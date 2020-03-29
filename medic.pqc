@@ -1,0 +1,193 @@
+void () HealSelf =
+{
+	local entity te;
+	local float healed;
+	if (self.playerclass != 5)
+		return;
+	if (self.no_grenades_2 < 1)
+	{
+		sprint(self, 2, "Not enough type 2 grenades... get more\n");
+		return;
+	}
+	healed = 0;
+	if ((self.leg_damage > 0))
+	{
+		sprint (self, 2, "Your leg wound has been healed!\n");
+		self.leg_damage = 0;
+		TeamFortress_SetSpeed (self);
+		healed = 1;
+	}
+	te = find (world, classname, "timer");
+	while ((((te.owner != self) || (te.think != ConcussionGrenadeTimer)) && (te != world)))
+	{
+		te = find (te, classname, "timer");
+	}
+	if ((te != world))
+	{
+		stuffcmd (self, "v_idlescale 0\n");		
+		sprint (self, 2, "you have been healed of your concussion\n");
+		dremove (te);
+		healed = 1;
+	}
+	if ((self.tfstate & 16384))
+	{
+		te = find (world, classname, "timer");
+		while ((((te.owner != self) || (te.think != HallucinationTimer)) && (te != world)))
+		{
+			te = find (te, classname, "timer");
+		}
+		if ((te != world))
+		{
+			stuffcmd (self, "v_idlescale 0\n");
+			self.tfstate = (self.tfstate - (self.tfstate & 16384));
+			sprint (self, 2, "you have been healed of your hallucinations.\n");
+			dremove (te);
+			healed = 1;
+		}
+	}
+	if ((self.tfstate & 32768))
+	{
+		te = find (world, classname, "timer");
+		while ((((te.owner != self) || (te.think != TranquiliserTimer)) && (te != world)))
+		{
+			te = find (te, classname, "timer");
+		}
+		if ((te != world))
+		{
+			self.tfstate = (self.tfstate - (self.tfstate & 32768));
+			TeamFortress_SetSpeed (self);
+			stuffcmd (self, "v_cshift 0 0 0 0\n");
+			sprint (self, 2, "you have been healed of your tranquilisation.\n");
+			dremove (te);
+			healed = 1;
+		}
+	}
+	if ((self.FlashTime > 0.000000))
+	{
+		te = find (world, netname, "flashtimer");
+		while ((((te.owner != self) || (te.classname != "timer")) && (te != world)))
+		{
+			te = find (te, netname, "flashtimer");
+		}
+		if ((te != world))
+		{			
+			stuffcmd (self, "v_cshift 0 0 0 0\n");
+			dremove (te);
+		}
+		self.FlashTime = 0.000000;
+		healed = 1;
+	}
+	if ((self.numflames > 0.000000))
+	{
+		self.numflames = 0.000000;
+		sprint (self, 2, "The flames have been doused!\n");
+		healed = 1;
+	}
+
+	if (healed == 0)
+	{
+		sprint(self, 2, "You have nothing to cure.\n");
+	}
+	else
+	{
+		self.no_grenades_2 = self.no_grenades_2 - 1;
+
+		WriteByte(4, 23);
+		WriteByte(4, 11);
+		WriteCoord(4, self.origin_x);
+		WriteCoord(4, self.origin_y);
+		WriteCoord(4, self.origin_z);
+		multicast(self.origin, TF_FLARE_OFF);
+		sound (self, 3, "items/r_item2.wav", 1, 1);
+	}
+}
+
+void () medpack_touch;
+void () medpack_remove;
+void () Throw_Health =
+{
+	if (self.has_drop4 == 1)
+	{
+		sprint(self, 2, "You can only have one med pack out at a time.\n");
+		return;
+	}
+	if (self.last_used > time)
+	{
+		sprint(self, 2, "Making a new medpack takes 1 minute.\n"); // was 2 minutes -arg
+		return;
+	}
+	self.last_used = time + 60;
+	newmis = spawn();
+	newmis.classname = "drop4";
+	newmis.touch = medpack_touch;
+	newmis.solid = 1;
+	newmis.movetype = MOVETYPE_TOSS;
+	newmis.owner = self;
+	newmis.real_owner = self;
+	setmodel(newmis, #MODEL_HEALTH_TEN);
+	setorigin(newmis, self.origin);
+	setsize(newmis, '0 0 0', '32 32 56');
+	newmis.team_no = self.team_no;
+	makevectors(self.v_angle);
+	if (self.v_angle_x)
+	{
+		newmis.velocity = v_forward * 400 + v_up * 200;
+	}
+	else
+	{
+		newmis.velocity = aim(self, 10000);
+		newmis.velocity = newmis.velocity * 400;
+		newmis.velocity_z = 200;
+	}
+	newmis.nextthink = time + 140;
+	newmis.think = medpack_remove;
+	newmis.health = 75;
+	self.has_drop4 = 1;
+};
+
+void () medpack_touch =
+{
+	if (self.last_saveme_sound > time)
+	{
+		return;
+	}
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (other.health <= 0)
+	{
+		return;
+	}
+	if (other.bugger > 0)
+	{
+		return;
+	}
+	if (other.health < other.max_health)
+	{
+		other.health = other.health + 25; // was 5
+		self.health = self.health - 1; // was 5, just a little drain on medic
+		self.last_saveme_sound = time + 1.5;
+		if (other.health > other.max_health)
+			other.health = other.max_health;
+		sound(other, 3, "items/r_item1.wav", 1, 1);
+		stuffcmd(other, "bf\n");
+		if (self.health < 1)
+		{
+			medpack_remove();
+		}
+	}
+
+};
+
+void () medpack_remove =
+{
+	kill_medpack(self);
+};
+void (entity otk) kill_medpack =
+{
+	sprint(otk.owner, 2, "Your medpack is gone.\n");
+	otk.owner.has_drop4 = 0;
+	dremove(otk);
+};
+//END

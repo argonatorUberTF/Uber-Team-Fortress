@@ -1,0 +1,32 @@
+void (float n) SetupStuff =
+{
+	if (n == 1)
+	{
+		self.n_b = "carried_all_message";
+	}
+};
+void () func_goalitem =
+{
+	if (self.allowteams != "")
+	{
+		if (self.allowteams == "red")
+		{
+			self.team_no = 2;
+			self.owned_by = 2;
+			SetupStuff(2);
+		}
+		if (self.allowteams == "blue")
+		{
+			self.team_no = 1;
+			self.owned_by = 1;
+			SetupStuff(1);
+		}
+	}
+	self.message = self.carried_message;
+	self.noise = self.carried_sound;
+	self.wait = self.delay;
+	self.classname = "item_tfgoal"; 	//converts func_goalitem to item_tfgoal
+	self.d_n_n = self.active_all_message;
+	item_tfgoal ();
+};
+//END 

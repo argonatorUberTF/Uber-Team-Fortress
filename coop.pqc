@@ -1,0 +1,85 @@
+void() DroppedKeyThink = 
+{
+	self.think = SUB_Null;
+	self.touch = key_touch;
+	self.owner = world;
+};
+
+float() DoorShouldOpen = 
+{
+	local entity ptr;
+	local float plyrcount;
+	local entity plyr1;
+	local entity plyr2;
+	if (coop != 2)
+	{
+		return TF_FLARE_OFF;
+	}
+	plyrcount = TF_FLARE_LIT;
+	ptr = find(world, classname, "player");
+	while (ptr != world)
+	{
+		if (!(ptr.tf_items & self.items) && ptr.playerclass != TF_FLARE_LIT && ptr.solid != TF_FLARE_LIT && ptr.model != string_null)
+		{
+			plyrcount = plyrcount + TF_FLARE_OFF;
+			if (plyrcount == TF_FLARE_OFF)
+			{
+				plyr1 = ptr;
+			}
+			else
+			{
+				if (plyrcount == 2)
+				{
+					plyr2 = ptr;
+				}
+			}
+		}
+		ptr = find(ptr, classname, "player");
+	}
+	if (plyrcount != TF_FLARE_LIT)
+	{
+		if (plyrcount == TF_FLARE_OFF)
+		{
+			bprint(2, plyr1.netname);
+			bprint(2, " needs");
+		}
+		else
+		{
+			if (plyrcount == 2)
+			{
+				bprint(2, plyr1.netname);
+				bprint(2, " and ");
+				bprint(2, plyr2.netname);
+				bprint(2, " need");
+			}
+			else
+			{
+				bprint(2, "More players need");
+			}
+		}
+		bprint(2, " to unlock the ");
+		if (self.items & 131072)
+		{
+			bprint(2, "silver");
+		}
+		else
+		{
+			bprint(2, "gold");
+		}
+		bprint(2, " door\n");
+		return TF_FLARE_LIT;
+	}
+	bprint(2, "The ");
+	if (self.items & 131072)
+	{
+		bprint(2, "silver");
+	}
+	else
+	{
+		bprint(2, "gold");
+	}
+	bprint(2, " door has been unlocked\n");
+	return TF_FLARE_OFF;
+};
+
+//END

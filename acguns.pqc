@@ -1,0 +1,366 @@
+void () ACprojectile_expireboom =
+{
+	self.takedamage = 0;
+	self.health = 0;
+	if ((self.owner.classname == "player"))
+	{
+	}
+	T_RadiusDamage (self, self.owner, self.dmg, self);
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+	dremove (self);
+	if (self.enemy.takedamage)
+	{
+	}
+};
+
+void () ACprojectile_touchboom =
+{
+	local float damg;
+	if ((self.owner.classname == "player"))
+	{
+	}
+	if (self.enemy.takedamage)
+	{
+	}
+	if ((pointcontents (self.origin) == -6))
+	{
+		remove (self);
+		return;
+	}
+	damg = self.dmg;
+	if ((self.classname == "ac_rocket"))
+	{
+		if ((other.health > 0))
+		{
+			deathmsg = 62;
+			T_Damage (other, self, self.owner, damg);
+		}
+		deathmsg = 62;
+		T_RadiusDamage (self, self.owner, damg, other);
+	}
+	if ((self.classname == "ac_seekingmissile"))
+	{
+		if ((other.health > 0))
+		{
+			deathmsg = 63;
+			T_Damage (other, self, self.owner, damg);
+		}
+		deathmsg = 63;
+		T_RadiusDamage (self, self.owner, damg, other);
+	}
+	self.origin = (self.origin - (8 * normalize (self.velocity)));
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+	dremove (self);
+};
+
+void () ACspike_touch =
+{
+	if (((other == self.owner) || (other.owner == self.owner)))
+	{
+		remove (self);
+		return;
+	}
+	if ((other.solid == 1))
+	{
+		remove (self);
+		return;
+	}
+	if ((pointcontents (self.origin) == -6))
+	{
+		remove (self);
+		return;
+	}
+	if ((self.classname == "cannon"))
+	{
+		spawn_touchblood (18);
+		deathmsg = 61;
+		T_Damage (other, self, self.owner, 25);
+	}
+	else
+	{
+		deathmsg = 65;
+		T_Damage (other, self, self.owner.enemy.enemy, 25);
+	}
+	remove (self);
+};
+
+void () bullet_touch =
+{
+	if (((other == self.enemy) && (self.enemy != world)))
+	{
+		return;
+	}
+	if ((pointcontents (self.origin) == -6))
+	{
+		dremove (self);
+		return;
+	}
+	dremove (self);
+};
+
+void () AC_bullet =
+{
+	local vector org;
+	newmis = spawn ();
+	newmis.owner = self.owner;
+	newmis.enemy = self.owner;
+	newmis.movetype = 9;
+	newmis.solid = 1;
+	setmodel (newmis, "progs/bullet.mdl");
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	org = self.origin;
+	setorigin (newmis, org);
+	makevectors (self.angles);
+	newmis.velocity = (v_forward * 1500);
+	newmis.oldorigin = newmis.velocity;
+	newmis.angles = self.angles;
+	newmis.oldorigin = newmis.velocity;
+	newmis.nextthink = (time + 5);
+	newmis.think = SUB_Remove;
+	newmis.touch = bullet_touch;
+	newmis.frame = 0;
+	newmis.skin = 0;
+};
+
+void (vector org, vector dir, entity targ) AC_spike =
+{
+	sound (self.enemy, 1, "helo/acannon.wav", 1, 1);
+	newmis = spawn ();
+	if ((targ != self.enemy))
+	{
+		newmis.owner = self.enemy;
+	}
+	else
+	{
+		newmis.owner = self;
+	}
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	newmis.angles = vectoangles (dir);
+	newmis.touch = ACspike_touch;
+	newmis.classname = "acspike";
+	newmis.think = SUB_Remove;
+	newmis.nextthink = (time + 0.700000);
+	setmodel (newmis, "progs/bullet.mdl");
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	setorigin (newmis, org);
+	newmis.velocity = (dir * 1500);
+};
+void () ACmissile_home =
+{
+	local vector dir;
+	local vector org;
+	local vector v0;
+	local vector v1;
+	local vector v2;
+	if ((time > self.attack_finished))
+	{
+		ACprojectile_expireboom ();
+		return;
+	}
+	if ((self.angles_x > 180))
+	{
+		self.angles_x = (self.angles_x - 360);
+	}
+	org = self.enemy.origin + ((self.enemy.mins + self.enemy.maxs) * 0.500000);
+	traceline (self.origin, org, 1, self);
+	if (((trace_fraction != 1) && (self.enemy.velocity != '0.000000 0.000000 0.000000')))
+	{
+		self.think = ACprojectile_expireboom;
+		self.nextthink = self.attack_finished;
+		return;
+	}
+	v0 = vectoangles ((org - self.origin));
+	if ((v0_x > 180))
+	{
+		v0_x = v0_x - 360;
+	}
+	v1 = '0.000000 0.000000 0.000000';
+	v1_y = anglemod ((v0_y - self.angles_y));
+	if ((v1_y > 180))
+	{
+		v1_y = v1_y - 360;
+	}
+	v1_x = v0_x - self.angles_x;
+	v2 = '0.000000 0.000000 0.000000';
+	if ((v1_x < 0))
+	{
+		v2_x = 0 - self.weapon;
+	}
+	if ((v1_x > 0))
+	{
+		v2_x = self.weapon;
+	}
+	fabs (v1_x);
+	if ((fabs (v1_x) < (self.weapon * 0.100000)))
+	{
+		v2_x = 0;
+		self.angles_x = v0_x;
+	}
+	if ((v1_y < 0))
+	{
+		v2_y = 0 - self.weapon;
+	}
+	if ((v1_y > 0))
+	{
+		v2_y = self.weapon;
+	}
+	fabs (v1_y);
+	if ((fabs (v1_y) < (self.weapon * 0.100000)))
+	{
+		v2_y = 0;
+		self.angles_y = v0_y;
+	}
+	else
+	{
+		self.angles_y = anglemod (self.angles_y);
+	}
+	self.avelocity = v2;
+	if ((fabs (v1_y) > 90))
+	{
+		fabs (v1_y);
+		fabs ((self.angles_x + v0_x));
+		if ((fabs ((self.angles_x + v0_x)) > (180 - fabs ((self.angles_x + v0_x)))))
+		{
+			self.angles_y = (self.angles_y + 180);
+			if (((self.angles_x + v0_x) >= 0))
+			{
+				self.angles_x = (180 - self.angles_x);
+			}
+			else
+			{
+				self.angles_x = (-180 - self.angles_x);
+			}
+		}
+	}
+	makevectors (self.angles);
+	dir = v_forward;
+	dir_z = 0 - dir_z;
+	self.velocity = (dir * self.speed);
+	self.nextthink = (time + 0.100000);
+	self.think = ACmissile_home;
+};
+
+void (vector org, vector dir, entity targ, float dm) AC_seekingmissile =
+{
+	newmis = spawn ();
+	if ((targ != self.enemy))
+	{
+		newmis.owner = self.enemy;
+	}
+	else
+	{
+		newmis.owner = self;
+	}
+	newmis.enemy = targ;
+	if ((targ.goalentity.classname == "player"))
+	{
+		targ.goalentity.rad_time = (time + 1);
+	}
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	newmis.effects = 8;
+#ifdef mtf_coop
+	setmodelu (newmis, "progs/rocket2.mdl");
+#else
+	setmodel (newmis, "progs/rocket2.mdl");
+#endif
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	newmis.angles = vectoangles (dir);
+	newmis.touch = ACprojectile_touchboom;
+	newmis.dmg = dm;
+	newmis.classname = "ac_seekingmissile";
+	if ((newmis.enemy != world))
+	{
+		newmis.think = ACmissile_home;
+		newmis.nextthink = (time + 0.100000);
+	}
+	else
+	{
+		newmis.think = ACprojectile_expireboom;
+	}
+	setorigin (newmis, org);
+	if (targ.takedamage)
+	{
+		targ.pdmg = (targ.pdmg + newmis.dmg);
+	}
+	self.lastmiss = newmis;
+};
+
+void (vector org, vector dir, entity targ) AC_heatseeker =
+{
+	sound (self.enemy, 1, "helo/rocklnch.wav", 1, 1);
+	AC_seekingmissile (org, dir, targ, 120);
+#ifdef mtf_coop
+	setmodelu (newmis, "progs/rocket2.mdl");
+#else
+	setmodel (newmis, "progs/rocket2.mdl");
+#endif
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	newmis.speed = 950;
+	newmis.weapon = 150;
+	if ((newmis.enemy != world))
+	{
+		newmis.attack_finished = (time + 5);
+	}
+	else
+	{
+		newmis.nextthink = (time + 5);
+	}
+	newmis.velocity = (dir * 800);
+};
+
+void () flare_touch =
+{
+	remove (self);
+	return;
+};
+
+void () AC_Flare =
+{
+	local entity e;
+	newmis = spawn ();
+	newmis.solid = 1;
+	newmis.movetype = 10;
+	newmis.velocity_x = ((random () * 200) - 100);
+	newmis.velocity_y = ((random () * 200) - 100);
+	newmis.velocity_z = ((random () * 200) - 100);
+	newmis.velocity = (newmis.velocity + self.enemy.velocity);
+	newmis.classname = "flare";
+	newmis.team_no = self.team_no;
+	deathmsg = 66;
+	setmodel (newmis, "progs/flare.spr");
+	sound (self, 3, "items/flare1.wav", 1, 1);
+	setsize (newmis, '-8.000000 -8.000000 -8.000000', '8.000000 8.000000 8.000000');
+	setorigin (newmis, ((self.origin - ((v_forward * 8) * 2)) - '0.000000 0.000000 16.000000'));
+	newmis.nextthink = (time + 3);
+	newmis.think = SUB_Remove;
+	newmis.touch = flare_touch;
+	newmis.effects = 4;
+	e = find (world, classname, "sidewinder");
+	while (e)
+	{
+		if ((e.enemy == self.enemy))
+		{
+			if ((random () < 0.500000))
+			{
+				e.enemy = newmis;
+			}
+		}
+		e = find (e, classname, "sidewinder");
+	}
+};
+//END
+

@@ -1,0 +1,70 @@
+void () Flash_Think =
+{
+	local float rng;
+	local vector org;
+	setmodel (self, "progs/s_null.spr");
+	rng = 1024;
+	if ((self.owner.flash == 0))
+	{
+		self.effects = 0;
+	}
+	else
+	{
+		if ((self.owner.flash == 1))
+		{
+			self.effects = (self.effects | 64);
+		}
+	}
+	if (((self.owner.deadflag != 0) || (self.owner.health < 1)))
+	{
+		remove (self);
+		return;
+	}
+	self.owner.show_hostile = (time + 1);
+	org = self.owner.origin + '0.000000 0.000000 16.000000';
+	makevectors (self.owner.v_angle);
+	traceline (org, (((org + (v_forward * rng)) + (v_right * self.fspec2)) + (v_up * self.fspec)), 0, self.owner);
+	if (trace_ent)
+	{
+		if ((trace_ent.takedamage == 2))
+		{
+			setorigin (self, trace_ent.origin);
+		}
+		else
+		{
+			setorigin (self, (trace_endpos - (v_forward * 10)));
+		}
+		if ((self.owner.classname == "player"))
+		{
+			if (((trace_ent.classname == "player") || (trace_ent.classname == "bot")))
+			{
+				centerprint (self.owner, trace_ent.netname);
+			}
+		}
+	}
+	else
+	{
+		setorigin (self, (trace_endpos - (v_forward * 10)));
+	}
+	self.think = Flash_Think;
+	self.nextthink = (time + 0.050000);
+};
+
+void (float up, float right) Make_Flash =
+{
+	local entity dude;
+	dude = spawn ();
+	dude.owner = self;
+	setorigin (dude, self.origin);
+	dude.effects = 8;
+	dude.think = Flash_Think;
+	dude.nextthink = (time + 0.050000);
+	dude.fspec = up;
+	dude.fspec2 = right;
+	dude.aflag = 0;
+	dude.attack_finished = (time + 0.500000);
+	setmodel (dude, "progs/s_null.spr");
+	setsize (dude, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+};
+//END
+

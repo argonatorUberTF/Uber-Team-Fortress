@@ -1,0 +1,192 @@
+
+
+void () BalBoltTouch =
+{
+	local vector dir;
+
+	if (other.takedamage)
+	{
+		if (((other != self.goalentity) && (self.velocity != '0.000000 0.000000 0.000000')))
+		{
+			self.goalentity = other;
+			deathmsg = 65;
+			dir = normalize (self.velocity);
+			traceline ((self.origin - (dir * 25)), (self.origin + (dir * 25)), 0, self);
+			T_Damage (other, self, self.owner.enemy.enemy, 25);
+			remove (self);
+		}
+	}
+};
+
+void () FireBalBolt =
+{
+	local vector org;
+
+	if (self.aagun_nextfire > time)
+		return;
+	self.aagun_nextfire = time + AA_GUN_ROF;
+	Attack_Finished (.5);
+	newmis = spawn ();
+	newmis.owner = self;
+	makevectors (self.angles);
+	org = (self.origin + self.proj_ofs) + v_forward;
+	sound (self.enemy, 1, "weapons/aagun.wav", 1, 1);
+	newmis.velocity = (normalize ((self.view_ofs - org)) * 1400);	// used to be 1000
+	traceline (org, (org + newmis.velocity), 0, self);
+	if (((trace_ent != self.goalentity) && self.goalentity.health))
+	{
+		newmis.velocity = (normalize ((((self.goalentity.absmin + self.goalentity.absmax) * 0.500000) - org)) * 1000);
+	}
+	newmis.movedir = normalize (newmis.velocity);
+	newmis.movetype = 9;
+	newmis.solid = 5;
+	newmis.thingtype = 2;
+	newmis.touch = ACspike_touch;
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.avelocity_z = 500;
+	newmis.dmg = self.dmg;
+	newmis.goalentity = newmis;
+	self.team_no = self.team_no;
+	self.classname = "aagun";
+	deathmsg = 65;
+	setmodel (newmis, "progs/bullet.mdl");
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	setorigin (newmis, org);
+};
+void (...) AdvanceFrame = #63; 
+
+void () ballista_fire =
+{
+	if ((self.frame == 2))
+	{
+		sound (self, 1, "weapons/ballista.wav", 1, 1);
+	}
+	else
+	{
+		if ((self.frame == 4))
+		{
+			FireBalBolt ();
+		}
+		else
+		{
+			if ((self.frame == 15))
+			{
+				sound (self, 1, "weapons/ballwind.wav", 1, 1);
+			}
+		}
+	}
+};
+
+void () ballista_think =
+{
+	local entity targ;
+	local float pitchmod;
+	local float checklooped;
+	local float bestdist;
+	local float lastdist;
+	local vector my_pitch;
+	local vector ideal_pitch;
+
+	if (((!self.enemy || !visible (self.enemy)) || !(self.enemy.flags2 & 8)))
+	{
+		targ = world;
+		self.enemy = world;
+		bestdist = 9999;
+		while (!checklooped)
+		{
+			targ = find (targ, classname, "player");
+			visible (targ);
+			if ((visible (targ) && (targ.flags2 & 8)))
+			{
+				lastdist = vlen ((targ.origin - self.origin));
+				if ((lastdist < bestdist))
+				{
+					bestdist = lastdist;
+					self.enemy = targ;
+				}
+			}
+			if ((targ == world))
+			{
+				checklooped = 1;
+			}
+		}
+	}
+	if (self.enemy)
+	{
+		enemy_yaw = vectoyaw ((self.enemy.origin - self.origin));
+		makevectors (self.angles);
+		my_pitch = normalize (v_forward);
+		ideal_pitch = normalize ((self.enemy.origin - self.origin));
+		ideal_pitch = vectoangles (ideal_pitch);
+		if ((ideal_pitch_z > my_pitch_z))
+		{
+			if (((ideal_pitch_z - my_pitch_z) > self.count))
+			{
+				pitchmod = self.count;
+			}
+			else
+			{
+				pitchmod = ideal_pitch_z - my_pitch_z;
+			}
+			self.angles_z = pitchmod;
+		}
+		else
+		{
+			if ((ideal_pitch_z < my_pitch_z))
+			{
+				if (((my_pitch_z - ideal_pitch_z) > self.count))
+				{
+					pitchmod = self.count;
+				}
+				else
+				{
+					pitchmod = my_pitch_z - ideal_pitch_z;
+				}
+				self.angles_z = pitchmod;
+			}
+		}
+	}
+	self.nextthink = (self.ltime + 0.100000);
+	self.think = ballista_think;
+};
+
+void () item_rlgun =
+{
+
+	precache_model ("progs/bullet.mdl");		//temp
+	precache_sound ("weapons/aagun.wav");		//temp
+
+	precache_model ("progs/minit.mdl");
+	self.solid = 2;
+	setmodel (self, "progs/minit.mdl");
+	setsize (self, '-16.000000 -16.000000 -20.000000', '16.000000 16.000000 16.000000');
+	droptofloor (/*0, 0*/);
+	self.oldorigin = self.angles;
+	self.th_weapon = FireBalBolt;
+	self.proj_ofs = '0.000000 0.000000 10.000000';
+	self.view_ofs = '0.000000 0.000000 10.000000';
+};
+
+void () item_aagun =
+{
+#ifdef mtf_coop
+	BTF_Precache ();
+#endif
+	precache_sound ("weapons/aagun.wav");
+	precache_model ("progs/minit.mdl");
+	self.solid = 2;
+	setmodel (self, "progs/minit.mdl");
+	setsize (self, '-16.000000 -16.000000 -20.000000', '16.000000 16.000000 16.000000');
+	droptofloor (/*0, 0*/);
+	self.oldorigin = self.angles;
+	self.th_weapon = FireBalBolt;
+	self.proj_ofs = '0.000000 0.000000 10.000000';
+	self.view_ofs = '0.000000 0.000000 10.000000';
+/*
+	self.th_die = aagun_die;
+	self.th_pain = aagun_dmg;
+	if (!self.health)
+		self.health = AA_GUN_HEALTH;
+*/
+};
+//END

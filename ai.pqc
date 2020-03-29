@@ -1,0 +1,1060 @@
+void(float normal) SUB_AttackFinished;
+//float()	WizardCheckAttack;
+//float()	SoldierCheckAttack;
+//float()	ShamCheckAttack;
+//float()	DemonCheckAttack;
+//float()	OgreCheckAttack;
+void (vector megadeth, float t) ai_ledgejump;
+void (float dist) ai_run_slide2;
+float()	CheckAttack;
+#ifdef mtf_coop_hipnotic
+float()  ScourgeCheckAttack;
+float()  ArmagonCheckAttack;
+#endif
+float(float v) anglemod = 
+{
+	while (v >= 360)
+	{
+		v = v - 360;
+	}
+	while (v < TF_FLARE_LIT)
+	{
+		v = v + 360;
+	}
+	return v;
+};
+void() t_movetarget = 
+{
+	local entity temp;
+	if (other.movetarget != self)
+	{
+		return;
+	}
+	if (other.enemy)
+	{
+		return;
+	}
+#ifdef mtf_coop
+	local string oldtarg;
+	if (self.pathtarget)
+	{
+	bprint(2,"HOLY MOLY AWESOME\n");
+		oldtarg = self.target;
+		self.target = self.pathtarget;
+		SUB_UseTargets();
+		self.target = oldtarg;
+	}
+#endif
+	temp = self;
+	self = other;
+	other = temp;
+	if (self.classname == "monster_ogre")
+	{
+		sound(self, 2, "ogre/ogdrag.wav", TF_FLARE_OFF, 2);
+	}
+	self.goalentity = self.movetarget = find(world, targetname, other.target);
+	self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
+	if (!(self.movetarget))
+	{
+		self.pausetime = time + 999999;
+		self.th_stand();
+		return;
+	}
+};
+
+void() movetarget_f = 
+{
+	if (!(self.targetname))
+	{
+		objerror("monster_movetarget: no targetname");
+	}
+	self.solid = TF_FLARE_OFF;
+	self.touch = t_movetarget;
+	setsize(self, '-8 -8 -8', '8 8 8');
+};
+void() path_corner = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	movetarget_f();
+};
+#ifdef mtf_coop_hipnotic
+void() t_followtarget =
+{
+   local entity   temp;
+   local vector   spot1, spot2;
+   local entity   targ;
+   local entity   client_t;
+
+   if (!other.flags & FL_MONSTER)
+      return;
+   if (other.classname == "monster_decoy")
+      return;
+   if (other.wetsuit_time > time)
+      return;
+   targ = other.enemy;
+   spot1 = other.origin + other.view_ofs;
+	spot2 = targ.origin + targ.view_ofs;
+   traceline (spot1, spot2, FALSE, other);
+   if (trace_fraction == 1)
+      return;
+	if (other.enemy)
+      {
+      // make the monster tame
+      other.oldenemy = other.enemy;
+      other.enemy = world;
+      other.think = other.th_walk;
+      }
+	temp = self;
+	self = other;
+	other = temp;
+	self.goalentity = self.movetarget = find (world, targetname, other.target);
+   self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
+   self.wetsuit_time = time + 2;
+	if (!self.movetarget)
+      {
+      if (self.oldenemy != world)
+         {
+         self.enemy = self.oldenemy;
+         FoundTarget();
+         return;
+         }
+      else
+         {
+         client_t = checkclient ();
+         if (!client_t)
+            {
+            self.enemy = client_t;
+            FoundTarget();
+            return;
+            }
+         self.pausetime = time + 999999;
+         self.th_stand ();
+         }
+      }
+};
+void() followtarget_f =
+{
+	self.solid = SOLID_TRIGGER;
+   self.touch = t_followtarget;
+   setmodel (self, self.model);  // set size and link into world
+	self.movetype = MOVETYPE_NONE;
+	self.modelindex = 0;
+	self.model = "";
+};
+void() path_follow =
+{
+   followtarget_f ();
+};
+void() path_follow2 =
+{
+   self.solid = SOLID_TRIGGER;
+   self.touch = t_followtarget;
+	setsize (self, '-8 -8 -8', '8 8 8');
+};
+#endif
+float(entity targ) range = 
+{
+	local vector spot1;
+	local vector spot2;
+	local float r;
+	spot1 = self.origin + self.view_ofs;
+	spot2 = targ.origin + targ.view_ofs;
+	r = vlen(spot1 - spot2);
+	if (r < 120)
+	{
+		return TF_FLARE_LIT;
+	}
+	if (r < 500)
+	{
+		return TF_FLARE_OFF;
+	}
+	if (r < 1000)
+	{
+		return 2;
+	}
+	return 3;
+};
+float(entity targ) infront = 
+{
+	local vector vec;
+	local float dot;
+	makevectors(self.angles);
+	vec = normalize(targ.origin - self.origin);
+	dot = vec * v_forward;
+	if (dot > 0.3)
+	{
+		return TF_FLARE_OFF;
+	}
+	return TF_FLARE_LIT;
+};
+
+
+
+
+#ifdef mtf_coop
+float (entity from_ent, entity to_ent) coop_visible =
+{
+	local vector bot_org;
+	local vector dest_org;
+	bot_org = from_ent.origin/* + self.view_ofs*/;
+	dest_org = to_ent.origin;
+	traceline (bot_org, dest_org, 1, self);
+	if (trace_fraction < 1)
+		return ( 0 );
+	return ( 1 );
+};
+float global_noticedelay;
+.entity wooha;
+#endif
+float() FindTarget = 
+{
+	local entity the_client;
+	local float r;
+#ifdef mtf_coop
+	float spyfoundprint;
+
+	if (self.#mflash_time > time)		// we are flash'd!
+		return 0;
+	if (global_noticedelay < time)
+	{
+		global_noticedelay = time + 1;
+		local entity head;
+		local entity guns;
+		guns = find (world, netname, "sentry");
+		{
+			if (guns != world)
+			{
+				head = findradius (guns.origin, 2048);
+				while (head) {
+					if (head.is_monster == 1 && coop_visible(guns, head) &&/* head.takedamage && */head.health > 0) {
+						if (head.enemy == world)
+						{
+							head.wooha = guns;
+						}
+					}
+					head = head.chain;
+				}
+			}
+			guns = find (world, netname, "sentry");
+		}
+	}
+	if (self.wooha != world)
+	{
+#ifdef mtf_coop_expsys
+		if (self.#is_minion == #TRUE) {
+			if (self.wooha.team_no == self.team_no)
+				self.wooha = world;
+		}
+		else {
+#endif
+		self.enemy = self.wooha;
+		self.wooha = world;
+		FoundTarget();
+		return 1;
+#ifdef mtf_coop_expsys
+		}
+#endif
+	}
+#endif
+	if (sight_entity_time >= time - 0.1 && !(self.spawnflags & 3))
+	{
+		the_client = sight_entity;
+		if (the_client.enemy == self.enemy)
+		{
+#ifdef mtf_coop
+			if (survival_mode == 1/*SURVIVAL_NATIVE*/) {		// xav: HAHAAAAAAX
+				if (self.health > 0 && self.enemy.health > 0 && self.th_run) {
+					FoundTarget();
+					return 1;
+				}
+			}
+#endif
+			return 0;
+		}
+	}
+	else
+	{
+		the_client = checkclient();
+#ifdef HALFLIFE
+		if (#HL_MAP)
+			if (self.spawnflags & 16)		// notarget flag for HL monsters
+				the_client = world;
+#endif
+#ifdef mtf_coop_expsys
+		if (self.#is_minion == 1) {
+			guns = world;
+			guns = findradius(self.origin, 850);
+			while (guns)
+			{
+				if (guns.monster_string == "on" && guns.#is_minion != #TRUE)
+				{
+					if (self.wooha != guns) {
+					}
+						self.wooha = guns;
+					if (visible(guns)) {
+						self.enemy = guns;
+						FoundTarget();
+						return 1;
+					}
+				}
+				guns = guns.chain;
+			}
+			return 0;
+		}
+#endif
+#ifndef mtf_coop
+		if (!the_client && the_client.classname != "bot")
+#else
+		if (!IsBuilding(the_client) && !the_client && the_client.classname != "bot")
+#endif
+		{
+			return TF_FLARE_LIT;
+		}
+	}
+	if (the_client == self.enemy)
+	{
+		return TF_FLARE_LIT;
+	}
+	if (the_client.flags & 128)
+	{
+		return TF_FLARE_LIT;
+	}
+	if (the_client.items & 524288)
+	{
+		return TF_FLARE_LIT;
+	}
+	if (the_client.team_no == self.team_no)
+	{
+		return TF_FLARE_LIT;
+	}
+#ifdef mtf_coop
+	if (the_client.model != "progs/mini-sub.mdl" || the_client.model != "progs/helo2.mdl")
+		if (the_client.playerclass == 8 && the_client.#spy_visible_time < time) // spy..
+		{
+			if (!(self.monster_items & #MITEM_SPY_DETECTOR))
+				return( 0 );
+			else 
+				spyfoundprint = 1;
+		}
+#else
+	if (the_client.undercover_team == self.team_no && the_client.playerclass == 8)
+	{
+		return TF_FLARE_LIT;
+	}
+#endif
+	r = range(the_client);
+	if (r == 3)
+	{
+		return TF_FLARE_LIT;
+	}
+#ifdef mtf_coop_expsys
+
+	if (self.#is_minion == #TRUE)
+	{
+		if (!coop_visible(self, the_client))
+		{
+			return 0;
+		}
+	}
+	else
+
+	if (self.#is_minion == #FALSE)
+	{
+#endif
+	if (!visible(the_client))
+	{
+		return TF_FLARE_LIT;
+	}
+	if (r == TF_FLARE_OFF)
+	{
+		if (the_client.show_hostile < time && !infront(the_client))
+		{
+			return TF_FLARE_LIT;
+		}
+	}
+	else
+	{
+		if (r == 2)
+		{
+#ifdef mtf_coop_expsys
+			if (!infront(the_client) && self.#is_minion != #TRUE)
+#else
+			if (!infront(the_client))
+#endif
+			{
+				return TF_FLARE_LIT;
+			}
+		}
+	}
+#ifdef mtf_coop_expsys
+	}
+#endif
+	self.enemy = the_client;
+#ifdef mtf_coop
+	if (!IsBuilding(self.enemy) && self.enemy.classname != "player" && self.enemy.classname != "bot" && self.enemy.classname != "monster_dog" && self.enemy.monster_string != "on" && Coop_Attackable(self.enemy) == #FALSE)
+#else
+	if (self.enemy.classname != "player" && self.enemy.classname != "bot" && self.enemy.classname != "monster_dog")
+#endif
+	{
+		self.enemy = self.enemy.enemy;
+#ifdef mtf_coop
+		if (!IsBuilding(self.enemy) && self.enemy.classname != "player" && self.enemy.classname != "bot" && self.enemy.classname != "monster_dog" && Coop_Attackable(self.enemy) == #FALSE)
+#else
+		if (self.enemy.classname != "player" && self.enemy.classname != "bot" && self.enemy.classname != "monster_dog")
+#endif
+		{
+			self.enemy = world;
+			return TF_FLARE_LIT;
+		}
+	}
+	
+#ifdef mtf_coop
+	if (spyfoundprint)
+	{
+		sprint (the_client, 2, "A monster (");
+		sprint(the_client, 2, GetMonsterPowers(self, 1));
+		sprint(the_client, 2, ") has seen through your disguise!\n");
+	}
+#endif
+	FoundTarget();
+	return TF_FLARE_OFF;
+};
+void(float dist) ai_forward = 
+{
+	walkmove(self.angles_y, dist);
+};
+void(float dist) ai_back = 
+{
+#ifdef mtf_coop_nehahra
+	if ((walkmove ((self.angles_y + 180), dist) == FALSE))
+	{
+		ai_ledgejump ((self.angles + '0 180 0'), 1);
+		ai_run_slide2 ((dist * 0.75));
+	}
+#else
+	walkmove(self.angles_y + 180, dist);
+#endif
+};
+void(float dist) ai_pain = 
+{
+	ai_back(dist);
+};
+void(float dist) ai_painforward = 
+{
+	walkmove(self.ideal_yaw, dist);
+};
+void(float dist) ai_run;
+void(float dist) ai_walk = 
+{
+#ifdef mtf_coop
+	local float sp_mult;
+	sp_mult = cvar ("monster_speed");
+	if (self.monster_items & MITEM_SPEED)
+		dist *= #MONSTER_SPEED_MULT;
+	if (self.tfstate & #MONSTER_TRANQUILIZED)
+		dist *= .3;
+	if (self.leg_damage)
+		dist /= self.leg_damage;
+	if (sp_mult > 0)
+		dist *= sp_mult;
+	if (self.health <= 0) {
+		bprint(2,"Tell DEV that a dead monster is moving.. sigh\n");
+		eprint(self);
+		self.think = SUB_Null;
+		self.nextthink = time + 9999999999;
+		return;
+	}
+#endif
+	movedist = dist;
+	if (self.classname == "monster_dragon")
+	{
+		movetogoal(dist);
+		return;
+	}
+	if (FindTarget())
+	{
+		return;
+	}
+	if (self.classname == "minifiend")
+	{
+		if (self.owner.health <= 0)
+			self.follow_mode = 0;
+		if (self.goalentity == world || self.goalentity.health <= 0 || self.enemy.health <= 0)
+		{
+			if ((vlen ((self.origin - self.owner.origin)) > 1500))
+			{
+			}
+			else
+			{
+				if ((vlen ((self.origin - self.owner.origin)) > 100))
+				{
+					self.follow_mode = 1;
+#ifdef minipets
+					demon1_run1();
+#endif
+					return;
+				}
+			}
+		}
+		else
+		{
+			self.follow_mode = 0;
+		}
+	}
+#ifdef mtf_coop_expsys
+	if (self.#is_minion == #TRUE) {
+		self.goalentity = self.owner;
+		self.enemy = self.owner;
+		self.think = self.th_run;
+		return;
+	}
+	
+#endif
+#ifdef mtf_coop
+	if (lms_entity != world) {
+		if (self.enemy)
+			self.th_run();
+	}
+	else
+#endif
+	movetogoal(dist);
+};
+
+#ifdef mtf_coop_malice
+void () ChangePitch =
+{
+	local float ideal;
+	local float move;
+	local float current_pitch;
+	current_pitch = self.angles_x;
+	ideal = self.ideal_pitcher;
+	if ((ideal > 54))
+	{
+		ideal = 54;
+	}
+	else
+	{
+		if ((ideal < -54))
+		{
+			ideal = -54;
+		}
+	}
+	if ((current_pitch == ideal))
+	{
+		return;
+	}
+	move = (ideal - current_pitch);
+	if ((move > MSG_BROADCAST))
+	{
+		if ((move > TE_LIGHTNING2))
+		{
+			move = TE_LIGHTNING2;
+		}
+	}
+	else
+	{
+		if ((move < CONTENT_SKY))
+		{
+			move = CONTENT_SKY;
+		}
+	}
+	current_pitch = (current_pitch + move);
+	self.angles_x = current_pitch;
+};
+
+void (float dist) old_ai_walk =
+{
+	local float sp_mult;
+	sp_mult = cvar ("monster_speed");
+	if (self.monster_items & MITEM_SPEED)
+		dist *= #MONSTER_SPEED_MULT;
+	if (self.tfstate & #MONSTER_TRANQUILIZED)
+		dist *= .3;
+	if (self.leg_damage)
+		dist /= self.leg_damage;
+	if (sp_mult > 0)
+		dist *= sp_mult;
+	movedist = dist;
+	if (FindTarget ())
+	{
+		return;
+	}
+	movetogoal (dist);
+};
+#endif
+void() ai_stand = 
+{
+	local float found_targ;
+	if (FindTarget())
+	{
+		if (self.classname == "minipet")
+		{
+			if (self.follow_mode == 1)
+				self.follow_mode = 0;
+		}
+		found_targ = 1;
+		//return;
+	}
+	if (self.classname == "minifiend")
+	{
+		if (self.owner.health <= 0)
+			self.follow_mode = 0;
+		if (self.enemy == world)
+		{
+			if ((vlen ((self.origin - self.owner.origin)) > 1500))
+			{
+			}
+			else
+			{
+				if ((vlen ((self.origin - self.owner.origin)) > 100))
+				{
+					self.follow_mode = 1;
+#ifdef minipets
+					demon1_run1();
+#endif
+					return;
+				}
+			}
+		}
+		else
+		{
+			self.follow_mode = 0;
+		}
+	}
+	if (time > self.pausetime)
+	{
+			self.th_walk();
+		return;
+	}
+};
+void() ai_turn = 
+{
+	if (FindTarget())
+	{
+		return;
+	}
+	ChangeYaw();
+};
+
+void(vector dest3) ChooseTurn = 
+{
+	local vector dir;
+	local vector newdir;
+	dir = self.origin - dest3;
+	newdir_x = trace_plane_normal_y;
+	newdir_y = TF_FLARE_LIT - trace_plane_normal_x;
+	newdir_z = TF_FLARE_LIT;
+	if (dir * newdir > TF_FLARE_LIT)
+	{
+		dir_x = TF_FLARE_LIT - trace_plane_normal_y;
+		dir_y = trace_plane_normal_x;
+	}
+	else
+	{
+		dir_x = trace_plane_normal_y;
+		dir_y = TF_FLARE_LIT - trace_plane_normal_x;
+	}
+	dir_z = TF_FLARE_LIT;
+	self.ideal_yaw = vectoyaw(dir);
+};
+float() FacingIdeal = 
+{
+	local float delta;
+	delta = anglemod(self.angles_y - self.ideal_yaw);
+	if (delta > 45 && delta < 315)
+	{
+		return TF_FLARE_LIT;
+	}
+	return TF_FLARE_OFF;
+};
+float() CheckAnyAttack = 
+{
+#ifdef mtf_coop
+	if (!enemy_vis && self.enemy.classname != "func_monstergoal")
+	{
+		return 0;
+	}
+#else
+	if (!enemy_vis)
+	{
+		return 0;
+	}
+	if (self.classname == "monster_dog")
+	{
+		return DogCheckAttack();
+	}
+#endif
+	if (self.classname == "bot")
+	{
+		return DogCheckAttack();
+	}
+#ifdef mtf_coop
+	if (self.classname == "monster_demon1")
+	{
+		return DemonCheckAttack();
+	}
+#endif
+#ifdef mtf_coop_hipnotic
+   if (self.classname == "monster_scourge")
+      return ScourgeCheckAttack ();
+   if (self.classname == "monster_armagon")
+      return ArmagonCheckAttack ();
+#endif
+	return CheckAttack();
+};
+void() ai_run_melee = 
+{
+	self.ideal_yaw = enemy_yaw;
+	ChangeYaw();
+	if (FacingIdeal())
+	{
+		self.th_melee();
+		self.attack_state = TF_FLARE_OFF;
+	}
+};
+
+void() ai_run_missile = 
+{
+	self.ideal_yaw = enemy_yaw;
+	ChangeYaw();
+	if (FacingIdeal())
+	{
+		self.th_missile();
+		self.attack_state = TF_FLARE_OFF;
+	}
+};
+
+void() ai_run_slide = 
+{
+	local float ofs;
+	self.ideal_yaw = enemy_yaw;
+	ChangeYaw();
+	if (self.lefty)
+	{
+		ofs = 90;
+	}
+	else
+	{
+		ofs = -90;
+	}
+	if (walkmove(self.ideal_yaw + ofs, movedist))
+	{
+		return;
+	}
+	self.lefty = TF_FLARE_OFF - self.lefty;
+	walkmove(self.ideal_yaw - ofs, movedist);
+};
+
+#ifdef mtf_coop
+void() ai_run_fire =
+{
+	self.ideal_yaw = enemy_yaw;
+	ChangeYaw ();
+	if (FacingIdeal())
+	{
+		self.th_fireball ();
+		self.attack_state = 1/*AS_STRAIGHT*/;
+	}
+};
+#endif
+
+#ifdef mtf_coop_hipnotic
+void() ai_run_dodge =
+{
+	local float	ofs;
+   local float newyaw;
+   self.nextthink = time + 0.1;
+   if (self.lefty)
+      ofs = 40;
+	else
+      ofs = -40;
+
+   if (time > self.ltime)
+      {
+      self.lefty = 1 - self.lefty;
+      self.ltime = time + 0.8;
+      }
+
+   newyaw = enemy_yaw + ofs;
+   self.ideal_yaw = enemy_yaw;
+   if (walkmove (newyaw, movedist))
+      {
+      ChangeYaw ();
+      return;
+      }
+
+   self.lefty = 1 - self.lefty;
+   self.ltime = time + 0.8;
+   newyaw = enemy_yaw - ofs;
+   self.ideal_yaw = enemy_yaw;
+   walkmove (newyaw, movedist);
+   ChangeYaw ();
+};
+
+void() ai_turn_in_place =
+   {
+   local float delta;
+
+   self.nextthink = time + 0.1;
+   enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+   delta = fabs(self.angles_y - enemy_yaw);
+   if (delta > MIN_ANGLE_DELTA)
+      {
+      self.ideal_yaw = enemy_yaw;
+      ChangeYaw();
+      }
+   else
+      {
+      self.think = self.th_run;
+      }
+   };
+void() UpdateCharmerGoal =
+   {
+   local entity targ;
+   local vector d;
+
+   d = normalize(self.origin-self.charmer.origin);
+
+   if (self.huntingcharmer == 1)
+      {
+      targ = spawn();
+      self.trigger_field = targ;
+      setorigin(targ,self.charmer.origin);
+      self.huntingcharmer = 2;
+      self.goalentity = targ;
+      }
+   if (self.huntingcharmer == 2)
+      {
+      targ = self.trigger_field;
+      traceline(self.origin,self.charmer.origin,TRUE,self);
+      if (trace_fraction == 1.0)
+         {
+         setorigin(targ,self.charmer.origin);
+         }
+      }
+   else
+      {
+      targ = self.trigger_field;
+      setorigin(targ,self.charmer.origin + (d*300));
+      }
+   };
+void() HuntCharmer =
+{
+   self.huntingcharmer = 1;
+   UpdateCharmerGoal();
+   self.think = self.th_walk;
+   self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
+   self.nextthink = time + 0.1;
+};
+void() FleeCharmer =
+{
+   self.huntingcharmer = 1;
+   UpdateCharmerGoal();
+   self.huntingcharmer = 3;
+   self.think = self.th_walk;
+   self.nextthink = time + 0.1;
+};
+void() StopHuntingCharmer =
+{
+   self.goalentity = world;
+   if (self.huntingcharmer>1)
+      remove(self.trigger_field);
+   self.huntingcharmer = 0;
+   self.think = self.th_stand;
+   self.nextthink = time + 0.1;
+};
+#endif
+void(float dist) ai_run = 
+{
+#ifdef mtf_coop
+	local float sp_mult;
+#ifdef HALFLIFE
+	if (self.enemy.classname == "script_corner") {
+		self.angles = vectoangles(self.enemy.origin - self.origin);
+		self.angles_x = 0;
+		if (walkmove (self.angles_y + (random()*17), dist) == #FALSE) {
+			if (FindTarget ())
+				self.enemy = world;
+		}
+		return;
+	}
+#endif
+	sp_mult = cvar ("monster_speed");
+	if (self.monster_items & MITEM_SPEED)
+		dist *= #MONSTER_SPEED_MULT;
+	if (self.tfstate & #MONSTER_TRANQUILIZED) {
+		dist *= .3;
+	}
+	if (self.leg_damage)
+		dist /= self.leg_damage;
+	if (sp_mult > 0)
+		dist *= sp_mult;
+#endif
+#ifndef mtf_coop_hipnotic
+	movedist = dist;
+	if (self.enemy.health <= TF_FLARE_LIT || self.playerclass == self.enemy.team_no)
+	{
+		self.enemy = world;
+		if (self.oldenemy.health > TF_FLARE_LIT)
+		{
+			self.enemy = self.oldenemy;
+			if (self.classname == "minifiend")
+			{
+				if (self.owner.health <= 0)
+					self.follow_mode = 0;
+			}
+			HuntTarget();
+		}
+		else
+		{
+			if (self.movetarget)
+			{
+				self.th_walk();
+			}
+			else
+			{
+				self.th_stand();
+			}
+			return;
+		}
+	}
+	self.show_hostile = time + TF_FLARE_OFF;
+	enemy_vis = visible(self.enemy);
+	if (enemy_vis)
+	{
+		self.search_time = time + 5;
+	}
+	if (coop && self.search_time < time)
+	{
+		if (FindTarget())
+		{
+			return;
+		}
+	}
+	enemy_infront = infront(self.enemy);
+	enemy_range = range(self.enemy);
+	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+	if (self.attack_state == 4)
+	{
+		ai_run_missile();
+		return;
+	}
+	if (self.attack_state == 3)
+	{
+		ai_run_melee();
+		return;
+	}
+	if (CheckAnyAttack())
+	{
+		return;
+	}
+	if (self.attack_state == 2)
+	{
+		ai_run_slide();
+		return;
+	}
+	movetogoal(dist);
+#else
+	local	float	axis;
+	movedist = dist;
+   if (self.enemy.health <= 0 || (self.charmed && (self.charmer == self.enemy)))
+	{
+		self.enemy = world;
+      if (self.charmed)
+         {
+         HuntCharmer();
+         return;
+         }
+		if (self.oldenemy.health > 0)
+		{
+			self.enemy = self.oldenemy;
+			HuntTarget ();
+		}
+		else
+		{
+			if (self.movetarget) {
+				self.th_walk ();
+			}
+			else
+				self.th_stand ();
+			return;
+		}
+	}
+	self.show_hostile = time + 1;		// wake up other monsters
+	enemy_vis = visible(self.enemy);
+	if (enemy_vis)
+		self.search_time = time + 5;
+   if (coop && self.search_time < time && !self.charmed)
+	{
+		if (FindTarget ())
+			return;
+	}
+	enemy_infront = infront(self.enemy);
+	enemy_range = range(self.enemy);
+	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+   if (self.th_turn)
+      {
+      local float angledelta;
+
+      angledelta = fabs(self.angles_y - enemy_yaw);
+      if (angledelta > MIN_ANGLE_DELTA)
+         {
+         self.th_turn();
+         return;
+         }
+      }
+
+	if (self.attack_state == 4/*AS_MISSILE*/)
+	{
+		ai_run_missile ();
+		return;
+	}
+	if (self.attack_state == 3/*AS_MELEE*/)
+	{
+		ai_run_melee ();
+		return;
+	}
+	if (self.attack_state == #AS_FIREBALL/* && self.classname == "monster_demon1"*/) //CH only for demons..
+	{
+		ai_run_fire ();
+		return;
+	}
+	if (CheckAnyAttack ())
+      {
+      return;              // beginning an attack
+      }
+
+	if (self.attack_state == 2/*AS_SLIDING*/)
+	{
+		ai_run_slide ();
+		return;
+	}
+
+   if (self.attack_state == AS_DODGING)
+	{
+      ai_run_dodge ();
+		return;
+	}
+   if (RUN_STRAIGHT && time > self.endtime)
+      {
+      RUN_STRAIGHT = 0;
+      axis = walkmove (self.angles_y, movedist);
+      if (!axis)
+         {
+         self.endtime = time + 3;
+	 self.lastruntime = time;
+	 COOP_WalkSmooth (dist);
+         }
+      }
+   else
+      {
+	self.lastruntime = time;
+      COOP_WalkSmooth (dist);
+      }
+#endif
+};
+//END

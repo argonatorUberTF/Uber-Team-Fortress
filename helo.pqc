@@ -1,0 +1,1547 @@
+void (string gibname, float dm, float explode, float firetrail) AC_ThrowGib;
+void () AC_TrailFire;
+void () AC_Eject;
+void () AC_ShotDown;
+void () HW_LaunchStinger;
+void () ac_cruise = [ 0, ac_cruise ]
+{
+	self.weaponframe = 0;
+};
+
+void () ac_firevc1 = [ 2, ac_firevc2 ]
+{
+	self.weaponframe = 2;
+};
+
+void () ac_firevc2 = [ 1, ac_firevc3 ]
+{
+	self.weaponframe = 1;
+};
+
+void () ac_firevc3 = [ 0, ac_cruise ]
+{
+	self.weaponframe = 0;
+	W_SetCurrentAmmo ();
+};
+
+void () AC_PilotTouch2 =
+{
+	local float tempx;
+	local float damg;
+	local vector dir;
+	if ((self.Old_Health <= 0))
+	{
+		AC_ThrowGib ("progs/acgib1.mdl", -1, 1, 0);
+		AC_Eject ();
+		self.touch = SUB_Null;
+		return;
+	}
+	if (((self.health <= 30) || (self.Aircraft_Fuel <= 0)))
+	{
+		if ((self.Old_Health <= 0))
+		{
+			return;
+		}
+		self.health = 0;
+		self.flash = 0;
+		AC_ShotDown ();
+		return;
+	}
+	damg = 40;
+	dir = normalize (self.velocity);
+	traceline (self.origin, (self.origin + (dir * 64)), 1, self.owner);
+	if ((trace_fraction < 1))
+	{
+		self.velocity = (other.velocity + self.velocity);
+		self.punchangle_x = 10;
+		deathmsg = 69;
+		tempx = vlen (self.velocity) * 0.050000;
+		T_Damage (self, self, self, tempx);
+		if ((self.velocity != '0.000000 0.000000 0.000000'))
+		{
+			sound (self, 2, "helo/achit.wav", 1, 1);
+			deathmsg = 69;
+			if ((random () < 0.330000))
+			{
+				if ((random () < 0.500000))
+				{
+					self.punchangle_z = 8;
+					deathmsg = 69;
+				}
+				else
+				{
+					self.punchangle_z = -18;
+					deathmsg = 69;
+				}
+			}
+			else
+			{
+				if ((random () < 0.660000))
+				{
+					if ((random () < 0.500000))
+					{
+						self.punchangle_x = 8;
+						deathmsg = 69;
+					}
+					else
+					{
+						self.punchangle_x = -18;
+						deathmsg = 69;
+					}
+				}
+				else
+				{
+					if ((random () < 0.500000))
+					{
+						self.punchangle_y = 8;
+						deathmsg = 69;
+					}
+					else
+					{
+						self.punchangle_y = -18;
+						deathmsg = 69;
+					}
+				}
+			}
+		}
+	}
+};
+
+void () AC_PilotTouch =
+{
+	local float tempx;
+	if ((other.team_no == self.team_no))
+	{
+		return;
+	}
+	if (other.takedamage)
+	{
+		other.velocity = (other.velocity + self.velocity);
+		other.axhitme = 1;
+		other.punchangle_x = 10;
+		deathmsg = 57;
+		tempx = vlen (self.velocity) * 0.050000;
+		T_Damage (other, self, self, tempx);
+	}
+	if ((self.Old_Health <= 0))
+	{
+		AC_ThrowGib ("progs/acgib1.mdl", -1, 1, 0);
+		AC_Eject ();
+		self.touch = SUB_Null;
+		return;
+	}
+	self.out_of_control = (time + 1.500000);
+	if ((self.Aircraft_Fuel <= 0))
+	{
+		self.out_of_control = (time + 5);
+	}
+	if ((self.Aircraft_Fuel <= 0))
+	{
+		self.velocity_x = 0;
+		self.velocity_y = 0;
+		self.NoFuel_Velocity_x = 0;
+		self.NoFuel_Velocity_y = 0;
+	}
+	if ((self.velocity != '0.000000 0.000000 0.000000'))
+	{
+		sound (self, 2, "helo/achit.wav", 1, 1);
+		if ((random () < 0.330000))
+		{
+			if ((random () < 0.500000))
+			{
+				self.punchangle_z = 8;
+			}
+			else
+			{
+				self.punchangle_z = -8;
+			}
+		}
+		else
+		{
+			if ((random () < 0.660000))
+			{
+				if ((random () < 0.500000))
+				{
+					self.punchangle_x = 8;
+				}
+				else
+				{
+					self.punchangle_x = -8;
+				}
+			}
+			else
+			{
+				if ((random () < 0.500000))
+				{
+					self.punchangle_y = 8;
+				}
+				else
+				{
+					self.punchangle_y = -8;
+				}
+			}
+		}
+	}
+};
+
+void (float modelindex_ac) AC_MaintainAircraft =
+{
+	local float rn;
+	AC_PilotTouch2 ();
+	self.air_finished = (time + 20);
+	self.touch = AC_PilotTouch;
+	self.team_no = self.team_no;
+	self.gravity = 0;
+	stuffcmd (self, "cl_bob 0\n");
+	if ((self.current_menu == 15))
+	{
+		ResetMenu ();
+		self.impulse = 0;
+	}
+	if ((time > self.fly_sound))
+	{
+		sound (self, 4, "engines/chopper.wav", (0.200000 + 0.200000), 1);
+		self.fly_sound = (time + 1);
+	}
+	if (!self.button0)
+	{
+		self.weaponframe = 0;
+	}
+	if (((self.health <= 10) || (self.Aircraft_Fuel <= 0)))
+	{
+		if ((self.Old_Health <= 0))
+		{
+			return;
+		}
+		self.health = 0;
+		self.flash = 0;
+		AC_ShotDown ();
+		return;
+	}
+	self.modelindex = modelindex_ac;
+	self.weaponmodel = "progs/cockpit.mdl";
+	if ((self.Old_Health > 0))
+	{
+		makevectors (self.v_angle);
+		self.velocity = aim (self, 1000);
+		self.angles = vectoangles (self.velocity);
+	}
+	if ((((self.Aircraft_Speed == 0) && (self.Old_Health > 0)) && (self.Aircraft_Fuel > 0)))
+	{
+		self.velocity_z = 0;
+		self.Current_Speed = (self.Current_Speed - 10);
+		if ((self.Current_Speed <= 0))
+		{
+			self.Current_Speed = 0;
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.020000);
+	}
+	if ((((self.Aircraft_Speed == 1) && (self.Old_Health > 0)) && (self.Aircraft_Fuel > 0)))
+	{
+		if ((self.Current_Speed < 150))
+		{
+			self.Current_Speed = (self.Current_Speed + 7.500000);
+		}
+		if ((self.Current_Speed >= 150))
+		{
+			self.Current_Speed = (self.Current_Speed - 7.500000);
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.040000);
+		self.NoFuel_Velocity = self.velocity;
+	}
+	if ((((self.Aircraft_Speed == 2) && (self.Old_Health > 0)) && (self.Aircraft_Fuel > 0)))
+	{
+		if ((self.Current_Speed < 300))
+		{
+			self.Current_Speed = (self.Current_Speed + 15);
+		}
+		if ((self.Current_Speed >= 300))
+		{
+			self.Current_Speed = (self.Current_Speed - 15);
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.040000);
+		self.NoFuel_Velocity = self.velocity;
+	}
+	if ((((self.Aircraft_Speed == 3) && (self.Old_Health > 0)) && (self.Aircraft_Fuel > 0)))
+	{
+		if ((self.Current_Speed < 150))
+		{
+			self.Current_Speed = 150;
+		}
+		self.Current_Speed = (self.Current_Speed + 15);
+		if ((self.Current_Speed >= 450))
+		{
+			self.Current_Speed = 450;
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.060000);
+		self.NoFuel_Velocity = self.velocity;
+	}
+	if (((self.Old_Health <= 0) || (self.Aircraft_Fuel <= 0)))
+	{
+		self.velocity_x = (self.velocity_x * 1.025000);
+		self.velocity_y = (self.velocity_y * 1.025000);
+	}
+	if ((self.nextservice <= time))
+	{
+		if (((self.Aircraft_Fuel < 20) && (self.Aircraft_Fuel > 1)))
+		{
+			centerprint (self, "FUEL LOW\n");
+			sound (self, 3, "helo/fuellow.wav", 1, 1);
+		}
+		else
+		{
+			if ((self.Aircraft_Fuel < 1))
+			{
+				centerprint (self, "FUEL DEPLETED\n");
+				self.Aircraft_Fuel = 0;
+				self.gravity = 1000;
+			}
+		}
+		self.nextservice = (time + 4.240000);
+		if ((self.Aircraft_Fuel > 0))
+		{
+		}
+		if ((random () < 0.200000))
+		{
+			rn = random ();
+			if ((rn < 0.150000))
+			{
+				sound (self, 2, "helo/voice1.wav", 1, 1);
+			}
+			else
+			{
+				if ((rn < 0.500000))
+				{
+					sound (self, 2, "helo/voice2.wav", 1, 1);
+				}
+				else
+				{
+					if ((rn < 0.750000))
+					{
+						sound (self, 2, "helo/voice3.wav", 1, 1);
+					}
+					else
+					{
+						sound (self, 2, "helo/voice4.wav", 1, 1);
+					}
+				}
+			}
+		}
+	}
+	self.armorvalue = self.Aircraft_Fuel;
+};
+
+void (entity pilot, float fuel, float shells, float Aircraft_Health) AC_MakePilot =
+{
+	setorigin (pilot, (pilot.origin + '0.000000 0.000000 32.000000'));
+	self.NoFuel_Velocity = '0.000000 0.000000 0.000000';
+	deathmsg = 57;
+	centerprint (pilot, "Keys bound to 1 - 9!\n");
+	pilot.Current_Speed = 0;
+	pilot.Old_Health = pilot.health;
+	pilot.health = Aircraft_Health;
+	pilot.Old_Armor = pilot.armorvalue;
+	pilot.Old_Shells = pilot.ammo_shells;
+	pilot.Aircraft_Fuel = fuel;
+	pilot.ammo_shells = shells;
+	pilot.Aircraft_Speed = 0;
+	pilot.Aircraft_Owner = 1;
+	pilot.last_side = 1;
+	pilot.Aircraft_Weapon = 1;
+	pilot.currentammo = pilot.ammo_shells;
+	pilot.weapon = 1;
+	pilot.attack_finished = (time + 1);
+	W_SetCurrentAmmo ();
+	pilot.nextservice = time;
+	setsize (pilot, '-16.000000 -16.000000 -24.000000', '32.000000 32.000000 32.000000');
+	pilot.view_ofs = '0.000000 0.000000 8.000000';
+	pilot.solid = 3;
+	pilot.movetype = 5;
+	stuffcmd (pilot, "cl_bob 0\n");
+	pilot.ffar_reloaded = time;
+};
+
+void () Aircraft_Touch =
+{
+	local float falldamage;
+	if ((((other.classname == "stinger") || (other.classname == "missile")) || (other.classname == "grenade")))
+	{
+		other.think = GrenadeExplode;
+		other.nextthink = time;
+	}
+	else
+	{
+		if ((other.classname == "spike"))
+		{
+			other.nextthink = time;
+		}
+		else
+		{
+			if ((other.classname == "player"))
+			{
+				if (((self.velocity == '0.000000 0.000000 0.000000') && !other.Aircraft_Owner))
+				{
+					if ((other.Next_Aircraft_Time > time))
+					{
+						return;
+					}
+					if ((other.health <= 0))
+					{
+						return;
+					}
+					if (((other.is_feigning || (other.is_undercover == 2)) || (other.is_undercover == 1)))
+					{
+						return;
+					}
+					if ((other.current_menu == 12))
+					{
+						return;
+					}
+					if ((other.weaponmodel == "progs/proxi2.mdl"))
+					{
+						return;
+					}
+					if ((other.weaponmodel == "progs/proxgren.mdl"))
+					{
+						return;
+					}
+					if ((other.tools == (other.tools | 32)))
+					{
+						return;
+					}
+					if ((other.probe_active == 1))
+					{
+						return;
+					}
+					if ((other.classname != "player"))
+					{
+						return;
+					}
+					other.v_angle = self.angles;
+					other.fixangle = 1;
+					other.flags = (other.flags - 512);
+					deathmsg = 57;
+					AC_MakePilot (other, self.Aircraft_Fuel, self.ammo_shells, self.health);
+					if ((self.owner.classname == "player"))
+					{
+						self.think = SUB_Remove;
+						self.nextthink = time;
+					}
+					else
+					{
+						self.model = string_null;
+						self.solid = 0;
+						self.think = SUB_regen;
+						self.nextthink = (time + 4);
+					}
+					return;
+				}
+				else
+				{
+					if ((other != self.owner))
+					{
+						spawn_touchblood (10);
+					}
+				}
+			}
+			else
+			{
+				if ((self.velocity != '0.000000 0.000000 0.000000'))
+				{
+					falldamage = time - self.Aircraft_Falltime;
+				}
+				if ((falldamage > 0.500000))
+				{
+					falldamage = falldamage * 50;
+					T_Damage (self, self, self.owner, falldamage);
+				}
+				self.Aircraft_Falltime = time;
+				if (((self.velocity_z < -60) && (self.velocity_z > -40)))
+				{
+					sound (self, 1, "weapons/bounce.wav", 1, 1);
+				}
+				self.velocity_z = (self.velocity_z * 0.600000);
+			}
+		}
+	}
+#ifdef VWEPS
+	if (other.classname == "player") {
+		other.vw_index = 31;
+	}
+#endif
+};
+
+void () AC_Destroyed =
+{
+	if (self.owned_vehicle)
+		self.owned_vehicle.active_vehicle = 0;
+	AC_ThrowGib ("progs/acgib1.mdl", -75, 0, 0);
+	AC_ThrowGib ("progs/acgib3.mdl", -60, 0, 0);
+	AC_ThrowGib ("progs/acgib4.mdl", -75, 0, 0);
+	AC_ThrowGib ("progs/acgib5.mdl", -30, 0, 0);
+	AC_ThrowGib ("progs/acgib7.mdl", -75, 0, 0);
+	AC_ThrowGib ("progs/acgib8.mdl", -30, 0, 0);
+	if ((cvar ("sv_maxspeed") != 320))
+	{
+		AC_ThrowGib ("progs/acgib6.mdl", -50, 0, 0);
+		AC_ThrowGib ("progs/acgib2.mdl", -75, 0, 0);
+	}
+	else
+	{
+		AC_ThrowGib ("progs/acgib6.mdl", -50, 0, 1);
+		AC_ThrowGib ("progs/acgib2.mdl", -75, 0, 1);
+	}
+	AC_ThrowGib ("progs/acgib2.mdl", -75, 1, 0);
+	sound (self, 3, "misc/metal2.wav", 1, 1);
+	AC_ThrowGib ("progs/acgib1.mdl", 0, 1, 0);
+	remove (self);
+};
+
+void () AC_Crash =
+{
+	local entity item66;
+	local string sl;
+	item66 = spawn ();
+	item66.owner = self;
+	item66.gravity = 1000;
+	item66.movetype = 10;
+	item66.colormap = item66.owner.colormap;
+	item66.takedamage = 1;
+	item66.th_die = AC_Destroyed;
+	self.My_Old_Plane = item66;
+	if ((self.Old_Health <= 0))
+	{
+		item66.health = self.Old_Health;
+		item66.ammo_shells = self.ammo_shells;
+		item66.solid = 2;
+		setsize (item66, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
+		if ((item66.health < 0))
+		{
+			item66.think = AC_Destroyed;
+			item66.nextthink = time;
+		}
+		else
+		{
+			item66.Aircraft_Fuel = (time + 1.500000);
+			item66.think = AC_TrailFire;
+			item66.nextthink = time;
+		}
+		item66.touch = SUB_Null;
+		item66.velocity = aim (self, 1000);
+		item66.velocity = (item66.velocity * 300);
+		item66.angles = vectoangles (item66.velocity);
+	}
+	else
+	{
+		item66.Aircraft_Fuel = item66.owner.Aircraft_Fuel;
+		item66.health = self.Old_Health;
+		item66.ammo_shells = self.ammo_shells;
+		sl = ftos (item66.health);
+		item66.solid = 1;
+		setsize (item66, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
+		item66.think = SUB_Remove;
+		item66.nextthink = (time + 60);
+		item66.touch = Aircraft_Touch;
+		item66.velocity = aim (self, 1000);
+		item66.velocity = (item66.velocity * 300);
+		item66.angles = vectoangles (item66.velocity);
+	}
+	item66.velocity_x = ((item66.velocity_x + (random () * 5)) - 2);
+	item66.velocity_x = ((item66.velocity_x + (random () * 5)) - 2);
+	item66.origin = self.origin;
+	setmodel (item66, "progs/helo2.mdl");
+	setorigin (item66, (self.origin + '0.000000 0.000000 16.000000'));
+	item66.Aircraft_Falltime = time;
+	self.Old_Health = 0;
+};
+
+void () AC_Eject =
+{
+	local float swap;
+	centerprint (self, "Ejecting!\n");
+	self.gravity = 1;
+	TeamFortress_SetSpeed (self);
+	self.Next_Aircraft_Time = time + 1.5;
+	self.Aircraft_Owner = 0;
+	self.Aircraft_Speed = 0;
+#ifdef APRIL_FOOLS
+	setmodel (self, "progs/a1player.mdl");
+#else
+	setmodel (self, "progs/player.mdl");
+#endif	
+	self.modelindex = modelindex_plyr;
+	self.velocity_z = 400;
+	self.velocity_x = (self.velocity_x * -0.400000);
+	self.velocity_y = (self.velocity_y * -0.400000);
+	sound (self, 3, "helo/eject2.wav", 1, 1);
+	if ((self.Old_Health > 0))
+	{
+		swap = self.health;
+		self.health = self.Old_Health;
+		self.Old_Health = swap;
+	}
+	AC_Crash ();
+	self.weapon = W_BestWeapon ();
+	W_SetCurrentAmmo ();
+	self.touch = SUB_Null;
+	self.movetype = 3;
+	self.solid = 3;
+	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
+	self.view_ofs = '0.000000 0.000000 22.000000';
+	self.armorvalue = self.Old_Armor;
+	self.ammo_shells = self.Old_Shells;
+	self.attack_finished = (time + 1.300000);
+};
+
+void () AC_ShotDown =
+{
+	local float swap;
+	centerprint (self, "Mayday! Mayday!\n");
+	self.think = AC_TrailFire;
+	self.nextthink = time;
+	self.movetype = 3;
+	self.gravity = 1;
+	swap = self.health;
+	self.health = self.Old_Health;
+	self.Old_Health = swap;
+	if ((self.Old_Health <= 0))
+	{
+		AC_Eject ();
+	}
+};
+
+void () AC_ChangeWeapon =
+{
+	local vector dir;
+	if ((((self.impulse == 1) && self.Aircraft_Owner) && (self.Old_Health > 0)))
+	{
+		makevectors (self.v_angle);
+		dir = self.origin + self.view_ofs;
+		traceline (dir, (dir + (v_forward * 100)), 0, self);
+		makevectors (self.angles);
+		if (((trace_fraction != 1) && !trace_ent.takedamage))
+		{
+			centerprint (self, "Bad launch trajectory\n");
+			self.impulse = 0;
+			return;
+		}
+		self.flash = 0;
+		AC_Eject ();
+	}
+	if (((self.impulse >= 2) && (self.impulse <= 3)))
+	{
+		if (((self.impulse == 2) && (self.Aircraft_Speed > 0)))
+		{
+			self.Aircraft_Speed = (self.Aircraft_Speed - 1);
+			self.fly_sound = time;
+		}
+		if (((self.impulse == 3) && (self.Aircraft_Speed < 3)))
+		{
+			self.Aircraft_Speed = (self.Aircraft_Speed + 1);
+			self.fly_sound = time;
+		}
+		if ((self.Aircraft_Speed == 0))
+		{
+			centerprint (self, "thrust: 0%\n");
+		}
+		else
+		{
+			if ((self.Aircraft_Speed == 1))
+			{
+				centerprint (self, "thrust: 10%\n");
+			}
+			else
+			{
+				if ((self.Aircraft_Speed == 2))
+				{
+					centerprint (self, "thrust: 50%\n");
+				}
+				else
+				{
+					if ((self.Aircraft_Speed == 3))
+					{
+						centerprint (self, "thrust: 100%\n");
+					}
+					else
+					{
+						if ((self.Aircraft_Speed == 0))
+						{
+							centerprint (self, "thrust:0%\n");
+						}
+					}
+				}
+			}
+		}
+	}
+	if ((self.impulse == 4))
+	{
+		centerprint (self, "30mm Cannon Armed\n");
+		self.Aircraft_Weapon = 1;
+		self.currentammo = self.ammo_shells;
+		self.currentammo = 300;
+		W_SetCurrentAmmo ();
+	}
+	if ((self.impulse == 5))
+	{
+		centerprint (self, "Stinger Armed\n");
+		self.Aircraft_Weapon = 2;
+		self.currentammo = self.ammo_shells;
+		W_SetCurrentAmmo ();
+	}
+	if ((self.impulse == 6))
+	{
+		centerprint (self, "SideWinder Armed\n");
+		self.Aircraft_Weapon = 3;
+		self.currentammo = self.ammo_shells;
+		W_SetCurrentAmmo ();
+	}
+	if ((self.impulse == 7))
+	{
+		centerprint (self, "Bomb Armed\n");
+		self.Aircraft_Weapon = 4;
+	}
+	if ((self.impulse == 8))
+	{
+		centerprint (self, "Chaff\n");
+		self.Aircraft_Weapon = 5;
+	}
+	else
+	{
+		if ((self.impulse == 9))
+		{
+			if ((self.flash == 0))
+			{
+				centerprint (self, "Lights On\n");
+				self.flash = 1;
+				Make_Flash (0, 0);
+			}
+			else
+			{
+				centerprint (self, "Lights Off\n");
+				self.flash = 0;
+			}
+		}
+	}
+	self.impulse = 0;
+	self.weaponframe = 0;
+};
+
+void () bomb_touch =
+{
+	local float damg;
+	if ((pointcontents (self.origin) == -6))
+	{
+		dremove (self);
+		return;
+	}
+	damg = 120 + (random () * 50);
+	if (other.health)
+	{
+		TF_T_Damage (other, self, self.owner, damg, 0, 4);
+		deathmsg = 68;
+	}
+	T_RadiusDamage (self, self.owner, 200, world);
+	deathmsg = 68;
+	self.origin = (self.origin - (8 * normalize (self.velocity)));
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+	dremove (self);
+};
+
+void () drop_bomb =
+{
+	local entity bomb;
+	bomb = spawn ();
+	bomb.owner = self;
+	bomb.team_no = self.team_no;
+	bomb.movetype = 10;
+	bomb.solid = 2;
+	makevectors (self.v_angle);
+	bomb.angles = self.angles;
+	bomb.touch = bomb_touch;
+	bomb.nextthink = (time + 5);
+	bomb.think = SUB_Remove;
+	deathmsg = 68;
+	setmodel (bomb, "progs/bomb.mdl");
+	sound (self, 3, "weapons/bombdrop.wav", 1, 1);
+	setsize (bomb, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	setorigin (bomb, ((self.origin - ((v_forward * 8) * 2)) - '0.000000 0.000000 16.000000'));
+};
+void (vector org) AC_SpawnShrapnel2;
+void () AC_RocketAway;
+
+void () FFAR_Touch =
+{
+	local float damg;
+	if ((pointcontents (self.origin) == -6))
+	{
+		dremove (self);
+		return;
+	}
+	damg = 100 + (random () * 50);
+	if ((other.Aircraft_Owner && (other.team_no != self.team_no)))
+	{
+		AC_SpawnShrapnel2 (other.origin);
+		AC_SpawnShrapnel2 (other.origin);
+		AC_SpawnShrapnel2 (other.origin);
+		AC_SpawnShrapnel2 (other.origin);
+	}
+	if (other.health)
+	{
+		TF_T_Damage (other, self, self.owner, damg, 0, 4);
+		deathmsg = 55;
+	}
+	T_RadiusDamage (self, self.owner, 120, other);
+	deathmsg = 55;
+	self.origin = (self.origin - (8 * normalize (self.velocity)));
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+	dremove (self);
+};
+
+void (float delay_time2, float side) AC_FireRocket =
+{
+	local entity missile;
+	missile = spawn ();
+	missile.team_no = self.team_no;
+	missile.classname = "stinger";
+	missile.owner = self;
+	missile.movetype = 9;
+	missile.solid = 2;
+	deathmsg = 55;
+	missile.nextthink = (time + delay_time2);
+	missile.think = AC_RocketAway;
+	if ((side == 1))
+	{
+		missile.last_side = 1;
+	}
+	else
+	{
+		missile.last_side = 2;
+	}
+};
+
+void () AC_RocketAway =
+{
+
+	makevectors (self.owner.v_angle);
+	self.velocity = aim (self.owner, 1000);
+	self.velocity = (self.velocity * 1100);
+	self.angles = vectoangles (self.velocity);
+	self.touch = FFAR_Touch;
+	setmodel (self, "progs/ffar.mdl");
+	setsize (self, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	self.team_no = self.team_no;
+	self.classname = "stinger";
+	deathmsg = 55;
+	if ((self.last_side == 2))
+	{
+		setorigin (self, ((self.owner.origin + (v_right * -16)) - '0.000000 0.000000 18.000000'));
+	}
+	else
+	{
+		setorigin (self, ((self.owner.origin + (v_right * 16)) - '0.000000 0.000000 18.000000'));
+	}
+	sound (self, 1, "weapons/ffar2.wav", 1, 1);
+	self.nextthink = (time + 10);
+	self.think = SUB_Remove;
+};
+void () AC_bullet;
+
+void () AC_FireVulcan =
+{
+	local vector dir;
+	dir = aim (self, 100000);
+	if ((self.ammo_shells < 1))
+	{
+		sprint (self, 2, "Empty\n");
+		return;
+	}
+	sound (self, 1, "weapons/gat2.wav", 1, 1);
+	deathmsg = 56;
+	FireBullets (6, dir, '0.040000 0.040000 0.000000');
+	muzzleflash();
+	self.ammo_shells = (self.ammo_shells - 1);
+	if ((self.ammo_shells < 1))
+	{
+		return;
+	}
+	FireBullets (6, dir, '0.040000 0.040000 0.000000');
+	self.ammo_shells = (self.ammo_shells - 1);
+};
+
+void () mini_gun_touch =
+{
+	if ((other == self.owner))
+	{
+		return;
+	}
+	if ((other.solid == 1))
+	{
+		return;
+	}
+	if ((pointcontents (self.origin) == -6))
+	{
+		remove (self);
+		return;
+	}
+	if (other.takedamage)
+	{
+		spawn_touchblood (18);
+		T_Damage (other, self, self.owner, 9);
+		deathmsg = 56;
+	}
+	else
+	{
+		WriteByte (4, 23);
+		WriteByte (4, 3);
+		WriteCoord (4, self.origin_x);
+		WriteCoord (4, self.origin_y);
+		WriteCoord (4, self.origin_z);
+		multicast (self.origin, 1);
+	}
+	remove (self);
+};
+void () mini_gun2 =
+{
+	sound (self, 1, "weapons/gat2.wav", 1, 1);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	deathmsg = 56;
+	makevectors (self.v_angle);
+	newmis.velocity = aim (self, 1000);
+	newmis.velocity = (newmis.velocity * 1200);
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.touch = mini_gun_touch;
+	newmis.nextthink = (time + 5);
+	newmis.think = SUB_Remove;
+	setmodel (newmis, "progs/bullet.mdl");
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	setorigin (newmis, ((self.origin + (v_forward * 4)) - '0.000000 0.000000 8.000000'));
+};
+void () W_FireTorpedo;
+void () AC_Flare;
+void () Aircraft_Attack =
+{
+	if ((self.Old_Health <= 0))
+	{
+		return;
+	}
+	makevectors (self.v_angle);
+	self.show_hostile = (time + 1);
+	if ((self.Aircraft_Weapon == 1))
+	{
+		if ((self.vulcan_reloaded > time))
+		{
+			if (self.last_saveme_sound < time)
+			{
+				sprint (self, 2, "Reloading.\n");
+				self.last_saveme_sound = time + 1;
+			}
+			return;
+		}
+		AC_FireVulcan ();
+		self.attack_finished = (time + 0.150000);
+		self.bullets_fired = (self.bullets_fired + 1);
+		if ((self.bullets_fired >= 60))
+		{
+			self.vulcan_reloaded = (time + 3);
+			self.bullets_fired = 0;
+		}
+	}
+	else
+	{
+		if ((self.Aircraft_Weapon == 2))
+		{
+			AC_FireRocket (0.200000, 1);
+			AC_FireRocket (0.200000, 2);
+			self.attack_finished = (time + 2);
+			return;
+		}
+		else
+		{
+			if ((self.Aircraft_Weapon == 3))
+			{
+				HW_LaunchStinger ();
+				return;
+			}
+			else
+			{
+				if ((self.Aircraft_Weapon == 4))
+				{
+					drop_bomb ();
+					self.attack_finished = (time + 1);
+					return;
+				}
+				else
+				{
+					if ((self.Aircraft_Weapon == 5))
+					{
+						AC_Flare ();
+						self.attack_finished = (time + 1);
+						return;
+					}
+				}
+			}
+		}
+	}
+};
+
+void () AC_TrailFire =
+{
+	local entity new;
+	if (((self.watertype == -3) && (self.waterlevel >= 1)))
+	{
+		remove (self);
+		return;
+	}
+	new = spawn ();
+	new.owner = self;
+	new.origin = self.origin;
+	setmodel (new, "progs/s_explod.spr");
+	setsize (new, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	new.velocity = '0.000000 0.000000 110.000000';
+	new.movetype = 9;
+	new.solid = 0;
+	new.think = s_explode1;
+	new.nextthink = (time + 0.100000);
+	self.nextthink = (time + 0.100000);
+	if (((self.classname != "player") && (time > self.Aircraft_Fuel)))
+	{
+		remove (self);
+	}
+};
+
+void () ShrapGrenadeExplode =
+{
+	deathmsg = 59;
+	T_RadiusDamage (self, self.owner, 100, world);
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+	dremove (self);
+};
+
+void (string gibname, float dm, float explode, float firetrail) AC_ThrowGib =
+{
+	local entity new;
+	local float rn;
+	rn = (random () * -80) - 50;
+	new = spawn ();
+	new.origin = (self.origin - '0.000000 0.000000 8.000000');
+	setmodel (new, gibname);
+	new.velocity = VelocityForDamage (rn);
+	new.movetype = 10;
+	new.solid = 0;
+	new.avelocity_x = (random () * 300);
+	new.avelocity_y = (random () * 300);
+	new.avelocity_z = (random () * 300);
+	new.owner = self;
+	new.colormap = self.owner.colormap;
+	if ((explode == 1))
+	{
+		new.think = ShrapGrenadeExplode;
+		if ((dm != 0))
+		{
+			new.nextthink = (time + 2.500000);
+		}
+		if ((dm == 0))
+		{
+			new.nextthink = (time + 0.500000);
+		}
+		if ((dm == -1))
+		{
+			new.velocity = self.velocity;
+			new.nextthink = time;
+		}
+		new.owner = self.enemy;
+	}
+	else
+	{
+		if ((firetrail == 1))
+		{
+			new.think = AC_TrailFire;
+			new.nextthink = (time + 0.010000);
+			new.effects = 8;
+			new.Aircraft_Fuel = (time + 0.800000);
+		}
+		else
+		{
+			new.think = SUB_Remove;
+			new.nextthink = ((time + 5) + (random () * 10));
+		}
+	}
+	new.ltime = time;
+	new.frame = 0;
+	new.flags = 0;
+	new.classname = "shrapnel";
+	deathmsg = 59;
+	setsize (new, '-3.000000 -3.000000 -3.000000', '3.000000 3.000000 3.000000');
+};
+
+void (vector org) AC_SpawnShrapnel2 =
+{
+	local entity new;
+	local float rn;
+	rn = (random () * -80) - 50;
+	new = spawn ();
+	new.origin = org;
+	setmodel (new, "progs/acgib1.mdl");
+	setsize (new, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	new.velocity = VelocityForDamage (rn);
+	new.movetype = 10;
+	new.solid = 0;
+	new.touch = SUB_Null;
+	new.avelocity_x = (random () * 300);
+	new.avelocity_y = (random () * 300);
+	new.avelocity_z = (random () * 300);
+	new.owner = self;
+	new.colormap = self.owner.colormap;
+	new.think = SUB_Remove;
+	new.nextthink = (time + 1.500000);
+	new.ltime = time;
+	new.frame = 0;
+	new.flags = 0;
+};
+
+void (vector org) AC_SpawnShrapnel =
+{
+	local entity new;
+	local float rn;
+	rn = (random () * -80) - 50;
+	new = spawn ();
+	new.origin = org;
+	setmodel (new, "progs/acgib1.mdl");
+	setsize (new, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	new.classname = "shrapnel";
+	deathmsg = 59;
+	new.velocity = VelocityForDamage (rn);
+	new.movetype = 10;
+	new.solid = 0;
+	new.touch = SUB_Null;
+	new.avelocity_x = (random () * 300);
+	new.avelocity_y = (random () * 300);
+	new.avelocity_z = (random () * 300);
+	new.owner = self;
+	new.colormap = self.owner.colormap;
+	new.think = SUB_Remove;
+	new.nextthink = (time + 1.500000);
+	new.ltime = time;
+	new.frame = 0;
+	new.flags = 0;
+};
+void () makesight;
+void () TT_MissileTouch =
+{
+	local float damg;
+	if ((pointcontents (self.origin) == -6))
+	{
+		dremove (self);
+		return;
+	}
+	damg = 100 + (random () * 50);
+	AC_SpawnShrapnel2 (other.origin);
+	AC_SpawnShrapnel2 (other.origin);
+	AC_SpawnShrapnel2 (other.origin);
+	AC_SpawnShrapnel2 (other.origin);
+	if (other.health)
+	{
+		TF_T_Damage (other, self, self.owner, damg, 0, 4);
+		deathmsg = 67;
+	}
+	T_RadiusDamage (self, self.owner, 120, other);
+	deathmsg = 67;
+	self.origin = (self.origin - (8 * normalize (self.velocity)));
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+	dremove (self);
+};
+void () T_TorpTouch;
+
+void () Stinger_Track =
+{
+	local vector ErrorMargin;
+	if ((self.Aircraft_Fuel < time))
+	{
+		self.think = GrenadeExplode;
+		self.nextthink = (time + 2);
+		return;
+	}
+	if ((self.Aircraft_Owner && !self.Stinger_Target.Aircraft_Owner))
+	{
+		self.Aircraft_Owner = 0;
+		self.Stinger_Target = self.Stinger_Target.My_Old_Plane;
+	}
+	if ((((self.Stinger_Target.health > 0) && (self.enemy.classname == "flare")) || ((self.Stinger_Target.health > 0) && (deathmsg == 66))))
+	{
+		ErrorMargin_x = (random () - 0.500000) * 0.300000;
+		ErrorMargin_y = (random () - 0.500000) * 0.300000;
+		ErrorMargin_z = (random () - 0.500000) * 0.300000;
+		self.velocity = (self.velocity + ErrorMargin);
+		self.velocity = (self.velocity * 760);
+		self.angles = vectoangles (self.velocity);
+		self.nextthink = (time + 0.200000);
+		return;
+	}
+	if ((((self.Stinger_Target.health > 0) && (self.enemy.classname != "flare")) || ((self.Stinger_Target.health > 0) && (deathmsg != 66))))
+	{
+		ErrorMargin_x = (random () - 0.500000) * 0.300000;
+		ErrorMargin_y = (random () - 0.500000) * 0.300000;
+		ErrorMargin_z = (random () - 0.500000) * 0.300000;
+		self.velocity = normalize ((self.Stinger_Target.origin - self.origin));
+		self.velocity = (self.velocity + ErrorMargin);
+		self.velocity = (self.velocity * 760);
+		self.angles = vectoangles (self.velocity);
+	}
+	self.nextthink = (time + 0.200000);
+};
+
+void () Stinger_Bounce =
+{
+	if ((other == self.owner))
+	{
+		return;
+	}
+	self.movetype = 10;
+	self.touch = SUB_Null;
+	self.think = SUB_Remove;
+	self.nextthink = (time + 4);
+	self.avelocity = '0.000000 300.000000 0.000000';
+};
+
+void () Stinger_Stage2 =
+{
+	sound (self, 1, "weapons/stinger.wav", 1, 1);
+	self.think = Stinger_Track;
+	self.nextthink = time;
+	self.touch = TT_MissileTouch;
+	self.Aircraft_Fuel = (time + 10);
+};
+
+void () HW_LaunchStinger =
+{
+	local entity missile;
+	if ((self.Stinger_LockTime < 1))
+	{
+		centerprint (self, "No Lock.\n");
+		return;
+	}
+	self.attack_finished = (time + 1.500000);
+	self.ammo_stingers = (self.ammo_stingers - 1);
+	W_SetCurrentAmmo ();
+	sound (self, 1, "helo/rocklnch.wav", 1, 1);
+	self.punchangle_x = 20;
+	missile = spawn ();
+	missile.owner = self;
+	missile.team_no = self.team_no;
+	deathmsg = 67;
+	missile.Stinger_Target = self.Stinger_Target;
+	missile.movetype = 9;
+	missile.solid = 2;
+	makevectors (self.v_angle);
+	missile.velocity = aim (self, 1000);
+	missile.velocity = (missile.velocity * 1100);
+	missile.angles = vectoangles (missile.velocity);
+	missile.touch = Stinger_Bounce;
+	missile.nextthink = (time + 0.500000);
+	missile.think = Stinger_Stage2;
+	missile.avelocity = '0.000000 0.000000 200.000000';
+#ifdef mtf_coop
+	setmodelu (missile, "progs/rocket2.mdl");
+#else
+	setmodel (missile, "progs/rocket2.mdl");
+#endif
+	setsize (missile, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	setorigin (missile, (((self.origin + (v_forward * 8)) + (v_right * 2)) - '0.000000 0.000000 16.000000'));
+	missile.classname = "sidewinder";
+	if ((missile.Stinger_Target.classname == "player"))
+	{
+		centerprint (missile.Stinger_Target, "INCOMING!\n");
+	}
+	if (missile.Stinger_Target.Aircraft_Owner)
+	{
+		missile.Aircraft_Owner = 1;
+	}
+};
+
+void () Stinger_TryLock =
+{
+	makevectors (self.v_angle);
+	traceline (self.origin, (self.origin + (v_forward * 5048)), 0, self);
+	if (((trace_ent.takedamage && (trace_ent.team_no != self.team_no)) && trace_ent.Aircraft_Owner))
+	{
+		self.Stinger_LockTime = (self.Stinger_LockTime + 1);
+	}
+	else
+	{
+		self.Stinger_LockTime = 0;
+	}
+	if ((self.Stinger_LockTime == 1))
+	{
+		centerprint (self, "LOCK\n");
+		sound (self, 0, "sub/lockon.wav", 1, 2);
+		self.Stinger_Target = trace_ent;
+		if (((trace_ent.team_no != self.team_no) && trace_ent.Aircraft_Owner))
+		{
+			centerprint (trace_ent, "MISSILE LOCK\n");
+		}
+		if (trace_ent.Aircraft_Owner)
+		{
+			sound (trace_ent, 0, "weapons/beedeep.wav", 1, 1);
+		}
+	}
+	if (((self.Stinger_LockTime > 1000) && self.enemy.Aircraft_Owner))
+	{
+		self.Stinger_LockTime = 1;
+	}
+};
+void () TrackTarget;
+void () sightthink;
+
+void () HomeTarget =
+{
+	local vector dir;
+	local vector plane;
+	local vector trajectory;
+	self.playerclass = (self.playerclass + 1);
+	if (self.Aircraft_Owner)
+	{
+		self.think = T_TorpTouch;
+		self.nextthink = time;
+		return;
+	}
+	if ((self.health <= 0))
+	{
+		self.think = TrackTarget;
+		self.nextthink = time;
+	}
+	dir = normalize ((self.enemy.origin - self.origin));
+	plane = normalize (self.velocity);
+	trajectory = normalize (((10 * plane) + dir));
+	if (self.enemy.Aircraft_Owner)
+	{
+		self.velocity = (trajectory * 1000);
+	}
+	else
+	{
+		self.velocity = (trajectory * 1000);
+	}
+	self.angles = vectoangles (self.velocity);
+	self.nextthink = (time + 0.050000);
+	if ((self.frame == 1))
+	{
+		self.frame = 0;
+	}
+	else
+	{
+		self.frame = 1;
+	}
+	if ((pointcontents (self.origin) == -6))
+	{
+		self.owner.tube_wing = (self.owner.tube_wing - 1);
+		dremove (self);
+		return;
+	}
+	if ((self.playerclass > 300))
+	{
+		self.owner.tube_wing = (self.owner.tube_wing - 1);
+		dremove (self);
+		remove (newmis);
+	}
+};
+
+void () sightthink =
+{
+	local vector dir;
+	dir = normalize ((self.owner.owner.origin - self.owner.enemy.origin));
+	setorigin (self, (((dir * -7) + self.owner.owner.origin) + '0.000000 0.000000 22.000000'));
+	self.nextthink = (time + 0.050000);
+	self.angles_x = (0 - self.owner.owner.v_angle_x);
+	self.angles_y = self.owner.owner.v_angle_y;
+	self.angles_z = 0;
+	if ((self.owner.owner.health < 1))
+	{
+		self.think = SUB_Null;
+		remove (self);
+	}
+};
+
+void () makesight =
+{
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.solid = 0;
+	newmis.classname = "grid";
+	newmis.movetype = 8;
+#ifdef mtf_coop
+	setmodelu (newmis, "progs/sight.mdl");
+#else
+	setmodel (newmis, "progs/sight.mdl");
+#endif
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	newmis.think = sightthink;
+	newmis.nextthink = time;
+};
+
+void () killdatarget =
+{
+	if (self.helo_owner)
+	{
+		self.helo_owner.think = SUB_Remove;
+	}
+	T_TorpTouch ();
+};
+
+void () TrackTarget =
+{
+	local entity targ;
+	if ((other.team_no == self.team_no))
+	{
+		return;
+	}
+	if (self.Aircraft_Owner)
+	{
+		self.think = T_TorpTouch;
+		self.nextthink = time;
+		return;
+	}
+	if (self.helo_owner)
+	{
+		self.helo_owner.think = SUB_Remove;
+	}
+	targ = findradius (self.origin, 1000);
+	while (targ)
+	{
+		visible (targ);
+		if (((visible (targ) && (targ != self.owner)) && targ.takedamage))
+		{
+			if (((targ.team_no != self.team_no) && targ.Aircraft_Owner))
+			{
+				self.enemy = targ;
+				self.think = HomeTarget;
+				self.nextthink = time;
+				sound (targ, 0, "sub/locked.wav", 0.500000, 2);
+				sound (self.owner, 0, "sub/lockon.wav", 1, 2);
+				makesight ();
+				return;
+			}
+		}
+		targ = targ.chain;
+	}
+	self.nextthink = (time + 0.100000);
+	self.think = TrackTarget;
+	self.playerclass = (self.playerclass + 1);
+	if ((self.frame == 1))
+	{
+		self.frame = 0;
+	}
+	else
+	{
+		self.frame = 1;
+	}
+	if ((pointcontents (self.origin) == -6))
+	{
+		self.owner.tube_wing = (self.owner.tube_wing - 1);
+		dremove (self);
+		return;
+	}
+};
+
+void () W_FireTorpedo =
+{
+	sound (self, 1, "weapons/ffar2.wav", 1, 1);
+	self.old_position = self.origin;
+	msg_entity = self;
+	WriteByte (1, 34);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.team_no = self.team_no;
+	newmis.classname = "torpedo";
+	newmis.colormap = self.colormap;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	deathmsg = 55;
+	makevectors (self.v_angle);
+	newmis.velocity = aim (self, 1000);
+	newmis.velocity = (newmis.velocity * 1100);
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.nextthink = (time + 0.150000);
+	newmis.touch = FFAR_Touch;
+	newmis.nextthink = (time + 10);
+	newmis.think = SUB_Remove;
+	setmodel (newmis, "progs/ffar.mdl");
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	newmis.playerclass = 0;
+	if ((self.tube_load == 1))
+	{
+		setorigin (newmis, ((self.origin + (v_right * -16)) + '0.000000 0.000000 18.000000'));
+		self.tube_load = 0;
+	}
+	else
+	{
+		setorigin (newmis, ((self.origin + (v_right * 16)) + '0.000000 0.000000 18.000000'));
+		self.tube_load = 1;
+	}
+	self.tube_wing = (self.tube_wing + 1);
+};
+
+void () T_TorpTouch =
+{
+	local float damg;
+	if ((other == self.owner))
+	{
+		return;
+	}
+	if ((other.team_no == self.team_no))
+	{
+		return;
+	}
+	if (self.voided)
+	{
+		return;
+	}
+	self.voided = 1;
+	self.owner.tube_wing = (self.owner.tube_wing - 1);
+	damg = 200 + (random () * 50);
+	if (other.health)
+	{
+		deathmsg = 55;
+		TF_T_Damage (other, self, self.owner, damg, 0, 4);
+	}
+	deathmsg = 55;
+	T_RadiusDamage (self, self.owner, 120, other);
+	self.origin = (self.origin - (8 * normalize (self.velocity)));
+	WriteByte (0, 23);
+	WriteByte (0, 3);
+	WriteCoord (0, self.origin_x);
+	WriteCoord (0, self.origin_y);
+	WriteCoord (0, self.origin_z);
+	BecomeExplosion ();
+};
+//END
+ 

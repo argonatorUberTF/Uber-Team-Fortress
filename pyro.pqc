@@ -1,0 +1,258 @@
+void() Flamer_stream_touch = 
+{
+	local entity flame;
+	local vector vtemp;
+	local entity _l_9140;
+	if (other.classname == "fire")
+	{
+		return;
+	}
+
+//anti thingie
+
+	if (other.team_no == self.owner.team_no)
+	{
+		return;
+	}
+
+	if (other != world)
+	{
+		if (other.takedamage == 2 && other.health > TF_FLARE_LIT)
+		{
+			deathmsg = 15;
+#ifdef mtf_coop
+// 12/20: Xav: scout used to do 100 damage.. too nuts :x
+			if (self.owner.playerclass == 1)
+				TF_T_Damage(other, self, self.owner, 125, 2, 16); // put it back to 100 to beat monsters tougher players -arg
+			else
+				TF_T_Damage(other, self, self.owner, 18, 2, 16);
+#else
+				TF_T_Damage(other, self, self.owner, 10, 2, 16);
+#endif
+			if (other.numflames >= 3)
+			{
+				return;
+			}
+			if (other.armorclass & 16)
+			{
+				if (other.armorvalue > TF_FLARE_LIT)
+				{
+					return;
+				}
+			}
+			if (other.classname == "player")
+			{
+				if (((self.owner.stats_on == 1.000000) && (self.owner != other)))
+				{
+					_l_9140 = self;
+					self = self.owner;
+					Stats_Hit (4096.000000);
+					self = _l_9140;
+				}
+				if (teamplay & 16 && other.team_no > TF_FLARE_LIT && other.team_no == self.owner.team_no)
+				{
+					return;
+				}
+				CenterPrint(other, "You are on fire!\n");
+				FlameMonster_Flame(); // put a flame over your head to show that you are torched :} -arg 
+				stuffcmd(other, "bf\n");
+			}
+			if (other.numflames < TF_FLARE_OFF)
+			{
+				flame = FlameSpawn("1", other);
+				sound(flame, 2, "ambience/fire1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+			}
+			else
+			{
+				flame = FlameSpawn("3", other);
+				if (flame == world)
+				{
+					return;
+				}
+			}
+			flame.classname = "fire";
+			flame.health = 30;
+			other.numflames = other.numflames + TF_FLARE_OFF;
+			flame.velocity = other.velocity;
+			flame.enemy = other;
+			flame.touch = OnPlayerFlame_touch;
+			flame.owner = self.owner;
+			vtemp = self.origin;
+			setorigin(flame, vtemp);
+			flame.nextthink = time + 0.1;
+			flame.think = FlameFollow;
+		}
+	}
+	else
+	{
+		if (random() < 0.4)
+		{
+			remove(self);
+			return;
+		}
+		flame = FlameSpawn("4", other);
+		if (flame != world)
+		{
+			flame.touch = WorldFlame_touch;
+			flame.classname = "fire";
+			vtemp = self.origin + '0 0 10';
+			setorigin(flame, vtemp);
+			flame.nextthink = time + 3;
+			flame.think = Remove;
+			flame.enemy = self.owner;
+		}
+		remove(self);
+	}
+};
+
+
+void(float num_bubbles, vector bub_origin) NewBubbles = 
+{
+	local entity bubble_spawner;
+	bubble_spawner = spawn();
+	setorigin(bubble_spawner, bub_origin);
+	bubble_spawner.movetype = TF_FLARE_LIT;
+	bubble_spawner.solid = TF_FLARE_LIT;
+	bubble_spawner.nextthink = time + 0.1;
+	if (self.classname == "player")
+	{
+		bubble_spawner.owner = self;
+	}
+	else
+	{
+		bubble_spawner.owner = self.enemy;
+	}
+	bubble_spawner.think = DeathBubblesSpawn;
+	bubble_spawner.bubble_count = num_bubbles;
+	return;
+};
+
+void() W_FireFlame = 
+{
+	local entity flame;
+	local float rn;
+	if (self.waterlevel > 2)
+	{
+		makevectors(self.v_angle);
+		NewBubbles(2, self.origin + v_forward * 64);
+		rn = random();
+		if (rn < 0.5)
+		{
+			sound(self, TF_FLARE_OFF, "misc/water1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+		}
+		else
+		{
+			sound(self, TF_FLARE_OFF, "misc/water2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+		}
+		return;
+	}
+	if (self.playerclass == 7)
+	{
+		self.currentammo = self.ammo_cells = self.ammo_cells - 2;
+		sound(self, TF_FLARE_LIT, "weapons/flmfire2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+	}
+	flame = spawn();
+	flame.owner = self;
+	flame.movetype = 9;
+	makevectors(self.v_angle);
+	flame.velocity = aim(self, 10000);
+	if (self.playerclass != 6)
+	{
+		flame.solid = 2;
+		flame.velocity = flame.velocity * 600;
+	}
+	else
+	{
+		flame.velocity = flame.velocity * 100;
+		flame.solid = TF_FLARE_LIT;
+	}
+	flame.classname = "flamerflame";
+	flame.effects = 8;
+	if (self.classname == "airstrike")
+	{
+		flame.velocity = '0 0 200';
+	}
+#ifdef mtf_coop_expsys
+	flame.velocity = flame.velocity + (flame.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
+#endif
+	flame.touch = Flamer_stream_touch;
+	flame.think = s2_explode1;
+	flame.nextthink = time + 0.15;
+	setmodel(flame, "progs/s_expl.spr");
+	setsize(flame, '0 0 0', '0 0 0');
+	setorigin(flame, self.origin + v_forward * 16 + '0 0 16');
+};
+
+void () W_FireIncendiaryCannon =
+{
+	local string inccheck;
+
+	if ((self.ammo_rockets < 2.000000))
+	{
+		return;
+	}
+	self.ammo_rockets = (self.ammo_rockets - 2.000000);
+	self.currentammo = (self.ammo_rockets - 1);
+	sound (self, 1.000000, "doors/airdoor2.wav", 1.000000, 1.000000);
+	KickPlayer (-3.000000, self);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.movetype = 9.000000;
+	newmis.solid = 2.000000;
+	makevectors (self.v_angle);
+	newmis.velocity = aim (self, 1000.000000);
+	inccheck = infokey (world, "newbalance");
+	if (inccheck == "1")
+	{
+		newmis.velocity = (newmis.velocity * 1000.000000);
+	}
+	else
+	{
+		newmis.velocity = (newmis.velocity * 750.000000);
+	}
+	newmis.angles = vectoangles (newmis.velocity);
+#ifdef mtf_coop_expsys
+	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
+#endif
+	newmis.playerclass = 0.000000;
+	newmis.touch = T_IncendiaryTouch;
+	newmis.nextthink = (time + 5.000000);
+	newmis.think = SUB_Remove;
+	newmis.weapon = 33.000000;
+	setmodel (newmis, "progs/incenrkt.mdl");
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	setorigin (newmis, ((self.origin + (v_forward * 8.000000)) + '0.000000 0.000000 16.000000'));
+};
+
+void () TeamFortress_IncendiaryCannon =
+{
+	if (!(self.weapons_carried & 16384.000000))
+	{
+		return;
+	}
+	if ((self.ammo_rockets < 2.000000))
+	{
+		sprint (self, 2.000000, "not enough ammo.\n");
+		return;
+	}
+	self.current_weapon = 16384.000000;
+	W_SetCurrentAmmo ();
+};
+
+void() TeamFortress_FlameThrower = 
+{
+	if (!(self.weapons_carried & 4096))
+	{
+		return;
+	}
+	if (self.ammo_cells < TF_FLARE_OFF)
+	{
+		sprint(self, 2, "not enough ammo.\n");
+		return;
+	}
+	self.current_weapon = 4096;
+	W_SetCurrentAmmo();
+};
+
+//END
+

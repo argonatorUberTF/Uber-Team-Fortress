@@ -1,0 +1,147 @@
+void () reset_mangle =
+{
+	SUB_CalcAngleMove (self.mangle, 10, SUB_Null);
+};
+
+void () control_return =
+{
+	if ((self.goalentity.classname != "catapult"))
+	{
+		self.goalentity.oldthink = SUB_Null;
+		self.goalentity.think = reset_mangle;
+		self.goalentity.nextthink = (time + 0);
+	}
+	if (self.check_ok)
+	{
+		self.enemy.oldweapon = 0;
+		self.enemy.th_weapon = W_SetCurrentAmmo;
+		self.check_ok = 0;
+		self.enemy = world;
+	}
+};
+
+void () control_touch =
+{
+	local vector org;
+	local vector dir;
+	local float fire_range;
+	if ((self.tfstate & 4096))
+	{
+		return;
+	}
+	if (other.is_feigning)
+	{
+		centerprint (other, "You must stop feigning to fire gun\n");
+		return;
+	}
+	if ((other.is_squating == 1))
+	{
+		centerprint (other, "You must stand to fire gun\n");
+		return;
+	}
+	if (other.hook_out)
+	{
+		centerprint (other, "You must stand to fire gun\n");
+		return;
+	}
+	if ((other.current_menu == 15))
+	{
+		centerprint (other, "You must stop building to fire gun\n");
+		return;
+	}
+	if ((((other.classname != "player") || other.Aircraft_Owner) || (other.probe_active == 1)))
+	{
+		return;
+	}
+	if (((self.enemy != world) && (other != self.enemy)))
+	{
+		return;
+	}
+	if (((self.goalentity.health <= 0) && self.health))
+	{
+		self.think = SUB_Remove;
+		self.nextthink = (time + 0);
+		return;
+	}
+	other.attack_finished = (time + 0.100000);
+	if (self.enemy.button0)
+	{
+	}
+	if ((other.classname == "player"))
+	{
+		other.weaponframe = 0;
+		other.th_weapon = SUB_Null;
+		other.aagun = 1;
+		stuffcmd (other, "fov 90\n");
+		self.check_ok = 1;
+	}
+	if ((self.enemy != other))
+	{
+		centerprint (other, "You're in control!\n");
+	}
+	self.enemy = other;
+	self.goalentity.enemy = self;
+	makevectors (self.enemy.v_angle);
+	org = self.enemy.origin + self.enemy.proj_ofs;
+	dir = normalize (v_forward);
+	traceline (org, (org + (dir * 10000)), 0, self.enemy);
+	org = self.goalentity.origin + self.goalentity.proj_ofs;
+	fire_range = vlen ((org - trace_endpos));
+	if ((fire_range > 250))
+	{
+		dir = normalize ((trace_endpos - org));
+		if ((self.enemy.button0 && (self.goalentity.th_weapon != SUB_Null)))
+		{
+			self.goalentity.think = self.goalentity.th_weapon;
+			self.goalentity.nextthink = (time + 0);
+		}
+		self.goalentity.view_ofs = trace_endpos;
+		dir = vectoangles (dir);
+		self.goalentity.angles = dir;
+		self.goalentity.angles_z = (dir_z / 10);
+		if ((self.goalentity.think != self.goalentity.th_weapon))
+		{
+			if ((self.enemy.button0 && (self.goalentity.th_weapon != SUB_Null)))
+			{
+				self.goalentity.think = self.goalentity.th_weapon;
+				self.goalentity.nextthink = (time + 0);
+			}
+		}
+	}
+	self.think = control_return;
+	self.nextthink = (time + 0.100000);
+};
+
+void () trigger_control_find_target =
+{
+	if (!self.target)
+	{
+		objerror ("Nothing to control!\n");
+	}
+	self.goalentity = find (world, targetname, self.target);
+	if (self.goalentity.takedamage)
+	{
+		self.health = 1;
+	}
+	if (!self.goalentity)
+	{
+		objerror ("Could not find target\n");
+	}
+	self.goalentity.mangle = self.goalentity.angles;
+};
+
+void () trigger_control =
+{
+	self.solid = 1;
+	self.movetype = 0;
+	self.model = string_null;
+	setmodel (self, string_null);
+	setsize (self, '-15.000000 -15.000000 -15.000000', '15.000000 15.000000 15.000000');
+	self.enemy = world;
+	self.touch = control_touch;
+	self.ltime = time;
+	InitTrigger ();
+	self.think = trigger_control_find_target;
+	self.nextthink = (time + 1);
+};
+//END

@@ -1,0 +1,271 @@
+void() button_wait;
+void() button_return;
+
+void() button_wait = 
+{
+	self.state = TF_FLARE_LIT;
+	self.nextthink = self.ltime + self.wait;
+	self.think = button_return;
+	activator = self.enemy;
+	SUB_UseTargets();
+	self.frame = TF_FLARE_OFF;
+};
+
+void() button_done = 
+{
+	self.state = TF_FLARE_OFF;
+};
+
+void() button_return = 
+{
+	self.goal_state = 2;
+	self.state = 3;
+	SUB_CalcMove(self.pos1, self.speed, button_done);
+	self.frame = TF_FLARE_LIT;
+	if (self.health)
+	{
+		self.takedamage = TF_FLARE_OFF;
+	}
+};
+
+void() button_blocked = 
+{
+};
+
+void() button_fire = 
+{
+	if (self.state == 2 || self.state == TF_FLARE_LIT)
+	{
+		return;
+	}
+	sound(self, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
+	self.state = 2;
+#ifdef mtf_coop_halflife
+	if (#HL_MAP)
+		if (self.spawnflags & 1) {
+			SUB_CalcMove(self.origin, self.speed, button_wait);
+			return;
+		}
+#endif
+	SUB_CalcMove(self.pos2, self.speed, button_wait);
+};
+
+void() button_use = 
+{
+#ifdef mtf_coop_halflife
+	if (has_master(self))
+		return;
+#endif
+	self.enemy = activator;
+	button_fire();
+};
+
+void() button_touch = 
+{
+	local entity te;
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (self.goal_activation & 8)
+	{
+		return;
+	}
+#ifdef mtf_coop_halflife
+	if (has_master(self))
+		return;
+#endif
+	if (!Activated(self, other))
+	{
+		if (self.else_goal != TF_FLARE_LIT)
+		{
+			te = Findgoal(self.else_goal);
+			if (te)
+			{
+				DoResults(te, other, self.goal_result & 2);
+			}
+		}
+		return;
+	}
+	self.enemy = other;
+	button_fire();
+};
+
+void() button_killed = 
+{
+#ifdef mtf_coop_halflife
+	if (has_master(self)) {
+		self.health = 1;
+		return;
+	}
+#endif
+	if (self.goal_activation & 8)
+	{
+		return;
+	}
+	self.enemy = damage_attacker;
+	self.health = self.max_health;
+	self.takedamage = TF_FLARE_LIT;
+	button_fire();
+};
+
+#ifdef mtf_coop
+void () movewith_think =
+{
+	local vector moveme;
+
+	if (((self.enemy.absmin+self.enemy.absmax)*0.5) != self.enemy.orig_origin) {
+		moveme = ((self.enemy.absmin+self.enemy.absmax)*0.5) - self.enemy.orig_origin;
+		setorigin(self.owner, (self.owner.orig_origin + moveme));
+	}
+	self.nextthink = time;
+};
+
+void () movewith_firstthink =
+{
+	local entity fent;
+	self.owner.orig_origin = self.owner.origin;
+	fent = find(world, targetname, self.owner.movewith);
+	while (fent) {
+		self.enemy = fent;
+		fent.orig_origin = ((fent.mins+fent.maxs)*0.5);
+		fent = find(fent, targetname, self.owner.movewith);
+	}
+	
+	self.think = movewith_think;
+	self.nextthink = time;
+};
+
+void (entity t_owner) SpawnMovewith =
+{
+	local entity newtent;
+	
+	newtent = spawn();
+	newtent.owner = t_owner;
+	newtent.think = movewith_firstthink;
+	newtent.nextthink = time + 0.1;
+};
+#endif
+#ifdef mtf_coop_halflife
+void() multi_use;
+void() trigger_multiple;
+#endif
+void() func_button = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	if (self.sounds == TF_FLARE_LIT)
+	{
+		precache_sound("buttons/airbut1.wav"); // used with needler.qc -arg
+		self.noise = "buttons/airbut1.wav";
+	}
+	if (self.sounds == TF_FLARE_OFF)
+	{
+		precache_sound("buttons/switch21.wav");
+		self.noise = "buttons/switch21.wav";
+	}
+	if (self.sounds == 2)
+	{
+		precache_sound("buttons/switch02.wav");
+		self.noise = "buttons/switch02.wav";
+	}
+	if (self.sounds == 3)
+	{
+		precache_sound("buttons/switch04.wav");
+		self.noise = "buttons/switch04.wav";
+	}
+	if (self.sounds == 4)
+	{
+		precache_sound("effects/rockfall.wav");
+		self.noise = "effects/rockfall.wav";
+	}
+	SetMovedir();
+	self.movetype = 7;
+	self.solid = 4;
+	setmodel(self, self.model);
+	self.blocked = button_blocked;
+	self.use = button_use;
+	if (self.health)
+	{
+		self.max_health = self.health;
+		self.th_die = button_killed;
+		self.takedamage = TF_FLARE_OFF;
+	}
+	else
+	{
+		self.touch = button_touch;
+	}
+	if (!(self.speed))
+	{
+		self.speed = 40;
+	}
+	if (!(self.wait))
+	{
+		self.wait = TF_FLARE_OFF;
+	}
+	if (!(self.lip))
+	{
+		self.lip = 4;
+	}
+	self.state = TF_FLARE_OFF;
+	self.pos1 = self.origin;
+	self.pos2 = self.pos1 + self.movedir * (fabs(self.movedir * self.size) - self.lip);
+#ifdef mtf_coop_halflife
+	if (mapname == "c1a1c") {
+		if (self.model == "*113")
+			self.target = "changetoc1a2";
+	}
+	else if (mapname == "c1a3d") {
+		if (self.target == "c1a3_liftdoor01") {
+			newmis = spawn();
+			newmis.classname = "trigger_once";
+			newmis.wait = -1;
+			newmis.delay = 3;
+			newmis.targetname = "c1a3_liftdoor01";
+			newmis.target = "c1a3_lift01";
+			newmis.use = multi_use;
+			return;
+		}
+	}
+	else if (mapname == "c1a3a") {
+		if (self.target == "c1a3_liftdoor03") {
+			newmis = spawn();
+			newmis.classname = "trigger_once";
+			newmis.wait = -1;
+			newmis.delay = 3;
+			newmis.targetname = "c1a3_liftdoor03";
+			newmis.target = "c1a3_lift02";
+			newmis.use = multi_use;
+			return;
+		}
+	}
+	else if (mapname == "c2a1a") {
+		if (self.target == "p_mm2") {
+			self.max_health = 1;
+			self.th_die = button_killed;
+			self.takedamage = 1;
+		}
+	}
+	self.hl_use = button_use;
+#ifdef COOP_HAX
+	if (self.hl_use)
+		//if (!self.touch)
+			Create_Useme( self, ((self.absmin+self.absmax)*.5) );
+#endif
+	
+	HalfLife_DoRender();
+#endif
+	if (self.spawnflags & 32)
+	{
+		button_fire();
+	}
+#ifdef mtf_coop
+	if (self.movewith != string_null) {
+		SpawnMovewith(self);
+	}
+#endif
+};
+//END

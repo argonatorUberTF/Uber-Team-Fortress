@@ -1,0 +1,271 @@
+qwprogs.dat
+
+usecoop.pqc
+defs.pqc
+mega_coop/mega_hip/hipdefs.qc		// Quake MP1 support
+mega_coop/mega_rogue/mtf_rogue.qc	// Quake MP2 support
+additional.pqc // vars for coopmtf and painkeep addons. Some modules can be commented out and still have vars declared for smaller compilation -arg.
+mega_coop/mega_halflife/hl_defs.qc
+ss_csqc.qc
+mega_coop/uberhard.qc
+mega_coop/mega_nehahra/neh_defsfuncs.qc
+
+menu.pqc
+//subs.pqc //moved to additional.pqc
+combat.pqc
+items.pqc
+gravity.qc	//painkeep gravity well bomb from pk modified for Mega-TF/UbertTF -arg
+//beartrap.qc //painkeep beartrap merged into additional.pqc
+weapons.pqc
+mega_coop/mega_hip/HIPMTF.qc		// Q1 MP1 weapon/item/blah functions
+world.pqc
+status.pqc
+client.pqc
+player.pqc
+doors.pqc
+buttons.pqc
+triggers.pqc
+plats.pqc
+misc.pqc
+monsters.pqc
+ai.pqc
+fight.pqc
+//dog.pqc 		//old qw version removed
+//zombie.pqc 	//old qw version removed
+//fish.pqc 		//disabled/removed to free up sounds for precache
+flare.pqc
+sentry.pqc
+//boss.pqc		//old, mega tf boss used instead.
+pyro.pqc
+spy.pqc
+demoman.pqc
+scout.pqc
+engineer.pqc
+tsoldier.pqc
+sniper.pqc
+medic.pqc
+tforthlp.pqc
+ctf.pqc
+coop.pqc
+actions.pqc
+//hiprot.pqc  //merged into additional.pqc
+missiles.pqc
+mturret.pqc
+camera.pqc
+prematch.pqc
+xavior.pqc
+tesla.pqc
+telepad.pqc
+security.pqc
+fieldgen.pqc
+acguns.pqc
+aagun.pqc
+light.pqc
+helo.pqc
+submarine.pqc
+control.pqc
+etf.pqc		// Converts (some) etf entities to work with mega
+rankings.pqc	// RANKINGS WITH FTE SERVER BIZZAAAATCH :D
+tinker.pqc		// MegaTF:United Tinker function
+mega_coop/needler.qc  //Xavior's needler gun for level 80+
+
+// MONSTERS!
+mega_coop/mtf_coop.qc
+mega_coop/mtf_coop_score.qc
+mega_coop/ogre.qc
+mega_coop/demon.qc
+mega_coop/shambler.qc
+mega_coop/knight.qc
+mega_coop/soldier.qc
+mega_coop/wizard.qc
+mega_coop/dog.qc
+mega_coop/zombie.qc
+mega_coop/boss.qc
+mega_coop/tarbaby.qc
+mega_coop/hknight.qc
+mega_coop/fish.qc
+mega_coop/shalrath.qc
+mega_coop/enforcer.qc
+mega_coop/oldone.qc
+// MISC stuff for user maps: 
+mega_coop/misc/thunder.qc	// map: The Middle Evil
+mega_coop/misc/mood.qc
+//mega_coop/misc/marcher.qc		// map: Marcher Fortress
+mega_coop/misc/cyberdemon.qc		// map: slidefox_coop
+mega_coop/boss_killable.qc	// Killable chthon a'la bbelief etc
+
+// TRAVAIL: New quake sp ep
+mega_coop/mega_travail/travail_defs_funcs.qc
+mega_coop/mega_travail/azothfight.qc
+mega_coop/mega_travail/azoth.qc
+mega_coop/mega_travail/axegrunt.qc
+mega_coop/mega_travail/ubs.qc
+mega_coop/mega_travail/spider.qc
+mega_coop/mega_travail/jugg.qc
+//mega_coop/mega_travail/vermis_init.qc
+//mega_coop/mega_travail/vermis_ai.qc
+//mega_coop/mega_travail/vermis.qc
+mega_coop/mega_travail/ne_triggers.qc
+
+// Mission Pack 1: Scourge of Armagon (COOP)
+mega_coop/mega_hip/hipsubs.qc
+mega_coop/mega_hip/hip_brk.qc
+mega_coop/mega_hip/hiptrain.qc
+mega_coop/mega_hip/hip_expl.qc
+//mega_coop/mega_hip/hipquake.qc
+mega_coop/mega_hip/hipcount.qc
+mega_coop/mega_hip/hipitems.qc
+mega_coop/mega_hip/hiprubbl.qc
+mega_coop/mega_hip/hip_push.qc
+mega_coop/mega_hip/hip_part.qc
+mega_coop/mega_hip/hipspawn.qc
+//mega_coop/mega_hip/hipgrem.qc  // The monster never worked right - freed up precached -arg
+mega_coop/mega_hip/hiparma.qc
+//mega_coop/mega_hip/newhip.HIPARMA.qc
+mega_coop/mega_hip/hipspike.qc
+mega_coop/mega_hip/hiprot.qc		// hiprot.pqc
+mega_coop/mega_hip/hipscrge.qc
+mega_coop/mega_hip/hipholes.qc
+mega_coop/mega_hip/hipclock.qc
+mega_coop/mega_hip/hiptrig.qc
+mega_coop/mega_hip/newhip.hipmisc.qc
+//mega_coop/mega_hip/hipwater.qc		// Already in MTF?
+mega_coop/mega_hip/hipdecoy.qc
+
+// ROGUE
+mega_coop/mega_rogue/new_ai.qc
+//mega_coop/mega_rogue/eel.qc //removed to free up precached. Sucked as monster attacker -arg
+mega_coop/mega_rogue/invis_sw.qc
+mega_coop/mega_rogue/newitems.qc
+mega_coop/mega_rogue/newplats.qc
+mega_coop/mega_rogue/newmisc.qc
+mega_coop/mega_rogue/elevatr.qc
+mega_coop/mega_rogue/pendulum.qc
+mega_coop/mega_rogue/lightnin.qc
+mega_coop/mega_rogue/wrath.qc
+mega_coop/mega_rogue/shield.qc
+mega_coop/mega_rogue/MTF_ROGUE_FUNC.qc	// xavior got lazy again
+mega_coop/mega_rogue/lava_wpn.qc
+mega_coop/mega_rogue/mult_wpn.qc
+mega_coop/mega_rogue/dragon.qc
+mega_coop/mega_rogue/s_wrath.qc
+mega_coop/mega_rogue/random.qc
+mega_coop/mega_rogue/earthq.qc
+mega_coop/mega_rogue/lavaman.qc
+mega_coop/mega_rogue/sphere.qc
+mega_coop/mega_rogue/buzzsaw.qc
+//mega_coop/mega_rogue/dmatch.qc  // file was not there when inherited from agent. -arg
+mega_coop/mega_rogue/morph.qc
+mega_coop/mega_rogue/ending.qc
+mega_coop/mega_rogue/mummy.qc
+mega_coop/mega_rogue/timemach.qc
+
+// QUOTH
+/*
+mega_coop/mega_quoth/quoth_defsfuncs.qc //I didn't get the source for these -arg 
+mega_coop/mega_quoth/ne_ambience.qc
+mega_coop/mega_quoth/ne_trigamb.qc
+mega_coop/mega_quoth/ne_mapobj.qc
+mega_coop/mega_quoth/monsfade.qc
+mega_coop/mega_quoth/ne_info.qc
+mega_coop/mega_quoth/ne_misc.qc
+mega_coop/mega_quoth/ai_fly.qc
+mega_coop/mega_quoth/gaunt.qc
+mega_coop/mega_quoth/voreling.qc
+mega_coop/mega_quoth/polyp.qc
+mega_coop/mega_quoth/dguard.qc
+mega_coop/mega_quoth/bob.qc
+mega_coop/mega_quoth/gug.qc
+mega_coop/mega_quoth/dlord.qc
+mega_coop/mega_quoth/drole.qc
+mega_coop/mega_quoth/ne_effects.qc
+mega_coop/mega_quoth/ne_snd.qc
+mega_coop/mega_quoth/ne_spawnmulti.qc
+*/
+
+// NEHAHRA
+
+mega_coop/mega_nehahra/neh_hknight.qc		// if mtf_coop_nehahra is defined, we use this.
+mega_coop/mega_nehahra/ai2.qc
+mega_coop/mega_nehahra/ai4.qc
+mega_coop/mega_nehahra/archg.qc
+mega_coop/mega_nehahra/baron.qc
+//mega_coop/mega_nehahra/cook.qc //don't need to precache for all maps and limit server -arg
+mega_coop/mega_nehahra/custit.qc
+mega_coop/mega_nehahra/cutscene.qc
+//mega_coop/mega_nehahra/frik1.qc
+mega_coop/mega_nehahra/dodge.qc
+mega_coop/mega_nehahra/effects.qc
+mega_coop/mega_nehahra/enf2.qc
+mega_coop/mega_nehahra/enf3.qc
+mega_coop/mega_nehahra/explode.qc
+mega_coop/mega_nehahra/explode.qc
+mega_coop/mega_nehahra/gaunt.qc		// DIFFERENT than quoth's
+mega_coop/mega_nehahra/horse.qc
+mega_coop/mega_nehahra/hunter.qc
+mega_coop/mega_nehahra/jagger.qc
+mega_coop/mega_nehahra/library.qc
+mega_coop/mega_nehahra/max.qc
+mega_coop/mega_nehahra/m_weps.qc
+mega_coop/mega_nehahra/nehah.qc
+mega_coop/mega_nehahra/push.qc
+mega_coop/mega_nehahra/qguy.qc
+mega_coop/mega_nehahra/retreat.qc
+mega_coop/mega_nehahra/story.qc
+mega_coop/mega_nehahra/soldier.qc		// new grunt+grunt ai
+mega_coop/mega_nehahra/thrown.qc
+mega_coop/mega_nehahra/vigil.qc
+mega_coop/mega_nehahra/vomitus.qc
+mega_coop/mega_nehahra/wall.qc
+mega_coop/mega_nehahra/watmos.qc
+mega_coop/mega_nehahra/weldburn.qc
+mega_coop/mega_nehahra/wraith.qc
+mega_coop/mega_nehahra/finale.qc
+
+// Wolf3D (shareware)
+mega_coop/mega_wolf3d/w3d_misc.qc
+//mega_coop/mega_wolf3d/dog.qc  // was disabled/removed to free up precache for pk mods. -arg
+//mega_coop/mega_wolf3d/w3d_ss.qc
+//mega_coop/mega_wolf3d/w3d_guard.qc
+//mega_coop/mega_wolf3d/vict_bj.qc
+//mega_coop/mega_wolf3d/w3d_boss.qc
+
+// Doom 1 & 2
+mega_coop/mega_doom/doom_misc.qc
+mega_coop/mega_doom/dsold.qc
+mega_coop/mega_doom/imp.qc
+mega_coop/mega_doom/dsarg.qc
+mega_coop/mega_doom/pinky.qc
+mega_coop/mega_doom/caco.qc
+mega_coop/mega_doom/baron.qc
+mega_coop/mega_doom/lostsoul.qc
+mega_coop/mega_doom/cyberdemon.qc
+mega_coop/mega_doom/spdemon.qc
+mega_coop/mega_doom/hwguy.qc
+mega_coop/mega_doom/mancubus.qc
+mega_coop/mega_doom/arachno.qc
+mega_coop/mega_doom/revenant.qc
+
+// Hexen 2
+mega_coop/mega_hexen2/hexen2_defs.qc
+mega_coop/mega_hexen2/hexen2_save.qc
+
+
+// Decemberween stuff
+//mega_coop/mega_xmas/elf.qc
+//mega_coop/mega_xmas/santa.qc
+
+mega_coop/mega_malice/malice_include.qc
+
+//mega_coop/mega_halflife/hl_include.qc		//half-life stuff is twitchy/buggy, gone -arg
+
+mega_coop/quake2.qc
+mega_coop/misc/rubicon2.qc
+mega_coop/mtf_coop_lms.qc		// Last Man Standing game mode, must be compiled. still -arg
+mega_coop/mtf_coop_srv.qc  //survival mode
+mega_coop/coop_monsters.qc
+rpg.pqc
+//minifiend.qc	// MINI FIEND -- your very own mini pet :D -0 kludgey needs work to use. -arg
+
+spectator.pqc
+//END

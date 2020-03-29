@@ -1,0 +1,1206 @@
+void () SubTouch;
+void () PreTouch;
+void() health_touch;
+void() noclass = 
+{
+	dprint("noclass spawned at");
+	dprint(vtos(self.origin));
+	dprint("\n");
+	remove(self);
+};
+float(entity e, float healamount2, float ignore) T_Heal = 
+{
+	if (e.health <= TF_FLARE_LIT)
+	{
+		return TF_FLARE_LIT;
+	}
+	if (!ignore && e.health >= e.max_health)
+	{
+		return TF_FLARE_LIT;
+	}
+	healamount2 = ceil(healamount2);
+	e.health = e.health + healamount2;
+	if (!ignore && e.health >= e.max_health)
+	{
+		e.health = e.max_health;
+	}
+#ifndef mtf_coop
+	if (e.health > 250)
+	{
+		e.health = 250;
+	}
+#endif
+	if (e.leg_damage)
+	{
+		if (e.health > 95)
+		{
+			e.leg_damage = TF_FLARE_LIT;
+		}
+		else
+		{
+			e.leg_damage = e.leg_damage - ceil(e.health / 20);
+		}
+		if (e.leg_damage < TF_FLARE_OFF)
+		{
+			e.leg_damage = TF_FLARE_LIT;
+		}
+		TeamFortress_SetSpeed(e);
+	}
+	return TF_FLARE_OFF;
+};
+
+void() item_health = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = health_touch;
+	if (self.spawnflags & TF_FLARE_OFF)
+	{
+#ifdef mtf_coop_halloween
+		precache_model ("progs/potion2.mdl");
+		setmodel(self, "progs/potion2.mdl");
+#else
+		precache_model(#MODEL_HEALTH_TEN);
+		precache_sound("items/r_item1.wav");
+		setmodel(self, #MODEL_HEALTH_TEN);
+#endif
+		self.noise = "items/r_item1.wav";
+		self.healamount = 15;
+		self.healtype = TF_FLARE_LIT;
+	}
+	else
+	{
+		if (self.spawnflags & 2)
+		{
+#ifdef mtf_coop_halloween
+		precache_model ("progs/potion2.mdl");
+		setmodel(self, "progs/potion2.mdl");
+#else
+			precache_model(#MODEL_HEALTH_HUNDRED);
+			precache_sound("items/r_item2.wav");
+			setmodel(self, #MODEL_HEALTH_HUNDRED);
+#endif
+			self.noise = "items/r_item2.wav";
+			self.healamount = 100;
+			self.healtype = 2;
+		}
+		else
+		{
+			precache_model("maps/b_bh25.bsp");
+			precache_sound("items/health1.wav");
+			setmodel(self, "maps/b_bh25.bsp");
+			self.noise = "items/health1.wav";
+			self.healamount = 25;
+			self.healtype = TF_FLARE_OFF;
+		}
+	}
+	setsize(self, '0 0 0', '32 32 56');
+	StartItem();
+};
+
+void() health_touch = 
+{
+	local float medi;
+	local string s;
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (other.is_feigning)
+	{
+		return;
+	}
+	if (other.tfstate & 65536)
+	{
+		return;
+	}
+	medi = TF_FLARE_LIT;
+	if (self.healtype == 2)
+	{
+		if (!(other.tfstate & 16))
+		{
+#ifndef mtf_coop
+			if (other.health >= 250)
+			{
+				return;
+			}
+#endif
+			if (!T_Heal(other, self.healamount, TF_FLARE_OFF))
+			{
+				return;
+			}
+		}
+	}
+	else
+	{
+		if (!T_Heal(other, self.healamount, TF_FLARE_LIT))
+		{
+			if (other.weapons_carried & 4)
+			{
+				if (other.ammo_medikit < other.maxammo_medikit)
+				{
+					other.ammo_medikit = other.ammo_medikit + self.healamount;
+					if (other.ammo_medikit > other.maxammo_medikit)
+					{
+						other.ammo_medikit = other.maxammo_medikit;
+					}
+					s = ftos(self.healamount);
+					sprint(other, TF_FLARE_LIT, "You gather ");
+					sprint(other, TF_FLARE_LIT, s);
+					sprint(other, TF_FLARE_LIT, " medikit ammo\n");
+					sound(other, 3, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
+					stuffcmd(other, "bf\n");
+					self.model = string_null;
+					self.solid = TF_FLARE_LIT;
+					if (deathmatch != 2)
+					{
+						if (deathmatch)
+						{
+							self.nextthink = time + 20;
+						}
+						self.think = SUB_regen;
+					}
+					activator = other;
+					SUB_UseTargets();
+				}
+			}
+			return;
+		}
+	}
+	if (other.tfstate & 16 && self.healamount > 80)
+	{
+		sprint(other, TF_FLARE_OFF, "You have been healed of your infection!");
+		other.tfstate = other.tfstate - (other.tfstate & 16);
+	}
+	else
+	{
+		s = ftos(self.healamount);
+		sprint(other, TF_FLARE_LIT, "You receive ");
+		sprint(other, TF_FLARE_LIT, s);
+		sprint(other, TF_FLARE_LIT, " health.\n");
+	}
+	sound(other, 3, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
+	stuffcmd(other, "bf\n");
+	self.model = string_null;
+	self.solid = TF_FLARE_LIT;
+	if (self.healtype == 2)
+	{
+		other.items = other.items | 65536;
+		self.nextthink = time + 5;
+		self.think = item_megahealth_rot;
+		self.owner = other;
+	}
+	else
+	{
+		if (deathmatch != 2)
+		{
+			if (deathmatch)
+			{
+				self.nextthink = time + 20;
+			}
+			self.think = SUB_regen;
+		}
+	}
+	activator = other;
+	SUB_UseTargets();
+#ifdef mtf_coop
+	if (self.orig_origin != '0 0 0') {
+		self.origin = self.orig_origin;
+	}
+#endif
+};
+void() armor_touch = 
+{
+	local float type;
+	local float value;
+	local float bit;
+	local float rnum;
+	local string s;
+	local entity oldself;
+	rnum = random();
+	if (other.health <= TF_FLARE_LIT)
+	{
+		return;
+	}
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (other.is_feigning)
+	{
+		return;
+	}
+	if (other.tfstate & 65536)
+	{
+		return;
+	}
+	if (self.classname == "item_armor1")
+	{
+		type = 0.3;
+		value = 100;
+		bit = 8192;
+	}
+	else
+	{
+		if (self.classname == "item_armor2")
+		{
+			type = 0.6;
+			value = 150;
+			bit = 16384;
+		}
+		else
+		{
+			if (self.classname == "item_armorInv")
+			{
+				type = 0.8;
+				value = 200;
+				bit = 32768;
+			}
+		}
+	}
+#ifdef mtf_coop_expsys
+	if (value == 200)
+		if (other.maxarmor > value)
+			value = other.maxarmor;
+#endif
+	if (other.armortype * other.armorvalue >= type * value)
+	{
+		if (other.playerclass == 9)
+		{
+			if (other.ammo_cells >= other.maxammo_cells)
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+	}
+	if (other.armor_allowed * other.maxarmor <= type * value)
+	{
+		if (other.armor_allowed == other.armortype)
+		{
+			if (other.maxarmor == other.armorvalue)
+			{
+				if (other.playerclass == 9)
+				{
+					if (other.ammo_cells >= other.maxammo_cells)
+					{
+						return;
+					}
+				}
+				else
+				{
+					return;
+				}
+			}
+		}
+	}
+	if (type > other.armor_allowed)
+	{
+		type = other.armor_allowed;
+		if (type == 0.3)
+		{
+			bit = 8192;
+		}
+		else
+		{
+			if (type == 0.6)
+			{
+				bit = 16384;
+			}
+			else
+			{
+				if (type == 0.8)
+				{
+					bit = 32768;
+				}
+			}
+		}
+	}
+	sprint(other, TF_FLARE_LIT, "You got armor.\n");
+	if (value > other.maxarmor)
+	{
+		if (other.playerclass == 9 && other.ammo_cells < other.maxammo_cells)
+		{
+			s = ftos(value - other.maxarmor);
+			sprint(other, TF_FLARE_LIT, s);
+			sprint(other, TF_FLARE_LIT, " metal.\n");
+			other.ammo_cells = other.ammo_cells + (value - other.maxarmor);
+			if (other.ammo_cells > other.maxammo_cells)
+			{
+				other.ammo_cells = other.maxammo_cells;
+			}
+			oldself = self;
+			self = other;
+			W_SetCurrentAmmo();
+			self = oldself;
+		}
+		value = other.maxarmor;
+	}
+	if (other.armortype * other.armorvalue < type * value)
+	{
+		other.armortype = type;
+		other.armorvalue = value;
+		other.items = other.items - (other.items & (8192 | 16384 | 32768)) + bit;
+	}
+	self.solid = TF_FLARE_LIT;
+	self.model = string_null;
+	if (deathmatch != 2)
+	{
+		self.nextthink = time + 10;
+	}
+	if (coop)
+	{
+		self.nextthink = time + 20;
+	}
+	self.think = SUB_regen;
+	sound(other, 3, "items/armor1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+	stuffcmd(other, "bf\n");
+	activator = other;
+	SUB_UseTargets();
+};
+
+void() item_armor1 = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+#ifdef mtfcoop_uberhardmode
+	if (uberhardmode) {
+		remove(self);
+		return;
+	}
+#endif
+	self.touch = armor_touch;
+	precache_model("progs/armor.mdl");
+	setmodel(self, "progs/armor.mdl");
+	self.skin = TF_FLARE_LIT;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+};
+
+void() item_armor2 = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+#ifdef mtfcoop_uberhardmode
+	if (uberhardmode) {
+		remove(self);
+		return;
+	}
+#endif
+	self.touch = armor_touch;
+	precache_model("progs/armor.mdl");
+	setmodel(self, "progs/armor.mdl");
+	self.skin = TF_FLARE_OFF;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+};
+
+void() item_armorInv = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+#ifdef mtfcoop_uberhardmode
+	if (uberhardmode) {
+		remove(self);
+		return;
+	}
+#endif
+	self.touch = armor_touch;
+	precache_model("progs/armor.mdl");
+	setmodel(self, "progs/armor.mdl");
+	self.skin = 2;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+};
+
+
+float(float w) RankForWeapon = 
+{
+	if (w == 65536)
+	{
+		return TF_FLARE_OFF;
+	}
+	if (w == 8192)
+	{
+		return 2;
+	}
+	if (w == 1024)
+	{
+		return 3;
+	}
+	if (w == 2048)
+	{
+		return 4;
+	}
+	if (w == 256)
+	{
+		return 5;
+	}
+	if (w == 512)
+	{
+		return 6;
+	}
+	return 7;
+};
+
+void() trigger_once;
+void() weapon_supershotgun = 
+{
+#ifdef mtf_coop
+	trigger_once();
+	return;
+#else
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	precache_model("progs/g_shot.mdl");
+	setmodel(self, "progs/g_shot.mdl");
+	self.weapon = 256;
+	self.netname = "Double-barrelled Shotgun";
+	self.touch = weapon_touch;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+#endif
+};
+void() weapon_nailgun = 
+{
+#ifdef mtf_coop
+	trigger_once();
+	return;
+#else
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	precache_model("progs/g_nail.mdl");
+	setmodel(self, "progs/g_nail.mdl");
+	self.weapon = 512;
+	self.netname = "nailgun";
+	self.touch = weapon_touch;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+#endif
+};
+void() weapon_supernailgun = 
+{
+#ifdef mtf_coop
+	trigger_once();
+	return;
+#else
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	precache_model("progs/g_nail2.mdl");
+	setmodel(self, "progs/g_nail2.mdl");
+	self.weapon = 1024;
+	self.netname = "Super Nailgun";
+	self.touch = weapon_touch;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+#endif
+};
+void() weapon_grenadelauncher = 
+{
+#ifdef mtf_coop
+	trigger_once();
+	return;
+#else
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	precache_model("progs/g_rock.mdl");
+	setmodel(self, "progs/g_rock.mdl");
+	self.weapon = 3;
+	self.netname = "Grenade Launcher";
+	self.touch = weapon_touch;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+#endif
+};
+void() weapon_rocketlauncher = 
+{
+#ifdef mtf_coop
+	trigger_once();
+	return;
+#else
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	precache_model("progs/g_rock2.mdl");
+	setmodel(self, "progs/g_rock2.mdl");
+	self.weapon = 3;
+	self.netname = "Rocket Launcher";
+	self.touch = weapon_touch;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+#endif
+};
+void() weapon_lightning = 
+{
+#ifdef mtf_coop
+	trigger_once();
+	return;
+#else
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	precache_model("progs/g_light.mdl");
+	setmodel(self, "progs/g_light.mdl");
+	self.weapon = 3;
+	self.netname = "Thunderbolt";
+	self.touch = weapon_touch;
+	setsize(self, '-16 -16 0', '16 16 56');
+	StartItem();
+#endif
+};
+void() item_spikes = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+#ifdef mtf_coop_hipnotic
+	if (Hipnotic_SaveModels2() == 1) {
+		dremove(self);
+		return;
+	}
+#endif
+
+	self.touch = ammo_touch;
+	if (self.spawnflags & TF_FLARE_OFF)
+	{
+#ifdef mtf_coop_halloween
+		precache_model ("progs/pumpkin.mdl");
+		setmodel(self, "progs/pumpkin.mdl");
+#else
+		precache_model("maps/b_nail1.bsp");
+		setmodel(self, "maps/b_nail1.bsp");
+#endif
+		self.aflag = 50;
+	}
+	else
+	{
+#ifdef mtf_coop_halloween
+		precache_model ("progs/pumpkin.mdl");
+		setmodel(self, "progs/pumpkin.mdl");
+#else
+		precache_model("maps/b_nail0.bsp");
+		setmodel(self, "maps/b_nail0.bsp");
+#endif
+		self.aflag = 25;
+	}
+	self.weapon = 2;
+	self.netname = "nails";
+	setsize(self, '0 0 0', '32 32 56');
+	StartItem();
+};
+void() item_rockets = 
+{
+#ifdef mtf_coop_hipnotic
+	if (Hipnotic_SaveModels2() == 1) {
+		dremove(self);
+		return;
+	}
+#endif
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = ammo_touch;
+	if (self.spawnflags & TF_FLARE_OFF)
+	{
+		precache_model("maps/b_rock1.bsp");
+		setmodel(self, "maps/b_rock1.bsp");
+		self.aflag = 10;
+	}
+	else
+	{
+		precache_model("maps/b_rock0.bsp");
+		setmodel(self, "maps/b_rock0.bsp");
+		self.aflag = 5;
+	}
+	self.weapon = 3;
+	self.netname = "rockets";
+	setsize(self, '0 0 0', '32 32 56');
+	StartItem();
+};
+
+void() item_cells = 
+{
+#ifdef mtf_coop_hipnotic
+	if (Hipnotic_SaveModels2() == 1) {
+		dremove(self);
+		return;
+	}
+#endif
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = ammo_touch;
+	if (self.spawnflags & TF_FLARE_OFF)
+	{
+		precache_model("maps/b_batt1.bsp");
+		setmodel(self, "maps/b_batt1.bsp");
+		self.aflag = 12;
+	}
+	else
+	{
+		precache_model("maps/b_batt0.bsp");
+		setmodel(self, "maps/b_batt0.bsp");
+		self.aflag = 6;
+	}
+	self.weapon = 4;
+	self.netname = "cells";
+	setsize(self, '0 0 0', '32 32 56');
+	StartItem();
+};
+
+void() item_weapon = 
+{
+#ifdef mtf_coop_hipnotic
+	if (Hipnotic_SaveModels2() == 1) {
+		dremove(self);
+		return;
+	}
+#endif
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = ammo_touch;
+	if (self.spawnflags & TF_FLARE_OFF)
+	{
+		if (self.spawnflags & 8)
+		{
+			precache_model("maps/b_shell1.bsp");
+			setmodel(self, "maps/b_shell1.bsp");
+			self.aflag = 40;
+		}
+		else
+		{
+			precache_model("maps/b_shell0.bsp");
+			setmodel(self, "maps/b_shell0.bsp");
+			self.aflag = 20;
+		}
+		self.weapon = TF_FLARE_OFF;
+		self.netname = "shells";
+	}
+	if (self.spawnflags & 4)
+	{
+		if (self.spawnflags & 8)
+		{
+			precache_model("maps/b_nail1.bsp");
+			setmodel(self, "maps/b_nail1.bsp");
+			self.aflag = 40;
+		}
+		else
+		{
+			precache_model("maps/b_nail0.bsp");
+			setmodel(self, "maps/b_nail0.bsp");
+			self.aflag = 20;
+		}
+		self.weapon = 2;
+		self.netname = "spikes";
+	}
+	if (self.spawnflags & 2)
+	{
+		if (self.spawnflags & 8)
+		{
+			precache_model("maps/b_rock1.bsp");
+			setmodel(self, "maps/b_rock1.bsp");
+			self.aflag = 10;
+		}
+		else
+		{
+			precache_model("maps/b_rock0.bsp");
+			setmodel(self, "maps/b_rock0.bsp");
+			self.aflag = 5;
+		}
+		self.weapon = 3;
+		self.netname = "rockets";
+	}
+	setsize(self, '0 0 0', '32 32 56');
+	StartItem();
+};
+void() key_touch = 
+{
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (other.health <= TF_FLARE_LIT)
+	{
+		return;
+	}
+	if (other.items & self.items)
+	{
+		return;
+	}
+	sprint(other, TF_FLARE_LIT, "You got the ");
+	sprint(other, TF_FLARE_LIT, self.netname);
+	sprint(other, TF_FLARE_LIT, ".\n");
+	sound(other, 3, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
+	stuffcmd(other, "bf\n");
+	other.items = other.items | self.items;
+	if (!coop)
+	{
+		self.solid = TF_FLARE_LIT;
+		self.model = string_null;
+	}
+	else
+	{
+		if (coop && self.deadflag)
+		{
+			dremove(self);
+			return;
+		}
+	}
+	activator = other;
+	SUB_UseTargets();
+};
+void() key_setsounds = 
+{
+	if (world.worldtype == TF_FLARE_LIT)
+	{
+		precache_sound("misc/medkey.wav");
+		self.noise = "misc/medkey.wav";
+	}
+	if (world.worldtype == TF_FLARE_OFF)
+	{
+		precache_sound("misc/runekey.wav");
+		self.noise = "misc/runekey.wav";
+	}
+	if (world.worldtype == 2)
+	{
+		precache_sound2("misc/basekey.wav");
+		self.noise = "misc/basekey.wav";
+	}
+};
+void() item_key1 = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	if (world.worldtype == TF_FLARE_LIT)
+	{
+		precache_model("progs/w_s_key.mdl");
+		setmodel(self, "progs/w_s_key.mdl");
+		self.netname = "silver key";
+	}
+	else
+	{
+		if (world.worldtype == TF_FLARE_OFF)
+		{
+			precache_model("progs/m_s_key.mdl");
+			setmodel(self, "progs/m_s_key.mdl");
+			self.netname = "silver runekey";
+		}
+		else
+		{
+			if (world.worldtype == 2)
+			{
+				precache_model2("progs/b_s_key.mdl");
+				setmodel(self, "progs/b_s_key.mdl");
+				self.netname = "silver keycard";
+			}
+		}
+	}
+	key_setsounds();
+	self.touch = key_touch;
+	self.items = 131072;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+void() item_key2 = 
+{
+#ifdef mtf_coop
+	if ( mapname == "harde1m1" )
+		self.origin_y += 45;
+#endif
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	if (world.worldtype == TF_FLARE_LIT)
+	{
+		precache_model("progs/w_g_key.mdl");
+		setmodel(self, "progs/w_g_key.mdl");
+		self.netname = "gold key";
+	}
+	if (world.worldtype == TF_FLARE_OFF)
+	{
+		precache_model("progs/m_g_key.mdl");
+		setmodel(self, "progs/m_g_key.mdl");
+		self.netname = "gold runekey";
+	}
+	if (world.worldtype == 2)
+	{
+		precache_model2("progs/b_g_key.mdl");
+		setmodel(self, "progs/b_g_key.mdl");
+		self.netname = "gold keycard";
+	}
+	key_setsounds();
+	self.touch = key_touch;
+	self.items = 262144;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+
+void() sigil_touch = 
+{
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (other.health <= TF_FLARE_LIT)
+	{
+		return;
+	}
+	CenterPrint(other, "You got the rune!");
+	sound(other, 3, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
+	stuffcmd(other, "bf\n");
+	self.solid = TF_FLARE_LIT;
+	self.model = string_null;
+	serverflags = serverflags | (self.spawnflags & 15);
+	self.classname = "";
+	activator = other;
+	SUB_UseTargets();
+};
+void() item_sigil = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	if (!(self.spawnflags))
+	{
+		objerror("no spawnflags");
+	}
+	precache_sound("misc/runekey.wav");
+	self.noise = "misc/runekey.wav";
+	if (self.spawnflags & TF_FLARE_OFF)
+	{
+		precache_model("progs/end1.mdl");
+		setmodel(self, "progs/end1.mdl");
+	}
+	if (self.spawnflags & 2)
+	{
+		precache_model2("progs/end2.mdl");
+		setmodel(self, "progs/end2.mdl");
+	}
+	if (self.spawnflags & 4)
+	{
+		precache_model2("progs/end3.mdl");
+		setmodel(self, "progs/end3.mdl");
+	}
+	if (self.spawnflags & 8)
+	{
+		precache_model2("progs/end4.mdl");
+		setmodel(self, "progs/end4.mdl");
+	}
+	self.touch = sigil_touch;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+void() powerup_touch = 
+{
+	if (other.classname != "player")
+	{
+		return;
+	}
+	if (other.health <= TF_FLARE_LIT)
+	{
+		return;
+	}
+	sprint(other, TF_FLARE_LIT, "You got the ");
+	sprint(other, TF_FLARE_LIT, self.netname);
+	sprint(other, TF_FLARE_LIT, ".\n");
+	if (deathmatch)
+	{
+		self.mdl = self.model;
+		if (self.classname == "item_artifact_invulnerability" || self.classname == "item_artifact_invisibility")
+		{
+			self.nextthink = time + 60 * 5;
+		}
+		else
+		{
+			self.nextthink = time + 60;
+		}
+		self.think = SUB_regen;
+	}
+	else
+	{
+		if (coop)
+		{
+			self.mdl = self.model;
+			if (self.classname == "item_artifact_invulnerability" || self.classname == "item_artifact_invisibility")
+			{
+				self.nextthink = time + 120 * 5;
+			}
+			else
+			{
+				self.nextthink = time + 120;
+			}
+			self.think = SUB_regen;
+		}
+	}
+	sound(other, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
+	stuffcmd(other, "bf\n");
+	self.solid = TF_FLARE_LIT;
+	other.items = other.items | self.items;
+	self.model = string_null;
+	if (self.classname == "item_artifact_envirosuit")
+	{
+		other.rad_time = TF_FLARE_OFF;
+		other.radsuit_finished = time + 30;
+	}
+	if (self.classname == "item_artifact_invulnerability")
+	{
+		other.invincible_time = TF_FLARE_OFF;
+#ifdef mtf_coop
+		if (other.invincible_finished > time)
+			other.invincible_finished = other.invincible_finished + 15;
+		else
+#endif		
+		other.invincible_finished = time + 30;
+	}
+	if (self.classname == "item_artifact_invisibility")
+	{
+		other.invisible_time = TF_FLARE_OFF;
+		other.invisible_finished = time + 30;
+	}
+	if (self.classname == "item_artifact_super_damage")
+	{
+		other.super_time = TF_FLARE_OFF;
+		other.super_damage_finished = time + 30;
+	}
+	activator = other;
+	SUB_UseTargets();
+};
+void() item_artifact_invulnerability = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = powerup_touch;
+	precache_model("progs/invulner.mdl");
+	precache_sound("items/protect.wav");
+	precache_sound("items/protect2.wav");
+	precache_sound("items/protect3.wav");
+	self.noise = "items/protect.wav";
+	setmodel(self, "progs/invulner.mdl");
+	self.netname = "Pentagram of Protection";
+	self.items = 1048576;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+void() item_artifact_envirosuit = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = powerup_touch;
+	precache_model("progs/suit.mdl");
+	precache_sound("items/suit.wav");
+	precache_sound("items/suit2.wav");
+	self.noise = "items/suit.wav";
+	setmodel(self, "progs/suit.mdl");
+	self.netname = "Biosuit";
+	self.items = 2097152;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+void() item_artifact_invisibility = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+	self.touch = powerup_touch;
+	precache_model("progs/invisibl.mdl");
+	precache_sound("items/inv1.wav");
+	precache_sound("items/inv2.wav");
+	precache_sound("items/inv3.wav");
+	self.noise = "items/inv1.wav";
+	setmodel(self, "progs/invisibl.mdl");
+	self.netname = "Ring of Shadows";
+	self.items = 524288;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+void() item_artifact_super_damage = 
+{
+	if (CheckExistence() == TF_FLARE_LIT)
+	{
+		dremove(self);
+		return;
+	}
+#ifdef mtf_coop
+	if (mapname == "insane")
+		dremove(self);
+#endif
+	self.touch = powerup_touch;
+	precache_model(#MODEL_QUAD);
+	precache_sound("items/damage.wav");
+	precache_sound("items/damage2.wav");
+	precache_sound("items/damage3.wav");
+	self.noise = "items/damage.wav";
+	setmodel(self, #MODEL_QUAD);
+	self.netname = "Quad Damage";
+	self.items = 4194304;
+	setsize(self, '-16 -16 -24', '16 16 32');
+	StartItem();
+};
+void () PackFloat =
+{
+	if ((pointcontents ((self.origin + '0.000000 0.000000 16.000000')) == -3.000000))
+	{
+		self.velocity_x = ((random () - 0.500000) * 50.000000);
+		self.velocity_y = ((random () - 0.500000) * 50.000000);
+		self.velocity_z = 30.000000;
+	}
+	else
+	{
+		self.velocity_x = ((random () - 0.500000) * 50.000000);
+		self.velocity_y = ((random () - 0.500000) * 50.000000);
+		self.velocity_z = -30.000000;
+	}
+	self.nextthink = (time + 0.500000);
+	self.think = PackFloat;
+};
+void () PackCheck =
+{
+	if ((pointcontents (self.origin) != -3.000000))
+	{
+		self.nextthink = (time + 120.000000);
+		self.think = SUB_Remove;
+	}
+	else
+	{
+		self.nextthink = (time + 1.000000);
+		self.movetype = 9.000000;
+		self.velocity_z = 50.000000;
+		self.think = PackFloat;
+	}
+};
+void () DropBackpack =
+{
+	if (!(((self.ammo_shells + self.ammo_nails) + self.ammo_rockets) + self.ammo_cells))
+	{
+		return;
+	}
+	newmis = spawn ();
+	newmis.origin = (self.origin - '0.000000 0.000000 24.000000');
+	newmis.ammo_shells = self.ammo_shells;
+	newmis.ammo_nails = self.ammo_nails;
+	newmis.ammo_rockets = self.ammo_rockets;
+	newmis.ammo_cells = self.ammo_cells;
+	newmis.armorvalue = self.armorvalue;
+	newmis.velocity_z = 300.000000;
+	newmis.velocity_x = (-100.000000 + (random () * 200.000000));
+	newmis.velocity_y = (-100.000000 + (random () * 200.000000));
+	newmis.flags = 256.000000;
+	newmis.solid = 1.000000;
+	newmis.movetype = 6.000000;
+	setmodel (newmis, "progs/backpack.mdl");
+	setsize (newmis, '-16.000000 -16.000000 0.000000', '16.000000 16.000000 56.000000');
+	newmis.touch = BackpackTouch;
+	if (newmis.ammo_rockets > 0)
+	{
+		newmis.nextthink = (time + 30.000000);
+		newmis.think = SUB_Remove;
+	}
+	else
+	{
+		newmis.nextthink = (time + 2.000000);
+		newmis.think = PackCheck;
+	}
+	sound (self, 2.000000, "items/itembk2.wav", 1.000000, 1.000000);
+};
+void () item_sub =
+{
+	if (infokey (world, "btf_stuff") == "1" || infokey (world, "btf_stuff") == "on")
+	{
+		BTF_Precache ();
+		self.touch = PreTouch;
+		precache_model ("progs/mini-sub.mdl");
+		setmodel (self, "progs/mini-sub.mdl");
+		self.noise = "utils/hoveron.wav";
+		setsize (self, '-32.000000 -32.000000 -24.000000', '32.000000 32.000000 32.000000');
+		self.health = 100;
+		StartItem ();
+	}
+};
+void () Aircraft_Touch;
+void () AC_Destroyed;
+void () item_helo =
+{
+#ifdef mtf_coop
+	precache_model ("progs/acgib1.mdl");
+	precache_model ("progs/ffar.mdl");
+	precache_model ("progs/bomb.mdl");
+#endif
+	if (infokey (world, "btf_stuff") == "1" || infokey (world, "btf_stuff") == "on")
+	{
+	BTF_Precache ();
+	self.touch = Aircraft_Touch;
+	precache_model2 ("progs/helo2.mdl");
+	setmodel (self, "progs/helo2.mdl");
+	precache_sound ("engines/ap_rotor3.wav");
+	if ((self.volume == 0))
+	{
+		self.volume = 0.500000;
+	}
+	ambientsound (self.origin, "engines/ap_rotor3.wav", self.volume, 1);
+	setsize (self, '-20.000000 -20.000000 -32.000000', '20.000000 20.000000 40.000000');
+	self.health = 200;
+	self.Aircraft_Fuel = 500;
+	self.ammo_shells = 500;
+	StartItem ();
+	}
+	else
+	{
+		dremove(self);
+	}
+};
+//END

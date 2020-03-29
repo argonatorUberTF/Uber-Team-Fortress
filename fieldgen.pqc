@@ -1,0 +1,415 @@
+//Not in compilation yet.
+void () FieldGen_Think;
+void () FieldGen_Die;
+void () ForceField_Think;
+void () ForceField_Touch;
+void (entity field, float downtime) ForceField_Remove;
+
+// The actual field-gen code (no, this is not Prozac CTF's)
+void () FieldGen_Think =
+{
+	local entity te;
+	local entity targ;
+	local float dist;
+	local float max_dist;
+	local vector base_size;
+	local vector min_size;
+	local vector max_size;
+
+	targ = world;
+	dist = 600;
+	if ((pointcontents (self.origin) == -3))
+	{
+		max_dist = 500;
+	}
+	else
+	{
+		max_dist = 300;
+	}
+	te = findradius (self.origin, max_dist);
+	while (te)
+	{
+		if (((((((te != self) && (te.classname == "building_fieldgen")) && ((((te.gen_north != self) && (te.gen_east != self)) && (te.gen_south != self)) && (te.gen_west != self))) && ((((self.gen_north != te) && (self.gen_east != te)) && (self.gen_south != te)) && (self.gen_west != te))) && (te.team_no == self.team_no)) && (fabs ((self.origin_z - te.origin_z)) < 10)))
+		{
+			if ((vlen ((te.origin - self.origin)) < dist))
+			{
+				if (((fabs ((te.origin_x - self.origin_x)) == TF_FLARE_LIT) || (fabs ((te.origin_y - self.origin_y)) == TF_FLARE_LIT)))
+				{
+					targ = te;
+					if (((targ.origin_y - self.origin_y) > TF_FLARE_LIT))
+					{
+						self.gen_north = targ;
+					}
+					else
+					{
+						if (((targ.origin_y - self.origin_y) < TF_FLARE_LIT))
+						{
+							self.gen_south = targ;
+						}
+						else
+						{
+							if (((targ.origin_x - self.origin_x) > TF_FLARE_LIT))
+							{
+								self.gen_east = targ;
+							}
+							else
+							{
+								if (((targ.origin_x - self.origin_x) < TF_FLARE_LIT))
+								{
+									self.gen_west = targ;
+								}
+							}
+						}
+					}
+					dist = vlen ((te.origin - self.origin));
+				}
+			}
+		}
+		te = te.chain;
+	}
+	if ((targ.classname == "building_fieldgen"))
+	{
+		te = spawn ();
+		te.classname = "force_field";
+		te.netname = "Force Field";
+		te.owner = self;
+		te.real_owner = self.owner;
+		te.gen_slave = targ;
+		te.movetype = TF_FLARE_LIT;
+		te.solid = 2;
+		te.team_no = self.team_no;
+		if (((targ.origin_y - self.origin_y) > TF_FLARE_LIT))
+		{
+			targ.gen_south = self;
+		}
+		else
+		{
+			if (((targ.origin_y - self.origin_y) < TF_FLARE_LIT))
+			{
+				targ.gen_north = self;
+			}
+			else
+			{
+				if (((targ.origin_x - self.origin_x) > TF_FLARE_LIT))
+				{
+					targ.gen_west = self;
+				}
+				else
+				{
+					if (((targ.origin_x - self.origin_x) < TF_FLARE_LIT))
+					{
+						targ.gen_east = self;
+					}
+				}
+			}
+		}
+		base_size = ((targ.origin - self.origin) * 0.5);
+		setorigin (te, ((base_size + self.origin) + '0 0 32'));
+		max_size_x = (fabs (base_size_x) - 2);
+		max_size_y = (fabs (base_size_y) - 2);
+		max_size_z = (fabs (base_size_z) + 32);
+		if ((max_size_x < 8))
+		{
+			max_size_x = 2;
+		}
+		if ((max_size_y < 8))
+		{
+			max_size_y = 2;
+		}
+		min_size = (max_size * -1);
+		setsize (te, min_size, max_size);
+		te.think = ForceField_Think;
+		te.touch = ForceField_Touch;
+		te.nextthink = (time + 0.1);
+	}
+	else
+	{
+		if (((((self.gen_north == world) && (self.gen_south == world)) && (self.gen_east == world)) && (self.gen_west == world)))
+		{
+			sound (self, TF_FLARE_LIT, "misc/notfound.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+		}
+		self.effects = (self.effects - (self.effects & (8 + 128)));
+	}
+	self.nextthink = (time + 5);
+};
+
+void () FieldGen_Die =
+{
+	local entity te;
+
+	self.real_owner.has_fieldgen = (self.real_owner.has_fieldgen - TF_FLARE_OFF);
+	te = find (world, classname, "force_field");
+	while (te)
+	{
+		if (((te.owner == self) || (te.gen_slave == self)))
+		{
+			dremove (te);
+		}
+		te = find (te, classname, "force_field");
+	}
+	ThrowGib ("progs/tgib1.mdl", -30);
+	ThrowGib ("progs/tgib2.mdl", -50);
+	ThrowGib ("progs/tgib3.mdl", -50);
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, TF_FLARE_OFF);
+	BecomeExplosion ();
+	if ((self.gen_north != world))
+	{
+		self.gen_north.gen_south = world;
+	}
+	if ((self.gen_south != world))
+	{
+		self.gen_south.gen_north = world;
+	}
+	if ((self.gen_east != world))
+	{
+		self.gen_east.gen_west = world;
+	}
+	if ((self.gen_west != world))
+	{
+		self.gen_west.gen_east = world;
+	}
+	dremove (self);
+};
+
+void () electro_bubble =
+{
+	if ((pointcontents (self.origin) != -3))
+	{
+		dremove (self);
+	}
+	self.nextthink = (time + 0.5);
+};
+
+void () ForceField_Think =
+{
+	local vector pos;
+	local vector vel;
+	local string ts;
+	local float i;
+	local float dist;
+	local float damg;
+	local float factor;
+	local entity te;
+	local entity snd;
+
+	traceline ((self.owner.origin + '0 0 16'), (self.gen_slave.origin + '0 0 16'), TF_FLARE_LIT, self);
+	if ((trace_fraction == TF_FLARE_OFF))
+	{
+		traceline ((self.owner.origin + '0 0 32'), (self.gen_slave.origin + '0 0 32'), TF_FLARE_LIT, self);
+		if ((trace_fraction == TF_FLARE_OFF))
+		{
+			traceline ((self.owner.origin + '0 0 64'), (self.gen_slave.origin + '0 0 64'), TF_FLARE_LIT, self);
+		}
+	}
+	if (((((self.owner.classname != "building_fieldgen") || (self.gen_slave.classname != "building_fieldgen")) || ((trace_fraction != TF_FLARE_OFF) && (trace_ent != self.gen_slave))) || match_state))
+	{
+		ForceField_Remove (self, TF_FLARE_OFF);
+		return;
+	}
+	if ((self.invincible_sound <= time))
+	{
+		sound (self, TF_FLARE_LIT, "ambient/100hzhum.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+		self.invincible_sound = (time + TF_FLARE_OFF);
+		self.owner.effects = (self.owner.effects | 128);
+		self.gen_slave.effects = (self.gen_slave.effects | 128);
+	}
+	if ((pointcontents (self.origin) == -3))
+	{
+		dist = (vlen ((self.owner.origin - self.gen_slave.origin)) * 2);
+		te = findradius (self.origin, dist);
+		while (te)
+		{
+			if (((te.classname == "player") && (te.waterlevel > TF_FLARE_LIT)))
+			{
+				factor = (70 / dist);
+				damg = (factor * (dist - vlen ((self.origin - te.origin))));
+				if ((random () < (damg / 70)))
+				{
+					deathmsg = 49;
+					TF_T_Damage (te, self, self, damg, 8, 8);
+					sound (te, TF_FLARE_LIT, "misc/spkbite.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+					stuffcmd (te, "bf\n");
+				}
+				else
+				{
+					if ((random () < 0.5))
+					{
+						snd = self.owner;
+					}
+					else
+					{
+						snd = self.gen_slave;
+					}
+					i = random ();
+					if ((i > 0.66))
+					{
+						ts = "misc/spkbite2.wav";
+					}
+					else
+					{
+						if ((i > 0.33))
+						{
+							ts = "misc/lowshock.wav";
+						}
+						else
+						{
+							ts = "misc/hishock1.wav";
+						}
+					}
+					i = random ();
+					sound (snd, TF_FLARE_LIT, ts, i, TF_FLARE_OFF);
+				}
+			}
+			te = te.chain;
+		}
+	}
+	if ((random () < 0.5))
+	{
+		pos = self.owner.origin;
+	}
+	else
+	{
+		pos = self.gen_slave.origin;
+	}
+	vel = ((self.origin - '0 0 32') - pos);
+	pos = (pos + (random () * vel));
+	WriteByte (4, 23);
+	WriteByte (4, 6);
+	WriteEntity (4, self);
+	WriteCoord (4, pos_x);
+	WriteCoord (4, pos_y);
+	WriteCoord (4, (pos_z + 56));
+	WriteCoord (4, pos_x);
+	WriteCoord (4, pos_y);
+	WriteCoord (4, pos_z);
+	multicast (pos, 5);
+	self.nextthink = (time + 0.34);
+};
+
+void () ForceField_Touch =
+{
+
+	if ((other.health > TF_FLARE_LIT))
+	{
+		if ((other.classname == "player"))
+		{
+			if (((self.owner.sabotaged == TF_FLARE_OFF) && (self.owner.saboteur.team_no != self.owner.team_no)))
+			{
+				deathmsg = 41;
+				T_RadiusDamage (self.owner, self.owner, 250, world);
+				T_Damage (other, self.owner, self.owner, 500);
+				T_Damage (self, world, world, 250);
+			}
+			else
+			{
+				if (((self.gen_slave.sabotaged == TF_FLARE_OFF) && (self.gen_slave.saboteur.team_no != self.gen_slave.team_no)))
+				{
+					deathmsg = 41;
+					T_RadiusDamage (self.gen_slave, self.gen_slave, 250, world);
+					T_Damage (other, self.gen_slave, self.gen_slave, 500);
+					T_Damage (self, world, world, 250);
+				}
+			}
+			if (((other.team_no == self.team_no) || (other.playerclass == 8)))
+			{
+				ForceField_Remove (self, 2);
+				return;
+			}
+		}
+		deathmsg = 39;
+		TF_T_Damage (other, self, self, 15, TF_FLARE_LIT, 8);
+	}
+	sound (other, TF_FLARE_LIT, "misc/spkbite2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+	WriteByte (4, 23);
+	WriteByte (4, 11);
+	WriteCoord (4, other.origin_x);
+	WriteCoord (4, other.origin_y);
+	WriteCoord (4, other.origin_z);
+	multicast (other.origin, 5);
+	if ((other.velocity_x == TF_FLARE_LIT))
+	{
+		other.velocity_x = ((other.origin_x - self.origin_x) * 30);
+	}
+	if ((other.velocity_y == TF_FLARE_LIT))
+	{
+		other.velocity_y = ((other.origin_y - self.origin_y) * 30);
+	}
+	if ((other.velocity_z == TF_FLARE_LIT))
+	{
+		other.velocity_z = ((other.origin_z - self.origin_z) * 30);
+	}
+	other.velocity = (other.velocity + '0 0 60');
+	setorigin (other, (other.origin + '0 0 4'));
+	other.flags = (other.flags - (other.flags & 512));
+};
+
+void (entity field, float downtime) ForceField_Remove =
+{
+	if (((field.gen_slave.origin_y - field.owner.origin_y) > TF_FLARE_LIT))
+	{
+		if ((field.owner != world))
+		{
+			field.owner.gen_north = world;
+		}
+	}
+	if ((field.gen_slave != world))
+	{
+		field.gen_slave.gen_south = world;
+	}
+	if (((field.gen_slave.origin_y - field.owner.origin_y) < TF_FLARE_LIT))
+	{
+		if ((field.owner != world))
+		{
+			field.owner.gen_south = world;
+		}
+		if ((field.gen_slave != world))
+		{
+			field.gen_slave.gen_north = world;
+		}
+	}
+	else
+	{
+		if (((field.gen_slave.origin_x - field.owner.origin_x) > TF_FLARE_LIT))
+		{
+			if ((field.owner != world))
+			{
+				field.owner.gen_east = world;
+			}
+			if ((field.gen_slave != world))
+			{
+				field.gen_slave.gen_west = world;
+			}
+		}
+		else
+		{
+			if (((field.gen_slave.origin_x - field.owner.origin_x) < TF_FLARE_LIT))
+			{
+				if ((field.owner != world))
+				{
+					field.owner.gen_west = world;
+				}
+				if ((field.gen_slave != world))
+				{
+					field.gen_slave.gen_east = world;
+				}
+			}
+		}
+	}
+	if ((field.owner != world))
+	{
+		field.owner.nextthink = (time + downtime);
+		field.owner.effects = (field.owner.effects - (field.owner.effects & 128));
+	}
+	if ((field.gen_slave != world))
+	{
+		field.gen_slave.nextthink = (time + (downtime + 0.2));
+		field.gen_slave.effects = (field.gen_slave.effects - (field.gen_slave.effects & 128));
+	}
+	dremove (field);
+};
+//END

@@ -1,0 +1,163 @@
+void() FoundTarget;
+#ifndef mtf_coop
+void() monster_ogre = 
+{
+	self.light_lev = 1;		//useless, just helps with the decompiler warnings >.<
+	dremove(self);
+};
+
+void() monster_knight = 
+{
+	dremove(self);
+};
+
+//void() monster_shambler = 
+//{
+//	dremove(self);
+//};
+
+void() monster_demon1 = 
+{
+	dremove(self);
+};
+
+void() monster_wizard = 
+{
+	dremove(self);
+};
+
+void() monster_hell_knight = 
+{
+	dremove(self);
+};
+
+void() monster_tarbaby = 
+{
+	dremove(self);
+};
+
+void() monster_vomit = 
+{
+	dremove(self);
+};
+
+void() monster_enforcer = 
+{
+	dremove(self);
+};
+
+void() monster_shalrath = 
+{
+	dremove(self);
+};
+
+void() monster_dragon = 
+{
+	dremove(self);
+};
+#endif
+void() flymonster_start_go = 
+{
+	self.takedamage = 2;
+	self.ideal_yaw = self.angles * '0 1 0';
+	if (!(self.yaw_speed))
+	{
+		self.yaw_speed = 10;
+	}
+	self.view_ofs = '0 0 25';
+	self.use = monster_use;
+	self.flags = self.flags | TF_FLARE_OFF;
+	self.flags = self.flags | 32;
+	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
+	{
+		dprint("flymonster in wall at: ");
+		dprint(vtos(self.origin));
+		dprint("\n");
+	}
+	if (self.target)
+	{
+		self.goalentity = self.movetarget = find(world, targetname, self.target);
+		if (!(self.movetarget))
+		{
+			dprint("Monster can't find target at ");
+			dprint(vtos(self.origin));
+			dprint("\n");
+		}
+		if (self.movetarget.classname == "path_corner")
+		{
+			self.th_walk();
+		}
+		else
+		{
+			self.pausetime = 100000000;
+		}
+		self.th_stand();
+	}
+	else
+	{
+		self.pausetime = 100000000;
+		self.th_stand();
+	}
+};
+
+void() flymonster_start = 
+{
+	self.nextthink = self.nextthink + random() * 0.5;
+	self.think = flymonster_start_go;
+#ifndef mtf_coop
+	total_monsters = total_monsters + TF_FLARE_OFF;
+#endif
+	set_monster_health();
+};
+
+void() swimmonster_start_go = 
+{
+	self.takedamage = 2;
+#ifndef mtf_coop
+	total_monsters = total_monsters + TF_FLARE_OFF;
+#endif
+	self.ideal_yaw = self.angles * '0 1 0';
+	if (!(self.yaw_speed))
+	{
+		self.yaw_speed = 10;
+	}
+	self.view_ofs = '0 0 10';
+	self.use = monster_use;
+	self.flags = self.flags | 2;
+	self.flags = self.flags | 32;
+	if (self.target)
+	{
+		self.goalentity = self.movetarget = find(world, targetname, self.target);
+		if (!(self.movetarget))
+		{
+//			dprint("Monster can't find target at ");
+//			dprint(vtos(self.origin));
+//			dprint("\n");
+		}
+		self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
+		self.th_walk();
+	}
+	else
+	{
+		if (self.owner)
+		{
+			self.enemy = self.owner;
+			movetogoal(30);
+		}
+		self.pausetime = 100000000;
+		self.th_stand();
+	}
+	self.nextthink = self.nextthink + random() * 0.5;
+};
+
+void() swimmonster_start = 
+{
+	self.nextthink = self.nextthink + random() * 0.5;
+	self.think = swimmonster_start_go;
+#ifndef mtf_coop
+	total_monsters = total_monsters + TF_FLARE_OFF;
+#endif
+	set_monster_health();
+};
+//END
+

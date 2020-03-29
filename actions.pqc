@@ -1,0 +1,167 @@
+void (vector direction,float damage) BigAssBullet =
+{
+	local vector org;
+	local vector src;
+	makevectors (self.v_angle);
+	src = (self.origin + (v_forward * 10));
+	src_z = (self.absmin_z + (self.size_z * 0.7));
+	ClearMultiDamage ();
+	traceline (src, (src + (direction * 1500)), 0.000000, self);
+	if ((trace_fraction != 1))
+	{
+		TraceAttack (damage, direction);
+	}
+	if (trace_ent.takedamage)
+	{
+		org = (trace_endpos - (v_forward * 4));
+		SpawnBlood (org, 9);
+	}
+	else
+	{
+		org = (trace_endpos - (v_forward * 4));
+		WriteByte (4, 23);
+		WriteByte (4, 0.000000);
+		WriteCoord (4, org_x);
+		WriteCoord (4, org_y);
+		WriteCoord (4, org_z);
+		multicast (self.origin, 1);
+	}
+
+	ApplyMultiDamage ();
+};
+
+void () DropFlag =
+{
+	local entity Item;
+	local entity te;
+	local float f;
+	local string st;
+	te = find (world, classname, "item_tfgoal");
+	while (te)
+	{
+		if (te.owner == self)
+		{
+			Item = te;
+		}
+		te = find (te, classname, "item_tfgoal");
+	}
+	if (Item == world)
+	{
+		sprint (self, 2, "You don't have the flag.\n");	
+		return;
+	}
+	if (self.DropFlagDelay > time)
+	{
+		sprint (self, 2, "Can't drop again for another ");	
+		f = ceil(self.DropFlagDelay - time);
+		st = ftos(f);
+		sprint (self, 2, st);
+		sprint (self, 2, " seconds.\n");	
+		return;
+	}
+	self.DropFlagDelay = time + 10;
+	WriteByte(4, 23);
+	WriteByte(4, 11);
+	WriteCoord(4, self.origin_x);
+	WriteCoord(4, self.origin_y);
+	WriteCoord(4, self.origin_z);
+	multicast(self.origin, TF_FLARE_OFF);
+	tfgoalitem_RemoveFromPlayer(Item, self, 2);
+	setorigin (Item, self.origin - '0 0 24');	// - vf*(16));// - '0 0 15');	//Item.origin = self.origin + v_forward*56 + '0 0 8';
+	Item.velocity = '0 0 1';		//((vf * 150) + '0 0 150';
+	Item.goal_state = 2;
+	Item.movetype = 6;
+	Item.solid = TF_FLARE_OFF;
+	setsize(Item, '-16 -16 0', '16 16 56');
+	if (Item.mdl != string_null)
+	{
+		setmodel(Item, Item.mdl);
+	}
+	Item.option5 = time + 2;
+	Item.tent = self;
+	
+	Item.nextthink = time + 5;
+	Item.think = tfgoalitem_dropthink;
+	Item.touch = item_tfgoal_touch;
+}
+void () Det_Disp =
+{
+	local entity te;
+	if (self.playerclass != 9)
+	{
+	return;
+	}
+	if (self.has_dispenser)
+	{
+		te = find(world, classname, "building_dispenser");
+		while (te)
+		{
+			if (te.real_owner == self)
+			{
+				deathmsg = 201;
+				T_RadiusDamage(te, te.real_owner, 140, world);
+				TF_T_Damage(te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+				sprint(self, 2, "Your dispenser was detonated.\n");
+			}
+			te = find(te, classname, "building_dispenser");
+		}
+	}
+	else
+	{
+		sprint(self, 2, "You don't have a dispenser to detonate.\n");
+	}
+}
+void () Det_Sent =
+{
+	local entity te;
+	if (self.playerclass != 9)
+	{
+	return;
+	}
+	if (self.has_sentry)
+	{
+		te = find(world, classname, "building_sentrygun");
+		while (te)
+		{
+			if (te.real_owner == self)
+			{
+				TF_T_Damage(te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+			}
+			te = find(te, classname, "building_sentrygun");
+		}
+	}
+	else
+	{
+		sprint(self, 2, "You don't have a sentry to detonate.\n");
+	}
+};
+void (entity pent) KickIdler =
+{
+	sprint (pent, 2, "You have been kicked for idling for more than 3 minutes without joining a team/class.\n");
+	stuffcmd(pent, "disconnect\n");	
+};
+void () CheckIdlers =
+{
+	local entity loopent;
+
+	loopent = find (world, classname, "player");
+	while (loopent)
+	{
+#ifdef BATTLE_ROYALE
+		if (battle_royale_e != world)
+			loopent.join_time = time;
+#endif
+#ifdef mtf_coop_lms
+		if (loopent.has_disconnected == 0 && loopent.join_time < (time - 180) && loopent.playerclass < 1 && loopent.#lms_lives != -1 && loopent.lives != -1 && lms_entity != world)
+#else
+		if (loopent.has_disconnected == 0 && loopent.join_time < (time - 180) && loopent.playerclass < 1)
+#endif
+		{		
+			KickIdler(loopent);
+			bprint(1, "",loopent.netname," has been kicked for idling too long.\n");
+		}
+		loopent = find (loopent, classname, "player");
+	}
+
+};
+//end
