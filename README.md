@@ -1,7 +1,9 @@
 # Uber-Team-Fortress
 Uber Team Fortress. 4 player teams, capture the flag, coop against monsters, or just death match. For Quakeworld servers.
+
  Uber Team Fortress - Open Sourced from:
  Author: Avirox (a.k.a. XavioR) up to 1-2015 with many others.
+ 
  Original MegaTeam Fortress Programmers: Ambush, Plexi, mod3m, Plasticity 1997
  Additional addons by Ratbert, Argonator, Agent, Pablo, Cloud, Doc 2010-2019, Often, Aberrant.
  Credits also to Hipnotic, Mega Team Fortress PTY LTD, Gold, Sh1thead. 
