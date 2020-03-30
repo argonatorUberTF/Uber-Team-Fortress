@@ -126,6 +126,12 @@ Custom skins are possible. Not restricted per class. Use "cmd customskin" Frag w
 # CODING TIPS
 Don't leave blank lines, or use /* /* comments, adds to code size by 12%, slows things down a lot.
 For the love of god, use // for comments instead. Sparingly.
+# Do not do this:
+local variablethatconflictswithaglobalname 
+(a blank line which lags the function)
+(code.....blah)
+} (and forget the semicolon)
+
 Production/release code should only have the minimum comments to speed up the code.
 This particular build only runs in window with MSDSV .28BXE build. Not sure about .32 MVDSV yet.
 Xavior did some tweaks to that build used here.
@@ -138,7 +144,7 @@ Generally in this order:
 #defines, .floats, .entities, vectors, static floats , floats, float functions, and then void().
 Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, half-life etc.
 
-Deployment of client and server files see #readme_files.md .
+Deployment of client and server files see readme_files.md .
 
 Donations glady accepted by bitcoin to address: 3J2nKrotxfP7mqQgTBotn4rgAvRqVhD1hh
 email: forgetitanyway@gmail.com
