@@ -142,6 +142,8 @@ Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, hal
 Deployment of client and server files see readme_files.md .
 
 Donations glady accepted by bitcoin to address: 3J2nKrotxfP7mqQgTBotn4rgAvRqVhD1hh
+
 email: forgetitanyway@gmail.com
+
 Discord: argonator#1511
 
