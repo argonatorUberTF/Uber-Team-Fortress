@@ -127,10 +127,14 @@ Custom skins are possible. Not restricted per class. Use "cmd customskin" Frag w
 Don't leave blank lines, or use /* /* comments, adds to code size by 12%, slows things down a lot.
 For the love of god, use // for comments instead. Sparingly.
 # Do not do this:
+
 local variablethatconflictswithaglobalname 
+
 (a blank line which lags the function)
+
 (code.....blah)
-} (and forget the semicolon)
+
+} (and forget the semicolon at the end)
 
 Production/release code should only have the minimum comments to speed up the code.
 This particular build only runs in window with MSDSV .28BXE build. Not sure about .32 MVDSV yet.
