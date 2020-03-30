@@ -1,0 +1,9 @@
+h:\games\quake\fortress\csprogs.dat
+
+system.qc
+csqc_defs.qc
+menu_class.qc
+menu_other.qc
+gui_menus.qc
+mtf_coop_hud.qc
+csqc_parse.qc

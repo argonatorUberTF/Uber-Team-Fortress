@@ -1,0 +1,17 @@
+c1a1b:
+trouble w/ doors
+tunnel thing is f*d
+c1a1c:
+no trigger(er)
+no .target field either
+cant push crates in water
+elevator at end dont connect to c1a2
+c1a2:
+elevator in beginning dont open
+no working autoturret
+c1a2b:
+enforce proper route (no door)
+glowy thing behind door unreachable
+c1a2c:
+door in beginning lacks open trigger
+crouching is a pain in the ass on this map
