@@ -1,6 +1,8 @@
 # UberTeam Fortress
 Uber Team Fortress. A four player teams, capture the flag, coop against monsters, or just death match. For Quakeworld servers.
 
+# Check releases for the deploy.zip pack for Fortress One clients and other Quakeworld clients.
+
 # Uber Team Fortress - Open Sourced from:
  Author: Avirox (a.k.a. XavioR) up to 1-2015 with many others.
  Mega Team Fortress, Coop vs monsters.
