@@ -2458,25 +2458,25 @@ string /*WARNING: could not determine return type*/ (float tno) GetTrueTeamName 
 {
 	if ((tno == 1))
 	{
-		return (/*65868*/"Âìõå");
+		return (/*65868*/"Ã‚Ã¬ÃµÃ¥");
 	}
 	else
 	{
 		if ((tno == 2))
 		{
-			return (/*65873*/"Òåä");
+			return (/*65873*/"Ã’Ã¥Ã¤");
 		}
 		else
 		{
 			if ((tno == 3))
 			{
-				return (/*65877*/"Ùåììï÷");
+				return (/*65877*/"Ã™Ã¥Ã¬Ã¬Ã¯Ã·");
 			}
 			else
 			{
 				if ((tno == 4))
 				{
-					return (/*65884*/"Çòååî");
+					return (/*65884*/"Ã‡Ã²Ã¥Ã¥Ã®");
 				}
 				else
 				{
@@ -3014,9 +3014,9 @@ void (float all) TeamFortress_TeamShowScores =
 		{
 			if ((team1score > team2score))
 			{
-				bprint (2, "");
+				bprint (2, "Â");
 				bprint (2, TeamFortress_TeamGetColorString (1));
-				bprint (2, "‘ èáó ÷ïî ôèå íáôãè¡\n");
+				bprint (2, "Â‘ Ã¨Ã¡Ã³Â Ã·Ã¯Ã®Â Ã´Ã¨Ã¥Â Ã­Ã¡Ã´Ã£Ã¨Â¡\n");
 				execute_changelevel ();
 				return;
 			}
@@ -3032,19 +3032,19 @@ void (float all) TeamFortress_TeamShowScores =
 			totalf = (fix1 - fix2);
 			totals = ftos (totalf);
 			if (totalf != 0) {
-			bprint (2, "");
+			bprint (2, "Â");
 			bprint (2, TeamFortress_TeamGetColorString (_l_7158));
-			bprint (2, "‘ éó ìåáäéîç âù ");
+			bprint (2, "Â‘ Ã©Ã³Â Ã¬Ã¥Ã¡Ã¤Ã©Ã®Ã§Â Ã¢Ã¹ Â");
 			bprint (2, totals);
-			bprint (2, "‘\n"); }
+			bprint (2, "Â‘\n"); }
 			else
 			{
-				bprint (2, "Ôèå çáíå éó tied‘\n");
+				bprint (2, "Ã”Ã¨Ã¥Â Ã§Ã¡Ã­Ã¥Â Ã©Ã³ ÂtiedÂ‘\n");
 			}	
 		}
 		else
 		{
-			bprint (2, "Ôèå çáíå éó tied‘\n");
+			bprint (2, "Ã”Ã¨Ã¥Â Ã§Ã¡Ã­Ã¥Â Ã©Ã³ ÂtiedÂ‘\n");
 		}
 		return;
 	}
@@ -4132,7 +4132,7 @@ void(entity Viewer, float pc, float rpc, float xavior_Var) TeamFortress_PrintCla
 	}
 	if (xavior_Var == 2)
 	{
-		sprint(Viewer, 2, "‘\n");
+		sprint(Viewer, 2, "Â‘\n");
 	}
 	else
 	{
@@ -6628,39 +6628,39 @@ string ( entity monster, float return_name ) GetMonsterPowers =
 #endif
 	if (monster.monster_items & MITEM_QUAD)
 	{
-		rtrn = strcat(rtrn, "ÑÕÁÄ ");
+		rtrn = strcat(rtrn, "Ã‘Ã•ÃÃ„ ");
 	}
 	if (monster.monster_items & MITEM_INVISIBLE)
 	{
-		rtrn = strcat(rtrn, "ÉÎÖÉÓÉÂÌÅ ");	// INVISIBLE
+		rtrn = strcat(rtrn, "Ã‰ÃÃ–Ã‰Ã“Ã‰Ã‚ÃŒÃ… ");	// INVISIBLE
 	}
 	if (monster.monster_items & MITEM_SPEED)
 	{
-		rtrn = strcat(rtrn, "ÓĞÅÅÄ ");	// SPEED
+		rtrn = strcat(rtrn, "Ã“ÃÃ…Ã…Ã„ ");	// SPEED
 	}
 	if (monster.monster_items & MITEM_MEGAHEALTH)
 	{
-		rtrn = strcat(rtrn, "ÍÅÇÁÈÅÁÌÔÈ ");	// MEGAHEALTH
+		rtrn = strcat(rtrn, "ÃÃ…Ã‡ÃÃˆÃ…ÃÃŒÃ”Ãˆ ");	// MEGAHEALTH
 	}
 	if (monster.monster_items & MITEM_FLAME)
 	{
-		rtrn = strcat(rtrn, "ÆÌÁÍÅ ");	// FLAME
+		rtrn = strcat(rtrn, "Ã†ÃŒÃÃÃ… ");	// FLAME
 	}
 	if (monster.monster_items & MITEM_ICE)
 	{
-		rtrn = strcat(rtrn, "ÉÃÅ ");		// ICE
+		rtrn = strcat(rtrn, "Ã‰ÃƒÃ… ");		// ICE
 	}
 	if (monster.monster_items & MITEM_LIGHTNING)
 	{
-		rtrn = strcat(rtrn, "ÌÉÇÈÔÎÉÎÇ ");		// LIGHTNING
+		rtrn = strcat(rtrn, "ÃŒÃ‰Ã‡ÃˆÃ”ÃÃ‰ÃÃ‡ ");		// LIGHTNING
 	}
 	if (monster.monster_items & MITEM_AIR)
 	{
-		rtrn = strcat(rtrn, "ÁÉÒ ");		// AIR
+		rtrn = strcat(rtrn, "ÃÃ‰Ã’ ");		// AIR
 	}
 	if (monster.monster_items & MITEM_POWERSTEALER)
 	{
-		rtrn = strcat(rtrn, "ĞÏ×ÅÒÓÔÅÁÌÅÒ ");		// POWERSTEALER
+		rtrn = strcat(rtrn, "ÃÃÃ—Ã…Ã’Ã“Ã”Ã…ÃÃŒÃ…Ã’ ");		// POWERSTEALER
 	}	
 	if (monster.weapon & #MWEAPON_ROCKETLAUNCHER)
 	{
@@ -7312,19 +7312,19 @@ void () TeamFortress_Inventory =
 	_l_10157 = ftos (self.team_no);
 	if ((_l_10157 == "1"))
 	{
-		sprint (self, 2.000000, "ÂÌÕÅ");
+		sprint (self, 2.000000, "Ã‚ÃŒÃ•Ã…");
 	}
 	if ((_l_10157 == "2"))
 	{
-		sprint (self, 2.000000, "ÒÅÄ");
+		sprint (self, 2.000000, "Ã’Ã…Ã„");
 	}
 	if ((_l_10157 == "3"))
 	{
-		sprint (self, 2.000000, "ÙÅÌÌÏ×");
+		sprint (self, 2.000000, "Ã™Ã…ÃŒÃŒÃÃ—");
 	}
 	if ((_l_10157 == "4"))
 	{
-		sprint (self, 2.000000, "ÇÒÅÅÎ");
+		sprint (self, 2.000000, "Ã‡Ã’Ã…Ã…Ã");
 	}
 	sprint (self, 2.000000, " team.\n");
 	if ((self.lives != -1.000000))
@@ -7343,10 +7343,10 @@ void () TeamFortress_Inventory =
 	}
 	if ((self.no_grenades_1 > 0.000000))
 	{
-		sprint (self, 2.000000, " Û");
+		sprint (self, 2.000000, " Ã›");
 		_l_10157 = ftos (self.no_grenades_1);
 		sprint (self, 2.000000, _l_10157);
-		sprint (self, 2.000000, "İ ");
+		sprint (self, 2.000000, "Ã ");
 		if ((self.tp_grenades_1 == 1.000000))
 		{
 			sprint (self, 2.000000, "normal grenade");
@@ -7419,10 +7419,10 @@ void () TeamFortress_Inventory =
 	}
 	if ((self.no_grenades_2 > 0.000000))
 	{
-		sprint (self, 2.000000, " Û");
+		sprint (self, 2.000000, " Ã›");
 		_l_10157 = ftos (self.no_grenades_2);
 		sprint (self, 2.000000, _l_10157);
-		sprint (self, 2.000000, "İ ");
+		sprint (self, 2.000000, "Ã ");
 		if ((self.tp_grenades_2 == 1.000000))
 		{
 			sprint (self, 2.000000, "normal grenade");
@@ -7699,7 +7699,7 @@ void () TeamFortress_ShowTF =
 {
 	local string _l_10203;
 	local float _l_10205;
-	sprint (self, 2.000000, "ÔåáíÆïòôòåóó Óåôôéîçóº\n\n");
+	sprint (self, 2.000000, "Ã”Ã¥Ã¡Ã­Ã†Ã¯Ã²Ã´Ã²Ã¥Ã³Ã³ Ã“Ã¥Ã´Ã´Ã©Ã®Ã§Ã³Âº\n\n");
 	if ((toggleflags & 1.000000))
 	{
 		sprint (self, 2.000000, "   Class Persistence On.\n");
@@ -7748,7 +7748,7 @@ void () TeamFortress_ShowTF =
 		sprint (self, 2.000000, "   Grapple Off.\n");
 	}
 	ReCheckRestrictions ();
-	sprint (self, 2.000000, "\n\n\nÃìáóó Òåóôòéãôéïîóº\n\n");
+	sprint (self, 2.000000, "\n\n\nÃƒÃ¬Ã¡Ã³Ã³ Ã’Ã¥Ã³Ã´Ã²Ã©Ã£Ã´Ã©Ã¯Ã®Ã³Âº\n\n");
 	_l_10205 = 0.000000;
 	_l_10205 = _l_10205 + ShowTF_PrintCR ("   Scout   : ", cr_scout);
 	_l_10205 = _l_10205 + ShowTF_PrintCR ("   Sniper  : ", cr_sniper);
@@ -8992,14 +8992,14 @@ void() TeamFortress_RemoveTimers =
 			if (CTF_Map == 1 && te.goal_no == 1)
 			{
 				bprint(2, self.netname);
-				bprint(2, " ÌÏÓÔ the ÂÌÕÅ flag!\n");
+				bprint(2, " ÃŒÃÃ“Ã” the Ã‚ÃŒÃ•Ã… flag!\n");
 			}
 			else
 			{
 				if (CTF_Map == 1 && te.goal_no == 2)
 				{
 					bprint(2, self.netname);
-					bprint(2, " ÌÏÓÔ the ÒÅÄ flag!\n");
+					bprint(2, " ÃŒÃÃ“Ã” the Ã’Ã…Ã„ flag!\n");
 				}
 			}
 		}
@@ -12022,7 +12022,7 @@ void () MTF_Coop_UpdateMapRanks =
 		file = open (filename, 2);
 		write (file, "// Best time, best player, best player frags\n");
 		if (new_best_time < old_best_time) {
-			MTF_Coop_AddExpToAll ( (total_monsters * 2), frik_strcat("ÂÏÎÕÓ ÅØĞ¡ New best time record set for ", mapname, frik_strcat(": ", ftos(new_best_time), " seconds!\nExp Bonus for all!") ), #FALSE);
+			MTF_Coop_AddExpToAll ( (total_monsters * 2), frik_strcat("Ã‚ÃÃÃ•Ã“Â Ã…Ã˜ÃÂ¡ New best time record set for ", mapname, frik_strcat(": ", ftos(new_best_time), " seconds!\nExp Bonus for all!") ), #FALSE);
 			Achievements_Change( world, world, ACHIEVEMENTS_GLOBALADD, ACHIEVEMENT_SPEEDY, 1 );
 			write (file, ftos(new_best_time));
 		}
@@ -14612,7 +14612,7 @@ void() item_flag_team2 =
 	precache_sound("boss2/pop2.wav");
 	self.classname = "item_tfgoal";
 	self.netname = "Team 1 Flag";
-	self.broadcast = " ÇÏÔ the enemy team's flag!\n";
+	self.broadcast = " Ã‡ÃÃ” the enemy team's flag!\n";
 	self.deathtype = "You've got the enemy flag!\n";
 	self.noise = "ogre/ogwake.wav";
 	self.mdl = "progs/tf_flag.mdl";
@@ -14637,8 +14637,8 @@ void() item_flag_team2 =
 	dp.items_allowed = 2;
 	dp.goal_no = 3;
 	dp.goal_effects = 3;
-	dp.broadcast = " ÃÁĞÔÕÒÅÄ the enemy flag!\n";
-	dp.message = "You ÃÁĞÔÕÒÅÄ the enemy flag!\n";
+	dp.broadcast = " ÃƒÃÃÃ”Ã•Ã’Ã…Ã„ the enemy flag!\n";
+	dp.message = "You ÃƒÃÃÃ”Ã•Ã’Ã…Ã„ the enemy flag!\n";
 	dp.noise = "boss2/pop2.wav";
 	dp.goal_result = 2;
 	dp.activate_goal_no = 5;
@@ -14676,7 +14676,7 @@ void() item_flag_team1 =
 	precache_sound("boss2/pop2.wav");
 	self.classname = "item_tfgoal";
 	self.netname = "Team 2 Flag";
-	self.broadcast = " ÇÏÔ the enemy team's flag!\n";
+	self.broadcast = " Ã‡ÃÃ” the enemy team's flag!\n";
 	self.deathtype = "You've got the enemy flag!\n";
 	self.noise = "ogre/ogwake.wav";
 	self.mdl = "progs/tf_flag.mdl";
@@ -14701,8 +14701,8 @@ void() item_flag_team1 =
 	dp.items_allowed = TF_FLARE_OFF;
 	dp.goal_no = 4;
 	dp.goal_effects = 3;
-	dp.broadcast = " ÃÁĞÔÕÒÅÄ the enemy flag!\n";
-	dp.message = "You ÃÁĞÔÕÒÅÄ the enemy flag!\n";
+	dp.broadcast = " ÃƒÃÃÃ”Ã•Ã’Ã…Ã„ the enemy flag!\n";
+	dp.message = "You ÃƒÃÃÃ”Ã•Ã’Ã…Ã„ the enemy flag!\n";
 	dp.noise = "boss2/pop2.wav";
 	dp.goal_result = 2;
 	dp.activate_goal_no = 6;
@@ -15757,27 +15757,27 @@ void () review_timeleft =
    	remaining = seconds - self.no_grenades_1;
    	if ((remaining == 5) & (seconds >= 5))
    	{
-		bprint(2,"µ óåãïîäó remaining!\n");
+		bprint(2,"ÂÂµ Ã³Ã¥Ã£Ã¯Ã®Ã¤Ã³ remaining!\n");
    	}
    	else if ((remaining == 30) & (seconds >= 30))
    	{
-		 bprint(2,"³° óåãïîäó remaining.\n");
+		 bprint(2,"ÂÂ³Â° Ã³Ã¥Ã£Ã¯Ã®Ã¤Ã³ remaining.\n");
    	}
    	else if ((remaining == 60) & (seconds >= 60))
    	{
-		 bprint(2,"± íéîõôå remaining.\n");
+		 bprint(2,"ÂÂ± Ã­Ã©Ã®ÃµÃ´Ã¥ remaining.\n");
    	}
    	else if ((remaining == 300) & (seconds >= 300))
    	{
-		 bprint(2,"µ íéîõôåó remaining.\n");
+		 bprint(2,"ÂÂµ Ã­Ã©Ã®ÃµÃ´Ã¥Ã³ remaining.\n");
    	}
 	else if ((remaining == 900) & (seconds >= 900))
 	{
-		bprint(2, "±µ íéîõôåó remaining.\n");
+		bprint(2, "Â±Âµ Ã­Ã©Ã®ÃµÃ´Ã¥Ã³ remaining.\n");
 	}
 	else if ((remaining == 1800) & (seconds >= 1800))
 	{
-		bprint(2, "³° íéîõôåó remaining.\n");
+		bprint(2, "Â³Â° Ã­Ã©Ã®ÃµÃ´Ã¥Ã³ remaining.\n");
 	}
    	else if (remaining <= 0) 
    	{
@@ -16826,10 +16826,10 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 		rank = stof(read(file));
 		sprint( self, 2, substr( frik_strcat( ftos(rank), "                      " ), 0, 9) );
 		//level:
-		sprint( self, 2, "         ¨ìåöåì: " );
+		sprint( self, 2, "         Â¨Ã¬Ã¥Ã¶Ã¥Ã¬: " );
 		level = Coop_GetLevel(rank);
 		sprint( self, 2, ftos(level) );
-		sprint( self, 2, "©\n" );
+		sprint( self, 2, "Â©\n" );
 
 		strunzone(rname);
 	}	
@@ -16850,9 +16850,9 @@ void () MTF_Coop_ViewTopMapRanks =
 		sprint( self, 2, " .\n" );
 		return;
 	}
-	sprint( self, 2, "Ôïğ Òáîëó æïòº " );
+	sprint( self, 2, "ÂÃ”Ã¯Ã°Â Ã’Ã¡Ã®Ã«Ã³Â Ã¦Ã¯Ã²Âº " );
 	sprint( self, 2, mapname );
-	sprint( self, 2, "‘ .\n" );
+	sprint( self, 2, "Â‘ .\n" );
 	read(file);		// skip line 1
 	rname = strzone(read(file));
 	rname = strzone(rname);
@@ -16901,7 +16901,7 @@ void () MTF_Coop_ShowAttrib =
 	sprint(self, 2, ftos(self.clipex_attr));	
 	sprint(self, 2, "\n -- 11) Projectile Speed Attributes: ");
 	sprint(self, 2, ftos(self.proj_attr));	
-	sprint(self, 2, "\n -- ÍÁØ ÓĞÅÎÄÉÎÇ ĞÏÉÎÔÓ ĞÅÒ ÁÔÔÒÉÂÕÔÅº ");	
+	sprint(self, 2, "\n -- ÃÃÃ˜ Ã“ÃÃ…ÃÃ„Ã‰ÃÃ‡ ÃÃÃ‰ÃÃ”Ã“Â ÃÃ…Ã’Â ÃÃ”Ã”Ã’Ã‰Ã‚Ã•Ã”Ã…Âº ");	
 	sprint(self, 2, ftos(#MAX_SPEND));
 	sprint(self, 2, " --");
 	sprint(self, 2, "\nType \"cmd spend\" for information on spending attributes.\n");
@@ -16951,7 +16951,7 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 		sprint(self, 2, "11 - projectile speed (increases speed of rockets, tranq, rails, flames, etc.\n");
 		sprint(self, 2, "Each increase in attribute level costs the previous level plus one in free attribute points.\n");
 		sprint(self, 2, "For example level 5 costs 6 free attribute points.\n");		
-		sprint(self, 2, " -- ÍÁØ ÓĞÅÎÄÉÎÇ ĞÏÉÎÔÓ ĞÅÒ ÁÔÔÒÉÂÕÔÅº ");	
+		sprint(self, 2, " -- ÃÃÃ˜ Ã“ÃÃ…ÃÃ„Ã‰ÃÃ‡ ÃÃÃ‰ÃÃ”Ã“Â ÃÃ…Ã’Â ÃÃ”Ã”Ã’Ã‰Ã‚Ã•Ã”Ã…Âº ");	
 		sprint(self, 2, ftos(#MAX_SPEND));
 		sprint(self, 2, " --\n");		
 		return;
@@ -21393,7 +21393,7 @@ void () Achievements_Set =
 				ach_total = 0;
 
 			if (Achievements_CheckComplete(a_type) <= ach_total) {
-				bprint(2, "‰‰‰ÎE× AÃHÉEÖEÍEÎT‰‰‰ ");
+				bprint(2, "Â‰Â‰Â‰ÃEÃ— AÃƒHÃ‰EÃ–EÃEÃTÂ‰Â‰Â‰ ");
 				bprint(2, t_plyr.connect_name);
 				bprint(2, " has earned the achievement: ");
 				bprint(2, Achievements_GetName(a_type) );
@@ -21574,9 +21574,9 @@ void (entity plyr, float amnt, float rcrd) Record_Check =
 			return;
 		if (amnt > record_fer)
 		{
-			bprint(2, "ÎÅ× ÒÅÃÏÒÄº ");
+			bprint(2, "ÃÃ…Ã— Ã’Ã…ÃƒÃÃ’Ã„Âº ");
 			bprint(2, plyr.netname);
-			bprint(2, " has ÂÒÏËÅÎ the last ÆÅÒ record of ");
+			bprint(2, " has Ã‚Ã’ÃÃ‹Ã…Ã the last Ã†Ã…Ã’ record of ");
 			bprint(2, ftos(record_fer));
 			bprint(2, " by getting a ");
 			bprint(2, ftos(amnt));
@@ -21592,9 +21592,9 @@ void (entity plyr, float amnt, float rcrd) Record_Check =
 		{
 			if (record_fragholder != plyr.netname)
 			{
-				bprint(2, "ÎÅ× ÒÅÃÏÒÄº ");
+				bprint(2, "ÃÃ…Ã— Ã’Ã…ÃƒÃÃ’Ã„Âº ");
 				bprint(2, plyr.netname);
-				bprint(2, " has ÂÒÏËÅÎ the last ÆÒÁÇ record of ");
+				bprint(2, " has Ã‚Ã’ÃÃ‹Ã…Ã the last Ã†Ã’ÃÃ‡ record of ");
 				bprint(2, ftos(record_frags));
 				bprint(2, " by getting a frag score of ");
 				bprint(2, ftos(amnt));
@@ -21776,9 +21776,9 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 					{
 						gotthrough = 1;
 						stuffcmd(te, "play misc/talk.wav\n");
-sprint(te, 2, "?? ¨");
+sprint(te, 2, "?? Â¨");
 sprint(te, 2, self.netname );
-sprint(te, 2, "©? ");
+sprint(te, 2, "Â©? ");
 sprint(te, 2, arg3);
 sprint(te, 2, "\n");
 
@@ -23175,10 +23175,10 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	{
 		if (!s2 || s2 == "")
 		{
-			sprint( self, 2, "General help. \n" );
+			sprint( self, 2, "ÂGeneral help. \n" );
 			sprint( self, 2, "Usage: cmd help <topic> .\n");
 			sprint( self, 2, "EXP - Will provide help on experience points.\n");
-			sprint( self, 2, "?fa?µaßµe ??p??s?‘ .\n");
+			sprint( self, 2, "AVAILABLE TOPICS\n");
 			sprint( self, 2, "ranks .\n");
 			sprint( self, 2, "exp .\n");
 			sprint( self, 2, "attributes (attrib) .\n");
@@ -23186,13 +23186,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "vote .\n");
 			sprint( self, 2, "masters .\n");
 			sprint( self, 2, "achievements (ach) .\n");
-			sprint( self, 2, "aura - If you are medic or have the masters skill.\n");
+			sprint( self, 2, "aura - If you are medic or have the masters skill. It heals your team members nearby.\n");
 			sprint( self, 2, "call - Calls your summoned minions to you for battle.\n");
-			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode.\n");
-			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun.\n");
-			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost.\n");
+			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode or stuck in a ditch/lava/slime.\n");
+			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun. Stay Frosty.\n");
+			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost. Farts damage enemies.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
-			sprint( self, 2, "End of help.\n");
+			sprint( self, 2, "End ofÂ help.\n");
 			return 1;
 		}
 #ifdef mtf_coop_expsys
@@ -23228,7 +23228,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		else if (s2 == "ranks")
 		{
 			sprint( self, 2, "-- Persistent player and map ranks --\n");
-			sprint( self, 2, "Example usage: ??d s???t?p ²° - shows top 20 players.\n");
+			sprint( self, 2, "Example usage: ??d s???t?p Â²Â° - shows top 20 players.\n");
 			sprint( self, 2, "showtop # - shows top players on the server (sorted by exp).\n");
 			sprint( self, 2, "showvoted # - shows top voted maps on the server (sorted by vote count).\n");
 			sprint( self, 2, "showmaptop - shows the top player time and score for the current map.\n");
@@ -23239,6 +23239,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "customskin <skinname> - Allows players to use a custom skin.\n");
 			sprint( self, 2, "res - Resurrects a nearby player.\n");
 			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode.\n");
+			sprint( self, 2, "powerleft - Shows your invicibility, quad, and invisbility time left.\n");		
+			
 			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun.\n");
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
@@ -24430,4 +24432,4 @@ void() HuntTarget =
 	self.nextthink = time + 0.1;
 	SUB_AttackFinished(TF_FLARE_OFF);
 };
-//END
+//END
