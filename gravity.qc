@@ -42,6 +42,8 @@ void() gravity_pull =
 	while (e)
 	{	 
 		//if (visible(e)) //comment out to pull through walls!!! SH*
+	if (e.classname != "merchant") // Don't pull the merchant. -ratbert -arg
+	if (e.team_no != self.team_no) // Don't pull in team mates. -ratbert -arg
 		if (e.classname != "gravity") // don't yank on any other gravity wells
 			if (e.classname != "beartrap")
 				if (e.classname != "Harpoon") // efc: leave harpoon alone
@@ -213,6 +215,6 @@ void() drop_gravity =
 	egravity.velocity = aim (self, 800); // efc aim
 	egravity.velocity = egravity.velocity * (600 + random() * 20) + '0 0 375'; // efc aim
 	egravity.weapon = 4096;
-	AddToSplash (egravity);
+	//AddToSplash (egravity);  // might be causing monsters falling through floor ?! -arg
 };
 //END
