@@ -259,8 +259,8 @@ void(string blah) strunzone;
 .entity nutarget;					// Rogue cutscene.qc
 .entity beartrap_target;				//Painkeep
 .entity turret_base;					// PAINKEEP
-.entity beartrap_target;				// PAINKEEP
 .entity turret_base;					//PAINKEEP
+entity bt;							//the beartrap is an entity with a team_no now. -arg
 entity tesla_target;			//hiptems.qc
 entity lastspawn_team1, lastspawn_team2, lastspawn_team3, lastspawn_team4;
 entity multi_ent;  //from weapons.pqc in the middle of the code.  Like everyone knows about it. -arg
@@ -586,7 +586,6 @@ entity tracetossent;			// Nehara
 .float tools;					// TEMP HERE
 // megatf coop carry-overs (AKA stuff that I was too lazy to change)
 .float has_tesla;
-.float team_no;
 .float distance;
 .float rv_s_h;
 .float mtf_items;
@@ -20812,6 +20811,10 @@ void() beartrapTouch =
 		return;
 	if (other.bt_immune_time > time)
 		return;
+	if ((other.team_no == self.owner.team_no) && (self.owner.team_no != TF_FLARE_LIT))
+	{
+      return ;   //don't clamp things on the same team.
+	}  		
 if (other.takedamage)
 {
 	other.beartrap_time = 1; 									// SWP: 14/05/97
@@ -20824,11 +20827,11 @@ if (other.takedamage)
 	deathmsg = 202; // Set death type for obituary. -arg
 	sound (self, CHAN_AUTO, "weapons/btrap/btrap_1.wav", 1, ATTN_NORM);
 }
+
 };
 
 void() beartrap_dropBearTrap =
 {
-	local entity bt;
 	if (self.pk_beartrapammo <= 0)
 	{
 		return;
@@ -20843,7 +20846,7 @@ void() beartrap_dropBearTrap =
 	bt.health = 50; // was 50, testing to make it harder to rjump them off of player SH*
 	bt.th_die = beartrapDie;
 	bt.netname = "Bear_Trap";
-	bt.team_no = self.team_no; // set the beartrap team number as the players.
+	bt.team_no = self.team_no; // set the beartrap team number same the players.
 	bt.pk_currentitem = PK_IT_BEARTRAP;
 	bt.beartrap_time = time + 1.6; 																									// was 3  SH* Grace period
 	bt.think = beartrapDie;
@@ -20859,7 +20862,7 @@ void() beartrap_dropBearTrap =
 	bt.touch = beartrapTouch;
 	deathmsg = 202; // Set death type for obituary. -arg
 	sound (self, CHAN_AUTO, "weapons/btrap/bdrop_1.wav", 1, ATTN_NORM);
-	AddToSplash (bt);
+	//AddToSplash (bt);
 	if (pointcontents(self.origin) == #CONTENT_SKY)  // If it touches the sky or gets stuck there, remove it. Borrowed code from weapons.qc Fusion_Touch - arg 11/2013
 	{
 		remove(self);
@@ -21654,6 +21657,7 @@ void ( entity to_summon ) BeginSummon =
 		sprint ( self, 2, "Can't resurrect that monster. Have a shambler instead.\n" );
 		//return;
 		newmon.netname = "shambler";
+		newmon.team_no = self.team_no;
 		SetSpawnFunc ( newmon, to_summon.classname );
 		
 	}

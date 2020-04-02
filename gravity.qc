@@ -40,14 +40,12 @@ void() gravity_pull =
 	e = findradius (self.origin, gDist);
 
 	while (e)
-	{	 
-		//if (visible(e)) //comment out to pull through walls!!! SH*
-	if (e.classname != "merchant") // Don't pull the merchant. -ratbert -arg
-	if (e.team_no != self.team_no) // Don't pull in team mates. -ratbert -arg
+	{
+if (e.classname != "merchant") // don't grab the merchant
+		//if (visible(e)) //comment out to pull through walls!!! SH*(crazy -arg)
 		if (e.classname != "gravity") // don't yank on any other gravity wells
-			if (e.classname != "beartrap")
 				if (e.classname != "Harpoon") // efc: leave harpoon alone
-					// if (e != self.owner)
+					if (e != self.owner)
 					if (e.movetype != MOVETYPE_PUSH)
 						if ((e.movetype != MOVETYPE_NOCLIP)  || (e.classname == "spectator") )
 							if (e.movetype != MOVETYPE_NONE || (intermission_running && e.classname == "info_intermission"))
@@ -92,7 +90,7 @@ void() gravity_pull =
 								}	
 							}
 		e = e.chain;
-		deathmsg = 204; // Set death type for obituary. -arg
+//		deathmsg = 204; // Set death type for obituary. -arg
 	}
 };
 void() gravity_pulse1 = [ $cubelf01, gravity_pulse2 ]
@@ -216,6 +214,6 @@ void() drop_gravity =
 	egravity.velocity = egravity.velocity * (600 + random() * 20) + '0 0 375'; // efc aim
 	egravity.weapon = 4096;
 	egravity.team_no = self.team_no;
-	//AddToSplash (egravity);  // might be causing monsters falling through floor ?! -arg
+	//AddToSplash (egravity);  /// This might be causing the dropping through floor bug.
 };
 //END
