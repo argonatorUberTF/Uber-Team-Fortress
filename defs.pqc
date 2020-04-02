@@ -1228,8 +1228,8 @@ float ( entity t_mons, float m_type ) Coop_IsMonster;
 #define MODEL_CAKE			"progs/bwcake.mdl"
 float cake_dispensed;
 #define mtf_coop_bonus
-#define BDAY_MSG 			"\n┤┴├ биртхдаы═едитион ├┴┤\nMay 87\n\n░мАП╨ "
-//#define BDAY_MSG 			"\n┤┴├ биртхдаы═едитион ├┴┤\nDec 15 - Happy Doc Day Bitchesss\n\n░мАП╨ "
+#define BDAY_MSG 			"\nб┤б┴б├ ц┌ц┴ц▓ц■ц┬ц└ц│ц≥б═ц┘ц└ц┴ц■ц┴ц▐ц▌ б├б┴б┤\nMay 87\n\nб░ц█ц║ц╟б╨ "
+//#define BDAY_MSG 			"\nб┤б┴б├ ц┌ц┴ц▓ц■ц┬ц└ц│ц≥б═ц┘ц└ц┴ц■ц┴ц▐ц▌ б├б┴б┤\nDec 15 - Happy Doc Day Bitchesss\n\nб░ц█ц║ц╟б╨ "
 #endif
 
 #ifdef mtf_coop
@@ -1724,5 +1724,5 @@ float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
 
-#define SETVERSION		localcmd("serverinfo UBERTF v3.26.20United\n");
-//END
+#define SETVERSION		localcmd("serverinfo UBERTF v4.02.20United\n");
+//END
