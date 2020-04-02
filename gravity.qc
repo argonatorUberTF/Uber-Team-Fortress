@@ -215,6 +215,7 @@ void() drop_gravity =
 	egravity.velocity = aim (self, 800); // efc aim
 	egravity.velocity = egravity.velocity * (600 + random() * 20) + '0 0 375'; // efc aim
 	egravity.weapon = 4096;
+	egravity.team_no = self.team_no;
 	//AddToSplash (egravity);  // might be causing monsters falling through floor ?! -arg
 };
 //END
