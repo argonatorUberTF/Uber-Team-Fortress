@@ -1,0 +1,608 @@
+// BTF Submarine
+void() SubTouch;
+
+void () Sub_Speed =
+{
+	self.air_finished = (time + 20);
+	stuffcmd (self, "cl_bob 0\n");
+	if ((self.Old_Health > 0))
+	{
+		makevectors (self.v_angle);
+		self.velocity = aim (self, 1000);
+		self.angles = vectoangles (self.velocity);
+	}
+	if (((self.Aircraft_Speed == 0) && (self.Old_Health > 0)))
+	{
+		self.velocity_z = 0;
+		self.Current_Speed = (self.Current_Speed - 10);
+		if ((self.Current_Speed <= 0))
+		{
+			self.Current_Speed = 0;
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.020000);
+	}
+	if (((self.Aircraft_Speed == 1) && (self.Old_Health > 0)))
+	{
+		if ((self.Current_Speed < 150))
+		{
+			self.Current_Speed = (self.Current_Speed + 7.500000);
+		}
+		if ((self.Current_Speed >= 150))
+		{
+			self.Current_Speed = (self.Current_Speed - 7.500000);
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.040000);
+		self.NoFuel_Velocity = self.velocity;
+	}
+	if (((self.Aircraft_Speed == 2) && (self.Old_Health > 0)))
+	{
+		if ((self.Current_Speed < 300))
+		{
+			self.Current_Speed = (self.Current_Speed + 15);
+		}
+		if ((self.Current_Speed >= 300))
+		{
+			self.Current_Speed = (self.Current_Speed - 15);
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.040000);
+		self.NoFuel_Velocity = self.velocity;
+	}
+	if (((self.Aircraft_Speed == 3) && (self.Old_Health > 0)))
+	{
+		if ((self.Current_Speed < 150))
+		{
+			self.Current_Speed = 150;
+		}
+		self.Current_Speed = (self.Current_Speed + 15);
+		if ((self.Current_Speed >= 650))
+		{
+			self.Current_Speed = 650;
+		}
+		if ((self.waterlevel == 2))
+		{
+			self.Current_Speed = 300;
+		}
+		self.velocity = (self.velocity * self.Current_Speed);
+		self.Aircraft_Fuel = (self.Aircraft_Fuel - 0.060000);
+		self.NoFuel_Velocity = self.velocity;
+	}
+};
+
+void () PreTouch =
+{
+	if (!(other.flags & 16))
+	{
+		return;
+	}
+	if ((other.classname != "player"))
+	{
+		return;
+	}
+	if ((other.tools == (other.tools | 32)))
+	{
+		return;
+	}
+	if ((other.health <= 0))
+	{
+		return;
+	}
+	if (((other.current_menu == 12) || (other.current_menu == 15)))
+	{
+		return;
+	}
+	if ((other.weaponmodel == "progs/proxi2.mdl"))
+	{
+		return;
+	}
+	if (((other.is_feigning || (other.is_undercover == 2)) || (other.is_undercover == 1)))
+	{
+		return;
+	}
+	if ((other.probe_active == 1))
+	{
+		return;
+	}
+	if ((other.classname == "player"))
+	{
+		SubTouch ();
+	}
+	if ((self.owner.classname == "player"))
+	{
+		self.think = SUB_Remove;
+		self.nextthink = time;
+	}
+	else
+	{
+		self.model = string_null;
+		self.solid = 0;
+		self.think = SUB_regen;
+		self.nextthink = (time + 4);
+	}
+};
+
+void () SubTouch =
+{
+	if (!(other.flags & 16))
+	{
+		return;
+	}
+	if ((other.classname != "player"))
+	{
+		return;
+	}
+	if ((other.tools == (other.tools | 32)))
+	{
+		return;
+	}
+	if ((other.health <= 0))
+	{
+		return;
+	}
+	if (((other.current_menu == 12) || (other.current_menu == 15)))
+	{
+		return;
+	}
+	if ((other.weaponmodel == "progs/proxi2.mdl"))
+	{
+		return;
+	}
+	if (((other.is_feigning || (other.is_undercover == 2)) || (other.is_undercover == 1)))
+	{
+		return;
+	}
+	if ((other.probe_active == 1))
+	{
+		return;
+	}
+	sound (other, 4, self.noise, 1, 1);
+	sound (other, 2, "sub/ping.wav", 0.300000, 1);
+	self.active_vehicle = 1;
+	other.owned_vehicle = self;
+	self.solid = 0;
+	other.Current_Speed = 0;
+	other.Old_Health = self.health;
+	stuffcmd (other, "cl_bob 0\n");
+	other.weaponmodel = "progs/subpit.mdl";
+	other.tools = (other.tools | 32);
+	self.model = string_null;
+	setmodel (other, "progs/mini-sub.mdl");
+	other.rad_time = 1;
+	other.radsuit_finished = (time + 9999);
+	other.Sub_Weapon = 1;		// so torpedo is def. weapon
+#ifdef VWEPS
+	other.vw_index = 31;
+#endif
+};
+
+void () Vehicle_DieTime =
+{
+	if (self.resup_vehicle < time)
+	{
+		AC_Destroyed();
+	}
+	else
+		self.nextthink = time + .5;
+}
+
+void () become_active =
+{
+	Vehicle_DieTime();
+	if ((pointcontents (self.origin) == -3))
+	{
+		self.solid = 2;
+		setsize (self, '-45.000000 -45.000000 -24.000000', '45.000000 45.000000 32.000000');
+		self.movetype = 0;
+		self.owner = self;
+		self.think = Vehicle_DieTime;
+	}
+	else
+	{
+		self.movetype = 6;
+	}
+	self.nextthink = (time + 0.100000);
+};
+
+void () exit_vehicle =
+{
+	self.old_position = self.velocity;
+	sound (self, 2, "misc/null.wav", 1, 1);
+	makevectors (self.v_angle);
+	if ((self.waterlevel >= 2))
+	{
+		self.velocity_z = 1000;
+	}
+	else
+	{
+		self.velocity_z = 500;
+	}
+	self.velocity_x = self.old_position_x;
+	self.velocity_y = self.old_position_y;
+#ifdef APRIL_FOOLS
+	setmodel (self, "progs/a1player.mdl");
+#else
+	setmodel (self, "progs/player.mdl");
+#endif	
+	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
+	self.angles_x = 0;
+	self.angles_z = 0;
+	self.fixangle = 1;
+	self.tools = (self.tools - (self.tools & 32));
+	stuffcmd (self, "cl_bob 0.01\n");
+	TeamFortress_SetSpeed (self);
+	self.Old_Health = 0;
+	self.Aircraft_Speed = 0;
+	self.flash = 0;
+	if (!(self.flags & 16))
+	{
+		self.maxspeed = 510;
+		stuffcmd (self, "cl_forwardspeed 360\n");
+	}
+	else
+	{
+		self.maxspeed = 510;
+		stuffcmd (self, "cl_forwardspeed 360\n");
+	}
+	newmis = spawn ();
+	newmis.movetype = 6;
+	newmis.solid = 0;
+	newmis.touch = SubTouch;
+	newmis.enemy = self;
+	newmis.owner = self;
+	newmis.takedamage = 1;
+	newmis.th_die = AC_Destroyed;
+	newmis.health = 150;
+	makevectors (self.angles);
+	newmis.noise = "utils/hoveron.wav";
+	newmis.angles = self.angles;
+	setmodel (newmis, "progs/mini-sub.mdl");
+	setorigin (newmis, self.origin);
+	newmis.nextthink = (time + 0.500000);
+	newmis.owned_vehicle = self.owned_vehicle;
+	newmis.resup_vehicle = time + 25;
+	newmis.think = become_active;
+	newmis.colormap = self.colormap;
+	newmis.velocity_x = (self.old_position_x * -0.300000);
+	newmis.velocity_y = (self.old_position_y * -0.300000);
+	newmis.velocity_z = 300;
+	self.walkframe = 0;
+	self.air_finished = (time + 12);
+	self.rad_time = 0;
+	self.radsuit_finished = 0;
+	W_SetCurrentAmmo ();
+	player_run ();
+};
+
+void () Sub_ChangeWeapon =
+{
+	local vector dir;
+
+	if ((self.impulse == 1))
+	{
+		makevectors (self.v_angle);
+		dir = self.origin + self.view_ofs;
+		traceline (dir, (dir + (v_forward * 100)), 0, self);
+		makevectors (self.angles);
+		if (((trace_fraction != 1) && !trace_ent.takedamage))
+		{
+			sprint (self, 2, "Bad launch trajectory.\n");
+			self.impulse = 0;
+			return;
+		}
+		sprint (self, 2, "Eject.\n");
+		self.flash = 0;
+		exit_vehicle ();
+	}
+	if ((self.impulse == 2))
+	{
+		sprint (self, 2, "Thrust: 0%.\n");
+		self.Aircraft_Speed = 0;
+	}
+	if ((self.impulse == 3))
+	{
+		sprint (self, 2, "Thrust: 10%.\n");
+		self.Aircraft_Speed = 1;
+		self.impulse = 0;
+		self.weaponframe = 0;
+		return;
+	}
+	if ((self.impulse == 4))
+	{
+		sprint (self, 2, "Thrust: 50%.\n");
+		self.Aircraft_Speed = 2;
+	}
+	if ((self.impulse == 5))
+	{
+		sprint (self, 2, "Thrust: 100%.\n");
+		self.Aircraft_Speed = 3;
+	}
+	if ((self.impulse == 6))
+	{
+		sprint (self, 2, "Torpedo Armed..Future\n");
+		self.Sub_Weapon = 2;
+	}
+	if ((self.impulse == 7))
+	{
+		sprint (self, 2, "Seeker Torpedo Armed.\n");
+		self.Sub_Weapon = 1;
+		self.impulse = 0;
+		self.weaponframe = 0;
+		return;
+	}
+	if ((self.impulse == 8))
+	{
+		if ((self.flash == 0))
+		{
+			sprint (self, 2, "Lights On.\n");
+			self.flash = 1;
+			Make_Flash (0, 0);
+		}
+		else
+		{
+			sprint (self, 2, "Lights Off.\n");
+			self.flash = 0;
+		}
+	}
+	self.impulse = 0;
+	self.weaponframe = 0;
+};
+void () Sub_FireTorpedo;
+
+void () Sub_Attack =
+{
+	if ((self.Sub_Weapon == 1))
+	{
+		if ((self.tube_wing > 1))
+		{
+			return;
+		}
+		else
+		{
+			self.attack_finished = (time + 0.500000);
+			Sub_FireTorpedo ();
+			return;
+		}
+	}
+};
+void () SubTrackTarget;
+void () SubBecomeReal;
+void () Sub_TorpTouch;
+
+void () SubHomeTarget =
+{
+	local vector dir;
+	local vector plane;
+	local vector trajectory;
+
+	self.playerclass = (self.playerclass + 1);
+	if ((self.owner.tools != (self.owner.tools | 32)))
+	{
+		self.think = Sub_TorpTouch;
+		self.nextthink = time;
+		return;
+	}
+	if ((self.enemy.health <= 0))
+	{
+		self.think = SubTrackTarget;
+		self.nextthink = time;
+		return;
+	}
+	dir = normalize ((self.enemy.origin - self.origin));
+	plane = normalize (self.velocity);
+	trajectory = normalize (((10 * plane) + dir));
+	if ((self.enemy.tools == (self.enemy.tools | 32)))
+	{
+		self.velocity = (trajectory * 1000);
+	}
+	else
+	{
+		self.velocity = (trajectory * 1000);
+	}
+	self.angles = vectoangles (self.velocity);
+	self.nextthink = (time + 0.050000);
+	if ((self.frame == 1))
+	{
+		self.frame = 0;
+	}
+	else
+	{
+		self.frame = 1;
+	}
+	if ((pointcontents (self.origin) != -3))
+	{
+		self.nextthink = (time + 0.800000);
+		self.think = SubBecomeReal;
+	}
+	if ((self.playerclass > 300))
+	{
+		self.owner.tube_wing = (self.owner.tube_wing - 1);
+		dremove (self);
+		remove (newmis);
+	}
+};
+
+void () Subsightthink =
+{
+	local vector dir;
+
+	dir = normalize ((self.owner.owner.origin - self.owner.enemy.origin));
+	setorigin (self, (((dir * -7) + self.owner.owner.origin) + '0.000000 0.000000 22.000000'));
+	self.nextthink = (time + 0.050000);
+	self.angles_x = (0 - self.owner.owner.v_angle_x);
+	self.angles_y = self.owner.owner.v_angle_y;
+	self.angles_z = 0;
+	if (((self.owner.owner.health < 1) || (self.owner.owner.tools != (self.owner.owner.tools | 32))))
+	{
+		self.think = SUB_Null;
+		remove (self);
+	}
+};
+
+void () Submakesight =
+{
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.solid = 0;
+	newmis.classname = "grid";
+	newmis.movetype = 8;
+#ifdef mtf_coop
+	setmodel/*u*/ (newmis, "progs/sight.mdl");
+#else
+	setmodel (newmis, "progs/sight.mdl");
+#endif
+#ifdef VWEPS
+	self.vw_index = 31;
+#endif
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	newmis.think = Subsightthink;
+	newmis.nextthink = time;
+	self.holo_owner = newmis;
+};
+
+void () Subkilldatarget =
+{
+	if (self.holo_owner)
+	{
+		self.holo_owner.think = SUB_Remove;
+	}
+	Sub_TorpTouch ();
+};
+
+void () SubTrackTarget =
+{
+	local entity targ;
+
+	if ((other.team_no == self.team_no))
+	{
+		return;
+	}
+	if ((self.owner.tools != (self.owner.tools | 32)))
+	{
+		self.think = Sub_TorpTouch;
+		self.nextthink = time;
+		return;
+	}
+	if (self.holo_owner)
+	{
+		self.holo_owner.think = SUB_Remove;
+	}
+	targ = findradius (self.origin, 1000);
+	while (targ)
+	{
+		visible (targ);
+		if (((visible (targ) && (targ != self.owner)) && targ.takedamage))
+		{
+			if (((targ.team_no != self.team_no) && (targ.tools == (self.tools | 32))))
+			{
+				self.enemy = targ;
+				self.think = SubHomeTarget;
+				self.nextthink = time;
+				sound (targ, 0, "sub/locked.wav", 0.500000, 2);
+				sound (self.owner, 0, "sub/lockon.wav", 1, 2);
+				Submakesight ();
+				return;
+			}
+		}
+		targ = targ.chain;
+	}
+	self.nextthink = (time + 0.100000);
+	self.think = SubTrackTarget;
+	self.playerclass = (self.playerclass + 1);
+	if ((self.frame == 1))
+	{
+		self.frame = 0;
+	}
+	else
+	{
+		self.frame = 1;
+	}
+	if ((pointcontents (self.origin) != -3))
+	{
+		self.movetype = 10;
+		self.nextthink = (time + 5);
+		self.think = SUB_Remove;
+	}
+};
+
+void () Sub_FireTorpedo =
+{
+	sound (self, 1, "weapons/torpedo.wav", 1, 1);
+	self.old_position = self.origin;
+	msg_entity = self;
+	WriteByte (1, 34);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.team_no = self.team_no;
+	newmis.classname = "torpedo";
+	newmis.colormap = self.colormap;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	deathmsg = 58;
+	makevectors (self.v_angle);
+	newmis.velocity = aim (self, 1000);
+	newmis.velocity = (newmis.velocity * 500);
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.touch = Subkilldatarget;
+	newmis.nextthink = (time + 0.150000);
+	newmis.think = SubTrackTarget;
+#ifdef mtf_coop
+	setmodel/*u*/ (newmis, "progs/torpedo.mdl");
+#else
+	setmodel (newmis, "progs/torpedo.mdl");
+#endif
+	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+	if ((self.tube_load == 1))
+	{
+		setorigin (newmis, ((self.origin + (v_right * -16)) + '0.000000 0.000000 18.000000'));
+		self.tube_load = 0;
+	}
+	else
+	{
+		setorigin (newmis, ((self.origin + (v_right * 16)) + '0.000000 0.000000 18.000000'));
+		self.tube_load = 1;
+	}
+	self.tube_wing = (self.tube_wing + 1);
+};
+
+void () Sub_TorpTouch =
+{
+	local float damg;
+
+	if ((other.team_no == self.team_no))
+	{
+		return;
+	}
+	if (self.voided)
+	{
+		return;
+	}
+	self.voided = 1;
+	self.owner.tube_wing = (self.owner.tube_wing - 1);
+	if ((other == self.owner))
+	{
+		return;
+	}
+	damg = 200 + (random () * 50);
+	if (other.health)
+	{
+		other.deathtype = "torpedo";
+		TF_T_Damage (other, self, self.owner, damg, 0, 4);
+	}
+	deathmsg = 58;
+	T_RadiusDamage (self, self.owner, 120, other);
+	self.origin = (self.origin - (8 * normalize (self.velocity)));
+	WriteByte (0, 23);
+	WriteByte (0, 3);
+	WriteCoord (0, self.origin_x);
+	WriteCoord (0, self.origin_y);
+	WriteCoord (0, self.origin_z);
+	BecomeExplosion ();
+};
+
+void () SubBecomeReal =
+{
+	self.movetype = 10;
+};
+//END

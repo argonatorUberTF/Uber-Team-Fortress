@@ -1,0 +1,270 @@
+///////////////////////////////////////////////////
+// 		CustomTF Teleport Pads		 //
+//          	  by Craig Hauser		 //
+//	       Fixed up for MegaTF by		 //
+//		       XavioR			 //
+///////////////////////////////////////////////////
+
+// This took me a damn while to get in, but I finally did it (yay!)
+// Took this straight from prozac TF, so I had to track down all the defs
+// that you see below. Also edited for this are the following files:
+// defs.pqc
+// combat.pqc
+// menu.pqc
+// engineer.pqc
+// client.pqc
+// I hope you enjoy it!
+//      -- XaviOR
+// Bug(s):
+// Turretized warp-pad dies when is warped in to.
+
+void() Teleporter_touch;
+void() Teleporter_Die;
+void() Teleporter_heat_think;
+float(entity targ) Teleporter_check_person;
+void(entity immuner,float timer) makeImmune;
+//float(float targteam, float attackteam) Teammate; // put this in defs.pqc eh?
+//- OfN
+float(entity player) IsOutWorld;
+
+float(entity player) IsOutWorld =
+{
+    if (pointcontents(player.origin) == #CONTENT_SOLID || pointcontents(player.origin) == #CONTENT_SKY)
+        return #TRUE;
+    
+    if (pointcontents(player.absmax) == #CONTENT_SOLID || pointcontents(player.absmax) == #CONTENT_SKY)
+        return #TRUE;
+
+    if (pointcontents(player.absmin) == #CONTENT_SOLID || pointcontents(player.absmin) == #CONTENT_SKY)
+        return #TRUE;
+   
+    return #FALSE;
+};
+
+void() Teleporter_touch =
+{
+	local entity te;
+
+	if (self.heat == 0)
+	{
+		if (Teleporter_check_person(other))
+		{
+			te = find(world, classname, "building_teleporter");
+			while (!(te.real_owner == self.real_owner && te != self) && te != world)
+			{
+				te = find(te, classname, "building_teleporter");
+			}
+			if (te != world)
+			{
+				local vector vec;
+                vec = '0 0 32';
+
+                if (te.tf_items & 2) //- OfN turretized teleporters
+                    vec = '0 0 -40';
+                
+                if (te.heat == 0 && te.ammo_cells >= #TELEPORTER_CELLS)
+				{
+					self.heat = #TELEPORTER_WAIT;
+					te.heat = #TELEPORTER_WAIT;
+					if (self.is_malfunctioning & 8 || te.is_malfunctioning & 8)
+					{
+						CenterPrint(other, "The other teleporter is out of power.\n");
+						return;
+					}
+					
+                    self.ammo_cells = self.ammo_cells - #TELEPORTER_CELLS;
+                    te.ammo_cells = te.ammo_cells - #TELEPORTER_CELLS;
+
+					local entity ote;
+					ote = te;
+					if (self.is_malfunctioning & 4 || te.is_malfunctioning & 4) //sb
+					{
+						te = self.real_owner;
+						spawn_tdeath(te.origin + vec, te);
+					}
+					spawn_tfog (other.origin);
+					spawn_tdeath(te.origin + vec, other);
+					makeImmune(other,time + 2);
+					setorigin(other, te.origin + vec);
+#ifdef mtf_coop_expsys				
+					MTF_Coop_AddServiceExp( self.real_owner, other, 1, #SRV_TELEPORT );
+#endif					
+                    if (IsOutWorld(other))
+                    {
+                        deathmsg = 68;
+                        TF_T_Damage(other, other, other,1000,0,0);
+                        return;
+                    }
+                    if (self.is_malfunctioning & #SCREWUP_ONE || te.is_malfunctioning & #SCREWUP_ONE) // SB
+					{
+						other.ammo_cells = 0;
+						other.ammo_shells = 0;
+						other.ammo_nails = 0;
+						other.ammo_rockets = 0;
+						other.armorvalue = 0;
+						other.ammo_detpack = 0;
+						other.ammo_c4det = 0;
+						other.ammo_medikit = 0;
+					}
+					if (self.is_malfunctioning & #SCREWUP_TWO || te.is_malfunctioning & #SCREWUP_TWO) // SB
+					{
+						if (self.is_malfunctioning & #SCREWUP_TWO)
+							te.martyr_enemy = self.martyr_enemy;
+						else if (te.is_malfunctioning & #SCREWUP_TWO)
+							self.martyr_enemy = te.martyr_enemy;
+						TF_T_Damage(other, self, self, 500, 0, 0);
+					}
+					spawn_tfog (te.origin + vec);
+					if (self.is_malfunctioning & 4 || ote.is_malfunctioning & 4)
+						te = ote;
+					if ((te.ammo_cells >= #TELEPORTER_CELLS && te.ammo_cells <= #TELEPORTER_CELLS * 2) || (self.ammo_cells >= #TELEPORTER_CELLS && self.ammo_cells <= #TELEPORTER_CELLS * 2))
+						sprint (self.real_owner, #PRINT_HIGH, "A teleporter is getting low on power.\n");
+				}
+				else if (te.ammo_cells < #TELEPORTER_CELLS)
+					CenterPrint(other, "The other teleporter is out of power.\n");
+			}
+		}
+	}
+    if (other == world && self.tf_items & 2 && !(self.flags & #FL_ONGROUND)) 
+    { //The tele has landed! //- needed?
+		sprint(self.real_owner, #PRINT_HIGH, "Teleporter turretized succesfully!\n");
+		self.solid = #SOLID_BBOX; //#SOLID_BBOX;//SOLID_SLIDEBOX// SOLID_TRIGGER
+        self.flags = self.flags | #FL_ONGROUND;
+		self.origin_z = self.origin_z + 46;//32; // was 40, old custom bug? fixed
+        setorigin(self,self.origin);
+        self.velocity = '0 0 0';
+	}
+};
+
+float(entity targ) Teleporter_check_person =
+{
+	if (self.ammo_cells < #TELEPORTER_CELLS) {
+		if (Teammate(targ.team_no, self.team_no)) //only to team member
+			CenterPrint(other, "This teleporter is out of power.\n");
+		return #FALSE;
+	}
+	if (self.real_owner.has_teleporter == 1) {
+		if (Teammate(targ.team_no, self.team_no)) //only to team member
+			if (other.classname == "player")
+				CenterPrint(other, "There is no other teleporter!\n");
+		return #FALSE;
+	}
+#ifdef QUAKE_WORLD // culled by KK. was QUAKE_WORLD
+    if (ceasefire)
+        return #FALSE;
+#endif
+	if (targ == world)//that would be bad.
+		return #FALSE;
+	if (targ.done_custom & #CUSTOM_BUILDING)
+		return #FALSE;
+	if (targ.classname != "player")
+		return #FALSE;
+	if (targ.velocity != '0 0 0')
+		return #FALSE;
+	if (targ.health <= 0)
+		return #FALSE;
+	if (targ.playerclass == #PC_UNDEFINED)
+		return #FALSE;
+	if (targ.is_feigning)
+		return #FALSE;
+	if (targ.is_building)
+		return #FALSE;
+	if (targ.is_detpacking)
+		return #FALSE;
+	if (targ.playerclass == #PC_CIVILIAN) {
+		CenterPrint(targ, "Civilian + Teleporter = No, NFC!\n");
+		return #FALSE;
+	}
+#ifndef mtf_coop
+	if (targ.effects & (#EF_BRIGHTLIGHT | #EF_DIMLIGHT | #EF_BRIGHTFIELD)) {//no flag for you!
+		CenterPrint(targ, "Can't use teleporter while glowing!\n");
+		return #FALSE;
+	}
+#endif
+	if (teamplay)
+	{
+		if (Teammate(targ.team_no, self.team_no))
+			return #TRUE;
+		if (Teammate(targ.undercover_team, self.team_no))
+			return #TRUE;
+	}
+	else
+		return #TRUE;
+	return #FALSE;
+};
+void() Teleporter_heat_think =
+{
+    if (self.tf_items & 2 && !(self.flags & #FL_ONGROUND))
+        self.velocity_z = 200;
+//CH used to reduce the heat and check pos
+	local float pos, num;
+	local vector loc;
+	if (self.heat <= 0)
+		self.heat = 0;
+	else
+		self.heat = self.heat - 1;
+	self.think = Teleporter_heat_think; //keep in loop
+	self.nextthink = time + 1;
+//CH if spawnflags is >0 do extensive height checks b/c the pad just spawned.
+	if (self.spawnflags > 0) {
+		self.spawnflags = self.spawnflags - 1;
+		num = 0; //16 checks
+	}
+	else
+		num = 15; //1 check
+	while (num < 16)
+	{
+		loc = self.origin;
+		loc_z = loc_z + (rint(random() * 8 + 1) * 8); //1-8 * 8  x+8 -> x+64
+		loc_x = loc_x + ((rint(random() * 3 + 1) * 16) - 32);
+		loc_y = loc_y + ((rint(random() * 3 + 1) * 16) - 32);
+		pos = pointcontents(loc);                      //-
+		if ( ( (pos == #CONTENT_SOLID || pos == #CONTENT_SKY) && !self.tf_items & 2) || (self.tf_items & 2 && pos == #CONTENT_SKY) )
+		{
+			TF_T_Damage(self, world, world, self.health+1, 0, 0);
+			
+            if (self.tf_items & 2) //- ofn
+                sprint (self.real_owner, #PRINT_HIGH, "Your teleporter flies away.\n");
+            else
+                sprint (self.real_owner, #PRINT_HIGH, "Not enough space for teleportation.\n");
+			
+            num = 100; //Get out of loop
+		}
+		num = num + 1;
+	}
+	
+};
+
+void() Teleporter_Die =
+{
+	sprint(self.real_owner, #PRINT_HIGH, "Your Teleporter Pad was destroyed.\n");
+	self.real_owner.has_teleporter = (self.real_owner.has_teleporter - 1);
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, TF_FLARE_OFF);
+	BecomeExplosion ();
+};
+
+void(entity immuner,float timeimmune) makeImmune =
+{
+	if (immuner == world) return;
+	if (immuner.immune_to_chec > timeimmune) return;
+	immuner.immune_to_chec = timeimmune;
+};
+
+float(float targteam, float attackteam) Teammate =
+{
+	local float teammask;
+	if ( !targteam ) return #FALSE;
+	if ( targteam == attackteam ) return #TRUE;
+	if ( number_of_teams < 3 ) return #FALSE;
+	if      ( targteam == 1 ) teammask = 1;
+	else if ( targteam == 2 ) teammask = 2;
+	else if ( targteam == 3 ) teammask = 4;
+	else if ( targteam == 4 ) teammask = 8;
+	return #TRUE; //guess fix?
+};
+//END
