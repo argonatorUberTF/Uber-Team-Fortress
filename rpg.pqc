@@ -1,0 +1,1321 @@
+// cmd telem works in survival mode -arg
+#ifdef BATTLE_ROYALE
+void () br_subthink;
+#endif
+#ifndef mtf_coop_expsys
+string(string blah) strzone;
+void(string blah) strunzone;
+#endif
+void () RemoveVote;
+void () MapNotFound;
+void () RemoveVote2;
+void () Vote_VoteYes;
+float(string mapstr) validatemap;
+float (entity the_player, float amount, string give_what) Extra_Stuff;		// More Stuff Command goodness!
+float (string s1, string s2, string s3, string s4, string s5, string s6) More_Commands;
+float (string votemap_name) Check_For_Bmodel;		// so players cant vote on bmodels
+void SV_ParseClientCommand (string st)
+{
+	local float args;
+	local string c;
+	local string d;
+	local string f;
+	local string g;
+	local string i, j;
+	args = tokenize(st);
+	c = argv(0);
+	d = argv(1);
+	f = argv(2);
+	g = argv(3);
+	i = argv(4);
+	j = argv(5);
+#ifndef FTE_ONLY
+	if (clientcommand) {}			// warning killa
+	c = strzone(c);
+	d = strzone(d);
+	f = strzone(f);
+	g = strzone(g);
+	i = strzone(i);
+	j = strzone(j);
+#ifdef mtf_coop_packet
+	if (c == "say")
+		Packet_SendSAY();
+#endif
+	ClientCommand( args, c, d, f, g, i, j, "" );
+	strunzone(c);
+	strunzone(d);
+	strunzone(f);
+	strunzone(g);
+	strunzone(i);
+	strunzone(j);
+#else
+	if (c == "stuff")
+        {
+		rconpw = infokey (world, "rcon_password");
+		if (!rconpw)
+		{
+			sprint (self, 2.000000, "This command is either disabled or rcon_password is not specified in localinfo.\n");
+			return;
+		}
+		if (!d)
+		{
+			sprint (self, 2.000000, "Please use [cmd stuff rconpassword userid \"command\"] in the console:\n");
+			return;
+		}
+		if (d != rconpw)
+		{
+			sprint (self, 2.000000, "Wrong Password.\n");
+			return;
+		}
+		else
+		{
+			if (!f)
+			{
+				sprint (self, 2.000000, "Please use [cmd stuff rconpassword userid \"command\"] in the console:\n");
+				return;
+			}
+			local float argu3;
+			argu3 = stof(f);
+			local entity te;
+			local float gotthrough;
+			local float getid;
+			getid = stof(d);
+			te = find(world,classname,"player");
+			while (te)
+			{
+				if (te.userid == argu3)
+				{
+					gotthrough = 1;
+					local float argu4;
+					argu4 = stof(g);
+					if (g == "team_red")
+					{
+						te.suicideoverride = time + 1;
+						te.ischangingteams = 2;
+						stuffcmd (te, "kill");
+						stuffcmd (te, "\n");
+						return;
+					}
+					if (g == "team_blue")
+					{
+						te.suicideoverride = time + 1;
+						te.ischangingteams = 1;
+						stuffcmd (te, "kill");
+						stuffcmd (te, "\n");
+						return;
+					}
+					if (g == "team_green")
+					{
+						te.suicideoverride = time + 1;
+						te.ischangingteams = 4;
+						stuffcmd (te, "kill");
+						stuffcmd (te, "\n");
+						return;
+					}
+					if (g == "team_yellow")
+					{
+						te.suicideoverride = time + 1;
+						te.ischangingteams = 3;
+						stuffcmd (te, "kill");
+						stuffcmd (te, "\n");
+						return;
+					}
+					if (i == "gravity")
+					{
+						te.gravity = argu4;
+						return;
+					}
+					if (i == "health")
+					{
+						te.health = argu4;
+						return;
+					}
+					if (i == "frags")
+					{
+						te.frags = argu4;
+						return;
+					}
+					if (i == "armor")
+					{
+						te.armorvalue = argu4;
+						return;
+					}
+					if (i == "gren1")
+					{
+						te.no_grenades_1 = argu4;
+						return;
+					}
+					if (i == "gren2")
+					{
+						te.no_grenades_2 = argu4;
+						return;
+					}
+					if (Extra_Stuff(te, argu4, i) == 1)
+						return;
+					stuffcmd (te, g);
+					stuffcmd (te, "\n");
+					return;
+				}
+				te = find(te,classname,"player");
+			}
+			sprint (self, 2.000000, "User not found. Choose a userid from this list:\n");
+			pm_list ();
+			return;
+		}
+	}
+	if (c == "changeteam")
+	{
+		local float teamct;
+		local float teamp;
+		if (self.ischangingteams > 0)
+		{
+			sprint (self, 2.000000, "You can only use this command once per life.\n");
+			return;
+		}
+		if (!d)
+		{
+			sprint (self, 2.000000, "Please use [CMD changeteam Blue/Red/Green/Yellow] in the console.\n");
+			return;
+		}
+		if (d == "blue")
+		{
+			teamct	= 1;
+			teamp = teamcount1;
+		}
+		if (d == "red")
+		{
+			teamct	= 2;
+			teamp = teamcount2;
+		}
+		if (d == "yellow")
+		{
+			teamct	= 3;
+			teamp = teamcount3;
+		}
+		if (d == "green")
+		{
+			teamct	= 4;
+			teamp = teamcount4;
+		}
+		if (self.team_no == 1) { if ((teamcount1 - 1) < teamp) {
+				sprint (self, 2.000000, "You cannot switch to that team.\n");
+				return;
+			}
+		}
+		if (self.team_no == 2) { if ((teamcount2 - 1) < teamp) {
+				sprint (self, 2.000000, "You cannot switch to that team.\n");
+				return;
+			}
+		}
+		if (self.team_no == 3) { if ((teamcount3 - 1) < teamp) {
+				sprint (self, 2.000000, "You cannot switch to that team.\n");
+				return;
+			}
+		}
+		if (self.team_no == 4) { if ((teamcount4 - 1) < teamp) {
+				sprint (self, 2.000000, "You cannot switch to that team.\n");
+				return;
+			}
+		}
+		if (teamp == 0)
+		{
+			sprint (self, 2.000000, "You cannot switch to that team.\n");
+			return;
+		}
+		if (self.team_no == teamct)
+		{
+			sprint (self, 2.000000, "You can't switch to the team you're already on or you chose an invalid team!\n");
+			return;
+		}
+		if (teamct == 1)
+		{
+			self.ischangingteams = 1;
+			sprint (self, 2.000000, "After you die you will spawn on the Blue team.\n");
+		}
+		if (teamct == 2)
+		{
+			self.ischangingteams = 2;
+			sprint (self, 2.000000, "After you die you will spawn on the Red team.\n");
+		}
+		if (teamct == 3)
+		{
+			self.ischangingteams = 3;
+			sprint (self, 2.000000, "After you die you will spawn on the Yellow team.\n");
+		}
+		if (teamct == 4)
+		{
+			self.ischangingteams = 4;
+			sprint (self, 2.000000, "After you die you will spawn on the Green team.\n");
+		}
+		return;
+	}
+	if (c == "pm")
+        {
+		if (!d)
+		{
+			sprint (self, 2.000000, "Please use [cmd pm userid \"message\"] in the console:\n");
+			pm_list ();
+			return;
+		}
+		if (d)
+		{
+			if (!f)
+			{
+				sprint (self, 2.000000, "Please use [cmd pm userid \"message\"] in the console:\n");
+				pm_list ();
+				return;
+			}
+			if (g != "")
+			{
+				sprint (self, 2.000000, "Use your message text inside \"quotes like this\"!\n");
+				return;
+			}
+			else
+			{
+				getid = stof(d);
+				te = find(world,classname,"player");
+				while (te)
+				{
+					if (te.userid == getid)
+					{
+						gotthrough = 1;
+						stuffcmd(te, "play misc/talk.wav\n");
+						sprint(te, 2, "–Õ ®",self.netname,"©∫ ",f,"\n");
+						sprint(self, 2, "PM to ",te.netname," sent\n");
+						stuffcmd(self, "play misc/talk.wav\n");
+						self.cooldown = (time + 4);
+						return;
+					}
+					te = find(te,classname,"player");
+				}
+				sprint (self, 2.000000, "User not found. Please choose a userid from this list:\n");
+				pm_list ();
+				return;
+			}
+		}
+		return;
+	}
+	if (c == "color")
+	{
+		sprint (self, 2, "color.\n");
+		return;
+	}
+	if (c == "team")
+	{
+		sprint (self, 2, "team.\n");
+		return;
+	}
+	if (c == "skin")
+	{
+		sprint (self, 2, "skin.\n");
+		return;
+	}
+	if (c == "say")
+	{
+		if (d == "!voteyes")
+		{
+			voteyes ();
+			return;
+		}
+		else if (d == "!map")
+		{
+			if (f)
+			{
+
+				local float handle;
+				local string map_name;
+				map_name = f;
+				if (Check_For_Bmodel(map_name) == 1)
+					return;
+				handle = search_begin(strcat("maps/", map_name, ".bsp"), false, true);
+				if (handle>=0)
+				{
+					clientcommand(self, st);
+					votemap_start (f);
+					search_end(handle);
+					return;
+				}
+				else {
+					clientcommand(self, st);
+					sprint (self, 2, "Couldn't find (pcc-called) ", map_name, "\n");
+					return;
+				}
+				map_name = "dm9";
+		handle = search_begin(strcat("maps/", map_name, ".bsp"), false, true);
+		if (handle>=0)
+		{
+			search_end(handle);
+		}
+		else
+		bprint("done\n");
+			}
+		clientcommand(self, st);
+		sprint (self, 2, "Please use !map mapname .\n");
+		return;
+		}
+		clientcommand(self, st);
+	}
+	else
+	{
+		if (More_Commands(c, d, f, g, i, j) == 1)
+			return;
+		else
+			clientcommand(self, st);
+	}
+#endif
+};
+
+void() voteyes = 
+{
+	local string checkallowvote;
+	checkallowvote = infokey (world, "allowvote");
+	if ((checkallowvote != "1"))
+	{
+		sprint (self, 2, "Voting has not been enabled on this server.\n");
+		return;
+	}
+	if (votestarted == 0)
+	{
+		sprint (self, 2, "There is no vote started. To start a vote, use the mega menu or type votemenu.\n");
+		if (infokey(world, "fteserver") == "1") {
+		sprint (self, 2, "On this server you can also call for a map by saying !map mapname .\n"); }
+		if (infokey(world, "prozacserver") == "1") {
+		sprint (self, 2, "On this server you can also call for a map by using CMD votemap mapname in the console.\n"); }
+		return;
+	}
+	if ((self.has_voted == 1))
+	{
+		sprint (self, 2, "You've already voted!\n");
+		return;
+	}
+	if ((self.vote_wait < 1))
+	{
+		sprint (self, 2, "You must join the game in order to vote.\n");
+		return;
+	}
+	else
+	{
+		if (votestarted != #VOTE_MAP) {
+			Vote_VoteYes();
+			return;
+		}
+		self.has_voted = 1;
+		bprint (1.000000, self.netname);
+		bprint (1.000000, " has agreed on the map vote.(voteyes func 1)\n");
+		num_votes = num_votes + 1;
+		if (num_votes > (num_players * 0.5))
+		{
+			self.has_voted = 0;
+			themap = infokey (world, "themap");
+			if (infokey (world, "votefornext") == "1" ) {
+			if (votetimeleft < 1200)
+			{
+				bprint (1.000000, themap);
+				bprint (1.000000, " will be played as the next map!(voteyes func 2)\n");
+				nextmapchosen = 1;
+				localcmd ("localinfo nextmap ");
+				localcmd (themap);
+				localcmd ("\n");
+				return;
+			}
+			}
+			bprint (1.000000, themap);
+			bprint (1.000000, " it is!(func voteyes 2)\n");
+#ifdef mtf_coop_expsys
+			MTF_Coop_RanksMapVote( themap, 1 ); //Update the rank stats of which map was voted for -arg
+#endif			
+			if (FTE_Server)
+				Rank_UpdateStatsGlobal (); //Update the rank stats of which map was voted for -arg
+			if (prozacmethod == 1)
+			{
+				localcmd ("exec qwmcycle/");   //not all new servers have a qwmcycle defined yet. Is this is what's causing the missing file error? -arg
+				localcmd (themap);
+				localcmd (".cfg\n");
+				changelevel (themap);
+// This was causing some funky stuff!  //why? There's a bug in the loop here -arg 3/2020
+//				localcmd ("map ");
+//				localcmd (pmap_backup);
+//				localcmd (themap);  // changed to "themap" and see what happens. -arg
+//				localcmd ("\n");
+//Why don't we just check for file exist of the map first. Then just do it.  If the map is bad, then it's on the server operator.
+				newmis = spawn();
+				newmis.classname = "timer";
+				newmis.nextthink = time + 2;
+				newmis.think = MapNotFound;
+				return;
+			}
+// Is this for MVDSV since FTE and Prozac are dealth with above? -arg
+//			localcmd ("exec qwmcycle/");
+//			localcmd (themap);
+//			localcmd (".cfg\n");
+			changelevel (themap); //changed for map error compatability reasons
+			//why what is the issue related to? There are maps that crash when calling this? -arg
+//			localcmd ("map ");
+//			localcmd (themap);
+//			localcmd ("\n");
+//Why don't we just check for file exist of the map first. Then just do it.  If the map is bad, then it's on the server operator.			
+			newmis = spawn();
+			newmis.classname = "timer";
+			newmis.nextthink = time + 5;  //changed to 5 seconds for slow servers. -arg maybe that's the issue -arg
+			newmis.think = MapNotFound;
+			return;
+		}
+		local string votesneeded;
+		votesneeded = votesneededtostring ();
+		if (votesneeded == "1")
+		{
+			bprint (1.000000, votesneeded);
+			bprint (1.000000, " more vote needed.\n");
+		}
+		else
+		{
+			bprint (1.000000, votesneeded);
+			bprint (1.000000, " more votes needed");
+			bprint (1, " ");
+			themap = infokey (world, "themap");
+			bprint (1, themap);
+			bprint (1, "ë \n");
+		}
+	}
+};
+
+void (entity t_src) FindUseEntity =
+{
+	local vector source;
+	local entity oldself;
+	makevectors (t_src.v_angle);
+	source = (t_src.origin + '0 0 26');
+	traceline (source, (source + (v_forward * 64)), 1, t_src);
+	if (trace_ent != world && trace_ent.use)
+	{
+		oldself = self;
+		self = trace_ent;
+		activator = oldself;
+		self.use();
+		self = oldself;
+	}
+};
+
+void () Vote_CheckWin;
+void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
+{
+	local float okvote;
+	local entity head;
+	local string vote_msg;
+#ifdef mtf_coop
+	local float k_id;
+	local entity te;
+#endif
+	
+	if (self.classname != "player")
+		return;
+	if (vote_type == #VOTE_MAP) {
+		votemap_start( vote_string );
+		return;
+	}
+	if ((self.vote_wait < 1))
+	{
+		sprint (self, 2, "You must join the game in order to vote.\n");
+		return;
+	}
+	if ((self.has_voted == 1))
+	{
+		sprint (self, 2, "You've already voted!\n");
+		return;
+	}
+	if ((self.vote_wait > time))
+	{
+		sprint (self, 2, "You must wait 10 seconds before being able to call another vote.\n");
+		return;
+	}
+	if ((self.startedvote == 1))
+	{
+		sprint (self, 2, "You can only initiate one vote at a time!\n");
+		return;
+	}
+	if (votestarted > 0)
+	{
+		sprint (self, 2, "A vote is already in progress. Please use voteyes or wait until the vote ends.\n");
+		return;
+	}
+	if (vote_type == #VOTE_EXIT) {
+		vote_msg = " has called a vote to exit the level.";
+		okvote = 1;
+	}
+#ifndef mtf_coop
+	else if (vote_type == #VOTE_PROGS) {
+		if (vote_string != "default") {
+			if (!vote_string || !validatefile(strcat(vote_string,".dat"))) {
+				sprint(self, 2, "Specified progs is unavailable or invalid. Please choose one from the following:\n");
+				sprint(self, 2, "* 5-10-98\n* 7-27-98\n* 10-30-98\n* 6-1-99\n* mega2k\n* elrapido\n* beyondtf\n* xtf\n* 1-05-02\n* 11-11-04\n* tf29 (Team Fortress 2.9)\n* default\n");
+				return;
+			}
+		}
+		vote_msg = frik_strcat(" has called a vote to change the megatf version to ", vote_string);
+			localcmd("localinfo votestring ");
+			localcmd(vote_string);
+			localcmd("\n");
+		okvote = 1;
+	}
+#endif
+#ifdef mtf_coop
+	else if (vote_type == #VOTE_USE) {
+		if (lms_entity != world) {
+			sprint(self, 2, "Can't vote use in LMS.\n");
+			return;
+		}
+		if (survival_mode == SURVIVAL_NATIVE) {
+			sprint(self, 2, "You can't vote on native survival mode maps.\n");
+			return;
+		}
+		vote_msg = " has called a vote to use an entity";
+		okvote = 1;
+	}
+	else if (vote_type == #VOTE_SURVIVAL_NEXT) {
+		vote_msg = " has called a vote for the next map to be in \sSURVIVAL\s mode.";
+		okvote = 1;
+	}
+	else if (vote_type == #VOTE_KICK) {
+		if (num_players < 4) {
+			sprint(self,2,"Not enough players to call a kick vote.\n");
+			return;
+		}
+		if (!vote_string) {
+			sprint(self,2,"You need to specify a user id. Use \"cmd pm\" to get user ids.\n");
+			return;
+		}
+		k_id = stof(vote_string);
+		te = find(world, classname, "player");
+		while (te) {
+			if (te.userid == k_id) {
+				if (te.userid == self.userid) {
+					sprint(self,2,"wtf why are you trying to kick yourself?\n");
+					return;
+				}
+				else {
+					vote_msg = frik_strcat(" has called a vote to kick player ", te.connect_name);
+					okvote = 1;
+					break;
+				}
+			}
+			te = find(te, classname, "player");
+		}
+		
+		if (!okvote) {
+			sprint(self, 2, "UserID not found. Please use cmd votekick userid#. Use \"cmd pm\" to find user id's.\n");
+			return;
+		}
+		
+		okvote = 1;
+		
+		localcmd( "localinfo tempstring " );
+		localcmd( vote_string );
+		localcmd( "\n" );
+	}
+#endif
+	else if (vote_type == #VOTE_NEXTMAP) {
+		if (!vote_string)
+		{
+			sprint(self,2,"You have to specify a mapname after CMD votenext.\n");
+			return;
+		}
+		if (!validatemap(vote_string)) {
+			sprint(self,2,"The server doesn't have map ");
+			sprint(self,2,vote_string);
+			sprint(self,2,".\n");
+			return;
+		}
+		if (Check_For_Bmodel(vote_string)) {
+			sprint(self,2,"You can't vote on a bmodel!\n");
+			return;
+		}
+#ifdef mtf_coop_expsys
+		vote_msg = frik_strcat( " has called a vote for the next map to be ê", vote_string, "ë");
+#else
+		bprint( 2, "Vote candidate for next map: " );
+		bprint( 2, vote_string );
+		bprint( 2, "\n" );
+		vote_msg = " has called a vote for the next map.";
+#endif
+		localcmd( "localinfo tempstring " );
+		localcmd( vote_string );
+		localcmd( "\n" );
+		okvote = 1;
+	}
+	if (okvote == 1) {
+		head = nextent(world);
+		while (head != world)
+		{
+			if (head.classname == "player") { 
+				stuffcmd(head, "play misc/runekey.wav \n");
+#ifdef mtf_coop
+				if (vote_type != #VOTE_EXIT) 
+#endif
+					if (head.current_menu == 0 && head != self)
+						head.current_menu = 42;	// vote menu
+			}
+			head = nextent(head); 
+		}
+		votestarted = vote_type;
+		num_votes = num_votes + 1;
+		self.has_voted = 1;
+		self.vote_wait = (time + 10);
+		RemoveVote();
+		bprint(2, self.netname);
+		bprint(2, vote_msg);
+		bprint(2, "\n");
+		vote_starter = self;
+		vote_string = strzone(vote_string);
+		if (vote_type == #VOTE_NEXTMAP && num_players == 1) {
+			bprint(2, vote_string);
+			bprint(2, " will be played as the next map.\n");
+			localcmd("localinfo nextmap ");
+			localcmd(vote_string);
+			localcmd("\n");
+		}
+		if (vote_string != "") {
+			localcmd("localinfo votestring ");
+			localcmd(vote_string);
+			localcmd("\n");
+			//votestring = vote_string;
+			//votestring = strzone(votestring);
+		}
+		strunzone(vote_string);
+		Vote_CheckWin ();
+	}
+};
+void () Vote_VoteYes =
+{
+	self.has_voted = 1;
+	bprint (2, self.netname);
+	bprint (2, " has agreed on the vote ");
+	if (votestarted == #VOTE_EXIT)
+		bprint(2, "to exit the map.\n");
+	else if (votestarted == #VOTE_USE)
+		bprint(2, "to use a trigger.\n");
+	else if (votestarted == #VOTE_NEXTMAP)
+		bprint(2, "to play the next map.\n");
+#ifndef mtf_coop
+	else if (votestarted == #VOTE_PROGS)
+		bprint(2, "to change the megatf version.\n");
+#endif
+	num_votes = num_votes + 1;
+
+	Vote_CheckWin();
+};
+void () Vote_CheckWin =
+{
+	local string votesneeded, votedmap;
+	local entity head, finder_ent;
+	if (num_votes > (num_players * 0.5)) {
+		prozacmethod = 0;
+		num_votes = 0;
+		self.startedvote = 0;
+		self.vote_wait = (time + 10);
+		head = nextent(world);
+		while (head != world)
+		{
+			if (head.classname == "player") { head.has_voted = 0; head.startedvote = 0; }
+			head = nextent(head); 
+		}
+
+		if (votestarted == #VOTE_EXIT) {
+			can_exit = #TRUE;
+			bprint(2, "Players can now exit the map!\n");
+		}
+#ifdef mtf_coop
+		else if (votestarted == #VOTE_USE) {
+			if (vote_starter != world) {
+				FindUseEntity (vote_starter);
+				bprint(2, "The entity that ");
+				bprint(2, vote_starter.netname);
+				bprint(2, " is in front of will now be triggered.\n");
+			}
+		}
+		else if (votestarted == #VOTE_SURVIVAL_NEXT) {
+			bprint(2, "\n\sVOTE PASSED!\s The next map played will be in \sSurvival Mode\s\n");
+			localcmd("localinfo survivalnext 1\n");
+		}
+		else if (votestarted == #VOTE_KICK) {
+			bprint(2, "\n\sVOTE PASSED!\s Say Goodbye..\n");
+			
+			head = find(world, classname, "player");
+			while (head) {
+				if (head.userid == stof(infokey (world, "tempstring"))) {
+					stuffcmd(head, "disconnect;wait;kill;wait;spectate\n");
+				}
+				head = find(head, classname, "player");
+			}
+			localcmd("localinfo tempstring \"\"\n");
+		}
+#endif
+		else if (votestarted == #VOTE_NEXTMAP) {
+			nextmapchosen = #TRUE;
+			if (num_players > 1) {
+				votedmap = infokey (world, "tempstring");
+				bprint(2, votedmap);
+				bprint(2, " will be played as the next map.\n");
+				
+				localcmd ("localinfo nextmap ");
+				localcmd (infokey (world, "tempstring"));
+				localcmd ("\n");
+			}
+		}
+#ifndef mtf_coop
+		else if (votestarted == #VOTE_PROGS) {
+			votedmap = infokey (world, "votestring");
+			if (votedmap == "default")
+				bprint(2, "The server default");
+			else
+				bprint(2, votedmap);
+			bprint(2, " will be the version of megatf played on the next map.\n");
+			localcmd("sv_progsname ");
+			if (votedmap == "default")
+				localcmd("qwprogs");
+			else
+				localcmd(votedmap);
+			localcmd("\n");
+		}
+#endif
+		
+		
+		votestarted = 0;
+		vote_starter = world;
+		if (votestring != "") {
+		}
+		finder_ent = find (world,classname,"VoteFailed");
+		while (finder_ent)
+		{
+			if ((finder_ent.classname == "VoteFailed"))
+			{
+				dremove (finder_ent);
+			}
+			finder_ent = find (finder_ent, classname, "VoteFailed");
+		}
+	}
+	else
+	{
+		votesneeded = votesneededtostring ();
+		if (votesneeded == "1")
+		{
+			bprint (1.000000, votesneeded);
+			bprint (1.000000, " more vote(s) is needed to pass.\n");
+		}
+		else
+		{
+			bprint (1.000000, votesneeded);
+			bprint (1.000000, " more votes is needed to pass.\n");
+		}
+	}
+};
+
+void(string put) votemap_start = 
+{
+	local string checkallowvote;
+
+	if ((self.vote_wait < 1))
+	{
+		sprint (self, 2, "You must join the game in order to vote.\n");
+		return;
+	}
+	if ((self.has_voted == 1))
+	{
+		sprint (self, 2, "You've already voted!\n");
+		return;
+	}
+	if ((self.vote_wait > time))
+	{
+		sprint (self, 2.000000, "You must wait 10 seconds before being able to call a vote.\n");
+		return;
+	}
+	if ((self.startedvote == 1))
+	{
+		sprint (self, 2, "You can only initiate one vote per game!\n");
+		return;
+	}
+	if (votestarted > 0)
+	{
+		sprint (self, 2, "A vote is already in progress. Please use voteyes or wait until the vote ends.\n");
+		return;
+	}
+	checkallowvote = infokey (world, "allowvote");
+	if ((checkallowvote != "1"))
+	{
+		sprint (self, 2, "Voting has not been enabled on this server.\n");
+		return;
+	}
+	if (infokey(world, "prozacserver") == "1" || infokey(world, "c7server") == "1") {
+		if (!validatemap(put)) {
+			sprint(self,2,"The server doesn't have the ¢");
+			sprint(self,2,put);
+			sprint(self,2,"¢ map.\n");
+			return;
+		}
+	}
+	if ((self.has_voted == 1))
+	{
+		sprint (self, 2, "You've already voted!\n");
+		return;
+	}
+	else
+	{
+		string mapdispfix;
+		votestarted = #VOTE_MAP;
+		themap = put;
+		if (prozacmethod == 1)
+		{
+			themap = prozacmap;
+		}
+		bprint (1.000000, self.netname);
+		bprint (1.000000, " has voted for ");
+		bprint (1.000000, put);
+		mapdispfix = put;
+		localcmd ("localinfo  themap ");
+		localcmd (put);
+		localcmd ("\n");
+		bprint (1.000000, " - use voteyes to agree. If more than 50% is not agreed before one minute the vote will end.\n");
+		local entity head;
+		head = nextent(world);
+		while (head != world)
+		{
+		if (head.classname == "player") { stuffcmd(head, "play misc/runekey.wav \n"); }
+		head = nextent(head); 
+		}
+
+		num_votes = num_votes + 1;
+		self.has_voted = 1;
+		self.vote_wait = (time + 10);
+		RemoveVote();
+		if (num_votes > (num_players * 0.6))
+		{
+			self.has_voted = 0;
+#ifdef mtf_coop_expsys
+			MTF_Coop_RanksMapVote( put, 1 );
+#endif
+			localcmd ("exec qwmcycle/");
+			localcmd (put);
+			localcmd (".cfg\n");
+			localcmd ("map ");
+			localcmd (put);
+			localcmd ("\n");
+			newmis = spawn();
+			newmis.classname = "timer";
+			newmis.nextthink = time + 2;
+			newmis.think = MapNotFound;
+			return;
+		}
+		local string votesneeded;
+		votesneeded = votesneededtostring ();
+		if (votesneeded == "1")
+		{
+			bprint (1.000000, votesneeded);
+			bprint (1.000000, " more vote(s) needed.\n");
+		}
+		else
+		{
+			bprint (1.000000, votesneeded);
+			bprint (1.000000, " more votes needed");
+			bprint (1, " ");
+			themap = infokey (world, "themap");
+			bprint (1, mapdispfix);
+			bprint (1, "ë \n");
+		}
+	}
+};
+
+string() votesneededtostring =
+{
+	local float needed;
+	needed = ((num_players * 0.5) - num_votes);
+
+	if (needed < 1)
+	{
+		return ("1ë");
+	}
+	if (needed < 2)
+	{
+		return ("2ë");
+	}
+	if (needed < 3)
+	{
+		return ("3ë");
+	}
+	if (needed < 4)
+	{
+		return ("4ë");
+	}
+	if (needed < 5)
+	{
+		return ("5ë");
+	}
+	if (needed < 6)
+	{
+		return ("6ë");
+	}
+	if (needed < 7)
+	{
+		return ("7ë");
+	}
+	if (needed < 8)
+	{
+		return ("8ë");
+	}
+	if (needed < 9)
+	{
+		return ("9ë");
+	}
+	if (needed < 10)
+	{
+		return ("10ë");
+	}
+	if (needed < 11)
+	{
+		return ("11ë");
+	}
+	if (needed < 12)
+	{
+		return ("12ë");
+	}
+	if (needed >= 13)
+	{
+		return ("over 12ë");
+	}
+	return ("ERROR");
+};
+
+void() MapNotFound =
+{
+	local entity finder_ent;
+
+	localcmd("say --  Map Not Found(the func MapNotFound)  --\n");
+	nomap = 1;
+	if (FTE_Server && Ranks_Updated == 1)
+		Ranks_Updated = 0;
+	finder_ent = find (world,classname,"VoteFailed");
+	while (finder_ent)
+	{
+		if ((finder_ent.classname == "VoteFailed"))
+		{
+			dremove (finder_ent);
+		}
+		finder_ent = find (finder_ent, classname, "VoteFailed");
+	}
+	RemoveVote2 ();
+	dremove (self);
+}
+
+void() RemoveVote =
+{
+	newmis = spawn();
+	newmis.classname = "VoteFailed";
+	newmis.nextthink = time + 10;  //was 60, to hurry things up on a failed vote.
+	newmis.think = RemoveVote2;
+	nomap = 0;
+}
+
+void() RemoveVote2 =
+{
+	if (votestarted == 0) {
+		dremove(self);
+		return;
+	}
+
+	prozacmethod = 0;
+	local entity head;
+	if (nextmapchosen != 1)
+	{
+		localcmd("say -- VOTE HAS FAILED --");
+	}
+	votestarted = 0;
+	num_votes = 0;
+	self.startedvote = 0;
+	self.vote_wait = (time + 10);
+	head = nextent(world);
+	while (head != world)
+	{
+	if (head.classname == "player") { head.has_voted = 0; }
+	head = nextent(head); 
+	}
+	return;
+	dremove (self);
+}
+
+#include "vmap_menus.qc"
+
+float(string mapstr) validatemap =
+{
+    mapstr = strcat("maps/",mapstr);
+    mapstr = strcat(mapstr,".bsp");
+
+    return validatefile(mapstr);
+};
+
+float(string s1, string s2, string s3, string s4, string s5) ExtendedCMDs =
+{
+	return 1;
+};
+
+float (entity the_player, float amount, string give_what) Extra_Stuff =
+{
+	local entity oself;
+
+#ifdef mtf_coop
+	local entity ipl;
+	local string minfo;
+	
+	if (give_what == "srvreset")
+	{
+		ipl = find(world,classname,"monster_score");
+		if (ipl != world) {
+			if (ipl.noise1 != "")
+				minfo = ipl.noise1;
+			ipl.noise1 = strzone("none");
+			if (minfo != "")
+				strunzone(minfo);
+		}
+		the_player.ammo_cells = amount;
+		return 1;
+	}
+#endif
+	if (give_what == "building")
+	{
+		self = oself;
+		if (!amount)
+			return 0;
+
+		self = the_player;
+		TeamFortress_Build(amount);
+		self = oself;
+		return 1;
+	}
+	if (give_what == "ammo_cells")
+	{
+		the_player.ammo_cells = amount;
+		return 1;
+	}
+	if (give_what == "ammo_nails")
+	{
+		the_player.ammo_nails = amount;
+		return 1;
+	}
+	if (give_what == "ammo_shells")
+	{
+		the_player.ammo_shells = amount;
+		return 1;
+	}
+	if (give_what == "ammo_rockets")
+	{
+		the_player.ammo_rockets = amount;
+		return 1;
+	}
+	if (give_what == "ammo")
+	{
+		the_player.currentammo = amount;
+		return 1;
+	}
+	if (give_what == "speed")
+	{
+		the_player.maxfbspeed = amount;
+		the_player.maxspeed = amount;
+		the_player.maxstrafespeed = amount;
+		return 1;
+	}
+	if (give_what == "weapon")
+	{
+		if (amount == 1)
+		{
+			the_player.current_weapon = 8;	//spanner
+		}
+		if (amount == 2)
+		{
+			the_player.current_weapon = 32;	//S.R.
+		}
+		if (amount == 3)
+		{
+			the_player.current_weapon = 16384;	//Inc Cannon
+		}
+		if (amount == 4)
+		{
+			the_player.current_weapon = 262144;	//Tranq
+		}
+		if (amount == 5)
+		{
+			the_player.current_weapon = 32768;	//20mm
+		}
+		if (amount == 6)
+		{
+			the_player.current_weapon = 2048;	// Nade launcher
+		}
+		if (amount == 7)
+		{
+			the_player.current_weapon = 8192;	// R.L.
+		}
+		if (amount > 7)
+		{
+			the_player.current_weapon = amount;
+		}
+		W_SetCurrentAmmo();
+		return 1;
+	}
+	return 0;
+};
+
+#ifdef botprogs
+// spawns a list of bots only
+#define BOTLIST_NORM			0
+#define BOTLIST_TEAMCLASS		1
+#define BOTLIST_FULLDEBUG		2
+void(float btype) bot_list =
+{
+	local entity entar;
+	local string str;
+
+	entar = find(world, classname, "player");
+	while(entar)
+	{
+		if (entar.ishuman == 0 || entar.ishuman == 2)
+		{
+			str = ftos(entar.fUserID);
+			sprint (self, 2, str);
+			sprint (self, 2, "     ");
+			sprint (self, 2, entar.netname);
+			if (btype == #BOTLIST_TEAMCLASS)
+			{
+				sprint (self, 2, " ‘Â·Ì∫ ");
+				sprint (self, 2, GetTeamName(entar.team_no));
+				sprint (self, 2, " √Ï·ÛÛ∫ ");
+				sprint (self, 2, TeamFortress_GetClassName(entar.playerclass));
+			}
+			if (btype == #BOTLIST_FULLDEBUG)
+			{
+
+			}
+			sprint (self, 2, "\n");
+		}
+		entar = find(entar, classname, "player");
+	}
+};
+
+void (float clientno) bot_kick =
+{
+	local entity bot;
+
+	bot = find (world, classname, "player");
+	while (bot)
+	{
+		if (((bot.fUserID == clientno) && !bot.ishuman))
+		{
+			bot.fUserID = CONTENT_EMPTY;
+			botDisconnect (bot);
+			return;
+		}
+		bot = find (bot, classname, "player");
+	}
+	sprint(self,2, "Invalid bot. Bots in server:\n");
+	bot_list(#BOTLIST_NORM);
+};
+#endif
+
+#ifdef mtf_coop_expsys
+void ( float howmany ) MTF_Coop_ViewTopRanks;
+float ( float currexp ) Coop_ExpForNextLevel;
+void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank;
+void () MTF_Resurrect_Player_Find;
+#endif
+
+float (string votemap_name) Check_For_Bmodel =
+{
+	// Is this map a bmodel? can't play bmodels!
+	if (votemap_name == "rfort" || votemap_name == "bfort" || votemap_name == "control2" || // 2fort5p|| 2fort5p || colony1 i think?
+		votemap_name == "b_batt0" || votemap_name == "b_batt1" || votemap_name == "b_bh10" || //id1 pak0.pak bmodels
+		votemap_name == "b_bh100" || votemap_name == "b_bh25" || votemap_name == "b_explob" ||
+		votemap_name == "b_nail0" || votemap_name == "b_nail1" || votemap_name == "b_rock0" ||
+		votemap_name == "b_rock1" || votemap_name == "b_shell0" || votemap_name == "b_shell1" ||
+		votemap_name == "tank3" || votemap_name == "alk13" || votemap_name == "alk15" ||
+		votemap_name == "b_exbox2" || votemap_name == "b_lnail0" || //id1 pak1.pak bmodel
+		votemap_name == "ratport1")
+	{
+		sprint(self,2,"You can't start voting for a bmodel!\n");
+		return TRUE;
+	}
+#ifdef mtf_coop_expsys
+	if (votemap_name == "insane" || votemap_name == "beach" || votemap_name == "hipstart")
+	{
+		sprint(self,2,"I'm sorry Dave, I'm afraid I can't do that.\n");
+		return TRUE;
+	}
+#endif
+	return FALSE;
+};
+
+string (string packet_cmd) Packet_Slashpass =
+{
+	local string packet_pw;
+	local string return_str;
+	packet_pw = infokey (world, "packet_password");
+	if (packet_pw == "") {
+		bprint(2,"\"packet_password\" not set in localinfo - set this to the master server password\n");
+		return " \\ null null ";
+	}
+	return_str = frik_strcat( " \\ ", packet_pw, " ");
+	return_str = frik_strcat( return_str, packet_cmd, " ");
+	return return_str;
+	
+};
+
+void (entity plyr) Badpacket_attribute_over_limit =
+{
+	bprint(2, "Packet Bug: Player " );
+	bprint(2, plyr.connect_name);
+	bprint(2, " received attributes over the allowed limit. Please inform DEV. Attributes will be reset now..\n");
+	Coop_ResetAttributes ( plyr );
+	sprint(plyr, 2,"Sorry, seems you got caught in one of my endless bugs. Your attributes have been reset.\n");
+};
+void (string msg) Packet_SendGlobalMessage =
+{
+return; // to stop sending packets -arg
+};
+
+// Tell master server to send a **CHAT** message to all other servers connected
+void () Packet_SendSAY =
+{
+return; // To stop it from yakking.
+};
+
+void (string sender) Master_UpdateConnections =
+{
+	local float i, found_me;
+	i=0;
+	while (i<STORED_ADDRESSES) {
+		if (ips[i] == string_null)
+			break;
+		else if (ips[i] == sender) {
+			found_me = 1;
+			break;
+		}
+		i++;
+	}
+	
+	if (!found_me) {
+	
+		i=0;
+		while (i<STORED_ADDRESSES) {
+			if (ips[i] == string_null) {
+				ips[i] = sender;
+				ips[i] = strzone(ips[i]);
+				bprint(2,ips[i]);
+				bprint(2," added to the IP roster\n");
+				break;
+			}
+			i++;
+		}
+	
+	}
+};
+float(string sender, string contents) SV_ParseConnectionlessPacket = 
+{
+return 0;
+};
+
+
+//END 
