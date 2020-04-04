@@ -31,22 +31,12 @@ float		force_retouch;		// force all entities to touch triggers
 								// decremented each frame, so set to 2
 								// to guarantee everything is touched
 string		mapname;
-
-
-
-
-
-
-
 float		serverflags;		// propagated from level to level, used to
 								// keep track of completed episodes
-
 float		total_secrets;
 float		total_monsters;
-
 float		found_secrets;		// number of secrets found
 float		killed_monsters;	// number of monsters killed
-
 
 // spawnparms are used to encode information about clients across server
 // level changes
@@ -67,7 +57,6 @@ float		trace_plane_dist;
 entity		trace_ent;
 float		trace_inopen;
 float		trace_inwater;
-
 entity		msg_entity;				// destination of single entity writes
 
 //
@@ -91,8 +80,6 @@ void()		SetNewParms;			// called when a client first connects to
 
 void()		SetChangeParms;			// call to set parms for self so they can
 									// be saved for a level transition
-
-
 //================================================
 void		end_sys_globals;		// flag for structure dumping
 //================================================
@@ -110,42 +97,28 @@ void		end_sys_globals;		// flag for structure dumping
 //
 .float		modelindex;		// *** model index in the precached list
 .vector		absmin, absmax;	// *** origin + mins / maxs
-
 .float		ltime;			// local time for entity
-
 .float		lastruntime;	// *** to allow entities to run out of sequence
-
-
 .float		movetype;
 .float		solid;
-
 .vector		origin;			// ***
 .vector		oldorigin;		// ***
 .vector		velocity;
 .vector		angles;
 .vector		avelocity;
-
-
-
-
-
 .string		classname;		// spawn function
 .string		model;
 .float		frame;
 .float		skin;
 .float		effects;
-
 .vector		mins, maxs;		// bounding box extents reletive to origin
 .vector		size;			// maxs - mins
-
 .void()		touch;
 .void()		use;
 .void()		think;
 .void()		blocked;		// for doors or plats, called when can't push other
-
 .float		nextthink;
 .entity		groundentity;
-
 // stats
 .float		health;
 .float		frags;
@@ -154,79 +127,48 @@ void		end_sys_globals;		// flag for structure dumping
 .float		weaponframe;
 .float		currentammo;
 .float		ammo_shells, ammo_nails, ammo_rockets, ammo_cells;
-
 .float		items;			// bit flags
-
 .float		takedamage;
 .entity		chain;
 .float		deadflag;
-
 .vector		view_ofs;			// add to origin to get eye point
-
-
 .float		button0;		// fire
 .float		button1;		// use
 .float		button2;		// jump
-
 .float		impulse;		// weapon changes
-
 .float		fixangle;
 .vector		v_angle;		// view / targeting angle for players
-
-
-
-
-
 .string		netname;
-
 .entity 	enemy;
-
 .float		flags;
-
 .float		colormap;
 .float		team;
-
 .float		max_health;		// players maximum health is stored here
-
 .float		teleport_time;	// don't back up
-
 .float		armortype;		// save this fraction of incoming damage
 .float		armorvalue;
-
 .float		waterlevel;		// 0 = not in, 1 = feet, 2 = wast, 3 = eyes
 .float		watertype;		// a contents value
-
 .float		ideal_yaw;
 .float		yaw_speed;
-
 .entity		aiment;
-
 .entity 	goalentity;		// a movetarget or an enemy
-
 .float		spawnflags;
-
 .string		target;
 .string		targetname;
-
 // damage is accumulated through a frame. and sent as one single
 // message, so the super shotgun doesn't generate huge messages
 .float		dmg_take;
 .float		dmg_save;
 .entity		dmg_inflictor;
-
 .entity		owner;		// who launched a missile
 .vector		movedir;	// mostly for doors, but also used for waterjump
-
 .string		message;		// trigger messages
-
 .float		sounds;		// either a cd track number or sound number
-
 .string		noise, noise1, noise2, noise3;	// contains names of wavs to play
-
 //================================================
 void		end_sys_fields;			// flag for structure dumping
 //================================================
-
 /*
 ==============================================================================
 
@@ -234,7 +176,6 @@ void		end_sys_fields;			// flag for structure dumping
 
 ==============================================================================
 */
-
 float movedist /* = 0.000000 */;
 string string_null /* = "" */;
 //float empty_float /* = 0.000000 */;
@@ -346,25 +287,18 @@ entity (vector org, float rad) findradius = #22;
 #ifndef botprogs
 void(...) bprint				= #23;
 void(...) sprint 				= #24;
-
 void(...) bprint2				= #23;
 void(...) sprint2 				= #24;
-
 void(...) bprint3				= #23;
 void(...) sprint3 				= #24;
-
 void(...) bprint4				= #23;
 void(...) sprint4 				= #24;
-
 void(...) bprint5				= #23;
 void(...) sprint5 				= #24;
-
 void(...) bprint6				= #23;
 void(...) sprint6 				= #24;
-
 void(...) bprint7				= #23;
 void(...) sprint7 				= #24;
-
 void(...) bprint8				= #23;
 #else
 void(...) bprint				= #23;
@@ -376,7 +310,6 @@ void(...) bprint6				= #23;
 void(...) bprint7				= #23;
 void(...) bprint8				= #23;
 #endif
-
 void (string s) dprint = #25; 
 string (float f) ftos = #26; 
 string (vector v) vtos = #27; 
@@ -444,14 +377,11 @@ float sr_gren2;
 .float autodiscard;
 .float discard_max;
 void () DetpackDisarm;
-
 void () TeamFortress_Discard;
 float medicarmorheal;
-
 .float stats_on;
 void (float _p_2445) Stats_Hit;
 void (float _p_2420) Stats_Fired;
-
 void () lay;
 void () unlay;
 
@@ -482,7 +412,6 @@ void () unlay =
 //Centerprint4.. wtf..
 void (entity client, string s, ...) CenterPrint4 = #73; 
 void (entity client, string s, ...) CenterPrint6 = #73; 
-
 //votemap code
 float num_players;
 float num_votes;
@@ -503,7 +432,6 @@ float prozacmethod;
 string prozacmap;
 float(string mapstr) validatemap;
 string pmap_backup;
-
 // Server Fix Function
 var string(string s1, string s2, ...) strcat = __NULL__;
 string(string s1, string s2, ...) qsg_strcat = #82;
@@ -512,12 +440,10 @@ string(string s1, string s2, ...) mvdsv_strcat = #89;
 string(string s1, string s2, ...) frik_strcat = #115;
 float(string s) checkextension = #99;
 void () setup_strcat;
-
 var void(entity e, string s2) clientcommand = __NULL__;
 float(string s) tokenize = #84; // #441 for FTE
 string(float n) argv = #86;// #442 for FTE
 float() argc = #85;
-
 //fer stuff!
 .float num_kills;
 .float fertracker;
@@ -527,7 +453,6 @@ float() argc = #85;
 #endif
 // Rampage stuff!
 .float killstack;
-
 float spycam;
 .string oldweaponmodel;
 void () Cam;
@@ -535,12 +460,10 @@ void () DetpackDisarm;
 float olddisarm;
 float drop1;
 float drop2;
-
 void (entity _p_1912) camera_die;
 void () camera_expire;
 void () activatecam;
 void () LookThroughCam;
-
 //Server Message Display
 // serverinfo/localinfo svmsg1 - time amount between displaying message 1
 // serverinfo/localinfo svmsg2 - time amount between displaying message 2
@@ -569,7 +492,6 @@ float haltloop3;
 // This is optional however, and if the server doesn't find "svmsg_delay" it will continue messages as normal.
 float msgdelay;
 float msgdelay2;
-
 // PM code!
 void () pm_list;
 .float userid;
@@ -577,34 +499,27 @@ float globaluserid;
 .float cooldown;
 //special prozac pm code
 float(entity client) getuid = #83;
-
 // Class Restrict Stuff
 float clr_enabled;
-
 //spy jump (from '04)
 float spyjumpoption;
 .float spy_regjump;
-
 // Prozac STUFF Command
 // For the love of god, put rcon_password in localinfo
 string rconpw;
-
 // FTE
 float(string pattern, float caseinsensitive, float quiet) search_begin = #444;
 void(float handle) search_end = #445;
 string(float handle, float num) search_getfilename = #447; 
 //string(string s1, string s2) strcat = #82;
-
 // Test
 void () tester;
-
 // Quote System -
 // Various movie quotes. Can be edited easily, just look in xavior.pqc :DD
 void () display_quote;
 void () quotetimer;
 string (float whee) quotetostring;
 float quotestart;
-
 //zombeh!
 float true    = 1;
 float false    = 0;
@@ -736,7 +651,6 @@ float MULTICAST_PVS    = 2;
 float MULTICAST_ALL_R    = 3;
 float MULTICAST_PHS_R    = 4;
 float MULTICAST_PVS_R    = 5;
-
 // Change Team Code
 float teamcount1;
 float teamcount2;
@@ -762,15 +676,12 @@ float monsterrecharge;
 void () respawn_shambler;
 void () monster_shambler_respawn;
 #endif
-
 // Damage-O-meter - only supported by Prozac and FTE
 float canusenew;
 .float inflicted;
 .float infstaytime;
-
 // Engineer fun_nobuild (entity use for areas where engineers cant build)
 void () func_nobuild;
-
 // Tesla Code ala BTF
 .float has_tesla;
 .float height;
@@ -782,7 +693,6 @@ void () func_nobuild;
 .float has_turretized_tesla;
 // Prozac Tesla Model (cuz it's leeter)
 .float 		job;				// WK Yet another flag for player items
-
 // TelePad Code ala Prozac/CustomTF
 .float has_teleporter;
 void() Teleporter_touch;
@@ -796,7 +706,6 @@ float(entity targ) Teleporter_check_person;
 .float immune_to_chec;
 #define	PRINT_HIGH		 2		// critical messages
 float(float targteam, float attackteam) Teammate;
-
 // Security Cam Code ala Prozac/CustomTF
 .float has_camera;
 #define SCREWUP_THREE   4
@@ -822,24 +731,19 @@ float(float targteam, float attackteam) Teammate;
 #define IT_ARMOR1			8192 
 #define IT_ARMOR2			16384 
 #define IT_ARMOR3			32768 
-
 //dropammo fix
 float sr_dropgrens;
-
 // Engineer mag/railgun compatability fix
 .float option6;
-
 //"Vote as next map" feature - automatic if there are only 20 minutes left to a game
 float nextmapchosen;
 float votetimeleft;
-
 //mini turret
 .float has_mini;
 .float is_active_mini;
 #ifndef mtf_coop
 .float is_mini;
 #endif
-
 //Field Generator from DeadLode mod (I'm tired of trying to decipher PZCTF's hieroglyphics)
 .float has_fieldgen;
 .entity gen_north;
@@ -850,7 +754,6 @@ float votetimeleft;
 float match_state;
 .float sabotaged; // sabotaging is not a MegaTF feature and probably never will be in my mod --
 .entity saboteur; // I'll leave this here for the sake of code completion though.
-
 // Parachute ala BTF
 .float chute_active;
 .float chute_count;
@@ -858,13 +761,10 @@ float match_state;
 //.float jump_release;
 // dont want people spamming them eh
 .float nextuse_para;
-
 // Anti-Discard Flood
 .float discard_next;
-
 // Helo ala BTF
 void() AC_Crash;
-
 // Dynamic lights for FTEMegaTF!!!
 //.float light_lev;
 //.vector color;
@@ -874,12 +774,10 @@ void() AC_Crash;
 float PFLAGS_NOSHADOW = 1;
 float PFLAGS_CORONA = 2;
 float PFLAGS_FULLDYNAMIC = 128;
-
 /* Join time feature --
    if a client joins, he has 5 minutes to choose a team
    else he reconnects and goes spec */
 .float join_time;
-
 // RANK FEATURES (FTE only)
 float Ranks_Updated;		// tells us if the global ranks have been updated already (once per map)
 .float global_rank;
@@ -887,18 +785,14 @@ float Ranks_Updated;		// tells us if the global ranks have been updated already 
 .float global_fers;
 .float global_dths;
 void () Rank_UpdateStatsGlobal;
-
 float FALSE =			0;
 float TRUE =			1;
 #define FALSE			0
 #define TRUE			1
-
 // Tinker Bonus
 .float cells_bonus;
-
 // "You Got Juggled"
 .float being_juggled;
-
 #ifdef botprogs
 // Pablo Bot Stuff
 .float nocheck;
@@ -910,24 +804,14 @@ void () BotKill;
 .float auto_snipe;
 .float speed_set;		// stop calling TeamFortress_SetSpeed, stupid bots!
 #endif
-
 //mini pet!
 .float follow_mode;
-#ifdef minipets
-void () MINI_TeleportToOwner;
-void () demon1_run1;
-#endif
-
 // tf 2.9 map code
 .float hasnt_item_from_group,hn_i_g;
-
 #define DMSG_MINIFIEND			900
-
 //#define minipets			// enables minipets, not working, don't. -arg
-
 //#define id4		// enables 4th of july mode
 //#define halloween	// enables halloween mode
-
 // New class DEFS
 //#define NEW_CLASS1		// enables new class: Spec Op
 #ifdef NEW_CLASS1
@@ -938,18 +822,14 @@ void () demon1_run1;
 float EF_ADDITIVE =		32;
 #endif
 //end new class 1 defs
-
 // select last weapon
 .float last_weapon;
 .float last_weaponmode;
-
 .float no_bounce;		// flag (goal item) shouldnt bounce when thrown for X seconds (time + X)
-
 //#define LTB2		// enables the laser-trip bomb for demoman class (STALKER mod)
 #define LTB1		// enables LTB for demo (BTF style)
 #define weapon_bat	// enables bat weapon for scout (from tf2!)
 #define newsounds2	// " headshot/death6/bye2
-
 float record_fer;
 float record_frags;
 string record_fragholder;
@@ -957,18 +837,15 @@ string record_fragholder;
 #define RECORD_FRAGS	2
 #define RECORD_DEATHS	3
 #define RECORD_CAPS	4
-
 //more drop4
 .float has_drop4;
 void (entity otk) kill_medpack;
-
 // misery's wishlist crap
 float spy_armor;
 float allow_chute;
 float allow_bat;
 float self_flash;
 float oldconc;
-
 //#define CP_BOTS
 #ifdef CP_BOTS
 entity() spawnbot = #98;
@@ -976,7 +853,6 @@ entity() spawnbot = #98;
 void(entity botent, float botid, string botname, float botclass) setbot = #98;
 //void(float botid) removebot = #99;
 #endif
-
 #ifdef mtf_coop
 #define BOT_TEAM		666
 // macros for certain variables so we can reuse unused variables and still give it a unique name
@@ -1003,7 +879,6 @@ void() coop_walkmonster_start;
 #define MFLAG_BITER				8				// the monster can bite (IE: dogs)
 #define MFLAG_NOHEART				16				// mainly for warlock heart grabbing
 #define MFLAG_NOBREATHING			32				// monster doesn't breathe, (IE: shambler, enforcer (has suit))
-
 // misc ofn defs
 // String flags (used for fast find() searches)
 #define STRFLAG_COOL               "cool"
@@ -1012,7 +887,6 @@ void() coop_walkmonster_start;
 #define STRFLAG_STORM_TARGET       "strmtrgt"
 #define STRFLAG_EARTHQUAKE_TARGET  "eqtarget"
 #define monsterflag	weaponmodel
-
 // xav crap.
 //#define FTE_ONLY
 #define mtf_coop_expsys
@@ -1041,7 +915,6 @@ float(string s) tq_stof = #135;
 float(string fname) checkfilename = #136;
 float(string fname) checkmodelprecache = #137; 
 #endif
-
 // Exp Sys vars/properties
 #define ATTRIB_HEALTH	1
 #define ATTRIB_ARMOR	2
@@ -1068,18 +941,13 @@ float (entity plyr, float atype) MTF_Coop_SetArmorAttrib;
 .float maxspeed;
 .float done_custom;
 //.float		lastruntime;	// *** to allow entities to run out of sequence
-
 #define npc_smoothtime				maxspeed			// this is the time when we need to give back control to monster and stop lerping
 #define npc_smoothdist				demon_blood			// total distance we need to go
 #define npc_lastruntime				done_custom			// last time our lerp function was called
 #define npc_attemptednextthink		cnt
 #define npc_hax				speed_finished
-
 #define NPC_FRAMETIME			0.1
 #define NPC_LERPTIME			0.031
-
-
-
 .float speed_time;		// speed powerup (by popular demand)
 .float speed_finished;
 .string monster_string;
@@ -1100,14 +968,11 @@ float () Hipnotic_SaveModels2;
 #define MITEM_AIR		256
 #define MITEM_BOSS			512	// boss monster
 #define MITEM_POWERSTEALER	1024
-
 //#define NO_POWERSTEALER
-
 #define	MONSTER_SPEED_MULT	2	// when monster has MITEM_SPEED, multiply walk/run speed by this
 #define MONSTER_TRANQUILIZED	32768
 .void()	th_fireball;	// stolen from prz-coop
 #define AS_FIREBALL			9
-
 // Gizmo
 void (entity pickuper, float toss) zg_togglepickup;
 void (entity pickuper, float toss) zg_drop;
@@ -1115,19 +980,14 @@ float(entity tester_e) IsBuilding;
 #define WEAP_ZEROGRAVITY	4194304
 .entity pickedupobject_hands;
 #endif
-
 // OfN - Traceline modes
 #define TL_ANY_SOLID	0 // will hit any solid, but not triggers
 //#define TL_BSP_ONLY 	1 // will hit BSP only
 // Warning: do not use 2, it's used internally by server C code
 #define TL_TRIGGERS 	3 // Scan for triggers (Triggers must be flagged with FL_FINDABLE_NONSOLID)
 #define TL_EVERYTHING	4 // Scan for anything (Any NonSolid/Trigger entities must be flagged with FL_FINDABLE_NONSOLID)
-
-
 #define FL_FINDABLE_NONSOLID	16384 // OfN - Any entity with this can be "found" with findradius(), even if SOLID_NOT
-
 #define NEW_DOT	// use new sniper dot instead of precaching 4 different models for blue/red/green/yell sniper dot
-
 // LMS:
 #ifdef mtf_coop
 float ( string mname ) Coop_SpecialEnd;
@@ -1151,7 +1011,6 @@ entity lms_entity;
 void () spawn_mister;
 void () precache_mr;
 #endif
-
 void ( entity s_ent, string mname ) setmodelu;
 #endif
 //#define debug
@@ -1162,13 +1021,11 @@ float really_killed;
 
 #ifdef mtf_coop_expsys
 float no_more_exp;		// when set to "1" this locks the exp gain for the map
-
 // dual kills code
 #define other_possible_atacker 		gen_slave
 #define other_attacker			gen_west
 #define other_attacker_inflicted	done_custom
 #define reset_other_attacker		ammo_c4det
-
 // custom skins
 string (string nname, float currexp) MTF_Coop_GetSkin;
 void (entity p, string newskin) MTF_Coop_SetCustomSkin;
@@ -1185,18 +1042,17 @@ void(string blah) strunzone;
 // frik bot stuff (for coop score)
 void () ClientInRankings2;
 void (float clientno) clientSetFree2;
-
 float ( entity t_mons ) Coop_Attackable;
 float ( entity t_mons, float m_type ) Coop_IsMonster;
 #define MONSTERTYPE_NORMAL	0
 #define MONSTERTYPE_ANY		1
-
 #define spy_visible_time hn_i_g
 #endif
 
 #define MODEL_HEALTH_TEN		"maps/b_bh10.bsp"
 #define MODEL_HEALTH_HUNDRED		"maps/b_bh100.bsp"
 #define MODEL_MONSTERDROP		"progs/newmonsterdrop.mdl"
+
 #ifdef mtf_coop_halloween2
 #define MODEL_HGREN2			"progs/pkin.mdl"
 #else
@@ -1247,11 +1103,10 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote;
 #define VOTE_SURVIVAL_NEXT	5
 #define VOTE_SURVIVAL_NOW	6
 #define VOTE_KICK			7
+
 #ifndef mtf_coop
 #define VOTE_PROGS			8
-
 string (string blah) cvar_string = #103;
-
 #endif
 
 #ifdef mtf_coop_expsys
@@ -1262,13 +1117,10 @@ float flawless_bonus;
 // Chain saw!
 #define MODEL_CHAINSAW		"progs/v_chain.mdl"
 #define SOUND_CHAINSAW		"weapons/psaw.wav"
-
 .float rv_gr;
 #define kick_idle_time		rv_gr
-
 // Inventory
 float (string nname) MTF_Coop_SetupInventory;
-
 .float gold, max_inv;	// incase i want to replace these later, i use the #defines below
 #define gold		gold
 #define max_inv		max_inv
@@ -1289,12 +1141,8 @@ entity merchant;
 #define item4		pain_finished
 #define item5		rad_time
 #define merchant_type	super_sound
-
-
 #define P_TO_SELF_W_VALUE 	2
-
 void () HIP_LaserThink;
-
 .float mtf_items;
 void () MTF_Coop_ResetItems;
 #define BOUNCY_ROCKETS		1
@@ -1314,7 +1162,7 @@ void () MTF_Coop_ResetItems;
 //#endif
 
 #ifdef VWEPS
-// vweps for coop.. but why not enable for united in the future too?
+// vweps for coop.. but why not enable for united in the future too? -arg
 float(string model) precache_vwep_model = #532;
 .float vw_index;
 void () VWEPS_SetModel;
@@ -1331,9 +1179,7 @@ void () VWEPS_SetModel;
 // QUESTS
 //#define mtf_coop_quests
 #ifdef mtf_coop_quests
-
 .float qid, q_nw;
-
 void ( entity qplayer, float qvtype, entity qvent ) Quest_ProgressUpdate;
 string ( string fromme, string str_value, float str_valueno, string str_section ) TFI_GetValueFor;
 string ( float grabtype, float quest_id, entity qowner ) Quest_GetValueFor;
@@ -1352,21 +1198,17 @@ void () Quest_Think;
 #define questvar1			sabotaged
 #define questvar2			immune_to_chec
 #define	questvar3			martyr_enemy
-
 #define RULES_NONE		0
 #define RULES_ONLYONCE		1
-
 #define QVAR_NOVAR		0
 #define QVAR_KILLMONSTER	1
 #define QVAR_COLLECTITEM	2
 #define QVAR_KILLMONSTERANY	4
-
 #define RESULT_GIVENONE		0
 #define RESULT_GIVEGOLD		1
 #define RESULT_GIVEEXP		2
 #define RESULT_GIVEITEM		4
 #define RESULT_GOTOPART		8
-
 #endif
 
 vector(string s) stov = #130;		// mvdsv xe extension
@@ -1381,7 +1223,6 @@ void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop
 #endif
 
 #ifdef mtf_coop
-
 #define	mtf_coop_malice					 	// Malice TC support
 #ifdef mtf_coop_malice
 float malice_ched;					// check if all malice stuff is precache'd
@@ -1390,33 +1231,22 @@ float co2_spread;
 float modelindex_hover;
 .float burning, extinguished;
 .float atomic_intensity;
-
 #define warp_factor			a_r
 #define	ammo_nails2			a_n
 #define	ammo_cells2			rs_gr
 #define	ammo_shells2			a_r
 #define	ammo_rockets2			rs_gr
 #define	punish_eject		rs_gr
-
 #define notarget_flag		a_c
-
 #define ideal_pitcher			vw_index
-
 #define	hover_active		rs_gr
-
 #define dualfire			a_n
-
 #define co2_flag			a_n
-
 #define old_angles			dest2
-
 #define IT_UZI    4
 #define IT_NONE    128
-
 #define PLAYER_ONLY		1
-
 #define H_MEGA			2
-
 #define UT_PROBE     1
 #define UT_HOVER     2
 #define UT_CHUTE     4
@@ -1424,7 +1254,6 @@ float modelindex_hover;
 #define UT_BIGASSGUN     16
 #define UT_MINISUB     32
 #define UT_FALLING     64
-
 #define	SVC_SETVIEWPORT		5
 #define SVC_SETVIEWANGLES	10
 #define SECRET_OPEN_ONCE     1
@@ -1436,17 +1265,13 @@ float modelindex_hover;
 #define WEAPON_ROCKET     2
 #define WEAPON_SPIKES     4
 #define WEAPON_BIG     8
-
 #define SERV_VOL		0.5
-
 #define	MAX_DROPS		12
-
 #define CHT_NORMSPEED    510
 #define CHT_SCUBASPEED    554
 #define CHT_SUBSPEED    658
 #define CHT_HOVERSPEED    700
 #endif										// End Malice TC support
-
 
 //#define mtf_coop_halflife
 // Half-Life 1 support is seedy and incomplete. A lot of monsters are replaced, and a lot of entities are as well.
@@ -1459,7 +1284,6 @@ float modelindex_hover;
 #define npc_useTargetsOnRespawn		StatusBarSize		// if true then monster should call SUB_UseTargets() again when he dies after respawning
 #define DEFAULT_SPAWNER_TARGETNAME	"monster_spawner"
 #define SPAWN_USETARGETSONRESPAWN		4				// if present, monsters that respawn will re-fire their triggers upon death
-
 // MONSTER CODE
 .float monster_type;
 .float monsterframe;
@@ -1493,7 +1317,6 @@ float (string mpn) GetEP2MapBit;
 float (string mpn) GetEP3MapBit;
 float (string mpn) GetEP4MapBit;
 float (string mpn) GetW3DMapBit;
-
 // keep ACHIEVEMENT_ definitions 3 numerical units apart for file-reading purposes
 #define ACHIEVEMENT_BLADERUNNER			0
 #define ACHIEVEMENT_HEAVYMETAL			3
@@ -1524,35 +1347,28 @@ float (string mpn) GetW3DMapBit;
 #define ACHIEVEMENT_SPEEDY				78					// Get best completion time on maps
 #define ACHIEVEMENT_RECORD				81					// Get frag record on maps
 #define MAXLINES_ACHIEVEMENTS			83					// always TWO more than the most
-
 //s_type: 0 - set, 1 - add, 2 - subtract, 3 - reset
 #define ACHIEVEMENTS_SET		0
 #define ACHIEVEMENTS_ADD		1
 #define ACHIEVEMENTS_GLOBALADD	2
 #define ACHIEVEMENTS_GLOBALSET	3
 #define ACHIEVEMENTS_ADDBIT		4
-
 void ( float bodytype ) Survival_MakeDummy;
-
 #define mtf_coop_quake2
-
 void () Wizard_Bounce_Off_Walls;
-
 .string pathtarget;		// quake 2
 #endif
 #endif
+
 #ifdef mtf_coop
 // AOP
 .float walltype;
-
 // Monster flash time
 #define mflash_time		clipex_attr
-
 //survival
 float survival_mode;
 float () Survival_Fail;
 void () pdummy_think;
-
 // sentrygun upgrade #4
 #define sentry_power				has_tesla
 #define SENTRY_FLAME				1
@@ -1561,24 +1377,20 @@ void () pdummy_think;
 void () sham_Flamer_stream_touch;
 void () ShalHome;
 void () ShalMissileTouch;
-
 // Wolf 3D Stuff
 #ifndef mtf_coop_halflife
-//void() monster_wolf_dog;
+//void() monster_wolf_dog;  //removed to reduce precache of sounds/models -arg
 //void() monster_wolfboss;
 void() func_wolfdoor;
 void() wolfdoor_trigger_touch;
 #endif
-
 // Doom 1 & 2 Stuff
 #define DOOM_MAP 			(world.mtf_items & 8)
 #define DOOM2_MAP 			(world.mtf_items & 16)
 //.string item;			// really belongs in q2
 .string movewith;
-
 .float reload_rail_gun;
 void ( entity to_res ) MTF_Resurrect_Player;
-
 // Rubicon 2 map pack stuff
 .string message2;
 .float angle2;
@@ -1586,7 +1398,6 @@ void ( entity to_res ) MTF_Resurrect_Player;
 #define LASER_SOLID			2
 #define SPARKS_PALE			4
 #define SPARKS_BLUE			2
-
 #define xavioraddedneedler
 .float needles, needler_heat;
 // float ( float getlevel ) Coop_ExpReq; //moved to additional.pqc where vars are there to work with -arg
@@ -1594,17 +1405,15 @@ void ( entity to_res ) MTF_Resurrect_Player;
 #endif
 
 #define CSQC
-//#define amnesia_move
+//#define amnesia_move  // not needed, this isn't tastyspleen needing to notify users of a move. -arg
 #ifdef CSQC
 .float csqc_client;
 #endif
-
-//#define thanksgiving
+//#define thanksgiving  //turn on thanksgiving mods
 #ifdef thanksgiving
 void () effect_duckpond;
 #endif
-
-//#define decemberween
+//#define decemberween  // turns on xmas mode swapping out elfs for dogs and santa hats for things
 #ifdef decemberween
 #define mtf_coop_bonus
 #endif
@@ -1619,12 +1428,12 @@ void (vector v1, vector mins, vector maxs, vector v2, float nomonsters, entity i
 #undef VWEPS
 #endif
 
-//#define midair_switch
-#ifdef midair_switch
-a
-#endif
+//#define midair_switch  // no idea what was supposed to be here - disabled -arg
+//#ifdef midair_switch
+//a
+//#endif
 
-//#define mega_hats
+//#define mega_hats  // adds hats to players, special ones for certain user names.
 #ifdef mega_hats
 .entity hat;
 #define HAT_MODEL		"progs/mtfhats3d.mdl"
@@ -1651,7 +1460,7 @@ void (entity to_bloody, float damage) bloodyme;
 #endif
 
 #ifndef mtf_coop
-#define PL_FEM
+#define PL_FEM   // for femal gender model and deathmessages in client.pqc -arg
 //
 #ifdef PL_FEM
 #define FEMALE_MODEL_BLUE			"progs/pf_blue.mdl"
@@ -1664,21 +1473,19 @@ void (entity whom) SetPlayerModelindex;
 #define	GENDER_MALE				0
 #define GENDER_FEMALE			1
 #endif
-//
 #endif
 
 #ifdef mtf_coop_expsys
 #define mtf_coop_packet
 void () Packet_SendSAY;
-// packet test
-void(string dest, string content) QC_SendPacket = #242;
+void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
 #ifdef mtf_coop_packet
 #define awaiting_packet			health
 #define packet_tries			weapon
 //.entity packet_ent;
 #define STORED_ADDRESSES			10
 string ips[STORED_ADDRESSES];
-//void () Packet_Auth_Think; //turned off, no point jabbering to hub. -arg
+//void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
 //float (string s1, string s2, float startpos) strstrofs = #221;
 float (string s1, string s2) strstr = #221;
 //string(string s, float start, float length) substring = #116;
