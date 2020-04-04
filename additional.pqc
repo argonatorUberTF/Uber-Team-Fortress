@@ -9371,7 +9371,7 @@ void() TeamFortress_ExplodePerson =
 	}
 	setsize(newmis, '0 0 0', '0 0 0');
 	setorigin(newmis, self.owner.origin);
-	bprint(1, "No ");
+	bprint(1, "No, ");
 	bprint(1, self.owner.netname);
 	bprint(1, ", throw the grenade, not the pin!\n");
 	dremove(self);
@@ -9984,8 +9984,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 		{
 			oldself = self;
 			self = attacker;
-			if (attacker.classname == "bot") {
-				bprint(1, "woooooot \n"); }
+//			if (attacker.classname == "bot") {
+//				bprint(1, "woooooot \n"); }
 			if ((deathmsg == 1.000000))
 			{
 				Stats_Hit (128.000000);
@@ -10625,7 +10625,6 @@ void() changelevel_touch =
 void () summon_respawn_think =
 {
 	local entity head;
-
 	head = findradius (self.origin, 56);
 	while (head) {
 		if (head.classname == "player" && head.health > 0)
@@ -20813,7 +20812,7 @@ void() beartrapTouch =
 		return;
 	if ((other.team_no == self.owner.team_no) && (self.owner.team_no != TF_FLARE_LIT))
 	{
-      return ;   //don't clamp things on the same team.
+      return ;   //don't clamp things on the same team. includes minions
 	}  		
 if (other.takedamage)
 {
@@ -24435,5 +24434,87 @@ void() HuntTarget =
 	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 	self.nextthink = time + 0.1;
 	SUB_AttackFinished(TF_FLARE_OFF);
+};
+void () respawn_monster;
+void () respawn_think =
+{
+	local entity head;
+	if (self.classname == "monster_azoth")
+		return;
+	head = findradius (self.origin, 56);
+	while (head) {
+		if (head.takedamage && head.health > 0)
+		{
+			if (head.is_monster == 1)
+			{
+				head.deathtype = "monster_respawn";
+				head.health = -60;
+				Killed(head, self);
+			}
+			else if (head.classname == "player")
+			{
+				self.nextthink = time + 5;
+				return;
+			}
+			else if (head.th_die)
+			{
+				head.deathtype = "monster_respawn";
+				head.health = -60;
+				Killed(head, self);
+			}
+			else {
+				if (self.invisible_finished < 3)
+				{
+					self.nextthink = time + 5;
+					self.think = respawn_think;
+					self.invisible_finished = self.invisible_finished + 1;
+					return;
+				}
+				else {
+					if (!self.th_die)
+					{
+						dprint("A monster tried to respawn and die without a death function!\nClassname :");
+						dprint(self.classname);
+						dprint(" and Netname: ");
+						dprint( self.netname );
+						dprint( "\n" );
+					}
+					else
+					{
+						self.flags = self.flags | FL_MONSTER;
+						self.deathtype = "monster_respawn";
+						self.health = -60;
+						Killed (self, world);
+						return;
+					}
+				}
+			}
+		}
+
+		head = head.chain;
+	}
+	respawn_monster ();
+};
+void () respawn_monster =
+{
+	local float savedlives;
+	self.touch = SUB_Null;
+	if (self.old_owner != world)
+		dremove(self.old_owner);
+	spawn_tfog (self.origin);
+	savedlives = self.lives;
+	if (!self.think1) {
+		bprint(2,"DEV: SOMETHING IS REALLY BAD IN RESPAWN_THINK\n");
+		dremove(self);
+	}
+	self.think1 ();
+	self.lives = savedlives;
+	if (InSolid(self)) {
+		// this is kind of like a hack, but it works to ensure monster count is bumped
+		self.flags = self.flags | FL_MONSTER;
+		self.deathtype = "monster_respawn";
+		self.health = -60;
+		Killed (self, world);
+	}	
 };
 //END

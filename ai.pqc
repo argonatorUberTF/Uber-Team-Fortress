@@ -38,7 +38,7 @@ void() t_movetarget =
 	local string oldtarg;
 	if (self.pathtarget)
 	{
-	bprint(2,"HOLY MOLY AWESOME\n");
+//	bprint(2,"HOLY MOLY AWESOME\n");
 		oldtarg = self.target;
 		self.target = self.pathtarget;
 		SUB_UseTargets();

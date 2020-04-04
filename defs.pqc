@@ -377,24 +377,6 @@ void(...) bprint7				= #23;
 void(...) bprint8				= #23;
 #endif
 
- 
-//void (string s) bprint = #23; 
-//void (entity client, string s) sprint = #24; 
-//void (string s) bprint2 = #23; 
-//void (entity client, string s) sprint2 = #24; 
-//void (string s) bprint3 = #23; 
-//void (entity client, string s) sprint3 = #24; 
-//void (string s) bprint4 = #23; 
-//void (entity client, string s) sprint4 = #24; 
-//void (string s) bprint5 = #23; 
-//void (entity client, string s) sprint5 = #24; 
-//void (string s) bprint6 = #23; 
-//void (entity client, string s) sprint6 = #24; 
-//void (string s) bprint7 = #23; 
-//void (entity client, string s) sprint7 = #24; 
-//void (string s) bprint8 = #23; 
-
-
 void (string s) dprint = #25; 
 string (float f) ftos = #26; 
 string (vector v) vtos = #27; 
@@ -1228,8 +1210,8 @@ float ( entity t_mons, float m_type ) Coop_IsMonster;
 #define MODEL_CAKE			"progs/bwcake.mdl"
 float cake_dispensed;
 #define mtf_coop_bonus
-#define BDAY_MSG 			"\nÂ‡Â‰Â† Ã‚Ã‰Ã’Ã”ÃˆÃ„ÃÃ™Â Ã…Ã„Ã‰Ã”Ã‰ÃÃ Â†Â‰Â‡\nMay 87\n\nÂÃÃ¡Ã°Âº "
-//#define BDAY_MSG 			"\nÂ‡Â‰Â† Ã‚Ã‰Ã’Ã”ÃˆÃ„ÃÃ™Â Ã…Ã„Ã‰Ã”Ã‰ÃÃ Â†Â‰Â‡\nDec 15 - Happy Doc Day Bitchesss\n\nÂÃÃ¡Ã°Âº "
+#define BDAY_MSG 			"\n‡‰† ÂÉÒÔÈÄÁÙ ÅÄÉÔÉÏÎ †‰‡\nMay 87\n\nÍáğº "
+//#define BDAY_MSG 			"\n‡‰† ÂÉÒÔÈÄÁÙ ÅÄÉÔÉÏÎ †‰‡\nDec 15 - Happy Doc Day Bitchesss\n\nÍáğº "
 #endif
 
 #ifdef mtf_coop
@@ -1725,4 +1707,4 @@ entity battle_royale_e;
 #endif
 
 #define SETVERSION		localcmd("serverinfo UBERTF v4.02.20United\n");
-//END
+//END
