@@ -1,0 +1,349 @@
+void () Security_Camera_Idle;
+void () Security_Camera_Pain;
+void () Security_Camera_Die;
+void () Security_Camera_PrintTarget;
+void () Security_Camera_Spawn;
+void () SecurityCameraTossTouch;
+float /*WARNING: could not determine return type*/ (entity targ, entity check) visible2 =
+{
+	local vector spot1;
+	local vector spot2;
+	spot1 = check.origin + check.view_ofs;
+	spot2 = targ.origin + targ.view_ofs;
+	traceline (spot1, spot2, 1, check);
+	if ((trace_inopen && trace_inwater))
+	{
+		return (0);
+	}
+	if (((trace_fraction == 1) && (trace_endpos == spot2)))
+	{
+		return (1);
+	}
+	return (0);
+};
+
+float /*WARNING: could not determine return type*/ (entity targ, entity checker, float chkvis, float chkrng, float istesla, float chkcease) Pharse_Client =
+{
+	local float r;
+	if ((targ.classname != "player"))
+	{
+		return (0);
+	}
+	if ((targ.playerclass == 0))
+	{
+		return (0);
+	}
+	if ((targ.health <= 0))
+	{
+		return (0);
+	}
+	if (targ.has_disconnected)
+	{
+		return (0);
+	}
+	if (teamplay)
+	{
+		if (((targ.team_no == checker.team_no) && (checker.team_no != 0)))
+		{
+			if (istesla)
+			{
+				if (!(checker.tf_items & 65536))
+				{
+					return (0);
+				}
+			}
+			else
+			{
+				return (0);
+			}
+		}
+		if (((targ.undercover_team == checker.team_no) && (checker.team_no != 0)))
+		{
+			if (istesla)
+			{
+				if (!(checker.tf_items & 1024))
+				{
+					return (0);
+				}
+			}
+			else
+			{
+				return (0);
+			}
+		}
+	}
+	if ((targ == checker.real_owner))
+	{
+		if (istesla)
+		{
+			if (!(checker.tf_items & 65536))
+			{
+				return (0);
+			}
+		}
+		else
+		{
+			return (0);
+		}
+	}
+	if (targ.is_feigning)
+	{
+		if (istesla)
+		{
+			if (!(checker.tf_items & 1024))
+			{
+				return (0);
+			}
+		}
+		else
+		{
+			return (0);
+		}
+	}
+	if ((targ.flags & 128))
+	{
+		return (0);
+	}
+	if ((targ.items & 524288))
+	{
+		return (0);
+	}
+	if (((targ.job & 1) && ((targ.job & 128) || (targ.job & 256))))
+	{
+		if (istesla)
+		{
+			if (!(checker.tf_items & 1024))
+			{
+				return (0);
+			}
+		}
+		else
+		{
+			return (0);
+		}
+	}
+	if (chkvis)
+	{
+		if (!visible2 (targ, checker))
+		{
+			return (0);
+		}
+	}
+	if (chkrng)
+	{
+		r = vlen ((targ.origin - checker.origin));
+		if ((r > chkrng))
+		{
+			return (0);
+		}
+	}
+	return (1);
+};
+
+void () Security_Camera_Idle =
+{
+	if (Security_Camera_FindTarget ())
+	{
+		self.nextthink = (time + 2);
+	}
+	else
+	{
+		self.nextthink = (time + 0.500000);
+	}
+	self.think = Security_Camera_Idle;
+};
+
+float /*WARNING: could not determine return type*/ () Security_Camera_FindTarget =
+{
+	local entity t_client;
+	local float r;
+	local float gotone;
+	local float loopc;
+	r = 0;
+	loopc = 0;
+	gotone = 0;
+	while (((loopc < 32) && (gotone == 0)))
+	{
+		t_client = checkclient ();
+		gotone = 1;
+		if (!t_client)
+		{
+			gotone = 0;
+		}
+		if (!Pharse_Client (t_client, self, 1, 1000, 0, 1))
+		{
+			gotone = 0;
+		}
+		loopc = loopc + 1;
+		if (gotone)
+		{
+			loopc = 1000;
+		}
+	}
+	if (!gotone)
+	{
+		return (0);
+	}
+	self.enemy = t_client;
+	if ((self.enemy.classname != "player"))
+	{
+		self.enemy = self.enemy.enemy;
+		if ((self.enemy.classname != "player"))
+		{
+			self.enemy = world;
+			return (0);
+		}
+	}
+	if ((self.heat == 3))
+	{
+		sound (self, 1, "weapons/camera_beep.wav", 1, 1);
+		self.heat = 0;
+	}
+	else
+	{
+		self.heat = (self.heat + 1);
+	}
+	Security_Camera_PrintTarget ();
+	return (1);
+};
+
+void () Security_Camera_Pain =
+{
+	sound (self, 1, "weapons/camera_beep.wav", 1, 1);
+};
+
+void () Security_Camera_Die =
+{
+	sprint (self.real_owner, 2, "Your security camera was destroyed.\n");
+	self.real_owner.has_camera = 0;
+	WriteByte (4, 23);
+	WriteByte (4, 3);
+	WriteCoord (4, self.origin_x);
+	WriteCoord (4, self.origin_y);
+	WriteCoord (4, self.origin_z);
+	multicast (self.origin, 1);
+	BecomeExplosion ();
+};
+
+void () Security_Camera_PrintTarget =
+{
+	local string st;
+
+	sprint (self.real_owner, 2, "сецуриты цамера  ");
+	st = GetTrueTeamName (self.enemy.team_no);
+	sprint (self.real_owner, 2, st);
+	sprint (self.real_owner, 2, " ");
+	if ((self.enemy.playerclass != 11))
+	{
+		st = TeamFortress_GetClassName (self.enemy.playerclass);
+	}
+	sprint (self.real_owner, 2, st);
+	sprint (self.real_owner, 2, " (");
+	sprint (self.real_owner, 2, self.enemy.netname);
+	sprint (self.real_owner, 2, ").\n");
+};
+
+void () Security_Camera_Spawn =
+{
+	if ((self.ammo_cells < 55))
+	{
+		sprint (self, 2, "Not enough cells to build a Security Camera.\n");
+	}
+	else
+	{
+		self.ammo_cells = (self.ammo_cells - 55);
+		self.has_camera = 1;
+		newmis = spawn ();
+		newmis.movetype = 10;
+		setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+		//newmis.solid = SOLID_BBOX;
+		newmis.solid = 1;
+		newmis.takedamage = 2;
+		newmis.classname = "building_camera";
+		newmis.netname = "security_camera";
+		setorigin (newmis, self.origin);
+		newmis.owner = world;
+		newmis.real_owner = self;
+		makevectors (self.v_angle);
+		newmis.avelocity = '0.000000 0.000000 0.000000';
+		newmis.velocity = ((((v_forward * 800) + (v_up * 200)) + (v_right * 10)) + (v_up * 10));
+		newmis.angles = '0.000000 0.000000 0.000000';
+		newmis.angles_y = anglemod ((self.angles_y + 180));
+		newmis.th_die = Security_Camera_Die;
+		newmis.th_pain = Security_Camera_Pain;
+		newmis.mdl = "progs/camera.mdl";
+		setmodel (newmis, newmis.mdl);
+		newmis.team_no = self.team_no;
+		newmis.colormap = self.colormap;
+		newmis.heat = 0;
+		newmis.max_health = 100;
+		newmis.health = 100;
+		newmis.touch = SecurityCameraTossTouch;
+		W_SetCurrentAmmo ();
+	}
+};
+
+void () SecurityCameraTossTouch =
+{
+	if (((other != world) || (other == self.real_owner)))
+	{
+		return;
+	}
+	if ((((pointcontents (self.origin) == -6) || (pointcontents ((self.origin + '0.000000 0.000000 2.000000')) == -6)) || (pointcontents (self.origin) == -2)))
+	{
+		Security_Camera_Die ();
+		return;
+	}
+	if ((pointcontents ((self.origin + '0.000000 0.000000 1.000000')) == -2))
+	{
+		self.origin = (self.origin - '0.000000 0.000000 12.000000');
+	}
+	if ((pointcontents ((self.origin - '0.000000 0.000000 1.000000')) == -2))
+	{
+		self.origin = (self.origin + '0.000000 0.000000 4.000000');
+	}
+	if ((pointcontents ((self.origin + '0.000000 1.000000 0.000000')) == -2))
+	{
+		self.origin = (self.origin - '0.000000 16.000000 0.000000');
+	}
+	if ((pointcontents ((self.origin - '0.000000 1.000000 0.000000')) == -2))
+	{
+		self.origin = (self.origin + '0.000000 16.000000 0.000000');
+	}
+	if ((pointcontents ((self.origin + '1.000000 0.000000 0.000000')) == -2))
+	{
+		self.origin = (self.origin - '16.000000 0.000000 0.000000');
+	}
+	if ((pointcontents ((self.origin + '1.000000 0.000000 0.000000')) == -2))
+	{
+		self.origin = (self.origin + '16.000000 0.000000 0.000000');
+	}
+	setorigin (self, self.origin);
+	if ((((pointcontents (self.origin) == -6) || (pointcontents ((self.origin + '0.000000 0.000000 2.000000')) == -6)) || (pointcontents (self.origin) == -2)))
+	{
+		Security_Camera_Die ();
+		return;
+	}
+	local entity te;
+	te = find(world, classname, "player");
+	while (te) {
+		if (self.origin_x - 16 < te.absmax_x && self.origin_x + 16 > te.absmin_x &&
+			self.origin_y - 16 < te.absmax_y && self.origin_y + 16 > te.absmin_y &&
+			self.origin_z -  6 < te.absmax_z && self.origin_z + 10 > te.absmin_z) {
+			Security_Camera_Die();
+			return;
+		}
+		te = find(te, classname, "player");
+	}
+	sprint (self.real_owner, 2, "You finish building the Security Camera.\n");
+	teamsprint (self.real_owner.team_no, self.real_owner, self.real_owner.netname);
+	teamsprint (self.real_owner.team_no, self.real_owner, " has built a Security Camera.\n");
+	self.movetype = 0;
+	setsize (self, '-16.000000 -16.000000 -6.000000', '16.000000 16.000000 10.000000');
+	self.solid = 2;
+	self.takedamage = 2;
+	sound (self, 1, "weapons/guerilla_set.wav", 1, 1);
+	self.think = Security_Camera_Idle;
+	self.nextthink = (time + 1);
+};
+//END
