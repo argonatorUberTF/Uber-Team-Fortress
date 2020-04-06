@@ -19578,7 +19578,6 @@ void() turret_attackEnemy =
 	}
 	deathmsg = 27.000000;
 	 turret_physicsCheck();
-
 	if (self.solid == SOLID_NOT)
 	{
 		turret_checkIfCanBeSolid();
@@ -19763,7 +19762,7 @@ void() turret_nailTouch =
 		SpawnBlood (org, 15);
 		deathmsg = 27;
 		T_Damage (other, self, self.owner, 40);
-		if (self.super_damage_finished < time)
+		if (self.super_damage_finished < time)  // add damage if player is on quad.
 		{
 			T_Damage (other, self, self.owner, 200);	
 		}
@@ -19942,7 +19941,6 @@ void (entity e) MakeSplash =
 float (entity e) inWater =
 {
 	pc2 = pointcontents(e.origin);
-
 	if (!(pc2 == CONTENT_WATER || pc2 == CONTENT_SLIME || pc2 == CONTENT_LAVA))
 		pc2 = NOT_IN_WATER;
 	return (pc2);
@@ -23247,6 +23245,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun.\n");
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
+			sprint (self, 2.000000, "impulse  68 - Throws a beartrap.\n");
 		}
 		else if (s2 == "vote")
 		{
