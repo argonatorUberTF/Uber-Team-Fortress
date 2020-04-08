@@ -205,6 +205,7 @@
 #define EF_DIMLIGHT=8;
 //
 //					ENGINE HOOKS not defined in defs.pqc .
+void (...) AdvanceFrame = #63;  //from aagun.pqc
 float(string st1, string st2) strcasecmp = #87;
 float(string filename, float mode) fopen = #110;
 void(float handle) fclose = #111;
@@ -220,9 +221,8 @@ float () strcount = #138;
 string(string blah) strzone;
 void(string blah) strunzone;
 #endif
-
 //
-//ENTITIES
+//							ENTITIES
 .entity pickedupobject_hands;
 .entity pickupthink_hands;
 .entity _oldowner;
@@ -1180,7 +1180,7 @@ float (entity e) turret_inFront;				// PAINKEEP
 //major .voids
 .void() th_weapon;
 .void() oldthink;
-.void()     spawnthink;			// Hipnotic 
+.void() spawnthink;			// Hipnotic 
 .void() splash_func; // The function to call to make the splash splash.qc -arg
 entity(float team_num) FindTeamSpawnPoint;
 entity() SelectSpawnPoint;
@@ -1191,6 +1191,18 @@ void() monster_spawner_spawn; //fix for 2fortfood_coop.bsp -arg
 void() BTF_Precache;
 void () missing_precaches;  //put sounds and models missing here to load first absolutely -arg
 //						FLOAT FUNCTIONS and voids
+void () MTF_RemoveMonster;  //This was called in middle of mtf_coop.qc But should be defined first for summon_think to
+// prevent crashes -arg
+void ( float howmany ) MTF_Coop_ViewTopRanks;
+float ( float currexp ) Coop_ExpForNextLevel;
+void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank;
+void () MTF_Resurrect_Player_Find;
+void () Vote_CheckWin;
+void () summon_think;
+void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..
+void(entity Item) mtf_tfgoalitem_drop;
+void () tfgoalitem_remove;
+void () tfgoalitem_dropthink;
 void() HuntTarget;
 void() ai_run_melee;
 void() ai_run_missile;
@@ -1590,7 +1602,6 @@ string (entity whom) GetPlayerModel =
 			return FEMALE_MODEL_RED;
 	return "progs/player.mdl";
 };
-
 float (entity whom) GetPlayerModelindex =
 {
 	if (whom.gender == GENDER_FEMALE)
@@ -1601,7 +1612,6 @@ float (entity whom) GetPlayerModelindex =
 			
 	return modelindex_player;
 };
-
 void (entity whom) SetPlayerModelindex =
 {
 	if (whom.gender == GENDER_FEMALE) {
@@ -1745,16 +1755,10 @@ void() ResetMenu =
 	self.menu_count = 25;
 	self.current_menu = TF_FLARE_OFF;
 };
-
-vector(float dm) VelocityForDamage;
-
-void() summon_respawn_think;
-
 float(float v) mathlib_anglemod =
 {
 	return v - floor(v/360) * 360;
 };
-
 float() customize_frame =
 {
 	local float		tmpang, totang;
@@ -1782,7 +1786,6 @@ float() customize_frame =
 		self.frame = self.frame;
 	return TRUE;
 };
-
 float(entity targ) ai_distance =
 {
 local float		r;	
@@ -1823,7 +1826,6 @@ void() DeathBubblesSpawn =
 		dremove(self);
 	}
 };
-
 void(float num_bubbles) DeathBubbles = 
 {
 	local entity bubble_spawner;
@@ -1838,7 +1840,6 @@ void(float num_bubbles) DeathBubbles =
 	bubble_spawner.bubble_count = num_bubbles;
 	return;
 };
-
 void() DeathSound = 
 {
 	local float rs;
@@ -1910,7 +1911,6 @@ void() air_bubbles =
 	self.nextthink = time + TF_FLARE_OFF;
 	self.think = make_bubbles;
 };
-
 void() make_bubbles = 
 {
 	newmis = spawn();
@@ -1929,7 +1929,6 @@ void() make_bubbles =
 	self.nextthink = time + random() + 0.5;
 	self.think = make_bubbles;
 };
-
 void() bubble_split = 
 {
 	newmis = spawn();
@@ -1952,7 +1951,6 @@ void() bubble_split =
 		remove(self);
 	}
 };
-
 void() bubble_remove = 
 {
 	if (other.classname == self.classname)
@@ -1961,7 +1959,6 @@ void() bubble_remove =
 	}
 	dremove(self);
 };
-
 void() bubble_bob = 
 {
 	local float rnd1;
@@ -2009,7 +2006,6 @@ void() bubble_bob =
 	self.nextthink = time + 0.5;
 	self.think = bubble_bob;
 };
-
 void() func_wall_use = 
 {
 #ifdef mtf_coop
@@ -2051,14 +2047,12 @@ void(float psize, entity p) KickPlayer =
 		WriteByte(1, 35);
 	}
 };
-
 void() muzzleflash = 
 {
 	WriteByte(4, 39);
 	WriteEntity(4, self);
 	multicast(self.origin, 2);
 };
-
 void() display_location = 
 {
 	local string st;
@@ -2066,27 +2060,23 @@ void() display_location =
 	sprint(self, 2, st);
 	sprint(self, 2, "\n");
 };
-
 void(entity pl, string s1) CenterPrint = 
 {
 	centerprint(pl, s1);
 	pl.StatusRefreshTime = time + 1.5;
 };
-
 void (entity _p_3723, string _p_3724, string _p_3725) CenterPrint2 =
 {
 
 	centerprint (_p_3723, _p_3724, "\n", _p_3725);
 	_p_3723.StatusRefreshTime = (time + 1.500000);
 };
-
 void (entity _p_3729, float _p_3730, string _p_3731) StatusPrint =
 {
 
 	centerprint (_p_3729, _p_3731);
 	_p_3729.StatusRefreshTime = (time + _p_3730);
 };
-
 void (entity pl) RefreshStatusBar =
 {
 	local entity _l_3736;
@@ -2268,7 +2258,6 @@ void (entity pl) RefreshStatusBar =
 	}
 	centerprint (pl, s1, s2, s3, s4, s5, s6, s7);
 };
-
 float (float tno) TeamFortress_GetRealScore =
 {
 	local entity te;
@@ -2338,7 +2327,6 @@ float() TeamFortress_TeamPutPlayerInTeam =
 	}
 	return TeamFortress_TeamSet(likely_team);
 };
-
 float(float tno) TeamFortress_TeamGetColor = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -2359,7 +2347,6 @@ float(float tno) TeamFortress_TeamGetColor =
 	}
 	return 0;
 };
-
 void(float tno) TeamFortress_TeamSetColor = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -2466,7 +2453,6 @@ string(float tno) GetTeamName =
 	}
 	return st;
 };
-
 void(entity p) SetTeamName = 
 {
 	local string st;
@@ -2475,7 +2461,6 @@ void(entity p) SetTeamName =
 	stuffcmd(p, st);
 	stuffcmd(p, "\n");
 };
-
 string /*WARNING: could not determine return type*/ (float tno) GetTrueTeamName =
 {
 	if ((tno == 1))
@@ -2508,7 +2493,6 @@ string /*WARNING: could not determine return type*/ (float tno) GetTrueTeamName 
 		}
 	}
 };
-
 float(float tno) TeamFortress_TeamSet = 
 {
 	local string st;
@@ -2640,7 +2624,6 @@ float(float tno) TeamFortress_TeamSet =
 	}
 	return TF_FLARE_OFF;
 };
-
 void() TeamFortress_CheckTeamCheats = 
 {
 	local string st;
@@ -2806,7 +2789,6 @@ void() TeamFortress_CheckTeamCheats =
 		}
 	}
 };
-
 void(float tno, float scoretoadd) TeamFortress_TeamIncreaseScore = 
 {
 	local entity e;
@@ -2861,7 +2843,6 @@ void(float tno, float scoretoadd) TeamFortress_TeamIncreaseScore =
 	}
 #endif
 };
-
 float(float tno) TeamFortress_TeamGetScore = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -2882,7 +2863,6 @@ float(float tno) TeamFortress_TeamGetScore =
 	}
 	return 0;
 };
-
 float(float tno) TeamFortress_TeamGetLives = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -2903,7 +2883,6 @@ float(float tno) TeamFortress_TeamGetLives =
 	}
 	return 0;
 };
-
 float(float tno) TeamFortress_TeamGetNoPlayers = 
 {
 	local float size_team;
@@ -2919,7 +2898,6 @@ float(float tno) TeamFortress_TeamGetNoPlayers =
 	}
 	return size_team;
 };
-
 float(float tno) TeamFortress_TeamGetMaxPlayers = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -2940,7 +2918,6 @@ float(float tno) TeamFortress_TeamGetMaxPlayers =
 	}
 	return 0;
 };
-
 float() TeamFortress_TeamGetWinner = 
 {
 	local float i;
@@ -2962,7 +2939,6 @@ float() TeamFortress_TeamGetWinner =
 	}
 	return highestteam;
 };
-
 float() TeamFortress_TeamGetSecond = 
 {
 	local float i;
@@ -2991,7 +2967,6 @@ float() TeamFortress_TeamGetSecond =
 	}
 	return secondteam;
 };
-
 void (float all) TeamFortress_TeamShowScores =
 {
 	local string st;
@@ -3138,7 +3113,6 @@ void (float all) TeamFortress_TeamShowScores =
 		i = i + 1;
 	}
 };
-
 string(float tno) TeamFortress_TeamGetColorString = 
 {
 	local float col;
@@ -3221,7 +3195,6 @@ string(float tno) TeamFortress_TeamGetColorString =
 #endif
 #endif
 };
-
 void(entity Player) TeamFortress_TeamShowMemberClasses = 
 {
 	local entity e;
@@ -3251,7 +3224,6 @@ void(entity Player) TeamFortress_TeamShowMemberClasses =
 		sprint(Player, 2, "There are no other players on your team.\n");
 	}
 };
-
 void() CalculateTeamEqualiser = 
 {
 	local float t1;
@@ -3417,7 +3389,6 @@ void() CalculateTeamEqualiser =
 	}
 	self.nextthink = time + 10;
 };
-
 void() SetupTeamEqualiser = 
 {
 	local entity TE;
@@ -3434,7 +3405,6 @@ void() SetupTeamEqualiser =
 	TE.think = CalculateTeamEqualiser;
 	TE.nextthink = time + 30;
 };
-
 float(entity targ, entity attacker, float damage) TeamEqualiseDamage = 
 {
 	local float adv;
@@ -3551,7 +3521,6 @@ void() TeamFortress_StatusQuery =
 	sprint(self, 2, st);
 	sprint(self, 2, "\n");
 };
-
 float(float tno) TeamFortress_TeamGetIllegalClasses = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -3572,7 +3541,6 @@ float(float tno) TeamFortress_TeamGetIllegalClasses =
 	}
 	return 0;
 };
-
 float(float tno) TeamFortress_TeamIsCivilian = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -3611,7 +3579,6 @@ float(float tno) TeamFortress_TeamIsCivilian =
 	}
 	return 0;
 };
-
 void(float tno, entity ignore, string st) teamsprint = 
 {
 	local entity te;
@@ -3629,7 +3596,6 @@ void(float tno, entity ignore, string st) teamsprint =
 		te = find(te, classname, "player");
 	}
 };
-
 float() CheckExistence =
 {
 	UpdateAbbreviations (self);
@@ -3646,7 +3612,6 @@ float() CheckExistence =
 	}
 	return (1.000000);
 };
-
 float(entity obj, entity builder) CheckArea = 
 {
 	local vector src;
@@ -3706,7 +3671,6 @@ float(entity obj, entity builder) CheckArea =
 	}
 	return TF_FLARE_OFF;
 };
-
 float (float aNum) roughRoot =
 {
 	if ((aNum >= TF_FLARE_OFF))
@@ -3750,7 +3714,6 @@ float (float aNum) roughRoot =
 	}
 	return 0;
 };
-
 void() TeamFortress_ChangeClass = 
 {
 	local entity spot;
@@ -3768,8 +3731,6 @@ void() TeamFortress_ChangeClass =
 	local vector oldpos;
 	local entity merchanty;
 #endif
-
-
 #ifdef mtf_coop_lms
 	if (self.#lms_lives < 0)
 	{
@@ -4022,13 +3983,11 @@ void() TeamFortress_ChangeClass =
 #ifdef mtf_coop
 	if (self.monster_type == 0)
 #endif
-
 #ifdef PL_FEM
 	SetPlayerModelindex(self);
 #else
 	modelindex_player = self.modelindex;
 #endif
-
 	setsize(self, '-16 -16 -24', '16 16 32');
 	self.view_ofs = '0 0 22';
 	player_stand1();
@@ -4093,8 +4052,6 @@ void() TeamFortress_ChangeClass =
 	TeamFortress_PrintClassName(self, self.playerclass, self.tfstate & 8, 0);
 	TeamFortress_SetEquipment();
 	TeamFortress_SetHealth();
-
-
 	TeamFortress_SetSpeed(self);
 	TeamFortress_SetSkin(self);
 	stuffcmd (self, "cl_sidespeed 500\ncl_backspeed 500\ncl_forwardspeed 500\n");
@@ -4105,7 +4062,6 @@ void() TeamFortress_ChangeClass =
 	}
 #endif
 };
-
 void() execute_changelevel = 
 {
 	local entity pos;
@@ -4300,7 +4256,6 @@ void(entity Goal) UpdateAbbreviations =
 		Goal.has_disconnected = TF_FLARE_OFF;
 	}
 };
-
 float(float pc) IsLegalClass = 
 {
 	local float bit;
@@ -4390,7 +4345,6 @@ float(float pc) IsLegalClass =
 	}
 	return 1;
 };
-
 entity() FindIntermission = 
 {
 	local entity spot;
@@ -4443,7 +4397,6 @@ entity() FindIntermission =
 	objerror("FindIntermission: no spot");
 	return self;	// dirty fix to get rid of compiler bitching
 };
-
 string(float pc) TeamFortress_GetClassName = 
 {
 	if (pc == 1)
@@ -4538,7 +4491,6 @@ string(float pc) TeamFortress_GetClassName =
 	}
 	return ("Invalid Class");
 };
-
 void() TeamFortress_DisplayLegalClasses = 
 {
 	local float gotone;
@@ -4689,7 +4641,6 @@ float(float pc) IsRestrictedClass =
 				NumAllowed = cr_engineer;
 		}
 	}
-
 	if (NumAllowed == 0)
 		return 0;
 	if (NumAllowed < 0)
@@ -4810,7 +4761,6 @@ entity() SelectSpawnPoint =
 #endif
 	return spot;
 };
-
 #ifdef HALFLIFE
 float (entity tcl) hlt_think =
 {
@@ -4819,15 +4769,11 @@ local vector lmsv, neworg;
 local entity ips, nips;
 	if ( landmarked )
 		return ( #FALSE );
-
 	lmstats = infokey (world, "landmark");
 	lmstats = strzone(lmstats);
-	
 	if (!lmstats)
 		return #FALSE;
-	
 	if (tcl.landmark == lmstats) {
-		
 		ips = find(world, classname, "info_player_start");
 		while (ips != world)
 		{
@@ -4958,7 +4904,6 @@ void () ReCheckRestrictions =
 		cr_engineer = 0.000000;
 	}
 };
-
 void (entity pl, float fr) TF_AddFrags =
 {
     local entity e;
@@ -5041,7 +4986,6 @@ float(entity Retriever, float AmmoType) TeamFortress_GetMaxAmmo =
 	dprint("Invalid ammo type passed.\n");
 	return 0;
 };
-
 float(entity Retriever, float WeaponType) TeamFortress_CanGetWeapon = 
 {
 	if (Retriever.items_allowed & WeaponType)
@@ -5050,7 +4994,6 @@ float(entity Retriever, float WeaponType) TeamFortress_CanGetWeapon =
 	}
 	return 0;
 };
-
 void (entity _p_1249, entity _p_1250) Killed =
 {
 	local entity _l_1251;
@@ -5077,7 +5020,6 @@ void (entity _p_1249, entity _p_1250) Killed =
 	if (dmg_mult == 0)
 		dmg_mult = 1;
 	self.health = self.health / dmg_mult;
-
 	if (self.health > 0)	// should not be happening but whatever..
 		self.health = -1;
 #endif
@@ -5416,7 +5358,6 @@ void (float _p_10461) TeamFortress_DropAmmo =
 	if (newmis.weapon == 5 || newmis.weapon == 6)
 		setmodel (newmis, #MODEL_HGREN2);
 };
-
 void() make_explosion = 
 {
 	newmis = spawn();
@@ -5431,7 +5372,6 @@ void() make_explosion =
 	newmis.think = s2_explode1;
 	newmis.nextthink = time + 0.05;
 };
-
 void(float tno) RemoveOldAmmobox = 
 {
 	local float index;
@@ -5464,7 +5404,6 @@ void(float tno) RemoveOldAmmobox =
 		old = find(old, classname, "ammobox");
 	}
 };
-
 void() TeamFortress_AmmoboxTouch = 
 {
 	local float took;
@@ -5598,7 +5537,6 @@ void() TeamFortress_AmmoboxTouch =
 	self = other;
 	W_SetCurrentAmmo();
 };
-
 void(float tno) increment_team_ammoboxes = 
 {
 	if (tno == 1)
@@ -5656,7 +5594,6 @@ void(float tno) decrement_team_ammoboxes =
 		}
 	}
 };
-
 float(float tno) num_team_ammoboxes = 
 {
 	if (tno == 1)
@@ -5686,68 +5623,38 @@ float(float tno) num_team_ammoboxes =
 	}
 	return 0;
 };
-
 void() s_explode1 = [0, s_explode2]
-{
-};
-
+{};
 void() s_explode2 = [1, s_explode3]
-{
-};
-
+{};
 void() s_explode3 = [2, s_explode4]
-{
-};
-
+{};
 void() s_explode4 = [3, s_explode5]
-{
-};
-
+{};
 void() s_explode5 = [4, s_explode6]
-{
-};
-
+{};
 void() s_explode6 = [5, SUB_Remove]
-{
-};
-
+{};
 void() s2_explode1 = [0, s2_explode2]
-{
-};
-
+{};
 void() s2_explode2 = [1, s2_explode3]
-{
-};
-
+{};
 void() s2_explode3 = [2, s2_explode4]
-{
-};
-
+{};
 void() s2_explode4 = [3, s2_explode5]
-{
-};
-
+{};
 void() s2_explode5 = [4, s2_explode6]
-{
-};
-
+{};
 void() s2_explode6 = [5, s2_explode7]
-{
-};
-
+{};
 void() s2_explode7 = [6, s2_explode8]
-{
-};
-
+{};
 void() s2_explode8 = [7, SUB_Remove]
-{
-};
-
+{};
 void() BecomeExplosion = 
 {
 	dremove(self);
 };
-
 void(entity p) TeamFortress_SetSpeed = 
 {
 #ifdef botprogs
@@ -5759,7 +5666,6 @@ void(entity p) TeamFortress_SetSpeed =
 	if (p.classname != "player")
 		return;
 #endif
-
 	local string sp;
 	local float tf;
 	local entity te;
@@ -6158,7 +6064,7 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 	if (rtime > 0)
 		newmon.#npc_spawndelay = rtime;
 	else
-		newmon.#npc_spawndelay = respawntime;
+	newmon.#npc_spawndelay = respawntime;
 	newmon.angles = self.#npc_origangle;
 	newmon.#npc_origangle = self.#npc_origangle;
 	newmon.netname = self.netname;
@@ -6186,7 +6092,6 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 	}
 	newmon.think1 = spawn_func;
 };
-
 void(entity p) bound_other_ammo = 
 {
 	if (p.ammo_shells > TeamFortress_GetMaxAmmo(p, 256))
@@ -6214,7 +6119,6 @@ void(entity p) bound_other_ammo =
 		p.armorvalue = p.maxarmor;
 	}
 };
-
 void(entity p) TeamFortress_SetSkin = 
 {
 #ifdef mtf_coop_halloween
@@ -6551,7 +6455,6 @@ void(entity p) TeamFortress_SetSkin =
 		stuffcmd(p, "skin base\n");
 	}
 };
-
 // For those maps that have too many model precaches, lets precache the important ones first
 void () MTF_Priority_Precache =
 {
@@ -6581,7 +6484,6 @@ void () MTF_Priority_Precache =
 		precache_model("progs/v_mac10.mdl");
 		precache_model("progs/v_grap.mdl");
 }
-
 	if (mapname == "qte1m3" || mapname == "qte2m2" || mapname == "qte2m3" 
 	   || mapname == "qte2m4") {
 		precache_model("progs/v_knife.mdl");
@@ -6589,7 +6491,6 @@ void () MTF_Priority_Precache =
 		precache_model("progs/v_span.mdl");
 		precache_model("progs/v_rail.mdl");
 	}
-
 	if (mapname == "qte1m4" || mapname == "qte2m2" || mapname == "qte2m3" 
 	   || mapname == "qte2m4") {
 		if (mapname == "qte2m3")
@@ -6603,7 +6504,6 @@ precache_model ("progs/demon.mdl");
 		precache_model("progs/v_rail.mdl");
 		precache_model("progs/turrgun.mdl");
 	}
-
 	if (mapname == "qte2m3")
 	{
 		precache_model ("progs/dog.mdl");
@@ -6620,7 +6520,6 @@ precache_model ("progs/demon.mdl");
 		precache_model ("progs/demon.mdl");
 		precache_model ("progs/boss.mdl");
 	}
-
 	if (mapname == "neh1m9" || mapname == "neh2m3")
 	{
 		precache_model ("progs/v_mac10.mdl");
@@ -6640,7 +6539,6 @@ precache_model ("progs/demon.mdl");
 		precache_model ("progs/slime.mdl");
 	}
 };
-
 string ( entity monster, float return_name ) GetMonsterPowers =
 {
 	local string rtrn;
@@ -6720,7 +6618,6 @@ string ( entity monster, float return_name ) GetMonsterPowers =
 	{
 		rtrn = strcat(rtrn, "BOSS ");		// BOSS
 	}
-	
 	if ( return_name > 0 )
 	{
 		if (monster.netname == "zombie")
@@ -6738,13 +6635,10 @@ string ( entity monster, float return_name ) GetMonsterPowers =
 #endif
 	if ( return_name > 1 )
 		rtrn = strcat(rtrn, "\n");
-
 	if ( monster == world )
 		rtrn = "wall\n";		// xav: best message I can come up with? I liked spawning through the levy better :(
-
 	return rtrn;
 };
-
 void () W_SetCurrentAmmo =
 {
 	if (((self.health <= 0.000000) || (self.current_weapon == 0.000000)))
@@ -7106,7 +7000,6 @@ if (allow_bat == 1) {
 		Monsterweapon_setmodel(self.monster_type, self.current_weapon);
 #endif
 };
-
 void() TeamFortress_Spotlight = 
 {
 	if (self.playerclass != 2)
@@ -7123,7 +7016,6 @@ void() TeamFortress_Spotlight =
 	}
 	self.impulse = 0;
 };
-
 void() UseSpecialSkill = 
 {
 	local vector src;
@@ -7215,11 +7107,6 @@ void() UseSpecialSkill =
 		}
 	}
 };
-
-void () tfgoalitem_remove;
-
-void () tfgoalitem_dropthink;
-
 void (float _p_10136) TeamFortress_ItemStatus =
 {
 	local entity _l_10137;
@@ -7694,7 +7581,6 @@ void () TeamFortress_Inventory =
 	sprint (self, 2.000000, " can of Pork and Beans.\n");
 	}
 };
-
 float (string st, float ft) ShowTF_PrintCR =
 {
 	local string _l_10200;
@@ -7716,7 +7602,6 @@ float (string st, float ft) ShowTF_PrintCR =
 	}
 	return (1.000000);
 };
-
 void () TeamFortress_ShowTF =
 {
 	local string _l_10203;
@@ -7786,7 +7671,6 @@ void () TeamFortress_ShowTF =
 		sprint (self, 2.000000, "   none set\n");
 	}
 };
-
 void () TeamFortress_PrimeGrenade =
 {
 	local float _l_10231;
@@ -7795,12 +7679,10 @@ void () TeamFortress_PrimeGrenade =
 	local entity _l_10234;
 #ifdef mtf_coop
 	local float adj_gren2;
-
 	adj_gren2 = sr_gren2;
 	if (self.playerclass == 8)
 		adj_gren2 = 1;
 #endif
-
 	if ((self.bugger == 8.000000))
 	{
 		return;
@@ -8018,7 +7900,6 @@ void () TeamFortress_PrimeGrenade =
 	CSQC_SendGrenTimer(self);
 #endif
 };
-
 void () TeamFortress_GrenadePrimed =
 {
 	local entity _l_10249;
@@ -8208,8 +8089,6 @@ bprint(2,"TeamFortress_GrenadePrimed: GREN LOGIC FAIL # 1 TELL DEV\n");
 	self = _l_10251;
 	dremove (self);
 };
-
-
 void() TeamFortress_ThrowGrenade = 
 {
 	if (!(self.tfstate & 1))
@@ -8219,9 +8098,6 @@ void() TeamFortress_ThrowGrenade =
 	sound(self, 3, "weapons/throw.wav", 1, 1);
 	self.tfstate = self.tfstate | 1024;
 };
-
-
-
 void() TeamFortress_SetHealth = 
 {
 	if (self.playerclass == 1)
@@ -8313,7 +8189,6 @@ void() TeamFortress_SetHealth =
 	self.max_health = ceil( self.max_health * MTF_Coop_AttribGain(self, #ATTRIB_HEALTH) );
 	self.health = self.max_health;
 };
-
 void () TeamFortress_SetEquipment =
 {
 	local entity te;
@@ -8384,7 +8259,7 @@ void () TeamFortress_SetEquipment =
 		self.maxammo_nails = 200.000000;
 		self.maxammo_shells = 50.000000;
 		self.maxammo_cells = 100.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+		COOP_GetMaxGrensForClass (self.playerclass);
 		self.tp_grenades_1 = 9.000000;
 		self.tp_grenades_2 = 2.000000;
 		self.tf_items = 1.000000;
@@ -8411,7 +8286,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 			self.maxammo_nails = 100.000000;
 			self.maxammo_shells = 75.000000;
 			self.maxammo_cells = 50.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+			COOP_GetMaxGrensForClass (self.playerclass);
 			self.tp_grenades_1 = 1.000000;
 			self.tp_grenades_2 = 6.000000;
 			self.tf_items = 0.000000;
@@ -8437,7 +8312,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 				self.maxammo_nails = 100.000000;
 				self.maxammo_shells = 100.000000;
 				self.maxammo_cells = 50.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+				COOP_GetMaxGrensForClass (self.playerclass);
 				self.tp_grenades_1 = 1.000000;
 				self.tp_grenades_2 = 3.000000;
 				self.tf_items = 0.000000;
@@ -8463,7 +8338,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 					self.maxammo_nails = 50.000000;
 					self.maxammo_shells = 75.000000;
 					self.maxammo_cells = 50.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+					COOP_GetMaxGrensForClass (self.playerclass);
 					self.tp_grenades_1 = 1.000000;
 					self.tp_grenades_2 = 4.000000;
 					self.tf_items = 0.000000;
@@ -8495,8 +8370,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 #endif
 						self.maxammo_shells = 75.000000;
 						self.maxammo_cells = 60.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
-
+						COOP_GetMaxGrensForClass (self.playerclass);
 						self.tp_grenades_1 = 1.000000;
 						self.tp_grenades_2 = 2.000000;
 						self.tf_items = 0.000000;
@@ -8538,7 +8412,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 #endif
 							self.maxammo_shells = 250.000000;
 							self.maxammo_cells = 50.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+							COOP_GetMaxGrensForClass (self.playerclass);
 							self.tp_grenades_1 = 1.000000;
 							self.tp_grenades_2 = 4.000000;
 							self.tf_items = 0.000000;
@@ -8567,7 +8441,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 #endif
 								self.maxammo_shells = 40.000000;
 								self.maxammo_cells = 250.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+								COOP_GetMaxGrensForClass (self.playerclass);
 								self.tp_grenades_1 = 1.000000;
 								self.tp_grenades_2 = 5.000000;
 								self.tf_items = 0.000000;
@@ -8593,7 +8467,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 									self.maxammo_nails = 0.000000;
 									self.maxammo_shells = 0.000000;
 									self.maxammo_cells = 0.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+									COOP_GetMaxGrensForClass (self.playerclass);
 									self.tp_grenades_1 = 0.000000;
 									self.tp_grenades_2 = 0.000000;
 									self.tf_items = 0.000000;
@@ -8619,7 +8493,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 										self.maxammo_nails = 50.000000;
 										self.maxammo_shells = 40.000000;
 										self.maxammo_cells = 30.000000;
-COOP_GetMaxGrensForClass (self.playerclass);
+										COOP_GetMaxGrensForClass (self.playerclass);
 										self.tp_grenades_1 = 1.000000;
 										self.tp_grenades_2 = 7.000000;
 										self.tf_items = 0.000000;
@@ -8670,7 +8544,7 @@ else {
 #ifdef mtf_coop_expsys
 											self.maxammo_cells = 200.000000;
 #endif
-COOP_GetMaxGrensForClass (self.playerclass);
+											COOP_GetMaxGrensForClass (self.playerclass);
 											self.tp_grenades_1 = 1.000000;
 											self.tp_grenades_2 = 8.000000;
 											self.tf_items = 0.000000;
@@ -8693,7 +8567,7 @@ COOP_GetMaxGrensForClass (self.playerclass);
 												self.ammo_nails = 0;
 												self.ammo_shells = 0;
 												self.ammo_cells = 0;
-COOP_GetMaxGrensForClass (self.playerclass);
+												COOP_GetMaxGrensForClass (self.playerclass);
 												self.tp_grenades_1 = 0;
 												self.tp_grenades_2 = 0;
 												self.armorclass = 0;
@@ -8914,16 +8788,12 @@ COOP_GetMaxGrensForClass (self.playerclass);
 		self.ammo_nails = self.maxammo_nails;
 		self.ammo_shells = self.maxammo_shells;
 		self.ammo_cells = self.maxammo_cells;
-
 		self.armorvalue = self.maxarmor;
-
 #ifdef mtf_coop_expsys
 		self.max_health = ceil( self.max_health * MTF_Coop_AttribGain(self, #ATTRIB_HEALTH) );
 		self.health = self.max_health;
-
 		self.maxarmor = ceil( self.maxarmor * MTF_Coop_AttribGain(self, #ATTRIB_ARMOR) );
 		self.armorvalue = self.maxarmor;
-
 		local float a1, bit;
 		a1 = MTF_Coop_SetArmorAttrib(self, 2);
 		if (a1 > self.armor_allowed)
@@ -8941,7 +8811,6 @@ COOP_GetMaxGrensForClass (self.playerclass);
 #endif
 	W_SetCurrentAmmo();
 };
-
 void(entity Player, float Armorclass) TeamFortress_DescribeArmor = 
 {
 	if (Armorclass == 0)
@@ -8970,12 +8839,10 @@ void(entity Player, float Armorclass) TeamFortress_DescribeArmor =
 	}
 	sprint(Player, 2, "armor\n");
 };
-
 float(entity Retriever, entity Items) TeamFortress_AddBackpackItems = 
 {
 	return 0;
 };
-
 void() TeamFortress_RemoveTimers = 
 {
 	local entity te;
@@ -9399,7 +9266,6 @@ void() TeamFortress_ExplodePerson =
 	bprint(1, ", throw the grenade, not the pin!\n");
 	dremove(self);
 };
-
 void() NormalGrenadeTouch = 
 {
 	if (other == self.owner)
@@ -9412,7 +9278,6 @@ void() NormalGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void() NormalGrenadeExplode = 
 {
 	deathmsg = 8;
@@ -9432,7 +9297,6 @@ void () TeamFortress_DisplayDetectionItems =
 {
 	local entity _l_10555;
 	local entity _l_10556;
-
 	_l_10555 = find (world, classname, "info_tfdetect");
 	if (!_l_10555)
 	{
@@ -9527,7 +9391,6 @@ void() BioInfection_Decay =
 		dremove(self);
 	}
 };
-
 void() BioInfection_MonsterDecay = 
 {
 	self.nextthink = time + 2;
@@ -9537,7 +9400,6 @@ void() BioInfection_MonsterDecay =
 		dremove(self);
 		return;
 	}
-
 	deathmsg = 13;
 	T_Damage(self.enemy, self, self.owner, 42);
 #else
@@ -9635,9 +9497,7 @@ void() TeamFortress_RegenerateCells =
 			}
 		}
 		return;
-	
 };
-
 void() PlayerObserverMode = 
 {
 	self.current_menu = 1;
@@ -9661,14 +9521,12 @@ void() PlayerObserverMode =
 	CenterPrint(self, "\n");
 	stuffcmd(self, "cl_rollangle 0\n");
 };
-
 float(vector veca, vector vecb) crossproduct = 
 {
 	local float result;
 	result = veca_x * vecb_y - vecb_x * veca_y;
 	return result;
 };
-
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = 
         {
           	local vector dir;
@@ -9688,7 +9546,6 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 	{
 		return;
 	}
-	
 #ifdef mtf_coop_expsys
 	if (attacker.#is_minion == #TRUE && attacker.classname != "player") {
 		// TODO: multiply damage here for higher level minion master
@@ -9699,7 +9556,6 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 #ifdef mtf_coop
 		if (targ.classname == "player" && targ.health <= 0 && targ.solid == 0)
 			return;
-
 		if (attacker.is_monster == 1) {
 			damage = MTF_Monster_Damage( attacker, inflictor, targ, damage );
 		}
@@ -9720,12 +9576,9 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 					dir = normalize(dir);
 					if (targ.flags & FL_ONGROUND) 
 						targ.being_juggled = 1;
-
-						
-					targ.flags = targ.flags - FL_ONGROUND;
-					
-					targ.velocity_z += 325;		// was 300
-					targ.velocity = targ.velocity + dir * damage * 4;			
+						targ.flags = targ.flags - FL_ONGROUND;
+						targ.velocity_z += 325;		// was 300
+						targ.velocity = targ.velocity + dir * damage * 4;			
 				}		
 			}
 			damage = MTF_Monster_Take_Damage( attacker, targ, damage );
@@ -9741,7 +9594,6 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			attacker.inflicted = damage;
 			attacker.infstaytime = time + 2.25; } }
 		}
-
           	if (attacker.classname == "player")
           	{
           		damage = damage * 0.95;  // was .9 -arg
@@ -9968,10 +9820,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 					targ.velocity = targ.velocity + dir * damage * 4;			
 				}
 			}
-			
 			damage = MTF_Monster_Take_Damage( attacker, targ, damage );
-			
-
 		}
 	if (((targ.classname == "player_prop") && (targ.team_no == attacker.team_no) && targ != attacker))
 	{
@@ -10007,8 +9856,6 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 		{
 			oldself = self;
 			self = attacker;
-//			if (attacker.classname == "bot") {
-//				bprint(1, "woooooot \n"); }
 			if ((deathmsg == 1.000000))
 			{
 				Stats_Hit (128.000000);
@@ -10371,9 +10218,8 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
             	}
             	self = oldself;
 };
-
 void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDamage = 
-            {
+{
               	local float points;
               	local entity head;
               	local entity te;
@@ -10483,7 +10329,6 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
               		head = head.chain;
               	}
 };
-
 void(entity attacker, float damage) T_BeamDamage = 
 {
                 	local float points;
@@ -10570,7 +10415,6 @@ void () FlameMonster_Flame =
 			WriteCoord (MSG_BROADCAST, self.origin_z);
 		}
 	}
-
 	if (endp == self.orig_origin)	// save some bandwidth
 	{
 		self.nextthink = time + .1;
@@ -10659,12 +10503,10 @@ void () summon_respawn_think =
 	}
 	respawn_think ();
 };
-
 float() crandom = 
 {
 	return 2 * (random() - 0.5);
 };
-
 void (vector org,float damage) SpawnBlood =
 {
 	WriteByte (4, 23);
@@ -10682,12 +10524,10 @@ entity(float team_num) FindTeamSpawnPoint =
 	local entity at_spot;
 	local float spot_found;
 	local float attempts;
-	
 #ifdef BATTLE_ROYALE
 	if (battle_royale_e != world)
 		return FindTeamSpawnPoint_BR (team_num);
 #endif	
-	
 	if (team_num == TF_FLARE_OFF)
 	{
 		spot = lastspawn_team1;
@@ -10731,7 +10571,6 @@ entity(float team_num) FindTeamSpawnPoint =
 		{
 #ifdef mtf_coop
 			if (self.monster_type > 0) {
-			
 				spot = lastspawn_team2;
 				attempts = 0;
 				while (TF_FLARE_OFF)
@@ -10897,7 +10736,6 @@ entity(float team_num) FindTeamSpawnPoint =
 	}
 	return world;
 };
-
 void () T_MissileTouch =
 {
 	local float damg;
@@ -10946,7 +10784,6 @@ void () T_MissileTouch =
 	Bounce_Off_Walls ();
 #endif
 };
-
 void(float tno) decrement_team_pipebombs = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -10975,7 +10812,6 @@ void(float tno) decrement_team_pipebombs =
 		}
 	}
 };
-
 #ifdef mtf_coop
 float (entity us, entity test) COOP_IsValidTarget =
 {
@@ -11040,10 +10876,8 @@ float (entity us, entity test) COOP_IsValidTarget =
 				}
 			}
 		}
-
 	return #FALSE;
 };
-
 entity (entity scanner) COOP_FindTarget =
 {
 	local entity head;
@@ -11056,12 +10890,10 @@ entity (entity scanner) COOP_FindTarget =
 			if (COOP_IsValidTarget(scanner, head))
 				return head;
 		}
-
 		head = head.chain;
 	}
 	return world;
 };
-
 void () COOP_SmoothFrame =
 {
 	local float oldyaw;
@@ -11105,14 +10937,12 @@ void (float dist) COOP_WalkSmooth =
 	COOP_SmoothFrame ();
 };
 #endif
-
 void (entity t_plyr) CSQC_SendGrenTimer =
 {
 	if (!t_plyr.csqc_client)
 		return;
 	stuffcmd( t_plyr, "cmd grentimer 4\n" );		// addme: variable grenade times?
 };
-
 void() NailGrenadeExplode = 
 {
 	self.movetype = 5;
@@ -11121,7 +10951,6 @@ void() NailGrenadeExplode =
 	self.nextthink = time + 0.7;
 	self.think = NailGrenadeNailEm;
 };
-
 void() Napalm_touch = 
 {
 	local entity flame;
@@ -11204,7 +11033,6 @@ void() Napalm_touch =
 		FlameDestroy(self);
 	}
 };
-
 void () MirvGrenadeTouch =
 {
    sound (self,TF_FLARE_OFF,"weapons/bounce.wav",TF_FLARE_OFF,TF_FLARE_OFF);
@@ -11214,7 +11042,6 @@ void () MirvGrenadeTouch =
    }
 
 };
-
 void () MirvGrenadeExplode =
 {
    local float i;
@@ -11239,7 +11066,6 @@ void () MirvGrenadeExplode =
    }
    BecomeExplosion ();
 };
-
 void() T_IncendiaryTouch = 
 {
 	local float damg;
@@ -11311,7 +11137,6 @@ void() T_IncendiaryTouch =
 	multicast(self.origin, TF_FLARE_OFF);
 	dremove(self);
 };
-
 #ifdef mtf_coop_expsys
 void (entity t_other) MTF_DoEndBonus =
 {
@@ -11677,7 +11502,6 @@ void(entity Goal, entity AP, float addb) DoResults =
 		dremove(Goal);
 		return;
 	}
-
 	DoGroupWork(Goal, AP);
 	DoGoalWork(Goal, AP);
 	DoTriggerWork(Goal, AP);
@@ -11686,7 +11510,6 @@ void(entity Goal, entity AP, float addb) DoResults =
 		SetupRespawn(Goal);
 	}
 };
-
 void () Wizard_Bounce_Off_Walls =
 {
 	if (self.attack_finished < 1) {
@@ -11696,11 +11519,9 @@ void () Wizard_Bounce_Off_Walls =
 	self.attack_finished -= 1;
 	self.nextthink = time;
 	self.think = bounce_a;
-
 	if (self.velocity == '0 0 0')
 		dremove(self);
 };
-
 float(entity targ) visible = 
 {
 	local vector spot1;
@@ -11722,7 +11543,6 @@ float(entity targ) visible =
 	}
 	return TF_FLARE_LIT;
 };
-
 void() NapalmGrenadeExplode = 
 {
 	local entity head;
@@ -11771,7 +11591,6 @@ void() NapalmGrenadeExplode =
 		self.think = SUB_Remove;
 	}
 };
-
 void() DelayedResult = 
 {
 	if (self.enemy.goal_state == 4)
@@ -11780,7 +11599,6 @@ void() DelayedResult =
 	}
 	dremove(self);
 };
-
 void () Bounce_Off_Walls =
 {
 	if (self.attack_finished < 1) {
@@ -11803,7 +11621,6 @@ void() GasGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void() GasGrenadeExplode = 
 {
 	local entity te;
@@ -11845,7 +11662,6 @@ void() GasGrenadeExplode =
 	BecomeExplosion();
 	dremove(self);
 };
-
 void() NailGrenadeNailEm = 
 {
 	self.velocity = '0 0 0';
@@ -11853,7 +11669,6 @@ void() NailGrenadeNailEm =
 	self.think = NailGrenadeLaunchNail;
 	self.playerclass = TF_FLARE_LIT;
 };
-
 void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 {
 	local float addexp;
@@ -11973,7 +11788,6 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_KILLINGMACHINE, 1 );
 #endif
 };
-
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience =
 {
 	local entity oself;
@@ -11984,7 +11798,6 @@ void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience =
 	self = oself;
 	strunzone(nname);
 };
-
 void () MTF_Coop_UpdateMapRanks =
 {
 	local float old_best_time, new_best_time;
@@ -12070,8 +11883,6 @@ void () MTF_Coop_UpdateMapRanks =
 	if (new_best_player != "" && new_best_player != string_null)
 		strunzone(new_best_player);
 };
-
-
 void (string vname, float addness) MTF_Coop_RanksMapVote =
 {
 	local float vcnt;
@@ -12089,7 +11900,6 @@ void (string vname, float addness) MTF_Coop_RanksMapVote =
 		i++;
 		a = read (file);
 		if (a == vname) {
-
 			a = read (file);
 			foundit = 1;
 			vcnt = stof(a);
@@ -12113,10 +11923,8 @@ void (string vname, float addness) MTF_Coop_RanksMapVote =
 			break;
 		}
 	}
-
 	close (file);
 };
-
 void() FlareGrenadeTouch = 
 {
 if (other.classname == "player")
@@ -12147,7 +11955,6 @@ if (other.classname == "player")
 #ifdef mtf_coop
 		local entity te, flame;
 		local vector vtemp;
-		
 		te = findradius(self.origin, 50);
 		while (te)
 		{
@@ -12182,7 +11989,6 @@ if (other.classname == "player")
 		self.movetype = 6;
 	}
 };
-
 void() EMPGrenadeTouch = 
 {
 	sound(self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -12250,7 +12056,6 @@ entity(string type, entity p_owner) FlameSpawn =
 	newmis.owner = p_owner;
 	return newmis;
 };
-
 void (vector org, entity shooter) MirvGrenadeLaunch =
  {
    local float xdir;
@@ -12276,7 +12081,6 @@ void (vector org, entity shooter) MirvGrenadeLaunch =
    setsize (newmis,'0 0 0','0 0 0');
    setorigin (newmis,org);
 };
-
 void() MoveFlag = 
 {
 	if ( (prematch) )// && (self.owner.items & 131072) )
@@ -12303,7 +12107,6 @@ void() MoveFlag =
 		dremove(self);
 	}
 };
-
 void () TF_PlaceItem =
 {
 	self.flags = 256;
@@ -12321,7 +12124,6 @@ void () TF_PlaceItem =
 	self.item_list = item_list_bit;
 	item_list_bit = item_list_bit * 2.000000;
 };
-
 void () TF_StartItem =
 {
 	UpdateAbbreviations (self);
@@ -12332,7 +12134,6 @@ void () TF_StartItem =
 		RemoveGoal (self);
 	}
 };
-
 void () TF_PlaceGoal =
 {
 	local float oldz;
@@ -12366,7 +12167,6 @@ void () TF_PlaceGoal =
 	self.velocity = '0.000000 0.000000 0.000000';
 	self.oldorigin = self.origin;
 };
-
 void () TF_StartGoal =
 {
 	UpdateAbbreviations (self);
@@ -12378,7 +12178,6 @@ void () TF_StartGoal =
 		RemoveGoal (self);
 	}
 };
-
 void () info_tfdetect = 
 {
    local entity te;
@@ -12444,7 +12243,6 @@ void () info_tfdetect =
 	quotestart = 1;
 	}
 };
-
 void() info_player_teamspawn = 
 {
 	local entity te;
@@ -12497,13 +12295,11 @@ void() info_player_teamspawn =
 		}
 	}
 };
-
 void() i_p_t = 
 {
 	self.classname = "info_player_teamspawn";
 	info_player_teamspawn();
 };
-
 void() info_tfgoal = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -12557,13 +12353,11 @@ void() info_tfgoal =
 	}
 	TF_StartGoal();
 };
-
 void() i_t_g = 
 {
 	self.classname = "info_tfgoal";
 	info_tfgoal();
 };
-
 void() info_tfgoal_timer = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -12595,13 +12389,11 @@ void() info_tfgoal_timer =
 	setsize(self, '-16 -16 -24', '16 16 32');
 	TF_StartGoal();
 };
-
 void() i_t_t = 
 {
 	self.classname = "info_tfgoal_timer";
 	info_tfgoal_timer();
 };
-
 void() item_tfgoal = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -12648,7 +12440,6 @@ void() item_tfgoal =
 	setsize(self, '-16 -16 -24', '16 16 32');
 	TF_StartItem();
 };
-
 void(entity AD) ParseTFDetect = 
 {
 #ifndef mtf_coop
@@ -12752,7 +12543,6 @@ void(entity AD) ParseTFDetect =
 	}
 #endif
 };
-
 entity(float ino) Finditem = 
 {
 	local entity tg;
@@ -12772,7 +12562,6 @@ entity(float ino) Finditem =
 	dprint(".\n");
 	return world;
 };
-
 entity(float gno) Findgoal = 
 {
 	local entity tg;
@@ -12792,7 +12581,6 @@ entity(float gno) Findgoal =
 	dprint(".\n");
 	return(tg);		// is returning an empty entity safe? hmm
 };
-
 entity(float gno) Findteamspawn = 
 {
 	local entity tg;
@@ -12858,7 +12646,6 @@ void(entity Goal) RemoveGoal =
 		setmodel(Goal, string_null);
 	}
 };
-
 float(entity Goal, entity Player, entity AP) IsAffectedBy = 
 {
 	local float genv;
@@ -13154,7 +12941,6 @@ void(entity Goal, entity Player, entity AP, float addb) Apply_Results =
 		ForceRespawn (Player);
 	}
 };
-
 void(entity Goal, entity Player) RemoveResults = 
 {
 	local entity oldself;
@@ -13265,7 +13051,6 @@ void(entity Goal, entity Player) RemoveResults =
 	W_SetCurrentAmmo();
 	self = oldself;
 };
-
 float(entity Goal, entity AP) APMeetsCriteria = 
 {
 	local float gotone;
@@ -13409,7 +13194,6 @@ float(entity Goal, entity AP) APMeetsCriteria =
     }
     return (1);
 };
-
 void(entity Goal) SetupRespawn = 
 {
 	if (Goal.search_time != TF_FLARE_LIT)
@@ -13446,13 +13230,11 @@ void(entity Goal) SetupRespawn =
 	}
 	InactivateGoal(Goal);
 };
-
 void() DoRespawn = 
 {
 	RestoreGoal(self);
 	InactivateGoal(self);
 };
-
 float(entity Goal, entity AP) Activated = 
 {
 	local float APMet;
@@ -13496,7 +13278,6 @@ float(entity Goal, entity AP) Activated =
 	}
 	return Act;
 };
-
 void(entity Goal, entity AP, entity ActivatingGoal) AttemptToActivate = 
 {
 	local entity te;
@@ -13530,7 +13311,6 @@ void(entity Goal, entity AP, entity ActivatingGoal) AttemptToActivate =
 		}
 	}
 };
-
 void(entity Goal, entity AP) DoGoalWork = 
 {
 	local entity te;
@@ -13629,7 +13409,6 @@ void(entity Goal, entity AP) DoGoalWork =
 		}
 	}
 };
-
 void(entity Goal, entity AP) DoGroupWork = 
 {
 	local string st;
@@ -13768,7 +13547,6 @@ void(entity Goal, entity AP) DoGroupWork =
 		}
 	}
 };
-
 void(entity Item, entity AP) DoItemGroupWork = 
 {
 	local entity tg;
@@ -13853,7 +13631,6 @@ void(entity Item, entity AP) DoItemGroupWork =
 		}
 	}
 };
-
 void(entity Goal, entity AP) DoTriggerWork = 
 {
 	local entity t;
@@ -13899,9 +13676,6 @@ void(entity Goal, entity AP) DoTriggerWork =
 		} while (t != world);
 	}
 };
-
-
-
 void() tfgoal_touch = 
 {
 	if (!(self.goal_activation & TF_FLARE_OFF))
@@ -13922,7 +13696,6 @@ void() tfgoal_touch =
 		{
 		local float resp;
 		resp = FALSE;
-
 		if (self.ammo_cells && other.ammo_cells < other.maxammo_cells)
 			resp = TRUE;
 		if (self.ammo_shells && other.ammo_shells < other.maxammo_shells)
@@ -13947,12 +13720,10 @@ void() tfgoal_touch =
 	}
 	AttemptToActivate(self, other, self);
 };
-
 void() info_tfgoal_use = 
 {
 	AttemptToActivate(self, activator, self);
 };
-
 void() tfgoal_timer_tick = 
 {
 	if (self.goal_state != 3)
@@ -13969,7 +13740,6 @@ void() tfgoal_timer_tick =
 		}
 	}
 };
-
 void() item_tfgoal_touch = 
 {
 	local entity te;
@@ -14072,7 +13842,6 @@ void(entity Item, entity AP, entity Goal) tfgoalitem_GiveToPlayer =
 	DoResults(Item, AP, TF_FLARE_OFF);
 	DoItemGroupWork(Item, AP);
 };
-
 void() ReturnItem = 
 {
 	self.enemy.goal_state = 2;
@@ -14089,9 +13858,6 @@ void() ReturnItem =
 	tfgoalitem_checkgoalreturn(self.enemy);
 	dremove(self);
 };
-
-void(entity Item) mtf_tfgoalitem_drop;
-
 void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer = 
 {
 	local entity te;
@@ -14249,7 +14015,6 @@ void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer =
 		TeamFortress_SetSpeed(AP);
 		return;
 	}
-
 	dprint("Invalid method passed into tfgoalitem_RemoveFromPlayer\n");
 };
 void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
@@ -14261,7 +14026,8 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
     local float key2on;
     local float spyoff;
     local entity DelayReturn;
-    if (Item == world) {
+    if (Item == world)
+	{
 	objerror ("error: tfgoalitem_RemoveFromPlayer(): Item == world");
 	return;
     }
@@ -14307,13 +14073,10 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 
     if (!spyoff)
 	AP.is_unabletospy = 0;
-
     if (!key1on)
 	AP.items = AP.items - (AP.items & 131072);
-
     if (!key2on)
 	AP.items = AP.items - (AP.items & 262144);
-
     te = find (world, classname, "player");
     while (te != world) {
 	if (IsAffectedBy (Item, te, AP))
@@ -14326,14 +14089,12 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 	    if (te.team_no == Item.owned_by) {
 		if (Item.team_drop != string_null)
 		    CenterPrint2 (te, "\n\n\n", Item.team_drop);
-
 		if (Item.netname_team_drop != string_null) {
 		    sprint (te, 2, AP.netname, Item.netname_team_drop);
 		}
 	    } else {
 		if (Item.non_team_drop != string_null)
 		    CenterPrint2 (te, "\n\n\n", Item.non_team_drop);
-
 		if (Item.netname_non_team_drop != string_null) {
 		    sprint (te, 2, AP.netname, Item.netname_non_team_drop);
 		}
@@ -14389,7 +14150,6 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
     }
     objerror ("Invalid method passed into tfgoalitem_RemoveFromPlayer\n");
 };
-
 void() tfgoalitem_dropthink = 
 {
 	local float pos;
@@ -14425,7 +14185,6 @@ void() tfgoalitem_dropthink =
 		self.think = tfgoalitem_remove;
 	}
 };
-
 void () tfgoalitem_droptouch =
 {
     self.touch = item_tfgoal_touch;
@@ -14549,7 +14308,6 @@ void(entity Item) tfgoalitem_checkgoalreturn =
 		}
 	}
 };
-
 void(entity Goal, entity Player, entity Item) DisplayItemStatus = 
 {
 	if (Item.goal_state == TF_FLARE_OFF)
@@ -14600,7 +14358,6 @@ void(entity Goal, entity Player, entity Item) DisplayItemStatus =
 	}
 	sprint(Player, 2, "\n");
 };
-
 void() info_player_team1 = 
 {
 		dremove(self);
@@ -14610,7 +14367,6 @@ void() info_player_team1 =
 	self.goal_effects = TF_FLARE_OFF;
 	self.team_str_home = "ts2";
 };
-
 void() info_player_team2 = 
 {
 		dremove(self);
@@ -14620,7 +14376,6 @@ void() info_player_team2 =
 	self.goal_effects = TF_FLARE_OFF;
 	self.team_str_home = "ts1";
 };
-
 void() item_flag_team2 = 
 {
 #ifdef mtf_coop
@@ -14684,7 +14439,6 @@ void() item_flag_team2 =
 	dp.nextthink = time + 0.2;
 	dp.think = TF_PlaceGoal;
 };
-
 void() item_flag_team1 = 
 {
 #ifdef mtf_coop
@@ -14748,7 +14502,6 @@ void() item_flag_team1 =
 	dp.nextthink = time + 0.2;
 	dp.think = TF_PlaceGoal;
 };
-
 void() CTF_FlagCheck = 
 {
 	local entity te;
@@ -14791,7 +14544,6 @@ void() CTF_FlagCheck =
 	}
 	self.nextthink = time + 30;
 };
-
 void (entity P) ForceRespawn =
 {
 	local entity spot;
@@ -15063,7 +14815,6 @@ TF_T_Damage(head, self, self.owner, 200, TF_FLARE_LIT, 4);
 	self.owner.active_grenades_2 = (self.owner.active_grenades_2 - 1.000000);
 	dremove(self);
 };
-
 void () GasGrenadeMakeGas =
 {
 	local entity _l_9407;
@@ -15096,7 +14847,6 @@ void () GasGrenadeMakeGas =
 				}
 				else 
 #endif
-
 				if ((_l_9407.tfstate & 16384.000000))
 				{
 					_l_9409 = find (world, classname, "timer");
@@ -15178,7 +14928,6 @@ void () GasGrenadeMakeGas =
 	self.owner.active_grenades_2 = (self.owner.active_grenades_2 - 1.000000);
 	dremove (self);
 };
-
 void () HallucinationTimer =
 {
 	local entity _l_9418;
@@ -15186,7 +14935,6 @@ void () HallucinationTimer =
 	local float _l_9420;
 	local float _l_9421;
 	local float _l_9422;
-
 #ifdef mtf_coop
 	if (self.owner.is_monster == 1)
 	{
@@ -15281,7 +15029,6 @@ void () HallucinationTimer =
 		}
 	}
 };
-
 void() NailGrenadeLaunchNail = 
 {
 	local float i;
@@ -15309,7 +15056,6 @@ void() NailGrenadeLaunchNail =
 		self.think = GrenadeExplode;
 	}
 };
-
 void() FlareGrenadeExplode = 
 {
 	self.skin = TF_FLARE_OFF;
@@ -15319,7 +15065,6 @@ void() FlareGrenadeExplode =
 	self.solid = TF_FLARE_LIT;
 	self.think = FlareGrenadeThink;
 };
-
 void() FlashGrenadeTouch = 
 {
 	sound(self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -15328,7 +15073,6 @@ void() FlashGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void() FlashGrenadeExplode = 
 {
 	local entity te;
@@ -15347,10 +15091,8 @@ void() FlashGrenadeExplode =
 			te.enemy = world;
 			if (te.#mflash_time < (time - 10)) {
 				te.#mflash_time = time + 4;
-				
 				deathmsg = 35;
 				TF_T_Damage(te, self, self.owner, 60, TF_FLARE_LIT, 16);
-				
 				newmis = spawn ();
 				setmodel (newmis, "progs/s_bubble.spr");
 				setorigin (newmis, te.origin);
@@ -15404,7 +15146,6 @@ void() FlashGrenadeExplode =
 	self.owner.active_grenades_1 = (self.owner.active_grenades_1 - 1.000000);
 	dremove (self);
 };
-
 void() OnPlayerFlame_touch = 
 {
 	local entity flame;
@@ -15455,7 +15196,6 @@ void() OnPlayerFlame_touch =
 		flame.think = FlameFollow;
 	}
 };
-
 float () Coop_ExpCurve =
 {
 	local float rtrn;
@@ -15478,7 +15218,6 @@ float () Coop_ExpCurve =
 void ( float exptotal, string reason, float sayamount ) MTF_Coop_AddExpToAll =
 {
 	local entity te;
-
 	if (reason != string_null) {
 		bprint( 2, reason );
 		bprint( 2, "\n" );
@@ -15593,14 +15332,12 @@ void() FlameFollow =
 		}
 	}
 };
-
 void (entity t_plyr, float t_exp) CSQC_SendExperience =
 {
 	stuffcmd( t_plyr, "cmd setexp " );
 	stuffcmd( t_plyr, ftos(t_exp) );
 	stuffcmd( t_plyr, "\n" );
 };
-
 void() WorldFlame_touch = 
 {
 	local entity flame;
@@ -15652,7 +15389,6 @@ void() WorldFlame_touch =
 		flame.think = FlameFollow;
 	}
 };
-
 float(string id_flame) RemoveFlameFromQueue = 
 {
 	local entity tmp;
@@ -15696,7 +15432,6 @@ float(string id_flame) RemoveFlameFromQueue =
 	remove(tmp);
 	return TF_FLARE_OFF;
 };
-
 void() GrenadeTouch = 
 {
 	if (other == self.owner)
@@ -15714,7 +15449,6 @@ void() GrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void() GrenadeExplode = 
 {
 #ifdef mtf_coop
@@ -15760,7 +15494,6 @@ void() GrenadeExplode =
 	BecomeExplosion();
 	dremove(self);
 };
-
 void () review_timeleft =
 {
 	local string st;
@@ -15848,22 +15581,18 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 			rname = strzone(rname);
 			rval = read(dummyfile);
 			rval = strzone(rval);
-			
 			write( file, rname );
 			write( file, "\n" );
 			write( file, rval );
 			write( file, "\n" );		
-
 			strunzone (rval);
 			strunzone (rname);
 		}
 	}
-
 	strunzone( nname );
 	close( file );
 	close( dummyfile );
 };
-
 void ( entity t_player, entity t_monster, float exptotal, float sayamount) MTF_Coop_AddExpAndWrite =
 {
 	MTF_Coop_AddExperience(t_player, t_monster, exptotal);
@@ -15917,7 +15646,6 @@ void (entity plyr) Attributes_over_limit =
 	sprint(plyr, 2,"Your attributes have been reset.\n");
 	
 };
-
 float (float attrib_count) CheckAttributes =
 {
 	if (attrib_count > #MAX_SPEND) {
@@ -15992,7 +15720,6 @@ void (float file) MTF_Coop_GetAttributes =
 	strunzone(b);
 	strunzone(b);
 };
-
 void ( entity te ) Coop_ResetAttributes =
 {
 	te.health_attr = 0; te.armor_attr = 0; te.damage_attr = 0; te.ammo_attr = 0; te.misc_attr = 0; te.crit_attr = 0; te.reload_attr = 0;
@@ -16094,11 +15821,8 @@ void () Packet_Auth_Think =
 	}
 	else {
 	}
-	
 	self.nextthink = time + 3;
-	
 };
-
 float (string nname) MTF_Coop_GetExperience =
 {
 	nname = strzone(nname);	// er.. might be a good idea to move this AFTER "if ( nname ==..."
@@ -16115,7 +15839,6 @@ float (string nname) MTF_Coop_GetExperience =
 		bprint(2, self.connect_name);
 		bprint(2, ")\n");
 	}
-
 	if ( nname == "" || !nname )
 		return ( -1 );
 	filename = /*strzone(*/frik_strcat( "ranks/", nname, ".tfi" )/*)*/;
@@ -16199,7 +15922,6 @@ bprint(2,"\n");
 	strunzone(filename);
 	return ( exp );
 };
-
 float (string nname) MTF_Coop_GetUserExperience =
 {
 	nname = strzone(nname);	// er.. might be a good idea to move this AFTER "if ( nname ==..."
@@ -16274,12 +15996,10 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank =
 			rname = strzone(rname);
 			rval = read(dummyfile);
 			rval = strzone(rval);
-			
 			write( file, rname );
 			write( file, "\n" );
 			write( file, rval );
 			write( file, "\n" );		
-
 			strunzone (rval);
 			strunzone (rname);
 		}
@@ -16317,7 +16037,6 @@ void () MTF_Coop_RanksExperienceSet =
 			break;
 		}
 	}
-
 	dremove(self);
 	close (file);
 };
@@ -16595,38 +16314,6 @@ float ( float getlevel ) Coop_ExpReq =
 	}
 	return 999999999;
 };
-
-/*void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
-{
-	local float lvlg, newlvl;
-	local float i;
-	newlvl = 0;
-	i=0;
-	while (i < #MAX_LEVEL)
-	{
-		i++;
-		lvlg = Coop_ExpReq( i );
-		if (origexp < lvlg && newexp >= lvlg) {
-			newlvl = i;
-			self.attribute_points += 1;
-		}
-		else if (newexp < lvlg)
-			break;
-	}
-	if (newlvl > 0) {
-		bprint(2, self.netname);
-		bprint(2, " is now level ");
-		bprint(2, ftos(newlvl));
-		bprint(2, "!\n");
-		sprint(self, 2, "CONGRATULATIONS! To check your attributes, type cmd attrib  .\n");
-		MTF_Coop_WriteExperience(self.connect_name, self.coop_exp);		// xavior: hopefully this fixes the bug that causes
-		if (newlvl < 81)
-			Achievements_Change( self, world, ACHIEVEMENTS_SET, ACHIEVEMENT_LEVELTWENTY, newlvl );
-		if (newlvl == 80) {
-		}
-	}
-};
-*/
 void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 {
 	local float lvlg, newlvl, chklvl;
@@ -16671,7 +16358,6 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 		newlvl = 7;
 		self.attribute_points += 1;
 	}
-
 	lvlg = #COOP_LEVEL_EIGHT;
 	if (origexp < lvlg && newexp >= lvlg) {
 		newlvl = 8;
@@ -16682,7 +16368,6 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 		newlvl = 9;
 		self.attribute_points += 1;
 	}
-
 	lvlg = #COOP_LEVEL_TEN;
 	if (origexp < lvlg && newexp >= lvlg) {
 		newlvl = 10;
@@ -16721,7 +16406,6 @@ bprint(2, " eh?\n");
 		sprint(self, 2, "CONGRATULATIONS! To check your attributes, type cmd attrib!\n");
 	}
 };
-
 void (string nname, float exp/*, float reset_attribs*/) MTF_Coop_ForceWriteExperience =
 {
 	local string filename;
@@ -16854,10 +16538,8 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 
 		strunzone(rname);
 	}	
-
 	close (file);
 };
-
 void () MTF_Coop_ViewTopMapRanks =
 {
 	local string rname, fname;
@@ -16951,7 +16633,6 @@ float ( float currexp, float attrib_type ) Coop_GetNextLevelNeeded =
 	else
 		return 0;
 };
-
 void ( float attrib_type ) MTF_Coop_SpendAttrib =
 {
 	local string attr_name;
@@ -17067,7 +16748,6 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 		MTF_Coop_SpendAttrib ( 0 );
 		return;
 	}
-
 	sprint(self, 2, "You spend one attribute on ");
 	sprint(self, 2, attr_name);
 	sprint(self, 2, ".\n");
@@ -17083,7 +16763,6 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 		sprint( self, 2, " You have unlocked a new Masters Skill!\n Check \"CMD help masters\" to see what it is!\n" );
 	}
 };
-
 float (entity plyr, float attrib_type) MTF_Coop_AttribGain =
 {
 	if (attrib_type == #ATTRIB_HEALTH) {
@@ -17127,7 +16806,6 @@ float (entity plyr, float attrib_type) MTF_Coop_AttribGain =
 		return ( 1 );
 	}
 };
-
 float (entity plyr, float atype) MTF_Coop_SetArmorAttrib =
 {
 	if (plyr.health_attr < 1)
@@ -17146,11 +16824,6 @@ float (entity plyr, float atype) MTF_Coop_SetArmorAttrib =
 
 	return ( plyr.armor_allowed );
 };
-
-void () summon_think;
-
-void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..
-
 void () Coop_MinionMonsterTouch =
 {
 	local float dist, strength;
@@ -17180,8 +16853,6 @@ void () Coop_MinionMonsterTouch =
 	}
 	self.velocity = self.velocity + delta;	
 };
-
-void () MTF_RemoveMonster;
 void () summon_think =
 {
 	local float fls, mhp;
@@ -17234,7 +16905,6 @@ void () summon_think =
 	setorigin(self, endp);
 	self.nextthink = time + .1;
 };
-
 float ( float currexp ) Coop_GetLevel =
 {
 	local float i;
@@ -17249,14 +16919,12 @@ float ( float currexp ) Coop_GetLevel =
 	}
 	return #MAX_LEVEL;
 };
-
 float ( float currexp ) Coop_ExpForNextLevel =
 {
 	local float t_lvl;
 	t_lvl = Coop_GetLevel( currexp );
 	return ( Coop_ExpReq( t_lvl + 1 ) - currexp );
 };
-
 string (string nname, float currexp) MTF_Coop_GetSkin =
 {
 	local string filename, a;
@@ -17291,14 +16959,12 @@ string (string nname, float currexp) MTF_Coop_GetSkin =
 		}
 	}
 };
-
 void (entity p, string newskin) MTF_Coop_SetCustomSkin =
 {
 	local string filename;
 	local float file;
 	if ( !MTF_Coop_IsValidPlayer(p) )
 		return;
-
 	if ( Coop_GetLevel(p.coop_exp) < 10 )
 	{
 		sprint(p, 2, "You need to be at least level 10 to access this feature!\n");
@@ -17309,7 +16975,6 @@ void (entity p, string newskin) MTF_Coop_SetCustomSkin =
 		sprint(p, 2, "No skin specified. Use CMD customskin skinname\n");
 		return;
 	}
-		
 	filename = frik_strcat( "skins/", newskin, ".pcx" );
 	if ( validatefile(filename) || newskin == "off")
 	{
@@ -17340,15 +17005,13 @@ void (entity p, string newskin) MTF_Coop_SetCustomSkin =
 		sprint(p, 2, "The skin you tried to select is not on this server.\n Please contact an admin about uploading the specified skin.\n");
 	}
 };
-
 float (entity plyr) MTF_Coop_IsValidPlayer =
 {
 	if (self.coop_exp < 1)
 		return 0;
 	else
 		return 1;
-}
-
+};
 float ( entity t_plyr, float attrib_type ) Coop_HasMasterSkill =
 {
 	local float attr_total;
@@ -17358,7 +17021,6 @@ float ( entity t_plyr, float attrib_type ) Coop_HasMasterSkill =
 	}
 	return #FALSE;
 };
-
 void () Masters_MinionSpawnThink =
 {
 	droptofloor ();
@@ -17367,7 +17029,6 @@ void () Masters_MinionSpawnThink =
 		dremove(self);
 		return;
 	}
-	
 	if (InSolid(self)) {
 		sprint( self.enemy, 2, "Move to a more open area to teleport your minion in\n" );
 		dremove(self);
@@ -17380,7 +17041,6 @@ void () Masters_MinionSpawnThink =
 	WriteCoord (MSG_BROADCAST, self.origin_y);
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	multicast (self.origin, MULTICAST_PHS);
-	
 	dremove(self);
 };
 void ( entity t_plyr, float attrib_type, float skill_no ) Coop_UseMasterSkill =
@@ -17479,7 +17139,6 @@ void ( entity t_plyr, float attrib_type, float skill_no ) Coop_UseMasterSkill =
 			sprint ( t_plyr, 2, "No minion found to warp\n" );
 	}
 };
-
 void ( float howmany ) MTF_Coop_ViewVoteTopRanks =
 {
 	local string rname;
@@ -17519,7 +17178,6 @@ void ( float howmany ) MTF_Coop_ViewVoteTopRanks =
 	}	
 	close (file);
 };
-
 void(entity spy) Spy_RemoveDisguise = 
 {
 	local string st;
@@ -17569,7 +17227,6 @@ void(entity spy) Spy_RemoveDisguise =
 	VWEPS_Update(spy);
 #endif
 };
-
 void (vector org,vector dir) launch_spike =
 {
 	newmis = spawn ();
@@ -17594,7 +17251,6 @@ void (vector org,vector dir) launch_spike =
 	setorigin (newmis, org);
 	newmis.velocity = (dir * 2000);
 };
-
 void () superspike_touch =
 {
 	local float ndmg;
@@ -17643,12 +17299,10 @@ void () superspike_touch =
 	}
 	dremove (self);
 };
-
 void() Remove = 
 {
 	FlameDestroy(self);
 };
-
 void() FlareGrenadeThink = 
 {
 	local float rnum;
@@ -17705,14 +17359,12 @@ void() FlareGrenadeThink =
 		}
 	}
 };
-
 void() RemoveFlare = 
 {
 	self.owner.effects = self.owner.effects - (self.owner.effects & 4);
 	self.owner.active_grenades_2 = (self.owner.active_grenades_2 - 1.000000);
 	dremove(self);
 };
-
 void() ammo_touch = 
 {
 	local entity stemp;
@@ -17815,7 +17467,6 @@ void() ammo_touch =
 #endif
 	Respawn_Item(self, other);
 };
-
 void() item_shells = 
 {
 #ifdef mtf_coop_hipnotic
@@ -17857,7 +17508,6 @@ void() item_shells =
 	setsize(self, '0 0 0', '32 32 56');
 	StartItem();
 };
-
 void () FlashTimer =
 {
 	local entity te;
@@ -17898,7 +17548,6 @@ void () FlashTimer =
 	}
 	self.nextthink = (time + 0.100000);
 };
-
 void() ConcussionGrenadeTouch = 
 {
 	sound(self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -17907,7 +17556,6 @@ void() ConcussionGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void() ConcussionGrenadeExplode = 
 {
 	T_RadiusBounce(self, self.owner, 240, world);
@@ -17921,13 +17569,11 @@ void() ConcussionGrenadeExplode =
 	self.owner.active_grenades_2 = (self.owner.active_grenades_2 - 1.000000);
 	dremove(self);
 };
-
 void(entity this) FlameDestroy = 
 {
 	num_world_flames = num_world_flames - TF_FLARE_OFF;
 	remove(this);
 };
-
 void() weapon_touch = 
 {
 	local float hadammo;
@@ -18108,7 +17754,6 @@ void() weapon_touch =
 	}
 	Respawn_Item(self, other);
 };
-
 void() EMPExplode = 
 {
 	local float expsize;
@@ -18169,7 +17814,6 @@ void() EMPExplode =
 	multicast(self.origin, TF_FLARE_OFF);
 	Respawn_Item(self, self.enemy);
 };
-
 float (float orighp) MTF_Monster_Health2 =
 {
 	if (self.classname == "player")
@@ -18191,7 +17835,6 @@ float (float orighp) MTF_Monster_Health2 =
 	else
 		return (orighp * 3);
 };
-
 float (entity ent) InSolid =
 {
 	local entity tente, oself;
@@ -18223,7 +17866,6 @@ float (entity ent) InSolid =
 	remove (tente);
 	return !ret;
 };
-
 void(entity spy) TeamFortress_SpyCalcName = 
 {
 	local entity te;
@@ -18270,14 +17912,12 @@ void (entity vwup) VWEPS_Update =
 	VWEPS_SetModel();
 	self = rpl;
 };
-
 void (float damage) spawn_touchblood =
 {
 	local vector vel;
 	vel = (wall_velocity () * 0.2);
 	SpawnBlood ((self.origin + (vel * 0.01)), damage);
 };
-
 void () TeamFortress_DetpackExplode =
 {
    local float pos;
@@ -18301,7 +17941,6 @@ void () TeamFortress_DetpackExplode =
    }
    BecomeExplosion ();
 };
-
 float () W_BestWeapon =
 {
 	local float it;
@@ -18402,13 +18041,11 @@ float () W_BestWeapon =
 	}
 	return (0.000000);
 };
-
 void() StartItem = 
 {
 	self.nextthink = time + 0.2;
 	self.think = PlaceItem;
 };
-
 void () BackpackTouch =
 {
 	local string s;
@@ -18488,7 +18125,6 @@ void () BackpackTouch =
 	self.pk_beartrapammo = self.pk_beartrapammo +1;
 	W_SetCurrentAmmo ();
 };
-
 float() GetGrenadePossibility = 
 {
 	if (random() < 0.5)
@@ -18519,11 +18155,8 @@ float() GetGrenadePossibility =
 	}
 	return TF_FLARE_LIT;
 };
-
 void(float old, float new) Deathmatch_Weapon = 
-{
-};
-
+{};
 void(entity ritem, entity act) Respawn_Item = 
 {
 	local entity oldself;
@@ -18547,11 +18180,9 @@ void(entity ritem, entity act) Respawn_Item =
 	SUB_UseTargets();
 	self = oldself;
 };
-
 vector () wall_velocity =
 {
 	local vector vel;
-
 	vel = normalize (self.velocity);
 	vel = normalize (((vel + (v_up * (random () - 0.5))) + (v_right * (random () - 0.5))));
 	vel = (vel + (2 * trace_plane_normal));
@@ -18872,7 +18503,6 @@ float() Sentry_FindTarget =
 	Sentry_FoundTarget();
 	return 1;
 };
-
 float turret_clearGround (entity head) =
 {
   local entity e, parent;
@@ -18901,7 +18531,6 @@ float turret_clearGround (entity head) =
 	  return FALSE;	  
 	  }
 };
-
 void() Reset_My_Grapple = 
 {
 	sound(self.owner, TF_FLARE_OFF, "doors/ddoor2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -18914,7 +18543,6 @@ void() Reset_My_Grapple =
 	self.think = SUB_Remove;
 	self.nextthink = time;
 };
-
 void() Sentry_FoundTarget = 
 {
 	if (self.ammo_shells > 0 || (self.ammo_rockets > 0 && self.weapon == 3))
@@ -18928,7 +18556,6 @@ void() Sentry_FoundTarget =
 		self.super_damage_finished = time + 0.5;
 	}
 };
-
 void() Sentry_HuntTarget = 
 {
 	self.goalentity = self.enemy;
@@ -18951,19 +18578,16 @@ void() Sentry_HuntTarget =
 	self.nextthink = time + 0.1;
 	SUB_AttackFinished(1);
 };
-
 void() ai_face = 
 {
 	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 	self.ideal_yaw = anglemod(self.ideal_yaw);
 	ChangeYaw();
 };
-
 void() lvl1_sentry_stand = [0, lvl1_sentry_stand]
 {
 	Sentry_Rotate();
 };
-
 void() lvl1_sentry_atk1 = [1, lvl1_sentry_atk3]
 {
 	ai_face();
@@ -18990,23 +18614,19 @@ void() lvl1_sentry_atk1 = [1, lvl1_sentry_atk3]
 		}
 	}
 };
-
 void() lvl1_sentry_atk2 = [2, lvl1_sentry_atk3]
 {
 	ai_face();
 	Sentry_Fire();
 };
-
 void() lvl1_sentry_atk3 = [0, lvl1_sentry_atk1]
 {
 	ai_face();
 };
-
 void() lvl2_sentry_stand = [3, lvl2_sentry_stand]
 {
 	Sentry_Rotate();
 };
-
 void() lvl2_sentry_atk1 = [4, lvl2_sentry_atk2]
 {
 	ai_face();
@@ -19033,24 +18653,20 @@ void() lvl2_sentry_atk1 = [4, lvl2_sentry_atk2]
 		}
 	}
 };
-
 void() lvl2_sentry_atk2 = [5, lvl2_sentry_atk3]
 {
 	ai_face();
 	Sentry_Fire();
 };
-
 void() lvl2_sentry_atk3 = [3, lvl2_sentry_atk1]
 {
 	ai_face();
 	Sentry_Fire();
 };
-
 void() lvl3_sentry_stand = [6, lvl3_sentry_stand]
 {
 	Sentry_Rotate();
 };
-
 void() lvl3_sentry_atk1 = [7, lvl3_sentry_atk2]
 {
 	ai_face();
@@ -19077,19 +18693,16 @@ void() lvl3_sentry_atk1 = [7, lvl3_sentry_atk2]
 		}
 	}
 };
-
 void() lvl3_sentry_atk2 = [8, lvl3_sentry_atk3]
 {
 	ai_face();
 	Sentry_Fire();
 };
-
 void() lvl3_sentry_atk3 = [6, lvl3_sentry_atk1]
 {
 	ai_face();
 	Sentry_Fire();
 };
-
 void() Sentry_Rotate = 
 {
 	local float ay;
@@ -19132,12 +18745,10 @@ void() Sentry_Rotate =
 		}
 	}
 };
-
 void() Sentry_Pain = 
 {
 	self.real_owner.StatusRefreshTime = time + 0.2;
 };
-
 void() Sentry_Die = 
 {
 #ifdef mtf_coop_halflife
@@ -19167,7 +18778,6 @@ void() Sentry_Die =
 	multicast(self.origin, 1);
 	BecomeExplosion();
 };
-
 float() Sentry_Fire = 
 {
 	local vector dir;
@@ -19389,7 +18999,6 @@ void (float shotcount,vector dir,vector spread) FireBullets =
 	ApplyMultiDamage ();
 	Multi_Finish ();
 };
-
 void (string gibname, float dm) turret_throwGib =
 {
 	local entity new;
@@ -19413,7 +19022,6 @@ void (string gibname, float dm) turret_throwGib =
 	new.owner = self.owner; // changed from self.owner -arg 
 	new.touch = turret_gibTouch;
 };
-
 void () ClearMultiDamage =
 {
 	multi_ent = world;
@@ -19421,10 +19029,7 @@ void () ClearMultiDamage =
 	blood_count = 0.000000;
 	puff_count = 0.000000;
 };
-
-
 $frame gunsearch gunfire1 gunfire2 gunfire3 gunfire4 gunmisfire1 gunmisfire2
-
 void () turret_physicsCheck = 
 {
 	if (self.origin != self.turret_base.origin)	
@@ -19433,7 +19038,6 @@ void () turret_physicsCheck =
 	  self.velocity = self.turret_base.velocity;
 	self.flags = self.turret_base.flags;
 };
-
 float() turret_dropTurret =
 {
 	local entity turret;
@@ -19497,7 +19101,6 @@ float() turret_dropTurret =
 	}
 	return (1);
 };
-
 void() turret_searchForEnemy =
 {
 if ((self.owner.owner.has_disconnected == 1.000000))
@@ -19520,7 +19123,6 @@ if ((self.owner.owner.has_disconnected == 1.000000))
 	turret_findTarget();
 	self.nextthink = time + 0.1;
 };
-
 void() turret_findTarget =
 {
 	local float dist, tempDist;
@@ -19576,7 +19178,6 @@ void() turret_findTarget =
 		self.think = turret_attackEnemy;
 }
 };
-
 float (entity e) turret_inFront =
 {
 	local vector vec;
@@ -19685,11 +19286,10 @@ void() turret_explode =
 	deathmsg=27;
 	T_RadiusDamage (self, self.owner, 50, world); // team damage allowed, don't stand next to it silly.
 };
-
 void() turret_deathAnim =
 {
 	local float numOfGibs;
-  if(self.turret_base.flags & FL_ONGROUND)
+	if(self.turret_base.flags & FL_ONGROUND)
     while(turret_clearGround(self.turret_base)) {}
 	turret_throwGib ("progs/turgib1.mdl", -50);
 	turret_throwGib ("progs/turgib2.mdl", -50);
@@ -19707,13 +19307,11 @@ void() turret_deathAnim =
 	self.nextthink = time + 0.1;
 	self.think = SUB_Remove;
 };
-
 void() turret_deathAnimBase =
 {
 	self = self.owner;
 	turret_deathAnim();
 };
-
 void() turret_gibTouch =
 {
 	local vector org;
@@ -19743,7 +19341,6 @@ void() turret_gibTouch =
 		multicast (self.origin, MULTICAST_PHS);
 	}
 };
-
 void (vector org, vector vec) turret_launchNail =
 {
 	vec = normalize (vec);
@@ -19764,7 +19361,6 @@ void (vector org, vector vec) turret_launchNail =
 	newmis.weapon = 1;
 	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
 };
-
 void() turret_nailTouch =
 {
 	local vector org;
@@ -19800,7 +19396,6 @@ void() turret_nailTouch =
 	}
 	remove (self);
 };
-
 void() turret_checkIfCanBeSolid =
 {
 	local entity head;
@@ -19813,7 +19408,6 @@ void() turret_checkIfCanBeSolid =
 		setsize (self.turret_base, '-15 -14 -18', '9 14 1');
 	}
 };
-
 void(string gibname, float dm) ThrowGib = 
 {
 	newmis = spawn();
@@ -19833,7 +19427,6 @@ void(string gibname, float dm) ThrowGib =
 	newmis.frame = TF_FLARE_LIT;
 	newmis.flags = TF_FLARE_LIT;
 };
-
 void (float damage,vector dir) TraceAttack =
 {
 	local vector vel;
@@ -19853,7 +19446,6 @@ void (float damage,vector dir) TraceAttack =
 		puff_count = (puff_count + 1);
 	}
 };
-
 void () ApplyMultiDamage =
 {
 	if (!multi_ent)
@@ -19862,7 +19454,6 @@ void () ApplyMultiDamage =
 	}
 	TF_T_Damage (multi_ent, self, self, multi_damage, 2, 1);
 };
-
 void () Multi_Finish =
 {
 	if (puff_count)
@@ -19886,7 +19477,6 @@ void () Multi_Finish =
 		multicast (puff_org, 2);
 	}
 };
-
 void (entity hit,float damage) AddMultiDamage =
 {
 	if (!hit)
@@ -19904,13 +19494,11 @@ void (entity hit,float damage) AddMultiDamage =
 		multi_damage = (multi_damage + damage);
 	}
 };
-
 void() Remove_Splash =
 {
 	splash_count = splash_count - 1;
 	remove (self);
 };
-
 $frame splash1 splash2 splash3 splash4 splash5
 void() do_small_splash1 = [ $splash1, do_small_splash2 ] {};
 void() do_small_splash2 = [ $splash1, do_small_splash3 ] {};
@@ -19959,7 +19547,6 @@ void (entity e) MakeSplash =
 		splash_count = splash_count + 1;
 	}
 };
-
 float (entity e) inWater =
 {
 	pc2 = pointcontents(e.origin);
@@ -19967,7 +19554,6 @@ float (entity e) inWater =
 		pc2 = NOT_IN_WATER;
 	return (pc2);
 };
-
 void() CheckWaterLevels =
 {
 	local entity e;
@@ -20005,14 +19591,12 @@ void() CheckWaterLevels =
 		e = find (e, water_notify, "yes");
 	}
 };
-
 void (entity e) AddToSplash =
 {
 	e.inwater = inWater(e);
 	e.water_notify = "yes";
 	e.splash_func = do_small_splash1;
 };
-
 void (entity e) AddToSplashBig =
 {
 	e.inwater = inWater(e);
@@ -20130,9 +19714,7 @@ void() player_run = [6, player_run]
 		}
 	}
 	self.walkframe = self.walkframe + 1;
-
 };
-
 void () check_shot_idle =
 {
 	if ((self.weaponframe == 21))
@@ -20248,7 +19830,6 @@ void() TeamFortress_NightVision =
 		te = find(te, classname, "bot");
 	}
 };
-
 void() ambient_suck_wind = 
 {
 #ifdef mtf_coop_hipnotic
@@ -20265,7 +19846,6 @@ void() ambient_suck_wind =
 	precache_sound("ambience/suck1.wav");
 	ambientsound(self.origin, "ambience/suck1.wav", TF_FLARE_OFF, 3);
 };
-
 void() ambient_drip = 
 {
 #ifdef mtf_coop_hipnotic
@@ -20286,17 +19866,14 @@ void() ambient_drip =
 	precache_sound("ambience/drip1.wav");
 	ambientsound(self.origin, "ambience/drip1.wav", self.volume, 3);
 };
-
 void() SUB_Null =
-{
-};
+{};
 void() SUB_RemoveClearGround =
 {
   if(self.flags & FL_ONGROUND)
     while(turret_clearGround(self)) {}
 	remove (self);
 };
-
 void() InitTrigger =
 {
 	if (self.angles != '0 0 0')
@@ -20309,7 +19886,6 @@ void() InitTrigger =
 	self.modelindex = 0;
 	self.model = "";
 };
-
 void (entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt =
 {
 	local entity stemp;
@@ -20329,7 +19905,6 @@ void() SUB_CalcMoveDone =
 		self.think1();
 	}
 };
-
 void (entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMoveEnt =
 {
 	local entity stemp;
@@ -20338,7 +19913,6 @@ void (entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMove
 	SUB_CalcAngleMove (destangle, tspeed, func);
 	self = stemp;
 };
-
 void (vector destangle, float tspeed, void() func) SUB_CalcAngleMove =
 {
 	local vector destdelta;
@@ -20356,7 +19930,6 @@ void (vector destangle, float tspeed, void() func) SUB_CalcAngleMove =
 	self.finalangle = destangle;
 	self.think = SUB_CalcAngleMoveDone;
 };
-
 void() SUB_CalcAngleMoveDone =
 {
 	self.angles = self.finalangle;
@@ -20367,14 +19940,12 @@ void() SUB_CalcAngleMoveDone =
 		self.think1();
 	}
 };
-
 void() DelayThink =
 {
 	activator = self.enemy;
 	SUB_UseTargets();
 	remove (self);
 };
-
 void() SUB_UseTargets =
 {
 	local entity t, stemp, otemp, act;
@@ -20470,7 +20041,6 @@ float (entity mnst) Is_Monster =
 		return 1;
 	return 0;
 };
-
 void (void() thinkst) SUB_CheckRefire = 
 {
 	if (skill < 3)
@@ -20488,13 +20058,10 @@ void (void() thinkst) SUB_CheckRefire =
 	self.cnt = TF_FLARE_OFF;
 	self.think = thinkst;
 };
-
-
 void() SUB_Remove = 
 {
 	dremove(self);
 };
-
 void() SetMovedir = 
 {
 	if (self.angles == '0 -1 0')
@@ -20515,7 +20082,6 @@ void() SetMovedir =
 	}
 	self.angles = '0 0 0';
 };
-
 void(vector tdest, float tspeed, void() func) SUB_CalcMove = 
 {
 	local vector vdestdelta;
@@ -20544,7 +20110,6 @@ void(vector tdest, float tspeed, void() func) SUB_CalcMove =
 	self.nextthink = self.ltime + traveltime;
 	self.velocity = vdestdelta * (TF_FLARE_OFF / traveltime);
 };
-
 void(float normal) SUB_AttackFinished = 
 {
 	self.cnt = TF_FLARE_LIT;
@@ -20629,7 +20194,6 @@ void (entity rank_ent) Rank_FindStats =
 	}
 	strunzone(filename);
 };
-
 void (entity rank_ent) Rank_UpdateStats =
 {
 	local float file;
@@ -20673,8 +20237,6 @@ void () Rank_UpdateStatsGlobal =
 		head = nextent(head); 
 	}
 };
-
-// called from impulse 69
 void () Rank_ShowStats =
 {
 	sprint(self, 2, "Your ranks:\n");
@@ -20688,7 +20250,6 @@ void () Rank_ShowStats =
 	sprint(self, 2, ftos(self.global_dths));
 	sprint(self, 2, "\n");
 };
-
 void (entity rank_ent, float addscore) Rank_AddRank =
 {
 	rank_ent.global_rank = rank_ent.global_rank + addscore;
@@ -20697,7 +20258,6 @@ void (entity rank_ent, float addscore) Rank_AddRank =
 
 	Rank_UpdateStats(rank_ent);
 };
-
 void (entity rank_ent, float addscore) Rank_AddFrags =
 {
 	rank_ent.global_frags = rank_ent.global_frags + addscore;
@@ -20710,12 +20270,10 @@ void (entity rank_ent, float addscore) Rank_AddFrags =
 	else if (rank_ent.global_rank == 3 && rank_ent.global_frags >= RANK_FOUR)
 		Rank_AddRank(rank_ent, 1);
 };
-
 void (entity rank_ent, float addscore) Rank_AddFers =
 {
 	rank_ent.global_fers = rank_ent.global_fers + addscore;
 };
-
 void (entity rank_ent, float addscore) Rank_AddDeaths =
 {
 	rank_ent.global_dths = rank_ent.global_dths + addscore;
@@ -20758,7 +20316,6 @@ void (entity plyr, float addfrags) Rank_FragIncrease =
 		fclose(file);
 	}
 };
-
 void () missing_precaches =
 {
 precache_model("progs/ammobox2.mdl");
@@ -20773,7 +20330,6 @@ precache_sound2("sound/fish/bite.wav");
 precache_sound2("sound/fish/idle.bite.wav");
 precache_sound2("sound/fish/death.wav");
 };
-
 $frame bear01 bear02 bear03
 void() beartrapFollow =
 {
@@ -20806,24 +20362,20 @@ void() beartrapFollow =
 	if (self.beartrap_time > PK_BT_TIMETOFOLLOW)
 		self.think = beartrapDie;
 };
-
 void() btf =
 {
 	beartrapFollow();
 
 	self.nextthink = time + 0.1;
 };
-
 void() btf_1 = [ $bear02, btf_2 ]
 {
 	beartrapFollow();
 };
-
 void() btf_2 = [ $bear03, btf ]
 {
 	setmodel (self, "progs/bearbld.mdl");
 };
-
 void() beartrapTouch =
 {
 	if ((other == self.owner) && (self.beartrap_time > time))
@@ -20846,7 +20398,6 @@ if (other.takedamage)
 	deathmsg = 202; // Set death type for obituary. -arg
 	sound (self, CHAN_AUTO, "weapons/btrap/btrap_1.wav", 1, ATTN_NORM);
 }
-
 };
 
 void() beartrap_dropBearTrap =
@@ -20940,7 +20491,6 @@ float ( float pclass ) COOP_GetMaxGrensForClass =
 rtrn = ((self.ammo_attr + 1) * 3);  // 6 times the attribute for ammo is the number of grens you get.
 self.no_grenades_1 = rtrn;
 self.no_grenades_2 = rtrn;
-
 	return (rtrn);
 };
 
@@ -21038,7 +20588,6 @@ string (float anum) Achievements_GetName =
 	}
 	return "noname";
 };
-
 float (float anum) Achievements_CheckComplete =
 {
 	switch(anum)
@@ -21131,7 +20680,6 @@ float (float anum) Achievements_CheckComplete =
 			return 50000;			// some insane amount.. because something is wack
 			break;
 	}
-
 	return 5000;
 };
 
@@ -21229,7 +20777,6 @@ float ( float anum ) Achievements_GetExp =
 	}
 	return 2500;
 };
-
 float (entity t_plyr) Achievements_Setup =
 {
 	local string a;
@@ -21301,7 +20848,6 @@ float (entity t_plyr) Achievements_Setup =
 	strunzone(filenamee);
 	return #TRUE;
 };
-
 void ( float p_type, entity t_plyr ) Achievements_Print =
 {
 	local float file, i, infa, infb;
@@ -21413,7 +20959,6 @@ void () Achievements_Set =
 			}
 			else
 				ach_total = 0;
-
 			if (Achievements_CheckComplete(a_type) <= ach_total) {
 				bprint(2, "ÎE× AÃHÉEÖEÍEÎT ");
 				bprint(2, t_plyr.connect_name);
@@ -21429,19 +20974,16 @@ void () Achievements_Set =
 				write( dummyfile, ftos( ach_total ) );
 				write( dummyfile, "\n" );
 				i++;
-				
 			}
 			else {
 				write( dummyfile, ftos( ach_total ) );
 				write( dummyfile, "\n" );
 			}
-			
 		}
 		else {
 			write( dummyfile, read(file) );
 			write( dummyfile, "\n" );
 		}
-		
 		i++;
 	}
 	close ( dummyfile );
@@ -21451,7 +20993,6 @@ void () Achievements_Set =
 		MTF_Coop_AddServiceExp( t_plyr, world, Achievements_GetExp(a_type), #SRV_ACHIEVEMENT );
 	dremove(self);
 };
-
 void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) Achievements_Change =
 {
 	local entity ach_ent, te;
@@ -21481,7 +21022,6 @@ void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) 
 	ach_ent.think = Achievements_Set;
 	ach_ent.nextthink = time + .6 + random();
 };
-
 float (string mpn) GetEP1MapBit = 
 {
 	if (mpn  == "e1m1")
@@ -21501,7 +21041,6 @@ float (string mpn) GetEP1MapBit =
 		
 	return -1;
 };
-
 float (string mpn) GetEP2MapBit = 
 {
 	if (mpn  == "e2m1")
@@ -21521,7 +21060,6 @@ float (string mpn) GetEP2MapBit =
 		
 	return -1;
 };
-
 float (string mpn) GetEP3MapBit = 
 {
 	if (mpn  == "e3m1")
@@ -21558,10 +21096,8 @@ float (string mpn) GetEP4MapBit =
 		return 32;
 	else if (mpn  == "e4m7")
 		return 64;
-		
 	return -1;
 };
-
 float (string mpn) GetW3DMapBit = 
 {
 	if (mpn  == "e1f1")
@@ -21582,10 +21118,8 @@ float (string mpn) GetW3DMapBit =
 		return 128;	
 	else if (mpn  == "e1f9")
 		return 256;
-	
 	return -1;
 };
-
 void (entity plyr, float amnt, float rcrd) Record_Check =
 {
 	if (plyr.classname != "player")
@@ -21670,16 +21204,6 @@ void ( entity to_summon ) BeginSummon =
 	newmon = spawn();
 	newmon.#is_minion = #TRUE;
 	SetSpawnFunc ( newmon, to_summon.classname );
-	if ( newmon.netname == "" || newmon.netname == string_null )
-	{
-		//dremove ( newmon );
-		sprint ( self, 2, "Can't resurrect that monster. Have a shambler instead.\n" );
-		//return;
-		newmon.netname = "shambler";
-		newmon.team_no = self.team_no;
-		SetSpawnFunc ( newmon, to_summon.classname );
-		
-	}
 	self.#minions += 1;
 	newmon.owner = self;
 	newmon.origin = to_summon.origin + '0 0 25';
@@ -21712,8 +21236,6 @@ void ( entity to_summon ) BeginSummon =
 	sprint( self, 2, "You are attempting to summon a minion...\n" );
 	self.#allow_next_summon_time = (time + 5) - self.minion_attr; // was 18 but we need armies of summons to fight with in multi-team mode. -arg
 };
-
-void () MTF_RemoveMonster;
 
 void () MTF_Coop_SummonMinion =
 {
@@ -21749,7 +21271,6 @@ void () MTF_Coop_SummonMinion =
 		BeginSummon ( tgood );
 	else
 		sprint ( self, 2, "No monster nearby to resurrect.\n" );
-		
 };
 float(float num_args, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) ClientCommand =
 {
@@ -21804,7 +21325,6 @@ sprint(te, 2, self.netname );
 sprint(te, 2, "©? ");
 sprint(te, 2, arg3);
 sprint(te, 2, "\n");
-
 sprint(self, 2, "PM to ");
 sprint(self, 2, te.netname );
 sprint(self, 2, " sent\n");
@@ -22474,7 +21994,6 @@ float () Changelevel_GetMapData =
 void (entity t_src) DisplayUseEntity =
 {
 	local vector source;
-
 	makevectors (t_src.v_angle);
 	source = (t_src.origin + '0 0 26');
 	traceline (source, (source + (v_forward * 64)), 1, t_src);
@@ -24148,11 +23667,9 @@ void() walkmonster_start =
 	self.nextthink = self.nextthink + random() * 0.5;
 	self.think = walkmonster_start_go;
 #ifdef mtf_coop
-
 	if (!self.takedamage && self.health > 0) {
 		self.takedamage = 2;
 	}
-
 #endif
 #ifndef mtf_coop
 	total_monsters = total_monsters + TF_FLARE_OFF;

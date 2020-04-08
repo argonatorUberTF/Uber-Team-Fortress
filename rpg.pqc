@@ -14,7 +14,7 @@ float(string mapstr) validatemap;
 float (entity the_player, float amount, string give_what) Extra_Stuff;		// More Stuff Command goodness!
 float (string s1, string s2, string s3, string s4, string s5, string s6) More_Commands;
 float (string votemap_name) Check_For_Bmodel;		// so players cant vote on bmodels
-void SV_ParseClientCommand (string st)
+void SV_ParseClientCommand (string st) =
 {
 	local float args;
 	local string c;
@@ -321,7 +321,6 @@ void SV_ParseClientCommand (string st)
 		{
 			if (f)
 			{
-
 				local float handle;
 				local string map_name;
 				map_name = f;
@@ -364,7 +363,6 @@ void SV_ParseClientCommand (string st)
 	}
 #endif
 };
-
 void() voteyes = 
 {
 	local string checkallowvote;
@@ -478,7 +476,6 @@ void() voteyes =
 		}
 	}
 };
-
 void (entity t_src) FindUseEntity =
 {
 	local vector source;
@@ -495,8 +492,6 @@ void (entity t_src) FindUseEntity =
 		self = oldself;
 	}
 };
-
-void () Vote_CheckWin;
 void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 {
 	local float okvote;
@@ -506,7 +501,6 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 	local float k_id;
 	local entity te;
 #endif
-	
 	if (self.classname != "player")
 		return;
 	if (vote_type == #VOTE_MAP) {
@@ -600,14 +594,11 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 			}
 			te = find(te, classname, "player");
 		}
-		
 		if (!okvote) {
 			sprint(self, 2, "UserID not found. Please use cmd votekick userid#. Use \"cmd pm\" to find user id's.\n");
 			return;
 		}
-		
 		okvote = 1;
-		
 		localcmd( "localinfo tempstring " );
 		localcmd( vote_string );
 		localcmd( "\n" );
@@ -718,7 +709,6 @@ void () Vote_CheckWin =
 			if (head.classname == "player") { head.has_voted = 0; head.startedvote = 0; }
 			head = nextent(head); 
 		}
-
 		if (votestarted == #VOTE_EXIT) {
 			can_exit = #TRUE;
 			bprint(2, "Players can now exit the map!\n");
@@ -738,7 +728,6 @@ void () Vote_CheckWin =
 		}
 		else if (votestarted == #VOTE_KICK) {
 			bprint(2, "\n\sVOTE PASSED!\s Say Goodbye..\n");
-			
 			head = find(world, classname, "player");
 			while (head) {
 				if (head.userid == stof(infokey (world, "tempstring"))) {
@@ -755,7 +744,6 @@ void () Vote_CheckWin =
 				votedmap = infokey (world, "tempstring");
 				bprint(2, votedmap);
 				bprint(2, " will be played as the next map.\n");
-				
 				localcmd ("localinfo nextmap ");
 				localcmd (infokey (world, "tempstring"));
 				localcmd ("\n");
@@ -777,8 +765,6 @@ void () Vote_CheckWin =
 			localcmd("\n");
 		}
 #endif
-		
-		
 		votestarted = 0;
 		vote_starter = world;
 		if (votestring != "") {
@@ -808,11 +794,9 @@ void () Vote_CheckWin =
 		}
 	}
 };
-
 void(string put) votemap_start = 
 {
 	local string checkallowvote;
-
 	if ((self.vote_wait < 1))
 	{
 		sprint (self, 2, "You must join the game in order to vote.\n");
@@ -922,12 +906,10 @@ void(string put) votemap_start =
 		}
 	}
 };
-
 string() votesneededtostring =
 {
 	local float needed;
 	needed = ((num_players * 0.5) - num_votes);
-
 	if (needed < 1)
 	{
 		return ("1‘");
@@ -982,11 +964,9 @@ string() votesneededtostring =
 	}
 	return ("ERROR");
 };
-
 void() MapNotFound =
 {
 	local entity finder_ent;
-
 	localcmd("say --  Map Not Found(the func MapNotFound)  --\n");
 	nomap = 1;
 	if (FTE_Server && Ranks_Updated == 1)
@@ -1002,8 +982,7 @@ void() MapNotFound =
 	}
 	RemoveVote2 ();
 	dremove (self);
-}
-
+};
 void() RemoveVote =
 {
 	newmis = spawn();
@@ -1011,15 +990,13 @@ void() RemoveVote =
 	newmis.nextthink = time + 10;  //was 60, to hurry things up on a failed vote.
 	newmis.think = RemoveVote2;
 	nomap = 0;
-}
-
+};
 void() RemoveVote2 =
 {
 	if (votestarted == 0) {
 		dremove(self);
 		return;
 	}
-
 	prozacmethod = 0;
 	local entity head;
 	if (nextmapchosen != 1)
@@ -1038,31 +1015,24 @@ void() RemoveVote2 =
 	}
 	return;
 	dremove (self);
-}
-
+};
 #include "vmap_menus.qc"
-
 float(string mapstr) validatemap =
 {
     mapstr = strcat("maps/",mapstr);
     mapstr = strcat(mapstr,".bsp");
-
     return validatefile(mapstr);
 };
-
 float(string s1, string s2, string s3, string s4, string s5) ExtendedCMDs =
 {
 	return 1;
 };
-
 float (entity the_player, float amount, string give_what) Extra_Stuff =
 {
 	local entity oself;
-
 #ifdef mtf_coop
 	local entity ipl;
 	local string minfo;
-	
 	if (give_what == "srvreset")
 	{
 		ipl = find(world,classname,"monster_score");
@@ -1082,7 +1052,6 @@ float (entity the_player, float amount, string give_what) Extra_Stuff =
 		self = oself;
 		if (!amount)
 			return 0;
-
 		self = the_player;
 		TeamFortress_Build(amount);
 		self = oself;
@@ -1159,7 +1128,6 @@ float (entity the_player, float amount, string give_what) Extra_Stuff =
 	}
 	return 0;
 };
-
 #ifdef botprogs
 // spawns a list of bots only
 #define BOTLIST_NORM			0
@@ -1169,7 +1137,6 @@ void(float btype) bot_list =
 {
 	local entity entar;
 	local string str;
-
 	entar = find(world, classname, "player");
 	while(entar)
 	{
@@ -1199,7 +1166,6 @@ void(float btype) bot_list =
 void (float clientno) bot_kick =
 {
 	local entity bot;
-
 	bot = find (world, classname, "player");
 	while (bot)
 	{
@@ -1215,14 +1181,6 @@ void (float clientno) bot_kick =
 	bot_list(#BOTLIST_NORM);
 };
 #endif
-
-#ifdef mtf_coop_expsys
-void ( float howmany ) MTF_Coop_ViewTopRanks;
-float ( float currexp ) Coop_ExpForNextLevel;
-void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank;
-void () MTF_Resurrect_Player_Find;
-#endif
-
 float (string votemap_name) Check_For_Bmodel =
 {
 	// Is this map a bmodel? can't play bmodels!
@@ -1247,7 +1205,6 @@ float (string votemap_name) Check_For_Bmodel =
 #endif
 	return FALSE;
 };
-
 string (string packet_cmd) Packet_Slashpass =
 {
 	local string packet_pw;
@@ -1260,9 +1217,7 @@ string (string packet_cmd) Packet_Slashpass =
 	return_str = frik_strcat( " \\ ", packet_pw, " ");
 	return_str = frik_strcat( return_str, packet_cmd, " ");
 	return return_str;
-	
 };
-
 void (entity plyr) Badpacket_attribute_over_limit =
 {
 	bprint(2, "Packet Bug: Player " );
@@ -1275,32 +1230,33 @@ void (string msg) Packet_SendGlobalMessage =
 {
 return; // to stop sending packets -arg
 };
-
-// Tell master server to send a **CHAT** message to all other servers connected
 void () Packet_SendSAY =
 {
 return; // To stop it from yakking.
 };
-
 void (string sender) Master_UpdateConnections =
 {
 	local float i, found_me;
 	i=0;
-	while (i<STORED_ADDRESSES) {
+	while (i<STORED_ADDRESSES)
+	{
 		if (ips[i] == string_null)
 			break;
-		else if (ips[i] == sender) {
+		else
+		if (ips[i] == sender)
+		{
 			found_me = 1;
 			break;
 		}
 		i++;
 	}
-	
-	if (!found_me) {
-	
+	if (!found_me)
+	{
 		i=0;
-		while (i<STORED_ADDRESSES) {
-			if (ips[i] == string_null) {
+		while (i<STORED_ADDRESSES)
+		{
+			if (ips[i] == string_null)
+			{
 				ips[i] = sender;
 				ips[i] = strzone(ips[i]);
 				bprint(2,ips[i]);
@@ -1309,13 +1265,10 @@ void (string sender) Master_UpdateConnections =
 			}
 			i++;
 		}
-	
 	}
 };
 float(string sender, string contents) SV_ParseConnectionlessPacket = 
 {
 return 0;
 };
-
-
-//END 
+//END

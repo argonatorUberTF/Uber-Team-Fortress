@@ -15,13 +15,9 @@ entity		other;
 entity		world;
 float		time;
 float		frametime;
-
-
 entity		newmis;				// if this is set, the entity that just
 								// run created a new missile that should
 								// be simulated immediately
-
-
 float		force_retouch;		// force all entities to touch triggers
 								// next frame.  this is needed because
 								// non-moving things don't normally scan
@@ -37,7 +33,6 @@ float		total_secrets;
 float		total_monsters;
 float		found_secrets;		// number of secrets found
 float		killed_monsters;	// number of monsters killed
-
 // spawnparms are used to encode information about clients across server
 // level changes
 float		parm1, parm2, parm3, parm4, parm5, parm6, parm7, parm8, parm9, parm10, parm11, parm12, parm13, parm14, parm15, parm16;
@@ -46,7 +41,6 @@ float		parm1, parm2, parm3, parm4, parm5, parm6, parm7, parm8, parm9, parm10, pa
 // global variables set by built in functions
 //	
 vector		v_forward, v_up, v_right;	// set by makevectors()
-	
 // set by traceline / tracebox
 float		trace_allsolid;
 float		trace_startsolid;
@@ -58,22 +52,17 @@ entity		trace_ent;
 float		trace_inopen;
 float		trace_inwater;
 entity		msg_entity;				// destination of single entity writes
-
 //
 // required prog functions
 //
 void() 		main;						// only for testing
-
 void()		StartFrame;
-
 void() 		PlayerPreThink;
 void() 		PlayerPostThink;
-
 void()		ClientKill;
 void()		ClientConnect;
 void() 		PutClientInServer;		// call after setting the parm1... parms
 void()		ClientDisconnect;
-
 void()		SetNewParms;			// called when a client first connects to
 									// a server. sets parms so they can be
 									// saved off for restarts
@@ -384,7 +373,6 @@ void (float _p_2445) Stats_Hit;
 void (float _p_2420) Stats_Fired;
 void () lay;
 void () unlay;
-
 // new server setting:
 // serverinfo/localinfo laymode 0/1/2
 // 0 - disabled completely
@@ -402,13 +390,11 @@ void () lay =
 	}
 	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 8.000000');
 };
-
 void () unlay =
 {
 	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
 };
 .float offgroundmessage;
-
 //Centerprint4.. wtf..
 void (entity client, string s, ...) CenterPrint4 = #73; 
 void (entity client, string s, ...) CenterPrint6 = #73; 
@@ -469,7 +455,6 @@ void () LookThroughCam;
 // serverinfo/localinfo svmsg2 - time amount between displaying message 2
 // serverinfo/localinfo message1 - what msg1 displays (IE serverinfo message1 "hi everybody!")
 // serverinfo/localinfo message2 - what msg2 displays
-
 void () messagetimer;
 void () pre_messagetimer2;
 void () pre_messagetimer3;
@@ -663,7 +648,6 @@ float allowchange;
 .float ischangingteams;
 void (entity targ) teamchangetimer;
 void (entity targ) teamchange;
-
 // Prematch monster --
 // Shambler is one example. Basically what the prematch monster does is fight a player. If another
 // player joins, the monster *should* remove itself. This piece of code controls that. By default the
@@ -774,9 +758,9 @@ void() AC_Crash;
 float PFLAGS_NOSHADOW = 1;
 float PFLAGS_CORONA = 2;
 float PFLAGS_FULLDYNAMIC = 128;
-/* Join time feature --
-   if a client joins, he has 5 minutes to choose a team
-   else he reconnects and goes spec */
+// Join time feature --
+//   if a client joins, he has 5 minutes to choose a team
+//   else he reconnects and goes spec 
 .float join_time;
 // RANK FEATURES (FTE only)
 float Ranks_Updated;		// tells us if the global ranks have been updated already (once per map)
@@ -1018,7 +1002,6 @@ void ( entity s_ent, string mname ) setmodelu;
 float total_killed;
 float really_killed;
 #endif
-
 #ifdef mtf_coop_expsys
 float no_more_exp;		// when set to "1" this locks the exp gain for the map
 // dual kills code
@@ -1037,7 +1020,6 @@ string(string blah) strzone;
 void(string blah) strunzone;
 #define custom_skin			noise4
 #endif
-
 #ifdef mtf_coop
 // frik bot stuff (for coop score)
 void () ClientInRankings2;
@@ -1048,17 +1030,14 @@ float ( entity t_mons, float m_type ) Coop_IsMonster;
 #define MONSTERTYPE_ANY		1
 #define spy_visible_time hn_i_g
 #endif
-
 #define MODEL_HEALTH_TEN		"maps/b_bh10.bsp"
 #define MODEL_HEALTH_HUNDRED		"maps/b_bh100.bsp"
 #define MODEL_MONSTERDROP		"progs/newmonsterdrop.mdl"
-
 #ifdef mtf_coop_halloween2
 #define MODEL_HGREN2			"progs/pkin.mdl"
 #else
 #define MODEL_HGREN2			"progs/hgren2.mdl"
 #endif
-
 //#define mtf_coop_birthday
 #ifdef mtf_coop_birthday
 #define MODEL_HEALTH_TEN		"progs/grenade3.mdl"
@@ -1069,7 +1048,6 @@ float cake_dispensed;
 #define BDAY_MSG 			"\náâÜ ¬…“‘»ƒ¡Ÿ†≈ƒ…‘…œŒ Üâá\nMay 87\n\nêÕ·∫ "
 //#define BDAY_MSG 			"\náâÜ ¬…“‘»ƒ¡Ÿ†≈ƒ…‘…œŒ Üâá\nDec 15 - Happy Doc Day Bitchesss\n\nêÕ·∫ "
 #endif
-
 #ifdef mtf_coop
 // rune stuff
 .float a_c, a_r, a_s;
@@ -1090,7 +1068,6 @@ void () Coop_ThrowRune;
 #else
 #define MODEL_QUAD			"progs/quaddama.mdl"
 #endif
-
 // Newer votemap code
 entity vote_starter;
 float can_exit;
@@ -1103,16 +1080,13 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote;
 #define VOTE_SURVIVAL_NEXT	5
 #define VOTE_SURVIVAL_NOW	6
 #define VOTE_KICK			7
-
 #ifndef mtf_coop
 #define VOTE_PROGS			8
 string (string blah) cvar_string = #103;
 #endif
-
 #ifdef mtf_coop_expsys
 float flawless_bonus;
 #endif
-
 #ifdef mtf_coop
 // Chain saw!
 #define MODEL_CHAINSAW		"progs/v_chain.mdl"
@@ -1155,27 +1129,22 @@ void () MTF_Coop_ResetItems;
 #define MTFITEM_DIVIDE_EXP				512
 #define MTFITEM_NEEDLER					1024
 #endif
-
 //#ifdef mtf_coop_expsys
 // VWEPS require MVDSV/XE, and I dunno if they work with bots (#ifndef botprogs me!!)
 #define VWEPS
 //#endif
-
 #ifdef VWEPS
 // vweps for coop.. but why not enable for united in the future too? -arg
 float(string model) precache_vwep_model = #532;
 .float vw_index;
 void () VWEPS_SetModel;
 #endif
-
 #ifdef mtf_coop
 #define MODEL_V_SHOTGUN			"progs/v_hybrid.mdl"
 #else
 #define MODEL_V_SHOTGUN			"progs/v_shot.mdl"
 #endif
-
 #define is_warped 		max_inv
-
 // QUESTS
 //#define mtf_coop_quests
 #ifdef mtf_coop_quests
@@ -1210,9 +1179,7 @@ void () Quest_Think;
 #define RESULT_GIVEITEM		4
 #define RESULT_GOTOPART		8
 #endif
-
 vector(string s) stov = #130;		// mvdsv xe extension
-
 #ifdef mtf_coop_expsys
 void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop_AddServiceExp;
 #define next_srv_time		follow_mode
@@ -1221,7 +1188,6 @@ void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop
 #define SRV_ACHIEVEMENT		4
 #define SRV_RESURRECT		8
 #endif
-
 #ifdef mtf_coop
 #define	mtf_coop_malice					 	// Malice TC support
 #ifdef mtf_coop_malice
@@ -1272,7 +1238,9 @@ float modelindex_hover;
 #define CHT_SUBSPEED    658
 #define CHT_HOVERSPEED    700
 #endif										// End Malice TC support
-
+//This is the switch that turns on half-life functions and map support. -arg
+//But beware, the maps are not necessarily complete, some monsters not complete. -arg
+//Also there are different changes to basic things like doors and platform switches -arg
 //#define mtf_coop_halflife
 // Half-Life 1 support is seedy and incomplete. A lot of monsters are replaced, and a lot of entities are as well.
 //Some maps work fine, others need quite some work. Most are somewhere in between.
@@ -1280,7 +1248,6 @@ float modelindex_hover;
 #ifdef mtf_coop_halflife
 #define HALFLIFE
 #endif
-
 #define npc_useTargetsOnRespawn		StatusBarSize		// if true then monster should call SUB_UseTargets() again when he dies after respawning
 #define DEFAULT_SPAWNER_TARGETNAME	"monster_spawner"
 #define SPAWN_USETARGETSONRESPAWN		4				// if present, monsters that respawn will re-fire their triggers upon death
@@ -1305,7 +1272,6 @@ float monster_mode;
 #define MC_SHAMBLER		1
 #define MC_FIEND		2
 #endif
-
 // ACHIEVEMENTS
 #ifdef mtf_coop_expsys
 #define mtf_coop_achievements
@@ -1359,7 +1325,6 @@ void () Wizard_Bounce_Off_Walls;
 .string pathtarget;		// quake 2
 #endif
 #endif
-
 #ifdef mtf_coop
 // AOP
 .float walltype;
@@ -1403,7 +1368,6 @@ void ( entity to_res ) MTF_Resurrect_Player;
 // float ( float getlevel ) Coop_ExpReq; //moved to additional.pqc where vars are there to work with -arg
 // end mtf_coop
 #endif
-
 #define CSQC
 //#define amnesia_move  // not needed, this isn't tastyspleen needing to notify users of a move. -arg
 #ifdef CSQC
@@ -1417,28 +1381,22 @@ void () effect_duckpond;
 #ifdef decemberween
 #define mtf_coop_bonus
 #endif
-
 #define CHAN_VOICE		CHAN_VOICE
 #define SOLID_NOT		SOLID_NOT
-
 void (vector v1, vector mins, vector maxs, vector v2, float nomonsters, entity ignore) tracebox = #90;
-
 //#define APRIL_FOOLS
 #ifdef APRIL_FOOLS
 #undef VWEPS
 #endif
-
 //#define midair_switch  // no idea what was supposed to be here - disabled -arg
 //#ifdef midair_switch
 //a
 //#endif
-
 //#define mega_hats  // adds hats to players, special ones for certain user names.
 #ifdef mega_hats
 .entity hat;
 #define HAT_MODEL		"progs/mtfhats3d.mdl"
 #endif
-
 #ifdef mtf_coop_halloween
 #define mtf_coop_bloodmod
 #ifdef mtf_coop_bloodmod
@@ -1448,20 +1406,16 @@ void (entity to_bloody, float damage) bloodyme;
 .float next_bloodtime;
 #endif
 #endif
-
 //#define mtf_coop_tgiving
 #ifdef mtf_coop_tgiving
 #define MODEL_HGREN2			"progs/cnade3.mdl"
 #endif
-
 #ifdef mtf_coop
 .entity reload_ent;
 .void() reload_finished_func;
 #endif
-
 #ifndef mtf_coop
-#define PL_FEM   // for femal gender model and deathmessages in client.pqc -arg
-//
+#define PL_FEM   // for female gender model and deathmessages in client.pqc -arg
 #ifdef PL_FEM
 #define FEMALE_MODEL_BLUE			"progs/pf_blue.mdl"
 #define FEMALE_MODEL_RED			"progs/pf_red.mdl"
@@ -1474,8 +1428,10 @@ void (entity whom) SetPlayerModelindex;
 #define GENDER_FEMALE			1
 #endif
 #endif
-
 #ifdef mtf_coop_expsys
+//This switch allows comms to the hub and other MegaTF COOP servers. Since UberTF is
+//not participating with this, it's turned off. I also just put a return only to calls
+//Those functions in case it's called later.
 #define mtf_coop_packet
 void () Packet_SendSAY;
 void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
@@ -1492,7 +1448,6 @@ float (string s1, string s2) strstr = #221;
 void (entity to_update) Packet_SendEXP;
 void (string msg) Packet_SendGlobalMessage
 #endif
-
 #ifdef mtf_items_worn
 // gloves, pants, shirt, head, ring
 .entity wearslot1, wearslot2, wearslot3, wearslot4;
@@ -1503,15 +1458,12 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 #endif
-
 #ifndef mtf_coop
 #define BATTLE_ROYALE			1
 #endif
-
 #ifdef BATTLE_ROYALE
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-
 #define SETVERSION		localcmd("serverinfo UBERTF v4.07.20United\n");
 //END

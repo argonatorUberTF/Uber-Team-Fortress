@@ -104,7 +104,6 @@ void() Menu_Vote =
 
 //	CenterPrint(self, "€ Vote Map Menu ‚\n\n€“‚ ThunderVote\n€”‚ Toaster    \n€•‚ Drop #3    \n€–‚ Holograph  \n€—‚ NightVision\n€˜‚ Lay Mode   \n€™‚ Taunt Menu \n€š‚ Yell Menu  \n€›‚ VoteMap    \n€0‚ Nothing    \n");
 };
-
 void(float inp) Menu_Vote_Input = 
 {
 	string put;

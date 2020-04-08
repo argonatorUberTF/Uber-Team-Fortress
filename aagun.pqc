@@ -1,9 +1,6 @@
-
-
 void () BalBoltTouch =
 {
 	local vector dir;
-
 	if (other.takedamage)
 	{
 		if (((other != self.goalentity) && (self.velocity != '0.000000 0.000000 0.000000')))
@@ -17,11 +14,9 @@ void () BalBoltTouch =
 		}
 	}
 };
-
 void () FireBalBolt =
 {
 	local vector org;
-
 	if (self.aagun_nextfire > time)
 		return;
 	self.aagun_nextfire = time + AA_GUN_ROF;
@@ -53,8 +48,6 @@ void () FireBalBolt =
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	setorigin (newmis, org);
 };
-void (...) AdvanceFrame = #63; 
-
 void () ballista_fire =
 {
 	if ((self.frame == 2))
@@ -76,7 +69,6 @@ void () ballista_fire =
 		}
 	}
 };
-
 void () ballista_think =
 {
 	local entity targ;
@@ -149,13 +141,10 @@ void () ballista_think =
 	self.nextthink = (self.ltime + 0.100000);
 	self.think = ballista_think;
 };
-
 void () item_rlgun =
 {
-
 	precache_model ("progs/bullet.mdl");		//temp
 	precache_sound ("weapons/aagun.wav");		//temp
-
 	precache_model ("progs/minit.mdl");
 	self.solid = 2;
 	setmodel (self, "progs/minit.mdl");
@@ -166,7 +155,6 @@ void () item_rlgun =
 	self.proj_ofs = '0.000000 0.000000 10.000000';
 	self.view_ofs = '0.000000 0.000000 10.000000';
 };
-
 void () item_aagun =
 {
 #ifdef mtf_coop
@@ -182,11 +170,5 @@ void () item_aagun =
 	self.th_weapon = FireBalBolt;
 	self.proj_ofs = '0.000000 0.000000 10.000000';
 	self.view_ofs = '0.000000 0.000000 10.000000';
-/*
-	self.th_die = aagun_die;
-	self.th_pain = aagun_dmg;
-	if (!self.health)
-		self.health = AA_GUN_HEALTH;
-*/
 };
 //END
