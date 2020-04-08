@@ -88,7 +88,6 @@ void() t_followtarget =
    local vector   spot1, spot2;
    local entity   targ;
    local entity   client_t;
-
    if (!other.flags & FL_MONSTER)
       return;
    if (other.classname == "monster_decoy")
@@ -192,9 +191,6 @@ float(entity targ) infront =
 	return TF_FLARE_LIT;
 };
 
-
-
-
 #ifdef mtf_coop
 float (entity from_ent, entity to_ent) coop_visible =
 {
@@ -207,8 +203,8 @@ float (entity from_ent, entity to_ent) coop_visible =
 		return ( 0 );
 	return ( 1 );
 };
-float global_noticedelay;
-.entity wooha;
+
+
 #endif
 float() FindTarget = 
 {
@@ -216,7 +212,6 @@ float() FindTarget =
 	local float r;
 #ifdef mtf_coop
 	float spyfoundprint;
-
 	if (self.#mflash_time > time)		// we are flash'd!
 		return 0;
 	if (global_noticedelay < time)
@@ -361,7 +356,6 @@ float() FindTarget =
 		}
 	}
 	else
-
 	if (self.#is_minion == #FALSE)
 	{
 #endif
@@ -447,7 +441,6 @@ void(float dist) ai_painforward =
 {
 	walkmove(self.ideal_yaw, dist);
 };
-void(float dist) ai_run;
 void(float dist) ai_walk = 
 {
 #ifdef mtf_coop
@@ -493,9 +486,6 @@ void(float dist) ai_walk =
 				if ((vlen ((self.origin - self.owner.origin)) > 100))
 				{
 					self.follow_mode = 1;
-#ifdef minipets
-					demon1_run1();
-#endif
 					return;
 				}
 			}
@@ -512,7 +502,6 @@ void(float dist) ai_walk =
 		self.think = self.th_run;
 		return;
 	}
-	
 #endif
 #ifdef mtf_coop
 	if (lms_entity != world) {
@@ -772,13 +761,11 @@ void() ai_run_dodge =
       ofs = 40;
 	else
       ofs = -40;
-
    if (time > self.ltime)
       {
       self.lefty = 1 - self.lefty;
       self.ltime = time + 0.8;
       }
-
    newyaw = enemy_yaw + ofs;
    self.ideal_yaw = enemy_yaw;
    if (walkmove (newyaw, movedist))
@@ -786,7 +773,6 @@ void() ai_run_dodge =
       ChangeYaw ();
       return;
       }
-
    self.lefty = 1 - self.lefty;
    self.ltime = time + 0.8;
    newyaw = enemy_yaw - ofs;
@@ -798,7 +784,6 @@ void() ai_run_dodge =
 void() ai_turn_in_place =
    {
    local float delta;
-
    self.nextthink = time + 0.1;
    enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
    delta = fabs(self.angles_y - enemy_yaw);
@@ -811,7 +796,8 @@ void() ai_turn_in_place =
       {
       self.think = self.th_run;
       }
-   };
+};
+
 void() UpdateCharmerGoal =
    {
    local entity targ;
@@ -999,7 +985,6 @@ void(float dist) ai_run =
    if (self.th_turn)
       {
       local float angledelta;
-
       angledelta = fabs(self.angles_y - enemy_yaw);
       if (angledelta > MIN_ANGLE_DELTA)
          {
@@ -1007,7 +992,6 @@ void(float dist) ai_run =
          return;
          }
       }
-
 	if (self.attack_state == 4/*AS_MISSILE*/)
 	{
 		ai_run_missile ();
@@ -1027,13 +1011,11 @@ void(float dist) ai_run =
       {
       return;              // beginning an attack
       }
-
 	if (self.attack_state == 2/*AS_SLIDING*/)
 	{
 		ai_run_slide ();
 		return;
 	}
-
    if (self.attack_state == AS_DODGING)
 	{
       ai_run_dodge ();

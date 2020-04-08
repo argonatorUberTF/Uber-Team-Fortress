@@ -7520,9 +7520,9 @@ void (vector org,vector vec) DroneLaunchLaser =
 	setmodel (newmis, "progs/beam.mdl");
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, org);
-	newmis.velocity = (vec * 2000);
+	newmis.velocity = (vec * 2500);
 	newmis.angles = vectoangles (newmis.velocity);
-	newmis.nextthink = (time + .1);
+	newmis.nextthink = (time + 4);
 	newmis.think = SUB_Remove;
 	newmis.touch = Drone_Laser_Touch;
 };
@@ -7548,34 +7548,7 @@ void () DroneDie =
 	T_RadiusDamage (self, self.owner.owner, 90, world); //Do some shrapnel damage when crashed. Game Over Man! -arg
 	BecomeExplosion ();
 	MushroomFlame(); // Make a pretty fireball with explosion. -arg
-	sound(self, 3, "weapons/throw.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-	newmis = spawn();
-	newmis.classname = "timer";
-	newmis.owner = self;
-	newmis.team_no = self.team_no;
-	newmis.health = time;
-	newmis.weapon = TF_FLARE_LIT;
-	newmis.movetype = 6;
-	newmis.solid = TF_FLARE_OFF;
-	newmis.team_no = self.team_no;
-	makevectors(self.v_angle);
-	if (self.v_angle_x)
-	{
-		newmis.velocity = v_forward * 400 + v_up * 200;
-	}
-	else
-	{
-		newmis.velocity = aim(self, 10000);
-		newmis.velocity = newmis.velocity * 400;
-		newmis.velocity_z = 200;
-	}
-	newmis.avelocity = '300 300 300';
-	setsize(newmis, '0 0 0', '0 0 0');
-	setorigin(newmis, self.origin);
-	newmis.nextthink = time + 2;
-	newmis.think = LavaBecome;
-	newmis.touch = LavaBallTouch;
-	setmodel(newmis, "progs/lavaball.mdl");
+	TeamFortress_DetpackExplode(); //make a crowd pleaser of a boom. -arg
 };
 
 void () DroneFall =

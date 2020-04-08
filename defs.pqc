@@ -1513,5 +1513,5 @@ float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
 
-#define SETVERSION		localcmd("serverinfo UBERTF v4.02.20United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v4.07.20United\n");
 //END

@@ -1,6 +1,6 @@
 // Uber Team Fortress - Open Sourced from:
 //
-// Mega Team Fortress, Coop vs monsters, 4 player deathmatch, with or without bots, battle royale mode. 12-2019
+// Mega Team Fortress, Coop vs monsters, added 4 player deathmatch, with or without bots, battle royale mode. 12-2019
 // Author: Avirox (a.k.a. XavioR) up to 1-2015 with many others.
 // Original MegaTeam Fortress Programmers: Ambush, Plexi, mod3m, Plasticity 1997
 // Additional addons by Ratbert, Argonator, Agent, Pablo, Cloud, Doc 2010-2019, Often, Aberrant.
@@ -272,10 +272,10 @@ entity bulletholes;			//hipdefs.qc
 entity lastbullet;			//hipdefs.qc
 entity hipdecoy;			//hipdefs.qc
 entity tracetossent;			// Nehara
+entity horn_charmer;			// horn of conjuring hipnotic
 //.entity lastplayer;		//for half-life, unused -arg
 //entity mini_f_client; // for mini sentry guns from defs.qc -arg
 //entity damage_inflictor;  //unused ? -arg
-//entity horn_charmer;			// horn of conjuring hipnotic
 //.entity bolt_target; // PK current player firing at ...
 //.entity bolt_targetNext; // PK next target in the chain...
 //.entity bolt_targetTimeoutEntity; // PK Entity timeout, used just for the nextthink!
@@ -350,12 +350,12 @@ entity tracetossent;			// Nehara
 .float dragonInTransit;			// dragon specific fields mtf_rogue
 .float dragonAttacking;			// dragon specific fields mtf_rogue
 .float dragonPainSequence;		// dragon specific fields mtf_rogue
-.float		childrenSpawned;	// Other Rogue Fields
-.float		ltrailLastUsed;		// Other Rogue Fields
-.float		shield_death_time;	// Other Rogue Fields
-.float		shieldSoundTime;	// Other Rogue Fields
-.float		dragonDeathState;	// Other Rogue Fields
-.float		orbitPosition;		// new AI fields mtf_rogue
+.float childrenSpawned;	// Other Rogue Fields
+.float ltrailLastUsed;		// Other Rogue Fields
+.float shield_death_time;	// Other Rogue Fields
+.float shieldSoundTime;	// Other Rogue Fields
+.float dragonDeathState;	// Other Rogue Fields
+.float orbitPosition;		// new AI fields mtf_rogue
 .float oldmovetype;
 .float has_syringe, option, option5, is_squating;
 .float last_used, tools, option4, vision, maxfbspeed;
@@ -554,6 +554,7 @@ entity tracetossent;			// Nehara
 .float  endtime;		// Rotation	
 .float  rotate_type;	// Rotation
 .float      huntingcharmer;		// Hipnotic horn of conjuring	
+.float      charmed;			// Hipnotic horn of conjuring
 .float      duration;				// Hipnotic misc
 .float      items2;				// Hipnotic entry
 .float      gorging;			// Hipnotic 
@@ -561,7 +562,6 @@ entity tracetossent;			// Nehara
 .float      spawnsolidtype;		// Hipnotic 
 .float      spawnsilent;		// Hipnotic
 .float      spawnmulti;			// Hipnotic	
-.float      charmed;			// Hipnotic horn of conjuring
 .float gravity;
 .float DropFlagDelay; 			// from actions.pqc where this was hiding in duplicate code commented out ? -arg
 .float		idealpitch;			// calculated pitch angle for lookup up slopes
@@ -956,6 +956,7 @@ float MAX_WAYPOINT_TIME;
 #endif
 //
 //FLOATS REGULAR
+float global_noticedelay;		//ai.pqc
 float strategy_move;			// Nehara
 float hknight_type;				// Nehara
 float panzy_mode;				// Nehara
@@ -1191,6 +1192,27 @@ void() BTF_Precache;
 void () missing_precaches;  //put sounds and models missing here to load first absolutely -arg
 //						FLOAT FUNCTIONS and voids
 void() HuntTarget;
+void() ai_run_melee;
+void() ai_run_missile;
+void() ai_run_slide;
+void() ai_run_fire;
+void() ai_run_dodge;
+void() ai_turn_in_place;
+void(vector dest3) ChooseTurn;
+void() ai_turn;
+void() ai_stand;
+void(float dist) ai_forward;
+void(float dist) ai_back;
+void () ChangePitch;
+void (float dist) old_ai_walk;
+float() FindTarget;
+void(float dist) ai_walk;
+void(float dist) ai_run;
+void(float dist) ai_pain;
+void(float dist) ai_painforward;
+void () respawn_think;
+void () respawn_monster;
+float (entity ent) InSolid;
 void() SightSound;
 void() FoundTarget;
 void() monster_use;
@@ -1198,6 +1220,7 @@ void() set_monster_health;
 void () walkmonster_start_go;
 void() item_megahealth_rot;
 void() walkmonster_start;
+void (float playerid, float item_slot, float item_price) Inventory_TradeItem;
 void (entity loadent, string strflgs) ParseLoadFlags;
 float (entity checkme) Set_SaveFlags;
 void () PreMonsterItemTouch;
@@ -18255,8 +18278,8 @@ void (float damage) spawn_touchblood =
 	SpawnBlood ((self.origin + (vel * 0.01)), damage);
 };
 
-void () TeamFortress_DetpackExplode = {
-
+void () TeamFortress_DetpackExplode =
+{
    local float pos;
    bprint (TF_FLARE_OFF,"FIRE IN THE HOLE!\n");
    sound (self,TF_FLARE_OFF,"weapons/detpack.wav",TF_FLARE_OFF,TF_FLARE_LIT);
@@ -18277,7 +18300,6 @@ void () TeamFortress_DetpackExplode = {
       dremove (self.observer_list);
    }
    BecomeExplosion ();
-
 };
 
 float () W_BestWeapon =
@@ -23193,6 +23215,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun. Stay Frosty.\n");
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost. Farts damage enemies.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
+			sprint (self, 2.000000, "impulse  68 - Throws a beartrap.\n");
 			sprint( self, 2, "End of help.\n");
 			return 1;
 		}
@@ -23388,13 +23411,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, ftos(total_secrets - found_secrets));
 		sprint(self, 2,".\n");
 	}
-	else if (s1 == "tm3")
+	else if (s1 == "petekill")
 	{
-	te = nextent(world);
-	while (te != world)
+	local entity head;
+	head = findradius (self.origin, 60);
+	if (head)
 	{
-		eprint(te);
-		te = nextent(te); 
+		dremove(head);
 	}
 	}
 	else if (s1 == "ttime")
@@ -24434,7 +24457,7 @@ void() HuntTarget =
 	self.nextthink = time + 0.1;
 	SUB_AttackFinished(TF_FLARE_OFF);
 };
-void () respawn_monster;
+
 void () respawn_think =
 {
 	local entity head;
@@ -24502,13 +24525,16 @@ void () respawn_monster =
 		dremove(self.old_owner);
 	spawn_tfog (self.origin);
 	savedlives = self.lives;
-	if (!self.think1) {
-		bprint(2,"DEV: SOMETHING IS REALLY BAD IN RESPAWN_THINK\n");
+	if (!self.think1)
+	{
+		bprint(2,"DEV: SOMETHING IS REALLY BAD IN RESPAWN_THINK.\n");
 		dremove(self);
+		return; //not sure to return or let it crash. defined InSolid as a fix here? -arg 
 	}
 	self.think1 ();
 	self.lives = savedlives;
-	if (InSolid(self)) {
+	if (InSolid(self))
+	{
 		// this is kind of like a hack, but it works to ensure monster count is bumped
 		self.flags = self.flags | FL_MONSTER;
 		self.deathtype = "monster_respawn";

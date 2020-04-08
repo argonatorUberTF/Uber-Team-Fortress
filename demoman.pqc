@@ -6,7 +6,8 @@ void () TeamFortress_DetpackSet;
 void () TeamFortress_DetpackTouch;
 void () TeamFortress_DetpackDisarm;
 void () TeamFortress_DetpackCountDown;
-void () TeamFortress_DetonatePipebombs = {
+void () TeamFortress_DetonatePipebombs =
+{
    local entity e;
    e = find (world,classname,"pipebomb");
    while (e != world)
@@ -68,7 +69,6 @@ float(entity obj) DetpackCheckArea =
 	local vector src;
 	local float pos;
 	pos = pointcontents(obj.origin);
-
 	if (pos == -2 || pos == -6)
 	{
 		return TF_FLARE_LIT;
@@ -116,8 +116,8 @@ float(entity obj) DetpackCheckArea =
 	}
 	return TF_FLARE_OFF;
 };
-void (float timer) TeamFortress_SetDetpack = {
-
+void (float timer) TeamFortress_SetDetpack =
+{
    local string stimer;
    local entity te;
    self.impulse = TF_FLARE_LIT;
@@ -133,25 +133,16 @@ void (float timer) TeamFortress_SetDetpack = {
      return ;
    }
 #endif
-
    if (!(self.flags & 512))
    {
       sprint (self,2,"You can't set detpacks in the air!\n");
       return ;
    }
-
-   if (timer < 5)
-   {
-      sprint (self,2,"You can't set detpacks for less that 5 seconds.\n");
-      return ;
-   }
-
    if (DetpackCheckArea(self) == TF_FLARE_LIT)
 	{
 		sprint(self,2,"You need more room to set a detpack.\n");
 		return;
 	}
-
 #ifdef mtf_coop
 	if (self.last_used > time)
 	{
@@ -160,10 +151,8 @@ void (float timer) TeamFortress_SetDetpack = {
 	}
 	self.last_used = time + 15;  // was 30 -arg
 #endif
-	
-   te = find (world,classname,"detpack");
-
-   while (te) 
+	te = find (world,classname,"detpack");
+	while (te) 
    {
       if (te.owner == self)
 	  {
@@ -172,7 +161,6 @@ void (float timer) TeamFortress_SetDetpack = {
       }
       te = find (te,classname,"detpack");
    }
-
    self.is_detpacking = TF_FLARE_OFF;
    self.ammo_detpack = (self.ammo_detpack - TF_FLARE_OFF);
    self.immune_to_check = (time + 5);
@@ -356,7 +344,6 @@ void () TeamFortress_DetpackDisarmTrigger =
 
 void () TeamFortress_DetpackDisarm =
 {
-
 	bprint (1.000000, self.enemy.owner.netname);
 	bprint (1.000000, "'s detpack was defused by ");
 	bprint (1.000000, self.owner.netname);
