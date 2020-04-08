@@ -24527,7 +24527,7 @@ void () respawn_monster =
 	savedlives = self.lives;
 	if (!self.think1)
 	{
-		bprint(2,"DEV: SOMETHING IS REALLY BAD IN RESPAWN_THINK.\n");
+		bprint(2,"DEV: Do not try to summmon that type of monster.\n");
 		dremove(self);
 		return; //not sure to return or let it crash. defined InSolid as a fix here? -arg 
 	}
