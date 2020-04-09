@@ -54,7 +54,6 @@ void () crate_push =
 		return;
 	}
 };
-
 void () thing_crate1 =
 {
 	local float oldz;
@@ -77,7 +76,6 @@ void () thing_crate1 =
 		return;
 	}
 };
-
 void () thing_crate2 =
 {
 	local float oldz;
@@ -100,7 +98,6 @@ void () thing_crate2 =
 		return;
 	}
 };
-
 void () thing_barrel =
 {
 	local float oldz;
@@ -123,11 +120,9 @@ void () thing_barrel =
 		remove (self);
 	}
 };
-
 void () thing_barrel2 =
 {
 	local float oldz;
-
 	self.solid = SOLID_BBOX;
 	self.movetype = MOVETYPE_NONE;
 	precache_model ("progs/barrel2.mdl");

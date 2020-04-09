@@ -7,7 +7,6 @@ void () W_FireSuperShotgun;
 void () WaterMove;
 void () CheckRules;
 void () cbt_rocketjump1;
-
 void () cn_wpt =
 {
 	if (!self.speed)
@@ -32,7 +31,6 @@ void () cn_wpt =
 		self.swim_flag = FALSE;
 	}
 };
-
 void (float slide_amount) cbot_slide =
 {
 	local float ofs;
@@ -73,7 +71,6 @@ void (float slide_amount) cbot_slide =
 	self.lefty = (AS_STRAIGHT - self.lefty);
 	walkmove ((self.ideal_yaw - ofs), ((random () * slide_amount) + TE_LIGHTNING3));
 };
-
 void (float slide_amount) cbot_retreat =
 {
 	local float ofs;
@@ -100,7 +97,6 @@ void (float slide_amount) cbot_retreat =
 	self.lefty = (AS_STRAIGHT - self.lefty);
 	walkmove ((self.ideal_yaw - ofs), ((random () * slide_amount) + TE_LIGHTNING3));
 };
-
 float () cbot_incoming_missile =
 {
 	local entity article;
@@ -118,7 +114,6 @@ float () cbot_incoming_missile =
 	}
 	return (FALSE);
 };
-
 float () cbot_check_attack =
 {
 	local vector spot1;
@@ -175,7 +170,6 @@ float () cbot_check_attack =
 	}
 	return (FALSE);
 };
-
 float () cbot_facing_ideal =
 {
 	local float delta_yaw;
@@ -188,7 +182,6 @@ float () cbot_facing_ideal =
 	}
 	return (TRUE);
 };
-
 float () cbot_best_weapon =
 {
 	local float it;
@@ -199,7 +192,6 @@ float () cbot_best_weapon =
 	}
 	return (IT_NONE);
 };
-
 float () cbot_check_no_ammo =
 {
 	if ((self.currentammo > MSG_BROADCAST))
@@ -213,7 +205,6 @@ float () cbot_check_no_ammo =
 	self.weapon = IT_UZI;
 	return (FALSE);
 };
-
 float (entity e_target, entity e_inflictor) cbot_determine_mode =
 {
 	if ((self.weapon == IT_NONE))
@@ -243,7 +234,6 @@ float (entity e_target, entity e_inflictor) cbot_determine_mode =
 	}
 	return (WITHDRAW);
 };
-
 void () cbot_fire_weapon =
 {
 	if (!cbot_check_no_ammo ())
@@ -266,7 +256,6 @@ void () cbot_fire_weapon =
 		}
 	}
 };
-
 void () cbot_track_target =
 {
 	local vector los;
@@ -309,7 +298,6 @@ void () cbot_track_target =
 	ChangeYaw ();
 	ChangePitch ();
 };
-
 void () cbot_attack =
 {
 	if (cbot_incoming_missile ())
@@ -371,13 +359,11 @@ void () cbot_attack =
 		}
 	}
 };
-
 void () cbot_attack_initial =
 {
 	cbot_attack ();
 };
 void () cbt_jump1;
-
 void () cbot_jump =
 {
 	local float vel;
@@ -394,7 +380,6 @@ void () cbot_jump =
 	self.nextthink = (time + 0.3);
 	cbt_jump1 ();
 };
-
 void () cbot_watchdog =
 {
 	local float dist;
@@ -444,7 +429,6 @@ void () cbot_watchdog =
 	}
 	self.old_posn = self.origin;
 };
-
 float (float itype) cbot_got_item =
 {
 	if ((itype == SVC_TEMPENTITY))
@@ -485,7 +469,6 @@ float (float itype) cbot_got_item =
 	}
 	return 0;
 };
-
 entity () cbot_find_nearest_enemy =
 {
 	local entity article;
@@ -559,7 +542,6 @@ entity (float findp, float ignore, float endp) cbot_get_waypoint =
 	}
 	return (best_article);
 };
-
 float (entity article) cbot_check_max_ammo =
 {
 	if (((article.classname == "item_cells") && (self.ammo_cells2 == 100)))
@@ -568,7 +550,6 @@ float (entity article) cbot_check_max_ammo =
 	}
 	return (TRUE);
 };
-
 void () cbot_ai_stand =
 {
 	local entity article;
@@ -640,13 +621,10 @@ void () cbot_ai_stand =
 		else
 		{
 			self.goal_status = SEARCH;
-			//if (SEARCH)
-			//{
 				self.goal_status = CAMPER;
 				self.goalentity = self.origin_save;
 				self.think = self.th_run;
 				self.nextthink = (time + 0.1);
-			//}
 		}
 		self.watchdog_time = (time + 1.2);
 	}
@@ -700,7 +678,6 @@ void () cbot_ai_stand =
 		}
 	}
 };
-
 void (float dist) cbot_ai_walk =
 {
 	local entity trywpt;
@@ -953,10 +930,8 @@ void (float dist) cbot_ai_walk =
 		self.nextthink = (time + 0.1);
 	}
 };
-
 void (float dist) cbot_ai_run =
 {
 	cbot_ai_walk (dist);
 };
-
 //end

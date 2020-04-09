@@ -2,36 +2,23 @@ void () f_turbine1 = [ 0, f_turbine2 ]
 {
 	sound (self, CHAN_VOICE, "turbine/fanblow.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () f_turbine2 = [ 1, f_turbine3 ]
-{
-};
-
+{};
 void () f_turbine3 = [ 2, f_turbine4 ]
-{
-};
-
+{};
 void () f_turbine4 = [ 3, f_turbine5 ]
-{
-};
-
+{};
 void () f_turbine5 = [ 0, f_turbine6 ]
 {
 	sound (self, CHAN_VOICE, "turbine/fanblow.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
 
 void () f_turbine6 = [ 1, f_turbine7 ]
-{
-};
-
+{};
 void () f_turbine7 = [ 2, f_turbine8 ]
-{
-};
-
+{};
 void () f_turbine8 = [ 3, f_turbine1 ]
-{
-};
-
+{};
 void () fan_turbine =
 {
 	precache_model ("progs/turbine.mdl");
@@ -41,7 +28,6 @@ void () fan_turbine =
 	self.movetype = MOVETYPE_NONE;
 	f_turbine1 ();
 };
-
 void () fan_turbine2 =
 {
 	precache_model ("progs/turbine.mdl");
@@ -52,7 +38,6 @@ void () fan_turbine2 =
 	self.angles_x = 90;
 	f_turbine1 ();
 };
-
 void () plantouch =
 {
 	if ((other.classname == "player"))
@@ -60,7 +45,6 @@ void () plantouch =
 		remove (self);
 	}
 };
-
 void () the_plans =
 {
 	precache_model ("progs/plans.mdl");
@@ -71,7 +55,6 @@ void () the_plans =
 	setsize (self, '-5 -5 -5', '5 5 5');
 	self.touch = plantouch;
 };
-
 void () blowball =
 {
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
@@ -83,7 +66,6 @@ void () blowball =
 	self.frame = SPAWNFLAG_SUPERSPIKE;
 	self.solid = SOLID_NOT;
 };
-
 void () disco_ball =
 {
 	precache_model ("progs/discob.mdl");

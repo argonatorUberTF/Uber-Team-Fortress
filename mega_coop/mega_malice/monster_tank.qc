@@ -1,13 +1,10 @@
 void () boss_die;
-
 void (float forward, float back, float right, float left, string name) blastsmoke;
-
 void () gunnablow =
 {
 	sound (self, CHAN_AUTO, "weapons/r_exp3.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NONE);
 	MorterExplode ();
 };
-
 void () short_circuit =
 {
 	setmodel (self, "maps/tank5.bsp");
@@ -18,7 +15,6 @@ void () short_circuit =
 	self.touch = gunnablow;
 	sound (self, CHAN_AUTO, "weapons/r_exp3.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NONE);
 };
-
 void () checkface =
 {
 	self.enemy = checkclient ();
@@ -28,17 +24,14 @@ void () checkface =
 	}
 	self.nextthink = (time + 0.01);
 };
-
 void () tank_path = [ 0, tank_path1 ]
 {
 	self.nextthink = (time + 0.01);
 };
-
 void () tank_path1 = [ 0, tank_path ]
 {
 	self.nextthink = (time + 0.01);
 };
-
 void () monster_tank_malice =
 {
 	if (deathmatch)
@@ -58,7 +51,6 @@ void () monster_tank_malice =
 	self.solid = SOLID_BBOX;
 	self.movetype = MOVETYPE_STEP;
 };
-
 void () monster_tank2 =
 {
 	if (deathmatch)
@@ -77,7 +69,6 @@ void () monster_tank2 =
 	self.movetype = MOVETYPE_STEP;
 	walkmonster_start ();
 };
-
 void () kamikaze =
 {
 	local vector kamicaze;
@@ -102,7 +93,6 @@ void () kamikaze =
 		sound (self, CHAN_AUTO, "bossman/death2.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NONE);
 	}
 };
-
 void () boss_die2 =
 {
 	local entity tan;
@@ -116,7 +106,6 @@ void () boss_die2 =
 	killed_monsters = (killed_monsters + SPAWNFLAG_SUPERSPIKE);
 	WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
 };
-
 void () boss_die =
 {
 	self.velocity_z = 260;
@@ -134,7 +123,6 @@ void () boss_die =
 	}
 	self.nextthink = (time + 0.01);
 };
-
 void () boss_pain =
 {
 	local float x;
@@ -162,7 +150,6 @@ void () boss_pain =
 		}
 	}
 };
-
 void () Coverfire =
 {
 	local vector firepath;
@@ -186,7 +173,6 @@ void () Coverfire =
 	setorigin (missile, ((self.origin + (v_forward * 34)) + '0 0 10'));	// orig: (v_forward * 20), but the stupid self-hit bug came back :(
 };
 void () boss_brain;
-
 void () rocket_back =
 {
 	local vector atat;
@@ -211,7 +197,6 @@ void () rocket_back =
 	}
 	self.nextthink = (time + 0.01);
 };
-
 void () rocket_away =
 {
 	local vector atat;
@@ -242,7 +227,6 @@ void () rocket_away =
 		sound (self, CHAN_AUTO, "bossman/jets.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	}
 };
-
 void () FireBossGun =
 {
 	local vector firepath;
@@ -268,7 +252,6 @@ void () FireBossGun =
 	setsize (pulse, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (pulse, ((self.origin + (v_forward * 100)) - '0 0 60'));
 };
-
 void () boss_brain =
 {
 	local entity tan;
@@ -301,7 +284,6 @@ void () boss_brain =
 	}
 	self.nextthink = (time + 0.01);
 };
-
 void () monster_bossman =
 {
 	if (deathmatch)
@@ -328,10 +310,8 @@ void () monster_bossman =
 	self.#monsterflag = #STRFLAG_MONSTER;
 	self.#npc_origangle = self.angles;
 	self.#npc_spawndelay = 30;
-	//self.#npc_spawnfunc = monster_swat1 ;
 	COOP_SetLives ();
 	self.lives = 0;
-	//self.#npc_spawnfunc ();	
 	self.solid = SOLID_BBOX;
 	setmodel (self, "progs/bossman.mdl");
 	setsize (self, '-20 -20 0', '20 20 40');
@@ -345,7 +325,6 @@ void () monster_bossman =
 	self.movetype = MOVETYPE_FLY;
 	self.takedamage = DAMAGE_AIM;
 };
-
 void (float forward, float back, float right, float left, string name) blastsmoke =
 {
 	local entity smok;

@@ -1,5 +1,4 @@
 void () Riot_JumpTouch;
-
 void () IdleComment =
 {
 	local float x;
@@ -16,7 +15,6 @@ void () IdleComment =
 		}
 	}
 };
-
 void () riot_stand1 = [ 45, riot_stand2 ]
 {
 	ai_stand ();
@@ -79,7 +77,6 @@ void () riot_jump4 = [ 27, riot_jump5 ]
 	ai_forward (20);
 	ai_face ();
 };
-
 void () riot_jump5 = [ 28, riot_jump6 ]
 {
 	ai_face ();
@@ -95,35 +92,22 @@ void () riot_jump5 = [ 28, riot_jump6 ]
 };
 
 void () riot_jump6 = [ 29, riot_jump7 ]
-{
-};
-
+{};
 void () riot_jump7 = [ 30, riot_jump6 ]
-{
-};
-
+{};
 void () riot_jump8 = [ 31, riot_jump9 ]
-{
-};
-
+{};
 void () riot_jump9 = [ 32, riot_jump10 ]
-{
-};
-
+{};
 void () riot_jump10 = [ 33, riot_jump11 ]
-{
-};
-
+{};
 void () riot_jump11 = [ 34, riot_jump12 ]
-{
-};
-
+{};
 void () riot_jump12 = [ 35, riot_run1 ]
 {
 	ai_forward (TE_LIGHTNING2);
 };
 void () riot_run1;
-
 void () Riot_JumpTouch =
 {
 	local float ldmg;
@@ -153,7 +137,6 @@ void () Riot_JumpTouch =
 	self.think = riot_jump8;
 	self.nextthink = (time + 0.1);
 };
-
 void () Kung_Fu =
 {
 	local vector dist;
@@ -194,17 +177,14 @@ void () riot_walk1 = [ 101, riot_walk2 ]
 	}
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk2 = [ 102, riot_walk3 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk3 = [ 103, riot_walk4 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk4 = [ 104, riot_walk5 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
@@ -473,95 +453,57 @@ void () riot_decap1 = [ 92, riot_decap2 ]
 {
 	ThrowGib ("progs/h_riot.mdl", -100);
 };
-
 void () riot_decap2 = [ 93, riot_decap3 ]
-{
-};
-
+{};
 void () riot_decap3 = [ 94, riot_decap4 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () riot_decap4 = [ 93, riot_decap5 ]
-{
-};
-
+{};
 void () riot_decap5 = [ 92, riot_decap6 ]
-{
-};
-
+{};
 void () riot_decap6 = [ 93, riot_decap7 ]
-{
-};
-
+{};
 void () riot_decap7 = [ 94, riot_decap8 ]
-{
-};
-
+{};
 void () riot_decap8 = [ 95, riot_decap9 ]
-{
-};
-
+{};
 void () riot_decap9 = [ 96, riot_decap10 ]
-{
-};
-
+{};
 void () riot_decap10 = [ 97, riot_decap11 ]
-{
-};
-
+{};
 void () riot_decap11 = [ 98, riot_decap12 ]
-{
-};
-
+{};
 void () riot_decap12 = [ 99, riot_decap13 ]
-{
-};
-
+{};
 void () riot_decap13 = [ 100, riot_decap13 ]
-{
-};
-
+{};
 void () riot_painb1 = [ 53, riot_painb2 ]
 {
 	ai_pain (SPAWNFLAG_LASER);
 };
-
 void () riot_painb2 = [ 54, riot_painb3 ]
 {
 };
-
 void () riot_painb3 = [ 55, riot_painb4 ]
-{
-};
-
+{};
 void () riot_painb4 = [ 56, riot_painb5 ]
-{
-};
-
+{};
 void () riot_painb5 = [ 57, riot_painb6 ]
-{
-};
-
+{};
 void () riot_painb6 = [ 58, riot_painb7 ]
-{
-};
-
+{};
 void () riot_painb7 = [ 59, riot_painb8 ]
-{
-};
-
+{};
 void () riot_painb8 = [ 60, riot_painb9 ]
 {
 	ai_run (15);
 };
-
 void () riot_painb9 = [ 61, riot_painb10 ]
 {
 	ai_run (15);
 };
-
 void () riot_painb10 = [ 62, riot_run1 ]
 {
 	ai_run (15);
@@ -594,120 +536,71 @@ void (entity attacker, float damage) riot_pain =
 	riot_painb1 ();
 	self.pain_finished = (time + SPAWNFLAG_LASER);
 };
-
 void () riot_die1 = [ 63, riot_die2 ]
-{
-};
-
+{};
 void () riot_die2 = [ 64, riot_die3 ]
-{
-};
-
+{};
 void () riot_die3 = [ 65, riot_die4 ]
-{
-	self.solid = SOLID_NOT;
+{	self.solid = SOLID_NOT;
 };
-
 void () riot_die4 = [ 66, riot_die5 ]
-{
-};
-
+{};
 void () riot_die5 = [ 67, riot_die6 ]
-{
-};
-
+{};
 void () riot_die6 = [ 68, riot_die7 ]
-{
-};
-
+{};
 void () riot_die7 = [ 69, riot_die8 ]
-{
-};
-
+{};
 void () riot_die8 = [ 70, riot_die8 ]
-{
-};
-
+{};
 void () riot_ded1 = [ 81, riot_ded2 ]
-{
-};
-
+{};
 void () riot_ded2 = [ 82, riot_ded3 ]
-{
-};
-
+{};
 void () riot_ded3 = [ 83, riot_ded4 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () riot_ded4 = [ 84, riot_ded5 ]
-{
-};
-
+{};
 void () riot_ded5 = [ 85, riot_ded6 ]
-{
-};
+{};
 
 void () riot_ded6 = [ 86, riot_ded7 ]
-{
-};
-
+{};
 void () riot_ded7 = [ 87, riot_ded7 ]
-{
-};
-
+{};
 void () riot_dieb1 = [ 71, riot_dieb2 ]
-{
-};
-
+{};
 void () riot_dieb2 = [ 72, riot_dieb3 ]
-{
-};
-
+{};
 void () riot_dieb3 = [ 73, riot_dieb4 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () riot_dieb4 = [ 74, riot_dieb5 ]
-{
-};
-
+{};
 void () riot_dieb5 = [ 75, riot_dieb6 ]
-{
-};
-
+{};
 void () riot_dieb6 = [ 76, riot_dieb7 ]
-{
-};
-
+{};
 void () riot_dieb7 = [ 77, riot_dieb8 ]
 {
 };
-
 void () riot_dieb8 = [ 78, riot_dieb9 ]
-{
-};
-
+{};
 void () riot_dieb9 = [ 79, riot_dieb10 ]
-{
-};
-
+{};
 void () riot_dieb10 = [ 80, riot_dieb10 ]
-{
-};
-
+{};
 void () riot_diec1 = [ 119, riot_diec2 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec2 = [ 120, riot_diec3 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec3 = [ 121, riot_diec4 ]
 {
 	self.solid = SOLID_NOT;
@@ -842,7 +735,6 @@ void () riot_diec28 = [ 146, riot_diec29 ]
 void () riot_diec29 = [ 147, riot_diec29 ]
 {
 };
-
 void () riot_die =
 {
 	local float r;
@@ -892,7 +784,6 @@ void () riot_die =
 		}
 	}
 };
-
 void () monster_riot1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -910,12 +801,10 @@ void () monster_riot1 =
 	self.th_die = riot_die;
 	self.th_missile = Kung_Fu;
 	coop_walkmonster_start ();
-
 };
 
 void () monster_riot =
 {
-
 	precache_model ("progs/riot.mdl");
 	precache_model ("progs/h_riot.mdl");
 	precache_sound ("riot/attack.wav");

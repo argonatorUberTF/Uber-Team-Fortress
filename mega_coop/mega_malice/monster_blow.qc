@@ -1,5 +1,4 @@
 void () blowfish_run1;
-
 void () venom_touch =
 {
 	if ((other == self.owner))
@@ -21,7 +20,6 @@ void () venom_touch =
 		remove (self);
 	}
 };
-
 void () blowfish_venom =
 {
 	local vector trace1;
@@ -40,63 +38,44 @@ void () blowfish_venom =
 	setsize (harp, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (harp, ((self.origin + (v_forward * 14)) + '0 0 14'));
 };
-
 void () blowfish_fire1 = [ 44, blowfish_fire2 ]
-{
-};
-
+{};
 void () blowfish_fire2 = [ 45, blowfish_fire3 ]
-{
-};
-
+{};
 void () blowfish_fire3 = [ 46, blowfish_fire4 ]
-{
-};
-
+{};
 void () blowfish_fire4 = [ 47, blowfish_fire5 ]
 {
 	ai_face ();
 };
-
 void () blowfish_fire5 = [ 48, blowfish_fire6 ]
 {
 	ai_face ();
 };
-
 void () blowfish_fire6 = [ 49, blowfish_fire7 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "blowfish/venom.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	blowfish_venom ();
 };
-
 void () blowfish_fire7 = [ 50, blowfish_fire8 ]
 {
 	ai_face ();
 };
-
 void () blowfish_fire8 = [ 51, blowfish_fire9 ]
 {
 	ai_face ();
 };
-
 void () blowfish_fire9 = [ 52, blowfish_fire10 ]
 {
 	ai_face ();
 };
-
 void () blowfish_fire10 = [ 53, blowfish_fire11 ]
-{
-};
-
+{};
 void () blowfish_fire11 = [ 54, blowfish_fire12 ]
-{
-};
-
+{};
 void () blowfish_fire12 = [ 55, blowfish_run1 ]
-{
-};
-
+{};
 void () blowfish_markfire1 =
 {
 	if ((random () < 0.4))
@@ -105,11 +84,9 @@ void () blowfish_markfire1 =
 	}
 	else
 	{
-//		ai_run ();
 		ai_run (0);
 	}
 };
-
 void () blowfish_stand1 = [ 79, blowfish_stand2 ]
 {
 	ai_stand ();
@@ -125,12 +102,10 @@ void () blowfish_stand1 = [ 79, blowfish_stand2 ]
 		}
 	}
 };
-
 void () blowfish_stand2 = [ 80, blowfish_stand3 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand3 = [ 81, blowfish_stand4 ]
 {
 	ai_stand ();
@@ -288,7 +263,6 @@ void () blowfish_run10 = [ 9, blowfish_run1 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_melee =
 {
 	local vector delta;
@@ -306,7 +280,6 @@ void () blowfish_melee =
 	ldmg = ((random () + random ()) * SECRET_YES_SHOOT);
 	T_Damage (self.enemy, self, self, ldmg);
 };
-
 void () blowfish_attack1 = [ 18, blowfish_attack2 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
@@ -441,67 +414,43 @@ void () blowfish_death1 = [ 56, blowfish_death2 ]
 };
 
 void () blowfish_death2 = [ 57, blowfish_death3 ]
-{
-};
-
+{};
 void () blowfish_death3 = [ 58, blowfish_death4 ]
-{
-};
-
+{};
 void () blowfish_death4 = [ 59, blowfish_death5 ]
-{
-};
-
+{};
 void () blowfish_death5 = [ 60, blowfish_death6 ]
-{
-};
-
+{};
 void () blowfish_death6 = [ 61, blowfish_death7 ]
-{
-};
-
+{};
 void () blowfish_death7 = [ 62, blowfish_death8 ]
-{
-};
-
+{};
 void () blowfish_death8 = [ 63, blowfish_death9 ]
-{
-};
-
+{};
 void () blowfish_death9 = [ 64, blowfish_death10 ]
-{
-};
-
+{};
 void () blowfish_death10 = [ 65, blowfish_death11 ]
-{
-};
-
+{};
 void () blowfish_death11 = [ 66, blowfish_death12 ]
 {
 	sound (self, CHAN_VOICE, "blowfish/death.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
 
 void () blowfish_death12 = [ 67, blowfish_death13 ]
-{
-};
+{};
 
 void () blowfish_death13 = [ 68, blowfish_death14 ]
-{
-};
+{};
 
 void () blowfish_death14 = [ 69, blowfish_death15 ]
-{
-};
-
+{};
 void () blowfish_death15 = [ 70, blowfish_death15 ]
 {
 	self.movetype = MOVETYPE_NONE;
 };
-
 void () blowfish_pain1 = [ 35, blowfish_pain2 ]
 {
 };
-
 void () blowfish_pain2 = [ 36, blowfish_pain3 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
@@ -513,32 +462,25 @@ void () blowfish_pain3 = [ 37, blowfish_pain4 ]
 };
 
 void () blowfish_pain4 = [ 38, blowfish_pain5 ]
-{
-};
+{};
 
 void () blowfish_pain5 = [ 39, blowfish_pain6 ]
-{
-};
+{};
 
 void () blowfish_pain6 = [ 40, blowfish_pain7 ]
-{
-};
+{};
 
 void () blowfish_pain7 = [ 41, blowfish_pain8 ]
-{
-};
+{};
 
 void () blowfish_pain8 = [ 42, blowfish_pain9 ]
-{
-};
+{};
 
 void () blowfish_pain9 = [ 43, blowfish_run1 ]
-{
-};
+{};
 
 void () blowfish_hurt1 = [ 71, blowfish_hurt2 ]
-{
-};
+{};
 
 void () blowfish_hurt2 = [ 72, blowfish_hurt3 ]
 {
@@ -551,24 +493,19 @@ void () blowfish_hurt3 = [ 73, blowfish_hurt4 ]
 };
 
 void () blowfish_hurt4 = [ 74, blowfish_hurt5 ]
-{
-};
+{};
 
 void () blowfish_hurt5 = [ 75, blowfish_hurt6 ]
-{
-};
+{};
 
 void () blowfish_hurt6 = [ 76, blowfish_hurt7 ]
-{
-};
+{};
 
 void () blowfish_hurt7 = [ 77, blowfish_hurt8 ]
-{
-};
+{};
 
 void () blowfish_hurt8 = [ 78, blowfish_run1 ]
-{
-};
+{};
 
 void (entity attacker, float damage) blowfish_pain =
 {
@@ -587,7 +524,6 @@ void (entity attacker, float damage) blowfish_pain =
 		blowfish_hurt1 ();
 	}
 };
-
 void () blowfish_chomp =
 {
 	if ((random () < 0.5))
@@ -599,7 +535,6 @@ void () blowfish_chomp =
 		blowfish_attack1 ();
 	}
 };
-
 void () monster_blow1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -617,8 +552,6 @@ void () monster_blow1 =
 	self.th_missile = blowfish_markfire1;
 	coop_swimmonster_start ();
 };
-
-
 void () monster_blow =
 {
 	if (deathmatch)

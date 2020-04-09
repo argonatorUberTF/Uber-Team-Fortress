@@ -4,13 +4,11 @@ float MAX_t_dropS    = 74;
 float MAX_t_dropS    = 12;
 #endif
 void () streak;
-
 void () WIPE_UP_BLOOD =
 {
 	num_blooddrops = (num_blooddrops - SPAWNFLAG_SUPERSPIKE);
 	remove (self);
 };
-
 void () bd =
 {
 	if (self.aqua_sound)
@@ -34,13 +32,10 @@ void () bd =
 			self.nextthink = (time + SPAWNFLAG_SUPERSPIKE);
 		}
 	}
-
 #ifdef mtf_coop_bloodmod
-	//if (random() < 0.4)
 		SpawnBlood (self.origin, 0);
 #endif
 };
-
 void () blooddrops =
 {
 	local vector spot;
@@ -70,7 +65,6 @@ void () blooddrops =
 	t_drop.think = bd;
 	t_drop.nextthink = time;
 };
-
 void () wallsplat =
 {
 	local vector dir;
@@ -133,7 +127,6 @@ void () wallsplat =
 		bcount = (bcount - SPAWNFLAG_SUPERSPIKE);
 	}
 };
-
 void () streak =
 {
 	local vector dir;
@@ -145,7 +138,6 @@ void () streak =
 	local float tightness;
 	local float hypo;
 	local entity t_drop;
-
 	tightness = (SVC_INTERMISSION + (crandom () * SVC_SETVIEWPORT));
 	if ((random () < 0.5))
 	{
@@ -184,20 +176,15 @@ void () streak =
 		bcount = (bcount + SPAWNFLAG_SUPERSPIKE);
 	}
 };
-
 #ifdef mtf_coop_bloodmod
 void () SpawnMeatSprayBloody_Touch =
 {
 	local entity datk;
-	
 	datk = spawn();
 	datk.origin = self.orig_origin;
 	damage_attacker = datk;
-	
 	wallsplat();
-	
 	dremove(datk);
-	
 };
 #endif
 //END

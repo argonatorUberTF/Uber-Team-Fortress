@@ -1,7 +1,6 @@
 #define ATTN_BANSHEE    	0.5
 #define SERVO_VOLUMETWO    0.5
 void () Projectile_Hit;
-
 void (float ofs, float turn) b_fire_rocket =
 {
 	local vector src;
@@ -54,7 +53,6 @@ void (float ofs, float turn) b_fire_rocket =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, src);
 };
-
 void () Projectile_Hit =
 {
 	local vector org;
@@ -87,7 +85,6 @@ void () Projectile_Hit =
 		remove (self);
 	}
 };
-
 void (float angdelta, float delta) ban_rotate =
 {
 	if ((fabs (angdelta) < SVC_SETVIEWANGLES))
@@ -113,7 +110,6 @@ void (float angdelta, float delta) ban_rotate =
 		}
 	}
 };
-
 void () banshee_think =
 {
 	local float delta;
@@ -177,7 +173,6 @@ void () banshee_think =
 		}
 	}
 };
-
 void () ban_thinkwalk =
 {
 	local float delta;
@@ -252,14 +247,12 @@ void () ban_thinkwalk =
 	}
 };
 void () ban_fire_still;
-
 void () banshee_stand1 = [ 0, banshee_stand2 ]
 {
 	ai_stand ();
 	banshee_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () banshee_stand2 = [ 1, banshee_stand3 ]
 {
 	banshee_think ();
@@ -964,7 +957,6 @@ void (entity attacker, float damage) banshee_pain =
 	self.pain_finished = (time + SPAWNFLAG_LASER);
 	sound (self, CHAN_VOICE, "banshee/pain.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () banshee_missile_attack =
 {
 	local float n;
@@ -985,7 +977,6 @@ void () banshee_missile_attack =
 		}
 	}
 };
-
 void () banshee_repulse_attack =
 {
 	local entity head;
@@ -1023,7 +1014,6 @@ void () banshee_repulse_attack =
 		}
 	}
 };
-
 void () ban_fire_still =
 {
 	local vector spot1;
@@ -1064,7 +1054,6 @@ void () ban_fire_still =
 	}
 	return;
 };
-
 float () BansheeCheckAttack =
 {
 	local vector spot1;
@@ -1101,7 +1090,6 @@ float () BansheeCheckAttack =
 	self.lefty = SPAWNFLAG_SUPERSPIKE;
 	return (FALSE);
 };
-
 void () monster_banshee1 =
 {
 	local entity body;
@@ -1157,7 +1145,6 @@ void () monster_banshee1 =
 	self.th_pain = banshee_pain;
 	coop_walkmonster_start ();
 };
-
 void () monster_banshee =
 {
 

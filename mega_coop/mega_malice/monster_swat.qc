@@ -1,7 +1,6 @@
 void (float offset) SwatMissile;
 void () swat_fire01;
 void () swat_fire07;
-
 void () IdleSound =
 {
 	local float x;
@@ -32,97 +31,57 @@ void () swat_stand = [ 0, swat_stand1 ]
 };
 
 void () swat_stand1 = [ 1, swat_stand2 ]
-{
-};
-
+{};
 void () swat_stand2 = [ 2, swat_stand3 ]
-{
-};
-
+{};
 void () swat_stand3 = [ 3, swat_stand4 ]
-{
-};
-
+{};
 void () swat_stand4 = [ 4, swat_stand5 ]
-{
-};
-
+{};
 void () swat_stand5 = [ 5, swat_stand6 ]
-{
-};
-
+{};
 void () swat_stand6 = [ 6, swat_stand7 ]
-{
-};
-
+{};
 void () swat_stand7 = [ 7, swat_stand8 ]
-{
-};
-
+{};
 void () swat_stand8 = [ 8, swat_stand9 ]
-{
-};
-
+{};
 void () swat_stand9 = [ 9, swat_stand10 ]
-{
-};
-
+{};
 void () swat_stand10 = [ 10, swat_stand11 ]
-{
-};
-
+{};
 void () swat_stand11 = [ 11, swat_stand12 ]
-{
-};
-
+{};
 void () swat_stand12 = [ 12, swat_stand13 ]
-{
-};
-
+{};
 void () swat_stand13 = [ 13, swat_stand14 ]
-{
-};
-
+{};
 void () swat_stand14 = [ 14, swat_stand15 ]
-{
-};
-
+{};
 void () swat_stand15 = [ 15, swat_stand16 ]
-{
-};
-
+{};
 void () swat_stand16 = [ 16, swat_stand17 ]
-{
-};
-
+{};
 void () swat_stand17 = [ 17, swat_stand18 ]
-{
-};
-
+{};
 void () swat_stand18 = [ 18, swat_stand19 ]
-{
-};
-
+{};
 void () swat_stand19 = [ 19, swat_stand20 ]
 {
 	ai_stand ();
 };
-
 void () swat_stand20 = [ 20, swat_stand21 ]
 {
 	ai_stand ();
 };
-
 void () swat_stand21 = [ 21, swat_stand22 ]
 {
 	ai_stand ();
 };
-
 void () swat_stand22 = [ 22, swat_stand23 ]
 {
 	ai_stand ();
 };
-
 void () swat_stand23 = [ 23, swat_stand24 ]
 {
 	ai_stand ();
@@ -423,94 +382,58 @@ void () swat_walk12 = [ 35, swat_walk01 ]
 };
 
 void () swat_pain01 = [ 38, swat_pain02 ]
-{
-};
-
+{};
 void () swat_pain02 = [ 39, swat_pain03 ]
-{
-};
-
+{};
 void () swat_pain03 = [ 40, swat_pain04 ]
-{
-};
-
+{};
 void () swat_pain04 = [ 41, swat_pain05 ]
-{
-};
-
+{};
 void () swat_pain05 = [ 42, swat_pain06 ]
-{
-};
-
+{};
 void () swat_pain06 = [ 43, swat_pain07 ]
-{
-};
-
+{};
 void () swat_pain07 = [ 44, swat_pain08 ]
-{
-};
-
+{};
 void () swat_pain08 = [ 45, swat_run04 ]
-{
-};
-
+{};
 void () swat_hurt01 = [ 87, swat_hurt02 ]
-{
-};
-
+{};
 void () swat_hurt02 = [ 88, swat_hurt03 ]
-{
-};
-
+{};
 void () swat_hurt03 = [ 89, swat_hurt04 ]
-{
-};
-
+{};
 void () swat_hurt04 = [ 90, swat_hurt05 ]
-{
-};
-
+{};
 void () swat_hurt05 = [ 91, swat_hurt06 ]
-{
-};
-
+{};
 void () swat_hurt06 = [ 92, swat_hurt07 ]
-{
-};
-
+{};
 void () swat_hurt07 = [ 93, swat_hurt08 ]
-{
-};
-
+{};
 void () swat_hurt08 = [ 94, swat_run04 ]
-{
-};
-
+{};
 void () swat_jug01 = [ 114, swat_jug02 ]
 {
 	sound (self, CHAN_VOICE, "swat/jug.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	ai_forward (SPAWNFLAG_LASER);
 };
-
 void () swat_jug02 = [ 115, swat_jug03 ]
 {
 	self.solid = SOLID_NOT;
 	ai_forward (SPAWNFLAG_LASER);
 	self.nextthink = (time + 0.05);
 };
-
 void () swat_jug03 = [ 116, swat_jug04 ]
 {
 	self.nextthink = (time + 0.05);
 	ai_forward (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () swat_jug04 = [ 117, swat_jug05 ]
 {
 	self.nextthink = (time + 0.05);
 	ai_forward (SPAWNFLAG_LASER);
 };
-
 void () swat_jug05 = [ 118, swat_jug06 ]
 {
 	self.ammo_nails2 = 10;
@@ -522,19 +445,16 @@ void () swat_jug05 = [ 118, swat_jug06 ]
 	self.nextthink = (time + 0.05);
 	ai_forward (SPAWNFLAG_LASER);
 };
-
 void () swat_jug06 = [ 119, swat_jug07 ]
 {
 	self.nextthink = (time + 0.05);
 	ai_forward (SPAWNFLAG_LASER);
 };
-
 void () swat_jug07 = [ 120, swat_jug08 ]
 {
 	self.nextthink = (time + 0.05);
 	ai_forward (AS_MELEE);
 };
-
 void () swat_jug08 = [ 121, swat_jug09 ]
 {
 	self.nextthink = (time + 0.05);
@@ -688,28 +608,18 @@ void () swat_die05 = [ 50, swat_die06 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () swat_die06 = [ 51, swat_die07 ]
-{
-};
-
+{};
 void () swat_die07 = [ 52, swat_die08 ]
-{
-};
-
+{};
 void () swat_die08 = [ 53, swat_die09 ]
-{
-};
-
+{};
 void () swat_die09 = [ 54, swat_die09 ]
-{
-};
-
+{};
 void () swat_up01 = [ 46, swat_up02 ]
 {
 	self.health = 100;
 };
-
 void () swat_up02 = [ 47, swat_up03 ]
 {
 	self.health = 100;
@@ -779,23 +689,14 @@ void () swat_up15 = [ 109, swat_up16 ]
 {
 	self.health = SPAWNFLAG_SUPERSPIKE;
 };
-
 void () swat_up16 = [ 110, swat_up17 ]
-{
-};
-
+{};
 void () swat_up17 = [ 111, swat_up18 ]
-{
-};
-
+{};
 void () swat_up18 = [ 112, swat_up19 ]
-{
-};
-
+{};
 void () swat_up19 = [ 113, swat_run01 ]
-{
-};
-
+{};
 void () swat_ded01 = [ 75, swat_ded02 ]
 {
 	sound (self, CHAN_VOICE, "swat/death2.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
@@ -807,25 +708,15 @@ void () swat_ded02 = [ 76, swat_ded03 ]
 };
 
 void () swat_ded03 = [ 77, swat_ded04 ]
-{
-};
-
+{};
 void () swat_ded04 = [ 78, swat_ded05 ]
-{
-};
-
+{};
 void () swat_ded05 = [ 79, swat_ded06 ]
-{
-};
-
+{};
 void () swat_ded06 = [ 80, swat_ded07 ]
-{
-};
-
+{};
 void () swat_ded07 = [ 81, swat_ded08 ]
-{
-};
-
+{};
 void () swat_ded08 = [ 82, swat_ded09 ]
 {
 	self.ammo_nails2 = 10;
@@ -835,45 +726,32 @@ void () swat_ded08 = [ 82, swat_ded09 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () swat_ded09 = [ 83, swat_ded10 ]
-{
-};
-
+{};
 void () swat_ded10 = [ 84, swat_ded11 ]
-{
-};
-
+{};
 void () swat_ded11 = [ 85, swat_ded12 ]
-{
-};
-
+{};
 void () swat_ded12 = [ 86, swat_ded12 ]
-{
-};
-
+{};
 void () swat_aadie01 = [ 95, swat_aadie02 ]
 {
 	sound (self, CHAN_VOICE, "swat/death3.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	ai_forward (10);
 };
-
 void () swat_aadie02 = [ 96, swat_aadie03 ]
 {
 	ai_forward (10);
 	self.solid = SOLID_NOT;
 };
-
 void () swat_aadie03 = [ 97, swat_aadie04 ]
 {
 	ai_forward (10);
 };
-
 void () swat_aadie04 = [ 98, swat_aadie05 ]
 {
 	ai_forward (SVC_SETVIEWPORT);
 };
-
 void () swat_aadie05 = [ 99, swat_aadie06 ]
 {
 	self.ammo_nails2 = 10;
@@ -883,78 +761,45 @@ void () swat_aadie05 = [ 99, swat_aadie06 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () swat_aadie06 = [ 100, swat_aadie07 ]
-{
-};
-
+{};
 void () swat_aadie07 = [ 101, swat_aadie08 ]
-{
-};
-
+{};
 void () swat_aadie08 = [ 102, swat_aadie09 ]
-{
-};
-
+{};
 void () swat_aadie09 = [ 103, swat_aadie09 ]
-{
-};
-
+{};
 void () swat_gib01 = [ 55, swat_gib02 ]
 {
 	ThrowGib ("progs/h_swat.mdl", -100);
 	sound (self, CHAN_VOICE, "player/udeath.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () swat_gib02 = [ 56, swat_gib03 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () swat_gib03 = [ 57, swat_gib20 ]
-{
-};
-
+{};
 void () swat_gib20 = [ 56, swat_gib21 ]
-{
-};
-
+{};
 void () swat_gib21 = [ 55, swat_gib22 ]
-{
-};
-
+{};
 void () swat_gib22 = [ 56, swat_gib23 ]
-{
-};
-
+{};
 void () swat_gib23 = [ 57, swat_gib04 ]
-{
-};
-
+{};
 void () swat_gib04 = [ 58, swat_gib05 ]
-{
-};
-
+{};
 void () swat_gib05 = [ 59, swat_gib06 ]
-{
-};
-
+{};
 void () swat_gib06 = [ 60, swat_gib07 ]
-{
-};
-
+{};
 void () swat_gib07 = [ 61, swat_gib08 ]
-{
-};
-
+{};
 void () swat_gib08 = [ 62, swat_gib09 ]
-{
-};
-
+{};
 void () swat_gib09 = [ 63, swat_gib10 ]
-{
-};
-
+{};
 void () swat_gib10 = [ 64, swat_gib11 ]
 {
 	self.ammo_nails2 = 10;
@@ -964,43 +809,28 @@ void () swat_gib10 = [ 64, swat_gib11 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () swat_gib11 = [ 65, swat_gib12 ]
-{
-};
-
+{};
 void () swat_gib12 = [ 66, swat_gib12 ]
-{
-};
-
+{};
 void () swat_gibb01 = [ 67, swat_gibb02 ]
 {
 	sound (self, CHAN_VOICE, "swat/arms.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	ThrowGib ("progs/gib1.mdl", -100);
 	ThrowGib ("progs/gib1.mdl", -100);
 };
-
 void () swat_gibb02 = [ 68, swat_gibb03 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () swat_gibb03 = [ 67, swat_gibb04 ]
-{
-};
-
+{};
 void () swat_gibb04 = [ 68, swat_gibb05 ]
-{
-};
-
+{};
 void () swat_gibb05 = [ 69, swat_gibb06 ]
-{
-};
-
+{};
 void () swat_gibb06 = [ 70, swat_gibb07 ]
-{
-};
-
+{};
 void () swat_gibb07 = [ 71, swat_gibb08 ]
 {
 	self.ammo_nails2 = 10;
@@ -1010,19 +840,15 @@ void () swat_gibb07 = [ 71, swat_gibb08 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () swat_gibb08 = [ 72, swat_gibb09 ]
 {
 };
-
 void () swat_gibb09 = [ 73, swat_gibb10 ]
 {
 };
-
 void () swat_gibb10 = [ 74, swat_gibb10 ]
 {
 };
-
 void () swat_gib =
 {
 	if ((random () > 0.5))
@@ -1034,7 +860,6 @@ void () swat_gib =
 		swat_gib01 ();
 	}
 };
-
 void () swat_die =
 {
 	local float r;
@@ -1073,7 +898,6 @@ void () swat_die =
 		}
 	}
 };
-
 void (entity attacker, float damage) swat_pain =
 {
 	local float n;
@@ -1117,7 +941,6 @@ void (entity attacker, float damage) swat_pain =
 		}
 	}
 };
-
 void () swat_fire =
 {
 	if ((random () > 0.5))
@@ -1241,7 +1064,6 @@ void () monster_swat1 =
 	self.nextthink = (self.nextthink + (random () * SPAWNFLAG_LASER));
 	self.think = coop_walkmonster_start;
 };
-
 void () monster_swat =
 {
 	precache_sound ("swat/idle1.wav");
@@ -1272,9 +1094,6 @@ void () monster_swat =
 	COOP_SetLives ();
 	self.#npc_spawnfunc ();	
 };
-	
-
-
 void () thing_body =
 {
 	local float n;

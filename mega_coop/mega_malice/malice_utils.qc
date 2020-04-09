@@ -11,7 +11,6 @@ void () Util_Precache =
 	precache_sound ("utils/putout.wav");
 	precache_model ("progs/probe.mdl");
 };
-
 void () util_touch =
 {
 	if ((other.classname != "player"))
@@ -44,7 +43,6 @@ void () util_touch =
 	activator = other;
 	SUB_UseTargets ();
 };
-
 void () utility_parachute =
 {
 	self.touch = util_touch;
@@ -56,7 +54,6 @@ void () utility_parachute =
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	StartItem ();
 };
-
 void () utility_probe =
 {
 	self.touch = util_touch;
@@ -68,7 +65,6 @@ void () utility_probe =
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	StartItem ();
 };
-
 void () utility_hoverboard =
 {
 	self.touch = util_touch;
@@ -80,7 +76,6 @@ void () utility_hoverboard =
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	StartItem ();
 };
-
 void () utility_scuba =
 {
 	self.touch = util_touch;
@@ -91,12 +86,10 @@ void () utility_scuba =
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	StartItem ();
 };
-
 void () bigassgun =
 {
 remove(self);
 };
-
 void () HoverBoard =
 {
 	if ((self.hover_active == AS_STRAIGHT))
@@ -130,29 +123,17 @@ void () HoverBoard =
 		sound (self, CHAN_VOICE, "utils/hoveron.wav", AS_STRAIGHT, ATTN_NORM);
 	}
 };
-
 void () exit_vehicle;
-
 void () eco1 = [ 0, eco2 ]
-{
-};
-
+{};
 void () eco2 = [ 1, eco3 ]
-{
-};
-
+{};
 void () eco3 = [ 2, eco4 ]
-{
-};
-
+{};
 void () eco4 = [ 3, eco5 ]
-{
-};
-
+{};
 void () eco5 = [ 4, SUB_Remove ]
-{
-};
-
+{};
 void () Douse_Flame =
 {
 	if ((other.health <= MSG_BROADCAST))
@@ -167,7 +148,6 @@ void () Douse_Flame =
 	other.extinguished = WEAPON_SHOTGUN;
 	other.effects = (other.effects - (other.effects & EF_DIMLIGHT));
 };
-
 void () WhoFarted =
 {
 	local entity co2;
@@ -184,7 +164,6 @@ void () WhoFarted =
 	setmodel (co2, "progs/s_co2.spr");
 	setsize (co2, VEC_ORIGIN, VEC_ORIGIN);
 };
-
 void () extinguisher_touch =
 {
 	if ((other.health <= MSG_BROADCAST))
@@ -207,7 +186,6 @@ void () extinguisher_touch =
 	}
 	droptofloor ();
 };
-
 void () fire_extinguisher =
 {
 	precache_model ("progs/extngshr.mdl");
@@ -233,7 +211,6 @@ void () fire_extinguisher2 =
 	self.fixangle = TRUE;
 	StartItem ();
 };
-
 void () compresser_touch =
 {
 	if ((other.health <= MSG_BROADCAST))
@@ -253,7 +230,6 @@ void () compresser_touch =
 		other.armorvalue = (other.armorvalue + WEAPON_SHOTGUN);
 	}
 };
-
 void () air_compresser =
 {
 	precache_model ("progs/extngshr.mdl");

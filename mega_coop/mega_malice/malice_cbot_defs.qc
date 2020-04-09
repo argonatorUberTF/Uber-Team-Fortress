@@ -29,11 +29,9 @@ float cbotnum;
 .float pi8;
 .float pi9;
 void (entity me) CBot_Create;
-
 void () CN_Client_Init_Think =
 {
 };
-
 string () choosename =
 {
 	if ((cbotnum == MSG_BROADCAST))
@@ -54,7 +52,6 @@ string () choosename =
 			}
 			else
 			{
-//				return;
 				return("Zero");
 			}
 		}

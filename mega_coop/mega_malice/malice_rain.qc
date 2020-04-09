@@ -11,7 +11,6 @@ void () rain_splash =
 	particle ((self.origin + '0 0 -15'), VEC_ORIGIN, x, SVC_SETVIEWANGLES);
 	remove (self);
 };
-
 void () rain_fall =
 {
 	local entity rain;
@@ -29,7 +28,6 @@ void () rain_fall =
 	rain.origin_y = (self.absmin_y + (random () * self.size_y));
 	rain.origin_z = (self.absmin_z + (random () * self.size_z));
 };
-
 void () makerain =
 {
 	local float temp;
@@ -42,7 +40,6 @@ void () makerain =
 	self.nextthink = (time + 0.07);
 	self.think = makerain;
 };
-
 void () rain =
 {
 	precache_model ("progs/rain.mdl");
@@ -54,31 +51,18 @@ void () rain =
 	precache_sound ("ambience/stormy1.wav");
 	ambientsound (self.origin, "ambience/stormy1.wav", WEAPON_SHOTGUN, ATTN_NORM);
 };
-
 void () splash1 = [ 0, splash2 ]
-{
-};
-
+{};
 void () splash2 = [ 1, splash3 ]
-{
-};
-
+{};
 void () splash3 = [ 2, splash4 ]
-{
-};
-
+{};
 void () splash4 = [ 3, splash5 ]
-{
-};
-
+{};
 void () splash5 = [ 4, splash6 ]
-{
-};
-
+{};
 void () splash6 = [ 5, SUB_Remove ]
-{
-};
-
+{};
 void (float number, entity where) WaterSplash =
 {
 	local entity splash;

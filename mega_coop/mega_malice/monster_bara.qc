@@ -2,22 +2,18 @@ void () bar_stand1 = [ 18, bar_stand2 ]
 {
 	ai_stand ();
 };
-
 void () bar_stand2 = [ 19, bar_stand3 ]
 {
 	ai_stand ();
 };
-
 void () bar_stand3 = [ 20, bar_stand4 ]
 {
 	ai_stand ();
 };
-
 void () bar_stand4 = [ 21, bar_stand5 ]
 {
 	ai_stand ();
 };
-
 void () bar_stand5 = [ 22, bar_stand6 ]
 {
 	ai_stand ();
@@ -187,19 +183,16 @@ void () bar_run1 = [ 18, bar_run2 ]
 		sound (self, CHAN_VOICE, "blob/land1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	}
 };
-
 void () bar_run2 = [ 19, bar_run3 ]
 {
 	ai_forward (20);
 	ai_face ();
 };
-
 void () bar_run3 = [ 20, bar_run4 ]
 {
 	ai_forward (20);
 	ai_face ();
 };
-
 void () bar_run4 = [ 21, bar_run5 ]
 {
 	ai_forward (20);
@@ -211,19 +204,16 @@ void () bar_run5 = [ 22, bar_run6 ]
 	ai_run (20);
 	ai_face ();
 };
-
 void () bar_run6 = [ 23, bar_run7 ]
 {
 	ai_forward (20);
 	ai_face ();
 };
-
 void () bar_run7 = [ 24, bar_run8 ]
 {
 	ai_run (20);
 	ai_face ();
 };
-
 void () bar_run8 = [ 25, bar_run9 ]
 {
 	ai_run (20);
@@ -298,7 +288,6 @@ void () baracuda_melee =
 {
 	local vector delta;
 	local float ldmg;
-
 	if (!self.enemy)
 	{
 		return;
@@ -537,7 +526,6 @@ void () monster_bara1 =
 	self.th_melee = bar_attack1;
 	coop_swimmonster_start ();
 };
-
 void () monster_bara =
 {
 	precache_model ("progs/baracuda.mdl");

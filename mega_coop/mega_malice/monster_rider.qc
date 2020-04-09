@@ -1,6 +1,5 @@
 void () Rider_Missile_Touch;
 void () rider_pppain1;
-
 void (float ofs, float turn) rider_launch_missile =
 {
 	local vector src;
@@ -54,7 +53,6 @@ void (float ofs, float turn) rider_launch_missile =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, src);
 };
-
 void () Rider_Missile_Touch =
 {
 	local vector org;
@@ -69,14 +67,12 @@ void () Rider_Missile_Touch =
 	}
 	org = (self.origin - (SECRET_NO_SHOOT * normalize (self.velocity)));
 	SpawnBlood (org, 15);
-//	SpawnBlood (org, (self.velocity * 0.2), 15, other);
 	T_Damage (other, self, self.owner, SVC_SETVIEWANGLES);
 	sound (self, CHAN_WEAPON, "enforcer/enfstop.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	self.origin = (self.origin - (SECRET_NO_SHOOT * normalize (self.velocity)));
 	te_gunshot(org);
 	remove (self);
 };
-
 void (float angdelta, float delta) rider_turn =
 {
 	if ((fabs (angdelta) < SVC_SETVIEWANGLES))
@@ -102,7 +98,6 @@ void (float angdelta, float delta) rider_turn =
 		}
 	}
 };
-
 void () rider_think =
 {
 	local float delta;
@@ -178,9 +173,7 @@ void () rider_walkthink =
 		FoundTarget ();
 	}
 };
-
 void () rider_stand_attack;
-
 void () idlesnd =
 {
 	if ((random () < 0.2))
@@ -195,7 +188,6 @@ void () idlesnd =
 		}
 	}
 };
-
 void () rider_stand1 = [ 0, rider_stand2 ]
 {
 	ai_stand ();
@@ -203,7 +195,6 @@ void () rider_stand1 = [ 0, rider_stand2 ]
 	self.nextthink = (time + 0.2);
 	idlesnd ();
 };
-
 void () rider_stand2 = [ 1, rider_stand3 ]
 {
 	rider_think ();
@@ -690,11 +681,8 @@ void () rider_die10 = [ 76, rider_die11 ]
 {
 	rider_think ();
 };
-
 void () rider_die11 = [ 76, SUB_Null ]
-{
-};
-
+{};
 void (entity attacker, float damage) rider_pain =
 {
 	if ((self.health <= MSG_BROADCAST))
@@ -709,7 +697,6 @@ void (entity attacker, float damage) rider_pain =
 	sound (self, CHAN_VOICE, "rider/pain1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	rider_pppain1 ();
 };
-
 void () rider_pppain1 = [ 15, rider_pppain2 ]
 {
 	rider_think ();
@@ -764,14 +751,12 @@ void () rider_jump02 = [ 43, rider_jump03 ]
 {
 	rider_think ();
 };
-
 void () rider_jump03 = [ 44, rider_jump04 ]
 {
 	rider_think ();
 	ChangeYaw ();
 	ChangeYaw ();
 };
-
 void () rider_jump04 = [ 45, rider_jump05 ]
 {
 	rider_think ();
@@ -779,7 +764,6 @@ void () rider_jump04 = [ 45, rider_jump05 ]
 	ChangeYaw ();
 	ChangeYaw ();
 };
-
 void () rider_jump05 = [ 46, rider_jump06 ]
 {
 	rider_think ();
@@ -787,7 +771,6 @@ void () rider_jump05 = [ 46, rider_jump06 ]
 	ChangeYaw ();
 	ChangeYaw ();
 };
-
 void () rider_jump06 = [ 47, rider_jump07 ]
 {
 	rider_think ();
@@ -795,7 +778,6 @@ void () rider_jump06 = [ 47, rider_jump07 ]
 	ChangeYaw ();
 	ChangeYaw ();
 };
-
 void () rider_jump07 = [ 48, rider_jump08 ]
 {
 	rider_think ();
@@ -1015,4 +997,3 @@ void () monster_rider =
 	self.#npc_spawnfunc ();	
 };
 //END
-

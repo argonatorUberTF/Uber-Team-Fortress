@@ -1,13 +1,8 @@
 void () baboon_leap2;
-
 void () baboon_run1;
-
 void () baboon_stand1;
-
 void () baboon_find_enemy;
-
 void () baboon_kill_lights2;
-
 void (float offset) ChuckRock =
 {
 	local vector offang;
@@ -25,7 +20,6 @@ void (float offset) ChuckRock =
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
 	newmis.velocity = (vec * 1000);
 };
-
 void (float side) baboon_bite =
 {
 	local float ldmg;
@@ -55,7 +49,6 @@ void (float side) baboon_bite =
 	makevectors (self.angles);
 	SpawnMeatSpray ((self.origin + (v_forward * SECRET_YES_SHOOT)), (side * v_right));
 };
-
 void () Baboon_JumpTouch =
 {
 	local float ldmg;
@@ -85,62 +78,52 @@ void () Baboon_JumpTouch =
 	self.think = baboon_leap2;
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail1 = [ 58, baboon_wail2 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 	sound (self, CHAN_VOICE, "baboon/wail2.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () baboon_wail2 = [ 59, baboon_wail3 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail3 = [ 60, baboon_wail4 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail4 = [ 61, baboon_wail5 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail5 = [ 62, baboon_wail6 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail6 = [ 63, baboon_wail7 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail7 = [ 64, baboon_wail8 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail8 = [ 65, baboon_wail9 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_wail9 = [ 66, baboon_wail10 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_wail10 = [ 67, baboon_wail11 ]
 {
 	ai_stand ();
@@ -152,57 +135,47 @@ void () baboon_wail11 = [ 66, baboon_wail12 ]
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_wail12 = [ 65, baboon_wail13 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_wail13 = [ 64, baboon_wail14 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail14 = [ 63, baboon_wail15 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail15 = [ 62, baboon_wail16 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail16 = [ 61, baboon_wail17 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail17 = [ 60, baboon_wail18 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail18 = [ 59, baboon_wail19 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_wail19 = [ 58, baboon_stand2 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.1);
 };
-
 void () baboon_stand2;
-
 void () baboon_stand1 = [ 10, baboon_stand2 ]
 {
 	ai_stand ();
@@ -216,19 +189,16 @@ void () baboon_stand1 = [ 10, baboon_stand2 ]
 		sound (self, CHAN_VOICE, "baboon/monst18.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	}
 };
-
 void () baboon_stand2 = [ 11, baboon_stand3 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand3 = [ 12, baboon_stand4 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand4 = [ 13, baboon_stand5 ]
 {
 	ai_stand ();
@@ -532,7 +502,6 @@ void () baboon_find_enemy =
 	}
 	baboon_run1 ();
 };
-
 void () baboon_attack =
 {
 	if ((self.enemy.classname == "breakable_bulb"))
@@ -551,7 +520,6 @@ void () baboon_attack =
 		}
 	}
 };
-
 void () baboon_leap1 = [ 0, baboon_leap11 ]
 {
 	ai_face ();
@@ -564,11 +532,8 @@ void () baboon_leap1 = [ 0, baboon_leap11 ]
 		self.flags = (self.flags - FL_ONGROUND);
 	}
 };
-
 void () baboon_leap11 = [ 0, baboon_leap11 ]
-{
-};
-
+{};
 void () baboon_leap2 = [ 1, baboon_leap3 ]
 {
 	ai_forward (32);
@@ -655,76 +620,58 @@ void (entity attacker, float damage) baboon_pain =
 };
 
 void () baboon_die1 = [ 68, baboon_die2 ]
-{
-};
+{};
 
 void () baboon_die2 = [ 69, baboon_die3 ]
-{
-};
+{};
 
 void () baboon_die3 = [ 70, baboon_die4 ]
-{
-};
+{};
 
 void () baboon_die4 = [ 71, baboon_die5 ]
-{
-};
+{};
 
 void () baboon_die5 = [ 72, baboon_die6 ]
-{
-};
+{};
 
 void () baboon_die6 = [ 73, baboon_die7 ]
-{
-};
+{};
 
 void () baboon_die7 = [ 74, baboon_die8 ]
-{
-};
+{};
 
 void () baboon_die8 = [ 75, baboon_die9 ]
-{
-};
+{};
 
 void () baboon_die9 = [ 76, baboon_die9 ]
-{
-};
+{};
 
 void () baboon_dieb1 = [ 77, baboon_dieb2 ]
-{
-};
+{};
 
 void () baboon_dieb2 = [ 78, baboon_dieb3 ]
-{
-};
+{};
 
 void () baboon_dieb3 = [ 79, baboon_dieb4 ]
-{
-};
+{};
 
 void () baboon_dieb4 = [ 80, baboon_dieb5 ]
-{
-};
+{};
 
 void () baboon_dieb5 = [ 81, baboon_dieb6 ]
-{
-};
+{};
 
 void () baboon_dieb6 = [ 82, baboon_dieb7 ]
-{
-};
+{};
 
 void () baboon_dieb7 = [ 83, baboon_dieb8 ]
-{
-};
+{};
 
 void () baboon_dieb8 = [ 84, baboon_dieb9 ]
-{
-};
+{};
 
 void () baboon_dieb9 = [ 85, baboon_dieb9 ]
-{
-};
+{};
 
 void () baboon_die =
 {
@@ -745,7 +692,6 @@ void () baboon_die =
 	self.solid = SOLID_NOT;
 	baboon_die1 ();
 };
-
 float () CheckBaboonMelee =
 {
 	if ((enemy_range == RANGE_MELEE))
@@ -755,7 +701,6 @@ float () CheckBaboonMelee =
 	}
 	return (FALSE);
 };
-
 float () CheckBaboonJump =
 {
 	local vector dist;
@@ -785,7 +730,6 @@ float () CheckBaboonJump =
 	}
 	return (TRUE);
 };
-
 float () BaboonCheckAttack =
 {
 	if (CheckBaboonMelee ())
@@ -800,7 +744,6 @@ float () BaboonCheckAttack =
 	}
 	return (FALSE);
 };
-
 void () monster_baboon1 =
 {
 		self.solid = SOLID_SLIDEBOX;
@@ -818,8 +761,7 @@ void () monster_baboon1 =
 		self.th_missile = baboon_leap1;
 		self.enemy = world;
 		coop_walkmonster_start ();
-}
-		
+};
 void () monster_baboon =
 {
 	if (!deathmatch)

@@ -1,9 +1,7 @@
-
 void () key_active =
 {
 	self.solid = SOLID_TRIGGER;
 };
-
 void (float type) drop_key =
 {
 	local entity key;
@@ -33,12 +31,10 @@ void (float type) drop_key =
 		key.netname = "access";
 	}
 };
-
 void () sound_alarm =
 {
 	sound (self, CHAN_AUTO, "ambience/siren.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void (vector where) make_bub =
 {
 	local entity bubble;
@@ -54,7 +50,6 @@ void (vector where) make_bub =
 	bubble.nextthink = time;
 	bubble.think = bubble_bob;
 };
-
 void () rot8 =
 {
 	makevectors (self.owner.angles);
@@ -70,7 +65,6 @@ void () rot8 =
 	self.nextthink = time;
 	self.think = rot8;
 };
-
 void () beamshine =
 {
 	local entity beam;
@@ -97,7 +91,6 @@ void () beamshine =
 	beam2.solid = SOLID_NOT;
 	beam2.effects = (beam2.effects | EF_DIMLIGHT);
 };
-
 void () init_siren =
 {
 	if ((other.classname != "player"))
@@ -110,7 +103,6 @@ void () init_siren =
 	sound_alarm ();
 	self.touch = SUB_Null;
 };
-
 void () siren =
 {
 	precache_model ("progs/siren.mdl");
@@ -121,7 +113,6 @@ void () siren =
 	self.touch = init_siren;
 	self.classname = "siren";
 };
-
 void () plant_poo =
 {
 	self.takedamage = DAMAGE_NO;
@@ -137,7 +128,6 @@ void () plant_poo =
 	self.think = plant_poo;
 	self.th_pain = SUB_Null;
 };
-
 void () the_plant =
 {
 	local float oldz;
@@ -161,7 +151,6 @@ void () the_plant =
 		remove (self);
 	}
 };
-
 void () Fly_Fuck =
 {
 	self.think = Fly_Fuck;
@@ -216,7 +205,6 @@ void () Fly_Fuck =
 	}
 	self.dualfire = (self.dualfire + SPAWNFLAG_SUPERSPIKE);
 };
-
 void () trig_think =
 {
 	if ((self.count > SPAWNFLAG_LASER))
@@ -231,7 +219,6 @@ void () trig_think =
 	}
 	self.nextthink = (time + AS_MELEE);
 };
-
 void () release_deathsquad =
 {
 	local entity trig;
@@ -246,7 +233,6 @@ void () release_deathsquad =
 	setsize (trig, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (trig, self.origin);
 };
-
 void () tbone_touch =
 {
 	if ((other.classname == "player"))
@@ -255,7 +241,6 @@ void () tbone_touch =
 		remove (self);
 	}
 };
-
 void () trigger_deathsquad =
 {
 	precache_model ("progs/null.spr");

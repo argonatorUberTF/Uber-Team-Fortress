@@ -1,32 +1,22 @@
 void () frogmen_run1;
-
 void () OutControl;
-
 void () harpoon;
-
 void () frogmen_fire1 = [ 8, frogmen_fire2 ]
 {
 	harpoon ();
 };
-
 void () frogmen_fire2 = [ 9, frogmen_fire3 ]
-{
-};
-
+{};
 void () frogmen_fire3 = [ 10, frogmen_fire4 ]
-{
-};
-
+{};
 void () frogmen_fire4 = [ 11, frogmen_fire5 ]
 {
 	ai_face ();
 };
-
 void () frogmen_fire5 = [ 12, frogmen_fire6 ]
 {
 	ai_face ();
 };
-
 void () frogmen_fire6 = [ 14, frogmen_fire7 ]
 {
 	ai_face ();
@@ -84,7 +74,6 @@ void () frogmen_fire =
 		frogmen_run1 ();
 	}
 };
-
 void () frogmen_stand1 = [ 19, frogmen_stand2 ]
 {
 	ai_stand ();
@@ -142,7 +131,6 @@ void () frogmen_walk1 = [ 0, frogmen_walk2 ]
 		sound (self, CHAN_VOICE, "frogman/idle.wav", SPAWNFLAG_SUPERSPIKE, ATTN_IDLE);
 	}
 };
-
 void () frogmen_walk2 = [ 1, frogmen_walk3 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
@@ -228,52 +216,31 @@ void () frogmen_death1 = [ 39, frogmen_death2 ]
 {
 	sound (self, CHAN_VOICE, "frogman/death.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () frogmen_death2 = [ 40, frogmen_death3 ]
 {
 	self.solid = SOLID_NOT;
 };
 
 void () frogmen_death3 = [ 41, frogmen_death4 ]
-{
-};
-
+{};
 void () frogmen_death4 = [ 42, frogmen_death5 ]
-{
-};
-
+{};
 void () frogmen_death5 = [ 43, frogmen_death6 ]
-{
-};
-
+{};
 void () frogmen_death6 = [ 44, frogmen_death7 ]
-{
-};
-
+{};
 void () frogmen_death7 = [ 45, frogmen_death8 ]
-{
-};
-
+{};
 void () frogmen_death8 = [ 46, frogmen_death9 ]
-{
-};
-
+{};
 void () frogmen_death9 = [ 47, frogmen_death10 ]
-{
-};
-
+{};
 void () frogmen_death10 = [ 48, frogmen_death11 ]
-{
-};
-
+{};
 void () frogmen_death11 = [ 49, frogmen_death11 ]
-{
-};
-
+{};
 void () frogmen_pain1 = [ 28, frogmen_pain2 ]
-{
-};
-
+{};
 void () frogmen_pain2 = [ 29, frogmen_pain3 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
@@ -285,13 +252,9 @@ void () frogmen_pain3 = [ 30, frogmen_pain4 ]
 };
 
 void () frogmen_pain4 = [ 31, frogmen_pain5 ]
-{
-};
-
+{};
 void () frogmen_pain5 = [ 32, frogmen_run1 ]
-{
-};
-
+{};
 void (entity attacker, float damage) frogmen_pain =
 {
 	if ((self.pain_finished > time))
@@ -309,7 +272,6 @@ void (entity attacker, float damage) frogmen_pain =
 	}
 	frogmen_pain1 ();
 };
-
 void () poon_bang =
 {
 	if ((other == self.owner))
@@ -331,7 +293,6 @@ void () poon_bang =
 		remove (self);
 	}
 };
-
 void () harpoon =
 {
 	local vector trace1;
@@ -351,39 +312,33 @@ void () harpoon =
 	setsize (harp, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (harp, ((self.origin + (v_forward * 14)) + '0 0 14'));
 };
-
 void () spinup1 = [ 56, spinup2 ]
 {
 	self.velocity_z = 400;
 	self.touch = OutControl;
 	make_bub (self.origin);
 };
-
 void () spinup2 = [ 57, spinup3 ]
 {
 	self.velocity_z = 400;
 	make_bub (self.origin);
 };
-
 void () spinup3 = [ 58, spinup4 ]
 {
 	self.velocity_z = 400;
 	make_bub (self.origin);
 };
-
 void () spinup4 = [ 59, spinup1 ]
 {
 	self.velocity_z = 400;
 	make_bub (self.origin);
 };
-
 void () spinover1 = [ 50, spinover2 ]
 {
 	self.velocity = self.old_angles;
 	self.touch = OutControl;
 	make_bub (self.origin);
 };
-
 void () spinover2 = [ 51, spinover3 ]
 {
 	self.velocity = self.old_angles;
@@ -401,7 +356,6 @@ void () spinover4 = [ 53, spinover5 ]
 	self.velocity = self.old_angles;
 	make_bub (self.origin);
 };
-
 void () spinover5 = [ 54, spinover6 ]
 {
 	self.velocity = self.old_angles;
@@ -465,7 +419,6 @@ void () frogmen_die =
 		}
 	}
 };
-
 void () monster_frogman1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -507,4 +460,3 @@ void () monster_frogman =
 	self.#npc_spawnfunc ();
 };
 //END
-	

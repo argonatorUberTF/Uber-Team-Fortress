@@ -2,25 +2,21 @@ void () merc_fire;
 void () TelFX;
 void () TeleBabe;
 void () merc_tel1;
-
 void () merc_stand1 = [ 12, merc_stand2 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_stand2 = [ 13, merc_stand3 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_stand3 = [ 14, merc_stand4 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_stand4 = [ 15, merc_stand5 ]
 {
 	ai_stand ();
@@ -284,68 +280,38 @@ void () merc_pain1 = [ 30, merc_pain2 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () merc_pain2 = [ 31, merc_pain3 ]
-{
-};
-
+{};
 void () merc_pain3 = [ 32, merc_pain4 ]
-{
-};
-
+{};
 void () merc_pain4 = [ 33, merc_pain5 ]
-{
-};
-
+{};
 void () merc_pain5 = [ 34, merc_pain6 ]
-{
-};
-
+{};
 void () merc_pain6 = [ 35, merc_run1 ]
-{
-};
-
+{};
 void () merc_paina1 = [ 109, merc_paina2 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () merc_paina2 = [ 110, merc_paina3 ]
-{
-};
-
+{};
 void () merc_paina3 = [ 111, merc_paina4 ]
-{
-};
-
+{};
 void () merc_paina4 = [ 112, merc_paina5 ]
-{
-};
-
+{};
 void () merc_paina5 = [ 113, merc_paina6 ]
-{
-};
-
+{};
 void () merc_paina6 = [ 114, merc_paina7 ]
-{
-};
-
+{};
 void () merc_paina7 = [ 115, merc_paina8 ]
-{
-};
-
+{};
 void () merc_paina8 = [ 116, merc_paina9 ]
-{
-};
-
+{};
 void () merc_paina9 = [ 117, merc_run1 ]
-{
-};
-
+{};
 void () merc_painb1 = [ 79, merc_painb2 ]
-{
-};
-
+{};
 void () merc_painb2 = [ 80, merc_painb3 ]
 {
 	ai_painforward (13);
@@ -357,53 +323,29 @@ void () merc_painb3 = [ 81, merc_painb4 ]
 };
 
 void () merc_painb4 = [ 82, merc_painb5 ]
-{
-};
-
+{};
 void () merc_painb5 = [ 83, merc_painb6 ]
-{
-};
-
+{};
 void () merc_painb6 = [ 84, merc_painb7 ]
-{
-};
-
+{};
 void () merc_painb7 = [ 85, merc_painb8 ]
-{
-};
-
+{};
 void () merc_painb8 = [ 86, merc_painb9 ]
-{
-};
-
+{};
 void () merc_painb9 = [ 87, merc_painb10 ]
-{
-};
-
+{};
 void () merc_painb10 = [ 88, merc_painb11 ]
-{
-};
-
+{};
 void () merc_painb11 = [ 89, merc_painb12 ]
-{
-};
-
+{};
 void () merc_painb12 = [ 90, merc_painb13 ]
-{
-};
-
+{};
 void () merc_painb13 = [ 91, merc_painb14 ]
-{
-};
-
+{};
 void () merc_painb14 = [ 92, merc_run1 ]
-{
-};
-
+{};
 void () merc_ded1 = [ 101, merc_ded2 ]
-{
-};
-
+{};
 void () merc_ded2 = [ 102, merc_ded3 ]
 {
 	ai_back (SPAWNFLAG_SUPERSPIKE);
@@ -416,35 +358,28 @@ void () merc_ded2 = [ 102, merc_ded3 ]
 
 	DropBackpack ();
 };
-
 void () merc_ded3 = [ 103, merc_ded4 ]
 {
 	ai_back (SPAWNFLAG_LASER);
 };
-
 void () merc_ded4 = [ 104, merc_ded5 ]
 {
 	ai_back (AS_MELEE);
 };
-
 void () merc_ded5 = [ 105, merc_ded6 ]
 {
 	ai_back (SECRET_1ST_DOWN);
 };
-
 void () merc_ded6 = [ 106, merc_ded7 ]
 {
 	ai_back (SPAWNFLAG_LASER);
 };
-
 void () merc_ded7 = [ 107, merc_ded8 ]
 {
 };
-
 void () merc_ded8 = [ 108, merc_ded8 ]
 {
 };
-
 void () merc_shoot =
 {
 	local float r;
@@ -472,7 +407,6 @@ void () merc_shoot =
 		}
 	}
 };
-
 void (entity attacker, float damage) merc_pain =
 {
 	local float r;
@@ -511,7 +445,6 @@ void (entity attacker, float damage) merc_pain =
 		}
 	}
 };
-
 void () merc_fire =
 {
 	local vector dir;
@@ -524,7 +457,6 @@ void () merc_fire =
 	dir = normalize ((dir - self.origin));
 	FireBullets (SPAWNFLAG_SUPERSPIKE, dir, '0.1 0.1 0');
 };
-
 void () merc_stand =
 {
 	if ((random () > SERV_VOL))
@@ -536,62 +468,40 @@ void () merc_stand =
 		merc_astand1 ();
 	}
 };
-
 void () merc_die1 = [ 68, merc_die2 ]
-{
-};
-
+{};
 void () merc_die2 = [ 69, merc_die3 ]
-{
-};
-
+{};
 void () merc_die3 = [ 70, merc_die4 ]
 {
 	self.solid = SOLID_NOT;
 	self.ammo_shells2 = SVC_SETVIEWPORT;
+	self.ammo_rockets=10;
+	self.ammo_cells=20;
+	self.ammo_nails=20;
+	self.ammo_shells=20;
 	DropBackpack ();
 };
-
 void () merc_die4 = [ 71, merc_die5 ]
-{
-};
-
+{};
 void () merc_die5 = [ 72, merc_die6 ]
-{
-};
-
+{};
 void () merc_die6 = [ 73, merc_die7 ]
-{
-};
-
+{};
 void () merc_die7 = [ 74, merc_die8 ]
-{
-};
-
+{};
 void () merc_die8 = [ 75, merc_die9 ]
-{
-};
-
+{};
 void () merc_die9 = [ 76, merc_die10 ]
-{
-};
-
+{};
 void () merc_die10 = [ 77, merc_die11 ]
-{
-};
-
+{};
 void () merc_die11 = [ 78, merc_die11 ]
-{
-};
-
+{};
 void () merc_cdie1 = [ 93, merc_cdie2 ]
-{
-};
-
+{};
 void () merc_cdie2 = [ 94, merc_cdie3 ]
-{
-};
-
+{};
 void () merc_cdie3 = [ 95, merc_cdie4 ]
 {
 	self.solid = SOLID_NOT;
@@ -599,30 +509,22 @@ void () merc_cdie3 = [ 95, merc_cdie4 ]
 	DropBackpack ();
 	ai_back (SECRET_1ST_DOWN);
 };
-
 void () merc_cdie4 = [ 96, merc_cdie5 ]
 {
 	ai_back (SECRET_1ST_DOWN);
 };
-
 void () merc_cdie5 = [ 97, merc_cdie6 ]
 {
 	ai_back (SECRET_1ST_DOWN);
 };
-
 void () merc_cdie6 = [ 98, merc_cdie7 ]
 {
 	ai_back (SECRET_1ST_DOWN);
 };
-
 void () merc_cdie7 = [ 99, merc_cdie8 ]
-{
-};
-
+{};
 void () merc_cdie8 = [ 100, merc_cdie8 ]
-{
-};
-
+{};
 void () merc_die =
 {
 	local float r;
@@ -657,37 +559,31 @@ void () merc_die =
 		}
 	}
 };
-
 void () merc_heh1 = [ 134, merc_heh2 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh2 = [ 134, merc_heh3 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh3 = [ 134, merc_heh4 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh4 = [ 134, merc_heh5 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh5 = [ 134, merc_heh6 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh6 = [ 134, merc_heh7 ]
 {
 	ai_walk (20);
@@ -750,47 +646,29 @@ void () merc_heh15 = [ 134, merc_spn1 ]
 void () merc_spn1;
 
 void () merc_tel1 = [ 118, merc_tel2 ]
-{
-};
-
+{};
 void () merc_tel2 = [ 119, merc_tel3 ]
-{
-};
-
+{};
 void () merc_tel3 = [ 120, merc_tel4 ]
-{
-};
-
+{};
 void () merc_tel4 = [ 121, merc_tel5 ]
-{
-};
-
+{};
 void () merc_tel5 = [ 122, merc_tel6 ]
-{
-};
-
+{};
 void () merc_tel6 = [ 123, merc_tel7 ]
-{
-};
-
+{};
 void () merc_tel7 = [ 124, merc_tel8 ]
-{
-};
-
+{};
 void () merc_tel8 = [ 125, merc_tel9 ]
-{
-};
-
+{};
 void () merc_tel9 = [ 126, merc_heh1 ]
 {
 	TeleBabe ();
 	self.solid = SOLID_NOT;
 };
-
 void () TeleBabe =
 {
 	local entity zip;
-
 	MuzzleEnt(self);
 	sound (self, CHAN_VOICE, "misc/r_tele1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	zip = spawn ();
@@ -799,7 +677,6 @@ void () TeleBabe =
 	setsize (zip, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (zip, self.origin);
 };
-
 void () TelFX =
 {
 	self.origin = (self.origin - (SECRET_NO_SHOOT * normalize (self.velocity)));
@@ -811,7 +688,6 @@ void () TelFX =
 	remove (self);
 	return;
 };
-
 void () merc_spn1 = [ 127, merc_spn2 ]
 {
 	TeleBabe ();
@@ -819,32 +695,20 @@ void () merc_spn1 = [ 127, merc_spn2 ]
 	self.solid = SOLID_SLIDEBOX;
 	setsize (self, VEC_HULL_MIN, '16 16 40');
 };
-
 void () merc_spn2 = [ 128, merc_spn3 ]
 {
 	ai_face ();
 };
-
 void () merc_spn3 = [ 129, merc_spn4 ]
-{
-};
-
+{};
 void () merc_spn4 = [ 130, merc_spn5 ]
-{
-};
-
+{};
 void () merc_spn5 = [ 131, merc_spn6 ]
-{
-};
-
+{};
 void () merc_spn6 = [ 132, merc_spn7 ]
-{
-};
-
+{};
 void () merc_spn7 = [ 133, merc_run1 ]
-{
-};
-
+{};
 void () monster_merc1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -861,9 +725,7 @@ void () monster_merc1 =
 	self.th_die = merc_die;
 	self.th_melee = merc_mel1;
 	coop_walkmonster_start ();
-
 };
-
 void () monster_merc =
 {
 	precache_model ("progs/mercbabe.mdl");
@@ -885,5 +747,4 @@ void () monster_merc =
 	COOP_SetLives ();
 	self.#npc_spawnfunc ();
 };
-	
 //END

@@ -1,53 +1,32 @@
-
 void () cbt_stand1 = [ 0, cbt_stand1 ]
 {
 	cbot_ai_stand ();
 };
 
 void () cbt_jump1 = [ 58, cbt_jump2 ]
-{
-};
-
+{};
 void () cbt_jump2 = [ 59, cbt_jump3 ]
-{
-};
-
+{};
 void () cbt_jump3 = [ 60, cbt_jump4 ]
-{
-};
-
+{};
 void () cbt_jump4 = [ 61, cbt_jump5 ]
-{
-};
-
+{};
 void () cbt_jump5 = [ 62, cbt_jump6 ]
-{
-};
-
+{};
 void () cbt_jump6 = [ 63, cbt_jump7 ]
-{
-};
-
+{};
 void () cbt_jump7 = [ 64, cbt_jump8 ]
-{
-};
-
+{};
 void () cbt_jump8 = [ 65, cbt_jump9 ]
-{
-};
-
+{};
 void () cbt_jump9 = [ 66, cbt_jump10 ]
-{
-};
-
+{};
 void () cbt_jump10 = [ 67, cbt_run1 ]
 {
 	cbot_ai_run (25);
 };
 void () Fly_Fuck;
-
 void () attack_pattern;
-
 void () Engage =
 {
 	local float vel;
@@ -80,7 +59,6 @@ void () Engage =
 	self.nextthink = (time + 0.3);
 	sound (self, CHAN_BODY, "weapons/punish4.wav", WEAPON_SHOTGUN, ATTN_NORM);
 };
-
 void () NarfSprite =
 {
 	local entity narf;
@@ -92,19 +70,12 @@ void () NarfSprite =
 	setsize (narf, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (narf, (self.origin - '0 0 10'));
 };
-
 void () cbt_rocketjump1 = [ 58, cbt_rocketjump2 ]
-{
-};
-
+{};
 void () cbt_rocketjump2 = [ 59, cbt_rocketjump3 ]
-{
-};
-
+{};
 void () cbt_rocketjump3 = [ 60, cbt_rocketjump4 ]
-{
-};
-
+{};
 void () cbt_rocketjump4 = [ 61, cbt_rocketjump5 ]
 {
 	Engage ();
@@ -112,31 +83,20 @@ void () cbt_rocketjump4 = [ 61, cbt_rocketjump5 ]
 };
 
 void () cbt_rocketjump5 = [ 62, cbt_rocketjump6 ]
-{
-};
-
+{};
 void () cbt_rocketjump6 = [ 63, cbt_rocketjump7 ]
-{
-};
-
+{};
 void () cbt_rocketjump7 = [ 64, cbt_rocketjump8 ]
-{
-};
-
+{};
 void () cbt_rocketjump8 = [ 65, cbt_rocketjump9 ]
-{
-};
-
+{};
 void () cbt_rocketjump9 = [ 66, cbt_rocketjump10 ]
-{
-};
-
+{};
 void () cbt_rocketjump10 = [ 67, cbt_dodge1 ]
 {
 	cbot_attack ();
 };
 void () cbt_dodge1;
-
 void () attack_pattern =
 {
 	self.nextthink = (time + 0.05);
@@ -179,17 +139,14 @@ void () attack_pattern =
 		}
 	}
 };
-
 void () cbt_dodge1 = [ 0, cbt_dodge2 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge2 = [ 103, cbt_dodge3 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge3 = [ 1, cbt_dodge4 ]
 {
 	attack_pattern ();
@@ -484,7 +441,6 @@ void () cbt_die1;
 void () cbt_dieb1;
 void () cbt_diec1;
 void () cbt_died1;
-
 void () cbt_die =
 {
 	local float x;
@@ -538,7 +494,6 @@ void () precache_cbot_models =
 	precache_sound ("vasquez/death2.wav");
 	precache_sound ("vasquez/death3.wav");
 };
-
 entity () spawn_cbot =
 {
 	local entity me;
@@ -550,7 +505,6 @@ entity () spawn_cbot =
 	cbotnum = (cbotnum + WEAPON_SHOTGUN);
 	return (me);
 };
-
 void (entity me) CBot_Create =
 {
 	local entity spot;
@@ -662,186 +616,117 @@ void (entity me) CBot_Create =
 	me.nextthink = (time + 0.1);
 	me.think = cbt_jump1;
 };
-
 void () cbt_die1 = [ 49, cbt_die2 ]
 {
 	self.angles_x = MSG_BROADCAST;
 };
-
 void () cbt_die2 = [ 50, cbt_die3 ]
-{
-};
-
+{};
 void () cbt_die3 = [ 51, cbt_die4 ]
 {
 	self.solid = SOLID_NOT;
 	DropBackpack ();
 };
-
 void () cbt_die4 = [ 52, cbt_die5 ]
-{
-};
-
+{};
 void () cbt_die5 = [ 53, cbt_die6 ]
-{
-};
-
+{};
 void () cbt_die6 = [ 54, cbt_die7 ]
-{
-};
-
+{};
 void () cbt_die7 = [ 55, cbt_die8 ]
-{
-};
-
+{};
 void () cbt_die8 = [ 56, cbt_die9 ]
-{
-};
-
+{};
 void () cbt_die9 = [ 57, SUB_Null ]
 {
 	Fly_Fuck ();
 };
-
 void () cbt_dieb1 = [ 68, cbt_dieb2 ]
 {
 	self.angles_x = MSG_BROADCAST;
 };
 
 void () cbt_dieb2 = [ 69, cbt_dieb3 ]
-{
-};
+{};
 
 void () cbt_dieb3 = [ 71, cbt_dieb4 ]
 {
 	self.solid = SOLID_NOT;
 	DropBackpack ();
 };
-
 void () cbt_dieb4 = [ 72, cbt_dieb5 ]
-{
-};
-
+{};
 void () cbt_dieb5 = [ 73, cbt_dieb6 ]
-{
-};
-
+{};
 void () cbt_dieb6 = [ 74, cbt_dieb7 ]
-{
-};
-
+{};
 void () cbt_dieb7 = [ 75, cbt_dieb8 ]
-{
-};
-
+{};
 void () cbt_dieb8 = [ 76, cbt_dieb9 ]
-{
-};
-
+{};
 void () cbt_dieb9 = [ 77, cbt_dieb10 ]
-{
-};
-
+{};
 void () cbt_dieb10 = [ 78, cbt_dieb11 ]
-{
-};
-
+{};
 void () cbt_dieb11 = [ 79, SUB_Null ]
 {
 	Fly_Fuck ();
 };
-
 void () cbt_diec1 = [ 80, cbt_diec2 ]
 {
 	self.angles_x = MSG_BROADCAST;
 };
-
 void () cbt_diec2 = [ 81, cbt_diec3 ]
-{
-};
-
+{};
 void () cbt_diec3 = [ 82, cbt_diec4 ]
 {
 	self.solid = SOLID_NOT;
 	DropBackpack ();
 };
-
 void () cbt_diec4 = [ 83, cbt_diec5 ]
-{
-};
-
+{};
 void () cbt_diec5 = [ 84, cbt_diec6 ]
-{
-};
-
+{};
 void () cbt_diec6 = [ 85, cbt_diec7 ]
-{
-};
-
+{};
 void () cbt_diec7 = [ 86, cbt_diec8 ]
-{
-};
-
+{};
 void () cbt_diec8 = [ 87, cbt_diec9 ]
-{
-};
-
+{};
 void () cbt_diec9 = [ 88, cbt_diec10 ]
-{
-};
-
+{};
 void () cbt_diec10 = [ 89, cbt_diec11 ]
-{
-};
-
+{};
 void () cbt_diec11 = [ 90, cbt_diec12 ]
-{
-};
-
+{};
 void () cbt_diec12 = [ 91, SUB_Null ]
 {
 	Fly_Fuck ();
 };
-
 void () cbt_died1 = [ 92, cbt_died2 ]
 {
 	self.angles_x = MSG_BROADCAST;
 };
-
 void () cbt_died2 = [ 93, cbt_died3 ]
 {
 };
-
 void () cbt_died3 = [ 94, cbt_died4 ]
 {
 	self.solid = SOLID_NOT;
 	DropBackpack ();
 };
-
 void () cbt_died4 = [ 95, cbt_died5 ]
-{
-};
-
+{};
 void () cbt_died5 = [ 96, cbt_died6 ]
-{
-};
-
+{};
 void () cbt_died6 = [ 97, cbt_died7 ]
-{
-};
-
+{};
 void () cbt_died7 = [ 98, cbt_died8 ]
-{
-};
-
+{};
 void () cbt_died8 = [ 99, cbt_died9 ]
-{
-};
-
+{};
 void () cbt_died9 = [ 100, cbt_died10 ]
-{
-};
-
+{};
 void () cbt_died10 = [ 101, SUB_Null ]
 {
 	Fly_Fuck ();

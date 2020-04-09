@@ -1,27 +1,21 @@
 void () hang_fire01;
-
 void () hang_fire07;
-
 void () hang_stand = [ 0, hang_stand1 ]
 {
 	ai_stand ();
 };
-
 void () hang_stand1 = [ 1, hang_stand2 ]
 {
 	ai_stand ();
 };
-
 void () hang_stand2 = [ 2, hang_stand3 ]
 {
 	ai_stand ();
 };
-
 void () hang_stand3 = [ 3, hang_stand4 ]
 {
 	ai_stand ();
 };
-
 void () hang_stand4 = [ 4, hang_stand5 ]
 {
 	ai_stand ();
@@ -48,65 +42,45 @@ void () hang_run1 = [ 1, hang_run2 ]
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_run2 = [ 2, hang_run3 ]
 {
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_run3 = [ 3, hang_run4 ]
 {
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_run4 = [ 4, hang_run5 ]
 {
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_run5 = [ 5, hang_run6 ]
 {
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_run6 = [ 6, hang_run ]
 {
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_pain01 = [ 7, hang_pain02 ]
-{
-};
-
+{};
 void () hang_pain02 = [ 8, hang_pain03 ]
-{
-};
-
+{};
 void () hang_pain03 = [ 9, hang_pain04 ]
-{
-};
-
+{};
 void () hang_pain04 = [ 10, hang_pain05 ]
-{
-};
-
+{};
 void () hang_pain05 = [ 11, hang_pain06 ]
-{
-};
-
+{};
 void () hang_pain06 = [ 12, hang_pain07 ]
-{
-};
-
+{};
 void () hang_pain07 = [ 13, hang_run ]
-{
-};
-
+{};
 void () hang_die01 = [ 14, hang_die02 ]
 {
 	if ((random () < 0.33))
@@ -125,20 +99,14 @@ void () hang_die01 = [ 14, hang_die02 ]
 		}
 	}
 };
-
 void () hang_die02 = [ 15, hang_die03 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () hang_die03 = [ 16, hang_die04 ]
-{
-};
-
+{};
 void () hang_die04 = [ 17, hang_die05 ]
-{
-};
-
+{};
 void () hang_die05 = [ 18, hang_die06 ]
 {
 	self.ammo_nails2 = SVC_SETVIEWANGLES;
@@ -148,11 +116,8 @@ void () hang_die05 = [ 18, hang_die06 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () hang_die06 = [ 19, hang_die06 ]
-{
-};
-
+{};
 void () hang_gib =
 {
 	sound (self, CHAN_VOICE, "player/udeath.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
@@ -162,7 +127,6 @@ void () hang_gib =
 	ThrowGib ("progs/gib3.mdl", self.health);
 	return;
 };
-
 void () hang_die =
 {
 	if ((self.health < -20))
@@ -178,11 +142,9 @@ void () hang_die =
 		hang_die01 ();
 	}
 };
-
 void (entity attacker, float damage) hang_pain =
 {
 	local float n;
-
 	n = random ();
 	if ((self.pain_finished > time))
 	{
@@ -206,7 +168,6 @@ void (entity attacker, float damage) hang_pain =
 	}
 	hang_pain01 ();
 };
-
 void () hang_fire =
 {
 	if ((random () > SERV_VOL))
@@ -218,25 +179,21 @@ void () hang_fire =
 		hang_fire07 ();
 	}
 };
-
 void () hang_fire01 = [ 20, hang_fire02 ]
 {
 	ai_face ();
 	SwatMissile (MSG_BROADCAST);
 };
-
 void () hang_fire02 = [ 21, hang_fire03 ]
 {
 	ai_face ();
 	sound (self, CHAN_WEAPON, "swat/uzim.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () hang_fire03 = [ 20, hang_fire04 ]
 {
 	ai_face ();
 	SwatMissile (MSG_BROADCAST);
 };
-
 void () hang_fire04 = [ 21, hang_fire05 ]
 {
 	ai_face ();
@@ -248,19 +205,16 @@ void () hang_fire05 = [ 20, hang_fire06 ]
 	ai_face ();
 	SwatMissile (MSG_BROADCAST);
 };
-
 void () hang_fire06 = [ 21, hang_run ]
 {
 	ai_face ();
 	sound (self, CHAN_WEAPON, "swat/uzim.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () hang_fire07 = [ 20, hang_fire08 ]
 {
 	ai_face ();
 	SwatMissile (MSG_BROADCAST);
 };
-
 void () hang_fire08 = [ 21, hang_fire09 ]
 {
 	ai_face ();
@@ -282,7 +236,6 @@ void () stretch_papa;
 void () stretch_mama;
 void () stretch_baby;
 void () WeaveNewNewHemp;
-
 void () WeaveNewHemp =
 {
 	local entity flax;
@@ -300,7 +253,6 @@ void () WeaveNewHemp =
 void () WeaveNewNewHemp =
 {
 	local entity flax;
-
 	flax = spawn ();
 	flax.owner = self;
 	flax.movetype = MOVETYPE_NONE;
@@ -360,7 +312,6 @@ void () stretch_papa =
 		}
 	}
 };
-
 void () stretch_mama =
 {
 	local float dist;
@@ -410,7 +361,6 @@ void () stretch_mama =
 		}
 	}
 };
-
 void () stretch_baby =
 {
 	local float dist;
@@ -460,7 +410,6 @@ void () stretch_baby =
 		}
 	}
 };
-
 void () WeaveHemp =
 {
 	local entity flax;
@@ -474,7 +423,6 @@ void () WeaveHemp =
 	flax.nextthink = (time + 0.1);
 	flax.think = stretch_baby;
 };
-
 void () monster_hanger1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -494,10 +442,8 @@ void () monster_hanger1 =
 	WeaveHemp ();
 
 };
-
 void () monster_hanger =
 {
-
 	precache_sound ("swat/pain1.wav");
 	precache_sound ("swat/pain2.wav");
 	precache_sound ("swat/pain3.wav");

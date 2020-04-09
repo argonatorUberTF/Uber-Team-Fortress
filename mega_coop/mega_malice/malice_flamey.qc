@@ -15,7 +15,6 @@ void () torcher_splat01;
 void () torcher_salto1;
 void () torcher_salto2;
 void () torcher_faceplant01;
-
 void () Torcher_JumpTouch =
 {
 	local float ldmg;
@@ -30,7 +29,6 @@ void () Torcher_JumpTouch =
 	self.movetype = MOVETYPE_BOUNCE;
 	self.velocity = VEC_ORIGIN;
 };
-
 void () Torcher_TurnTurnTurn =
 {
 	local float ldmg;
@@ -65,7 +63,6 @@ void () Torcher_TurnTurnTurn =
 	self.angles_z = MSG_BROADCAST;
 	self.fixangle = TRUE;
 };
-
 void () Flame_Touch =
 {
 	local vector org;
@@ -96,7 +93,6 @@ void () Flame_Touch =
 		remove (self);
 	}
 };
-
 void (vector org, vector vec) LaunchFlame =
 {
 	vec = normalize (vec);
@@ -114,7 +110,6 @@ void (vector org, vector vec) LaunchFlame =
 	newmis.think = SUB_Remove;
 	newmis.touch = Flame_Touch;
 };
-
 void () torcher_fire =
 {
 	local vector org;
@@ -123,7 +118,6 @@ void () torcher_fire =
 	org = (((self.origin + (v_forward * SVC_INTERMISSION)) + (v_right * 8.5)) + '0 0 16');
 	LaunchFlame (org, (self.enemy.origin - self.origin));
 };
-
 void () FuelTankExplode =
 {
 	local vector dir;
@@ -135,7 +129,6 @@ void () FuelTankExplode =
 	Fire_bomb (self.origin, dir);
 	Fire_bomb (self.origin, dir);
 };
-
 void () torcher_stand01 = [ 76, torcher_stand02 ]
 {
 	if ((random () < 0.2))
@@ -949,7 +942,6 @@ void () torcher_dood02 = [ 141, torcher_dood03 ]
 void () torcher_dood03 = [ 142, torcher_dood04 ]
 {
 };
-
 void () torcher_dood04 = [ 143, torcher_dood05 ]
 {
 	self.solid = SOLID_NOT;
@@ -958,33 +950,25 @@ void () torcher_dood04 = [ 143, torcher_dood05 ]
 	self.ammo_rockets = 10;
 	self.ammo_cells = 10;
 	self.ammo_nails = 20;
-
 	DropBackpack ();
 };
-
 void () torcher_dood05 = [ 144, torcher_dood06 ]
-{
-};
+{};
 
 void () torcher_dood06 = [ 145, torcher_dood07 ]
-{
-};
+{};
 
 void () torcher_dood07 = [ 146, torcher_dood08 ]
-{
-};
+{};
 
 void () torcher_dood08 = [ 147, torcher_dood09 ]
-{
-};
+{};
 
 void () torcher_dood09 = [ 148, torcher_dood10 ]
-{
-};
+{};
 
 void () torcher_dood10 = [ 149, SUB_Null ]
-{
-};
+{};
 
 void () torcher_splat01 = [ 154, torcher_splat02 ]
 {
@@ -992,12 +976,10 @@ void () torcher_splat01 = [ 154, torcher_splat02 ]
 };
 
 void () torcher_splat02 = [ 155, torcher_splat03 ]
-{
-};
+{};
 
 void () torcher_splat03 = [ 156, torcher_splat04 ]
-{
-};
+{};
 
 void () torcher_splat04 = [ 157, torcher_splat05 ]
 {
@@ -1005,24 +987,19 @@ void () torcher_splat04 = [ 157, torcher_splat05 ]
 };
 
 void () torcher_splat05 = [ 158, torcher_splat06 ]
-{
-};
+{};
 
 void () torcher_splat06 = [ 159, torcher_splat07 ]
-{
-};
+{};
 
 void () torcher_splat07 = [ 160, torcher_splat08 ]
-{
-};
+{};
 
 void () torcher_splat08 = [ 161, torcher_splat09 ]
-{
-};
+{};
 
 void () torcher_splat09 = [ 162, SUB_Null ]
-{
-};
+{};
 
 void () torcher_fly1 = [ 150, torcher_fly2 ]
 {
@@ -1035,32 +1012,25 @@ void () torcher_fly1 = [ 150, torcher_fly2 ]
 };
 
 void () torcher_fly2 = [ 151, torcher_fly3 ]
-{
-};
+{};
 
 void () torcher_fly3 = [ 152, torcher_fly4 ]
-{
-};
+{};
 
 void () torcher_fly4 = [ 153, torcher_fly5 ]
-{
-};
+{};
 
 void () torcher_fly5 = [ 150, torcher_fly6 ]
-{
-};
+{};
 
 void () torcher_fly6 = [ 151, torcher_fly7 ]
-{
-};
+{};
 
 void () torcher_fly7 = [ 152, torcher_fly8 ]
-{
-};
+{};
 
 void () torcher_fly8 = [ 153, torcher_fly5 ]
-{
-};
+{};
 
 void () torcher_faceplant01 = [ 167, torcher_faceplant02 ]
 {
@@ -1068,12 +1038,10 @@ void () torcher_faceplant01 = [ 167, torcher_faceplant02 ]
 };
 
 void () torcher_faceplant02 = [ 168, torcher_faceplant03 ]
-{
-};
+{};
 
 void () torcher_faceplant03 = [ 169, torcher_faceplant04 ]
-{
-};
+{};
 
 void () torcher_faceplant04 = [ 170, torcher_faceplant05 ]
 {
@@ -1081,16 +1049,13 @@ void () torcher_faceplant04 = [ 170, torcher_faceplant05 ]
 };
 
 void () torcher_faceplant05 = [ 171, torcher_faceplant06 ]
-{
-};
+{};
 
 void () torcher_faceplant06 = [ 172, torcher_faceplant07 ]
-{
-};
+{};
 
 void () torcher_faceplant07 = [ 173, SUB_Null ]
-{
-};
+{};
 
 void () torcher_salto1 = [ 163, torcher_salto2 ]
 {
@@ -1104,28 +1069,23 @@ void () torcher_salto1 = [ 163, torcher_salto2 ]
 };
 
 void () torcher_salto2 = [ 164, torcher_salto3 ]
-{
-};
+{};
 
 void () torcher_salto3 = [ 165, torcher_salto4 ]
-{
-};
+{};
 
 void () torcher_salto4 = [ 166, torcher_salto5 ]
-{
-};
+{};
 
 void () torcher_salto5 = [ 163, torcher_salto6 ]
-{
-};
+{};
 
 void () torcher_salto6 = [ 164, torcher_salto7 ]
 {
 };
 
 void () torcher_salto7 = [ 165, torcher_salto8 ]
-{
-};
+{};
 
 void () torcher_salto8 = [ 166, torcher_salto5 ]
 {
@@ -1139,7 +1099,6 @@ void () torcher_salto8 = [ 166, torcher_salto5 ]
 void () torcher_death =
 {
 	local float r;
-
 	r = random ();
 	if ((self.health < -20))
 	{
@@ -1168,12 +1127,10 @@ void () torcher_death =
 		}
 	}
 };
-
 void () torcher_explode1 = [ 174, torcher_explode2 ]
 {
 	self.takedamage = DAMAGE_NO;
 };
-
 void () torcher_explode2 = [ 174, torcher_explode2 ]
 {
 	T_RadiusDamage (self, self, 120, world);
@@ -1185,7 +1142,6 @@ void () torcher_explode2 = [ 174, torcher_explode2 ]
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	BecomeExplosion ();
 };
-
 void () monster_torcher =
 {
 	if (!deathmatch)
@@ -1220,3 +1176,4 @@ void () monster_torcher =
 		remove (self);
 	}
 };
+//END

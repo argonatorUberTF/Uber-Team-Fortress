@@ -14,7 +14,6 @@ void () dealwithskill =
 	precache_model ( "progs/s_splash.spr" );
 	malice_ched = 1;
 };
-
 void () trigger_cutscene =
 {
 	precache_model( "progs/null.spr");
@@ -25,17 +24,14 @@ void () trigger_cutscene =
 	self.movetype = MOVETYPE_STEP;
 	self.touch = changelevel_touch;
 };
-
 void () utility_prop =
 {
 	item_sub ();
 };
-
 void () weapon_hellfire =
 {
 	dremove(self);
 };
-
 void(entity ent) MuzzleEnt =
 {
 	WriteByte (MSG_MULTICAST, SVC_MUZZLEFLASH);
@@ -43,11 +39,8 @@ void(entity ent) MuzzleEnt =
 	multicast (self.origin, MULTICAST_PVS);
 
 };
-
 void(float punch) punchself =
-{
-};
-
+{};
 void(vector org) te_gunshot =
 {
 	WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
@@ -58,43 +51,28 @@ void(vector org) te_gunshot =
 	WriteCoord (MSG_MULTICAST, org_z);
 	multicast (org, MULTICAST_PVS);
 };
-
 void () ambient_disco =
 {
 	precache_sound ("ambience/disco.wav");
 	ambientsound (self.origin, "ambience/disco.wav", WEAPON_SHOTGUN, ATTN_NORM);
 };
-
 void () ambient_disco2 =
 {
 	precache_sound ("ambience/disco2.wav");
 	ambientsound (self.origin, "ambience/disco2.wav", WEAPON_SHOTGUN, ATTN_NORM);
 };
-
 void () plasma1 = [ 0, plasma2 ]
-{
-};
-
+{};
 void () plasma2 = [ 1, plasma3 ]
-{
-};
-
+{};
 void () plasma3 = [ 2, plasma4 ]
-{
-};
-
+{};
 void () plasma4 = [ 3, plasma5 ]
-{
-};
-
+{};
 void () plasma5 = [ 4, plasma6 ]
-{
-};
-
+{};
 void () plasma6 = [ 5, SUB_Remove ]
-{
-};
-
+{};
 void () RailExplosion =
 {
 	self.movetype = MOVETYPE_NONE;
@@ -104,7 +82,6 @@ void () RailExplosion =
 	setmodel (self, "progs/s_punish.spr");
 	plasma1 ();
 };
-
 void () PlasTouch =
 {
 	local float amount;
@@ -124,7 +101,6 @@ void () PlasTouch =
 	}
 	remove (self);
 };
-
 void () W_DeathFire =
 {
 	local entity plasma;
@@ -142,7 +118,6 @@ void () W_DeathFire =
 	setsize (plasma, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (plasma, ((self.origin + (v_forward * 20)) + '0 0 18'));
 };
-
 void (vector org, vector dir) Flame_bomb;
 void () MorterExplode =
 {
@@ -175,9 +150,7 @@ void () MorterExplode =
 	Flame_bomb (org, (dir + '0 180 0'));
 	Flame_bomb (org, (dir + '0 270 0'));
 };
-
 void() CheckTouch;
-
 void () MorterTouch =
 {
 	if ((pointcontents (self.origin) == CONTENT_SKY))
@@ -197,11 +170,9 @@ void () MorterTouch =
 		CheckTouch ();
 	}
 };
-
 void (entity head7) Enolagay;
 void () AtomSmash;
 void () ionstorm;
-
 void (float limit) W_FireBigassGun =
 {
 	local entity pulse;
@@ -251,15 +222,12 @@ void (float limit) W_FireBigassGun =
 void () ionstorm =
 {
 	makevectors (self.angles);
-	
 	SpawnBlood ((self.origin + (v_right * SVC_INTERMISSION)), 15);
 	SpawnBlood ((self.origin + (v_right * -30)), 15);
 	SpawnBlood ((self.origin + (v_up * SVC_INTERMISSION)), 15);
 	SpawnBlood ((self.origin + (v_up * -30)), 15);
 	self.nextthink = (time + 0.05);
-
 };
-
 void () blow_baby =
 {
 	if ((self.frame == SVC_TEMPENTITY))
@@ -276,7 +244,6 @@ void () blow_baby =
 void (entity victim) BreakDown =
 {
 	local float intensity;
-
 	sound (victim, CHAN_WEAPON, "misc/thud.wav", AS_STRAIGHT, ATTN_NORM);
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_LAVASPLASH);
@@ -350,42 +317,23 @@ void () OverLoad =
 		victim = victim.chain;
 	}
 };
-
 void () shell1 = [ 0, shell2 ]
-{
-};
-
+{};
 void () shell2 = [ 1, shell3 ]
-{
-};
-
+{};
 void () shell3 = [ 2, shell4 ]
-{
-};
-
+{};
 void () shell4 = [ 3, shell5 ]
-{
-};
-
+{};
 void () shell5 = [ 4, shell6 ]
-{
-};
-
+{};
 void () shell6 = [ 5, shell7 ]
-{
-};
-
+{};
 void () shell7 = [ 6, shell8 ]
-{
-};
-
+{};
 void () shell8 = [ 7, SUB_Remove ]
-{
-};
-
-
+{};
 void () Hmmm_something_burning;
-
 void (entity head7) Enolagay =
 {
 	local entity bomby;
@@ -395,7 +343,6 @@ void (entity head7) Enolagay =
 	bomby.think = Hmmm_something_burning;
 	bomby.nextthink = time;
 };
-
 void () Hmmm_something_burning =
 {
 	if ((self.owner.classname != "player"))
@@ -500,7 +447,6 @@ void () Hmmm_something_burning =
 	self.think = Hmmm_something_burning;
 	self.nextthink = (time + 0.05);
 };
-
 void () UpdateAmmoBars =
 {
 	local float bar;
@@ -573,8 +519,7 @@ void () UpdateAmmoBars =
 		}
 		special_happy_count = (special_happy_count + WEAPON_SHOTGUN);
 	}
-};
-void (vector org, vector dir) malice_launch_spike =
+};void (vector org, vector dir) malice_launch_spike =
 {
 	newmis = spawn ();
 	newmis.owner = self;

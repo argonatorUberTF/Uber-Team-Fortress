@@ -2,7 +2,6 @@ void () monster_hanger;
 float ATTN_PROBE    = 0.5;
 float PROBE_VOLUME    = 0.5;
 void () probe_pulsetouch;
-
 void (float ofs, float turn) Probe_laser_fire =
 {
 	local vector src;
@@ -56,7 +55,6 @@ void (float ofs, float turn) Probe_laser_fire =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, src);
 };
-
 void () probe_pulsetouch =
 {
 	local vector org;
@@ -73,7 +71,6 @@ void () probe_pulsetouch =
 	if (other.health)
 	{
 		SpawnBlood (org, 15);
-		//SpawnBlood (org, (self.velocity * 0.2), 15, other);
 		T_Damage (other, self, self.owner, MAX_DROPS);
 	}
 	else
@@ -84,7 +81,6 @@ void () probe_pulsetouch =
 	}
 	remove (self);
 };
-
 void (float angdelta, float delta) probe_turn =
 {
 	if ((fabs (angdelta) < SVC_SETVIEWANGLES))
@@ -110,7 +106,6 @@ void (float angdelta, float delta) probe_turn =
 		}
 	}
 };
-
 void () probe_think =
 {
 	local float delta;
@@ -176,7 +171,6 @@ void () probe_think =
 		}
 	}
 };
-
 void () probe_walkthink =
 {
 	local float delta;
@@ -251,39 +245,33 @@ void () probe_walkthink =
 	}
 };
 void () probe_stand_attack;
-
 void () probe_stand1 = [ 0, probe_stand2 ]
 {
 	ai_stand ();
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand2 = [ 1, probe_stand3 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand3 = [ 2, probe_stand4 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand4 = [ 3, probe_stand5 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand5 = [ 4, probe_stand6 ]
 {
 	ai_stand ();
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand6 = [ 5, probe_stand7 ]
 {
 	probe_think ();
@@ -523,7 +511,6 @@ void () probe_run12 = [ 11, probe_run13 ]
 void () probe_run13 = [ 12, probe_run1 ]
 {
 	local float delta;
-
 	ChangeYaw ();
 	RUN_STRAIGHT = SPAWNFLAG_SUPERSPIKE;
 	ai_run (SVC_SETVIEWANGLES);
@@ -693,13 +680,11 @@ void () probe_die2 = [ 14, probe_die3 ]
 	self.nextthink = (time + 0.2);
 	ai_run_slide ();
 };
-
 void () probe_die3 = [ 15, SUB_Remove ]
 {
 	if (self.trigger_field != world)
 		self.trigger_field.frame = self.frame;
 };
-
 void (entity attacker, float damage) probe_pain =
 {
 	if ((self.health <= MSG_BROADCAST))
@@ -717,7 +702,6 @@ void (entity attacker, float damage) probe_pain =
 	self.pain_finished = (time + SPAWNFLAG_LASER);
 	sound (self, CHAN_VOICE, "probe/pain.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () probe_missile_attack =
 {
 	local float n;
@@ -804,7 +788,6 @@ float () ProbeCheckAttack =
 	self.lefty = SPAWNFLAG_SUPERSPIKE;
 	return (FALSE);
 };
-
 void () monster_probe1 =
 {
 	local entity body;

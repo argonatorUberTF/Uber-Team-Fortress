@@ -14,96 +14,79 @@ void () dancer_lights =
 		self.skin = self.warp_factor;
 	}
 };
-
 void () f_dancer1 = [ 0, f_dancer2 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer2 = [ 1, f_dancer3 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer3 = [ 2, f_dancer4 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer4 = [ 3, f_dancer5 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer5 = [ 4, f_dancer6 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer6 = [ 5, f_dancer7 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer7 = [ 6, f_dancer8 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer8 = [ 7, f_dancer9 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer9 = [ 8, f_dancer10 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer10 = [ 9, f_dancer11 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer11 = [ 10, f_dancer12 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer12 = [ 11, f_dancer13 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer13 = [ 12, f_dancer14 ]
 {
 	self.nextthink = (time + 0.05);
 	dancer_lights ();
 };
-
 void () f_dancer14 = [ 13, f_dancer15 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer15 = [ 14, f_dancer16 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () f_dancer16 = [ 15, f_dancer1 ]
 {
 	self.nextthink = (time + 0.05);
 	self.angles_y = (self.angles_y + SVC_INTERMISSION);
 	dancer_lights ();
 };
-
 void () become_merc =
 {
 	sound (self, CHAN_BODY, "mercbabe/scream.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
@@ -133,7 +116,6 @@ void () become_merc =
 	self.th_melee = merc_mel1;
 	walkmonster_start ();
 };
-
 void () dancer =
 {
 	precache_model ("progs/dancer.mdl");

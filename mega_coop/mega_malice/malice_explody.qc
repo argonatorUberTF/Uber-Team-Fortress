@@ -16,7 +16,6 @@ void (string name, float amount) RockPieces =
 	rock.think = SUB_Remove;
 	rock.nextthink = ((time + 1.5) + (random () * SPAWNFLAG_SUPERSPIKE));
 };
-
 void () wall_touchie =
 {
 	sound (self, CHAN_WEAPON, "misc/crumble.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
@@ -33,7 +32,6 @@ void () wall_touchie =
 	RockPieces ("progs/rubble3.mdl", self.health);
 	remove (self);
 };
-
 void () exploding_object =
 {
 	precache_model ("progs/rubble1.mdl");
@@ -56,7 +54,6 @@ void () exploding_object =
 	self.solid = SOLID_BSP;
 	self.movetype = MOVETYPE_PUSH;
 };
-
 void () walkthrough_object =
 {
 	setmodel (self, self.model);
