@@ -22930,13 +22930,15 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, ftos(total_secrets - found_secrets));
 		sprint(self, 2,".\n");
 	}
-	else if (s1 == "petekill")
+	else if (s1 == "killpete")
 	{
+	sprint(self, 2, "Killing Pete the undead head...searching...");
 	local entity head;
-	head = findradius (self.origin, 60);
-	if (head)
+	head = findradius (self.origin, 100);
+	if (head && (head.classname != "player"))
 	{
 		dremove(head);
+		sprint(self, 2, "poof!..done.");
 	}
 	}
 	else if (s1 == "ttime")
@@ -22963,6 +22965,10 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, "Total entity count: ");
 		sprint(self, 2, ftos(tm));
 		sprint(self, 2, ".\n");
+		if (tm >= 512) 
+		{
+		sprint(self, 2, "Entities are over 512, bad karma, things will go wrong.");
+		}
 	}
 	else if (s1 == "pentleft") {
 		sprint(self, 2, "Invincibility time left: ");
@@ -24059,4 +24065,4 @@ void () respawn_monster =
 		Killed (self, world);
 	}	
 };
-//END
+//END 
