@@ -1074,22 +1074,17 @@ void() changelevel_use =
 #ifdef mtf_coop_expsys
 	MTF_DoEndBonus ( other );
 #endif
-		
 	nextmap = self.map;
-
 	SUB_UseTargets ();
-
 	if ( (self.spawnflags & 1) && (deathmatch == 0) )
 	{	// NO_INTERMISSION
 		GotoNextMap();
 		return;
 	}
-	
 	self.touch = SUB_Null;
 	self.think = execute_changelevel;
 	self.nextthink = time + 0.1;
 };
-
 #ifdef SVEN_COOP
 void () trigger_changelevel_parse;
 void () trigger_changelevel_activate =
@@ -1098,7 +1093,6 @@ void () trigger_changelevel_activate =
 	self.use = changelevel_use;
 	self.solid = SOLID_TRIGGER;
 };
-
 void () exit_skins =
 {
 	if (self.frame == 0)
@@ -1138,7 +1132,6 @@ void() trigger_changelevel =
 		self.map = "qtstart";
 #endif
 	InitTrigger();
-
 #ifdef SVEN_COOP
 	if (#HL_MAP) {
 		precache_model ( "progs/hlexit.spr" );
@@ -1162,7 +1155,6 @@ void () trigger_changelevel_parse =
 	nmt = cvar_string( "nomaptrans" );
 	if ( nmt != "" ) {
 		if ( self.map == nmt ) {
-		
 			self.touch = SUB_Null;
 			self.use = SUB_Null;
 			self.solid = SOLID_BBOX;
@@ -1186,7 +1178,6 @@ void () trigger_changelevel_parse =
 		newmis.frame = 0;
 		newmis.think = exit_skins;
 		newmis.nextthink = time + 1;
-		
 		self.map = cvar_string( "nextmap" );
 		trigger_changelevel_activate();
 		return;
@@ -1328,10 +1319,8 @@ void() ClientKill =
 			return;
 #endif
 };
-
 void(entity e) ValidateUser = 
-{
-};
+{};
 void() PutClientInServer = 
 {
 	self.pk_turretammo = 6;  //set painkeep weapon ammo amounts. -arg
@@ -1434,7 +1423,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 			stuffcmd (self, "\n");
 		}
 	}
-
 	st = infokey (self, "*z_ver");
 	if ((st != ""))
 	{
@@ -1741,7 +1729,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 #ifdef APRIL_FOOLS
 	setmodel (self, "progs/a1player.mdl");
 #else
-
 #ifdef PL_FEM
 	setmodel (self, GetPlayerModel(self));
 #else
@@ -1832,8 +1819,6 @@ void() info_player_start =
 		spawn_mister ();
 	}
 #endif
-
-
 #ifdef SVEN_COOP
 	if (#HL_MAP)
 		self.classname = "info_intermission";
@@ -1862,7 +1847,6 @@ void () info_player_deathmatch_use =
 	}
 };
 #endif
-
 void() testplayerstart = 
 {
 	if (CheckExistence() == 0)
@@ -2006,7 +1990,6 @@ void() NextLevel =
 	o.think = execute_changelevel;
 	o.nextthink = time + 0.1;
 };
-
 void() CheckRules = 
 {
 #ifndef mtf_coop
@@ -2037,7 +2020,6 @@ void () pdummy_wait_on_reconnect =
 		}
 		te = find(te, classname, "player");	
 	}
-	
 	if (isgud)
 		self.has_tesla = 1;
 	else
@@ -2048,7 +2030,6 @@ void () pdummy_wait_on_reconnect =
 		dremove(self.enemy);
 		return;
 	}
-	
 	self.nextthink = time + .5;
 };
 
@@ -2510,7 +2491,6 @@ void() CheckWaterJump =
 void () PlayerPreThink =
 {
 	local vector src;
-
 #ifdef botprogs
 	if (BotPreFrame ())
 	{
@@ -2743,7 +2723,6 @@ void() CheckPowerups =
 	{
 		self.modelindex = modelindex_null;
 	}
-	
 #ifdef VWEPS
 #ifdef PL_FEM
 	if (self.gender == GENDER_FEMALE) {
@@ -3619,16 +3598,13 @@ void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience;
 #include "fem_obits.qc"
 void FemaleClientObituary(entity targ, entity attacker );
 #endif
-
 void(entity targ, entity attacker) ClientObituary = 
 {
 	local float rnum;
 	local string deathstring;
 	local string deathstring2;
 	local entity b_ent;
-
 	setup_strcat ();
-	
 	if (prematch)
 	{
 		return;
@@ -3783,7 +3759,6 @@ void(entity targ, entity attacker) ClientObituary =
 		return;
 	}
 #endif
-
 	rnum = random();
 #ifdef mtf_coop
 	if (targ.classname == "player" || targ.is_monster == 1)
@@ -3857,37 +3832,37 @@ void(entity targ, entity attacker) ClientObituary =
 				bprint(TF_FLARE_OFF, targ.netname);
 				if (deathmsg == 8)
 				{
-					deathstring = " grenades himself\n";
+					deathstring = " grenades himself.\n";
 				}
 				else
 				{
 																if ((deathmsg == 65))
 																{
-																	deathstring = " Has no sense of direction\n";
+																	deathstring = " Has no sense of direction.\n";
 																}
 																else
 																{
 												if ((deathmsg == 58))
 												{
-													deathstring = " Examines his torpedo too closely\n";
+													deathstring = " Examines his torpedo too closely.\n";
 												}
 												else
 												{
 				if ((deathmsg == 69))
 				{
-					deathstring = " tries to ride a meteor\n";
+					deathstring = " tries to ride a meteor.\n";
 				}
 				else
 				{
 				if ((deathmsg == 68))
 				{
-					deathstring = " Didnt get far enough from his bomb\n";
+					deathstring = " Didnt get far enough from his bomb.\n";
 				}
 				else
 				{
 				if ((deathmsg == 55))
 				{
-					deathstring = " Had a stinger turn on him\n";
+					deathstring = " Had a stinger turn on him.\n";
 				}
 				else
 				{
@@ -3899,44 +3874,44 @@ void(entity targ, entity attacker) ClientObituary =
 				{
 				if ((deathmsg == 59))
 				{
-					deathstring = " caught a chunk of shrapnel\n";
+					deathstring = " caught a chunk of shrapnel.\n";
 				}
 				else
 				{
 				if ((deathmsg == 67))
 				{
-					deathstring = " Had a sidewinder turn on him\n";
+					deathstring = " Had a sidewinder turn on him.\n";
 				}
 				else
 				{
 
 					if (deathmsg == 52)
 					{
-						deathstring = " tries to fly with his turretizing tesla\n";
+						deathstring = " tries to fly with his turretizing tesla.\n";
 					}
 					else
 					{
 					if (deathmsg == 43)
 					{
-						deathstring = " has himself bombed\n";
+						deathstring = " has himself bombed.\n";
 					}
 					else
 					{
 						if (deathmsg == 45)
 						{
-							deathstring = " hugs his proximity grenade\n";
+							deathstring = " hugs his proximity grenade.\n";
 						}
 						else
 						{
 							if (deathmsg == 9)
 							{
-								deathstring = " nails himself\n";
+								deathstring = " nails himself.\n";
 							}
 							else
 							{
 								if (deathmsg == 10)
 								{
-									deathstring = " is blown to bits\n";
+									deathstring = " is blown to bits.\n";
 								}
 								else
 								{
@@ -3954,19 +3929,19 @@ void(entity targ, entity attacker) ClientObituary =
 										{
 											if (deathmsg == 30)
 											{
-												deathstring = " nukes his own ammo\n";
+												deathstring = " nukes his own ammo.\n";
 											}
 											else
 											{
 												if (deathmsg == 35)
 												{
-													deathstring = " flash grenade himself to death\n";
+													deathstring = " flash grenade himself to death.n";
 												}
 												else
 												{
 													if (deathmsg == 31)
 													{
-														deathstring = " detonates an ammo box too close to him\n";
+														deathstring = " detonates an ammo box too close to him.\n";
 													}
 													else
 													{
@@ -3986,30 +3961,30 @@ void(entity targ, entity attacker) ClientObituary =
 																{
 																	if (rnum <= 0.5)
 																	{
-																		deathstring = " checks if his weapon is loaded\n";
+																		deathstring = " checks if his weapon is loaded.\n";
 																	}
 																	else
 																	{
-																		deathstring = " hates himself\n";
+																		deathstring = " hates himself.\n";
 																	}
 																}
 																else
 																{
 																	if (deathmsg == 41)
 																	{
-																		deathstring = "'s Laser Drone malfunctioned\n";
+																		deathstring = "'s Laser Drone malfunctioned.\n";
 																	}
 																	else
 																	{
 																		if (deathmsg == 33)
 																		{
-																			deathstring = " chars himself with an incendiary rocket\n";
+																			deathstring = " chars himself with an incendiary rocket.\n";
 																		}
 																		else
 																		{
 																			if (deathmsg == 5)
 																			{
-																				deathstring = " tries to put the pin back in\n";
+																				deathstring = " tries to put the pin back in.\n";
 																			}
 																			else
 																			{
@@ -4017,7 +3992,7 @@ void(entity targ, entity attacker) ClientObituary =
 																				{
 																					if (attacker.playerclass == TF_FLARE_OFF)
 																					{
-																						deathstring = "'s JetPack malfunctions\n";
+																						deathstring = "'s JetPack malfunctions.\n";
 																					}
 																					else
 																					{
@@ -4035,13 +4010,13 @@ void(entity targ, entity attacker) ClientObituary =
 																					{
 																						if (deathmsg == 40)																					
 																						{
-																							deathstring = " couldn't outrun his airspam\n";																							
+																							deathstring = " couldn't outrun his airspam.\n";																							
 																						}
 																						else
 																						{
 																							if (deathmsg == 201)
 																							{
-																								deathstring = " used his dispenser for all the wrong reasons\n";																								
+																								deathstring = " used his dispenser for all the wrong reasons.\n";																								
 																							}
 																						}
 																					}
@@ -4085,23 +4060,23 @@ void(entity targ, entity attacker) ClientObituary =
 					}
 					if (rnum < 0.25)
 					{
-						deathstring = " mows down a teammate\n";
+						deathstring = " mows down a teammate.\n";
 					}
 					else
 					{
 						if (rnum < 0.5)
 						{
-							deathstring = " checks his glasses\n";
+							deathstring = " checks his glasses.\n";
 						}
 						else
 						{
 							if (rnum < 0.75)
 							{
-								deathstring = " gets a frag for the other team\n";
+								deathstring = " gets a frag for the other team.\n";
 							}
 							else
 							{
-								deathstring = " loses another friend\n";
+								deathstring = " loses another friend.\n";
 							}
 						}
 					}
@@ -4127,13 +4102,13 @@ void(entity targ, entity attacker) ClientObituary =
 					if (deathmsg == 449)
 					{
 						deathstring = " was shredded by ";
-						deathstring2 = "'s chainsaw\n";
+						deathstring2 = "'s chainsaw.\n";
 					}
 #endif
 					if (deathmsg == 43)
 					{
 						deathstring = " was bombed by ";
-						deathstring2 = "'s AirStrike call\n";
+						deathstring2 = "'s AirStrike call.\n";
 					}
 					if (deathmsg == 59)
 					{
@@ -4148,32 +4123,32 @@ void(entity targ, entity attacker) ClientObituary =
 					if ((deathmsg == 58))
 					{
 						deathstring = " Is made into fish chum by ";
-						deathstring2 = "'s torpedo\n";
+						deathstring2 = "'s torpedo.\n";
 					}
 					if ((deathmsg == 57))
 					{
 						deathstring = " got too close to ";
-						deathstring2 = "'s rotor blade\n";
+						deathstring2 = "'s rotor blade.\n";
 					}
 					if ((deathmsg == 56))
 					{
 						deathstring = " eats too much lead from ";
-						deathstring2 = "'s 30mm rotary cannon\n";
+						deathstring2 = "'s 30mm rotary cannon.\n";
 					}
 					if ((deathmsg == 55))
 					{
 						deathstring = " was stung by ";
-						deathstring2 = "'s stinger\n";
+						deathstring2 = "'s stinger.\n";
 					}
 					if ((deathmsg == 68))
 					{
 						deathstring = " was pounded by ";
-						deathstring2 = "'s bomb\n";
+						deathstring2 = "'s bomb.\n";
 					}
 					if (((deathmsg == 67) || (deathmsg == 66)))
 					{
 						deathstring = " was caught by ";
-						deathstring2 = "'s sidewinder\n";
+						deathstring2 = "'s sidewinder.\n";
 					}
 					if ((deathmsg == 50))
 					{
@@ -4185,17 +4160,17 @@ void(entity targ, entity attacker) ClientObituary =
 					if (deathmsg == 45)
 					{
 						deathstring = " gets too friendly with ";
-						deathstring2 = "'s Proxi grenade\n";
+						deathstring2 = "'s Proxi grenade.\n";
 					}
 					if (deathmsg == 46)
 					{
 						deathstring = " gets shredded by ";
-						deathstring2 = "'s 20mm cannon\n";
+						deathstring2 = "'s 20mm cannon.\n";
 					}
 					if (deathmsg == 446)
 					{
 						deathstring = " has the crap beaten out of him by ";
-						deathstring2 = "'s bat\n";
+						deathstring2 = "'s bat.\n";
 					}
 					if (deathmsg == 447)
 					{
@@ -4207,41 +4182,46 @@ void(entity targ, entity attacker) ClientObituary =
 						deathstring = "'s ankles get chewed by ";
 						deathstring2 = "'s MiniSentry\n";
 					}
-					if ((deathmsg == #DMSG_MINIFIEND))
+					if ((deathmsg == 202))
 					{
-						deathstring = "'s ass was torn off by ";
-						deathstring2 = "'s Mini Fiend\n";
+						deathstring = "'s ass was clamped off by ";
+						deathstring2 = "'s bear trap.\n";
+					}
+					if ((deathmsg == 203))
+					{
+						deathstring = "'s chokes to death on ";
+						deathstring2 = "'s bad ass farts.\n";
 					}
 					if (deathmsg == 8)
 					{
 						deathstring = " tries to hatch ";
-						deathstring2 = "'s grenade\n";
+						deathstring2 = "'s grenade.\n";
 					}
 					if (deathmsg == 100)
 					{
 						deathstring = " is fried by ";
-						deathstring2 = "'s lightning gun\n";
+						deathstring2 = "'s lightning gun.\n";
 					}
 					else
 					{
 						if (deathmsg == 9)
 						{
 							deathstring = " gets perforated by ";
-							deathstring2 = "'s nail grenade\n";
+							deathstring2 = "'s nail grenade.\n";
 						}
 						else
 						{
 							if (deathmsg == 10)
 							{
 								deathstring = " gets juiced by ";
-								deathstring2 = "'s Mirv grenade\n";
+								deathstring2 = "'s Mirv grenade.\n";
 							}
 							else
 							{
 								if (deathmsg == 40)
 								{
 									deathstring = " is shreaded by ";
-									deathstring2 = "'s AirMirv\n";
+									deathstring2 = "'s AirMirv.\n";
 								}
 								else
 								{
@@ -4255,7 +4235,7 @@ void(entity targ, entity attacker) ClientObituary =
 										if (deathmsg == 24)
 										{
 											deathstring = " sniffs to much of ";
-											deathstring2 = "'s glue\n";
+											deathstring2 = "'s glue.\n";
 										}
 										else
 										{
@@ -4269,35 +4249,35 @@ void(entity targ, entity attacker) ClientObituary =
 												if (deathmsg == 35)
 												{
 													deathstring = "'s brain is fried by ";
-													deathstring2 = "'s flash grenade\n";
+													deathstring2 = "'s flash grenade.\n";
 												}
 												else
 												{
 													if (deathmsg == 31)
 													{
 														deathstring = " stands near some ammo as ";
-														deathstring2 = "'s EMP nukes it\n";
+														deathstring2 = "'s EMP nukes it.\n";
 													}
 													else
 													{
 														if (deathmsg == 12)
 														{
 															deathstring = " is nuked by ";
-															deathstring2 = "'s detpack\n";
+															deathstring2 = "'s detpack.\n";
 														}
 														else
 														{
-															if (deathmsg == 16)
+															if (deathmsg == 204)
 															{
-																deathstring = " cut the red wire of ";
-																deathstring2 = "'s detpack\n";
+																deathstring = " gets squarshed ";
+																deathstring2 = "'s gravity well.\n";
 															}
 															else
 															{
 																if (deathmsg == 13)
 																{
 																	deathstring = " dies from ";
-																	deathstring2 = "'s social disease\n";
+																	deathstring2 = "'s social disease.\n";
 																	sound(targ, 0, "player/mpain6.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 																}
 																else
@@ -4305,18 +4285,18 @@ void(entity targ, entity attacker) ClientObituary =
 																	if (deathmsg == 14)
 																	{
 																		deathstring = " escapes infection from ";
-																		deathstring2 = " by dying first\n";
+																		deathstring2 = " by dying first.\n";
 																	}
 																	else
 																	{
 																		if (deathmsg == 5)
 																		{
 																			deathstring = " swallows ";
-																			deathstring2 = "'s grenade\n";
+																			deathstring2 = "'s grenade.\n";
 																			if (targ.health < -40)
 																			{
 																				deathstring = " was split in half by ";
-																				deathstring2 = "'s grenade\n";
+																				deathstring2 = "'s grenade.\n";
 																			}
 																		}
 																		else
@@ -4324,11 +4304,11 @@ void(entity targ, entity attacker) ClientObituary =
 																			if (deathmsg == 6)
 																			{
 																				deathstring = " is reamed by ";
-																				deathstring2 = "'s rocket\n";
+																				deathstring2 = "'s rocket.\n";
 																				if (targ.health < -40)
 																				{
 																					deathstring = "'s bunghole was ripped by ";
-																					deathstring2 = "'s rocket\n";
+																					deathstring2 = "'s rocket.\n";
 																				}
 																			}
 																			else
@@ -4336,26 +4316,26 @@ void(entity targ, entity attacker) ClientObituary =
 																				if (deathmsg == 41)
 																				{
 																					deathstring = " was killed by ";
-																					deathstring2 = "'s Laser Drone\n";
+																					deathstring2 = "'s Laser Drone.\n";
 																					if (targ.health < -40)
 																					{
 																						deathstring = " was vaporized by ";
-																						deathstring2 = "'s Laser Drone\n";
+																						deathstring2 = "'s Laser Drone.\n";
 																					}
 																				}
 																				else
 																				{
 																					if (deathmsg == 42)
 																					{
-																						deathstring = " was torn up by an enemy Rottweiler";
+																						deathstring = " was torn up by an enemy Rottweiler.";
 																						deathstring2 = "\n";
 																					}
 																					else
 																					{
 																						if (deathmsg == 44)
 																						{
-																							deathstring = " was stopped by an enemy autoturret";
-																							deathstring2 = "\n";
+																							deathstring = " was stopped by an enemy autoturret.";
+																							deathstring2 = ".\n";
 																						}
 																						else
 																						{
@@ -4364,33 +4344,33 @@ void(entity targ, entity attacker) ClientObituary =
 																								if (rnum < 0.2)
 																								{
 																									deathstring = " burns to death by ";
-																									deathstring2 = "'s flame\n";
+																									deathstring2 = "'s flame.\n";
 																								}
 																								else
 																								{
 																									if (rnum < 0.4)
 																									{
 																										deathstring = " is fried by ";
-																										deathstring2 = "'s fire\n";
+																										deathstring2 = "'s fire.\n";
 																									}
 																									else
 																									{
 																										if (rnum < 0.6)
 																										{
 																											deathstring = " is boiled alive by ";
-																											deathstring2 = "'s heat\n";
+																											deathstring2 = "'s heat.\n";
 																										}
 																										else
 																										{
 																											if (rnum < 0.8)
 																											{
 																												deathstring = " is cremated by ";
-																												deathstring2 = "'s incinerator\n";
+																												deathstring2 = "'s incinerator.\n";
 																											}
 																											else
 																											{
 																												deathstring = " is grilled by ";
-																												deathstring2 = "'s BBQ\n";
+																												deathstring2 = "'s BBQ.\n";
 																											}
 																										}
 																									}
@@ -4408,56 +4388,56 @@ void(entity targ, entity attacker) ClientObituary =
 																									{
 																										deathstring = " was slit open by ";
 																									}
-																									deathstring2 = "\n";
+																									deathstring2 = ".\n";
 																								}
 																								else
 																								{
 																									if (deathmsg == 32)
 																									{
 																										deathstring = " was spanner-whacked by ";
-																										deathstring2 = "\n";
+																										deathstring2 = ".\n";
 																									}
 																									else
 																									{
 																										if (deathmsg == TF_FLARE_OFF)
 																										{
 																											deathstring = " was swiss-cheesed by ";
-																											deathstring2 = "'s bird gun\n";
+																											deathstring2 = "'s bird gun.\n";
 																										}
 																										else
 																										{
 																											if (deathmsg == 2)
 																											{
 																												deathstring = "'s head is popped by ";
-																												deathstring2 = "'s shotgun\n";
+																												deathstring2 = "'s shotgun.\n";
 																											}
 																											else
 																											{
 																												if (deathmsg == 3)
 																												{
-																													deathstring = " was capped by ";
-																													deathstring2 = "\n";
+																													deathstring = " was bustacapped by ";
+																													deathstring2 = ".\n";
 																												}
 																												else
 																												{
 																													if (deathmsg == 4)
 																													{
 																														deathstring = " was perforated by ";
-																														deathstring2 = "'s lava nailgun\n";
+																														deathstring2 = "'s lava nailgun.\n";
 																													}
 																													else
 																													{
 																														if (deathmsg == 7)
 																														{
 																															deathstring = " swims with ";
-																															deathstring2 = "'s toaster\n";
+																															deathstring2 = "'s toaster.\n";
 																														}
 																														else
 																														{
 																															if (deathmsg == 21)
 																															{
 																																deathstring = " grappled with ";
-																																deathstring2 = "\n";
+																																deathstring2 = ".\n";
 																															}
 																															else
 																															{
@@ -4466,19 +4446,19 @@ void(entity targ, entity attacker) ClientObituary =
 																																	if (rnum <= 0.3)
 																																	{
 																																		deathstring = " gets a sucking chest wound from ";
-																																		deathstring2 = "\n";
+																																		deathstring2 = ".\n";
 																																	}
 																																	else
 																																	{
 																																		if (rnum <= 0.6)
 																																		{
 																																			deathstring = "'s liver is blown out by ";
-																																			deathstring2 = "\n";
+																																			deathstring2 = ".\n";
 																																		}
 																																		else
 																																		{
 																																			deathstring = "'s chest explodes from ";
-																																			deathstring2 = "'s sniper round\n";
+																																			deathstring2 = "'s sniper round.\n";
 																																		}
 																																	}
 																																}
@@ -4489,12 +4469,12 @@ void(entity targ, entity attacker) ClientObituary =
 																																		if (rnum <= 0.5)
 																																		{
 																																			deathstring = " is beheaded by ";
-																																			deathstring2 = "'s round\n";
+																																			deathstring2 = "'s round.\n";
 																																		}
 																																		else
 																																		{
 																																			deathstring = "'s labotomized by ";
-																																			deathstring2 = "'s sniper round\n";
+																																			deathstring2 = "'s sniper round.\n";
 																																		}
 																																	}
 																																	else
@@ -4504,12 +4484,12 @@ void(entity targ, entity attacker) ClientObituary =
 																																			if ((rnum <= 0.5))
 																																			{
 																																				deathstring = " was shocked to death by ";
-																																				deathstring2 = "'s tesla coil\n";
+																																				deathstring2 = "'s tesla coil.\n";
 																																			}
 																																			else
 																																			{
 																																				deathstring = "'s was obliterated by ";
-																																				deathstring2 = "'s tesla coil\n";
+																																				deathstring2 = "'s tesla coil.\n";
 																																			}
 																																		} else {
 																																										if ((deathmsg == 52))
@@ -4517,22 +4497,22 @@ void(entity targ, entity attacker) ClientObituary =
 																																											if ((rnum < 0.5))
 																																											{
 																																												deathstring = " is disentegrated by ";
-																																												deathstring2 = "'s Sentry Point Defense System\n";
+																																												deathstring2 = "'s Sentry Point Defense System.\n";
 																																											}
 																																											else
 																																											{
 																																												deathstring = " is obliterated by ";
-																																												deathstring2 = "'s sentry gun\n";
+																																												deathstring2 = "'s sentry gun.\n";
 																																											}
 																																										}
 #ifdef mtf_coop																																									
 	else if (deathmsg == 1124) {
 		deathstring = " is pinned by ";
-		deathstring2 = "'s needler\n";
+		deathstring2 = "'s needler.\n";
 	}
 	else if (deathmsg == 1125) {
 		deathstring = " is set aflare by ";
-		deathstring2 = "'s flare gun\n";
+		deathstring2 = "'s flare gun.\n";
 	}
 	else {
 #elseif
@@ -4543,12 +4523,12 @@ void(entity targ, entity attacker) ClientObituary =
 																																			if (rnum <= 0.5)
 																																			{
 																																				deathstring = " is neutered by ";
-																																				deathstring2 = "\n";
+																																				deathstring2 = ".\n";
 																																			}
 																																			else
 																																			{
 																																				deathstring = "'s legs explode open from ";
-																																				deathstring2 = "'s shot\n";
+																																				deathstring2 = "'s shot.\n";
 																																			}
 																																		}
 																																		else
@@ -4563,14 +4543,14 @@ void(entity targ, entity attacker) ClientObituary =
 																																				if (deathmsg == 20)
 																																				{
 																																					deathstring = " torso is removed by ";
-																																					deathstring2 = "\n";
+																																					deathstring2 = ".\n";
 																																				}
 																																				else
 																																				{
 																																					if (deathmsg == 22)
 																																					{
 																																						deathstring = " is ass-knifed by ";
-																																						deathstring2 = "\n";
+																																						deathstring2 = ".\n";
 																																						sound(targ, 0, "player/mpain6.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 																																					}
 																																					else
@@ -4578,21 +4558,21 @@ void(entity targ, entity attacker) ClientObituary =
 																																						if (deathmsg == 25)
 																																						{
 																																							deathstring = " is over-dosed by ";
-																																							deathstring2 = "'s ludes\n";
+																																							deathstring2 = "'s ludes.\n";
 																																						}
 																																						else
 																																						{
 																																							if (deathmsg == 26)
 																																							{
 																																								deathstring = " spews juice thru holes from ";
-																																								deathstring2 = "'s railgun\n";
+																																								deathstring2 = "'s railgun.\n";
 																																							}
 																																							else
 																																							{
 																																								if (deathmsg == 33)
 																																								{
 																																									deathstring = " gets cooked by ";
-																																									deathstring2 = "'s incendiary rocket\n";
+																																									deathstring2 = "'s incendiary rocket.\n";
 																																								} 
 																																								// pablo. spike trap death msg.
 																																								else
@@ -4600,7 +4580,7 @@ void(entity targ, entity attacker) ClientObituary =
 																																									if (deathmsg == 200)
 																																									{
 																																										deathstring = "'s leg was amputated by ";
-																																										deathstring2 = "'s spike\n";
+																																										deathstring2 = "'s spike.\n";
 																																									}
 																																									// pablo. dispenser death msg.
 																																									else
@@ -4608,7 +4588,7 @@ void(entity targ, entity attacker) ClientObituary =
 																																										if (deathmsg == 201)
 																																										{
 																																											deathstring = " thought ";
-																																											deathstring2 = "'s dispenser was a mechanical bull\n";
+																																											deathstring2 = "'s dispenser was a mechanical bull.\n";
 																																										}
 																																									}
 																																								}
@@ -4693,13 +4673,13 @@ void(entity targ, entity attacker) ClientObituary =
 					{
 						if ((deathmsg == 27))
 						{
-							deathstring = " crossed his sentry gun's line of fire\n";
+							deathstring = " crossed his sentry gun's line of fire.\n";
 						}
 						else
 						{
 							if ((deathmsg == 52))
 							{
-								deathstring = " was electrocuted by his own tesla coil\n";
+								deathstring = " was electrocuted by his own tesla coil.\n";
 							}
 						}
 					}
@@ -4717,14 +4697,14 @@ void(entity targ, entity attacker) ClientObituary =
 					if (deathmsg == 34)
 					{
 						deathstring = " is creamed by ";
-						deathstring2 = "'s sentry gun\n";
+						deathstring2 = "'s sentry gun.\n";
 					}
 					else
 					{
 						if (deathmsg == 27)
 						{
 							deathstring = "'s spine is extracted by ";
-							deathstring2 = "'s sentry gun\n";
+							deathstring2 = "'s sentry gun.\n";
 						}
 					}
 #ifdef mtf_coop
@@ -4780,7 +4760,7 @@ local entity te;
 					}
 					else
 					{
-						deathstring = " can't breathe water\n";
+						deathstring = " can't breathe water.\n";
 					}
 				}
 				else
@@ -4789,11 +4769,11 @@ local entity te;
 					{
 						if (random() < 0.5)
 						{
-							deathstring = " gulped a load of slime\n";
+							deathstring = " gulped a load of Texas trucker matress squeezings.\n";
 						}
 						else
 						{
-							deathstring = " can't exist on slime alone\n";
+							deathstring = " can't exist on Mt. Dew alone.\n";
 						}
 					}
 					else
@@ -4802,17 +4782,17 @@ local entity te;
 						{
 							if (targ.health < -15)
 							{
-								deathstring = " burst into flames\n";
+								deathstring = " burst into flames.\n";
 							}
 							else
 							{
 								if (random() < 0.5)
 								{
-									deathstring = " turned into hot slag\n";
+									deathstring = " turned into hot slag.\n";
 								}
 								else
 								{
-									deathstring = " visits the Hell fires\n";
+									deathstring = " visits the Hell fires.\n";
 								}
 							}
 						}
@@ -4820,38 +4800,38 @@ local entity te;
 						{
 							if (attacker.classname == "monster_dog")
 							{
-								deathstring = " was mauled by a Rottweiler\n";
+								deathstring = " was mauled by a Rottweiler.\n";
 							}
 							else
 							{
 								if (attacker.classname == "explo_box")
 								{
-									deathstring = " blew up\n";
+									deathstring = " blow'd up.\n";
 								}
 								else
 								{
 									if (attacker.solid == 4 && attacker != world)
 									{
-										deathstring = " was crushed\n";
+										deathstring = " was crushed.\n";
 									}
 									else
 									{
 										if (targ.deathtype == "falling")
 										{
 											targ.deathtype = "";
-											deathstring = " fell to his death\n";
+											deathstring = " fell to his death.\n";
 										}
 										else
 										{
 											if (attacker.classname == "trap_shooter" || attacker.classname == "trap_spikeshooter")
 											{
-												deathstring = " was shot\n";
+												deathstring = " was shot.\n";
 											}
 											else
 											{
 												if (attacker.classname == "fireball")
 												{
-													deathstring = " ate a lavaball\n";
+													deathstring = " ate a lavaball.\n";
 												}
 												else
 												{
@@ -4863,13 +4843,13 @@ local entity te;
 												{
 												if (deathmsg == 59)
 												{
-													deathstring = " caught a chunk of shrapnel\n";
+													deathstring = " caught a chunk of shrapnel.\n";
 												}
 												else
 												{
 													if (attacker.classname == "trigger_changelevel")
 													{
-														deathstring = " tried to leave\n";
+														deathstring = " tried to leave.\n";
 													}
 #ifndef mtf_coop
 													if (attacker.classname == "monster_shambler")
@@ -4906,9 +4886,9 @@ local entity te;
 															}
 														}
 														else
-															deathstring = " died\n";
+															deathstring = " died.\n";
 #else
-														deathstring = " died\n";
+														deathstring = " died.\n";
 #endif
 													}
 												} } }
@@ -5064,7 +5044,7 @@ deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 #ifdef mtf_coop
 				else if (attacker.classname == "monster_cyberdemon")
 					deathstring = strcat(" was shot into Doom II by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.netname != "" && attacker != world && deathstring == " died\n")
+				else if (attacker.netname != "" && attacker != world && deathstring == " died.\n")
 				{
 					deathstring = GetMonsterDeathstring(attacker.classname);
 					deathstring = strcat(deathstring, GetMonsterPowers(attacker, 2));
@@ -5095,7 +5075,7 @@ deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 				if ((attacker == targ.real_owner))
 				{
 					bprint (TF_FLARE_OFF, targ.real_owner.netname);
-					bprint (TF_FLARE_OFF, " selfdistructs his sentrygun\n");
+					bprint (TF_FLARE_OFF, " self destructs his sentrygun.\n");
 					return;
 				}
 				bprint (TF_FLARE_OFF, targ.real_owner.netname);
@@ -5108,7 +5088,7 @@ deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 					bprint (TF_FLARE_OFF, "'s tesla coil was no match for ");
 				}
 				bprint (TF_FLARE_OFF, attacker.netname);
-				bprint (TF_FLARE_OFF, "\n");
+				bprint (TF_FLARE_OFF, ".\n");
 				logfrag (attacker, targ.real_owner);
 				if (((attacker.team_no > TF_FLARE_LIT) && (attacker.team_no != targ.real_owner.team_no)))
 				{
@@ -5135,7 +5115,6 @@ void(entity attacker) fertimer =
 	newmis.nextthink = time + 3;
 	newmis.think = ferdisplay;
 };
-
 void(entity te) ferdisplay =
 {
 	local entity playernamefer;
@@ -5180,7 +5159,6 @@ void(entity te) ferdisplay =
 	playernamefer.hookpoints = 0;
 	dremove (self);
 };
-
 void(entity targ) teamchangetimer = 
 {
 	self.wait = 1;
@@ -5190,7 +5168,6 @@ void(entity targ) teamchangetimer =
 	newmis.nextthink = time + .5;
 	newmis.think = teamchange;
 };
-
 void(entity targeh) teamchange = 
 {
 	local entity targ;
@@ -5238,7 +5215,6 @@ void(entity targeh) teamchange =
 		targ.ischangingteams = 0; }
 	dremove (self);
 };
-
 void () FixSoundCrap =
 {
 	local entity playername;
@@ -5246,6 +5222,4 @@ void () FixSoundCrap =
 	stuffcmd (playername, "_snd_mixahead .1\n");
 	dremove (self);
 };
-
 //End
-

@@ -6548,39 +6548,39 @@ string ( entity monster, float return_name ) GetMonsterPowers =
 #endif
 	if (monster.monster_items & MITEM_QUAD)
 	{
-		rtrn = strcat(rtrn, "ÑÕÁÄ ");
+		rtrn = strcat(rtrn, "QUAD ");
 	}
 	if (monster.monster_items & MITEM_INVISIBLE)
 	{
-		rtrn = strcat(rtrn, "ÉÎÖÉÓÉÂÌÅ ");	// INVISIBLE
+		rtrn = strcat(rtrn, "INVISIBLE ");	// INVISIBLE
 	}
 	if (monster.monster_items & MITEM_SPEED)
 	{
-		rtrn = strcat(rtrn, "ÓÐÅÅÄ ");	// SPEED
+		rtrn = strcat(rtrn, "SPEED ");	// SPEED
 	}
 	if (monster.monster_items & MITEM_MEGAHEALTH)
 	{
-		rtrn = strcat(rtrn, "ÍÅÇÁÈÅÁÌÔÈ ");	// MEGAHEALTH
+		rtrn = strcat(rtrn, "MEGAHEALTH ");	// MEGAHEALTH
 	}
 	if (monster.monster_items & MITEM_FLAME)
 	{
-		rtrn = strcat(rtrn, "ÆÌÁÍÅ ");	// FLAME
+		rtrn = strcat(rtrn, "FLAME ");	// FLAME
 	}
 	if (monster.monster_items & MITEM_ICE)
 	{
-		rtrn = strcat(rtrn, "ÉÃÅ ");		// ICE
+		rtrn = strcat(rtrn, "ICE ");		// ICE
 	}
 	if (monster.monster_items & MITEM_LIGHTNING)
 	{
-		rtrn = strcat(rtrn, "ÌÉÇÈÔÎÉÎÇ ");		// LIGHTNING
+		rtrn = strcat(rtrn, "LIGHTNING ");		// LIGHTNING
 	}
 	if (monster.monster_items & MITEM_AIR)
 	{
-		rtrn = strcat(rtrn, "ÁÉÒ ");		// AIR
+		rtrn = strcat(rtrn, "AIR ");		// AIR
 	}
 	if (monster.monster_items & MITEM_POWERSTEALER)
 	{
-		rtrn = strcat(rtrn, "ÐÏ×ÅÒÓÔÅÁÌÅÒ ");		// POWERSTEALER
+		rtrn = strcat(rtrn, "POWER-STEALER ");		// POWERSTEALER
 	}	
 	if (monster.weapon & #MWEAPON_ROCKETLAUNCHER)
 	{
@@ -18112,7 +18112,7 @@ void () BackpackTouch =
 		TeamFortress_Discard ();
 	}
 	sound (other, 3.000000, "weapons/lock4.wav", 1.000000, 1.000000);
-		stuffcmd (other, "bf\n");
+//		stuffcmd (other, "bf\n");
 	dremove (self);
 	self = other;
 	sprint5(other, 2, "You picked up 1 beartrap.\n ");  //report pk goodies -arg
@@ -19374,14 +19374,15 @@ void() turret_nailTouch =
 		return; // no point trying to damage the sky, the nail is gone for good. remove it.
 	}
 	org = self.origin - 8 * normalize (self.velocity);
-	deathmsg = 27.000000; // categorize death obituary as a turret sentry kill. -arg
+	deathmsg = 44.000000; // categorize death obituary as a turret sentry kill. -arg
 	if (other.health)
 	{
 		SpawnBlood (org, 15);
-		deathmsg = 27;
+		deathmsg = 44;
 		T_Damage (other, self, self.owner, 40);
 		if (self.super_damage_finished < time)  // add damage if player is on quad.
 		{
+			deathmsg = 44;
 			T_Damage (other, self, self.owner, 200);	
 		}
 	}
@@ -22932,13 +22933,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	}
 	else if (s1 == "killpete")
 	{
-	sprint(self, 2, "Killing Pete the undead head...searching...");
+	sprint(self, 2, "Killing Pete the undead head...searching...\n");
 	local entity head;
 	head = findradius (self.origin, 100);
-	if (head && (head.classname != "player"))
+	if ((head.classname != "player") || (head.classname != "merchant" ))
 	{
 		dremove(head);
-		sprint(self, 2, "poof!..done.");
+		sprint(self, 2, "poof!..done.\n");
 	}
 	}
 	else if (s1 == "ttime")
