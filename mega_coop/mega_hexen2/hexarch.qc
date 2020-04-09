@@ -26,48 +26,32 @@ $frame patrol6      patrol7      patrol8      patrol9      patrol10
 $frame patrol11     patrol12     patrol13     patrol14     patrol15     
 $frame patrol16     patrol17     patrol18     patrol19     patrol20     
 $frame patrol21     patrol22     
-
-//
 $frame redraw1      redraw2      redraw3      redraw4      redraw5      
 $frame redraw6      redraw7      redraw8      redraw9      redraw10     
 $frame redraw11     redraw12     
-
-//
 $frame tranA1       tranA2       tranA3       tranA4       tranA5       
 $frame tranA6       tranA7       tranA8       tranA9       tranA10      
 $frame tranA11      tranA12      tranA13      
 
-//
 $frame tranB1       tranB2       tranB3       tranB4       tranB5       
 $frame tranB6       tranB7       tranB8       tranB9       tranB10      
 $frame tranB11      tranB12      tranB13      tranB14      tranB15      
 $frame tranB16      
-
-//
 $frame tranC1       tranC2       tranC3       tranC4       tranC5       
 $frame tranC6       tranC7       tranC8       tranC9       tranC10      
-
-//
 $frame tranD1       tranD2       tranD3       tranD4       tranD5       
 $frame tranD6       tranD7       tranD8       tranD9       
-
-//
 $frame waitA1       waitA2       waitA3       waitA4       waitA5       
 $frame waitA6       waitA7       waitA8       waitA9       waitA10      
 $frame waitA11      waitA12      waitA13      waitA14      waitA15      
 $frame waitA16      waitA17      waitA18      
-
-//
 $frame waitB1       waitB2       waitB3       waitB4       waitB5       
 $frame waitB6       waitB7       waitB8       waitB9       waitB10      
 $frame waitB11      waitB12      
-
-//
 $frame walk1        walk2        walk3        walk4        walk5        
 $frame walk6        walk7        walk8        walk9        walk10       
 $frame walk11       walk12       walk13       walk14       walk15       
 $frame walk16       
-
 float ARCHER_STUCK = 2;	// Archer can't run
 float GREEN_ARROW = 0;
 float RED_ARROW = 1;
@@ -78,9 +62,7 @@ void archerredraw(void);
 void archerdraw(void);
 void()archerdrawhold;
 void archermissile(void);
-
 void()archer_check_defense;
-
 float archer_check_shot(void)
 {
 	vector spot1,spot2;
@@ -100,7 +82,6 @@ float archer_check_shot(void)
 	}
 	return TRUE;
 };
-
 void archer_duck () [++ $duck1..$duck14]
 {
 	ai_face();
@@ -127,7 +108,6 @@ void archer_duck () [++ $duck1..$duck14]
 		thinktime self :0.2;
 	}
 };
-
 void archer_check_defense()
 {
 	entity enemy_proj;
@@ -156,7 +136,6 @@ void archer_check_defense()
 		return;
 	}
 };
-
 void archer_arrow_touch(void)
 {
 	float damg;
@@ -194,7 +173,6 @@ void archer_arrow_touch(void)
 		CreateGreenSpark (self.origin); 
 	remove(self);
 };
-
 void archer_dying (void) [++ $deathA1..$deathA22]
 {
 	stopSound(self,CHAN_WEAPON);
@@ -210,7 +188,6 @@ void archer_dying (void) [++ $deathA1..$deathA22]
 		MakeSolidCorpse();
 	}
 };
-
 void() archer_die =
 {
 	if (self.health < -30)
@@ -227,7 +204,6 @@ void() archer_die =
 	}
 	archer_dying();
 };
-
 void archer_pain_anim () [++ $pain1 .. $pain16]
 {
 	if (self.frame == $pain2)
@@ -244,7 +220,6 @@ void archer_pain_anim () [++ $pain1 .. $pain16]
 		archerredraw();
 	}
 };
-
 void archer_pain (entity attacker, float damg)
 {
 	if ((self.frame >= $pain1) && (self.frame <= $pain16)) // Still going through pain anims
@@ -259,7 +234,6 @@ if (self.attack_state == AS_MISSILE)
 	else
 		archer_pain_anim();
 };
-
 void archer_launcharrow (float arrowtype,vector spot1,vector spot2)
 {
 	self.last_attack=time;
@@ -285,7 +259,6 @@ void archer_launcharrow (float arrowtype,vector spot1,vector spot2)
 	newmis.abslight=0.5;
 	thinktime newmis : 2.5;
 };
-
 void archerdrawdone () [-- $tranA7..$tranA1]
 {
 	archer_check_defense();
@@ -300,7 +273,6 @@ void archerdrawdone () [-- $tranA7..$tranA1]
 		archer_run();
 	}
 };
-
 void archermissile () [++ $fire1..$fire4]
 {
 float enemy_range,chance,ok,tspeed;
@@ -390,7 +362,6 @@ vector spot1, spot2;
 	else if(visible(self.enemy))
 		ai_face();
 };
-
 void archerredraw () [++ $redraw1..$redraw12]
 {
 	self.attack_state = AS_MISSILE;
@@ -408,7 +379,6 @@ void archerredraw () [++ $redraw1..$redraw12]
 		return;
 	}
 };
-
 void archerdrawhold ()
 {
 float chance,startframe,endframe;
@@ -512,8 +482,6 @@ void archerdraw () [++ $tranA1..$tranA13]
 		}
 	}
 };
-
-
 void archer_run(void) 
 {
 	self.think = archer_run;
@@ -542,7 +510,6 @@ void archer_run(void)
 		ai_run(4);
 	}
 };
-
 void archer_walk(void) [++ $patrol1..$patrol22]
 {
 	thinktime self : HX_FRAME_TIME + .01;	// Make him move a little slower so his run will look faster
@@ -607,8 +574,7 @@ void monster_archer ()
 	self.yaw_speed = 10;
 	self.view_ofs = '0 0 40';
 	walkmonster_start();
-}
-
+};
 void monster_archer_lord ()
 {
 	if (deathmatch)
@@ -649,7 +615,6 @@ void monster_archer_lord ()
 	self.view_ofs = '0 0 40';
 	walkmonster_start();
 };
-
 float ArcherCheckAttack (void)
 {
 	local vector	spot1, spot2;	
@@ -711,3 +676,4 @@ float ArcherCheckAttack (void)
 
 	return FALSE;
 };
+//END
