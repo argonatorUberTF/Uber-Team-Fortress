@@ -6,7 +6,6 @@ void () RestoreGame =
 	head.think = restore_settings;
 	head.nextthink = (time + 0.05);
 };
-
 void (entity obj1, entity obj2) fog_restoration =
 {
 	stuffcmd_wrap (obj1, "gl_fogenable ");
@@ -20,7 +19,6 @@ void (entity obj1, entity obj2) fog_restoration =
 	stuffcmd_wrap (obj1, "gl_fogblue ");
 	fog_ftos_scr (obj2.clfog_blue, obj1);
 };
-
 void () restore_settings =
 {
 	local entity mark;
@@ -49,8 +47,6 @@ void () restore_settings =
 	if (mark.sky)
 	{
 		stuffcmd_wrap (head, "r_oldsky 0\n");
-//		WriteByte (MSG_ALL, SVC_SKYBOX);
-//		WriteString (MSG_ALL, mark.sky);
 	}
 	fog_restoration (head, mark);
 	stuffcmd_wrap (head, "r_waterripple ");
@@ -63,7 +59,6 @@ void () restore_settings =
 	stuffcmd_wrap (head, ftos (mark.gravity));
 	stuffcmd_wrap (head, "\n");
 };
-
 void () info_start =
 {
 	irespawn = self.method;
@@ -92,7 +87,6 @@ void () info_start =
 	self.think = supervise_level;
 	self.nextthink = (time + 0.3);
 };
-
 void () supervise_level =
 {
 	local entity head;
@@ -132,8 +126,6 @@ void () supervise_level =
 		if (((head.health > 0) && (head.dlmp == 1)))
 		{
 			msg_entity = head;
-//			WriteByte (MSG_ONE, SVC_HIDELMP);
-//			WriteString (MSG_ONE, "deadstate");
 			head.dlmp = 0;
 		}
 		head = find (head, classname, "player");
@@ -141,7 +133,6 @@ void () supervise_level =
 	self.nextthink = (time + 0.5);
 	self.think = supervise_level;
 };
-
 void () fog_defaults =
 {
 	if ((self.fog_start == 0))
@@ -157,14 +148,12 @@ void () fog_defaults =
 		self.fog_density = 0;
 	}
 };
-
 void () trigger_fog =
 {
 	fog_defaults ();
 	InitTrigger ();
 	self.touch = adjust_fog;
 };
-
 void (entity obj1, entity obj2, entity obj3) fog_set =
 {
 	stuffcmd_wrap (obj1, "gl_fogenable ");
@@ -185,7 +174,6 @@ void (entity obj1, entity obj2, entity obj3) fog_set =
 	obj3.clfog_start = obj2.fog_start;
 	obj3.clfog_end = obj2.fog_end;
 };
-
 void () adjust_fog =
 {
 	local entity head;
@@ -209,7 +197,6 @@ void () adjust_fog =
 		SUB_UseTargets ();
 	}
 };
-
 void (float num, entity obj1) fog_ftos_scr =
 {
 	local string txt;
@@ -217,7 +204,6 @@ void (float num, entity obj1) fog_ftos_scr =
 	stuffcmd_wrap (obj1, txt);
 	stuffcmd_wrap (obj1, "\n");
 };
-
 void () client_cvarpimp =
 {
 	local entity obj1;
@@ -238,7 +224,6 @@ void () client_cvarpimp =
 	}
 	obj1.nextthink = (time + 0.1);
 };
-
 void () set_clientcvars =
 {
 	local float num;
@@ -246,8 +231,6 @@ void () set_clientcvars =
 	if ((self.enemy.sky != ""))
 	{
 		stuffcmd_wrap (self.owner, "r_oldsky 0\n");
-//		WriteByte (MSG_ALL, SVC_SKYBOX);
-//		WriteString (MSG_ALL, self.enemy.sky);
 	}
 	fog_set (self.owner, self.enemy, self.enemy);
 	if (self.enemy.noise)
@@ -272,7 +255,6 @@ void () set_clientcvars =
 	stuffcmd_wrap (self.owner, "\n");
 	remove (self);
 };
-
 void () client_cvarnorm =
 {
 	stuffcmd_wrap (self.owner, "v_cshift 0 0 0 0\n");
@@ -286,7 +268,6 @@ void () client_cvarnorm =
 	stuffcmd_wrap (self.owner, "r_wateralpha 1\n");
 	remove (self);
 };
-
 void () info_particles =
 {
 	if ((self.speed == 0))
@@ -311,7 +292,6 @@ void () info_particles =
 	}
 	trigger_particles ();
 };
-
 void () trigger_particles =
 {
 	self.count = 0;
@@ -326,7 +306,6 @@ void () particles_reset =
 	self.think = info_player_start;
 	self.nextthink = (time + 999999);
 };
-
 void () emit_particles =
 {
 	local vector spot1;
@@ -341,7 +320,6 @@ void () emit_particles =
 	}
 	if ((self.method < 1))
 	{
-//		particle (self.origin, self.movedir, self.cnt, self.duration);
 	}
 	else
 	{
@@ -356,17 +334,14 @@ void () emit_particles =
 			self.aether_y = (self.aether_y + 360);
 		}
 		spot1 = self.origin + (v_forward * self.impulse);
-//		particle (spot1, self.movedir, self.cnt, self.duration);
 		if ((self.method == 2))
 		{
 			spot1 = self.origin + (v_forward * (0 - self.impulse));
-//			particle (spot1, self.movedir, self.cnt, self.duration);
 		}
 	}
 	self.think = emit_particles;
 	self.nextthink = (time + self.delay);
 };
-
 void () misc_smokemaker =
 {
 	precache_model ("progs/null.mdl");
@@ -389,21 +364,18 @@ void () misc_smokemaker =
 	self.nextthink = (time + random ());
 	self.think = spawn_smokethang;
 };
-
 void () trigger_smoke =
 {
 	self.use = stop_smoke;
 	self.nextthink = (time + random ());
 	self.think = spawn_smokethang;
 };
-
 void () stop_smoke =
 {
 	self.nextthink = (time + 99999);
 	self.think = SUB_Null;
 	self.use = trigger_smoke;
 };
-
 void () spawn_smokethang =
 {
 	local entity head;
@@ -429,7 +401,6 @@ void () spawn_smokethang =
 	}
 	self.think = spawn_smokethang;
 };
-
 void (vector vec) lavasplash =
 {
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
@@ -438,15 +409,6 @@ void (vector vec) lavasplash =
 	WriteCoord (MSG_BROADCAST, vec_y);
 	WriteCoord (MSG_BROADCAST, vec_z);
 };
-
 void (vector vec) makesmoke =
-{
-//	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
-//	WriteByte (MSG_BROADCAST, TE_SMOKE);
-//	WriteCoord (MSG_BROADCAST, vec_x);
-//	WriteCoord (MSG_BROADCAST, vec_y);
-//	WriteCoord (MSG_BROADCAST, vec_z);
-//	WriteByte (MSG_BROADCAST, 15);
-};
- 
+{};
 //END

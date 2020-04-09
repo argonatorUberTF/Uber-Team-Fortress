@@ -8,7 +8,6 @@ void () trigger_console =
 	}
 	self.touch = console_send;
 };
-
 void () console_send =
 {
 	if ((other.classname != "player"))
@@ -18,7 +17,6 @@ void () console_send =
 	stuffcmd (other, self.event);
 	stuffcmd (other, "\n");
 };
-
 void () info_idscale =
 {
 	self.use = trigger_V_IDLES_use;
@@ -27,12 +25,10 @@ void () info_idscale =
 		dprint ("No V_IDLESCALE set in info_idscale\n");
 	}
 };
-
 void () trigger_V_IDLES_use =
 {
 	cvar_set ("v_idlescale", self.message);
 };
-
 void () info_script =
 {
 	if ((coop || deathmatch))
@@ -42,13 +38,11 @@ void () info_script =
 		self.use = script_usetargets;
 	}
 };
-
 void () script_usetargets =
 {
 	SUB_UseTargets ();
 	remove (self);
 };
-
 void () info_camera =
 {
 	if ((coop || deathmatch))
@@ -58,11 +52,9 @@ void () info_camera =
 	}
 	self.use = camera_cyclez;
 };
-
 void () remove_movers =
 {
 	local entity m;
-
 	m = find (world, classname, "info_movecam");
 	while (m)
 	{
@@ -74,7 +66,6 @@ void () remove_movers =
 		m = find (m, classname, "info_movecam");
 	}
 };
-
 void () info_movecam =
 {
 	if ((deathmatch || coop))
@@ -88,12 +79,10 @@ void () info_movecam =
 	}
 	self.use = move_the_camera;
 };
-
 void () move_the_camera =
 {
 	local entity head;
 	local entity sa;
-
 	head = find (world, classname, "camera");
 	if ((head == world))
 	{
@@ -108,7 +97,6 @@ void () move_the_camera =
 	self.think = come_to_me;
 	self.nextthink = (time + 0.01);
 };
-
 void () come_to_me =
 {
 	local vector dave;
@@ -172,7 +160,6 @@ void () camera_cyclez =
 void (entity o) spawn_dummy =
 {
 	local entity sa;
-
 	if ((deathmatch || coop))
 	{
 		return;
@@ -195,36 +182,23 @@ void (entity o) spawn_dummy =
 	sa.think = dummy_stand;
 	sa.nextthink = (time + 0.1);
 };
-
 void () dummy_stand = [ 12, dummy_stand2 ]
-{
-};
-
+{};
 void () dummy_stand2 = [ 13, dummy_stand3 ]
-{
-};
-
+{};
 void () dummy_stand3 = [ 14, dummy_stand4 ]
-{
-};
-
+{};
 void () dummy_stand4 = [ 15, dummy_stand5 ]
-{
-};
-
+{};
 void () dummy_stand5 = [ 16, dummy_stand ]
-{
-};
-
+{};
 void () name_player =
 {
 	local entity play;
-
 	play = find (world, classname, "camera");
 	play.classname = "player";
 	stuffcmd (play, "-forward\n");
 };
-
 void () go_back =
 {
 	local entity t;
@@ -278,14 +252,12 @@ void () go_back =
 	t.think = SUB_Remove;
 	remove (self);
 };
-
 void () look_ahead =
 {
 	self.angles = self.enemy.mangle;
 	self.fixangle = 1;
 	self.nextthink = (time + 0.01);
 };
-
 void () go_camera =
 {
 	self.classname = "camera";
@@ -311,7 +283,6 @@ void () go_camera =
 	cvar_set ("v_idlescale", "0");
 	setorigin (self, self.enemy.origin);
 };
-
 void () camera_use =
 {
 	local entity head;
@@ -330,7 +301,6 @@ void () camera_use =
 	self.nextthink = (time + self.delay);
 	self.think = activate_cutscene;
 };
-
 void () trigger_camera =
 {
 	InitTrigger ();
@@ -348,7 +318,6 @@ void () trigger_camera =
 	}
 	self.use = camera_use;
 };
-
 void () camerap_touch =
 {
 	if (((other.health <= 0) || (other.classname != "player")))
@@ -357,7 +326,6 @@ void () camerap_touch =
 	}
 	script_usetargets ();
 };
-
 void () Script_play =
 {
 	local entity scrpt;
@@ -394,7 +362,6 @@ void () Script_play =
 	}
 	return;
 };
-
 void () big_bang =
 {
 	local vector newo;
@@ -424,18 +391,15 @@ void () big_bang =
 	self.nextthink = ((time + (0.2 * random ())) + 0.1);
 	self.think = big_bang;
 };
-
 void () misc_boom =
 {
 	precache_sound2 ("boss2/pop2.wav");
 	self.use = big_bang;
 };
-
 void () info_angle =
 {
 	dprint ("There is no info_angle!!!!  Only Zuuuuul!!!!!!!!\n");
 };
-
 void () camera_touch =
 {
 	if (self.targetname)
@@ -453,7 +417,6 @@ void () camera_touch =
 	self.nextthink = (time + self.delay);
 	self.think = activate_cutscene;
 };
-
 void () activate_cutscene =
 {
 	local entity t;
@@ -490,7 +453,6 @@ void () activate_cutscene =
 	self.nextthink = (time + 0.1);
 	self.think = SUB_Remove;
 };
-
 void () info_fadeout =
 {
 	if ((self.speed == 0))
@@ -500,7 +462,6 @@ void () info_fadeout =
 	self.cnt = 0;
 	self.use = fade_out_go;
 };
-
 void () info_fadein =
 {
 	if ((self.speed == 0))
@@ -510,7 +471,6 @@ void () info_fadein =
 	self.cnt = 255;
 	self.use = fade_in_go;
 };
-
 void () fade_in_go =
 {
 	if (findcamera ())
@@ -518,7 +478,6 @@ void () fade_in_go =
 		fade_in ();
 	}
 };
-
 void () fade_out_go =
 {
 	if (findcamera ())
@@ -526,7 +485,6 @@ void () fade_out_go =
 		fade_away ();
 	}
 };
-
 float () findcamera =
 {
 	local entity head;
@@ -542,7 +500,6 @@ float () findcamera =
 		return (1);
 	}
 };
-
 void () fade_in =
 {
 	fade_v_cshift ();
@@ -558,7 +515,6 @@ void () fade_in =
 	self.think = fade_in;
 	self.nextthink = (time + self.speed);
 };
-
 void () fade_away =
 {
 	fade_v_cshift ();
@@ -574,7 +530,6 @@ void () fade_away =
 	self.think = fade_away;
 	self.nextthink = (time + self.speed);
 };
-
 void () fade_v_cshift =
 {
 	stuffcmd (self.enemy, "v_cshift ");
@@ -590,5 +545,4 @@ void () fade_v_cshift =
 	stuffcmd (self.enemy, ftos (self.cnt));
 	stuffcmd (self.enemy, "\n");
 };
-
-//END 
+//END

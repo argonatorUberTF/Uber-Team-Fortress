@@ -15,7 +15,6 @@ float () wraith_checkenemy =
 	}
 	return (0);
 };
-
 void () wraith_2normal =
 {
 	self.th_stand = wraith_idle1;
@@ -27,7 +26,6 @@ void () wraith_2normal =
 	self.effects = (self.effects - (self.effects & EF_DIMLIGHT));
 	sound (self, CHAN_VOICE, "wraith/return.wav", 1, ATTN_NONE);
 };
-
 void () wraith_2inv =
 {
 	self.th_stand = wraith_inv_idle;
@@ -37,7 +35,6 @@ void () wraith_2inv =
 	self.effects = (self.effects | EF_DIMLIGHT);
 	sound (self, CHAN_VOICE, "wraith/return.wav", 1, ATTN_NONE);
 };
-
 void () wraith_inv_idle =
 {
 	if (!Wraith_Find_Orphans ())
@@ -59,7 +56,6 @@ void () wraith_inv_idle =
 		sound (self, CHAN_VOICE, "wraith/idle.wav", 1, ATTN_IDLE);
 	}
 };
-
 void () wraith_inv_motion =
 {
 	if ((self.health < 60))
@@ -126,13 +122,11 @@ void () wraith_inv_motion =
 		self.effects = (self.effects | EF_MUZZLEFLASH);
 	}
 };
-
 void () wraith_comeback =
 {
 	self.alpha = 0.8;
 	wraith_comeback2 ();
 };
-
 void () wraith_comeback2 =
 {
 	if ((self.walkframe >= 17))
@@ -146,7 +140,6 @@ void () wraith_comeback2 =
 	self.frame = (119 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () wraith_attack1 =
 {
 	local float num;
@@ -166,7 +159,6 @@ void () wraith_attack1 =
 		wraith_spike (num);
 	}
 };
-
 void () wraith_attack2 =
 {
 	local float num;
@@ -186,13 +178,11 @@ void () wraith_attack2 =
 		wraith_spike (num);
 	}
 };
-
 void () wraith_goinv =
 {
 	wraith_2inv ();
 	wraith_goinv2 ();
 };
-
 void () wraith_goinv2 =
 {
 	if ((self.walkframe >= 17))
@@ -206,13 +196,11 @@ void () wraith_goinv2 =
 	self.frame = (103 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () wraith_inv_souls =
 {
 	self.alpha = 0.8;
 	wraith_inv_souls2 ();
 };
-
 void () wraith_inv_souls2 =
 {
 	if ((self.walkframe >= 17))
@@ -226,7 +214,6 @@ void () wraith_inv_souls2 =
 	self.frame = (119 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () Wraith_Move =
 {
 	local entity sa;
@@ -268,7 +255,6 @@ void () Wraith_Move =
 		self.origin_z = (self.origin_z - num);
 	}
 };
-
 void (float offset) wraith_spike =
 {
 	local vector offang;
@@ -288,7 +274,6 @@ void (float offset) wraith_spike =
 	newmis.velocity = (vec * 300);
 	sound (self, CHAN_WEAPON, "baron/throb.wav", 1, ATTN_IDLE);
 };
-
 void () wraith_invisible = [ 0, wraith_invisible ]
 {
 	if ((self.enemy != world))
@@ -307,7 +292,6 @@ void () wraith_invisible = [ 0, wraith_invisible ]
 		}
 	}
 };
-
 void () wraith_idle1 =
 {
 	if (!Wraith_Find_Orphans ())
@@ -352,7 +336,6 @@ void () wraith_idle1 =
 		}
 	}
 };
-
 void () wraith_idle2 =
 {
 	if (!Wraith_Find_Orphans ())
@@ -393,7 +376,6 @@ void () wraith_idle2 =
 		}
 	}
 };
-
 void () wraith_motion =
 {
 	local float mspike;
@@ -492,7 +474,6 @@ void () wraith_motion =
 		}
 	}
 };
-
 void () wraith_throws_gunk =
 {
 	local entity gunk;
@@ -523,13 +504,11 @@ void () wraith_throws_gunk =
 	gunk.nextthink = (time + 0.01);
 	gunk.think = Spawn_Wraithgunk;
 };
-
 void () wraith_unform =
 {
 	self.walkframe = 0;
 	parse_anim ( 51, wraith_dissipate );
 };
-
 void () wraith_dissipate =
 {
 	if ((self.walkframe >= 17))
@@ -553,7 +532,6 @@ void () wraith_dissipate =
 	self.frame = (18 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () monster_wraith1 =
 {
 	self.solid = SOLID_TRIGGER;
@@ -582,9 +560,7 @@ void () monster_wraith1 =
 	self.nojump = 0;
 	self.touch = death_aura;
 	MTF_Setup_Monster_Postsets( self.health, coop_flymonster_start);
-//	flymonster_start ();
 };
-
 void () monster_wraith =
 {
 	if (deathmatch)
@@ -611,11 +587,9 @@ void () monster_wraith =
 	precache_sound ("wraith/talk3.wav");
 	precache_sound ("wraith/return.wav");
 	precache_sound ("wraith/select.wav");
-
 	MTF_Setup_Monster_Presets ( 0, "wraith", monster_wraith1 );
 	self.lives = 0;
 };
-
 void () death_aura =
 {
 	if ((other.health < 1))
@@ -639,7 +613,6 @@ void () wraith_wait =
 	self.frame = (0 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () wraith_begin =
 {
 	self.use = monster_use;
@@ -647,7 +620,6 @@ void () wraith_begin =
 	self.th_walk = wraith_motion;
 	parse_anim ( 0, wraith_motion );
 };
-
 void () wraith_pain =
 {
 	local float num;
@@ -680,31 +652,18 @@ void () wraith_pain =
 	self.pain_finished = (time + 5);
 	parse_anim ( 86, wraith_pain2 );
 };
-
 void () wraith_pain2 = [ 87, wraith_pain3 ]
-{
-};
-
+{};
 void () wraith_pain3 = [ 88, wraith_pain4 ]
-{
-};
-
+{};
 void () wraith_pain4 = [ 89, wraith_pain5 ]
-{
-};
-
+{};
 void () wraith_pain5 = [ 90, wraith_pain6 ]
-{
-};
-
+{};
 void () wraith_pain6 = [ 91, wraith_pain7 ]
-{
-};
-
+{};
 void () wraith_pain7 = [ 92, wraith_motion ]
-{
-};
-
+{};
 void () wraith_special =
 {
 	if ((self.super_damage_finished > time))
@@ -716,52 +675,42 @@ void () wraith_special =
 		self.effects = (self.effects - (self.effects & EF_DIMLIGHT));
 	}
 };
-
 void () wraith_zeda = [ 93, wraith_zeda1 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda1 = [ 94, wraith_zeda2 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda2 = [ 95, wraith_zeda3 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda3 = [ 96, wraith_zeda4 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda4 = [ 97, wraith_zeda5 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda5 = [ 98, wraith_zeda6 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda6 = [ 99, wraith_zeda7 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda7 = [ 100, wraith_zeda8 ]
 {
 	ai_face ();
 };
-
 void () wraith_zeda8 = [ 101, wraith_soulcheck ]
 {
 	ai_face ();
 };
-
 void () wraith_soulcheck =
 {
 	if ((self.enemy.classname != "soul_to_take"))
@@ -775,16 +724,12 @@ void () wraith_soulcheck =
 	parse_anim ( 100, wraith_xeda2 );
 	ai_face ();
 };
-
 void () wraith_xeda2 = [ 99, wraith_xeda3 ]
 {
 	ai_face ();
 };
-
 void () wraith_xeda3 = [ 98, wraith_zeda6 ]
-{
-};
-
+{};
 void () wraith_souls =
 {
 	if ((self.enemy.classname != "soul_to_take"))
@@ -797,7 +742,6 @@ void () wraith_souls =
 	}
 	wraith_zeda ();
 };
-
 void (entity mark) Soul_to_take =
 {
 	local entity soula;
@@ -822,7 +766,6 @@ void (entity mark) Soul_to_take =
 	soula.nextthink = (time + 0.2);
 	soula.think = Soul_Think;
 };
-
 void () Soul_Think =
 {
 	local vector dave;
@@ -882,7 +825,6 @@ void () Soul_Think =
 	self.think = Soul_Think;
 	self.nextthink = (time + 0.05);
 };
-
 float () Seek_out_soul =
 {
 	local entity head;
@@ -912,7 +854,6 @@ float () Seek_out_soul =
 		return (1);
 	}
 };
-
 float () Wraith_Find_Orphans =
 {
 	local entity head;
@@ -944,7 +885,6 @@ float () Wraith_Find_Orphans =
 		return (1);
 	}
 };
-
 void () wraith_soul_proxim =
 {
 	local vector megadeth;
@@ -960,7 +900,6 @@ void () wraith_soul_proxim =
 	}
 	self.cnt = 1;
 };
-
 void (entity mark) spawn_soulsound =
 {
 	local entity head;
@@ -971,12 +910,10 @@ void (entity mark) spawn_soulsound =
 	head.think = make_soulsound;
 	head.nextthink = (time + num);
 };
-
 void () make_soulsound =
 {
 	sound (self, 1/*CHAN_ENDER*/, "wraith/soul.wav", 1, ATTN_IDLE);
 	self.think = SUB_Remove;
 	self.nextthink = (time + 1.5);
 };
-
 //END

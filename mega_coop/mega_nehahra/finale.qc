@@ -19,7 +19,6 @@ void () nehahra_setupfinale =
 	nehahra_script ("97", "98", 17, "xactor");
 	nehahra_script ("98", "0", 0, "");
 };
-
 void () nehahra_levelchange =
 {
 	local entity head;
@@ -27,13 +26,11 @@ void () nehahra_levelchange =
 	head.think = go2nehend;
 	head.nextthink = (time + 4);
 };
-
 void () go2nehend =
 {
 	changelevel ("nehend");
 	remove (self);
 };
-
 void () drop_nehahra_finale_sensor =
 {
 	local entity new;
@@ -43,7 +40,6 @@ void () drop_nehahra_finale_sensor =
 	new.think = sense_finale_coming;
 	new.nextthink = (time + 0.2);
 };
-
 void () sense_finale_coming =
 {
 	local entity head;
@@ -67,7 +63,6 @@ void () sense_finale_coming =
 	self.think = sense_finale_coming;
 	self.nextthink = (time + 0.2);
 };
-
 void () nehahra_finalecam =
 {
 	local entity head;
@@ -79,7 +74,6 @@ void () nehahra_finalecam =
 	head.use = camera_cyclez;
 	setorigin (head, '99 -167 500');
 };
-
 void (vector vec, float num, string line) nehahra_movecam =
 {
 	local entity head;
@@ -90,7 +84,6 @@ void (vector vec, float num, string line) nehahra_movecam =
 	head.speed = num;
 	head.use = move_the_camera;
 };
-
 void (string t, string num, float o, string line) nehahra_script =
 {
 	local entity head;
@@ -102,7 +95,6 @@ void (string t, string num, float o, string line) nehahra_script =
 	head.next_script = num;
 	head.script_delay = o;
 };
-
 void () nehahra_finaletrigger =
 {
 	local entity head;
@@ -121,7 +113,6 @@ void () nehahra_finaletrigger =
 	head.touch = camera_touch;
 	head.use = camera_use;
 };
-
 void () spawn_tunnel =
 {
 	local entity head;
@@ -138,7 +129,6 @@ void () spawn_tunnel =
 	head.blink = 0;
 	head.use = tunnel_change;
 };
-
 void () tunnel_change =
 {
 	self.state = (self.state + 1);
@@ -151,7 +141,6 @@ void () tunnel_change =
 		return;
 	}
 };
-
 void () tunnel_move =
 {
 	if ((self.state == 1))
@@ -204,7 +193,6 @@ void () tunnel_move =
 	self.think = tunnel_move;
 	self.nextthink = time;
 };
-
 void () OLD_slow_end_vader =
 {
 	local entity mark;
@@ -214,7 +202,6 @@ void () OLD_slow_end_vader =
 		mark.speed = (mark.speed * 0.2);
 	}
 };
-
 void (entity o) spawn_dummy_finale =
 {
 	local entity sa;
@@ -248,19 +235,16 @@ void (entity o) spawn_dummy_finale =
 	sa.think = dummy_run;
 	sa.nextthink = (time + 0.1);
 };
-
 void () dummy_activate =
 {
 	self.state = 2424;
 };
-
 void () dummy_run =
 {
 	sound (self, 1/*CHAN_DAMAUL*/, "sets/set2_5.wav", 1, ATTN_NONE);
 	self.think = dummy_finale;
 	self.nextthink = (time + 0.1);
 };
-
 void () dummy_finale =
 {
 	if ((self.state == 2424))
@@ -279,7 +263,6 @@ void () dummy_finale =
 	self.frame = (12 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () dummy_suck =
 {
 	self.frame = 50;
@@ -291,7 +274,6 @@ void () dummy_suck =
 	self.think = dummy_suck;
 	self.nextthink = (time + 0.001000);
 };
-
 void () spawn_finalefx =
 {
 	local entity mark;
@@ -301,7 +283,6 @@ void () spawn_finalefx =
 	mark.think = setupfinalefx;
 	mark.nextthink = (time + 0.1);
 };
-
 void () setupfinalefx =
 {
 	local entity head;
@@ -324,7 +305,6 @@ void () setupfinalefx =
 	self.think = finalefog_fade;
 	self.nextthink = (time + 0.01);
 };
-
 void () finalefog_fade =
 {
 	self.fog_density = (self.fog_density + 0.05);
@@ -341,7 +321,6 @@ void () finalefog_fade =
 	self.think = finalefog_fade;
 	self.nextthink = (time + 0.05);
 };
-
 void () finalefadeout =
 {
 	stuffcmd_wrap (self.objekt, "gl_fogred ");
@@ -361,5 +340,4 @@ void () finalefadeout =
 	self.think = finalefadeout;
 	self.nextthink = (time + 0.05);
 };
-
 //END

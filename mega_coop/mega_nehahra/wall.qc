@@ -25,7 +25,6 @@ void () Anglechecking =
 		self.angles_z = (self.angles_z + 360);
 	}
 };
-
 void () setup_explodable =
 {
 	local float num;
@@ -137,7 +136,6 @@ void () setup_explodable =
 		}
 	}
 };
-
 void () func_cover =
 {
 	self.angles = VEC_ORIGIN;
@@ -150,7 +148,6 @@ void () func_cover =
 		self.model = string_null;
 	}
 };
-
 void () func_pain =
 {
 	self.angles = '0 0 0';
@@ -164,7 +161,6 @@ void () func_pain =
 	self.touch = painz_touch;
 	setmodel (self, self.model);
 };
-
 void () pain_deathtype =
 {
 	if ((self.cnt < 1))
@@ -226,7 +222,6 @@ void () pain_deathtype =
 		}
 	}
 };
-
 void () painz_touch =
 {
 	if ((((other.flags & FL_CLIENT) || other.flags) & FL_MONSTER))
@@ -238,7 +233,6 @@ void () painz_touch =
 		T_Damage (other, self, self, self.dmg);
 	}
 };
-
 void (string gibname, float dm) ThrowRubble =
 {
 	local entity new;
@@ -263,13 +257,11 @@ void (string gibname, float dm) ThrowRubble =
 	new.frame = 0;
 	new.flags = 0;
 };
-
 void () exploding_wall_use =
 {
 	activator = self;
 	SUB_UseTargets ();
 };
-
 void () wall_killed =
 {
 	local float rubble_count;
@@ -298,7 +290,6 @@ void () wall_killed =
 	}
 	remove (self);
 };
-
 void () Rubblesets =
 {
 	if ((self.spawnflags & FL_FLY))
@@ -334,7 +325,6 @@ void () Rubblesets =
 	ThrowRubble ("progs/rubble6.mdl", self.health);
 	ThrowRubble ("progs/rubble1.mdl", self.health);
 };
-
 void () info_throw_rubble =
 {
 	local float t;
@@ -376,25 +366,21 @@ void () info_throw_rubble =
 	}
 	self.use = throwrub;
 };
-
 void () throwrub =
 {
 	Rubblesets ();
 	remove (self);
 };
-
 void () func_explodable =
 {
 	func_wall ();		// xavior note: if this ain't called first, it ain't solid. No idea why.
 	exploding_wall ();
 };
-
 void () func_quakedmg =
 {
 	self.health = 5000;
 	exploding_wall ();
 };
-
 void () func_sobject =
 {
 	if (!self.health)
@@ -403,9 +389,7 @@ void () func_sobject =
 	}
 	exploding_wall ();
 };
-
 void () doom_barrel_think, doom_barrel_die;
-
 void () exploding_wall =
 {
 	local vector tempvec;
@@ -460,11 +444,9 @@ void () exploding_wall =
 	}
 	
 };
-
 void () func_bobbingobject =
 {
 dremove(self);
-bprint(2," CALLING \n");
 	if ((self.dmg > 0))
 	{
 		if ((self.spawnflags & FL_MONSTER))
@@ -536,7 +518,6 @@ bprint(2," CALLING \n");
 		spawn_mchsnd ();
 	}
 };
-
 void () bobber_on =
 {
 	self.use = bobber_off;
@@ -558,7 +539,6 @@ void () bobber_on =
 		sound (self, CHAN_VOICE, "machine/m3_st.wav", 1, ATTN_NORM);
 	}
 };
-
 void () bobber_off =
 {
 	self.think = SUB_Null;
@@ -581,7 +561,6 @@ void () bobber_off =
 		sound (self, CHAN_VOICE, "machine/m3_xx.wav", 1, ATTN_NORM);
 	}
 };
-
 void () spawn_mchsnd =
 {
 	local entity mach;
@@ -595,7 +574,6 @@ void () spawn_mchsnd =
 	mach.think = mchsnd_think;
 	mach.nextthink = (time + 0.5);
 };
-
 void () mchsnd_think =
 {
 	if ((self.enemy.think == SUB_Null))
@@ -617,7 +595,6 @@ void () mchsnd_think =
 	}
 	self.nextthink = (time + 0.5);
 };
-
 void () func_mindcrime =
 {
 	setorigin (self, self.origin);
@@ -649,7 +626,6 @@ void () func_mindcrime =
 	self.th_die = object_fall;
 	self.takedamage = DAMAGE_YES;
 };
-
 void () object_fall =
 {
 	SUB_UseTargets ();
@@ -676,7 +652,6 @@ void () object_fall =
 	self.think = wait_to_die;
 	self.nextthink = (time + 0.1);
 };
-
 void () wait_to_die =
 {
 	checkbottom (self);
@@ -715,7 +690,6 @@ void () wait_to_die =
 	self.think = wait_to_die;
 	self.nextthink = (time + 0.1);
 };
-
 #ifndef mtf_coop_halflife
 void () player_push2 =
 {
@@ -732,7 +706,6 @@ void () player_push2 =
 	}
 };
 #endif
-
 void () squish_touch =
 {
 	local vector spot;
@@ -746,7 +719,6 @@ void () squish_touch =
 		}
 	}
 };
-
 void () squish_touch2 =
 {
 	local vector spot;
@@ -761,7 +733,6 @@ void () squish_touch2 =
 		}
 	}
 };
-
 void () func_object =
 {
 	setmodel (self, self.model);
@@ -771,7 +742,6 @@ void () func_object =
 	self.movetype = MOVETYPE_STEP;
 	self.touch = player_push2;
 };
-
 void () mindcrime_throw =
 {
 	if ((self.spawnflags & MC_CONTROL))

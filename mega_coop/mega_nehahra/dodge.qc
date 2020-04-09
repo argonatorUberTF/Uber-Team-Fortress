@@ -96,7 +96,6 @@ float () ai_threats =
 	}
 	return (1);
 };
-
 void (entity threata, float dodge) dodge_fixed =
 {
 	local vector megadeth;
@@ -168,7 +167,6 @@ void (entity threata, float dodge) dodge_fixed =
 		dodge_cardinalize (t);
 	}
 };
-
 void (entity missile) dodge_incoming =
 {
 	local vector megadeth;
@@ -230,7 +228,6 @@ void (entity missile) dodge_incoming =
 		}
 	}
 };
-
 void (float num) dodge_cardinalize =
 {
 	local float mr;
@@ -264,7 +261,6 @@ void (float num) dodge_cardinalize =
 		}
 	}
 };
-
 float (entity missile, entity head) Calc_Dodgemove =
 {
 	local vector dave;
@@ -293,7 +289,6 @@ float (entity missile, entity head) Calc_Dodgemove =
 	}
 	return (num);
 };
-
 float (entity missile, entity head) Calc_Strafemove =
 {
 	local vector dave;
@@ -323,7 +318,6 @@ float (entity missile, entity head) Calc_Strafemove =
 	}
 	return (num);
 };
-
 float (vector vec) panicjump =
 {
 	local vector start;
@@ -374,5 +368,4 @@ float (vector vec) panicjump =
 	}
 	return (1);
 };
-
 //END

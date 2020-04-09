@@ -62,23 +62,19 @@ void () mark3_stand2 = [ 24, mark3_stand3 ]
 {
 	ai_stand ();
 };
-
 void () mark3_stand3 = [ 25, mark3_stand4 ]
 {
 	ai_stand ();
 };
-
 void () mark3_stand4 = [ 26, mark3_stand5 ]
 {
 	ai_stand ();
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_stand5 = [ 27, mark3_stand6 ]
 {
 	ai_stand ();
 };
-
 void () mark3_stand6 = [ 28, mark3_stand7 ]
 {
 	ai_stand ();
@@ -87,13 +83,11 @@ void () mark3_stand6 = [ 28, mark3_stand7 ]
 		enf2_idlesound ();
 	}
 };
-
 void () mark3_stand7 = [ 29, mark3_stand1 ]
 {
 	ai_stand ();
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_walk1 = [ 62, mark3_walk2 ]
 {
 	if ((random () < 0.2))
@@ -102,88 +96,72 @@ void () mark3_walk1 = [ 62, mark3_walk2 ]
 	}
 	ai_walk (FL_SWIM);
 };
-
 void () mark3_walk2 = [ 63, mark3_walk3 ]
 {
 	ai_walk (MOVETYPE_STEP);
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_walk3 = [ 64, mark3_walk4 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () mark3_walk4 = [ 65, mark3_walk5 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () mark3_walk5 = [ 66, mark3_walk6 ]
 {
 	ai_walk (1);
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_walk6 = [ 67, mark3_walk7 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () mark3_walk7 = [ 68, mark3_walk8 ]
 {
 	ai_emnity ("monster_qguy", 1500, 0);
 	ai_walk (FL_SWIM);
 };
-
 void () mark3_walk8 = [ 69, mark3_walk9 ]
 {
 	ai_walk (1);
 };
-
 void () mark3_walk9 = [ 70, mark3_walk10 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () mark3_walk10 = [ 71, mark3_walk11 ]
 {
 	ai_walk (MOVETYPE_STEP);
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_walk11 = [ 72, mark3_walk12 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () mark3_walk12 = [ 73, mark3_walk13 ]
 {
 	ai_walk (1);
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_walk13 = [ 74, mark3_walk14 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () mark3_walk14 = [ 75, mark3_walk15 ]
 {
 	ai_walk (MOVETYPE_WALK);
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_walk15 = [ 76, mark3_walk16 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () mark3_walk16 = [ 77, mark3_walk1 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () mark3_run1 =
 {
 	if (borkfactor1 ())
@@ -197,66 +175,53 @@ void () mark3_run1 =
 	}
 	ai3_run (22);
 };
-
 void () mark3_run2 = [ 31, mark3_run3 ]
 {
 	ai3_run (22);
 };
-
 void () mark3_run3 = [ 32, mark3_run4 ]
 {
 	ai3_run (22);
 };
-
 void () mark3_run4 = [ 33, mark3_run5 ]
 {
 	ai3_run (22);
 };
-
 void () mark3_run5 = [ 34, mark3_run6 ]
 {
 	ai3_run (22);
 };
-
 void () mark3_run6 = [ 35, mark3_run1 ]
 {
 	ai3_run (22);
 };
-
 void () mark3_dstand = [ 36, mark3_dstand2 ]
 {
 	ai_stand ();
 };
-
 void () mark3_dstand2 = [ 37, mark3_dstand3 ]
 {
 	ai_stand ();
 };
-
 void () mark3_dstand3 = [ 38, mark3_dstand4 ]
 {
 	ai_stand ();
 };
-
 void () mark3_dstand4 = [ 39, mark3_dstand5 ]
 {
 	ai_stand ();
 };
-
 void () mark3_dstand5 = [ 40, mark3_dstand6 ]
 {
 	ai_stand ();
 };
-
 void () mark3_dstand6 = [ 41, mark3_dstand7 ]
 {
 	ai_stand ();
 };
-
 void () mark3_dstand7 =
 {
 	local float yawn;
-
 	yawn = random ();
 	if ((yawn < 0.5))
 	{
@@ -267,33 +232,27 @@ void () mark3_dstand7 =
 	parse_anim ( 42, mark3_gunup );
 	ai_stand ();
 };
-
 void () mark3_gunup = [ 43, mark3_gunup2 ]
 {
 	ai_stand ();
 };
-
 void () mark3_gunup2 = [ 44, mark3_gunup3 ]
 {
 	ai_stand ();
 };
-
 void () mark3_gunup3 = [ 45, mark3_gunup4 ]
 {
 	ai_stand ();
 };
-
 void () mark3_gunup4 = [ 46, mark3_gunup5 ]
 {
 	ai_stand ();
 };
-
 void () mark3_gunup5 = [ 47, mark3_stand1 ]
 {
 	self.th_stand = mark3_stand1;
 	ai_stand ();
 };
-
 void () mark3_shoot =
 {
 	if (((self.origin_z >= self.enemy.origin_z) && (random () < 0.3)))
@@ -305,7 +264,6 @@ void () mark3_shoot =
 		mark3_atk1 ();
 	}
 };
-
 void () mark3_atk1 =
 {
 	if (borkfactor1 ())
@@ -320,18 +278,15 @@ void () mark3_atk1 =
 	}
 	parse_anim ( 48, mark3_walk1 );
 };
-
 void () mark3_atk2 = [ 49, mark3_atk3 ]
 {
 	ai_face ();
 	self.th_stand = mark3_stand1;
 };
-
 void () mark3_atk3 = [ 50, mark3_atk4 ]
 {
 	ai_face ();
 };
-
 void () mark3_atk4 =
 {
 	if ((self.health < 25))
@@ -346,13 +301,11 @@ void () mark3_atk4 =
 	parse_anim ( 51, mark3_atk5 );
 	ai_face ();
 };
-
 void () mark3_atk5 = [ 52, mark3_atk6 ]
 {
 	Mons_fire_shotgun2 ();
 	ai3_run (0);
 };
-
 void () mark3_atk6 =
 {
 	if (visible (self.enemy))
@@ -367,41 +320,26 @@ void () mark3_atk6 =
 	parse_anim ( 53, mark3_atk7 );
 	ai_face ();
 };
-
 void () mark3_atk7 = [ 54, mark3_atk8 ]
 {
 	ai_face ();
 };
-
 void () mark3_atk8 = [ 55, mark3_run1 ]
 {
 	ai_face ();
 };
-
 void () mark3_paina1 = [ 56, mark3_paina2 ]
-{
-};
-
+{};
 void () mark3_paina2 = [ 57, mark3_paina3 ]
-{
-};
-
+{};
 void () mark3_paina3 = [ 58, mark3_paina4 ]
-{
-};
-
+{};
 void () mark3_paina4 = [ 59, mark3_paina5 ]
-{
-};
-
+{};
 void () mark3_paina5 = [ 60, mark3_paina6 ]
-{
-};
-
+{};
 void () mark3_paina6 = [ 61, mark3_run1 ]
-{
-};
-
+{};
 void (entity attacker, float damage) mark3_pain =
 {
 	local float r;
@@ -421,17 +359,13 @@ void (entity attacker, float damage) mark3_pain =
 	}
 	mark3_paina1 ();
 };
-
 void () mark3_die1 =
 {
 	dead_stay_dead ();
 	parse_anim ( 0, mark3_die2 );
 };
-
 void () mark3_die2 = [ 1, mark3_die3 ]
-{
-};
-
+{};
 void () mark3_die3 = [ 2, mark3_die4 ]
 {
 	self.solid = SOLID_NOT;
@@ -453,94 +387,62 @@ void () mark3_die4 = [ 3, mark3_die5 ]
 {
 	ai_forward (14);
 };
-
 void () mark3_die5 = [ 4, mark3_die6 ]
 {
 	ai_forward (FL_SWIM);
 };
-
 void () mark3_die6 = [ 5, mark3_die7 ]
 {
 };
-
 void () mark3_die7 = [ 6, mark3_die8 ]
 {
 };
-
 void () mark3_die8 = [ 7, mark3_die9 ]
 {
 };
-
 void () mark3_die9 = [ 8, mark3_die10 ]
 {
 	ai_forward (MOVETYPE_WALK);
 };
-
 void () mark3_die10 = [ 9, mark3_die11 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () mark3_die11 = [ 10, mark3_die12 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () mark3_die12 = [ 11, mark3_die13 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () mark3_die13 = [ 12, mark3_die14 ]
-{
-};
-
+{};
 void () mark3_die14 = [ 13, mark3_die15 ]
-{
-};
-
+{};
 void () mark3_die15 = [ 14, mark3_die16 ]
-{
-};
-
+{};
 void () mark3_die16 = [ 15, mark3_die17 ]
-{
-};
-
+{};
 void () mark3_die17 = [ 16, mark3_die18 ]
-{
-};
-
+{};
 void () mark3_die18 = [ 17, mark3_die19 ]
-{
-};
-
+{};
 void () mark3_die19 = [ 18, mark3_die20 ]
-{
-};
-
+{};
 void () mark3_die20 = [ 19, mark3_die21 ]
-{
-};
-
+{};
 void () mark3_die21 = [ 21, mark3_die21 ]
-{
-};
-
+{};
 void () mark3_die22 = [ 22, corpse_think ]
-{
-};
-
+{};
 void () mark3_fdie1 =
 {
 	dead_stay_dead ();
 	parse_anim ( 78, mark3_fdie2 );
 };
-
 void () mark3_fdie2 = [ 79, mark3_fdie3 ]
-{
-};
-
+{};
 void () mark3_fdie3 = [ 80, mark3_fdie4 ]
 {
 	self.solid = SOLID_NOT;
@@ -555,32 +457,20 @@ void () mark3_fdie3 = [ 80, mark3_fdie4 ]
 		self.ammo_rockets = 10;
 	DropBackpack ();
 };
-
 void () mark3_fdie4 = [ 81, mark3_fdie5 ]
-{
-};
-
+{};
 void () mark3_fdie5 = [ 82, mark3_fdie6 ]
-{
-};
-
+{};
 void () mark3_fdie6 = [ 83, mark3_fdie7 ]
-{
-};
-
+{};
 void () mark3_fdie7 = [ 84, mark3_fdie8 ]
-{
-};
-
+{};
 void () mark3_fdie8 = [ 85, corpse_think ]
-{
-};
-
+{};
 void () mark3_lowshot = [ 96, mark3_lowshot2 ]
 {
 	ai_face ();
 };
-
 void () mark3_lowshot2 =
 {
 	self.th_pain = mark3_lowpain;
@@ -588,22 +478,18 @@ void () mark3_lowshot2 =
 	parse_anim ( 97, mark3_lowshot3 );
 	ai_face ();
 };
-
 void () mark3_lowshot3 = [ 98, mark3_lowshot4 ]
 {
 	ai_face ();
 };
-
 void () mark3_lowshot4 = [ 99, mark3_lowshot5 ]
 {
 	ai_face ();
 };
-
 void () mark3_lowshot5 = [ 100, mark3_lowshot6 ]
 {
 	Mons_fire_shotgun2 ();
 };
-
 void () mark3_lowshot6 =
 {
 	if ((visible (self.enemy) && (random () < 0.6)))
@@ -614,30 +500,21 @@ void () mark3_lowshot6 =
 	}
 	parse_anim ( 101, mark3_lowshot7 );
 };
-
 void () mark3_lowshot7 = [ 99, mark3_lowshot8 ]
-{
-};
-
+{};
 void () mark3_lowshot8 = [ 97, mark3_lowshot9 ]
-{
-};
-
+{};
 void () mark3_lowshot9 =
 {
 	self.th_pain = mark3_pain;
 	self.th_die = mark3_die;
 	parse_anim ( 98, mark3_run1 );
 };
-
 void () mark3_lowdie = [ 102, mark3_lowdie2 ]
-{
-};
-
+{};
 void () mark3_lowdie2 = [ 103, mark3_die ]
 {
 };
-
 void () mark3_lowpain =
 {
 	if ((self.pain_finished > time))
@@ -647,18 +524,14 @@ void () mark3_lowpain =
 	self.pain_finished = (time + 0.6);
 	parse_anim ( 102, mark3_lowpain2 );
 };
-
 void () mark3_lowpain2 = [ 103, mark3_lowpain3 ]
-{
-};
-
+{};
 void () mark3_lowpain3 =
 {
 	self.th_pain = mark3_pain;
 	self.th_die = mark3_die;
 	parse_anim ( 104, mark3_run1 );
 };
-
 void () mark3_die =
 {
 	if ((self.health < -35))
@@ -688,7 +561,6 @@ void () mark3_die =
 		mark3_fdie1 ();
 	}
 };
-
 void () monster_enf2 =
 {
 	if (deathmatch)
@@ -715,13 +587,11 @@ void () monster_enf2 =
 	precache_sound ("enf2/idle3.wav");
 	MTF_Setup_Monster_Presets ( 0, "field enforcer", monster_enf21 );
 }
-
 void () enf2_start =
 {
 	trigger_spawnmonster ();
 	carnify_enforcer2 ();
 };
-
 void () carnify_enforcer2 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -735,12 +605,10 @@ void () carnify_enforcer2 =
 	}
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () mark3_actor_wait = [ 36, mark3_actor_wait ]
 {
 	self.use = mark3_actor_use;
 };
-
 void () mark3_actor_use =
 {
 	if ((self.goalentity != world))
@@ -757,7 +625,6 @@ void () mark3_actor_use =
 	self.th_walk = mark3_walk1;
 	self.use = monster_use;
 };
-
 void () enf2_runfire1 =
 {
 	if (borkfactor1 ())
@@ -772,7 +639,6 @@ void () enf2_runfire1 =
 	}
 	ai_run_slide ();// (12);
 };
-
 void () enf2_runfire2 = [ 106, enf2_runfire3 ]
 {
 	ai_face ();
@@ -784,7 +650,6 @@ void () enf2_runfire2 = [ 106, enf2_runfire3 ]
 	}
 	ai_run_slide ();// (12);
 };
-
 void () enf2_runfire3 = [ 107, enf2_runfire4 ]
 {
 	ai_face ();
@@ -794,7 +659,6 @@ void () enf2_runfire3 = [ 107, enf2_runfire4 ]
 	}
 	ai_run_slide ();// (12);
 };
-
 void () enf2_runfire4 = [ 108, enf2_runfire5 ]
 {
 	ai_face ();
@@ -806,7 +670,6 @@ void () enf2_runfire4 = [ 108, enf2_runfire5 ]
 	}
 	ai_run_slide ();// (12);
 };
-
 void () enf2_runfire5 = [ 109, enf2_runfire6 ]
 {
 	ai_face ();
@@ -816,7 +679,6 @@ void () enf2_runfire5 = [ 109, enf2_runfire6 ]
 	}
 	ai_run_slide ();// (12);
 };
-
 void () enf2_runfire6 =
 {
 	ai_face ();
@@ -836,7 +698,6 @@ void () enf2_runfire6 =
 	self.tactic = 0;
 	ai_run_slide ();// (12);
 };
-
 void () enf2_sightsound =
 {
 	local float rsnd;
@@ -895,7 +756,6 @@ void () enf2_sightsound =
 		}
 	}
 };
-
 void () enf2_idlesound =
 {
 	local float num;
@@ -912,7 +772,6 @@ void () enf2_idlesound =
 	}
 	sound (self, CHAN_VOICE, "enf2/idle3.wav", 1, ATTN_NORM);
 };
-
 void () enf2_deathsound =
 {
 	local float num;
@@ -929,5 +788,4 @@ void () enf2_deathsound =
 	}
 	sound (self, CHAN_VOICE, "enf2/death3.wav", 1, ATTN_NORM);
 };
-
-//END 
+//END

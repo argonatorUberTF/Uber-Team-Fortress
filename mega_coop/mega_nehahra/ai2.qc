@@ -9,7 +9,6 @@ void (vector org, vector min, vector max, vector vel, entity ignore) ai3_traceto
 	tracetossent.velocity = vel;
 	tracetoss (tracetossent, ignore);
 };
-
 float (vector vec2, float t, vector mustaine) ai2_tracetoss =
 {
 	local vector megadeth;
@@ -57,7 +56,6 @@ float (vector vec2, float t, vector mustaine) ai2_tracetoss =
 		return (1);
 	}
 };
-
 void (vector megadeth, float t) ai_ledgejump =
 {
 	local float num;
@@ -88,7 +86,6 @@ void (vector megadeth, float t) ai_ledgejump =
 		}
 	}
 };
-
 void (entity head, vector vec) ai_teleport =
 {
 	spawn_tfog (head.origin);
@@ -98,7 +95,6 @@ void (entity head, vector vec) ai_teleport =
 	setorigin (head, vec);
 	head.flags = (head.flags - (head.flags & FL_ONGROUND));
 };
-
 void () ai_checkflee =
 {
 	if ((((self.health > 39) && self.flags) & FL_FLEE))
@@ -113,7 +109,6 @@ void () ai_checkflee =
 		}
 	}
 };
-
 void (float num, vector dave) ai2_jumpsplash =
 {
 	local vector megadeth;
@@ -129,7 +124,6 @@ void (float num, vector dave) ai2_jumpsplash =
 		}
 	}
 };
-
 void (vector vec, float num, vector dave) ai2_jump =
 {
 	if ((self.flags & FL_SWIM))
@@ -146,7 +140,6 @@ void (vector vec, float num, vector dave) ai2_jump =
 		self.flags = (self.flags - FL_ONGROUND);
 	}
 };
-
 float (string foe, float dist, float kind) ai_emnity =
 {
 	local entity head;
@@ -182,7 +175,6 @@ float (string foe, float dist, float kind) ai_emnity =
 	}
 	return (1);
 };
-
 float (vector vec, vector vec2) at_ledge =
 {
 	local float num;
@@ -239,7 +231,6 @@ float (vector vec, vector vec2) at_ledge =
 	}
 	return (-11);
 };
-
 float () ai_mourndead =
 {
 	local entity head;
@@ -288,7 +279,6 @@ float () ai_mourndead =
 		return (1);
 	}
 };
-
 float () ai_jagmourn =
 {
 	local entity head;
@@ -331,7 +321,6 @@ float () ai_jagmourn =
 		return (1);
 	}
 };
-
 float () ai_check_z =
 {
 	local float num;
@@ -345,7 +334,6 @@ float () ai_check_z =
 	}
 	return (0);
 };
-
 float () ai2_check_z =
 {
 	local float num;
@@ -373,7 +361,6 @@ float () ai2_check_z =
 	}
 	return (0);
 };
-
 void () objekt_touch =
 {
 	if ((self.enemy == world))
@@ -389,7 +376,6 @@ void () objekt_touch =
 		}
 	}
 };
-
 void () ai_objledge =
 {
 	local float num;
@@ -413,7 +399,6 @@ void () ai_objledge =
 		}
 	}
 };
-
 float (float dist) ai_checkobjdist =
 {
 	local vector megadeth;
@@ -427,7 +412,6 @@ float (float dist) ai_checkobjdist =
 		return (1);
 	}
 };
-
 float () ai_checksmalldist =
 {
 	local vector megadeth;
@@ -445,7 +429,6 @@ float () ai_checksmalldist =
 		return (0);
 	}
 };
-
 float () ai_checkdist =
 {
 	local vector megadeth;
@@ -467,7 +450,6 @@ float () ai_checkdist =
 		return (0);
 	}
 };
-
 float (entity mark, float dist) ai2_checkdist =
 {
 	local vector megadeth;
@@ -481,13 +463,11 @@ float (entity mark, float dist) ai2_checkdist =
 		return (0);
 	}
 };
-
 void (entity mark) ai2_face =
 {
 	self.ideal_yaw = vectoyaw ((mark.origin - self.origin));
 	ChangeYaw ();
 };
-
 void () ai_face_goal =
 {
 	if ((self.goalentity == world))
@@ -497,13 +477,11 @@ void () ai_face_goal =
 	self.ideal_yaw = vectoyaw ((self.goalentity.origin - self.origin));
 	ChangeYaw ();
 };
-
 void () ai_face_objekt =
 {
 	self.ideal_yaw = vectoyaw ((self.objekt.origin - self.origin));
 	ChangeYaw ();
 };
-
 void (float dist) ai2_walk =
 {
 	
@@ -518,7 +496,6 @@ void (float dist) ai2_walk =
 	}
 	movetogoal (dist);
 };
-
 void () ai2_stand =
 {
 	if (self.objekt)
@@ -530,7 +507,6 @@ void () ai2_stand =
 	}
 	self.th_walk ();
 };
-
 void (float dist) ai2_run =
 {
 	local vector megadeth;
@@ -720,7 +696,6 @@ void (float dist) ai2_run =
 	}
 	movetogoal (dist);
 };
-
 void () ai2_run_slide =
 {
 	local float ofs;
@@ -764,7 +739,6 @@ void () ai2_run_slide =
 		self.velocity = (v_right * -160);
 	}
 };
-
 void (float dist) ai3_pain =
 {
 	if ((time < self.enemy.attack_finished))
@@ -774,7 +748,6 @@ void (float dist) ai3_pain =
 	}
 	ai_back (dist);
 };
-
 void (float dist) ai3_run =
 {
 	local vector megadeth;
@@ -940,7 +913,6 @@ void (float dist) ai3_run =
 	}
 	movetogoal (dist);
 };
-
 void (float dist) ai4_run =
 {
 	local vector megadeth;
@@ -1076,7 +1048,6 @@ void (float dist) ai4_run =
 	}
 	movetogoal (dist);
 };
-
 float () Mons_consider =
 {
 	local entity head;
@@ -1110,7 +1081,6 @@ float () Mons_consider =
 		return (1);
 	}
 };
-
 float () Mons_proxim =
 {
 	local entity head;
@@ -1144,7 +1114,6 @@ float () Mons_proxim =
 		return (1);
 	}
 };
-
 float () ai_threatproxim =
 {
 	local entity threata;
@@ -1194,7 +1163,6 @@ float () ai_threatproxim =
 	HuntTarget ();
 	return (1);
 };
-
 void (float dist) ai2_fleerun =
 {
 	self.enemy = world;
@@ -1210,7 +1178,6 @@ void (float dist) ai2_fleerun =
 	}
 	movetogoal (dist);
 };
-
 entity (string pathst) SelectPathTarget =
 {
 	local entity head;
@@ -1233,7 +1200,6 @@ entity (string pathst) SelectPathTarget =
 	}
 	return (selected);
 };
-
 float () coward_is_safe =
 {
 	local entity head;

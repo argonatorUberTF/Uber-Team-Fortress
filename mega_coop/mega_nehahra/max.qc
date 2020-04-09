@@ -44,7 +44,6 @@ void () precache_mr =
 	precache_sound ("max/mpain2.wav");
 	precache_sound ("max/mpain3.wav");
 };
-
 void () prepare_finale =
 {
 	spawn_moderator ();
@@ -103,7 +102,6 @@ void () prepare_finale =
 	spawn_downpoint ('779 -269 856', 4);
 	spawn_downpoint ('90 -272 856', 4);
 };
-
 void (vector megadeth, vector vec) spawn_maxteleport =
 {
 	local entity mark;
@@ -114,7 +112,6 @@ void (vector megadeth, vector vec) spawn_maxteleport =
 	mark.think = max_teleport;
 	mark.nextthink = (time + 0.3);
 };
-
 void () max_teleport =
 {
 	local vector megadeth;
@@ -133,7 +130,6 @@ void () max_teleport =
 void (vector megadeth, vector vec, string ing) spawn_newteleport =
 {
 	local entity mark;
-
 	mark = spawn ();
 	setorigin (mark, megadeth);
 	mark.objekt = self;
@@ -142,7 +138,6 @@ void (vector megadeth, vector vec, string ing) spawn_newteleport =
 	mark.think = new_teleport;
 	mark.nextthink = (time + 0.3);
 };
-
 void () new_teleport =
 {
 	local vector megadeth;
@@ -162,7 +157,6 @@ void () new_teleport =
 	self.think = new_teleport;
 	self.nextthink = (time + 0.3);
 };
-
 void () spawn_moderator =
 {
 	local entity mark;
@@ -172,7 +166,6 @@ void () spawn_moderator =
 	mark.think = nehend_cllvl;
 	mark.nextthink = (time + 0.5);
 };
-
 void () nehend_cllvl =
 {
 	local float num;
@@ -255,7 +248,6 @@ void () nehend_cllvl =
 	self.think = nehend_cllvl;
 	self.nextthink = (time + 0.1);
 };
-
 void (entity mark) nehend_clearlevel =
 {
 	if ((mark.brain & FL_FLY))
@@ -267,7 +259,6 @@ void (entity mark) nehend_clearlevel =
 		mark.brain = (mark.brain - FL_SWIM);
 	}
 };
-
 void (entity mark) nehend_uplevel =
 {
 	if (!(mark.brain & FL_FLY))
@@ -279,7 +270,6 @@ void (entity mark) nehend_uplevel =
 		}
 	}
 };
-
 void (entity mark) nehend_downlevel =
 {
 	if (!(mark.brain & FL_SWIM))
@@ -291,7 +281,6 @@ void (entity mark) nehend_downlevel =
 		}
 	}
 };
-
 float (entity mark) nehend_checklevel =
 {
 	if ((mark.nojump == 666))
@@ -316,7 +305,6 @@ float (entity mark) nehend_checklevel =
 	}
 	return (4);
 };
-
 void (vector vec, float num, vector megadeth, vector dave, vector spot) spawn_movepoint =
 {
 	local entity mark;
@@ -337,7 +325,6 @@ void (vector vec, float num, vector megadeth, vector dave, vector spot) spawn_mo
 	mark.model = "";
 	mark.touch = movepoint_touch;
 };
-
 void () movepoint_touch =
 {
 	local float num;
@@ -396,7 +383,6 @@ void () movepoint_touch =
 		other.xgoal = self.xtrace;
 	}
 };
-
 float (vector megadeth, vector dave, entity head) situation =
 {
 	local vector spot1;
@@ -410,7 +396,6 @@ float (vector megadeth, vector dave, entity head) situation =
 	}
 	return (0);
 };
-
 void (vector vec, float num) spawn_downpoint =
 {
 	local entity mark;
@@ -421,7 +406,6 @@ void (vector vec, float num) spawn_downpoint =
 	mark.relations = num;
 	setorigin (mark, vec);
 };
-
 void () spawn_platpoint =
 {
 	local entity mark;
@@ -432,7 +416,6 @@ void () spawn_platpoint =
 	self.think = platpoint_plat;
 	self.nextthink = (time + 0.1);
 };
-
 void () platpoint_plat =
 {
 	local entity head;
@@ -457,7 +440,6 @@ void () platpoint_plat =
 		self.objekt = selected;
 	}
 };
-
 void (entity head) switchmethod =
 {
 	if ((head.method == 0))
@@ -510,7 +492,6 @@ void () maxnewteles =
 		self.xgoal = head.origin;
 	}
 };
-
 void () ai_maxrun =
 {
 	local entity head;
@@ -636,7 +617,6 @@ void () ai_maxrun =
 		self.xgoal = selected.origin;
 	}
 };
-
 float () findjumppath =
 {
 	local float dist;
@@ -686,12 +666,10 @@ float () findjumppath =
 		}
 	}
 };
-
 void () max_nadda =
 {
-bprint(2," max_nadda: SHOULD NOT BE BEING CALLED, THIS\n");
+//bprint(2," max_nadda: SHOULD NOT BE BEING CALLED, THIS\n");
 };
-
 void () spawn_mister =
 {
 	local entity head, old_self;
@@ -731,7 +709,6 @@ void () spawn_mister =
 	head.think = head.th_stand;
 	head.nextthink = (head.nextthink + (random () * 0.5));
 };
-
 void () max_begin =
 {
 	self.enemy = find (world, classname, "player");
@@ -739,7 +716,6 @@ void () max_begin =
 	self.th_stand = max_stand;
 	self.th_run ();
 };
-
 void () max_stand =
 {
 	local entity head;
@@ -787,7 +763,6 @@ void () max_stand =
 	}
 	FindTarget ();
 };
-
 void () max_squint =
 {
 	local entity head;
@@ -816,7 +791,6 @@ void () max_squint =
 	}
 	FindTarget ();
 };
-
 void () max_look =
 {
 	local entity head;
@@ -836,7 +810,6 @@ void () max_look =
 		ai4_face (head.origin);
 	}
 };
-
 void () max_look2 =
 {
 	if ((self.walkframe >= 10))
@@ -862,7 +835,6 @@ void () max_look3 =
 	self.frame = (20 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () max_look4 =
 {
 	if ((self.walkframe >= 10))
@@ -875,7 +847,6 @@ void () max_look4 =
 	self.frame = (29 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () max_stroll =
 {
 	if ((self.walkframe >= 14))
@@ -886,7 +857,6 @@ void () max_stroll =
 	self.frame = (40 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () max_attack =
 {
 	local vector megadeth;
@@ -923,7 +893,6 @@ void () max_attack =
 		max_shalrath1 ();
 	}
 };
-
 void () max_gauntrang1 = [ 73, max_gauntrang2 ]
 {
 	ai_threats ();
@@ -941,14 +910,12 @@ void () max_gauntrang3 = [ 75, max_gauntrang4 ]
 	ai_threats ();
 	ai_face ();
 };
-
 void () max_gauntrang4 = [ 76, max_gauntrang5 ]
 {
 	self.cnt = 0;
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_gauntrang5 =
 {
 	if (!visible (self.enemy))
@@ -968,7 +935,6 @@ void () max_gauntrang5 =
 	GauntMissile ();
 	max_backorcharge ();
 };
-
 void () max_gauntrang6 =
 {
 	ai_threats ();
@@ -986,17 +952,14 @@ void () max_gauntrang6 =
 		max_survival ();
 	}
 };
-
 void () max_gauntrang7 = [ 75, max_gauntrang8 ]
 {
 	ai_threats ();
 };
-
 void () max_gauntrang8 = [ 74, max_run ]
 {
 	ai_threats ();
 };
-
 void () max_backorcharge =
 {
 	if ((self.brain & FL_CLIENT))
@@ -1009,26 +972,22 @@ void () max_backorcharge =
 		movetogoal (15);
 	}
 };
-
 void () max_light1 = [ 60, max_light2 ]
 {
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_light2 = [ 61, max_light3 ]
 {
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_light3 = [ 62, max_light4 ]
 {
 	ai_face ();
 	sound (self, CHAN_BODY, "gaunt/boom.wav", 1, ATTN_NORM);
 	ai_threats ();
 };
-
 void () max_light4 = [ 63, max_light5 ]
 {
 	ai_face ();
@@ -1040,7 +999,6 @@ void () max_light4 = [ 63, max_light5 ]
 	MaxRedLightning ();
 	ai_threats ();
 };
-
 void () max_light5 =
 {
 	visible (self.enemy);
@@ -1056,7 +1014,6 @@ void () max_light5 =
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_light6 = [ 63, max_light7 ]
 {
 	ai_face ();
@@ -1064,14 +1021,12 @@ void () max_light6 = [ 63, max_light7 ]
 	sound (self, CHAN_VOICE, "gaunt/elekt.wav", 1, ATTN_NORM);
 	ai_threats ();
 };
-
 void () max_light7 = [ 62, max_light8 ]
 {
 	ai_face ();
 	ai_back (10);
 	ai_threats ();
 };
-
 void () max_light8 = [ 61, max_light9 ]
 {
 	ai_face ();
@@ -1082,12 +1037,10 @@ void () max_light9 = [ 60, max_run ]
 {
 	movetogoal (25);
 };
-
 void () max_shalrath1 = [ 65, max_shalrath2 ]
 {
 	ai_face ();
 };
-
 void () max_shalrath2 = [ 66, max_shalrath3 ]
 {
 	if ((self.flags & FL_ONGROUND))
@@ -1105,14 +1058,12 @@ void () max_shalrath2 = [ 66, max_shalrath3 ]
 		self.velocity_z = 300;
 	}
 };
-
 void () max_shalrath3 = [ 67, max_shalrath4 ]
 {
 	ai_face ();
 	Handle_Threats ();
 	self.pain_finished = (time + 0.6);
 };
-
 void () max_shalrath4 = [ 68, max_shalrath5 ]
 {
 	ai_face ();
@@ -1120,27 +1071,22 @@ void () max_shalrath4 = [ 68, max_shalrath5 ]
 	Handle_Threats ();
 	sound (self, CHAN_VOICE, "shalrath/attack2.wav", 1, ATTN_NORM);
 };
-
 void () max_shalrath5 = [ 69, max_shalrath6 ]
 {
 	ShalMissile ();
 };
-
 void () max_shalrath6 = [ 70, max_shalrath7 ]
 {
 	ai_face ();
 };
-
 void () max_shalrath7 = [ 71, max_shalrath8 ]
 {
 	ai_face ();
 };
-
 void () max_shalrath8 = [ 72, max_run ]
 {
 	ai_face ();
 };
-
 void () max_run =
 {
 	if ((self.walkframe >= 6))
@@ -1178,7 +1124,6 @@ void () max_run =
 		}
 	}
 };
-
 void () max_die =
 {
 	local float num;
@@ -1200,7 +1145,6 @@ void () max_die =
 		max_diec1 ();
 	}
 };
-
 void () max_pain =
 {
 	switchmethod (self);
@@ -1212,15 +1156,10 @@ void () max_pain =
 	parse_anim ( 110, max_pain2 );
 	max_painsound ();
 };
-
 void () max_pain2 = [ 111, max_pain3 ]
-{
-};
-
+{};
 void () max_pain3 = [ 112, max_pain4 ]
-{
-};
-
+{};
 void () max_pain4 =
 {
 	if ((random () < 0.5))
@@ -1232,7 +1171,6 @@ void () max_pain4 =
 		parse_anim ( 113, max_run );
 	}
 };
-
 void () max_diea1 =
 {
 	if ((self.walkframe >= 8))
@@ -1250,7 +1188,6 @@ void () max_diea1 =
 		self.solid = SOLID_NOT;
 	}
 };
-
 void () max_diea2 =
 {
 	if ((self.cnt > self.aflag))
@@ -1292,15 +1229,10 @@ void () max_diea2 =
 		self.cnt = (self.cnt + 1);
 	}
 };
-
 void () max_getup = [ 96, max_getup2 ]
-{
-};
-
+{};
 void () max_getup2 = [ 97, max_getup3 ]
-{
-};
-
+{};
 void () max_getup3 = [ 98, max_getup4 ]
 {
 	self.pain_finished = (time + 1);
@@ -1308,9 +1240,7 @@ void () max_getup3 = [ 98, max_getup4 ]
 };
 
 void () max_getup4 = [ 99, max_run ]
-{
-};
-
+{};
 void () max_diec1 =
 {
 	if ((self.walkframe >= 5))
@@ -1328,7 +1258,6 @@ void () max_diec1 =
 		self.solid = SOLID_NOT;
 	}
 };
-
 void () max_diec2 =
 {
 	if ((self.cnt > self.aflag))
@@ -1365,11 +1294,8 @@ void () max_diec2 =
 		self.cnt = (self.cnt + 1);
 	}
 };
-
 void () max_recover = [ 107, max_recover2 ]
-{
-};
-
+{};
 void () max_recover2 = [ 108, max_recover3 ]
 {
 	self.pain_finished = (time + 1);
@@ -1379,7 +1305,6 @@ void () max_recover2 = [ 108, max_recover3 ]
 void () max_recover3 = [ 109, max_run ]
 {
 };
-
 void () max_throw =
 {
 	if ((self.walkframe >= 8))
@@ -1416,7 +1341,6 @@ void () max_throw =
 	ai_face ();
 	Handle_Threats ();
 };
-
 void () Max_teleportsys =
 {
 	local float num;
@@ -1536,7 +1460,6 @@ void () Max_teleportsys =
 	}
 	ai_teleport (self, '297 -580 1205');
 };
-
 void () max_survival =
 {
 	local vector megadeth;
@@ -1589,7 +1512,6 @@ void () max_survival =
 		}
 	}
 };
-
 void () MaxRedLightning =
 {
 	local vector org;
@@ -1634,14 +1556,12 @@ void () MaxRedLightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);	
 	LightningDamage (org, trace_endpos, self, MOVETYPE_TOSS);
 };
-
 void () max_s_light1 = [ 60, max_s_light2 ]
 {
 	ai_face ();
 	ai_threats ();
 	sound (self, CHAN_WEAPON, "shambler/sattck1.wav", 1, ATTN_NORM);
 };
-
 void () max_s_light2 = [ 61, max_s_light3 ]
 {
 	ai_threats ();
@@ -1654,7 +1574,6 @@ void () max_s_light3 = [ 62, max_s_light4 ]
 	ai_threats ();
 	sound (self, CHAN_ITEM, "shambler/sboom.wav", 1, ATTN_NORM);
 };
-
 void () max_s_light4 = [ 63, max_s_light5 ]
 {
 	ai_face ();
@@ -1666,7 +1585,6 @@ void () max_s_light4 = [ 63, max_s_light5 ]
 	}
 	self.effects = (self.effects | EF_MUZZLEFLASH);
 };
-
 void () max_s_light5 =
 {
 	visible (self.enemy);
@@ -1683,7 +1601,6 @@ void () max_s_light5 =
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_s_light6 = [ 63, max_s_light7 ]
 {
 	ai_face ();
@@ -1691,49 +1608,41 @@ void () max_s_light6 = [ 63, max_s_light7 ]
 	ai_threats ();
 	sound (self, CHAN_VOICE, "gaunt/elekt.wav", 1, ATTN_NORM);
 };
-
 void () max_s_light7 = [ 62, max_s_light8 ]
 {
 	ai_face ();
 	ai_back (10);
 };
-
 void () max_s_light8 = [ 61, max_s_light9 ]
 {
 	ai_face ();
 	ai_back (10);
 };
-
 void () max_s_light9 = [ 60, max_run ]
 {
 	movetogoal (25);
 };
-
 void () max_rapidfire1 = [ 73, max_rapidfire2 ]
 {
 	self.pain_finished = (time + 0.5);
 	ai_threats ();
 };
-
 void () max_rapidfire2 = [ 74, max_rapidfire3 ]
 {
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_rapidfire3 = [ 75, max_rapidfire4 ]
 {
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_rapidfire4 = [ 76, max_rapidfire5 ]
 {
 	self.cnt = 0;
 	ai_face ();
 	ai_threats ();
 };
-
 void () max_rapidfire5 =
 {
 	if (!visible (self.enemy))
@@ -1753,7 +1662,6 @@ void () max_rapidfire5 =
 	max_backorcharge ();
 	ai_threats ();
 };
-
 void () max_rapidfire6 =
 {
 	if (((self.cnt > 8) || (vlen ((self.origin - self.enemy.origin)) > 330)))
@@ -1773,17 +1681,14 @@ void () max_rapidfire6 =
 		ai_threats ();
 	}
 };
-
 void () max_rapidfire7 = [ 75, max_rapidfire8 ]
 {
 	ai_threats ();
 };
-
 void () max_rapidfire8 = [ 74, max_run ]
 {
 	ai_threats ();
 };
-
 void (float dm) ThrowSprocket =
 {
 	local entity new;
@@ -1805,11 +1710,9 @@ void (float dm) ThrowSprocket =
 	new.frame = 0;
 	new.flags = 0;
 };
-
 void () spftouch =
 {
 	local vector v;
-
 	if ((pointcontents (self.origin) == CONTENT_LAVA))
 	{
 		sound (self, CHAN_AUTO, "weapons/sprocket.wav", 0.5, ATTN_NORM);
@@ -1858,7 +1761,6 @@ void () spftouch =
 	self.velocity = v;
 	self.avelocity = '100 100 100';
 };
-
 void () max_is_dead =
 {
 	local entity head;
@@ -1888,7 +1790,6 @@ void () max_is_dead =
 		head = find (head, sky, "end");
 	}
 };
-
 void () free_a_soul =
 {
 	local entity soula;
@@ -1917,14 +1818,12 @@ void () free_a_soul =
 	soula.nextthink = (time + (5 * num));
 	soula.think = SUB_Remove;
 };
-
 void () maxcorpse =
 {
 	free_a_soul ();
 	self.think = maxcorpse;
 	self.nextthink = ((time + random ()) + random ());
 };
-
 float () max_quadfudge =
 {
 	local vector vec;
@@ -2031,7 +1930,6 @@ float () max_quadfudge =
 		return (1);
 	}
 };
-
 void () max_qwait =
 {
 	if (!(self.enemy.items & IT_QUAD))
@@ -2053,7 +1951,6 @@ void () max_qwait =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void () spawn_finalerubble =
 {
 	local entity mark;
@@ -2062,7 +1959,6 @@ void () spawn_finalerubble =
 	mark.think = setup_finalerubble;
 	mark.nextthink = (time + 1);
 };
-
 void () setup_finalerubble =
 {
 	spawn_rubblefall ('-21 -242 962');
@@ -2119,7 +2015,6 @@ void () setup_finalerubble =
 	self.think = finalesnds;
 	self.nextthink = (time + 10);
 };
-
 void (vector vec) spawn_rubblefall =
 {
 	local entity head;
@@ -2131,7 +2026,6 @@ void (vector vec) spawn_rubblefall =
 	head.think = throwsomerub;
 	head.nextthink = (time + (random () * 20));
 };
-
 void () throwsomerub =
 {
 	ThrowRubble ("progs/rubble4.mdl", -10);
@@ -2141,7 +2035,6 @@ void () throwsomerub =
 	self.think = SUB_Remove;
 	self.nextthink = (time + 2);
 };
-
 void () finalesnds =
 {
 	local float num;
@@ -2164,7 +2057,6 @@ void () finalesnds =
 	self.think = finalesnds;
 	self.nextthink = (time + 3);
 };
-
 void () spawn_lightshow =
 {
 	local entity mark;
@@ -2176,7 +2068,6 @@ void () spawn_lightshow =
 	mark.think = fogflash;
 	mark.nextthink = (time + random ());
 };
-
 void () fogflash =
 {
 	local entity head;
@@ -2223,7 +2114,6 @@ void () fogflash =
 		self.nextthink = (time + 0.1);
 	}
 };
-
 void () spawn_maxcontrol =
 {
 	local entity mark;
@@ -2240,7 +2130,6 @@ void () spawn_maxcontrol =
 	mark.think = comment_think;
 	mark.nextthink = (time + 0.2);
 };
-
 void () comment_think =
 {
 	local entity head;
@@ -2368,7 +2257,6 @@ void () comment_think =
 	self.think = comment_think;
 	self.nextthink = (time + 0.2);
 };
-
 void () becomeearthquake =
 {
 	local entity head;
@@ -2388,7 +2276,6 @@ void () becomeearthquake =
 	self.think = becomeearthquake;
 	self.nextthink = (time + 2);
 };
-
 void () comment_waiting =
 {
 	if (!(self.regen & FL_MONSTER))
@@ -2431,7 +2318,6 @@ void () comment_waiting =
 		make_comment ();
 	}
 };
-
 float () comment_blunder =
 {
 	if ((self.enemy.boost == 1))
@@ -2522,7 +2408,6 @@ float () comment_blunder =
 		return (0);
 	}
 };
-
 void () comment_case1 =
 {
 	if (!(self.regen & FL_ITEM))
@@ -2582,7 +2467,6 @@ void () comment_case2 =
 		make_comment ();
 	}
 };
-
 void () comment_case3 =
 {
 	if (!(self.regen & FL_FLY))
@@ -2634,7 +2518,6 @@ void () comment_case3 =
 		make_comment ();
 	}
 };
-
 void () comment_final =
 {
 	local float num;
@@ -2724,7 +2607,6 @@ void () comment_final =
 	}
 	ending1 ();
 };
-
 void () ending1 =
 {
 	self.objekt.talk_finished = (time + 3);
@@ -2735,14 +2617,12 @@ void () ending1 =
 	self.think = remove_max;
 	self.nextthink = (time + self.cnt);
 };
-
 void () remove_max =
 {
 	spawn_tfog (self.objekt.origin);
 	remove (self.objekt);
 	remove (self);
 };
-
 void () make_comment =
 {
 	self.objekt.talk_finished = (time + 3);
@@ -2750,7 +2630,6 @@ void () make_comment =
 	stuffcmd (self.enemy, self.noise);
 	stuffcmd (self.enemy, "\n");
 };
-
 void () spawn_openshit =
 {
 	local entity mark;
@@ -2759,13 +2638,11 @@ void () spawn_openshit =
 	mark.think = openshit_dammit;
 	mark.nextthink = (time + 0.2);
 };
-
 void () openshit_dammit =
 {
 	SUB_UseTargets ();
 	remove (self);
 };
-
 void () maxstep =
 {
 	if ((random () < 0.4))
@@ -2775,7 +2652,6 @@ void () maxstep =
 	}
 	sound (self, CHAN_AUTO, "max/step3.wav", 0.7, ATTN_NORM);
 };
-
 void () max_painsound =
 {
 	if ((self.lives > 2))
@@ -2788,7 +2664,6 @@ void () max_painsound =
 	}
 	max_painsound2 ();
 };
-
 void () max_painsound1 =
 {
 	local float num;
@@ -2805,7 +2680,6 @@ void () max_painsound1 =
 	}
 	sound (self, CHAN_VOICE, "max/pain3.wav", 1, ATTN_NORM);
 };
-
 void () max_painsound2 =
 {
 	local float num;
@@ -2822,5 +2696,4 @@ void () max_painsound2 =
 	}
 	sound (self, CHAN_VOICE, "max/mpain3.wav", 1, ATTN_NORM);
 };
-
 //END

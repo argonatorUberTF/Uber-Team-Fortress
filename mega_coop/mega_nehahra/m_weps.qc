@@ -40,7 +40,6 @@ void () wizspike_touch =
 	}
 	remove (self);
 };
-
 void () knightspike_touch =
 {
 	local entity mark;
@@ -86,7 +85,6 @@ void () knightspike_touch =
 	}
 	remove (self);
 };
-
 void (vector p1, vector p2, entity from, float damage) ClientLightningDamage =
 {
 	local entity e1;
@@ -156,7 +154,6 @@ void (vector p1, vector p2, entity from, float damage) ClientLightningDamage =
 		T_Damage (trace_ent, from, from, damage);
 	}
 };
-
 void (vector org, vector dir) launch_rocket =
 {
 	newmis = spawn ();
@@ -174,7 +171,6 @@ void (vector org, vector dir) launch_rocket =
 	setorigin (newmis, org);
 	newmis.velocity = (dir * 1000);
 };
-
 void () M_MissileTouch =
 {
 	local float damg;
@@ -210,7 +206,6 @@ void () M_MissileTouch =
 	multicast (self.origin, 1);
 	BecomeExplosion ();
 };
-
 void () MGrenadeExplode =
 {
 	self.classname = "nadda";
@@ -223,7 +218,6 @@ void () MGrenadeExplode =
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	BecomeExplosion ();
 };
-
 void () MGrenadeTouch =
 {
 	if ((other == self.owner))
@@ -241,7 +235,6 @@ void () MGrenadeTouch =
 		self.avelocity = VEC_ORIGIN;
 	}
 };
-
 void () Mons_fire_grenade =
 {
 	local entity missile;
@@ -274,7 +267,6 @@ void () Mons_fire_grenade =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, self.origin);
 };
-
 void () Mons_fire_sprocket =
 {
 	local entity missile;
@@ -302,7 +294,6 @@ void () Mons_fire_sprocket =
 	}
 	missile.velocity = (missile.velocity * 700);
 	missile.angles = vectoangles (missile.velocity);
-//	missile.touch = Sprocket_Touch;
 	missile.touch = T_MissileTouch;
 	missile.nextthink = (time + MOVETYPE_FLY);
 	missile.think = SUB_Remove;
@@ -310,7 +301,6 @@ void () Mons_fire_sprocket =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, ((self.origin + (v_forward * FL_CLIENT)) + '0 0 16'));
 };
-
 void () Mons_fire_rocket =
 {
 	local entity missile;
@@ -318,7 +308,6 @@ void () Mons_fire_rocket =
 	local vector vec;
 	ai2_jumpsplash (-200, '0 0 200');
 	muzzleflash();
-	//self.effects = (self.effects | EF_MUZZLEFLASH);
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", CHAN_WEAPON, ATTN_NORM);
 	makevectors (self.angles);
 	org = ((self.origin + (v_forward * SVC_INTERMISSION)) + (v_right * 8.5)) + '0 0 16';
@@ -346,7 +335,6 @@ void () Mons_fire_rocket =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, ((self.origin + (v_forward * FL_CLIENT)) + '0 0 16'));
 };
-
 void () Mons_fire_shotgun =
 {
 	local vector dir;
@@ -358,7 +346,6 @@ void () Mons_fire_shotgun =
 	dir = normalize ((dir - self.origin));
 	FireBullets (10, dir, '0.14 0.08 0');
 };
-
 void () Mons_fire_shotgun2 =
 {
 	local vector dir;
@@ -371,7 +358,6 @@ void () Mons_fire_shotgun2 =
 	dir = normalize ((dir - self.origin));
 	FireBullets (MOVETYPE_STEP, dir, '0.1 0.1 0');
 };
-
 void () Mons_fire_nails =
 {
 	local vector dir;
@@ -392,7 +378,6 @@ void () Mons_fire_nails =
 	setmodel (newmis, "progs/s_spike.mdl");
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
 };
-
 void (vector org, vector dir) mons_spike =
 {
 	newmis = spawn ();
@@ -410,7 +395,6 @@ void (vector org, vector dir) mons_spike =
 	setorigin (newmis, org);
 	newmis.velocity = (dir * 1000);
 };
-
 void () monspike_touch =
 {
 	local entity mark;
@@ -448,7 +432,6 @@ void () monspike_touch =
 	}
 	remove (self);
 };
-
 vector (float t) mindcrime_lead =
 {
 	local float num;
@@ -475,5 +458,4 @@ vector (float t) mindcrime_lead =
 	dir = normalize ((dir - self.origin));
 	return (dir);
 };
-
 //END

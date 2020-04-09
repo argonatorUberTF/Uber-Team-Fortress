@@ -68,7 +68,6 @@ float () ai_frolic =
 	}
 	return (0);
 };
-
 float () jagger_checktop =
 {
 	local vector spot;
@@ -85,7 +84,6 @@ float () jagger_checktop =
 	}
 	return (1);
 };
-
 void () jagger_frolic =
 {
 	if (ai_frolic ())
@@ -94,7 +92,6 @@ void () jagger_frolic =
 	}
 	parse_anim ( 19, jagger_frolic2 );
 };
-
 void () jagger_frolic2 =
 {
 	if (ai_frolic ())
@@ -103,7 +100,6 @@ void () jagger_frolic2 =
 	}
 	parse_anim ( 20, jagger_frolic3 );
 };
-
 void () jagger_frolic3 =
 {
 	if (ai_frolic ())
@@ -112,7 +108,6 @@ void () jagger_frolic3 =
 	}
 	parse_anim ( 21, jagger_frolic4 );
 };
-
 void () jagger_frolic4 =
 {
 	if ((pointcontents (self.origin) == CONTENT_WATER))
@@ -138,7 +133,6 @@ void () jagger_frolic4 =
 	parse_anim ( 20, jagger_walk );
 	ai2_walk (10);
 };
-
 void () jagger_ffrolic = [ 19, jagger_ffrolic2 ]
 {
 	ai2_walk (3);
@@ -150,23 +144,19 @@ void () jagger_ffrolic = [ 19, jagger_ffrolic2 ]
 		self.flags = (self.flags - FL_ONGROUND);
 	}
 };
-
 void () jagger_ffrolic2 = [ 20, jagger_ffrolic3 ]
 {
 	ai2_walk (10);
 };
-
 void () jagger_ffrolic3 = [ 21, jagger_ffrolic4 ]
 {
 	ai2_walk (10);
 };
-
 void () jagger_ffrolic4 = [ 20, jagger_stand ]
 {
 	self.goalentity = world;
 	ai2_stand ();
 };
-
 void () jagger_mourn =
 {
 	local entity head;
@@ -186,7 +176,6 @@ void () jagger_mourn =
 	}
 	jagger_call1 ();
 };
-
 void () jagger_call =
 {
 	local entity head;
@@ -200,7 +189,6 @@ void () jagger_call =
 	T_Damage (head, self.enemy, self.enemy, 1);
 	jagger_call1 ();
 };
-
 void () jagger_call1 = [ 106, jagger_call2 ]
 {
 	ai_face ();
@@ -210,68 +198,55 @@ void () jagger_call2 = [ 107, jagger_call3 ]
 {
 	ai_face ();
 };
-
 void () jagger_call3 = [ 108, jagger_call4 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "jagger/bidle2.wav", 1, ATTN_IDLE);
 };
-
 void () jagger_call4 = [ 109, jagger_call5 ]
 {
 	ai_face ();
 };
-
 void () jagger_call5 = [ 110, jagger_call6 ]
 {
 	ai_face ();
 };
-
 void () jagger_call6 = [ 111, jagger_call7 ]
 {
 	ai_face ();
 };
-
 void () jagger_call7 = [ 112, jagger_call8 ]
 {
 	ai_face ();
 };
-
 void () jagger_call8 = [ 113, jagger_call9 ]
 {
 	ai_face ();
 };
-
 void () jagger_call9 = [ 114, jagger_call10 ]
 {
 	ai_face ();
 };
-
 void () jagger_call10 = [ 115, jagger_call11 ]
 {
 	ai_face ();
 };
-
 void () jagger_call11 = [ 116, jagger_call12 ]
 {
 	ai_face ();
 };
-
 void () jagger_call12 = [ 117, jagger_call13 ]
 {
 	ai_face ();
 };
-
 void () jagger_call13 = [ 110, jagger_call14 ]
 {
 	ai_face ();
 };
-
 void () jagger_call14 = [ 109, jagger_call15 ]
 {
 	ai_face ();
 };
-
 void () jagger_call15 =
 {
 	if ((self.enemy == world))
@@ -282,101 +257,82 @@ void () jagger_call15 =
 	parse_anim ( 108, jagger_watch );
 	ai_face ();
 };
-
 void () jagger_lower = [ 63, jagger_lower2 ]
 {
 	ai_face ();
 };
-
 void () jagger_lower2 = [ 64, jagger_lower3 ]
 {
 	ai_face ();
 };
-
 void () jagger_lower3 = [ 65, jagger_lower4 ]
 {
 	ai_face ();
 };
-
 void () jagger_lower4 = [ 66, jagger_lower5 ]
 {
 	ai_face ();
 };
-
 void () jagger_lower5 =
 {
 	ai_run (0);
 	jagger2ir ();
 	self.th_run ();
 };
-
 void () jagger_backup = [ 66, jagger_backup2 ]
 {
 	ai_face ();
 };
-
 void () jagger_backup2 = [ 65, jagger_backup3 ]
 {
 	ai_face ();
 };
-
 void () jagger_backup3 = [ 64, jagger_backup4 ]
 {
 	ai_face ();
 };
-
 void () jagger_backup4 = [ 63, jagger_backup5 ]
 {
 	ai_face ();
 };
-
 void () jagger_backup5 =
 {
 	ai_run (0);
 	jagger2ni ();
 	parse_anim ( 63, jagger_watch );
 };
-
 void () jagger_curious = [ 118, jagger_curious2 ]
 {
 	ai_face ();
 };
-
 void () jagger_curious2 = [ 119, jagger_curious3 ]
 {
 	ai_face ();
 };
-
 void () jagger_curious3 = [ 120, jagger_curious4 ]
 {
 	ai_face ();
 };
-
 void () jagger_curious4 = [ 121, jagger_curious5 ]
 {
 	ai_face ();
 };
-
 void () jagger_curious5 = [ 120, jagger_curious6 ]
 {
 	ai_face ();
 };
-
 void () jagger_curious6 = [ 119, jagger_watch ]
 {
 	ai_face ();
 };
-
 void () jagger_sprint1 = [ 123, jagger_sprint3 ]
 {
 	ai_run (35);
 };
-
 void () jagger_sprint3 = [ 124, jagger_sprint4 ]
 {
 	ai_run (40);
 };
-
 void () jagger_sprint4 = [ 123, jagger_run12 ]
 {
 	ai_run (30);
@@ -385,17 +341,14 @@ void () jagger_sprint4 = [ 123, jagger_run12 ]
 		ai2_jump (self.angles, 250, '0 0 250');
 	}
 };
-
 void () jagger_nod = [ 46, jagger_nod2 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod2 = [ 47, jagger_nod3 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod3 = [ 48, jagger_nod4 ]
 {
 	ai_face ();
@@ -405,37 +358,30 @@ void () jagger_nod4 = [ 49, jagger_nod5 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod5 = [ 50, jagger_nod6 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod6 = [ 51, jagger_nod7 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod7 = [ 52, jagger_nod8 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod8 = [ 53, jagger_nod9 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod9 = [ 54, jagger_nod10 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod10 = [ 55, jagger_nod11 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod11 =
 {
 	jagger2norm ();
@@ -444,7 +390,6 @@ void () jagger_nod11 =
 	self.oldenemy = world;
 	self.th_stand ();
 };
-
 void () jagger_old_idlesound =
 {
 	if ((random () < 0.05))
@@ -454,13 +399,11 @@ void () jagger_old_idlesound =
 	}
 	ai_walk (8);
 };
-
 void () jagger_walk = [ 0, jagger_walk2 ]
 {
 	ai2_walk (10);
 	ai_jagmourn ();
 };
-
 void () jagger_walk2 = [ 1, jagger_walk3 ]
 {
 	ai2_walk (18);
@@ -481,13 +424,11 @@ void () jagger_walk2 = [ 1, jagger_walk3 ]
 		}
 	}
 };
-
 void () jagger_walk3 = [ 2, jagger_walk4 ]
 {
 	ai2_walk (18);
 	Jagger_lookdec ();
 };
-
 void () jagger_walk4 = [ 3, jagger_walk5 ]
 {
 	ai2_walk (10);
@@ -499,7 +440,6 @@ void () jagger_walk4 = [ 3, jagger_walk5 ]
 		}
 	}
 };
-
 void () jagger_walk5 = [ 4, jagger_walk6 ]
 {
 	ai2_walk (18);
@@ -512,84 +452,68 @@ void () jagger_walk5 = [ 4, jagger_walk6 ]
 		}
 	}
 };
-
 void () jagger_walk6 = [ 5, jagger_nedec ]
 {
 	ai2_walk (18);
 };
-
 void () jagger_growl = [ 56, jagger_growl2 ]
 {
 	ai_run (0);
 };
-
 void () jagger_growl2 = [ 57, jagger_growl3 ]
 {
 	ai_face ();
 };
-
 void () jagger_growl3 = [ 58, jagger_growl4 ]
 {
 	ai_face ();
 };
-
 void () jagger_growl4 = [ 59, jagger_growl5 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "jagger/bidle.wav", 1, ATTN_IDLE);
 };
-
 void () jagger_growl5 = [ 60, jagger_growl6 ]
 {
 	ai_face ();
 };
-
 void () jagger_growl6 = [ 61, jagger_growl7 ]
 {
 	ai_face ();
 };
-
 void () jagger_growl7 = [ 62, jagger_irdec ]
 {
 	ai_face ();
 };
-
 void () jagger2_growl = [ 77, jagger2_growl2 ]
 {
 	ai_face ();
 };
-
 void () jagger2_growl2 = [ 78, jagger2_growl3 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "jagger/bidle.wav", 1, ATTN_IDLE);
 };
-
 void () jagger2_growl3 = [ 79, jagger2_growl4 ]
 {
 	ai_face ();
 };
-
 void () jagger2_growl4 = [ 80, jagger2_growl5 ]
 {
 	ai_face ();
 };
-
 void () jagger2_growl5 = [ 81, jagger2_growl6 ]
 {
 	ai_face ();
 };
-
 void () jagger2_growl6 = [ 82, jagger2_growl7 ]
 {
 	ai_face ();
 };
-
 void () jagger2_growl7 = [ 83, jagger_irdec2 ]
 {
 	ai_face ();
 };
-
 void () jagger_scareem =
 {
 	local entity mustaine;
@@ -602,53 +526,43 @@ void () jagger_scareem =
 		mustaine.flags = (mustaine.flags + FL_FLEE);
 	}
 };
-
 void () jagger_intimidate = [ 97, jagger_intimid2 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid2 = [ 98, jagger_intimid3 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid3 = [ 99, jagger_intimid4 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "jagger/bidle.wav", 1, ATTN_IDLE);
 };
-
 void () jagger_intimid4 = [ 100, jagger_intimid5 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid5 = [ 101, jagger_intimid6 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid6 = [ 102, jagger_intimid7 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid7 = [ 103, jagger_intimid8 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid8 = [ 104, jagger_intimid9 ]
 {
 	ai_face ();
 };
-
 void () jagger_intimid9 = [ 105, jagger_irdec ]
 {
 	ai_face ();
 };
-
 void () jagger_stand = [ 41, jagger_stand2 ]
 {
 	ai2_stand ();
@@ -657,12 +571,10 @@ void () jagger_stand = [ 41, jagger_stand2 ]
 		Jagger_fishhunt ();
 	}
 };
-
 void () jagger_stand2 = [ 42, jagger_stand3 ]
 {
 	ai2_stand ();
 };
-
 void () jagger_stand3 = [ 43, jagger_stand4 ]
 {
 	ai2_stand ();
@@ -671,38 +583,31 @@ void () jagger_stand3 = [ 43, jagger_stand4 ]
 		jagger_decide ();
 	}
 };
-
 void () jagger_stand4 = [ 44, jagger_stand5 ]
 {
 	ai2_stand ();
 	Jagger_lookdec ();
 };
-
 void () jagger_stand5 = [ 45, jagger_nedec ]
 {
 	ai2_stand ();
 };
-
 void () jagger_watch = [ 41, jagger_watch2 ]
 {
 	ai_face ();
 };
-
 void () jagger_watch2 = [ 42, jagger_watch3 ]
 {
 	ai_face ();
 };
-
 void () jagger_watch3 = [ 43, jagger_watch4 ]
 {
 	ai_face ();
 };
-
 void () jagger_watch4 = [ 44, jagger_watch5 ]
 {
 	ai_face ();
 };
-
 void () jagger_watch5 =
 {
 	local float gg;
@@ -732,47 +637,38 @@ void () jagger_watch5 =
 	}
 	parse_anim ( 45, jagger_call );
 };
-
 void () jagger2_watch = [ 68, jagger2_watch2 ]
 {
 	ai_run (0);
 };
-
 void () jagger2_watch2 = [ 69, jagger2_watch3 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch3 = [ 70, jagger2_watch4 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch4 = [ 71, jagger2_watch5 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch5 = [ 72, jagger2_watch6 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch6 = [ 73, jagger2_watch7 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch7 = [ 74, jagger2_watch8 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch8 = [ 75, jagger2_watch9 ]
 {
 	ai_face ();
 };
-
 void () jagger2_watch9 =
 {
 	ai_face ();
@@ -783,69 +679,50 @@ void () jagger2_watch9 =
 	}
 	parse_anim ( 76, jagger2_watch );
 };
-
 void () jagger_stop1 = [ 29, jagger_stop2 ]
 {
 	sound (self, CHAN_VOICE, "jagger/ddeath.wav", 1, ATTN_NORM);
 };
-
 void () jagger_stop2 = [ 30, jagger_stop3 ]
-{
-};
-
+{};
 void () jagger_stop3 = [ 31, jagger_stop4 ]
-{
-};
-
+{};
 void () jagger_stop4 = [ 32, jagger_stop5 ]
-{
-};
-
+{};
 void () jagger_stop5 = [ 33, jagger_stop6 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () jagger_stop6 = [ 34, jagger_stop7 ]
-{
-};
-
+{};
 void () jagger_stop7 = [ 35, corpse_think ]
-{
-};
-
+{};
 void () jagger_bstop1 = [ 36, jagger_bstop2 ]
 {
 	sound (self, CHAN_VOICE, "jagger/ddeath.wav", 1, ATTN_NORM);
 	ai_forward (16);
 };
-
 void () jagger_bstop2 = [ 37, jagger_bstop3 ]
 {
 	ai_forward (14);
 };
-
 void () jagger_bstop3 = [ 38, jagger_bstop4 ]
 {
 	ai_forward (10);
 };
-
 void () jagger_bstop4 = [ 39, jagger_bstop5 ]
 {
 	ai_forward (5);
 };
-
 void () jagger_bstop5 = [ 40, jagger_bstop6 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () jagger_bstop6 =
 {
 	self.think = corpse_think;
 	self.nextthink = (time + 3);
 };
-
 void () jagger_run =
 {
 	if (borkfactor1 ())
@@ -864,19 +741,16 @@ void () jagger_run =
 	ai_run (5);
 	ai_face ();
 };
-
 void () jagger_run2 = [ 7, jagger_run3 ]
 {
 	ai_run (5);
 	ai_face ();
 };
-
 void () jagger_run3 = [ 8, jagger_run4 ]
 {
 	ai_run (10);
 	ai_face ();
 };
-
 void () jagger_run4 = [ 9, jagger_run5 ]
 {
 	ai_face ();
@@ -897,15 +771,10 @@ void () jagger_run4 = [ 9, jagger_run5 ]
 	}
 	sound (self, CHAN_VOICE, "jagger/bjump.wav", 1, ATTN_NORM);
 };
-
 void () jagger_run5 = [ 10, jagger_run6 ]
-{
-};
-
+{};
 void () jagger_run6 = [ 11, jagger_run7 ]
-{
-};
-
+{};
 void () jagger_run7 = [ 12, jagger_run8 ]
 {
 	if ((self.watertype != CONTENT_WATER))
@@ -928,15 +797,10 @@ void () jagger_run7 = [ 12, jagger_run8 ]
 		}
 	}
 };
-
 void () jagger_run8 = [ 13, jagger_run9 ]
-{
-};
-
+{};
 void () jagger_run9 = [ 14, jagger_run10 ]
-{
-};
-
+{};
 void () jagger_run10 = [ 15, jagger_run11 ]
 {
 	if (jagger_checktop ())
@@ -944,11 +808,8 @@ void () jagger_run10 = [ 15, jagger_run11 ]
 		ai_run (25);
 	}
 };
-
 void () jagger_run11 = [ 16, jagger_run12 ]
-{
-};
-
+{};
 void () jagger_run12 =
 {
 	local vector megadeth;
@@ -969,52 +830,43 @@ void () jagger_run12 =
 	}
 	parse_anim ( 17, jagger_run );
 };
-
 void () jagger_atta1 = [ 23, jagger_atta2 ]
 {
 	ai_charge (10);
 	ai_face ();
 };
-
 void () jagger_atta2 = [ 24, jagger_atta3 ]
 {
 	ai_charge (10);
 	ai_face ();
 };
-
 void () jagger_atta3 = [ 25, jagger_atta4 ]
 {
 	ai_charge (10);
 	jagger_bite ();
 };
-
 void () jagger_atta4 = [ 26, jagger_atta5 ]
 {
 	sound (self, CHAN_VOICE, "jagger/bjump2.wav", 1, ATTN_NORM);
 	jagger_bite ();
 };
-
 void () jagger_atta5 = [ 27, jagger_atta6 ]
 {
 	ai_charge (10);
 	jagger_bite ();
 };
-
 void () jagger_atta6 = [ 28, jagger_run ]
 {
 	ai_charge (10);
 };
-
 void () jagger_leap1 = [ 25, jagger_leap2 ]
 {
 	ai_face ();
 };
-
 void () jagger_leap2 = [ 26, jagger_leap3 ]
 {
 	ai_face ();
 };
-
 void () jagger_leap3 = [ 27, jagger_leap4 ]
 {
 	ai_face ();
@@ -1031,12 +883,10 @@ void () jagger_leap3 = [ 27, jagger_leap4 ]
 		}
 	}
 };
-
 void () jagger_leap4 = [ 28, jagger_leap5 ]
 {
 	ai_face ();
 };
-
 void () jagger_leap5 = [ 29, jagger_leap6 ]
 {
 	ai_face ();
@@ -1046,7 +896,6 @@ void () jagger_leap6 = [ 13, jagger_run ]
 {
 	ai_face ();
 };
-
 float () CheckJaggerMelee =
 {
 	if ((enemy_range == RANGE_MELEE))
@@ -1056,7 +905,6 @@ float () CheckJaggerMelee =
 	}
 	return (0);
 };
-
 void () jagger_JumpTouch =
 {
 	local float ldmg;
@@ -1090,7 +938,6 @@ void () jagger_JumpTouch =
 	self.think = jagger_run8;
 	self.nextthink = time;
 };
-
 void (entity attacker, float damage) jagger_pain =
 {
 	if ((self.touch == jagger_JumpTouch))
@@ -1109,7 +956,6 @@ void (entity attacker, float damage) jagger_pain =
 	}
 	return;
 };
-
 void () jagger_die =
 {
 	if ((self.health < -50))
@@ -1139,7 +985,6 @@ void () jagger_die =
 	self.flags = (self.flags - (self.flags & FL_ONGROUND));
 	jagger_bstop1 ();
 };
-
 float () CheckJaggerJump =
 {
 	local vector dist;
@@ -1165,7 +1010,6 @@ float () CheckJaggerJump =
 	}
 	return (1);
 };
-
 float () JaggerCheckAttack =
 {
 	if (CheckJaggerMelee ())
@@ -1183,7 +1027,6 @@ float () JaggerCheckAttack =
 	}
 	return (0);
 };
-
 void () jagger_bite =
 {
 	local vector delta;
@@ -1210,7 +1053,6 @@ void () jagger_startt =
 	trigger_spawnmonster ();
 	carnify_jagger ();
 };
-
 void () carnify_jagger =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -1223,7 +1065,6 @@ void () carnify_jagger =
 	}
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () jagger2norm =
 {
 	self.th_stand = jagger_stand;
@@ -1240,7 +1081,6 @@ void () jagger_reset =
 	self.goalentity = world;
 	self.th_stand ();
 };
-
 void () jag_from_norm =
 {
 	if ((self.health < 150))
@@ -1252,7 +1092,6 @@ void () jag_from_norm =
 	jagger2ni ();
 	self.th_run ();
 };
-
 void () jagger2ni =
 {
 	self.th_stand = jagger_stand;
@@ -1262,7 +1101,6 @@ void () jagger2ni =
 	self.th_pain = jaggerpissed;
 	self.th_missile = SUB_Null;
 };
-
 void () jagger2ir =
 {
 	self.th_stand = jagger_stand;
@@ -1272,13 +1110,11 @@ void () jagger2ir =
 	self.th_missile = SUB_Null;
 	self.th_pain = jaggerpissed;
 };
-
 void () jaggerpissed =
 {
 	jagger2mad ();
 	self.th_run ();
 };
-
 void () jagger2mad =
 {
 	self.th_stand = jagger_reset;
@@ -1288,7 +1124,6 @@ void () jagger2mad =
 	self.th_run = jagger_run;
 	self.th_pain = jagger_pain;
 };
-
 void () jagger_decide =
 {
 	local entity mustaine;
@@ -1351,7 +1186,6 @@ void () jagger_decide =
 		return;
 	}
 };
-
 void () jagger_nedec =
 {
 	local vector megadeth;
@@ -1485,7 +1319,6 @@ void () jagger_irdec =
 	}
 	jagger_watch ();
 };
-
 void () jagger_irdec2 =
 {
 	local entity mustaine;
@@ -1533,7 +1366,6 @@ void () jagger_irdec2 =
 	}
 	jagger2_watch ();
 };
-
 float () Jagger_lookdec =
 {
 	local entity head;
@@ -1575,7 +1407,6 @@ float () Jagger_lookdec =
 		return (1);
 	}
 };
-
 float () Jagger_fishhunt =
 {
 	local entity head;
@@ -1619,7 +1450,6 @@ float () Jagger_fishhunt =
 		return (1);
 	}
 };
-
 float () Jagger_ontop =
 {
 	local entity head;
@@ -1659,7 +1489,6 @@ float () Jagger_ontop =
 		return (1);
 	}
 };
-
 void () Spew_fish =
 {
 	local entity item77;
@@ -1687,12 +1516,10 @@ void () Spew_fish =
 	item77.th_missile = SUB_Null;
 	item77.th_die = fish_splat;
 };
-
 void () fishy_blood =
 {
 	SpawnMeatSpray (self.origin, ((crandom () * 86) * v_right));
 };
-
 void () fish_splat =
 {
 	SpawnMeatSpray (self.origin, ((crandom () * 86) * v_right));
@@ -1701,14 +1528,12 @@ void () fish_splat =
 	ThrowGib ("progs/gib3.mdl", self.health);
 	remove (self);
 };
-
 void () info_jagnest =
 {
 	self.cnt = 0;
 	self.think = fish_tally;
 	self.nextthink = (time + 1.2);
 };
-
 void () fish_tally =
 {
 	local entity e;
@@ -1772,7 +1597,6 @@ void () fish_tally =
 	}
 	self.nextthink = (time + 1.2);
 };
-
 void () info_jagwater =
 {
 	local entity new;
@@ -1787,17 +1611,14 @@ void () info_jagwater =
 		remove (self);
 	}
 };
-
 void () info_jagout =
 {
 	self.think = jagout_assess;
 	self.nextthink = (time + 1);
 };
-
 void () jagout_assess =
 {
 	local vector vec;
-	
 	vec = self.origin - '0 0 200';
 	traceline (self.origin, vec, 1, self);
 	if ((trace_fraction == 1))
@@ -1813,13 +1634,11 @@ void () jagout_assess =
 	self.think = jagout_cardinal;
 	self.nextthink = (time + 0.5);
 };
-
 void () jagout_cardinal =
 {
 	local vector vec;
 	local vector megadeth;
 	local float num;
-
 	self.cnt = (self.cnt + 1);
 	vec = VEC_ORIGIN;
 	if ((self.cnt == 1))
@@ -1878,11 +1697,9 @@ void () jagout_cardinal =
 	self.think = jagout_cardinal;
 	self.nextthink = (time + 0.1);
 };
-
 void () setup_jagpoint =
 {
 	local entity new;
-
 	if ((self.xgoal == '0 0 0'))
 	{
 		dprint ("INFO_JAGOUT: Location lacks logical route\n");
@@ -1897,6 +1714,4 @@ void () setup_jagpoint =
 	new.classname = "jagpoint";
 	new.fullbright = 1;
 };
-
 //END
- 

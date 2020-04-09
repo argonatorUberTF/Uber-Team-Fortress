@@ -7,7 +7,6 @@ void (vector vec) spawn_borkedvigil =
 	head.think = borkedvigilthink;
 	head.nextthink = (time + 0.1);
 };
-
 void () borkedvigilthink =
 {
 	local entity mark;
@@ -27,5 +26,4 @@ void () borkedvigilthink =
 	self.think = borkedvigilthink;
 	self.nextthink = (time + 0.1);
 };
-
 //END

@@ -38,12 +38,10 @@ void () nehahra_checkvolume =
 	}
 	self.volume = 0.2;
 };
-
 void () monster_nehahra1 =
 {
 	return;
 };
-
 void () monster_nehahra =
 {
 	if (deathmatch)
@@ -139,7 +137,6 @@ void () monster_nehahra =
 	}
 	self.nextthink = (self.nextthink + (random () * 0.5));
 };
-
 void (float dist) nehahra_motion =
 {
 	local entity putz;
@@ -206,7 +203,6 @@ void (float dist) nehahra_motion =
 	enemy_yaw = vectoyaw ((self.enemy.origin - self.origin));
 	movetogoal (30);
 };
-
 void () nehahra_damage =
 {
 	local float ldmg;
@@ -239,7 +235,6 @@ void () nehahra_damage =
 		}
 	}
 };
-
 void () nehahra_bspdamage =
 {
 	if ((self.enemy.classname == "player"))
@@ -249,7 +244,6 @@ void () nehahra_bspdamage =
 	T_Damage (self.enemy, self, self, 2000);
 	sound (self, CHAN_BODY, "boss3/step1.wav", 1, ATTN_NONE);
 };
-
 float () nehahra_checkhit =
 {
 	local entity mark;
@@ -286,7 +280,6 @@ float () nehahra_checkhit =
 	}
 	return (0);
 };
-
 void () nehahra_field_goal =
 {
 	local entity mark;
@@ -306,7 +299,6 @@ void () nehahra_field_goal =
 		mark.velocity = ((v_forward * 800) + '0 0 450');
 	}
 };
-
 void () nehahra_stand =
 {
 	self.touch = SUB_Null;
@@ -319,7 +311,6 @@ void () nehahra_stand =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () nehahra_missile =
 {
 	local vector spot;
@@ -332,7 +323,6 @@ void () nehahra_missile =
 	}
 	nehahra_spitting ();
 };
-
 void () nehahra_spitting =
 {
 	self.touch = SUB_Null;
@@ -351,7 +341,6 @@ void () nehahra_spitting =
 		nehahra_spitfire (0);
 	}
 };
-
 void () nehahra_bspspit =
 {
 	self.touch = SUB_Null;
@@ -379,7 +368,6 @@ void () nehahra_bspspit =
 		}
 	}
 };
-
 void () nehahra_squashing =
 {
 	if (other.takedamage)
@@ -393,7 +381,6 @@ void () nehahra_squashing =
 		}
 	}
 };
-
 void () nehahra_goal =
 {
 	self.touch = nehahra_squashing;
@@ -440,7 +427,6 @@ void () nehahra_goal =
 		}
 	}
 };
-
 void () nehahra_melee =
 {
 	nehahra_sounds ();
@@ -453,7 +439,6 @@ void () nehahra_melee =
 		nehahra_kick1 ();
 	}
 };
-
 void () nehahra_sounds =
 {
 	local float num;
@@ -475,86 +460,64 @@ void () nehahra_sounds =
 		}
 	}
 };
-
 void () nehahra_smash1 = [ 45, nehahra_smash2 ]
 {
 	ai_charge (FL_MONSTER);
 };
-
 void () nehahra_smash2 = [ 46, nehahra_smash3 ]
 {
 	ai_charge (FL_MONSTER);
 };
-
 void () nehahra_smash3 = [ 47, nehahra_smash4 ]
 {
 	ai_charge (FL_INWATER);
 	nehahra_checkvolume ();
 	sound (self, CHAN_BODY, "boss3/swing.wav", self.volume, ATTN_NONE);
 };
-
 void () nehahra_smash4 = [ 48, nehahra_smash5 ]
 {
 	ai_charge (FL_MONSTER);
 };
-
 void () nehahra_smash5 = [ 49, nehahra_smash6 ]
 {
 	ai_charge (FL_MONSTER);
 };
-
 void () nehahra_smash6 = [ 50, nehahra_smash7 ]
 {
 	ai_face ();
 };
-
 void () nehahra_smash7 = [ 51, nehahra_smash8 ]
 {
 	ai_face ();
 	nehahra_damage ();
 };
-
 void () nehahra_smash8 = [ 50, nehahra_smash9 ]
-{
-};
-
+{};
 void () nehahra_smash9 = [ 49, nehahra_smash10 ]
-{
-};
-
+{};
 void () nehahra_smash10 = [ 48, nehahra_smash11 ]
-{
-};
-
+{};
 void () nehahra_smash11 = [ 47, nehahra_smash12 ]
-{
-};
-
+{};
 void () nehahra_smash12 = [ 46, nehahra_goal ]
-{
-};
-
+{};
 void () nehbsp_smash1 = [ 45, nehbsp_smash2 ]
 {
 	ai_charge (FL_MONSTER);
 };
-
 void () nehbsp_smash2 = [ 46, nehbsp_smash3 ]
 {
 	face_bsp (self.enemy);
 };
-
 void () nehbsp_smash3 = [ 47, nehbsp_smash4 ]
 {
 	face_bsp (self.enemy);
 };
-
 void () nehbsp_smash4 = [ 48, nehbsp_smash5 ]
 {
 	ai_charge (FL_MONSTER);
 	face_bsp (self.enemy);
 };
-
 void () nehbsp_smash5 = [ 49, nehbsp_smash6 ]
 {
 	ai_charge (FL_MONSTER);
@@ -562,39 +525,27 @@ void () nehbsp_smash5 = [ 49, nehbsp_smash6 ]
 	nehahra_checkvolume ();
 	sound (self, CHAN_BODY, "boss3/swing.wav", self.volume, ATTN_NONE);
 };
-
 void () nehbsp_smash6 = [ 50, nehbsp_smash7 ]
 {
 	face_bsp (self.enemy);
 };
-
 void () nehbsp_smash7 = [ 51, nehbsp_smash8 ]
 {
 	face_bsp (self.enemy);
 	nehahra_bspdamage ();
 };
-
 void () nehbsp_smash8 = [ 50, nehbsp_smash9 ]
-{
-};
-
+{};
 void () nehbsp_smash9 = [ 49, nehbsp_smash10 ]
-{
-};
-
+{};
 void () nehbsp_smash10 = [ 48, nehbsp_smash11 ]
-{
-};
-
+{};
 void () nehbsp_smash11 = [ 47, nehbsp_smash12 ]
 {
 	self.enemy = self.oldenemy;
 };
-
 void () nehbsp_smash12 = [ 46, nehahra_goal ]
-{
-};
-
+{};
 void () nehahra_handlebsp =
 {
 	self.walkframe = 0;
@@ -607,27 +558,22 @@ void () nehahra_handlebsp =
 		nehbsp_smash1 ();
 	}
 };
-
 void () nehahra_kick1 = [ 37, nehahra_kick2 ]
 {
 	ai_face ();
 };
-
 void () nehahra_kick2 = [ 38, nehahra_kick3 ]
 {
 	ai_face ();
 };
-
 void () nehahra_kick3 = [ 39, nehahra_kick4 ]
 {
 	ai_face ();
 };
-
 void () nehahra_kick4 = [ 40, nehahra_kick5 ]
 {
 	ai_face ();
 };
-
 void () nehahra_kick5 = [ 41, nehahra_kick6 ]
 {
 	self.touch = nehahra_squashing;
@@ -643,28 +589,21 @@ void () nehahra_kick5 = [ 41, nehahra_kick6 ]
 		self.flags = (self.flags - FL_ONGROUND);
 	}
 };
-
 void () nehahra_kick6 = [ 42, nehahra_kick7 ]
 {
 	ai_face ();
 	nehahra_damage ();
 	nehahra_field_goal ();
 };
-
 void () nehahra_kick7 = [ 43, nehahra_kick8 ]
 {
 	nehahra_damage ();
 	nehahra_field_goal ();
 };
-
 void () nehahra_kick8 = [ 44, nehahra_kick9 ]
-{
-};
-
+{};
 void () nehahra_kick9 = [ 42, nehahra_goal ]
-{
-};
-
+{};
 float (entity targ) visible_bsp =
 {
 	local vector spot1;
@@ -682,7 +621,6 @@ float (entity targ) visible_bsp =
 	}
 	return (FALSE);
 };
-
 void (entity targ) face_bsp =
 {
 	local vector spot1;
@@ -691,7 +629,6 @@ void (entity targ) face_bsp =
 	self.ideal_yaw = vectoyaw ((spot1 - self.origin));
 	ChangeYaw ();
 };
-
 void (float offset) nehahra_bspfire =
 {
 	local vector org;
@@ -703,7 +640,6 @@ void (float offset) nehahra_bspfire =
 	vec = normalize (((self.enemy.absmin + ((self.enemy.absmax - self.enemy.absmin) * 0.5)) - spot));
 	WeldFire (org, vec);
 };
-
 float () neh_findbsp =
 {
 	local entity head;
@@ -721,7 +657,6 @@ float () neh_findbsp =
 	}
 	return (0);
 };
-
 void () nehahra_wreckbsp =
 {
 	if ((self.waterlevel > 1))
@@ -744,7 +679,6 @@ void () nehahra_wreckbsp =
 	neh_findbsp ();
 	nehahra_bspdamage ();
 };
-
 void () nehahra_carnify_body =
 {
 	local entity body;
@@ -770,7 +704,6 @@ void () nehahra_carnify_body =
 	body.think = nehahra_frame;
 	body.nextthink = (time + 0.3);
 };
-
 void () nehahra_carnify_head =
 {
 	local entity head;
@@ -796,13 +729,11 @@ void () nehahra_carnify_head =
 	head.think = nehahra_frame;
 	head.nextthink = (time + 0.5);
 };
-
 void (entity attacker, float damage) bod_neh_pain =
 {
 	self.objekt.enemy = attacker;
 	T_Damage (self.objekt, attacker, self, 1);
 };
-
 void () nehahra_frame =
 {
 	local vector dave;
@@ -850,7 +781,6 @@ void () nehahra_frame =
 	self.think = nehahra_frame;
 	self.nextthink = (time + 0.1);
 };
-
 void () kill_nehahra =
 {
 	local entity head;
@@ -873,7 +803,6 @@ void () kill_nehahra =
 	T_Damage (self.objekt, self, self, num);
 	remove (self);
 };
-
 void () nehahra_die = [ 76, n_die2 ]
 {
 	self.health = -120;
@@ -883,53 +812,45 @@ void () nehahra_die = [ 76, n_die2 ]
 	lavasplash (self.origin);
 	sound (self, CHAN_ITEM, "boss3/nehdie2.wav", self.volume, ATTN_NONE);
 };
-
 void () n_die2 = [ 81, n_die3 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die3 = [ 80, n_die4 ]
 {
 	lavasplash (self.origin);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die4 = [ 79, n_die5 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die5 = [ 78, n_die6 ]
 {
 	lavasplash ((self.origin + '0 0 100'));
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die6 = [ 77, n_die7 ]
 {
 	ThrowGib ("progs/gib2.mdl", self.health);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die7 = [ 78, n_die8 ]
 {
 	lavasplash (self.origin);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die8 = [ 79, n_die9 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die9 = [ 80, n_die10 ]
 {
 	lavasplash ((self.origin + '0 0 100'));
@@ -937,117 +858,99 @@ void () n_die9 = [ 80, n_die10 ]
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die10 = [ 81, n_die11 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die11 = [ 82, n_die12 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die12 = [ 83, n_die13 ]
 {
 	lavasplash (self.origin);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die13 = [ 84, n_die14 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die14 = [ 85, n_die15 ]
 {
 	lavasplash ((self.origin + '0 0 140'));
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die15 = [ 86, n_die16 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die16 = [ 87, n_die17 ]
 {
 	nehjet ();
 };
-
 void () n_die17 = [ 83, n_die18 ]
 {
 	lavasplash (self.origin);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die18 = [ 84, n_die19 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die19 = [ 85, n_die20 ]
 {
 	lavasplash (self.origin);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die20 = [ 86, n_die21 ]
 {
 	lavasplash (self.origin);
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die21 = [ 87, n_die22 ]
 {
 	lavasplash ((self.origin + '0 0 150'));
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die22 = [ 88, n_die23 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die23 = [ 89, n_die24 ]
 {
 	lavasplash ((self.origin + '0 0 50'));
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die24 = [ 88, n_die25 ]
 {
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die25 = [ 87, n_die26 ]
 {
 	lavasplash ((self.origin + '0 0 50'));
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die26 = [ 86, n_die27 ]
 {
 	lavasplash ((self.origin + '0 0 150'));
 	nehjet ();
 	nehjet ();
 };
-
 void () n_die27 =
 {
 	self.cnt = (self.cnt + 1);
@@ -1076,7 +979,6 @@ void () n_die27 =
 		ThrowGibstorm ("progs/gstorm.mdl", self.health);
 	}
 };
-
 void () n_die28 = [ 90, n_die29 ]
 {
 	if ((world.model == "maps/nehahra.bsp"))
@@ -1093,7 +995,6 @@ void () n_die28 = [ 90, n_die29 ]
 	ThrowGibstorm ("progs/gstorm.mdl", self.health);
 	ThrowGibstorm ("progs/gstorm.mdl", self.health);
 };
-
 void () n_die29 = [ 91, n_die30 ]
 {
 	lavasplash ((self.origin + '0 0 150'));
@@ -1103,7 +1004,6 @@ void () n_die29 = [ 91, n_die30 ]
 	ThrowGibstorm ("progs/gstorm.mdl", self.health);
 	ThrowGibstorm ("progs/gstorm.mdl", self.health);
 };
-
 void () n_die30 = [ 92, n_die31 ]
 {
 	ThrowGibstorm ("progs/gstorm.mdl", self.health);
@@ -1115,11 +1015,8 @@ void () n_die30 = [ 92, n_die31 ]
 	lavasplash ((self.origin + '0 0 150'));
 	lavasplash (self.origin);
 };
-
 void () n_die31 = [ 93, BecomeExplosion ]
-{
-};
-
+{};
 void (string gibname, float dm) ThrowGibstorm =
 {
 	local entity new;
@@ -1138,7 +1035,6 @@ void (string gibname, float dm) ThrowGibstorm =
 	new.think = throwgibs;
 	new.nextthink = (((time + 1) + random ()) + random ());
 };
-
 void () throwgibs =
 {
 	if ((pointcontents (self.origin) == CONTENT_SKY))
@@ -1152,14 +1048,12 @@ void () throwgibs =
 	ThrowGib ("progs/gib3.mdl", self.health);
 	ThrowHead ("progs/gib2.mdl", self.health);
 };
-
 void () nehjet =
 {
 	nehahra_deathbeams ();
 	nehahra_deathbeams ();
 	nehahra_deathbeams ();
 };
-
 void () nehahra_deathbeams =
 {
 	local entity mark;
@@ -1206,5 +1100,4 @@ void () nehahra_deathbeams =
 	mark.think = SUB_Remove;
 	mark.nextthink = (time + 0.1);
 };
-
 //END

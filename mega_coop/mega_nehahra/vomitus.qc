@@ -27,9 +27,7 @@ void () monster_vomitus1 =
 	self.th_die = vomit_die;
 	self.th_pain = vomit_ouchie;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
-//	walkmonster_start ();
 };
-
 void () monster_vomitus =
 {
 	if (deathmatch)
@@ -37,7 +35,6 @@ void () monster_vomitus =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model ("progs/vomitus.mdl");
 	precache_sound ("vomit/gf_sbig.wav");
 	precache_sound ("vomit/gf_plop.wav");
@@ -49,7 +46,6 @@ void () monster_vomitus =
 
 	MTF_Setup_Monster_Presets ( 0, "vomitus", monster_vomitus1 );
 };
-
 void () vomit_ouchie =
 {
 	if ((self.pain_finished > time))
@@ -60,18 +56,15 @@ void () vomit_ouchie =
 	sound (self, CHAN_WEAPON, "vomit/groan.wav", 1, ATTN_NORM);
 	vomit_motion ();
 };
-
 void () vomit_flat = [ 63, vomit_flat ]
 {
 	ai_stand ();
 };
-
 void () vomit_dead =
 {
 	self.nextthink = (time + 20);
 	self.think = corpse_think;
 };
-
 void () vomit_rise =
 {
 	self.pain_finished = (time + 1);
@@ -79,7 +72,6 @@ void () vomit_rise =
 	sound (self, CHAN_WEAPON, "vomit/gf_sbig.wav", 1, ATTN_NORM);
 	vomit_riseup ();
 };
-
 void () vomit_riseup =
 {
 	if ((self.walkframe >= 16))
@@ -96,7 +88,6 @@ void () vomit_riseup =
 	self.frame = (63 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () vomit_idle =
 {
 	if ((self.walkframe >= 26))
@@ -109,7 +100,6 @@ void () vomit_idle =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () vomit_motion =
 {
 	if ((self.walkframe >= 26))
@@ -128,7 +118,6 @@ void () vomit_motion =
 		ai_walk (0.5);
 	}
 };
-
 void () vomit_vomit =
 {
 	self.pain_finished = (time + 1);
@@ -143,7 +132,6 @@ void () vomit_vomit =
 		vomit_barf2 ();
 	}
 };
-
 void () vomit_barf1 =
 {
 	if ((self.walkframe >= 8))
@@ -161,7 +149,6 @@ void () vomit_barf1 =
 		vomit_chunks ();
 	}
 };
-
 void () vomit_barf2 =
 {
 	if ((self.walkframe >= 14))
@@ -179,7 +166,6 @@ void () vomit_barf2 =
 		vomit_chunks ();
 	}
 };
-
 void () vomit_die =
 {
 	if ((self.health < -65))
@@ -197,7 +183,6 @@ void () vomit_die =
 	sound (self, CHAN_WEAPON, "vomit/groan.wav", 1, ATTN_NORM);
 	vomit_deflate ();
 };
-
 void () vomit_deflate =
 {
 	if ((self.walkframe >= 16))
@@ -214,12 +199,10 @@ void () vomit_deflate =
 		self.solid = SOLID_NOT;
 	}
 };
-
 void () vomit_chunks =
 {
 	blow_chunks ('0 0 0');
 };
-
 void (vector st) blow_chunks =
 {
 	local entity missile;
@@ -265,5 +248,4 @@ void (vector st) blow_chunks =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, org);
 };
-
 //END

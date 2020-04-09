@@ -52,7 +52,6 @@ void (float num) gaunt_ring =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, vec2);
 };
-
 void () gring_touch =
 {
 	local float damg;
@@ -105,14 +104,12 @@ void () gring_touch =
 	}
 	remove (self);
 };
-
 void () gaunt_kneel =
 {
 	self.event = "gauntmourn";
 	self.goalentity = world;
 	gaunt2_kneel ();
 };
-
 void () gaunt2_kneel =
 {
 	if ((self.walkframe >= 8))
@@ -141,7 +138,6 @@ void () gaunt2_kneel =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () gaunt_pray =
 {
 	if ((self.walkframe >= 7))
@@ -178,7 +174,6 @@ void () gaunt_pray =
 		sound (self, CHAN_VOICE, "gaunt/g1.wav", 1, ATTN_NORM);
 	}
 };
-
 void () gaunt_crucified =
 {
 	if ((self.walkframe >= 20))
@@ -190,7 +185,6 @@ void () gaunt_crucified =
 	self.walkframe = (self.walkframe + 1);
 	self.nextthink = ((time + 0.1) + (random () * 0.1));
 };
-
 void () gaunt_dieagain =
 {
 	if ((self.health < -35))
@@ -202,7 +196,6 @@ void () gaunt_dieagain =
 	self.takedamage = DAMAGE_AIM;
 	gaunt_crucdead ();
 };
-
 void () gaunt_crucdead =
 {
 	if ((self.health < -35))
@@ -220,19 +213,12 @@ void () gaunt_crucdead =
 		gaunt_crucdead2 ();
 	}
 };
-
 void () gaunt_crucdead1 = [ 173, gaunt_crucdead1 ]
-{
-};
-
+{};
 void () gaunt_crucdead2 = [ 174, gaunt_crucdead2 ]
-{
-};
-
+{};
 void () gaunt_boxed = [ 175, gaunt_boxed ]
-{
-};
-
+{};
 void () gaunt_retreat =
 {
 	if (visible (self.enemy))
@@ -254,11 +240,9 @@ void () gaunt_retreat =
 	self.frame = (176 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () gaunt_runfire =
 {
 	local float dist;
-
 	if ((self.enemy.health < 1))
 	{
 		gaunt_arg_control ();
@@ -300,7 +284,6 @@ void () gaunt_runfire =
 		}
 	}
 };
-
 void () gaunt_gibs =
 {
 	sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
@@ -310,7 +293,6 @@ void () gaunt_gibs =
 	ThrowGib ("progs/gib3.mdl", self.health);
 	return;
 };
-
 void () gaunt_stand =
 {
 	ai_stand ();
@@ -352,7 +334,6 @@ void () gaunt_stand =
 		}
 	}
 };
-
 void () gaunt_shakefists =
 {
 	ai_face ();
@@ -374,7 +355,6 @@ void () gaunt_shakefists =
 		Gaunt_Teleport ();
 	}
 };
-
 void () gaunt_shimmy =
 {
 	if ((self.walkframe >= 10))
@@ -388,7 +368,6 @@ void () gaunt_shimmy =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void () gaunt_wardoff =
 {
 	if ((self.walkframe >= 8))
@@ -412,7 +391,6 @@ void () gaunt_wardoff =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void () gaunt_shakefinger =
 {
 	if ((self.walkframe >= 12))
@@ -429,7 +407,6 @@ void () gaunt_shakefinger =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void () gaunt_lowfinger =
 {
 	if ((self.walkframe >= 8))
@@ -447,7 +424,6 @@ void () gaunt_lowfinger =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void () gaunt_die =
 {
 	if ((self.health < -35))
@@ -466,24 +442,16 @@ void () gaunt_die =
 		parse_anim ( 90, gaunt_death );
 	}
 };
-
 void () gaunt_dback = [ 54, gaunt_dback3 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () gaunt_dback3 = [ 55, gaunt_dback4 ]
-{
-};
-
+{};
 void () gaunt_dback4 = [ 56, gaunt_dback5 ]
-{
-};
-
+{};
 void () gaunt_dback5 = [ 57, corpse_think ]
-{
-};
-
+{};
 void () gaunt_death =
 {
 	if ((self.walkframe >= 16))
@@ -496,7 +464,6 @@ void () gaunt_death =
 	self.frame = (89 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () gaunt_shoot =
 {
 	if ((self.walkframe >= 12))
@@ -523,13 +490,11 @@ void () gaunt_shoot =
 		sound (self, CHAN_BODY, "gaunt/boom.wav", 1, ATTN_NORM);
 	}
 };
-
 void () gaunt_beam = [ 117, gaunt_beam1 ]
 {
 	GauntLightning ();
 	ai_face ();
 };
-
 void () gaunt_beam1 = [ 118, gaunt_beam2 ]
 {
 	ai_face ();
@@ -538,7 +503,6 @@ void () gaunt_beam1 = [ 118, gaunt_beam2 ]
 		sound (self, CHAN_VOICE, "gaunt/elekt.wav", 1, ATTN_NORM);
 	}
 };
-
 void () gaunt_beam2 =
 {
 	local vector megadeth;
@@ -557,7 +521,6 @@ void () gaunt_beam2 =
 	self.walkframe = 0;
 	parse_anim ( 119, gaunt_endshoot );
 };
-
 void () gaunt_endshoot =
 {
 	if ((self.walkframe >= 12))
@@ -570,11 +533,8 @@ void () gaunt_endshoot =
 	self.frame = (116 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () gaunt_nothing = [ 104, corpse_think ]
-{
-};
-
+{};
 void () gaunt_motion =
 {
 	if ((self.walkframe >= 10))
@@ -619,7 +579,6 @@ void () gaunt_motion =
 		}
 	}
 };
-
 void () gaunt_pain =
 {
 	if ((self.pain_finished > time))
@@ -641,23 +600,14 @@ void () gaunt_pain =
 	}
 	parse_anim ( 47, gaunt_pain1 );
 };
-
 void () gaunt_pain1 = [ 48, gaunt_pain2 ]
-{
-};
-
+{};
 void () gaunt_pain2 = [ 49, gaunt_pain3 ]
-{
-};
-
+{};
 void () gaunt_pain3 = [ 50, gaunt_pain4 ]
-{
-};
-
+{};
 void () gaunt_pain4 = [ 51, gaunt_pain5 ]
-{
-};
-
+{};
 void () gaunt_pain5 =
 {
 	self.walkframe = 0;
@@ -668,38 +618,31 @@ void () gaunt_pain5 =
 	}
 	parse_anim ( 52, gaunt_motion );
 };
-
 void () gaunt_swing2 = [ 125, gaunt_swing3 ]
 {
 	ai_face ();
 };
-
 void () gaunt_swing3 = [ 124, gaunt_swing4 ]
 {
 	ai_face ();
 };
-
 void () gaunt_swing4 = [ 123, gaunt_swing5 ]
 {
 	GauntMissile ();
 	ai_face ();
 };
-
 void () gaunt_swing5 = [ 122, gaunt_swing6 ]
 {
 	ai_face ();
 };
-
 void () gaunt_swing6 = [ 121, gaunt_swing7 ]
 {
 };
-
 void () gaunt_swing7 =
 {
 	self.walkframe = 0;
 	parse_anim ( 120, gaunt_motion );
 };
-
 void () gaunt_rock2 = [ 128, gaunt_rock3 ]
 {
 	if ((self.flags & FL_ONGROUND))
@@ -712,55 +655,32 @@ void () gaunt_rock2 = [ 128, gaunt_rock3 ]
 };
 
 void () gaunt_rock3 = [ 129, gaunt_rock4 ]
-{
-};
-
+{};
 void () gaunt_rock4 = [ 130, gaunt_rock5 ]
-{
-};
-
+{};
 void () gaunt_rock5 = [ 131, gaunt_rock6 ]
-{
-};
-
+{};
 void () gaunt_rock6 = [ 130, gaunt_rock7 ]
-{
-};
-
+{};
 void () gaunt_rock7 = [ 129, gaunt_rock8 ]
-{
-};
-
+{};
 void () gaunt_rock8 = [ 128, gaunt_rock9 ]
-{
-};
-
+{};
 void () gaunt_rock9 =
 {
 	self.walkframe = 0;
 	parse_anim ( 127, gaunt_motion );
 };
-
 void () gaunt_clap1 = [ 132, gaunt_clap2 ]
-{
-};
-
+{};
 void () gaunt_clap2 = [ 133, gaunt_clap3 ]
-{
-};
-
+{};
 void () gaunt_clap3 = [ 134, gaunt_clap4 ]
-{
-};
-
+{};
 void () gaunt_clap4 = [ 135, gaunt_clap5 ]
-{
-};
-
+{};
 void () gaunt_clap5 = [ 136, gaunt_clap6 ]
-{
-};
-
+{};
 void () gaunt_clap6 =
 {
 	if ((random () < 0.9))
@@ -773,20 +693,14 @@ void () gaunt_clap6 =
 		parse_anim ( 137, gaunt_clap7 );
 	}
 };
-
 void () gaunt_clap7 = [ 134, gaunt_clap8 ]
-{
-};
-
+{};
 void () gaunt_clap8 = [ 133, gaunt_clap9 ]
 {
 	self.th_wins = SUB_Null;
 };
-
 void () gaunt_clap9 = [ 132, gaunt_arg_control ]
-{
-};
-
+{};
 void () monster_gaunt1 =
 {
 	setmodel (self, "progs/gaunt.mdl");
@@ -829,7 +743,6 @@ void () monster_gaunt1 =
 		gaunt_crucdead ();
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	if ((((self.targetname == "actor23") || (self.targetname == "actor24")) || (self.targetname == "actor25")))
 	{
 		self.th_stand = gaunt_wait;
@@ -858,7 +771,6 @@ void () monster_gaunt1 =
 	carnify_gaunt ();
 	walkmonster_start ();
 };
-
 void () monster_gaunt =
 {
 	if (deathmatch)
@@ -901,14 +813,12 @@ void () monster_gaunt =
 	precache_sound2 ("boss3/nehdie4.wav");
 	MTF_Setup_Monster_Presets ( 0, "gaunt", monster_gaunt1 );
 };
-
 void () gaunt_start =
 {
 	trigger_spawnmonster ();
 	carnify_gaunt ();
 	walkmonster_start ();
 };
-
 void () carnify_gaunt =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -921,7 +831,6 @@ void () carnify_gaunt =
 	}
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () gaunt_wait =
 {
 	self.use = gaunt_begin;
@@ -933,7 +842,6 @@ void () gaunt_wait =
 	self.frame = (0 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () gaunt_begin =
 {
 	self.th_stand = gaunt_stand;
@@ -948,7 +856,6 @@ void () gaunt_begin =
 		parse_anim ( 0, gaunt_motion );
 	}
 };
-
 void () gaunt_talk =
 {
 	if ((self.skin == 0))
@@ -969,7 +876,6 @@ void () gaunt_talk =
 		self.skin = 0;
 	}
 };
-
 void () gaunt_voice =
 {
 	local float num;
@@ -1038,7 +944,6 @@ void () gaunt_voice =
 	}
 	sound (self, CHAN_VOICE, "gaunt/g1.wav", 1, ATTN_NORM);
 };
-
 void () gaunt_yell =
 {
 	local float num;
@@ -1082,7 +987,6 @@ void () gaunt_yell =
 	}
 	sound (self, CHAN_VOICE, "gaunt/ga1.wav", 1, ATTN_NORM);
 };
-
 float () gaunt_checkenemy =
 {
 	local entity head;
@@ -1104,7 +1008,6 @@ float () gaunt_checkenemy =
 		return (0);
 	}
 };
-
 void () gaunt_arg_control =
 {
 	local float num;
@@ -1174,7 +1077,6 @@ void () gaunt_arg_control =
 		parse_anim ( 126, gaunt_swing2 );
 	}
 };
-
 float () gaunt_measure =
 {
 	local entity g;
@@ -1190,13 +1092,11 @@ float () gaunt_measure =
 		return (1);
 	}
 };
-
 float () gaunt_select_kin =
 {
 	local entity head;
 	local entity selected;
 	local float dist;
-
 	dist = 300;
 	selected = world;
 	head = findradius (self.origin, 300);
@@ -1231,13 +1131,11 @@ float () gaunt_select_kin =
 		return (1);
 	}
 };
-
 float () gaunt_quirk =
 {
 	local entity head;
 	local entity selected;
 	local float dist;
-
 	dist = 800;
 	selected = world;
 	head = findradius (self.origin, 800);
@@ -1266,7 +1164,6 @@ float () gaunt_quirk =
 		return (1);
 	}
 };
-
 void () GauntMissile =
 {
 	local entity missile;
@@ -1298,7 +1195,6 @@ void () GauntMissile =
 	missile.enemy = self.enemy;
 	missile.touch = GntSpke_Touch;
 };
-
 void () Gntspke_Home =
 {
 	local vector dir;
@@ -1321,7 +1217,6 @@ void () Gntspke_Home =
 	self.nextthink = (time + 0.2);
 	self.think = Gntspke_Home;
 };
-
 void () GntSpke_Touch =
 {
 	if (other.is_monster == 1)
@@ -1341,7 +1236,6 @@ void () GntSpke_Touch =
 	T_Damage (other, self, self.owner, self.dmg);
 	remove (self);
 };
-
 float () Gaunt_Teleport =
 {
 	local entity head;
@@ -1373,7 +1267,6 @@ float () Gaunt_Teleport =
 	}
 	return (1);
 };
-
 void (entity mark) spawn_gmonitor =
 {
 	local entity head;
@@ -1386,7 +1279,6 @@ void (entity mark) spawn_gmonitor =
 	head.think = gmonitor;
 	head.nextthink = (time + 3);
 };
-
 void () gmonitor =
 {
 	local vector megadeth;
@@ -1399,5 +1291,4 @@ void () gmonitor =
 	self.think = gmonitor;
 	self.nextthink = (time + 0.4);
 };
-
 //END

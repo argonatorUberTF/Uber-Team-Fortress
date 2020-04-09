@@ -61,7 +61,6 @@ void () yield_items =
 		throw_item (IT_SUIT);
 	}
 };
-
 void () yield_armor =
 {
 	if ((self.armorvalue == 3))
@@ -80,7 +79,6 @@ void () yield_armor =
 		return;
 	}
 };
-
 void (float num) precache_thrown =
 {
 	if ((num & IT_QUAD))
@@ -142,7 +140,6 @@ void (float num) precache_thrown =
 		precache_model ("progs/mg_rock2.mdl");
 	}
 };
-
 void () precache_ammo =
 {
 	if ((self.ammo_shells > 0))
@@ -162,7 +159,6 @@ void () precache_ammo =
 		precache_model ("maps/b_batt0.bsp");
 	}
 };
-
 void (float num) throw_item =
 {
 	local entity item44;
@@ -317,7 +313,6 @@ void (float num) throw_item =
 		return;
 	}
 };
-
 void (float num) throw_ammo =
 {
 	local entity item22;
@@ -372,5 +367,4 @@ void (float num) throw_ammo =
 	item22.netname = "cells";
 	setsize (item22, VEC_ORIGIN, '32 32 56');
 };
-
-//END 
+//END

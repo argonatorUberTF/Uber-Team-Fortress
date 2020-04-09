@@ -39,7 +39,6 @@ void (float dist) ai_retreat =
 		}
 	}
 };
-
 void () flee_options =
 {
 	local float num;
@@ -82,7 +81,6 @@ void () flee_options =
 		self.fangle = judy_z;
 	}
 };
-
 vector (float num, vector t) checkfleepath =
 {
 	local vector megadeth;
@@ -136,7 +134,6 @@ vector (float num, vector t) checkfleepath =
 	}
 	return (t);
 };
-
 void () vispts =
 {
 	if (visible (self.enemy))
@@ -147,5 +144,4 @@ void () vispts =
 	{
 		self.boost = (self.boost + 1);
 	}
-};
-//END
+};//END

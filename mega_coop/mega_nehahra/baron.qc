@@ -20,7 +20,6 @@ void () baron_fling =
 		mark.velocity = ((v_forward * 400) + '0 0 350');
 	}
 };
-
 void () baron_idle =
 {
 	if ((self.walkframe >= 20))
@@ -48,7 +47,6 @@ void () baron_idle =
 		sound (self, CHAN_VOICE, "hknight/idle.wav", 1, ATTN_NORM);
 	}
 };
-
 void () baron_walk =
 {
 	if ((self.walkframe >= 20))
@@ -60,7 +58,6 @@ void () baron_walk =
 	self.walkframe = (self.walkframe + 1);
 	ai_walk (0);
 };
-
 void () baron_wins =
 {
 	local float num;
@@ -82,7 +79,6 @@ void () baron_wins =
 		}
 	}
 };
-
 void () baron_point =
 {
 	if ((self.walkframe >= 11))
@@ -96,7 +92,6 @@ void () baron_point =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () baron_hyped =
 {
 	if ((self.walkframe >= 19))
@@ -110,7 +105,6 @@ void () baron_hyped =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () baron_draw =
 {
 	self.walkframe = 0;
@@ -118,7 +112,6 @@ void () baron_draw =
 	self.pain_finished = (time + 0.6);
 	baron_draw1 ();
 };
-
 void () baron_draw1 =
 {
 	if ((self.walkframe >= 5))
@@ -144,7 +137,6 @@ void () baron_draw1 =
 	}
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () baron_run1 =
 {
 	if ((self.walkframe == 0))
@@ -163,7 +155,6 @@ void () baron_run1 =
 	self.walkframe = (self.walkframe + 1);
 	ai_run (FL_MONSTER);
 };
-
 void () baron_melee =
 {
 	self.walkframe = 0;
@@ -191,7 +182,6 @@ void () baron_melee =
 		}
 	}
 };
-
 void () baron_lrange =
 {
 	self.walkframe = 0;
@@ -206,47 +196,39 @@ void () baron_lrange =
 	}
 	baron_magic1 ();
 };
-
 void () baron_magic1 = [ 109, baron_magic2 ]
 {
 	ai_face ();
 };
-
 void () baron_magic2 = [ 110, baron_magic3 ]
 {
 	ai_face ();
 };
-
 void () baron_magic3 = [ 111, baron_magic4 ]
 {
 	ai_face ();
 	hknight_shot (0);
 };
-
 void () baron_magic4 = [ 112, baron_magic5 ]
 {
 	ai_face ();
 	hknight_shot (CONTENT_EMPTY);
 	hknight_shot (CONTENT_SOLID);
 };
-
 void () baron_magic5 = [ 113, baron_magic6 ]
 {
 	ai_face ();
 	hknight_shot (1);
 	hknight_shot (0);
 };
-
 void () baron_magic6 = [ 114, baron_magic7 ]
 {
 	ai_face ();
 };
-
 void () baron_magic7 = [ 115, baron_run1 ]
 {
 	ai_face ();
 };
-
 void () baron_sword1_1 =
 {
 	if ((self.walkframe >= 6))
@@ -278,7 +260,6 @@ void () baron_sword1_1 =
 		chainsaw (0);
 	}
 };
-
 void () baron_sword2_1 =
 {
 	if ((self.walkframe >= 13))
@@ -297,7 +278,6 @@ void () baron_sword2_1 =
 		ai_melee ();
 	}
 };
-
 void () baron_smash =
 {
 	if ((self.walkframe >= 12))
@@ -322,7 +302,6 @@ void () baron_smash =
 	self.walkframe = (self.walkframe + 1);
 	ai_charge (2);
 };
-
 void () baron_throw =
 {
 	if ((self.walkframe >= 11))
@@ -336,14 +315,12 @@ void () baron_throw =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void () baron_jump =
 {
 	self.walkframe = 0;
 	self.cnt = 0;
 	baron_jumpup ();
 };
-
 void () baron_jumpup =
 {
 	if ((self.walkframe >= 6))
@@ -378,7 +355,6 @@ void () baron_jumpup =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-
 void (entity attacker, float damage) baron_pain =
 {
 	if ((self.pain_finished > time))
@@ -399,36 +375,22 @@ void (entity attacker, float damage) baron_pain =
 		baron_bigpain1 ();
 	}
 };
-
 void () baron_pain1 = [ 43, baron_pain2 ]
-{
-};
-
+{};
 void () baron_pain2 = [ 42, baron_pain3 ]
-{
-};
-
+{};
 void () baron_pain3 = [ 41, baron_run1 ]
-{
-};
-
+{};
 void () baron_bigpain1 = [ 99, baron_bigpain2 ]
 {
 	sound (self, CHAN_WEAPON, "baron/bpain1.wav", 1, ATTN_NORM);
 };
-
 void () baron_bigpain2 = [ 100, baron_bigpain3 ]
-{
-};
-
+{};
 void () baron_bigpain3 = [ 101, baron_bigpain4 ]
-{
-};
-
+{};
 void () baron_bigpain4 = [ 102, baron_run1 ]
-{
-};
-
+{};
 void () baron_death =
 {
 	if ((self.health < -50))
@@ -448,57 +410,34 @@ void () baron_death =
 	}
 	baron_dieb1 ();
 };
-
 void () baron_diea1 = [ 44, baron_diea2 ]
-{
-};
-
+{};
 void () baron_diea2 = [ 45, baron_diea3 ]
-{
-};
-
+{};
 void () baron_diea3 = [ 46, baron_diea4 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () baron_diea4 = [ 47, baron_diea5 ]
-{
-};
-
+{};
 void () baron_diea5 = [ 48, baron_diea6 ]
-{
-};
-
+{};
 void () baron_diea6 = [ 49, corpse_think ]
-{
-};
-
+{};
 void () baron_dieb1 = [ 50, baron_dieb2 ]
-{
-};
-
+{};
 void () baron_dieb2 = [ 51, baron_dieb3 ]
-{
-};
-
+{};
 void () baron_dieb3 = [ 52, baron_dieb4 ]
-{
-};
-
+{};
 void () baron_dieb4 = [ 53, baron_dieb5 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () baron_dieb5 = [ 54, baron_dieb6 ]
-{
-};
-
+{};
 void () baron_dieb6 = [ 55, corpse_think ]
-{
-};
-
+{};
 void () monster_baron1 =
 {
 	if (!(self.brain & NAVLOGIC))
@@ -524,7 +463,6 @@ void () monster_baron1 =
 	}
 	carnify_baron ();
 };
-
 void () monster_baron =
 {
 	if (deathmatch)
@@ -532,7 +470,6 @@ void () monster_baron =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model2 ("progs/baron.mdl");
 	precache_model2 ("progs/k_spike.mdl");
 	precache_sound2 ("baron/sight.wav");
@@ -545,12 +482,10 @@ void () monster_baron =
 	precache_sound2 ("baron/bpain1.wav");
 	MTF_Setup_Monster_Presets ( 0, "baron", monster_baron1 );
 };
-
 void () baron_gostart =
 {
 	carnify_baron ();
 };
-
 void () carnify_baron =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -562,7 +497,5 @@ void () carnify_baron =
 		self.health = 500;
 	}
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
-	//walkmonster_start ();
 };
-
 //END

@@ -26,21 +26,18 @@ void () monster_qforge =
 	self.th_die = qforge_die;
 	walkmonster_start ();
 };
-
 void () qforge_spiel_go =
 {
 	self.use = SUB_Null;
 	spawn_qforgespeak ();
 	self.state = 1;
 };
-
 void () qforge_begin =
 {
 	self.takedamage = DAMAGE_NO;
 	self.use = qforge_spiel_go;
 	qforge_wait ();
 };
-
 void () qforge_wait =
 {
 	if ((self.state > 0))
@@ -62,7 +59,6 @@ void () qforge_wait =
 	self.frame = self.walkframe;
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () qforge_stir =
 {
 	if ((self.state > 0))
@@ -81,7 +77,6 @@ void () qforge_stir =
 	self.frame = (5 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () qforge_lookup =
 {
 	if ((self.walkframe >= 7))
@@ -111,7 +106,6 @@ void () qforge_lookup =
 	}
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () qforge_uptalk =
 {
 	if ((self.state > 2))
@@ -128,32 +122,20 @@ void () qforge_uptalk =
 	self.frame = (21 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () qforge_die = [ 25, qforge_die2 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () qforge_die2 = [ 26, qforge_die3 ]
-{
-};
-
+{};
 void () qforge_die3 = [ 27, qforge_die4 ]
-{
-};
-
+{};
 void () qforge_die4 = [ 28, qforge_die5 ]
-{
-};
-
+{};
 void () qforge_die5 = [ 29, qforge_die6 ]
-{
-};
-
+{};
 void () qforge_die6 = [ 30, qforge_die6 ]
-{
-};
-
+{};
 void () spawn_qforgespeak =
 {
 	local entity mark;
@@ -165,7 +147,6 @@ void () spawn_qforgespeak =
 	mark.think = qforge_talk;
 	mark.nextthink = (time + 0.3);
 };
-
 void () qforge_talk =
 {
 	self.cnt = (self.cnt + 1);
@@ -208,7 +189,6 @@ void () qforge_talk =
 	self.think = qforge_talk;
 	self.nextthink = (time + self.blink);
 };
-
 void () monster_labguy =
 {
 	if (deathmatch)
@@ -232,7 +212,6 @@ void () monster_labguy =
 	self.health = 50;
 	walkmonster_start ();
 };
-
 void () lab_idle =
 {
 	self.state = 0;
@@ -255,7 +234,6 @@ void () lab_idle =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab_idleaction =
 {
 	local float num;
@@ -278,7 +256,6 @@ void () lab_idleaction =
 	}
 	lab2_control ();
 };
-
 void () lab_looking =
 {
 	if ((self.walkframe >= 5))
@@ -307,7 +284,6 @@ void () lab_looking =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab_looking2 =
 {
 	if ((self.walkframe >= 5))
@@ -336,7 +312,6 @@ void () lab_looking2 =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab_lookdown =
 {
 	if ((self.walkframe >= 6))
@@ -365,7 +340,6 @@ void () lab_lookdown =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab1_control =
 {
 	if ((self.walkframe >= 9))
@@ -396,7 +370,6 @@ void () lab1_control =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab1_control2 =
 {
 	if ((self.walkframe >= 9))
@@ -413,7 +386,6 @@ void () lab1_control2 =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab2_control =
 {
 	if ((self.walkframe >= 9))
@@ -444,7 +416,6 @@ void () lab2_control =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab2_control2 =
 {
 	if ((self.walkframe >= 5))
@@ -461,7 +432,6 @@ void () lab2_control2 =
 	self.walkframe = (self.walkframe + 1);
 	npc_stand ();
 };
-
 void () lab_walk =
 {
 	if ((self.walkframe >= 11))
@@ -473,13 +443,11 @@ void () lab_walk =
 	self.walkframe = (self.walkframe + 1);
 	npc_walk (15);
 };
-
 void () lab_die =
 {
 	self.solid = SOLID_NOT;
 	lab_die2 ();
 };
-
 void () lab_die2 =
 {
 	if ((self.walkframe >= 10))
@@ -492,7 +460,6 @@ void () lab_die2 =
 	self.frame = (78 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () lab_run =
 {
 	if ((self.walkframe >= 6))
@@ -504,7 +471,6 @@ void () lab_run =
 	self.walkframe = (self.walkframe + 1);
 	ai2_fleerun (30);
 };
-
 void (float dist) npc_walk =
 {
 	movedist = dist;
@@ -522,7 +488,6 @@ void (float dist) npc_walk =
 	}
 	movetogoal (dist);
 };
-
 void () npc_stand =
 {
 	if (self.objekt)
@@ -538,7 +503,6 @@ void () npc_stand =
 	}
 	self.th_walk ();
 };
-
 float () npc_threats =
 {
 	local entity head;
@@ -564,4 +528,4 @@ float () npc_threats =
 	self.th_run ();
 	return (1);
 };
-//END
+//END

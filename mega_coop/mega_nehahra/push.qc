@@ -1,5 +1,4 @@
 float (entity Top, entity Bottom ) IsOnTopOf;
-
 void () experiment_push =
 {
 	if ((other.classname != "player"))
@@ -26,7 +25,6 @@ void () experiment_push =
 	self.velocity_x = (other.velocity_x * 0.6);
 	self.velocity_y = (other.velocity_y * 0.6);
 };
-
 void () pushable_die =
 {
 	self.origin = (self.mins+self.maxs)*.5;
@@ -38,7 +36,6 @@ void () pushable_die =
 	multicast (self.origin, 1);
 	BecomeExplosion();
 };
-
 #ifndef mtf_coop_halflife
 #ifdef mtf_coop_nehahra
 void () func_pushable =
@@ -52,7 +49,6 @@ void () func_pushable =
 	setmodel (self, self.model);
 	setorigin (self, self.origin);
 	setsize (self, self.mins, self.maxs);
-
 	// super: neherha intended for you to be able to push the barrels.
 	// the other push function was messed up (pushed parallel to your direction) 
 	self.touch = player_push2;
@@ -60,8 +56,7 @@ void () func_pushable =
 	if (mapname == "c1a2")
 		if (self.model == "*29")
 			self.origin_z -= 13;
-			
-	if (#HL_MAP) {
+		if (#HL_MAP) {
 		if (self.buoyancy > 0)
 		{
 		self.origin_z += 10;
@@ -81,7 +76,6 @@ void () func_pushable =
 };
 #endif
 #endif
-
 void () info_weight_switch =
 {
 	precache_sound ("misc/trigger1.wav");
@@ -93,7 +87,6 @@ void () info_weight_switch =
 	self.think = weight_switch_think;
 	self.nextthink = (time + 0.5);
 };
-
 void () weight_switch_think =
 {
 	if ((self.cnt == 10))
@@ -110,14 +103,12 @@ void () weight_switch_think =
 	self.nextthink = (time + 0.3);
 	self.think = weight_switch_think;
 };
-
 void () main_weight_switch =
 {
 	self.cnt = 0;
 	self.think = mweight_think;
 	self.nextthink = (time + 0.1);
 };
-
 void () mweight_think =
 {
 	local entity head;
@@ -136,13 +127,11 @@ void () mweight_think =
 	self.nextthink = (time + 0.3);
 	self.think = mweight_think;
 };
-
 float () Wsensor_checkothers =
 {
 	local float kount;
 	local float t;
 	local entity head;
-
 	t = 0;
 	kount = 0;
 	head = find (world, classname, "info_weight_switch");
@@ -167,7 +156,6 @@ float () Wsensor_checkothers =
 	remove (self);
 	return (0);
 };
-
 void () weight_sensor =
 {
 	if ((other.classname != "pushwall"))
@@ -179,5 +167,4 @@ void () weight_sensor =
 	sound (self, CHAN_ITEM, "misc/trigger1.wav", 1, ATTN_IDLE);
 	self.cnt = 1;
 };
-
 //END

@@ -19,7 +19,6 @@ vector () nehahra_lead =
 	dir = normalize ((dir - mark.origin));
 	return (dir);
 };
-
 void (float offset) nehahra_spitfire =
 {
 	local vector org;
@@ -39,7 +38,6 @@ void (float offset) nehahra_spitfire =
 	vec = normalize (vec);
 	WeldFire (org, vec);
 };
-
 void (float offset) max_shootfire =
 {
 	local vector org;
@@ -59,12 +57,10 @@ void (float offset) max_shootfire =
 	vec = normalize (vec);
 	WeldFire (org, vec);
 };
-
 void (vector org, vector dir) WeldFire =
 {
 	local entity weld;
 	local entity head;
-
 	weld = spawn ();
 	if ((self.classname == "monster_nehahra"))
 	{
@@ -120,19 +116,12 @@ void (vector org, vector dir) WeldFire =
 	sound (weld.owner, CHAN_WEAPON, weld_fire_sound_1, 0.6, ATTN_NORM);
 	sound (weld, CHAN_BODY, weld_fire_sound_2, 1, ATTN_NORM);
 };
-
 void () WeldExplode1 = [ 0, WeldExplode2 ]
-{
-};
-
+{};
 void () WeldExplode2 = [ 3, WeldExplode3 ]
-{
-};
-
+{};
 void () WeldExplode3 = [ 4, SUB_Remove ]
-{
-};
-
+{};
 void () WeldTouch =
 {
 	local float r;
@@ -232,7 +221,6 @@ void () WeldTouch =
 	sound (self, CHAN_BODY, weld_explode_sound, 1, ATTN_NORM);
 	WeldExplode1 ();
 };
-
 void () BurnMakeBubble =
 {
 	local entity bubble;
@@ -261,7 +249,6 @@ void () BurnMakeBubble =
 		remove (self);
 	}
 };
-
 void (float num_bubbles) BurnSteam =
 {
 	local entity steam;
@@ -276,7 +263,6 @@ void (float num_bubbles) BurnSteam =
 	setorigin (steam, self.enemy.origin);
 	sound (steam.owner, CHAN_BODY, burn_extinguish_sound, 1, ATTN_NORM);
 };
-
 void () BurnThink =
 {
 	local float damage;
@@ -379,7 +365,6 @@ void () BurnThink =
 	remove (self.burn_flame);
 	remove (self);
 };
-
 void (entity victim, entity attacker) BurnSetOnFire =
 {
 	local entity flame;
@@ -500,7 +485,6 @@ void (entity victim, entity attacker) BurnSetOnFire =
 	}
 	sound (flame, CHAN_WEAPON, "ambience/fire1.wav", ATTN_NORM, 1);
 };
-
 void () BurnPainSound =
 {
 	if ((time < self.burn_painsound_time))
@@ -517,5 +501,4 @@ void () BurnPainSound =
 	}
 	self.burn_painsound_time = (time + 0.8);
 };
-
 //END

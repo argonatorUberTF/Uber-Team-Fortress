@@ -63,7 +63,6 @@ float (float dist) ai4_strategy =
 	coffee_move (dist);
 	return (1);
 };
-
 float () scan_xgoal =
 {
 	local vector spot1;
@@ -89,13 +88,11 @@ float () scan_xgoal =
 	}
 	return (1);
 };
-
 void (vector dave) ai4_face =
 {
 	self.ideal_yaw = vectoyaw ((dave - self.origin));
 	ChangeYaw ();
 };
-
 float (vector dave) ai4_checkorg_z =
 {
 	local float num;
@@ -109,7 +106,6 @@ float (vector dave) ai4_checkorg_z =
 	}
 	return (0);
 };
-
 void (float dist) coffee_move =
 {
 	movedist = dist;
@@ -132,7 +128,6 @@ void (float dist) coffee_move =
 		}
 	}
 };
-
 float (vector dave) ai4_vis =
 {
 	local vector spot1;
@@ -150,7 +145,6 @@ float (vector dave) ai4_vis =
 	}
 	return (0);
 };
-
 void () ai4_checkblink =
 {
 	local float t;
@@ -211,7 +205,6 @@ void () ai4_checkblink =
 		}
 	}
 };
-
 float () fudge_blink1 =
 {
 	local entity head;
@@ -252,7 +245,6 @@ float () fudge_blink1 =
 	}
 	return 0;
 };
-
 void () fudge_blink2 =
 {
 	local entity head;
@@ -305,7 +297,6 @@ void () fudge_blink2 =
 		self.xtrace = VEC_ORIGIN;
 	}
 };
-
 void () beardblink =
 {
 	if ((self.classname == "monster_beard"))
@@ -313,7 +304,6 @@ void () beardblink =
 		spawn_tfog (self.origin);
 	}
 };
-
 void () fudge_blink3 =
 {
 	local entity head;
@@ -347,7 +337,6 @@ void () fudge_blink3 =
 		self.velocity = (v_forward * 300);
 	}
 };
-
 void () path_danger =
 {
 	setorigin (self, self.origin);
@@ -357,7 +346,6 @@ void () path_danger =
 	self.touch = direct_fleers;
 	InitTrigger ();
 };
-
 void () direct_fleers =
 {
 	if (!(other.flags & FL_MONSTER))
@@ -377,6 +365,5 @@ void () direct_fleers =
 		}
 	}
 	other.enemy = find (world, targetname, self.target);
-};
-//end
+};//end
  

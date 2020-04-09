@@ -17,7 +17,6 @@ void () Hunter_Seniority =
 		head = find (head, classname, self.classname);
 	}
 };
-
 void () Aether_Handling =
 {
 	local entity mark;
@@ -78,7 +77,6 @@ void () Aether_Handling =
 	{
 	}
 };
-
 void (vector selected) aether_navigate =
 {
 	local vector spot1;
@@ -97,7 +95,6 @@ void (vector selected) aether_navigate =
 		self.origin = (selected + '0 0 25');
 	}
 };
-
 void (vector selected) old_aether_navigate =
 {
 	if ((selected == '0 0 0'))
@@ -113,7 +110,6 @@ void (vector selected) old_aether_navigate =
 	spawn_tdeath (selected, self);
 	self.origin = (selected + '0 0 25');
 };
-
 float (entity concern) Dist_Check =
 {
 	local vector megadeth;
@@ -127,7 +123,6 @@ float (entity concern) Dist_Check =
 		return (0);
 	}
 };
-
 float (vector concern) Dist_Check_Low =
 {
 	local vector megadeth;
@@ -141,7 +136,6 @@ float (vector concern) Dist_Check_Low =
 		return (0);
 	}
 };
-
 void () hunter_walk =
 {
 	if ((self.walkframe >= 11))
@@ -170,7 +164,6 @@ void () hunter_walk =
 		hunter_idlesound ();
 	}
 };
-
 void () hunter_stand =
 {
 	local entity head;
@@ -219,7 +212,6 @@ void () hunter_stand =
 		return;
 	}
 };
-
 void () hunter_oltstand =
 {
 	local entity head;
@@ -268,7 +260,6 @@ void () hunter_oltstand =
 		return;
 	}
 };
-
 void () hunter_boogie =
 {
 	if ((self.walkframe >= 6))
@@ -292,7 +283,6 @@ void () hunter_boogie =
 		ai_objledge ();
 	}
 };
-
 void () hunter_back =
 {
 	if ((self.walkframe >= 6))
@@ -311,7 +301,6 @@ void () hunter_back =
 	self.walkframe = (self.walkframe + 1);
 	ai_back (8);
 };
-
 void () hunter_run =
 {
 	if ((self.walkframe == 0))
@@ -348,7 +337,6 @@ void () hunter_run =
 	}
 	ai2_run (23);
 };
-
 void () hunter_die =
 {
 	local float num;
@@ -385,7 +373,6 @@ void () hunter_die =
 		}
 	}
 };
-
 void () hunter_diea1 =
 {
 	if ((self.walkframe >= 7))
@@ -398,7 +385,6 @@ void () hunter_diea1 =
 	self.frame = (2 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () hunter_diea2 =
 {
 	if ((self.method == -1))
@@ -410,11 +396,8 @@ void () hunter_diea2 =
 	self.nextthink = ((time + 20) + (100 * random ()));
 	self.think = hunter_respawn;
 };
-
 void () hunter_diea3 = [ 9, hunter_diea3 ]
-{
-};
-
+{};
 void () hunter_respawn =
 {
 	local entity spot;
@@ -429,7 +412,6 @@ void () hunter_respawn =
 	ai_teleport (self, spot.origin);
 	carnify_hunter ();
 };
-
 void () hunter_pain =
 {
 	if ((self.pain_finished > time))
@@ -441,7 +423,6 @@ void () hunter_pain =
 	self.walkframe = 0;
 	parse_anim ( 10, hunter_pain2 );
 };
-
 void () hunter_pain2 = [ 11, hunter_pain3 ]
 {
 	if ((random () < 0.3))
@@ -453,19 +434,12 @@ void () hunter_pain2 = [ 11, hunter_pain3 ]
 		sound (self, CHAN_VOICE, "hunter/pain1.wav", 1, ATTN_NORM);
 	}
 };
-
 void () hunter_pain3 = [ 12, hunter_pain4 ]
-{
-};
-
+{};
 void () hunter_pain4 = [ 13, hunter_pain5 ]
-{
-};
-
+{};
 void () hunter_pain5 = [ 14, hunter_pain6 ]
-{
-};
-
+{};
 void () hunter_pain6 =
 {
 	if (visible (self.enemy))
@@ -474,7 +448,6 @@ void () hunter_pain6 =
 	}
 	parse_anim ( 15, hunter_run );
 };
-
 void () hunter_fire =
 {
 	if (borkfactor1 ())
@@ -494,19 +467,16 @@ void () hunter_fire =
 	ai_face ();
 	ai_threats ();
 };
-
 void () hunter_fire2 = [ 23, hunter_fire3 ]
 {
 	ai_face ();
 	ai_threats ();
 };
-
 void () hunter_fire3 = [ 24, hunter_fire4 ]
 {
 	ai_face ();
 	ai_threats ();
 };
-
 void () hunter_fire4 = [ 25, hunter_fire5 ]
 {
 	self.effects = (self.effects | EF_MUZZLEFLASH);
@@ -521,16 +491,12 @@ void () hunter_fire4 = [ 25, hunter_fire5 ]
 	}
 	ai_threats ();
 };
-
 void () hunter_fire5 = [ 26, hunter_fire6 ]
 {
 	ai_threats ();
 };
-
 void () hunter_fire6 = [ 27, hunter_run ]
-{
-};
-
+{};
 void () hunter_rapid = [ 24, hunter_rapid2 ]
 {
 	ai_threats ();
@@ -544,7 +510,6 @@ void () hunter_rapid = [ 24, hunter_rapid2 ]
 		Mons_fire_shotgun2 ();
 	}
 };
-
 void () hunter_rapid2 =
 {
 	visible (self.enemy);
@@ -561,7 +526,6 @@ void () hunter_rapid2 =
 	parse_anim ( 25, hunter_run );
 	ai_face ();
 };
-
 void () monster_hunter1 =
 {
 	self.aether = '0 0 0';
@@ -598,7 +562,6 @@ void () monster_hunter1 =
 	}
 	carnify_hunter ();
 };
-
 void () monster_hunter =
 {
 	if (deathmatch)
@@ -606,7 +569,6 @@ void () monster_hunter =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model ("progs/s_spike.mdl");
 	precache_model ("progs/sprocket.mdl");		//xav: needs this.
 	precache_model ("progs/hunter.mdl");
@@ -629,13 +591,11 @@ void () monster_hunter =
 	precache_sound ("hunter/pain2.wav");
 	MTF_Setup_Monster_Presets ( 0, "hunter", monster_hunter1 );
 };
-
 void () hunter_startt =
 {
 	trigger_spawnmonster ();
 	carnify_hunter ();
 };
-
 void () carnify_hunter =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -647,9 +607,7 @@ void () carnify_hunter =
 		self.health = 120;
 	}
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
-	//walkmonster_start ();
 };
-
 void () hunter_wait =
 {
 	if ((self.walkframe >= 5))
@@ -661,7 +619,6 @@ void () hunter_wait =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () hunter_respect1 =
 {
 	if ((random () < 0.2))
@@ -673,7 +630,6 @@ void () hunter_respect1 =
 		self.th_stand ();
 	}
 };
-
 void () hunter_respect0 =
 {
 	if ((self.walkframe >= 11))
@@ -687,7 +643,6 @@ void () hunter_respect0 =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () hunter_respect2 =
 {
 	if ((self.walkframe >= 11))
@@ -701,7 +656,6 @@ void () hunter_respect2 =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () hunter_dropbackpack =
 {
 	if (((self.impulse != 3) && (self.impulse != 6)))
@@ -720,7 +674,6 @@ void () hunter_dropbackpack =
 	self.ammo_cells = 10;
 	DropBackpack ();
 };
-
 void () hunter_idlesound =
 {
 	local float num;
@@ -778,7 +731,6 @@ void () hunter_idlesound =
 		}
 	}
 };
-
 void () hunter_runfire1 =
 {
 	if (borkfactor1 ())
@@ -793,7 +745,6 @@ void () hunter_runfire1 =
 	}
 	ai_run_slide ();//(5);
 };
-
 void () hunter_runfire2 =
 {
 	if ((self.enemy.health < 1))
@@ -818,7 +769,6 @@ void () hunter_runfire2 =
 	}
 	ai_run_slide ();//(5);
 };
-
 void () hunter_runfire3 = [ 60, hunter_runfire4 ]
 {
 	ai_face ();
@@ -828,7 +778,6 @@ void () hunter_runfire3 = [ 60, hunter_runfire4 ]
 	}
 	ai_run_slide ();//(5);
 };
-
 void () hunter_runfire4 = [ 61, hunter_runfire5 ]
 {
 	ai_face ();
@@ -847,7 +796,6 @@ void () hunter_runfire4 = [ 61, hunter_runfire5 ]
 	}
 	ai_run_slide ();//(5);
 };
-
 void () hunter_runfire5 = [ 62, hunter_runfire6 ]
 {
 	ai_face ();
@@ -857,7 +805,6 @@ void () hunter_runfire5 = [ 62, hunter_runfire6 ]
 	}
 	ai_run_slide ();//(5);
 };
-
 void () hunter_runfire6 =
 {
 	ai_face ();
@@ -884,5 +831,5 @@ void () hunter_runfire6 =
 	self.tactic = 0;
 	ai_run_slide ();//(6);
 };
-
 //END
+

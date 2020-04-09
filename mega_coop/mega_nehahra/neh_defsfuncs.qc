@@ -24,20 +24,17 @@ void () monster_army2 =
 	self.classname = "monster_army";
 	monster_army ();
 };
-
 void () monster_army3 =
 {
 	self.classname = "monster_army";
 	monster_army ();
 	self.skin = 0;
 };
-
 void () monster_army4 =
 {
 	self.classname = "monster_army";
 	monster_army ();
 };
-
 void () monster_army5 =
 {
 	self.classname = "monster_army";
@@ -45,8 +42,6 @@ void () monster_army5 =
 };
 #endif
 float (vector vec, vector vec2) at_ledge;
-
-
 .void() th_wins;
 .void() th_greet;
 .void() th_special;
@@ -3535,11 +3530,9 @@ void () zombie_paine30;
 void () zombie_die;
 void (entity attacker, float take) zombie_pain;
 void () monster_zombie;
-
 float () shal_clearance =
 {
 	local vector end;
-
 	end = self.origin + '0 0 250';
 	traceline (self.origin, end, TRUE, self);
 	if ((trace_fraction == 1))
@@ -3552,21 +3545,18 @@ float () shal_clearance =
 		return (0);
 	}
 };
-
 void () play_secj =
 {
 	sound (self, CHAN_AUTO, "ambience/secj.wav", 1, ATTN_NONE);
 	self.think = play_secj;
 	self.nextthink = (time + 25);
 };
-
 void () ambient_secj =
 {
 	precache_sound ("ambience/secj.wav");
 	self.think = play_secj;
 	self.nextthink = (time + 0.5);
 };
-
 void () box_think =
 {
 	if ((self.watertype == CONTENT_LAVA))
@@ -3581,7 +3571,6 @@ void () box_think =
 	self.think = box_think;
 	self.nextthink = (time + 0.2);
 };
-
 void () misc_slime_ball =
 {
 	precache_model ("progs/slime.mdl");
@@ -3592,7 +3581,6 @@ void () misc_slime_ball =
 	{
 	}
 };
-
 void () slime_fly =
 {
 	local entity fireball;
@@ -3613,13 +3601,11 @@ void () slime_fly =
 	self.nextthink = ((time + (random () * MOVETYPE_FLY)) + MOVETYPE_WALK);
 	self.think = slime_fly;
 };
-
 void () slime_touch =
 {
 	T_Damage (other, self, self, 10);
 	remove (self);
 };
-
 void () misc_barrel =
 {
 	local float oldz;
@@ -3675,7 +3661,6 @@ void () misc_barrel =
 	self.think = box_think;
 	self.nextthink = (time + 0.3);
 };
-
 void () Spawn_Wraithgunk =
 {
 	self.cnt = (self.cnt + 1);
@@ -3687,7 +3672,6 @@ void () Spawn_Wraithgunk =
 	}
 	self.nextthink = (time + 0.05);
 };
-
 void () wraith_throws_gunk2 =
 {
 	local entity gunk;
@@ -3718,7 +3702,6 @@ void () wraith_throws_gunk2 =
 	gunk.nextthink = (time + 0.01);
 	gunk.think = Spawn_Wraithgunk;
 };
-
 void () sbarrel_explode =
 {
 	self.takedamage = DAMAGE_NO;
@@ -3744,11 +3727,9 @@ void () sbarrel_explode =
 	multicast(self.origin, TF_FLARE_OFF);
 	BecomeExplosion ();
 };
-
 #ifndef HALFLIFE
 float (entity Top, entity bottom) IsOnTopOf =
 {
-	
 	if ((Top.absmin_z < (bottom.absmax_z - 3)))
 	{
 		return (0);
@@ -3795,7 +3776,6 @@ void () misc_car =
 		remove (self);
 	}
 };
-
 void () misc_vend =
 {
 	local float oldz;
@@ -3822,7 +3802,6 @@ void () misc_vend =
 		remove (self);
 	}
 };
-
 void () misc_motel =
 {
 	precache_model ("progs/motel.mdl");
@@ -3831,7 +3810,6 @@ void () misc_motel =
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_SLIDEBOX;
 };
-
 void () misc_sign =
 {
 	precache_model ("progs/route.mdl");
@@ -3852,7 +3830,6 @@ void () misc_sign =
 	}
 	self.solid = SOLID_NOT;
 };
-
 void () misc_tree =
 {
 	if (!self.model)
@@ -3876,7 +3853,6 @@ void () misc_tree =
 		self.solid = SOLID_SLIDEBOX;
 	}
 };
-
 void () vend_blows =
 {
 	ThrowRubble ("progs/frubble1.mdl", self.health);
@@ -3886,7 +3862,6 @@ void () vend_blows =
 	ThrowRubble ("progs/frubble3.mdl", self.health);
 	BecomeExplosion ();
 };
-
 void () abyss_touch =
 {
 	if ((other.classname == "camera"))
@@ -3902,7 +3877,6 @@ void () abyss_touch =
 		remove (other);
 	}
 };
-
 void () skubremove_touch =
 {
 	if ((other.classname == "player"))
@@ -3931,7 +3905,6 @@ void () skubremove_touch =
 	dprint ("something removed via func_remove\n");
 	remove (other);
 };
-
 void () func_remove =
 {
 	InitTrigger ();
@@ -3944,7 +3917,6 @@ void () func_remove =
 		self.touch = skubremove_touch;
 	}
 };
-
 void () misc_corpse =
 {
 	if (deathmatch)
@@ -4022,7 +3994,6 @@ void () misc_corpse =
 	}
 	self.use = corpsesplat;
 };
-
 void () corpsesplat =
 {
 	if ((random () < 0.5))
@@ -4039,7 +4010,6 @@ void () corpsesplat =
 	ThrowHead ("progs/h_player.mdl", self.health);
 	self.use = SUB_Null;
 };
-
 void () play_sound_looped =
 {
 	precache_sound (self.noise);
@@ -4068,27 +4038,23 @@ void () play_sound_looped =
 	self.think = playloopsnd;
 	self.nextthink = (time + self.wait);
 };
-
 void () playloopsnd =
 {
 	sound (self, CHAN_AUTO, self.noise, self.volume, ATTN_IDLE);
 	self.think = playloopsnd;
 	self.nextthink = (time + self.cnt);
 };
-
 void () start_loopsnd =
 {
 	self.use = stop_loopsnd;
 	playloopsnd ();
 };
-
 void () stop_loopsnd =
 {
 	self.use = start_loopsnd;
 	self.think = SUB_Null;
 	self.nextthink = (time + 9999);
 };
-
 void () misc_valve =
 {
 	precache_sound ("forge/turnme.wav");
@@ -4106,7 +4072,6 @@ void () misc_valve =
 	self.touch = valve_turn;
 	setsize (self, '-16 -16 0', '16 16 56');
 };
-
 void () misc_fscreen =
 {
 	precache_sound ("forge/alarm.wav");
@@ -4120,7 +4085,6 @@ void () misc_fscreen =
 	self.think = fscreen_think;
 	self.nextthink = (time + 1);
 };
-
 void () fscreen_think =
 {
 	if ((self.skin == 0))
@@ -4134,7 +4098,6 @@ void () fscreen_think =
 	self.think = fscreen_think;
 	self.nextthink = (time + 1);
 };
-
 void () fscreen_trigger1 =
 {
 	SUB_UseTargets ();
@@ -4143,7 +4106,6 @@ void () fscreen_trigger1 =
 	self.think = fscreen_think2;
 	self.nextthink = (time + 0.5);
 };
-
 void () fscreen_think2 =
 {
 	if ((self.skin == 3))
@@ -4165,14 +4127,12 @@ void () fscreen_think2 =
 	self.think = fscreen_think2;
 	self.nextthink = (time + 0.5);
 };
-
 void () fscreen_trigger2 =
 {
 	self.use = SUB_Null;
 	self.think = fscreen_error;
 	self.nextthink = (time + 0.7);
 };
-
 void () fscreen_error =
 {
 	if ((self.skin == 1))
@@ -4194,7 +4154,6 @@ void () fscreen_error =
 	self.think = fscreen_error;
 	self.nextthink = (time + 0.7);
 };
-
 void () floating_gibs =
 {
 	precache_model ("progs/fgib1.mdl");
@@ -4217,7 +4176,6 @@ void () floating_gibs =
 	self.think = fgib_spawn;
 	self.nextthink = (time + self.delay);
 };
-
 void () fgib_touch =
 {
 	if ((other.classname != "player"))
@@ -4231,11 +4189,9 @@ void () fgib_touch =
 		self.velocity_z = (other.velocity_z * 0.5);
 	}
 };
-
 void (string gibname, float dm) spawn_fgib =
 {
 	local entity fgib;
-
 	fgib = spawn ();
 	fgib.origin = self.origin;
 	setmodel (fgib, gibname);
@@ -4255,7 +4211,6 @@ void (string gibname, float dm) spawn_fgib =
 	fgib.th_die = fgib_die;
 	setorigin (fgib, self.origin);
 };
-
 void () fgib_think =
 {
 	local vector spot;
@@ -4309,7 +4264,6 @@ void () fgib_think =
 	self.think = fgib_think;
 	self.nextthink = (time + 0.1);
 };
-
 void () qteleport_touch =
 {
 	local entity t;
@@ -4354,7 +4308,6 @@ void () qteleport_touch =
 	}
 	other.flags = (other.flags - (other.flags & FL_ONGROUND));
 };
-
 void () trigger_qtele =
 {
 	InitTrigger ();
@@ -4365,18 +4318,15 @@ void () trigger_qtele =
 	}
 	self.use = teleport_use;
 };
-
 void () trigger_gibs =
 {
 	self.use = SUB_Null;
 	self.think = fgib_spawn;
 	self.nextthink = (time + self.delay);
 };
-
 void () fgib_spawn =
 {
 	local float t;
-
 	t = random ();
 	if ((t < 0.2))
 	{
@@ -4402,7 +4352,6 @@ void () fgib_spawn =
 	self.think = fgib_spawn;
 	self.nextthink = (time + self.delay);
 };
-
 void () fgib_die =
 {
 	ThrowGib ("progs/zom_gib.mdl", self.health);
@@ -4410,7 +4359,6 @@ void () fgib_die =
 	ThrowGib ("progs/zom_gib.mdl", self.health);
 	remove (self);
 };
-
 void () Seekoutwall =
 {
 	local entity blah;
@@ -4421,14 +4369,12 @@ void () Seekoutwall =
 	}
 	T_Damage (blah, self, self.owner, 7000);
 };
-
 vector (entity mark) Sub_CalcOrigin =
 {
 	local vector spot;
 	spot = mark.absmin + ((mark.absmax - mark.absmin) * 0.5);
 	return (spot);
 };
-
 void () light_swinging_lantern =
 {
 	precache_model ("progs/lantern.mdl");
@@ -4436,7 +4382,6 @@ void () light_swinging_lantern =
 	FireAmbient ();
 	makestatic (self);
 };
-
 void () light_candle_t =
 {
 	precache_model ("progs/candle_t.mdl");
@@ -4444,7 +4389,6 @@ void () light_candle_t =
 	FireAmbient ();
 	makestatic (self);
 };
-
 void () light_candle_w =
 {
 	precache_model ("progs/candle_w.mdl");
@@ -4452,7 +4396,6 @@ void () light_candle_w =
 	FireAmbient ();
 	makestatic (self);
 };
-
 void () light_candleth =
 {
 	precache_model ("progs/candleth.mdl");
@@ -4460,7 +4403,6 @@ void () light_candleth =
 	FireAmbient ();
 	makestatic (self);
 };
-
 void () light_candlews =
 {
 	precache_model ("progs/candlews.mdl");
@@ -4468,7 +4410,6 @@ void () light_candlews =
 	FireAmbient ();
 	makestatic (self);
 };
-
 void (entity monster) spawn_irritant =
 {
 	local entity head;
@@ -4477,7 +4418,6 @@ void (entity monster) spawn_irritant =
 	head.think = irritate_monster;
 	head.nextthink = (time + 0.2);
 };
-
 void () irritate_monster =
 {
 	self.objekt.enemy = find (world, classname, "player");
@@ -4489,7 +4429,6 @@ void () irritate_monster =
 	self.think = irritate_monster;
 	self.nextthink = (time + 0.5);
 };
-
 float () borkfactor1 =
 {
 	if ((self.health < 1))
@@ -4500,7 +4439,6 @@ float () borkfactor1 =
 	}
 	return (0);
 };
-
 void () dead_stay_dead =
 {
 	self.th_stand = SUB_Null;
@@ -4513,7 +4451,6 @@ void () dead_stay_dead =
 	self.th_pain = SUB_Null;
 	self.use = SUB_Null;
 };
-
 void () valve_turn =
 {
 	if ((other.classname != "player"))
@@ -4540,7 +4477,6 @@ void () valve_turn =
 	self.pain_finished = (time + 0.3);
 	sound (self, CHAN_AUTO, "forge/turnme.wav", 1, ATTN_NORM);
 };
-
 void () trigger_spawnmonster =
 {
 	if ((self.style == 1))
@@ -4549,17 +4485,14 @@ void () trigger_spawnmonster =
 	}
 	spawn_tdeath (self.origin, self);
 };
-
 void () BecomeExplosion2 =
 {
 	BecomeExplosion ();
 };
-
 void () BecomeExplosion3 =
 {
 	BecomeExplosion ();
 };
-
 // AI
 void (float dist) ai_run_slide2 =
 {
@@ -4583,8 +4516,6 @@ void (float dist) ai_run_slide2 =
 	walkmove ((self.ideal_yaw - ofs), movedist);
 	ai_face ();
 };
-
-
 void (float dist) id_run_slide =
 {
 	if (((self.enemy.angles_y > -30) && (self.enemy.angles_y < 20)))
@@ -4597,7 +4528,6 @@ void (float dist) id_run_slide =
 		movetogoal (dist);
 	}
 };
-
 void () monster_swim =
 {
 	local float num;
@@ -4710,5 +4640,4 @@ void () monster_swim =
 		}
 	}
 };
-
-//END 
+//END

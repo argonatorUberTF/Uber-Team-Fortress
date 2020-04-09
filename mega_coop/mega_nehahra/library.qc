@@ -19,7 +19,6 @@ void () monster_library1 =
 	self.th_special = library_watch;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_library =
 {
 	if (deathmatch)
@@ -27,7 +26,6 @@ void () monster_library =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model2 ("progs/library.mdl");
 	precache_model2 ("progs/archg.mdl");
 	precache_model2 ("progs/h_gaunt.mdl");
@@ -47,7 +45,6 @@ void () monster_library =
 	precache_sound2 ("archg/fire2.wav");
 	MTF_Setup_Monster_Presets ( 0, "library mage", monster_library1 );
 };
-
 void () library_2archg =
 {
 	setmodel (self, "progs/archg.mdl");
@@ -64,7 +61,6 @@ void () library_2archg =
 	self.th_wins = archg_bow1;
 	self.th_greet = archg_bow1;
 };
-
 void () library_pain =
 {
 	if ((self.health < 1))
@@ -77,14 +73,12 @@ void () library_pain =
 	self.th_pain (world, 0);
 	return;
 };
-
 void () library_2mad =
 {
 	library_2archg ();
 	self.th_run ();
 	return;
 };
-
 void () library_read_r =
 {
 	if ((self.walkframe >= 24))
@@ -99,7 +93,6 @@ void () library_read_r =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_flippage =
 {
 	if ((self.walkframe >= 13))
@@ -113,7 +106,6 @@ void () library_flippage =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_flippage2 =
 {
 	if ((self.walkframe >= 6))
@@ -128,7 +120,6 @@ void () library_flippage2 =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_rtl =
 {
 	if ((self.walkframe >= 11))
@@ -143,7 +134,6 @@ void () library_rtl =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_read_l =
 {
 	if ((self.walkframe >= 23))
@@ -158,7 +148,6 @@ void () library_read_l =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_ltr =
 {
 	if ((self.walkframe >= 11))
@@ -173,14 +162,12 @@ void () library_ltr =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_hmm =
 {
 	self.walkframe = 0;
 	self.cnt = 1;
 	library_lookup ();
 };
-
 void () library_shush =
 {
 	self.walkframe = 0;
@@ -188,7 +175,6 @@ void () library_shush =
 	self.th_greet = SUB_Null;
 	library_lookup ();
 };
-
 void () library_lookup =
 {
 	if ((self.walkframe >= 7))
@@ -216,7 +202,6 @@ void () library_lookup =
 	}
 	ai_library ();
 };
-
 void () library_lookdown =
 {
 	if ((self.walkframe >= 7))
@@ -231,7 +216,6 @@ void () library_lookdown =
 	self.walkframe = (self.walkframe + 1);
 	ai_library ();
 };
-
 void () library_shsh =
 {
 	if ((self.walkframe >= 14))
@@ -253,7 +237,6 @@ void () library_shsh =
 	}
 	ai_library ();
 };
-
 void () library_shsh2 =
 {
 	if ((self.walkframe >= 14))
@@ -272,7 +255,6 @@ void () library_shsh2 =
 	}
 	ai_library ();
 };
-
 void () library_watch =
 {
 	if ((self.walkframe >= 9))
@@ -306,7 +288,6 @@ void () library_watch =
 	}
 	ai_library ();
 };
-
 void () library_think =
 {
 	local entity clienta;
@@ -332,12 +313,10 @@ void () library_think =
 		}
 	}
 };
-
 void () library_itemmad =
 {
 	sound (self, CHAN_VOICE, "archg/mykey.wav", 1, ATTN_NORM);
 };
-
 void () ai_library =
 {
 	if ((self.objekt && visible (self.objekt)))
@@ -350,7 +329,6 @@ void () ai_library =
 		}
 	}
 };
-
 float () CheckItemStuff =
 {
 	local float check;
@@ -382,7 +360,6 @@ float () CheckItemStuff =
 	}
 	return (0);
 };
-
 void () monster_oglib1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -403,7 +380,6 @@ void () monster_oglib1 =
 	self.th_pain = oglib_run;
 	MTF_Setup_Monster_Postsets ( self.health, coop_walkmonster_start );
 };
-
 void () monster_oglib =
 {
 	if (deathmatch)
@@ -411,7 +387,6 @@ void () monster_oglib =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model ("progs/libogre.mdl");
 	precache_model ("progs/libcart.mdl");
 	precache_model ("progs/ogre.mdl");
@@ -433,19 +408,16 @@ void () monster_oglib =
 	precache_sound ("wall/woodbrk.wav");
 	MTF_Setup_Monster_Presets ( 0, "library ogre", monster_oglib1 );
 };
-
 void () oglib_run =
 {
 	oglib_2ogre ();
 	self.th_run ();
 };
-
 void () oglib_die =
 {
 	oglib_2ogre ();
 	self.th_die ();
 };
-
 void () oglib_stand =
 {
 	if ((self.walkframe >= 15))
@@ -462,7 +434,6 @@ void () oglib_stand =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () oglib_cartsound =
 {
 	local float num;
@@ -487,33 +458,27 @@ void () oglib_cartsound =
 		}
 	}
 };
-
 void () oglib_walk1 = [ 0, oglib_walk2 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () oglib_walk2 = [ 1, oglib_walk3 ]
 {
 	ai_walk (FL_SWIM);
 	oglib_cartsound ();
 };
-
 void () oglib_walk3 = [ 2, oglib_walk4 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () oglib_walk4 = [ 3, oglib_walk5 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () oglib_walk5 = [ 4, oglib_walk6 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () oglib_walk6 = [ 5, oglib_walk7 ]
 {
 	ai_walk (MOVETYPE_FLY);
@@ -523,56 +488,46 @@ void () oglib_walk6 = [ 5, oglib_walk7 ]
 		sound (self, CHAN_VOICE, "ogre/ogdrag.wav", 1, ATTN_IDLE);
 	}
 };
-
 void () oglib_walk7 = [ 6, oglib_walk8 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () oglib_walk8 = [ 7, oglib_walk9 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () oglib_walk9 = [ 8, oglib_walk10 ]
 {
 	ai_walk (MOVETYPE_WALK);
 	oglib_cartsound ();
 };
-
 void () oglib_walk10 = [ 9, oglib_walk11 ]
 {
 	ai_walk (1);
 };
-
 void () oglib_walk11 = [ 10, oglib_walk12 ]
 {
 	ai_walk (FL_SWIM);
 	oglib_cartsound ();
 };
-
 void () oglib_walk12 = [ 11, oglib_walk13 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () oglib_walk13 = [ 12, oglib_walk14 ]
 {
 	ai_walk (MOVETYPE_WALK);
 	oglib_cartsound ();
 };
-
 void () oglib_walk14 = [ 13, oglib_walk15 ]
 {
 	ai_walk (MOVETYPE_WALK);
 	oglib_cartsound ();
 };
-
 void () oglib_walk15 = [ 14, oglib_walk16 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () oglib_walk16 =
 {
 	ai_walk (MOVETYPE_STEP);
@@ -586,7 +541,6 @@ void () oglib_walk16 =
 		parse_anim ( 15, oglib_walk1 );
 	}
 };
-
 void () oglib_2ogre =
 {
 	self.th_stand = ogre_stand1;
@@ -601,7 +555,6 @@ void () oglib_2ogre =
 	ogrelib_throwcart ();
 	self.pain_finished = (time + 1);
 };
-
 void () ogrelib_throwcart =
 {
 	local entity cart;
@@ -613,7 +566,6 @@ void () ogrelib_throwcart =
 	cart.health = 69;
 	cart.th_die = cart_boom;
 	cart.takedamage = DAMAGE_AIM;
-//	cart.touch = player_push;
 	setmodel (cart, "progs/libcart.mdl");
 	setsize (cart, VEC_HULL_MIN, VEC_HULL_MAX);
 	makevectors (self.angles);
@@ -622,7 +574,6 @@ void () ogrelib_throwcart =
 	cart.velocity = ((v_forward * 220) + '0 0 200');
 	cart.origin_z = (cart.origin_z + 1);
 };
-
 void () cart_boom =
 {
 	self.dmg = 0;
@@ -636,4 +587,4 @@ void () cart_boom =
 	sound (self, CHAN_ITEM, "wall/woodbrk.wav", 1, ATTN_IDLE);
 	remove (self);
 };
-//END
+//END

@@ -1,5 +1,4 @@
 #ifdef mtf_nehmode
-
 void () BecomeExplosion2 =
 {
 	if ((nospr32 == 1))
@@ -18,7 +17,6 @@ void () BecomeExplosion2 =
 	self.solid = SOLID_NOT;
 	spr32_boom ();
 };
-
 void () BecomeExplosion3 =
 {
 	if ((nospr32 == 1))
@@ -37,7 +35,6 @@ void () BecomeExplosion3 =
 	self.solid = SOLID_NOT;
 	spr32_boom ();
 };
-
 void () spr32_boom =
 {
 	local float num;
@@ -50,18 +47,15 @@ void () spr32_boom =
 	self.think = spr32_boom;
 	self.nextthink = (time + 0.01);
 };
-
 void (entity mark) gibgore =
 {
 	local vector min;
 	local vector max;
 	local float vel;
-
 	min = self.origin + self.mins;
 	max = (self.origin + self.maxs) + self.maxs;
 	vel = 10;
 };
-
 void (entity mark) backup_gibgore =
 {
 	local vector min;
@@ -71,7 +65,6 @@ void (entity mark) backup_gibgore =
 	max = self.origin + self.maxs;
 	vel = 30;
 };
-
 void () NormalExplosion =
 {
 	self.movetype = MOVETYPE_NONE;
@@ -81,5 +74,4 @@ void () NormalExplosion =
 	self.solid = SOLID_NOT;
 	s_explode1 ();
 };
-#endif
-//end
+#endif//end

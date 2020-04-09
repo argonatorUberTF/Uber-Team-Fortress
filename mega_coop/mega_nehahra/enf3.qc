@@ -10,21 +10,16 @@ void () enf3_ouch3 = [ 85, enf3_ouch4 ]
 {
 	ai_back (10);
 };
-
 void () enf3_ouch4 = [ 86, enf3_ouch5 ]
 {
 	ai_back (7);
 };
-
 void () enf3_ouch5 = [ 87, enf3_ouch6 ]
 {
 	ai_back (3);
 };
-
 void () enf3_ouch6 = [ 88, enf3_run1 ]
-{
-};
-
+{};
 void () enf3_run1 =
 {
 	if (borkfactor1 ())
@@ -39,7 +34,6 @@ void () enf3_run1 =
 	}
 	ai_walk (18);
 };
-
 void () enf3_run2 = [ 1, enf3_run3 ]
 {
 	if ((self.enemy != world))
@@ -49,7 +43,6 @@ void () enf3_run2 = [ 1, enf3_run3 ]
 	}
 	ai_walk (14);
 };
-
 void () enf3_run3 = [ 2, enf3_run4 ]
 {
 	if ((self.enemy != world))
@@ -69,7 +62,6 @@ void () enf3_run4 = [ 3, enf3_run5 ]
 	}
 	ai_walk (12);
 };
-
 void () enf3_run5 = [ 4, enf3_run6 ]
 {
 	if ((self.enemy != world))
@@ -83,7 +75,6 @@ void () enf3_run5 = [ 4, enf3_run6 ]
 		enf3_idlesound ();
 	}
 };
-
 void () enf3_run6 = [ 5, enf3_run7 ]
 {
 	if ((self.enemy != world))
@@ -93,7 +84,6 @@ void () enf3_run6 = [ 5, enf3_run7 ]
 	}
 	ai_walk (14);
 };
-
 void () enf3_run7 =
 {
 	local vector dave;
@@ -116,7 +106,6 @@ void () enf3_run7 =
 	}
 	ai_stand ();//MOVETYPE_PUSH);
 };
-
 void () enf3_run8 = [ 7, enf3_run1 ]
 {
 	if ((self.enemy != world))
@@ -126,7 +115,6 @@ void () enf3_run8 = [ 7, enf3_run1 ]
 	}
 	ai_walk (MOVETYPE_BOUNCEMISSILE);
 };
-
 void () enf3_pain1 =
 {
 	if ((self.pain_finished > time))
@@ -162,47 +150,31 @@ void () enf3_pain1 =
 	}
 	parse_anim ( 8, enf3_pain2 );
 };
-
 void () enf3_pain2 = [ 9, enf3_pain3 ]
-{
-};
-
+{};
 void () enf3_pain3 = [ 10, enf3_pain4 ]
-{
-};
-
+{};
 void () enf3_pain4 = [ 11, enf3_pain5 ]
-{
-};
-
+{};
 void () enf3_pain5 = [ 12, enf3_pain6 ]
-{
-};
-
+{};
 void () enf3_pain6 = [ 13, enf3_pain7 ]
-{
-};
-
+{};
 void () enf3_pain7 = [ 14, enf3_shoot ]
-{
-};
-
+{};
 void () enf3_stand1 = [ 76, enf3_stand2 ]
 {
 	ai_stand ();
 	ai_emnity ("monster_qguy", 2000, 0);
 };
-
 void () enf3_stand2 = [ 77, enf3_stand3 ]
 {
 	ai_stand ();
 };
-
 void () enf3_stand3 = [ 78, enf3_stand4 ]
 {
 	ai_stand ();
 };
-
 void () enf3_stand4 = [ 79, enf3_stand5 ]
 {
 	ai_stand ();
@@ -211,49 +183,40 @@ void () enf3_stand4 = [ 79, enf3_stand5 ]
 		enf3_idlesound ();
 	}
 };
-
 void () enf3_stand5 = [ 80, enf3_stand6 ]
 {
 	ai_stand ();
 	ai_emnity ("monster_qguy", 2000, 0);
 };
-
 void () enf3_stand6 = [ 81, enf3_stand7 ]
 {
 	ai_stand ();
 };
-
 void () enf3_stand7 = [ 82, enf3_stand1 ]
 {
 	ai_stand ();
 };
-
 void () enf3_shoot = [ 15, enf3_shoot2 ]
 {
 	self.th_pain = enf3_pain1;
 	self.th_die = enf3_die;
 };
-
 void () enf3_shoot2 = [ 16, enf3_shoot3 ]
 {
 	ai_face ();
 };
-
 void () enf3_shoot3 = [ 17, enf3_shoot4 ]
 {
 	ai_face ();
 };
-
 void () enf3_shoot4 = [ 18, enf3_shoot5 ]
 {
 	ai_face ();
 };
-
 void () enf3_shoot5 = [ 19, enf3_shoot6 ]
 {
 	Mons_fire_nails ();
 };
-
 void () enf3_shoot6 = [ 20, enf3_shoot7 ]
 {
 	ai_face ();
@@ -262,16 +225,13 @@ void () enf3_shoot6 = [ 20, enf3_shoot7 ]
 		ai2_jump (self.angles, 200, '0 0 230');
 	}
 };
-
 void () enf3_shoot7 = [ 21, enf3_shoot8 ]
 {
 	Mons_fire_nails ();
 };
-
 void () enf3_shoot8 =
 {
 	local vector dave;
-
 	if (borkfactor1 ())
 	{
 		return;
@@ -292,55 +252,41 @@ void () enf3_shoot8 =
 	}
 	parse_anim ( 22, enf3_shoot9 );
 };
-
 void () enf3_shoot9 = [ 17, enf3_shoot10 ]
-{
-};
-
+{};
 void () enf3_shoot10 = [ 16, enf3_run1 ]
-{
-};
-
+{};
 void () enf3_open1 = [ 23, enf3_open2 ]
 {
 	ai_charge (4);
 };
-
 void () enf3_open2 = [ 24, enf3_open3 ]
 {
 	ai_charge (FL_CLIENT);
 	sound (self, CHAN_VOICE, "enf3/jump1.wav", 1, ATTN_NORM);
 };
-
 void () enf3_open3 = [ 25, enf3_open4 ]
 {
 	ai_charge (7);
 };
-
 void () enf3_open4 = [ 26, enf3_open5 ]
 {
 	ai_charge (7);
 };
-
 void () enf3_open5 = [ 27, enf3_open6 ]
 {
 	ai_charge (6);
 };
-
 void () enf3_open6 = [ 28, enf3_open7 ]
 {
 	ai_charge (5);
 };
-
 void () enf3_open7 = [ 29, enf3_open8 ]
 {
 	ai_charge (4);
 };
-
 void () enf3_open8 = [ 30, enf3_dice ]
-{
-};
-
+{};
 void () enf3_close = [ 30, enf3_close2 ]
 {
 	if ((self.flags & FL_ONGROUND))
@@ -351,30 +297,23 @@ void () enf3_close = [ 30, enf3_close2 ]
 		self.flags = (self.flags - FL_ONGROUND);
 	}
 };
-
 void () enf3_close2 = [ 29, enf3_close3 ]
 {
 	sound (self, CHAN_VOICE, "enf3/jump1.wav", 1, ATTN_NORM);
 };
 
 void () enf3_close3 = [ 28, enf3_close4 ]
-{
-};
-
+{};
 void () enf3_close4 = [ 27, enf3_close5 ]
-{
-};
-
+{};
 void () enf3_close5 = [ 26, enf3_close6 ]
 {
 	ai_back (2);
 };
-
 void () enf3_close6 = [ 25, enf3_close7 ]
 {
 	ai_back (7);
 };
-
 void () enf3_close7 =
 {
 	if (((self.enemy.health > 0) && visible (self.enemy)))
@@ -389,7 +328,6 @@ void () enf3_close7 =
 	}
 	parse_anim ( 24, enf3_run1 );
 };
-
 void () enf3_bladepull =
 {
 	ai_face ();
@@ -405,7 +343,6 @@ void () enf3_bladepull =
 		movetogoal (25);
 	}
 };
-
 void () enf3_dice = [ 94, enf3_dice2 ]
 {
 	enf3_bladepull ();
@@ -413,7 +350,6 @@ void () enf3_dice = [ 94, enf3_dice2 ]
 	self.th_die = enf3_bldie;
 	self.nextthink = (time + 0.05);
 };
-
 void () enf3_dice2 = [ 95, enf3_dice3 ]
 {
 	enf3_bladepull ();
@@ -424,7 +360,6 @@ void () enf3_dice3 = [ 96, enf3_dice4 ]
 	enf3_bladepull ();
 	sound (self, CHAN_VOICE, "enf3/bspin.wav", 1, ATTN_NORM);
 };
-
 void () enf3_dice4 = [ 97, enf3_dice5 ]
 {
 	enf3_bladepull ();
@@ -437,47 +372,40 @@ void () enf3_dice4 = [ 97, enf3_dice5 ]
 		}
 	}
 };
-
 void () enf3_dice5 = [ 98, enf3_dice6 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () enf3_dice6 = [ 99, enf3_dice7 ]
 {
 	enf3_bladepull ();
 	chainsaw (1);
 };
-
 void () enf3_dice7 = [ 100, enf3_dice8 ]
 {
 	chainsaw (1);
 	enf3_bladepull ();
 };
-
 void () enf3_dice8 = [ 101, enf3_dice9 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 15));
 };
-
 void () enf3_dice9 = [ 102, enf3_dice10 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 15));
 };
-
 void () enf3_dice10 = [ 103, enf3_dice11 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 15));
 };
-
 void () enf3_dice11 =
 {
 	local vector dave;
@@ -493,34 +421,29 @@ void () enf3_dice11 =
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice12 = [ 105, enf3_dice13 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 };
-
 void () enf3_dice13 = [ 106, enf3_dice14 ]
 {
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 	enf3_bladepull ();
 };
-
 void () enf3_dice14 = [ 107, enf3_dice15 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice15 = [ 108, enf3_dice16 ]
 {
 	chainsaw (0);
 	enf3_bladepull ();
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice16 = [ 109, enf3_dice17 ]
 {
 	enf3_bladepull ();
@@ -528,14 +451,12 @@ void () enf3_dice16 = [ 109, enf3_dice17 ]
 	self.angles_y = (self.angles_y + (random () * 5));
 	sound (self, CHAN_VOICE, "enf3/bspin.wav", 1, ATTN_NORM);
 };
-
 void () enf3_dice17 = [ 110, enf3_dice18 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice18 = [ 111, enf3_dice19 ]
 {
 	enf3_bladepull ();
@@ -549,27 +470,23 @@ void () enf3_dice19 = [ 112, enf3_dice20 ]
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice20 = [ 113, enf3_dice21 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice21 = [ 114, enf3_dice22 ]
 {
 	enf3_bladepull ();
 	chainsaw (1);
 };
-
 void () enf3_dice22 = [ 115, enf3_dice23 ]
 {
 	enf3_bladepull ();
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice23 =
 {
 	local vector dave;
@@ -582,18 +499,15 @@ void () enf3_dice23 =
 	parse_anim ( 116, enf3_dice24 );
 	chainsaw (0);
 };
-
 void () enf3_dice24 = [ 117, enf3_dice25 ]
 {
 	self.th_pain = enf3_pain1;
 	self.th_die = enf3_die;
 };
-
 void () enf3_dice25 = [ 118, enf3_close ]
 {
 	self.nextthink = (time + 0.1);
 };
-
 void () enf3_melee =
 {
 	local vector dave;
@@ -605,7 +519,6 @@ void () enf3_melee =
 	}
 	enf3_shoot ();
 };
-
 void () enf3_blpain =
 {
 	if ((random () < 0.4))
@@ -617,21 +530,16 @@ void () enf3_blpain =
 	ai_pain (5);
 	sound (self, CHAN_BODY, "enf3/blout.wav", 1, ATTN_NORM);
 };
-
 void () enf3_blpain2 = [ 57, enf3_blpain3 ]
 {
 	enf3_painsound ();
 };
-
 void () enf3_blpain3 = [ 58, enf3_blpain4 ]
 {
 	ai_pain (3);
 };
-
 void () enf3_blpain4 = [ 59, enf3_blpain5 ]
-{
-};
-
+{};
 void () enf3_blpain5 =
 {
 	local vector dave;
@@ -643,30 +551,25 @@ void () enf3_blpain5 =
 	}
 	parse_anim ( 60, enf3_close );
 };
-
 void () enf3_bldie =
 {
 	dead_stay_dead ();
 	parse_anim ( 61, enf3_bldie2 );
 	sound (self, CHAN_VOICE, "enforcer/death1.wav", 1, ATTN_NORM);
 };
-
 void () enf3_bldie2 = [ 62, enf3_bldie3 ]
 {
 	ThrowGib ("progs/gib1.mdl", -150);
 	sound (self, CHAN_ITEM, "enf3/blhit.wav", 1, ATTN_NORM);
 };
-
 void () enf3_bldie3 = [ 63, enf3_bldie4 ]
 {
 	ThrowGib ("progs/gib2.mdl", -120);
 };
-
 void () enf3_bldie4 = [ 64, enf3_bldie5 ]
 {
 	ThrowGib ("progs/gib3.mdl", -50);
 };
-
 void () enf3_bldie5 = [ 65, enf3_bldie6 ]
 {
 	ThrowGib ("progs/gib3.mdl", self.health);
@@ -682,7 +585,6 @@ void () enf3_bldie5 = [ 65, enf3_bldie6 ]
 		self.ammo_cells = 10;
 	DropBackpack ();
 };
-
 void () enf3_bldie6 =
 {
 	if ((skill == 0))
@@ -700,7 +602,6 @@ void () enf3_bldie6 =
 	ThrowGib ("progs/gib3.mdl", self.health);
 	return;
 };
-
 void () enf3_die =
 {
 	if ((self.health < -35))
@@ -729,15 +630,10 @@ void () enf3_die =
 	parse_anim ( 66, enf3_die2 );
 	dead_stay_dead ();
 };
-
 void () enf3_die2 = [ 67, enf3_die3 ]
-{
-};
-
+{};
 void () enf3_die3 = [ 68, enf3_die4 ]
-{
-};
-
+{};
 void () enf3_die4 = [ 69, enf3_die5 ]
 {
 	self.solid = SOLID_NOT;
@@ -754,24 +650,16 @@ void () enf3_die4 = [ 69, enf3_die5 ]
 	self.ammo_cells = 10;
 	DropBackpack ();
 };
-
 void () enf3_die5 = [ 70, enf3_die6 ]
-{
-};
-
+{};
 void () enf3_die6 = [ 71, corpse_think ]
-{
-};
-
+{};
 void () enf3_plop1 = [ 90, enf3_plop2 ]
 {
 	dead_stay_dead ();
 };
-
 void () enf3_plop2 = [ 91, enf3_plop3 ]
-{
-};
-
+{};
 void () enf3_plop3 = [ 92, enf3_plop4 ]
 {
 	self.solid = SOLID_NOT;
@@ -781,10 +669,8 @@ void () enf3_plop3 = [ 92, enf3_plop4 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () enf3_plop4 = [ 93, corpse_think ]
-{
-};
+{};
 
 void () monster_enf3 =
 {
@@ -821,13 +707,11 @@ void () monster_enf3 =
 	precache_sound ("enf3/shit.wav");
 	MTF_Setup_Monster_Presets ( 0, "mutant ogre", monster_enf31 );
 };
-
 void () enforcer3_start =
 {
 	trigger_spawnmonster ();
 	carnify_enforcer3 ();
 };
-
 void () carnify_enforcer3 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -842,27 +726,20 @@ void () carnify_enforcer3 =
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 	//walkmonster_start ();
 };
-
 void () enf3_actor_wait = [ 75, enf3_actor_wait ]
 {
 	self.use = enf3_awake;
 };
-
 void () enf3_awake = [ 75, enf3_awake2 ]
 {
 	self.th_stand = enf3_stand1;
 	self.th_walk = enf3_run1;
 	self.use = monster_use;
 };
-
 void () enf3_awake2 = [ 74, enf3_awake3 ]
-{
-};
-
+{};
 void () enf3_awake3 = [ 73, enf3_awake4 ]
-{
-};
-
+{};
 void () enf3_awake4 =
 {
 	if ((self.goalentity != world))
@@ -874,7 +751,6 @@ void () enf3_awake4 =
 		parse_anim ( 74, enf3_stand1 );
 	}
 };
-
 void () enf3_painsound =
 {
 	local float num;
@@ -892,7 +768,6 @@ void () enf3_painsound =
 	}
 	sound (self, CHAN_VOICE, "enf3/enf3p3.wav", 1, ATTN_NORM);
 };
-
 void () enf3_sightsound =
 {
 	local float rsnd;
@@ -950,7 +825,6 @@ void () enf3_sightsound =
 		}
 	}
 };
-
 void () enf3_idlesound =
 {
 	local float num;
@@ -967,7 +841,6 @@ void () enf3_idlesound =
 	}
 	sound (self, CHAN_VOICE, "enf3/idle3.wav", 1, ATTN_NORM);
 };
-
 void () enf3_deathsound =
 {
 	local float num;
@@ -984,5 +857,4 @@ void () enf3_deathsound =
 	}
 	sound (self, CHAN_VOICE, "enf3/death3.wav", 1, ATTN_NORM);
 };
-
 //END

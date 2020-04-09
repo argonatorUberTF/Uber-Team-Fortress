@@ -11,7 +11,6 @@ void () func_earthquake =
 	}
 	self.touch = initiate_quake;
 };
-
 void () initiate_quake =
 {
 	local entity e;
@@ -39,7 +38,6 @@ void () initiate_quake =
 	self.think = quake_n_shake;
 	self.nextthink = time;
 };
-
 void () quakenoise =
 {
 	Seekoutwall ();
@@ -47,7 +45,6 @@ void () quakenoise =
 	self.think = quakenoise;
 	self.nextthink = (time + 2.8);
 };
-
 void () quake_n_shake =
 {
 	local entity e;
@@ -75,7 +72,6 @@ void () quake_n_shake =
 	self.think = quake_n_shake;
 	self.nextthink = (time + self.cnt);
 };
-
 void () efx_lightning =
 {
 	precache_sound ("weapons/lstart.wav");
@@ -90,7 +86,6 @@ void () efx_lightning =
 		self.think = efx1_Attack;
 	}
 };
-
 void () efx1_Attack =
 {
 	local vector org;
@@ -114,14 +109,12 @@ void () efx1_Attack =
 	WriteCoord (MSG_ALL, targ_y);
 	WriteCoord (MSG_ALL, targ_z);
 };
-
 void () efx_snow =
 {
 	self.classname = "efx_snow";
 	self.nextthink = 0.1;
 	self.think = efx3_spawn;
 };
-
 void () efx3_spawn =
 {
 	local float n;
@@ -139,12 +132,10 @@ void () efx3_spawn =
 	self.nextthink = ((time + 0.3) + RandomRange (1.5, FL_SWIM));
 	self.think = efx3_spawn;
 };
-
 void () rain_touch =
 {
 	remove (self);
 };
-
 void () rain_think =
 {
 	local vector rain_org;
@@ -170,7 +161,6 @@ void () rain_think =
 	self.nextthink = (time + 0.2);
 	self.think = rain_think;
 };
-
 void () check4liquid =
 {
 	if ((pointcontents (self.origin) < CONTENT_SOLID))
@@ -180,7 +170,6 @@ void () check4liquid =
 	self.think = check4liquid;
 	self.nextthink = time;
 };
-
 void () func_raining =
 {
 	precache_model ("progs/rain.mdl");
@@ -200,20 +189,17 @@ void () func_raining =
 		self.nextthink = ((time + 0.3) + random ());
 	}
 };
-
 void () begin_rain =
 {
 	self.use = SUB_Remove;
 	self.think = rain_think;
 	self.nextthink = ((time + 0.3) + random ());
 };
-
 void () func_floating =
 {
 	func_drift ();
 	setsize (self, self.mins, self.maxs);
 };
-
 void () func_drift =
 {
 	if ((world.model == "maps/neh1m9.bsp"))
@@ -235,7 +221,6 @@ void () func_drift =
 	}
 	drift_trigger ();
 };
-
 void () drift_trigger =
 {
 	self.use = SUB_Null;
@@ -243,7 +228,6 @@ void () drift_trigger =
 	self.think = brush_drift;
 	self.nextthink = (time + 0.1);
 };
-
 void () brush_drift =
 {
 	local float vel1;
@@ -267,5 +251,4 @@ void () brush_drift =
 	self.think = brush_drift;
 	self.nextthink = (time + 0.1);
 };
-
 //END

@@ -30,7 +30,6 @@ void () GauntLightning =
 	traceline (org, (self.origin + (dir * 600)), 1, self);
 	LightningDamage (org, trace_endpos, self, MOVETYPE_TOSS);
 };
-
 void (entity missile) TossBackGrenade =
 {
 	local vector megadeth;
@@ -56,7 +55,6 @@ void (entity missile) TossBackGrenade =
 	missile.nextthink = (time + 2.5);
 	missile.think = GrenadeExplode;
 };
-
 void () Handle_Threats =
 {
 	local entity threata;
@@ -104,7 +102,6 @@ void () Handle_Threats =
 		threata = find (threata, event, "thrett");
 	}
 };
-
 void () ThrashEnemy =
 {
 	local entity thrashed;
@@ -148,11 +145,8 @@ void () archgaunt_funeral =
 	self.health = 500;
 	archgaunt_funeral2 ();
 };
-
 void () archgaunt_funeral2 = [ 113, archgaunt_funeral2 ]
-{
-};
-
+{};
 void () monster_archgaunt1 =
 {
 	if (!(self.brain & NAVLOGIC))
@@ -186,7 +180,6 @@ void () monster_archgaunt1 =
 	}
 	carnify_archgaunt ();
 };
-
 void () monster_archgaunt =
 {
 	if (deathmatch)
@@ -194,7 +187,6 @@ void () monster_archgaunt =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model2 ("progs/archg.mdl");
 	precache_model2 ("progs/h_archg.mdl");
 	precache_model2 ("progs/gntspke.mdl");
@@ -221,7 +213,6 @@ void () monster_archgaunt =
 	precache_sound2 ("boss3/nehdie4.wav");
 	MTF_Setup_Monster_Presets ( 0, "arch gaunt", monster_archgaunt1 );
 };
-
 void () archgaunt_start =
 {
 	trigger_spawnmonster ();
@@ -239,9 +230,7 @@ void () carnify_archgaunt =
 		self.health = 500;
 	}
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
-//walkmonster_start ();
 };
-
 void () archg_die =
 {
 	if ((self.health < -35))
@@ -257,14 +246,12 @@ void () archg_die =
 	self.think = gotostone;
 	self.nextthink = (time + 0.1);
 };
-
 void () gotostone =
 {
 	sound (self, CHAN_VOICE, "archg/petrify.wav", 1, ATTN_NORM);
 	self.event = "stone";
 	go_tostone ();
 };
-
 void () go_tostone =
 {
 	self.skin = (self.skin + 1);
@@ -276,21 +263,18 @@ void () go_tostone =
 	self.nextthink = (time + 0.2);
 	self.think = go_tostone;
 };
-
 void () becomestatue =
 {
 	self.flags = FL_BLOODLESS;
 	self.takedamage = DAMAGE_YES;
 	self.solid = SOLID_BBOX;
 	self.health = 60;
-//	self.touch = player_push;
 	self.th_die = statue_blown;
 	self.th_pain = SUB_Null;
 	self.th_walk = SUB_Null;
 	self.th_run = SUB_Null;
 	self.th_missile = SUB_Null;
 };
-
 void () statue_blown =
 {
 	self.dmg = 11;
@@ -302,7 +286,6 @@ void () statue_blown =
 	ThrowRubble ("progs/h_archg.mdl", self.health);
 	remove (self);
 };
-
 void () archg_motion =
 {
 	if ((self.walkframe >= 13))
@@ -336,7 +319,6 @@ void () archg_motion =
 	}
 	ai_walk (4);
 };
-
 void () archg_stand =
 {
 	if ((self.walkframe >= 7))
@@ -357,7 +339,6 @@ void () archg_stand =
 		ai_stand ();
 	}
 };
-
 void () archg_look =
 {
 	if ((self.walkframe >= 18))
@@ -378,7 +359,6 @@ void () archg_look =
 		ai_stand ();
 	}
 };
-
 void () archg_bow1 =
 {
 	if ((self.walkframe >= 14))
@@ -406,7 +386,6 @@ void () archg_bow1 =
 		}
 	}
 };
-
 void () archg_bow2 =
 {
 	if ((self.walkframe >= 14))
@@ -434,7 +413,6 @@ void () archg_bow2 =
 		}
 	}
 };
-
 void () archg_up =
 {
 	if ((self.walkframe >= 10))
@@ -464,7 +442,6 @@ void () archg_up =
 	ai_face ();
 	Handle_Threats ();
 };
-
 void () archg_pain =
 {
 	if ((self.pain_finished > time))
@@ -487,125 +464,82 @@ void () archg_pain =
 		parse_anim ( 76, archg_painb2 );
 	}
 };
-
 void () archg_pain1 = [ 74, archg_pain2 ]
-{
-};
-
+{};
 void () archg_pain2 = [ 75, archg_pain3 ]
-{
-};
-
+{};
 void () archg_pain3 = [ 76, archg_pain4 ]
-{
-};
-
+{};
 void () archg_pain4 = [ 75, archg_pain5 ]
-{
-};
-
+{};
 void () archg_pain5 = [ 74, archg_pain6 ]
-{
-};
-
+{};
 void () archg_pain6 = [ 73, archg_pain7 ]
-{
-};
-
+{};
 void () archg_pain7 = [ 72, archg_pain8 ]
-{
-};
-
+{};
 void () archg_pain8 = [ 71, archg_pain9 ]
-{
-};
-
+{};
 void () archg_pain9 = [ 70, archg_pain10 ]
-{
-};
-
+{};
 void () archg_pain10 = [ 69, archg_pain11 ]
-{
-};
-
+{};
 void () archg_pain11 = [ 68, archg_control ]
-{
-};
-
+{};
 void () archg_painb2 = [ 75, archg_painb3 ]
-{
-};
-
+{};
 void () archg_painb3 = [ 74, archg_painb4 ]
-{
-};
-
+{};
 void () archg_painb4 = [ 71, archg_painb5 ]
-{
-};
-
+{};
 void () archg_painb5 = [ 70, archg_painb6 ]
-{
-};
-
+{};
 void () archg_painb6 = [ 69, archg_control ]
-{
-};
-
+{};
 void () archg_att = [ 68, archg_att1 ]
 {
 	ai_face ();
 };
-
 void () archg_att1 = [ 69, archg_att2 ]
 {
 	ai_face ();
 };
-
 void () archg_att2 = [ 70, archg_att3 ]
 {
 	ai_face ();
 };
-
 void () archg_att3 = [ 71, archg_att4 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "gaunt/boom.wav", 1, ATTN_NORM);
 };
-
 void () archg_att4 = [ 72, archg_att5 ]
 {
 	ai_face ();
 	GauntMissile ();
 	sound (self, 1/*CHAN_BAL*/, "gaunt/elekt.wav", 1, ATTN_NORM);
 };
-
 void () archg_att5 = [ 73, archg_att6 ]
 {
 	ai_face ();
 };
-
 void () archg_att6 = [ 72, archg_att7 ]
 {
 	ai_face ();
 	GauntMissile ();
 };
-
 void () archg_att7 = [ 70, archg_att8 ]
 {
 	ai_face ();
 };
-
 void () archg_att8 = [ 69, archg_att9 ]
 {
 	ai_face ();
 };
-
 void () archg_att9 = [ 68, archg_control ]
 {
 	ai_face ();
 };
-
 void () archg_attack =
 {
 	if ((self.walkframe >= 8))
@@ -624,7 +558,6 @@ void () archg_attack =
 	}
 	ai_face ();
 };
-
 void () archg_attack2 =
 {
 	if ((self.walkframe >= 8))
@@ -649,7 +582,6 @@ void () archg_attack2 =
 	}
 	ai_face ();
 };
-
 void () archg_control =
 {
 	local float a;
@@ -692,7 +624,6 @@ void () archg_control =
 	}
 	parse_anim ( 68, archg_att );
 };
-
 void () archg_ai3 =
 {
 	if (self.enemy)
@@ -704,7 +635,6 @@ void () archg_ai3 =
 	self.enemy = world;
 	archg_point ();
 };
-
 void () archg_point =
 {
 	if ((self.walkframe >= 5))
@@ -732,7 +662,6 @@ void () archg_point =
 	self.walkframe = (self.walkframe + 1);
 	ai2_face (self.threat);
 };
-
 void () archg_no =
 {
 	if ((self.walkframe >= 12))
@@ -747,7 +676,6 @@ void () archg_no =
 	self.walkframe = (self.walkframe + 1);
 	ai2_face (self.threat);
 };
-
 void () archg_nofinger =
 {
 	if ((self.walkframe >= 5))
@@ -768,7 +696,6 @@ void () archg_nofinger =
 	self.frame = (94 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () archg_hold =
 {
 	if ((self.walkframe >= 6))
@@ -786,7 +713,6 @@ void () archg_hold =
 	self.walkframe = (self.walkframe + 1);
 	ai2_face (self.threat);
 };
-
 float () scan_for_goodies =
 {
 	local entity head;
@@ -818,5 +744,4 @@ float () scan_for_goodies =
 		return (1);
 	}
 };
-
 //end

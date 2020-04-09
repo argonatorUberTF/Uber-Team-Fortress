@@ -29,60 +29,49 @@ void (float side, float damg) kguard_firing =
 	}
 	Mons_fire_nails ();
 };
-
 void () kguard_stand1 = [ 12, kguard_stand2 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand2 = [ 13, kguard_stand3 ]
 {
 	ai_stand ();
 	TargetBadGuys ();
 };
-
 void () kguard_stand3 = [ 14, kguard_stand4 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand4 = [ 15, kguard_stand5 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand5 = [ 16, kguard_stand6 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand6 = [ 15, kguard_stand7 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand7 = [ 14, kguard_stand8 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand8 = [ 16, kguard_stand9 ]
 {
 	ai_stand ();
 };
-
 void () kguard_stand9 =
 {
 	ai_stand ();
 	kguard_stand1 ();
 };
-
 void () kguard_walk1 = [ 6, kguard_walk2 ]
 {
 	ai_walk (28);
 	TargetBadGuys ();
 };
-
 void () kguard_walk2 = [ 7, kguard_walk3 ]
 {
 	ai_walk (28);
@@ -91,27 +80,22 @@ void () kguard_walk2 = [ 7, kguard_walk3 ]
 		ai_objledge ();
 	}
 };
-
 void () kguard_walk3 = [ 8, kguard_walk4 ]
 {
 	ai_walk (28);
 };
-
 void () kguard_walk4 = [ 9, kguard_walk5 ]
 {
 	ai_walk (28);
 };
-
 void () kguard_walk5 = [ 10, kguard_walk6 ]
 {
 	ai_walk (28);
 };
-
 void () kguard_walk6 = [ 11, kguard_walk1 ]
 {
 	ai_walk (28);
 };
-
 void () kguard_back =
 {
 	if ((self.walkframe >= 6))
@@ -126,45 +110,37 @@ void () kguard_back =
 	self.walkframe = (self.walkframe + 1);
 	ai_back (12);
 };
-
 void () kguard_run1 = [ 6, kguard_run2 ]
 {
 	ai3_run (29);
 };
-
 void () kguard_run2 = [ 7, kguard_run3 ]
 {
 	ai3_run (29);
 	TargetBadGuys ();
 };
-
 void () kguard_run3 = [ 8, kguard_run4 ]
 {
 	ai3_run (29);
 };
-
 void () kguard_run4 = [ 9, kguard_run5 ]
 {
 	ai3_run (29);
 };
-
 void () kguard_run5 = [ 10, kguard_run6 ]
 {
 	ai3_run (29);
 	ai_threats ();
 };
-
 void () kguard_run6 = [ 11, kguard_run7 ]
 {
 	ai3_run (29);
 };
-
 void () kguard_run7 =
 {
 	ai3_run (29);
 	kguard_shoot ();
 };
-
 void () kguard_atta1 =
 {
 	if (qguy_tolerance ())
@@ -175,14 +151,12 @@ void () kguard_atta1 =
 	parse_anim ( 113, kguard_atta4 );
 	ai_face ();
 };
-
 void () kguard_atta4 = [ 114, kguard_atta5 ]
 {
 	ai_face ();
 	kguard_firing (0, 0);
 	self.effects = (self.effects | EF_MUZZLEFLASH);
 };
-
 void () kguard_atta5 =
 {
 	if (((random () < 0.4) && visible (self.enemy)))
@@ -193,23 +167,19 @@ void () kguard_atta5 =
 	parse_anim ( 115, kguard_atta6 );
 	ai_face ();
 };
-
 void () kguard_atta6 = [ 116, kguard_atta7 ]
 {
 	ai_face ();
 };
-
 void () kguard_atta7 = [ 117, kguard_atta8 ]
 {
 	ai_face ();
 };
-
 void () kguard_atta8 =
 {
 	ai_face ();
 	kguard_shoot ();
 };
-
 void () kguard_pain1 =
 {
 	if ((self.pain_finished > time))
@@ -220,112 +190,60 @@ void () kguard_pain1 =
 	parse_anim ( 35, kguard_pain2 );
 	PainSound ();
 };
-
 void () kguard_pain2 = [ 36, kguard_pain3 ]
-{
-};
-
+{};
 void () kguard_pain3 = [ 37, kguard_pain4 ]
-{
-};
-
+{};
 void () kguard_pain4 = [ 38, kguard_pain5 ]
-{
-};
-
+{};
 void () kguard_pain5 = [ 39, kguard_pain6 ]
-{
-};
-
+{};
 void () kguard_pain6 = [ 40, kguard_shoot ]
-{
-};
-
+{};
 void () kguard_pain =
 {
 	kguard_pain1 ();
 };
-
 void () kguard_die1 = [ 50, kguard_die2 ]
-{
-};
-
+{};
 void () kguard_die2 = [ 51, kguard_die3 ]
-{
-};
-
+{};
 void () kguard_die3 = [ 52, kguard_die4 ]
-{
-};
-
+{};
 void () kguard_die4 = [ 53, kguard_die5 ]
-{
-};
-
+{};
 void () kguard_die5 = [ 54, kguard_die6 ]
-{
-};
-
+{};
 void () kguard_die6 = [ 55, kguard_die7 ]
-{
-};
-
+{};
 void () kguard_die7 = [ 56, kguard_die8 ]
-{
-};
-
+{};
 void () kguard_die8 = [ 57, kguard_die9 ]
-{
-};
-
+{};
 void () kguard_die9 = [ 58, kguard_die10 ]
-{
-};
-
+{};
 void () kguard_die10 = [ 59, kguard_die11 ]
-{
-};
-
+{};
 void () kguard_die11 = [ 60, corpse_think ]
-{
-};
-
+{};
 void () kguard_dieb1 = [ 85, kguard_dieb2 ]
-{
-};
-
+{};
 void () kguard_dieb2 = [ 86, kguard_dieb3 ]
-{
-};
-
+{};
 void () kguard_dieb3 = [ 87, kguard_dieb4 ]
-{
-};
-
+{};
 void () kguard_dieb4 = [ 88, kguard_dieb5 ]
-{
-};
-
+{};
 void () kguard_dieb5 = [ 89, kguard_dieb6 ]
-{
-};
-
+{};
 void () kguard_dieb6 = [ 90, kguard_dieb7 ]
-{
-};
-
+{};
 void () kguard_dieb7 = [ 91, kguard_dieb8 ]
-{
-};
-
+{};
 void () kguard_dieb8 = [ 92, kguard_dieb9 ]
-{
-};
-
+{};
 void () kguard_dieb9 = [ 93, corpse_think ]
-{
-};
-
+{};
 void () kguard_die =
 {
 	if ((self.health < -35))
@@ -355,12 +273,10 @@ void () kguard_die =
 		kguard_dieb1 ();
 	}
 };
-
 void () monster_qguy1 =
 {
 	return;
 };
-
 void () monster_qguy =
 {
 	if (deathmatch)
@@ -406,7 +322,6 @@ void () monster_qguy =
 	}
 	if ((self.brain & TRIGGER_SPAWN))
 	{
-//		self.use = qguy_start;
 		return;
 	}
 	if (self.is_monster != 1)
@@ -417,13 +332,11 @@ void () monster_qguy =
 	self.lives = 0;
 	carnify_qguy ();
 };
-
 void () qguy_start =
 {
 	trigger_spawnmonster ();
 	carnify_qguy ();
 };
-
 void () carnify_qguy =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -437,7 +350,6 @@ void () carnify_qguy =
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 	walkmonster_start ();
 };
-
 void () kguard_actor_wait =
 {
 	self.use = kguard_actor_use;
@@ -449,7 +361,6 @@ void () kguard_actor_wait =
 	self.frame = (12 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () kguard_actor_use =
 {
 	if ((self.goalentity == world))
@@ -465,7 +376,6 @@ void () kguard_actor_use =
 	self.th_walk = kguard_walk1;
 	self.use = monster_use;
 };
-
 void () kguard_shoot =
 {
 	if ((self.enemy.health < 1))
@@ -482,13 +392,11 @@ void () kguard_shoot =
 	}
 	kguard_run1 ();
 };
-
 float () TargetBadGuys =
 {
 	local entity head;
 	local entity selected;
 	local float dist;
-
 	if ((self.relations == -1))
 	{
 		return 0;
@@ -529,7 +437,6 @@ float () TargetBadGuys =
 		return (1);
 	}
 };
-
 float () qguy_tolerance =
 {
 	if ((self.enemy.classname == "monster_qguy"))
@@ -554,5 +461,4 @@ float () qguy_tolerance =
 		return (1);
 	}
 	return (0);
-};
-//END
+};//END

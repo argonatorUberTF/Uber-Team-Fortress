@@ -21,7 +21,6 @@ void () trigger_custom =
 	self.think = custom_timing;
 	self.nextthink = (time + 1);
 };
-
 void () custom_timing =
 {
 	if ((self.touch != check_custom))
@@ -31,7 +30,6 @@ void () custom_timing =
 	self.nextthink = (time + 2);
 	self.think = custom_timing;
 };
-
 void () check_custom =
 {
 	local entity item55;
@@ -57,7 +55,6 @@ void () check_custom =
 	SUB_UseTargets ();
 	remove (self);
 };
-
 void () custom_item =
 {
 	if (!self.model)
@@ -82,7 +79,6 @@ void () custom_item =
 	setsize (self, '-16 -16 0', '16 16 56');
 	StartItem ();
 };
-
 void () cust_item_touch =
 {
 	if (((other.classname != "player") || (other.health < 1)))
@@ -98,7 +94,6 @@ void () cust_item_touch =
 	SUB_UseTargets ();
 	remove (self);
 };
-
 void () snd_beat_toggle =
 {
 	if (!self.noise)
@@ -134,14 +129,12 @@ void () snd_beat_toggle =
 		self.nextthink = (time + self.delay);
 	}
 };
-
 void () snd_beat_use =
 {
 	self.think = snd_beat_go;
 	self.nextthink = time + 1;//snd_beat_use;
 	self.use = SUB_Remove;
 };
-
 void () snd_beat_go =
 {
 	sound (other, CHAN_ITEM, self.noise2, 1, ATTN_NORM);
@@ -161,7 +154,6 @@ void () snd_beat_go =
 	self.nextthink = (time + self.delay);
 	self.think = snd_beat_go;
 };
-
 void () misc_misc =
 {
 	if (!self.model)
@@ -175,5 +167,4 @@ void () misc_misc =
 	setorigin (self, self.origin);
 	setsize (self, '-16 -16 0', '16 16 56');
 };
-
 //END
