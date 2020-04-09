@@ -14,7 +14,6 @@ $frame hammer10 hammer11 hammer12 hammer13 hammer14 hammer15 hammer16 hammer17 h
 $frame hammer19 hammer20 hammer21 hammer22 hammer23 hammer24 hammer25 hammer26 hammer27
 $frame hammer28 hammer29 hammer30 hammer31 hammer32 hammer33 hammer34 hammer35 hammer36
 $frame hammer37
-
 $frame launch01 launch02 launch03 launch04 launch05 launch06 launch07 launch08 launch09
 $frame launch10 launch11 launch12 launch13 launch14 launch15 launch16 launch17 launch18
 $frame launch19 launch20 launch21 launch22 launch23 launch24 launch25 launch26 launch27
@@ -281,7 +280,6 @@ void(entity attacker, float damage)     bigtank_pain =
                 sound (self, CHAN_VOICE, "bigtank/tnkpain2.wav", 1, ATTN_NORM);
 	}
 };
-
 void(vector org, float damage, float dt, string ctyp) BigTankFireGrenade =
 {
 	local	entity missile;
@@ -305,7 +303,6 @@ void(vector org, float damage, float dt, string ctyp) BigTankFireGrenade =
 	setsize (missile, '0 0 0', '0 0 0');		
 	setorigin (missile, org);
 };
-
 void() TankFireBombKaboom =
 {
    local entity e;
@@ -331,7 +328,6 @@ void() TankFireBombKaboom =
    e.think = BecomeExplosion;
    e.nextthink = time + 0.01;
 };
-
 void(vector org, float dir) bigtank_groundcrash =
 {
    newmis = spawn();
@@ -365,7 +361,6 @@ void(vector org, vector dir) testlaunch_spike =
 	setorigin (newmis, org);
 	newmis.velocity = dir * 2000; // WK was 1000
 };
-
 void(float offset, vector orgn) bigtank_fireflame =
 {
 	local	vector	offang;
@@ -471,4 +466,4 @@ void() bigtank_die =
         sound (self, CHAN_VOICE, "bigtank/death.wav", 1, ATTN_NORM);
         bigtank_die1 ();
 };
-//END 
+//END
