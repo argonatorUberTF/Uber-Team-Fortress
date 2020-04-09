@@ -1,6 +1,5 @@
 void () azoth_stand2;
 void () rift_hold;
-
 void () azoth_stand1 = [ 0, azoth_stand2 ]
 {
 	ai_stand ();
@@ -138,8 +137,6 @@ void () azoth_walk12 = [ 22, azoth_walk1 ]
 
 void () azoth_out1 = [ 11, azoth_out2 ]
 {
-	//local void() azoth_out2;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (FL_INWATER);
@@ -147,8 +144,6 @@ void () azoth_out1 = [ 11, azoth_out2 ]
 
 void () azoth_out2 = [ 12, azoth_out3 ]
 {
-//	local void() azoth_out3;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (FL_INWATER);
@@ -156,8 +151,6 @@ void () azoth_out2 = [ 12, azoth_out3 ]
 
 void () azoth_out3 = [ 13, azoth_out4 ]
 {
-//	local void() azoth_out4;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (FL_INWATER);
@@ -165,8 +158,6 @@ void () azoth_out3 = [ 13, azoth_out4 ]
 
 void () azoth_out4 = [ 14, azoth_out5 ]
 {
-//	local void() azoth_out5;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (MOVETYPE_BOUNCE);
@@ -174,8 +165,6 @@ void () azoth_out4 = [ 14, azoth_out5 ]
 
 void () azoth_out5 = [ 15, azoth_out6 ]
 {
-//	local void() azoth_out6;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (17);
@@ -183,7 +172,6 @@ void () azoth_out5 = [ 15, azoth_out6 ]
 
 void () azoth_out6 = [ 16, azoth_stand1 ]
 {
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	self.th_stand = azoth_stand1;
@@ -262,11 +250,9 @@ void () azoth_run12 = [ 22, azoth_run1 ]
 void () azoth_s_charge1;
 void () azoth_swipe1;
 void () azoth_s_run1;
-
 float () check_chargerange =
 {
 	local float h;
-
 	h = self.enemy.absmin_z - self.absmin_z;
 	if (((vlen ((self.enemy.origin - self.pos2)) < 700) && (fabs (h) < 48)))
 	{
@@ -475,7 +461,6 @@ void (float dist) shield_charge =
 {
 	local float facing;
 	local float unstuck;
-
 	facing = vectoyaw ((self.enemy.origin - self.origin));
 	unstuck = walkmove (facing, dist);
 	if ((vlen ((self.enemy.origin - self.origin)) < 91))
@@ -491,7 +476,6 @@ void (float dist) shield_charge =
 	ai_face ();
 	self.bubble_count = (self.bubble_count - TRUE);
 };
-
 void () azoth_s_charge1 = [ 23, azoth_s_charge2 ]
 {
 	shield_charge (SVC_INTERMISSION);
@@ -499,7 +483,6 @@ void () azoth_s_charge1 = [ 23, azoth_s_charge2 ]
 };
 void () azoth_die;
 void () azoth_s_charge3;
-
 void () azoth_s_charge2 = [ 24, azoth_s_charge3 ]
 {
 	shield_charge (24);
@@ -507,14 +490,12 @@ void () azoth_s_charge2 = [ 24, azoth_s_charge3 ]
 	sound (self, FL_SWIM, "azoth/awake.wav", TRUE, TRUE);
 };
 void () azoth_s_charge4;
-
 void () azoth_s_charge3 = [ 25, azoth_s_charge4 ]
 {
 	shield_charge (24);
 	self.takedamage = FALSE;
 };
 void () azoth_s_charge6;
-
 void () azoth_s_charge4 = [ 27, azoth_s_charge6 ]
 {
 	shield_charge (MOVETYPE_BOUNCE);
@@ -576,9 +557,7 @@ void () azoth_swipe2 = [ 36, azoth_swipe3 ]
 
 void () azoth_swipe3 = [ 37, azoth_swipe4 ]
 {
-//	local void() azoth_swipe4;
 	local vector delta;
-
 	ai_face ();
 	self.takedamage = FL_SWIM;
 	if (!self.enemy)
@@ -630,10 +609,8 @@ void () azoth_swipe9 = [ 43, azoth_swipe10 ]
 
 void () azoth_swipe10 = [ 44, azoth_swipe11 ]
 {
-//	local void() azoth_swipe11;
 	local vector delta;
 	local float ldmg;
-
 	ai_charge (20);
 	if (!self.enemy)
 	{
@@ -651,13 +628,10 @@ void () azoth_swipe10 = [ 44, azoth_swipe11 ]
 	ldmg = 13 + (random () * 13);
 	T_Damage (self.enemy, self, self, ldmg);
 };
-
 void () azoth_swipe11 = [ 45, azoth_swipe12 ]
 {
-//	local void() azoth_swipe12;
 	local vector delta;
 	local float ldmg;
-
 	ai_charge (MOVETYPE_BOUNCE);
 	if (!self.enemy)
 	{
@@ -820,10 +794,8 @@ void () azoth_hammer5 = [ 70, azoth_hammer6 ]
 
 void () azoth_hammer6 = [ 71, azoth_hammer7 ]
 {
-//	local void() azoth_hammer7;
 	local vector delta;
 	local float ldmg;
-
 	ai_charge (35);
 	if (!self.enemy)
 	{
@@ -883,7 +855,6 @@ void () flame_move =
 {
 	local vector o;
 	local vector v;
-
 	o = self.origin - '0 0 7';
 	v = self.pos1;
 	traceline ((o - (v * 0.5)), (o + v), FALSE, self);
@@ -946,7 +917,6 @@ void (vector org, vector dir) launch_flame =
 
 void (vector head) breathe_fire =
 {
-
 	makevectors ((self.angles + head));
 	launch_flame (((self.origin + '0 0 100') + (v_forward * 34)), ((v_forward * 0.8) - ('0 0 3' * 0.2)));
 };
@@ -970,8 +940,6 @@ void () azoth_fire3 = [ 54, azoth_fire4 ]
 
 void () azoth_fire4 = [ 55, azoth_fire5 ]
 {
-//	local void() azoth_fire5;
-
 	sound (self, FL_SWIM, "azoth/fire.wav", TRUE, TRUE);
 	self.pos1 = (self.enemy.origin + (self.enemy.velocity * 0.7));
 	self.ideal_yaw = vectoyaw ((self.pos1 - self.origin));
@@ -980,8 +948,6 @@ void () azoth_fire4 = [ 55, azoth_fire5 ]
 
 void () azoth_fire5 = [ 56, azoth_fire6 ]
 {
-//	local void() azoth_fire6;
-
 	self.ideal_yaw = vectoyaw ((self.pos1 - self.origin));
 	ChangeYaw ();
 };
@@ -1152,7 +1118,6 @@ void () azoth_throw_direct =
 	local entity missile;
 	local vector dir;
 	local float r;
-
 	makevectors (self.angles);
 	r = vlen ((self.origin - self.enemy.origin));
 	if ((self.enemy.origin_z > (self.origin_z + 20)))
@@ -1197,7 +1162,6 @@ void () skullhome =
 {
 	local vector dir;
 	local vector vtemp;
-
 	vtemp = self.enemy.origin + '0 0 10';
 	if ((!IsAlive (self.enemy) && (self.enemy.classname != "homingpoint")))
 	{
@@ -1239,7 +1203,6 @@ void () azoth_throw_indirect =
 	local float m;
 	local float p;
 	local float d;
-
 	if ((self.th_die != azoth_phase7))
 	{
 		m = vectoyaw ((self.origin - tower));
@@ -1413,31 +1376,24 @@ void () azoth_throw17 = [ 105, azoth_run1 ]
 
 void () azoth_throwindirect7 = [ 95, azoth_throwindirect8 ]
 {
-//	local void() azoth_throwindirect8;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 };
 
 void () azoth_throwindirect8 = [ 96, azoth_throwindirect9 ]
 {
-//	local void() azoth_throwindirect9;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 };
 
 void () azoth_throwindirect9 = [ 97, azoth_throwindirect10 ]
 {
-//	local void() azoth_throwindirect10;
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 };
 
 void () azoth_throwindirect10 = [ 98, azoth_throw11 ]
 {
-
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	azoth_throw_indirect ();
@@ -1447,7 +1403,6 @@ void (float cel) azoth_fly =
 {
 	local vector d;
 	local float r;
-
 	if ((self.attack_finished < time))
 	{
 		azoth_land1 ();
@@ -1518,7 +1473,6 @@ void () azoth_fly8 = [ 137, azoth_fly1 ]
 {
 	azoth_fly (100);
 };
-
 void () azoth_fly_touch =
 {
 	if ((other.classname != "player"))
@@ -1528,26 +1482,17 @@ void () azoth_fly_touch =
 	self.velocity_z = 500;
 };
 void () azoth_leap2;
-
 void () azoth_leap1 = [ 76, azoth_leap2 ]
-{
-};
+{};
 void () azoth_leap3;
-
 void () azoth_leap2 = [ 77, azoth_leap3 ]
-{
-};
+{};
 void () azoth_leap4;
-
 void () azoth_leap3 = [ 78, azoth_leap4 ]
-{
-};
+{};
 void () azoth_leap5;
-
 void () azoth_leap4 = [ 79, azoth_leap5 ]
-{
-};
-
+{};
 void () azoth_leap5 = [ 80, azoth_fly1 ]
 {
 	self.lip = FALSE;
@@ -1557,7 +1502,6 @@ void () azoth_leap5 = [ 80, azoth_fly1 ]
 	azoth_fly (250);
 	self.touch = azoth_fly_touch;
 };
-
 void () azoth_free =
 {
 	local vector d;
@@ -1575,7 +1519,6 @@ void () azoth_land1 = [ 81, azoth_land2 ]
 	self.velocity = (self.velocity * 0.1);
 	self.touch = SUB_Null;
 };
-
 void () azoth_land2 = [ 82, azoth_land2 ]
 {
 	if ((self.flags & FL_ONGROUND))
@@ -1589,36 +1532,23 @@ void () azoth_land2 = [ 82, azoth_land2 ]
 	AzothCheckAttack ();
 };
 void () azoth_land4;
-
 void () azoth_land3 = [ 83, azoth_land4 ]
-{
-};
+{};
 void () azoth_land5;
-
 void () azoth_land4 = [ 84, azoth_land5 ]
-{
-};
+{};
 void () azoth_land6;
-
 void () azoth_land5 = [ 85, azoth_land6 ]
-{
-};
+{};
 void () azoth_land7;
-
 void () azoth_land6 = [ 86, azoth_land7 ]
-{
-};
+{};
 void () azoth_land8;
-
 void () azoth_land7 = [ 87, azoth_land8 ]
-{
-};
+{};
 void () azoth_land9;
-
 void () azoth_land8 = [ 88, azoth_land9 ]
-{
-};
-
+{};
 void () azoth_land9 =
 {
 
@@ -1662,11 +1592,9 @@ void () azoth_dive2b = [ 82, azoth_dive2b ]
 	}
 	AzothCheckAttack ();
 };
-
 void () azoth_dive3 = [ 83, azoth_land4 ]
 {
 	local entity e;
-
 	e = nextent (world);
 	while ((e.classname == "player"))
 	{
@@ -1689,7 +1617,6 @@ void () rift_open_start;
 void (vector dir) rift_lightning =
 {
 	local vector org;
-
 	makevectors ((self.angles_y * '0 1 0'));
 	org = ((self.origin + (dir_x * v_forward)) - (dir_y * v_right)) + (dir_z * '0 0 1');
 	WriteByte (FALSE, SVC_TEMPENTITY);
@@ -1748,7 +1675,6 @@ void (float cel) azoth_fly_death =
 {
 	local vector d;
 	local float r;
-
 	makevectors (self.angles);
 	d = (((rift.origin - self.origin) - (self.height * '0 0 1')) + (26 * v_forward)) + (15 * v_right);
 	r = vlen (d);
@@ -1761,30 +1687,20 @@ void (float cel) azoth_fly_death =
 void () azoth_died2;
 
 void () azoth_died1 = [ 130, azoth_died2 ]
-{
-};
+{};
 void () azoth_died3;
-
 void () azoth_died2 = [ 131, azoth_died3 ]
-{
-};
+{};
 void () azoth_died4;
-
 void () azoth_died3 = [ 132, azoth_died4 ]
-{
-};
+{};
 void () azoth_died5;
-
 void () azoth_died4 = [ 133, azoth_died5 ]
-{
-};
+{};
 void () azoth_died6;
-
 void () azoth_died5 = [ 134, azoth_died6 ]
-{
-};
+{};
 void () azoth_diee1;
-
 void () azoth_died6 = [ 135, azoth_diee1 ]
 {
 	self.lip = FALSE;
@@ -1793,7 +1709,6 @@ void () azoth_died6 = [ 135, azoth_diee1 ]
 	azoth_fly_death (200);
 };
 void () azoth_diee2;
-
 void () azoth_diee1 = [ 136, azoth_diee2 ]
 {
 	sound (self, FL_SWIM, "azoth/flap.wav", TRUE, FALSE);
@@ -1831,13 +1746,11 @@ void () azoth_diee5 = [ 140, azoth_diee6 ]
 	}
 };
 void () azoth_diee7;
-
 void () azoth_diee6 = [ 139, azoth_diee7 ]
 {
 	azoth_fly_death (90);
 };
 void () azoth_diee8;
-
 void () azoth_diee7 = [ 138, azoth_diee8 ]
 {
 	azoth_fly_death (70);
@@ -1848,52 +1761,34 @@ void () azoth_diee8 = [ 137, azoth_diee1 ]
 	azoth_fly_death (70);
 };
 void () leg2;
-
 void () leg1 = [ 1, leg2 ]
-{
-};
+{};
 void () leg3;
-
 void () leg2 = [ 2, leg3 ]
-{
-};
+{};
 void () leg4;
-
 void () leg3 = [ 3, leg4 ]
-{
-};
+{};
 void () leg5;
-
 void () leg4 = [ 4, leg5 ]
-{
-};
+{};
 void () leg6;
-
 void () leg5 = [ 5, leg6 ]
-{
-};
+{};
 void () leg7;
-
 void () leg6 = [ 6, leg7 ]
-{
-};
+{};
 void () leg8;
-
 void () leg7 = [ 7, leg8 ]
-{
-};
+{};
 void () leg9;
-
 void () leg8 = [ 8, leg9 ]
 {
 	sound (self, FL_SWIM, "demon/dland2.wav", TRUE, FALSE);
 };
 void () leg10;
-
 void () leg9 = [ 8, leg10 ]
-{
-};
-
+{};
 void () leg10 = [ 8, leg10 ]
 {
 	if ((coop == FL_SWIM))
@@ -2117,7 +2012,6 @@ void () azoth_dief25 = [ 165, azoth_dief26 ]
 void () azoth_dief26 = [ 165, azoth_dief25 ]
 {
 	local entity gib;
-
 	gib = spawn ();
 	gib.origin = rift.origin;
 	if ((coop == FL_SWIM))
@@ -2148,7 +2042,6 @@ void () dummy_test =
 	local entity oself;
 	local vector d;
 	local float r;
-
 	self.velocity = VEC_ORIGIN;
 	dummy = self.trigger_field;
 	d = self.origin - dummy.origin;
@@ -2207,7 +2100,6 @@ void () SpawnStairWaypoint =
 {
 	local entity waypoint;
 	local entity oself;
-
 	if ((self.goalentity.classname == "stairpoint"))
 	{
 		return;
@@ -2443,7 +2335,6 @@ void () azoth_die =
 	local entity waypoint;
 	local entity dummy;
 	local entity oself;
-
 	self.target = self.deathtype;
 	traceline (rift.origin, (rift.origin - '0 0 1024'), TRUE, rift);
 	waypoint = spawn ();
@@ -2515,7 +2406,6 @@ void () azoth_phase2 =
 	local vector spot;
 	local vector vout;
 	local vector vperp;
-
 	if ((vlen ((self.origin - gate)) > 700))
 	{
 		sound (self, FL_SWIM, "azoth/pain.wav", TRUE, TRUE);
@@ -2642,7 +2532,6 @@ void () azoth_flee =
 void () azoth_phase5 =
 {
 	local float q;
-
 	self.health = MTF_Monster_Health((1700 + (skill * 300)));
 	self.th_run = azoth_run1;
 	self.th_die = azoth_phase1;
@@ -2717,7 +2606,6 @@ void () monster_azoth_restart_go =
 	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/azoth.mdl");
 	setsize (self, VEC_HULL2_MIN, '32 32 160');
-	//self.health = (1700 + (skill * 300));
 	self.health = MTF_Monster_Health((1700 + (skill * 300)));
 	self.th_stand = azoth_stand1;
 	self.th_walk = azoth_walk1;
@@ -2753,15 +2641,11 @@ void () monster_azoth_restart =
 	precache_sound ("azoth/thwack.wav");
 	self.use = monster_azoth_restart_go;
 	total_monsters = total_monsters + TRUE;
-
 	self.classname = "monster_azoth";
 	self.netname = "Azoth";
-
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
-
 	self.#monsterflag = #STRFLAG_MONSTER;
-
 	self.#npc_origangle = self.angles;
 	self.#npc_spawndelay = 30;
 	self.#npc_spawnfunc = monster_azoth;
@@ -2791,19 +2675,14 @@ void () monster_azoth =
 	precache_sound ("azoth/crunch.wav");
 	precache_model ("progs/skull.mdl");
 	precache_sound ("azoth/thwack.wav");
-
 	self.netname = "Azoth";
-
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
-
 	self.#monsterflag = #STRFLAG_MONSTER;
-
 	self.#npc_origangle = self.angles;
 	self.#npc_spawndelay = 30;
 	self.#npc_spawnfunc = monster_azoth;
 	COOP_SetLives ();
-
 	self.solid = MOVETYPE_WALK;
 	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/azoth.mdl");
@@ -2878,15 +2757,11 @@ void () event_nightfall =
 	self.nextthink = (time + 0.1);
 	self.think = nightfall2;
 };
-
 void () func_blacksky =
-{
-};
-
+{};
 void () sky_open =
 {
 	local entity sky24;
-
 	sky24 = spawn ();
 	setmodel (sky24, "progs/sky.mdl");
 	setorigin (sky24, self.origin);
@@ -2896,7 +2771,6 @@ void () sky_open =
 void () rift_hold =
 {
 	local float r;
-
 	self.nextthink = (time + 0.1);
 	r = random ();
 	if ((r < 0.35))
@@ -2915,7 +2789,6 @@ void () rift_hold =
 void () rift_close =
 {
 	local float r;
-
 	lightstyle (FALSE, "e");
 	if ((self.frame > FALSE))
 	{
@@ -2993,7 +2866,6 @@ void () info_rift =
 		rift = self;
 	}
 };
-
 void () misc_mapmodel =
 {
 	if (!self.model)
@@ -3008,4 +2880,4 @@ void () misc_mapmodel =
 	{
 		makestatic (self);
 	}
-}; 
+};//END

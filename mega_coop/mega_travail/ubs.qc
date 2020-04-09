@@ -19,7 +19,6 @@ void () ubs_countscraglets =
 	}
 };
 float inside;
-
 void () ubscheckdist =
 {
 	local vector dist;
@@ -81,7 +80,6 @@ void () ubscheckdist =
 };
 void () ubshome;
 void () ubshome2;
-
 void () ubs_shot2 =
 {
 	local vector offang;
@@ -103,7 +101,6 @@ void () ubs_shot2 =
 	newmis.think = ubshome2;
 	newmis.nextthink = (time + 0.2);
 };
-
 void (float setting) ubs_spread =
 {
 	local vector offang;
@@ -130,7 +127,6 @@ void (float setting) ubs_spread =
 	newmis.nextthink = (time + 0.4);
 	newmis.enemy = self.enemy;
 };
-
 void (float dist, float damage) ubs_zap =
 {
 	local vector org;
@@ -163,7 +159,6 @@ void (float dist, float damage) ubs_zap =
 		T_Damage (trace_ent, self, self, damage);
 	}
 };
-
 void () ubs_shot1_touch =
 {
 	self.think = SUB_Null;
@@ -180,7 +175,6 @@ void () ubs_shot1_touch =
 	multicast (self.origin, MULTICAST_PHS);
 	BecomeExplosion ();
 };
-
 void () ubs_shot1_touch2 =
 {
 	self.think = SUB_Null;
@@ -193,7 +187,6 @@ void () ubs_shot1_touch2 =
 	spawnwiz ();
 	BecomeExplosion ();
 };
-
 void () ubshome =
 {
 	local vector dir;
@@ -248,7 +241,6 @@ void () ubshome =
 		self.temp6 = (self.temp6 + TRUE);
 	}
 };
-
 void () ubshome2 =
 {
 	local vector dir;
@@ -290,7 +282,6 @@ void () ubshome2 =
 		}
 	}
 };
-
 void (float offset) ubs_shot1 =
 {
 	local entity missile;
@@ -321,7 +312,6 @@ void (float offset) ubs_shot1 =
 	missile.enemy = self.enemy;
 	missile.movetype = MOVETYPE_FLYMISSILE;
 };
-
 void (entity missile, float mspeed, float accuracy) UbsMissile =
 {
 	local vector vec;
@@ -341,7 +331,6 @@ void (entity missile, float mspeed, float accuracy) UbsMissile =
 	missile.nextthink = (time + MOVETYPE_FLY);
 	missile.think = SUB_Remove;
 };
-
 float () ubsCheckAttack =
 {
 	local vector spot1;
@@ -423,7 +412,6 @@ float () ubsCheckAttack =
 	}
 	return (FALSE);
 };
-
 void () ubsAttackFinished =
 {
 	if (((enemy_range >= FL_SWIM) || !enemy_vis))
@@ -432,7 +420,6 @@ void () ubsAttackFinished =
 		self.think = ubs_run;
 	}
 };
-
 void () ubs_FastFire =
 {
 	local vector vec;
@@ -453,7 +440,6 @@ void () ubs_FastFire =
 	}
 	remove (self);
 };
-
 void () ubs_StartFast =
 {
 	local entity missile;
@@ -479,7 +465,6 @@ void () ubs_StartFast =
 	missile.think = ubs_FastFire;
 	missile.movedir = (VEC_ORIGIN - v_right);
 };
-
 void () ubs_idlesound =
 {
 	local float wr;
@@ -499,7 +484,6 @@ void () ubs_idlesound =
 	return;
 };
 void () ubs_unfurl2;
-
 void () ubs_unfurl1 = [ 0, ubs_unfurl2 ]
 {
 	sound (self, FL_SWIM, "ubs/wsight.wav", TRUE, FALSE);
@@ -510,51 +494,32 @@ void () ubs_unfurl1 = [ 0, ubs_unfurl2 ]
 	self.flags = (self.flags | FL_MONSTER);
 };
 void () ubs_unfurl3;
-
 void () ubs_unfurl2 = [ 1, ubs_unfurl3 ]
-{
-};
+{};
 void () ubs_unfurl4;
-
 void () ubs_unfurl3 = [ 2, ubs_unfurl4 ]
-{
-};
+{};
 void () ubs_unfurl5;
-
 void () ubs_unfurl4 = [ 3, ubs_unfurl5 ]
-{
-};
+{};
 void () ubs_unfurl6;
-
 void () ubs_unfurl5 = [ 4, ubs_unfurl6 ]
-{
-};
+{};
 void () ubs_unfurl7;
-
 void () ubs_unfurl6 = [ 5, ubs_unfurl7 ]
-{
-};
+{};
 void () ubs_unfurl8;
-
 void () ubs_unfurl7 = [ 6, ubs_unfurl8 ]
-{
-};
+{};
 void () ubs_unfurl9;
-
 void () ubs_unfurl8 = [ 7, ubs_unfurl9 ]
-{
-};
+{};
 void () ubs_unfurl10;
-
 void () ubs_unfurl9 = [ 8, ubs_unfurl10 ]
-{
-};
+{};
 void () ubs_unfurl11;
-
 void () ubs_unfurl10 = [ 9, ubs_unfurl11 ]
-{
-};
-
+{};
 void () ubs_unfurl11 = [ 10, ubs_runa1 ]
 {
 	self.ideal_yaw = vectoyaw ((self.enemy.origin - self.origin));
@@ -563,13 +528,11 @@ void () ubs_unfurl11 = [ 10, ubs_runa1 ]
 	self.th_run ();
 };
 void () ubs_standa2;
-
 void () ubs_standa1 = [ 11, ubs_standa2 ]
 {
 	ai_stand ();
 };
 void () ubs_standa3;
-
 void () ubs_standa2 = [ 12, ubs_standa3 ]
 {
 	ai_stand ();
@@ -593,13 +556,11 @@ void () ubs_standa5 = [ 15, ubs_standa6 ]
 	ai_stand ();
 };
 void () ubs_standa7;
-
 void () ubs_standa6 = [ 16, ubs_standa7 ]
 {
 	ai_stand ();
 };
 void () ubs_standa8;
-
 void () ubs_standa7 = [ 17, ubs_standa8 ]
 {
 	ai_stand ();
@@ -623,7 +584,6 @@ void () ubs_standb2 = [ 20, ubs_standb3 ]
 	ai_stand ();
 };
 void () ubs_standb4;
-
 void () ubs_standb3 = [ 21, ubs_standb4 ]
 {
 	ai_stand ();
@@ -647,7 +607,6 @@ void () ubs_standb6 = [ 24, ubs_standb7 ]
 	ai_stand ();
 };
 void () ubs_standb8;
-
 void () ubs_standb7 = [ 25, ubs_standb8 ]
 {
 	ai_stand ();
@@ -670,25 +629,21 @@ void () ubs_standc2 = [ 28, ubs_standc3 ]
 	ai_stand ();
 };
 void () ubs_standc4;
-
 void () ubs_standc3 = [ 29, ubs_standc4 ]
 {
 	ai_stand ();
 };
 void () ubs_standc5;
-
 void () ubs_standc4 = [ 30, ubs_standc5 ]
 {
 	ai_stand ();
 };
 void () ubs_standc6;
-
 void () ubs_standc5 = [ 31, ubs_standc6 ]
 {
 	ai_stand ();
 };
 void () ubs_standc7;
-
 void () ubs_standc6 = [ 32, ubs_standc7 ]
 {
 	ai_stand ();
@@ -868,7 +823,6 @@ void () ubs_walkc8 = [ 34, ubs_walk ]
 {
 	ai_walk (FL_CLIENT);
 };
-
 void () ubs_walk =
 {
 	if ((self.health <= 500))
@@ -1693,23 +1647,16 @@ void () ubs_makewiza1 = [ 107, ubs_makewiza2 ]
 void () ubs_makewiza3;
 
 void () ubs_makewiza2 = [ 108, ubs_makewiza3 ]
-{
-};
+{};
 void () ubs_makewiza4;
-
 void () ubs_makewiza3 = [ 109, ubs_makewiza4 ]
-{
-};
+{};
 void () ubs_makewiza5;
-
 void () ubs_makewiza4 = [ 110, ubs_makewiza5 ]
-{
-};
+{};
 void () ubs_makewiza6;
-
 void () ubs_makewiza5 = [ 111, ubs_makewiza6 ]
-{
-};
+{};
 void () ubs_makewiza7;
 
 void () ubs_makewiza6 = [ 112, ubs_makewiza7 ]
@@ -2579,25 +2526,17 @@ void () ubs_dieend1 = [ 223, ubs_dieend2 ]
 	sound (self, FL_SWIM, "ubs/wdeath2.wav", TRUE, FALSE);
 };
 void () ubs_dieend3;
-
 void () ubs_dieend2 = [ 224, ubs_dieend3 ]
-{
-};
+{};
 void () ubs_dieend4;
-
 void () ubs_dieend3 = [ 225, ubs_dieend4 ]
-{
-};
+{};
 void () ubs_dieend5;
-
 void () ubs_dieend4 = [ 226, ubs_dieend5 ]
-{
-};
+{};
 void () ubs_dieend6;
-
 void () ubs_dieend5 = [ 227, ubs_dieend6 ]
-{
-};
+{};
 void () ubs_dieend7;
 
 void () ubs_dieend6 = [ 228, ubs_dieend7 ]
@@ -2974,7 +2913,6 @@ void () Toss_Flap =
 
 void (entity attacker, float damage) ubs_Pain =
 {
-
 	if ((self.health <= 500))
 	{
 		if ((self.ubs_deflapped != TRUE))
@@ -3144,7 +3082,6 @@ void () monster_ubs1 =
 
 void () monster_ubs =
 {
-
 	if (deathmatch)
 	{
 		remove (self);

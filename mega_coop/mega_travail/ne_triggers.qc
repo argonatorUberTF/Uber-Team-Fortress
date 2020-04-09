@@ -33,7 +33,6 @@ void () trigger_void_touch =
 	}
 	force_retouch = FL_SWIM;
 };
-
 void () trigger_void =
 {
 	InitTrigger ();

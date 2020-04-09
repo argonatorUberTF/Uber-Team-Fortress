@@ -15,7 +15,6 @@ void () azoth_phase4;
 void () azoth_phase5;
 void () azoth_phase7;
 void () azoth_phase7b;
-
 float () azoth_new_flightpoint =
 {
 	local vector d;
@@ -141,7 +140,6 @@ float () azoth_new_flightpoint =
 	}
 	return (FALSE);
 };
-
 float (entity ent) towerquadrant =
 {
 	local float q;
@@ -173,7 +171,6 @@ float (entity ent) towerquadrant =
 		}
 	}
 };
-
 void (float q) Azoth_jumproundGo =
 {
 	local vector spot;
@@ -194,7 +191,6 @@ void (float q) Azoth_jumproundGo =
 	azoth_leap1 ();
 	self.attack_finished = (time + MOVETYPE_WALK);
 };
-
 void () Azoth_jumproundfirst =
 {
 	local float si;
@@ -228,7 +224,6 @@ void () Azoth_jumproundfirst =
 		}
 	}
 };
-
 void () Azoth_flytofirst =
 {
 	local vector spot;
@@ -264,7 +259,6 @@ void () Azoth_flytofirst =
 	azoth_leap1 ();
 	self.attack_finished = (time + MOVETYPE_WALK);
 };
-
 void (float q) Azoth_flyroundGo =
 {
 	local vector spot;
@@ -295,7 +289,6 @@ void (float q) Azoth_flyroundGo =
 	azoth_leap1 ();
 	self.attack_finished = (time + MOVETYPE_WALK);
 };
-
 void () Azoth_flyroundsecond =
 {
 	local float si;
@@ -333,7 +326,6 @@ void () Azoth_flyroundsecond =
 		}
 	}
 };
-
 void () Azoth_flytosecond =
 {
 	local vector spot;
@@ -360,7 +352,6 @@ void () Azoth_flytosecond =
 	azoth_leap1 ();
 	self.attack_finished = (time + MOVETYPE_BOUNCE);
 };
-
 float () AzothCheckMissile =
 {
 	makevectors (self.angles);
@@ -374,7 +365,6 @@ float () AzothCheckMissile =
 		return (FALSE);
 	}
 };
-
 void () AzothFloorAttack =
 {
 	local float r;
@@ -506,7 +496,6 @@ void () AzothFloorAttack =
 		}
 	}
 };
-
 float () AzothCheckAttack_Phase1 =
 {
 	local vector spot1;
@@ -638,7 +627,6 @@ float () AzothCheckAttack_Phase1 =
 		}
 	}
 };
-
 float () AzothCheckAttack_Phase5 =
 {
 	local entity targ;
@@ -689,7 +677,6 @@ float () AzothCheckAttack_Phase5 =
 	}
 	return (FALSE);
 };
-
 float () AzothCheckAttack_Phase4 =
 {
 	local entity targ;
@@ -754,7 +741,6 @@ float () AzothCheckAttack_Phase4 =
 	return (FALSE);
 };
 void () azoth_dief1;
-
 float () AzothCheckAttack =
 {
 	if ((self.origin_z < -200))

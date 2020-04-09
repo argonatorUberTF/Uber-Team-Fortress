@@ -6,7 +6,6 @@ void () spid_stand = [ 0, spid_stand ]
 	ai_stand ();
 };
 void () spid_walk2;
-
 void () spid_walk1 = [ 0, spid_walk2 ]
 {
 	if ((random () < 0.2))
@@ -16,7 +15,6 @@ void () spid_walk1 = [ 0, spid_walk2 ]
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk3;
-
 void () spid_walk2 = [ 1, spid_walk3 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
@@ -29,45 +27,38 @@ void () spid_walk3 = [ 2, spid_walk4 ]
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk5;
-
 void () spid_walk4 = [ 3, spid_walk5 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk6;
-
 void () spid_walk5 = [ 4, spid_walk6 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk7;
-
 void () spid_walk6 = [ 5, spid_walk7 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk8;
-
 void () spid_walk7 = [ 6, spid_walk8 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk9;
-
 void () spid_walk8 = [ 7, spid_walk9 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk10;
-
 void () spid_walk9 = [ 8, spid_walk10 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () spid_walk10 = [ 9, spid_walk1 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
@@ -212,110 +203,68 @@ void () spid_melee10 = [ 8, spid_run1 ]
 	ai_charge (STAT_TOTALMONSTERS);
 };
 void () spid_pain2;
-
 void () spid_pain1 = [ 20, spid_pain2 ]
-{
-};
+{};
 void () spid_pain3;
-
 void () spid_pain2 = [ 21, spid_pain3 ]
-{
-};
+{};
 void () spid_pain4;
-
 void () spid_pain3 = [ 22, spid_pain4 ]
-{
-};
+{};
 void () spid_pain5;
-
 void () spid_pain4 = [ 23, spid_pain5 ]
-{
-};
+{};
 void () spid_pain6;
-
 void () spid_pain5 = [ 24, spid_pain6 ]
-{
-};
+{};
 void () spid_pain7;
-
 void () spid_pain6 = [ 25, spid_pain7 ]
-{
-};
+{};
 void () spid_pain8;
-
 void () spid_pain7 = [ 26, spid_pain8 ]
-{
-};
+{};
 void () spid_pain9;
-
 void () spid_pain8 = [ 27, spid_pain9 ]
-{
-};
+{};
 void () spid_pain10;
-
 void () spid_pain9 = [ 28, spid_pain10 ]
-{
-};
+{};
 void () spid_pain11;
-
 void () spid_pain10 = [ 29, spid_pain11 ]
-{
-};
-
+{};
 void () spid_pain11 = [ 30, spid_run1 ]
-{
-};
+{};
 void () spid_death3;
-
 void () spid_death1 = [ 10, spid_death3 ]
-{
-};
-
+{};
 void () spid_death2 = [ 10, spid_death3 ]
-{
-};
+{};
 void () spid_death4;
-
 void () spid_death3 = [ 11, spid_death4 ]
-{
-};
+{};
 void () spid_death5;
-
 void () spid_death4 = [ 12, spid_death5 ]
-{
-};
+{};
 void () spid_death6;
-
 void () spid_death5 = [ 13, spid_death6 ]
-{
-};
+{};
 void () spid_death7;
-
 void () spid_death6 = [ 14, spid_death7 ]
-{
-};
+{};
 void () spid_death8;
-
 void () spid_death7 = [ 15, spid_death8 ]
-{
-};
+{};
 void () spid_death9;
-
 void () spid_death8 = [ 16, spid_death9 ]
-{
-};
+{};
 void () spid_death10;
-
 void () spid_death9 = [ 17, spid_death10 ]
-{
-};
+{};
 void () spid_death11;
-
 void () spid_death10 = [ 18, spid_death11 ]
 {
 	Become_Corpse ();
 };
-
 void () spid_death11 = [ 19, spid_death11 ]
 {
 	if (!checkclient ())
@@ -323,7 +272,6 @@ void () spid_death11 = [ 19, spid_death11 ]
 		remove (self);
 	}
 };
-
 void () spider_pain =
 {
 	if ((self.pain_finished > time))
@@ -338,7 +286,6 @@ void () spider_pain =
 	spid_pain1 ();
 	self.pain_finished = (time + MOVETYPE_WALK);
 };
-
 void () spider_die =
 {
 	if ((self.health < -90))
@@ -365,7 +312,6 @@ void () spider_die =
 	spid_death1 ();
 	self.solid = FALSE;
 };
-
 float () CheckSpiderJump =
 {
 	local vector dist;
@@ -398,7 +344,6 @@ float () CheckSpiderJump =
 	}
 	return (TRUE);
 };
-
 void () Spider_JumpTouch =
 {
 	local float ldmg;
@@ -429,7 +374,6 @@ void () Spider_JumpTouch =
 	self.think = spid_run1;
 	self.nextthink = (time + 0.1);
 };
-
 void () spid_leap1 = [ 10, spid_leap2 ]
 {
 	local vector dir;
@@ -488,16 +432,12 @@ void () spid_leap1 = [ 10, spid_leap2 ]
 	}
 };
 void () spid_leap3;
-
 void () spid_leap2 = [ 11, spid_leap3 ]
-{
-};
-
+{};
 void () spid_leap3 = [ 12, spid_run1 ]
 {
 	self.nextthink = (time + MOVETYPE_WALK);
 };
-
 void () spider_attack =
 {
 	if (CheckSpiderJump ())
@@ -510,7 +450,6 @@ void () spider_attack =
 	}
 	return;
 };
-
 void () poisondamage =
 {
 	if ((self.is_poisoned != FALSE))
@@ -544,7 +483,6 @@ void () poisondamage =
 		}
 	}
 };
-
 void () spider_poison =
 {
 	spawn_touchblood (FL_SWIM);
@@ -556,7 +494,6 @@ void () spider_poison =
 	}
 	poison_globaltime = poison_globaltime + MOVETYPE_FLY;
 };
-
 void () monster_spider1 =
 {
 	self.solid = MOVETYPE_WALK;
@@ -573,7 +510,6 @@ void () monster_spider1 =
 	self.th_melee = spid_melee1;
 	coop_walkmonster_start ();
 };
-
 void () monster_spider =
 {
 	if (deathmatch)

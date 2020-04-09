@@ -1,53 +1,44 @@
 void () axe_stand2;
-
 void () axe_stand1 = [ 17, axe_stand2 ]
 {
 	ai_stand ();
 };
 void () axe_stand3;
-
 void () axe_stand2 = [ 18, axe_stand3 ]
 {
 	ai_stand ();
 };
 void () axe_stand4;
-
 void () axe_stand3 = [ 19, axe_stand4 ]
 {
 	ai_stand ();
 };
 void () axe_stand5;
-
 void () axe_stand4 = [ 20, axe_stand5 ]
 {
 	ai_stand ();
 };
 void () axe_stand6;
-
 void () axe_stand5 = [ 21, axe_stand6 ]
 {
 	ai_stand ();
 };
 void () axe_stand7;
-
 void () axe_stand6 = [ 22, axe_stand7 ]
 {
 	ai_stand ();
 };
 void () axe_stand8;
-
 void () axe_stand7 = [ 23, axe_stand8 ]
 {
 	ai_stand ();
 };
 void () axe_stand9;
-
 void () axe_stand8 = [ 24, axe_stand9 ]
 {
 	ai_stand ();
 };
 void () axe_stand10;
-
 void () axe_stand9 = [ 25, axe_stand10 ]
 {
 	ai_stand ();
@@ -59,18 +50,15 @@ void () axe_stand10 = [ 26, axe_stand11 ]
 	ai_stand ();
 };
 void () axe_stand12;
-
 void () axe_stand11 = [ 27, axe_stand12 ]
 {
 	ai_stand ();
 };
-
 void () axe_stand12 = [ 28, axe_stand1 ]
 {
 	ai_stand ();
 };
 void () axe_walk2;
-
 void () axe_walk1 = [ 17, axe_walk2 ]
 {
 	ai_walk (TRUE);
@@ -179,7 +167,6 @@ void () axe_run6 = [ 5, axe_run1 ]
 {
 	ai_run (STAT_TOTALMONSTERS);
 };
-
 void (vector dir) axe_chop =
 {
 	local vector delta;
@@ -204,7 +191,6 @@ void (vector dir) axe_chop =
 	toss = ((v_forward * dir_x) + (v_right * dir_y)) + (v_up * dir_z);
 	self.enemy.velocity = (self.enemy.velocity + toss);
 };
-
 void () axe_runatka1 = [ 119, axe_runatka2 ]
 {
 	if ((random () > 0.5))
@@ -502,7 +488,6 @@ void () axe_die9 = [ 49, axe_die9 ]
 		remove (self);
 	}
 };
-
 void () axe_die =
 {
 	if ((self.health < -30))
@@ -517,7 +502,6 @@ void () axe_die =
 	sound (self, FL_SWIM, "knight/kdeath.wav", TRUE, TRUE);
 	axe_die1 ();
 };
-
 void () monster_axegrunt1 =
 {
 	self.solid = MOVETYPE_WALK;
@@ -533,7 +517,6 @@ void () monster_axegrunt1 =
 	self.th_die = axe_die;
 	coop_walkmonster_start ();
 };
-
 void () monster_axegrunt =
 {
 	if (deathmatch)

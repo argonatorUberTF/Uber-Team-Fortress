@@ -1,39 +1,32 @@
 void () juggernaut_pain2;
-
 void () juggernaut_pain1 = [ 90, juggernaut_pain2 ]
 {
 	ai_pain (TRUE);
 };
 void () juggernaut_pain3;
-
 void () juggernaut_pain2 = [ 91, juggernaut_pain3 ]
 {
 	ai_pain (TRUE);
 };
 void () juggernaut_pain4;
-
 void () juggernaut_pain3 = [ 92, juggernaut_pain4 ]
 {
 	ai_pain (TRUE);
 };
 void () juggernaut_pain5;
-
 void () juggernaut_pain4 = [ 93, juggernaut_pain5 ]
 {
 	ai_painforward (TRUE);
 };
 void () juggernaut_pain6;
-
 void () juggernaut_pain5 = [ 94, juggernaut_pain6 ]
 {
 	ai_painforward (TRUE);
 };
-
 void () juggernaut_pain6 = [ 95, juggernaut_run1 ]
 {
 	ai_painforward (TRUE);
 };
-
 void (entity attacker, float take) juggernaut_pain =
 {
 	local float r;
