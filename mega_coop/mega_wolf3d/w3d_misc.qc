@@ -5,7 +5,6 @@ void() ai_sprite_orient =
 		if (self.think != self.th_stand && (self.oframe != 8 && self.oframe != 16 && self.oframe != 24 && self.oframe != 32))
 			if ( (coop) || (deathmatch) )
 				return;
-					
 		best_client_dist = 9999;
 		clienta = find(world, classname, "player");
 		while (clienta) {
@@ -39,8 +38,6 @@ void() ai_sprite_orient =
 		else if (totang < 247.5 && totang >= 202.5)
 			self.frame = self.frame + 7;
 };
-
-
 void(vector dir) FireMonsterBullets =
 {
 	local	vector	 org;
@@ -52,7 +49,6 @@ void(vector dir) FireMonsterBullets =
 	if (trace_ent.takedamage && trace_ent.classname == "player")
 	{
 		endist = ai_distance(self.enemy);
-
 		if (self.classname == "monster_ss" || self.classname == "monster_boss")
 			endist = (endist*2) / 3;
 		if (self.enemy.velocity_x >= 160 || self.enemy.velocity_x <= -160 || self.enemy.velocity_y >= 160 || self.enemy.velocity_y <= -160)
@@ -70,7 +66,6 @@ void(vector dir) FireMonsterBullets =
 		else
 			hitchance = hitchance - (endist*8);
 		self = sstemp;
-
 		org = trace_endpos - v_forward*4;
 		if (random()*256 < hitchance)
 		{
@@ -95,7 +90,6 @@ void(vector dir) FireMonsterBullets =
 
 	}
 };
-
 void(string muzspr, float muztime, float mzlfrm) ai_monster_fire =
 {
 	local	vector	dir;
@@ -110,16 +104,10 @@ void(string muzspr, float muztime, float mzlfrm) ai_monster_fire =
 	dir = normalize (self.enemy.origin - self.origin);
 	FireMonsterBullets (dir);
 };
-
-
 void() DropAmmo =
-{
-};
-
+{};
 void() DropGun =
-{
-};
-
+{};
 void() DropKey =
 {
 	local entity item33;
@@ -140,15 +128,12 @@ void() DropKey =
 	item33.classname = "backpack";
 	item33.touch = key_touch;
 };
-
-
 void() trigger_area_touch =
 {
 	if (other.health <= 0)
 		return;
 	other.area = self.area;
 };
-
 void() trigger_area =
 {
 	if (deathmatch == 1)
@@ -156,14 +141,11 @@ void() trigger_area =
 		dremove(self);
 		return;
 	}
-
 	if (!self.area)
 		self.area = 1;
-
 	InitTrigger ();
 	self.touch = trigger_area_touch;
 };
-
 void() treasure_touch =
 {
 	if (other.classname != "player")
@@ -195,7 +177,6 @@ void() treasure_touch =
 	if (!deathmatch)
 	{
 		other.ammo_nails = other.ammo_nails + self.ammo_nails;
-
 		if (other.ammo_nails >= 400)
 		{
 			sound (other, CHAN_ITEM, "lsfx/044.wav", 1, ATTN_NORM);
@@ -215,7 +196,6 @@ void() treasure_touch =
 		found_secrets = found_secrets + 1;
 		WriteByte (MSG_ALL, SVC_FOUNDSECRET);
 	}
-
 	self.solid = SOLID_NOT;
 	self.model = string_null;
 	if (deathmatch)
@@ -226,7 +206,6 @@ void() treasure_touch =
 	activator = other;
 	SUB_UseTargets();
 };
-
 void() item_treasure =
 {
 	precache_model("sprites/items/!treasure.spr");
@@ -243,8 +222,6 @@ void() item_treasure =
 	setsize (self, '-16 -16 -32', '16 16 24');
 	StartItem ();
 };
-
-
 void() wammo_touch =
 {
 local entity	sstemp;
@@ -278,7 +255,6 @@ local float		best;
 			self.nextthink = time + 30;
 			self.think = SUB_regen;
 		}
-
 		activator = other;
 		SUB_UseTargets();
 	}
@@ -298,7 +274,6 @@ local float		best;
 	setsize (self, '-16 -16 -32', '16 16 24');
 	StartItem ();
 };
-
 void() wolf_decor =
 {
 	if (!self.model)
@@ -318,16 +293,13 @@ void() wolf_decor =
 		makestatic (self);
 	}
 };
-
 void() pushwall_done =
 {
 	self.state = STATE_TOP;
 	found_secrets = found_secrets + 1;
 	WriteByte (MSG_ALL, SVC_FOUNDSECRET);
-
 	dremove(self.trigger_field);
 };
-
 void() pushwall_use =
 {
 	if (self.state == STATE_UP)
@@ -339,19 +311,16 @@ void() pushwall_use =
 	SUB_CalcMove (self.pos2, self.speed, pushwall_done);
 
 };
-
 void() pushwall_blocked =
 {
 	T_Damage (other, self, self, 35);
 };
-
 void() pushwall_killed =
 {
 	self.health = self.max_health;
 	self.takedamage = DAMAGE_NO;
 	pushwall_use ();
 };
-
 void() pushwall_trigger_touch =
 {
 	local vector	testingz;
@@ -380,7 +349,6 @@ void() pushwall_trigger_touch =
 	self = self.owner;
 	pushwall_use ();
 };
-
 entity(vector fmins, vector fmaxs) spawn_pushwall_field =
 {
 	local entity	trigger;
@@ -401,7 +369,6 @@ entity(vector fmins, vector fmaxs) spawn_pushwall_field =
 		setsize (trigger, fmins - '32 32 0', fmaxs + '32 32 0');
 	return (trigger);
 };
-
 void() pushwall_spawn_trigger =
 {
 	if (self.health)
@@ -410,7 +377,6 @@ void() pushwall_spawn_trigger =
 		return;
 	self.trigger_field = spawn_pushwall_field(self.mins, self.maxs);
 };
-
 void() func_pushwall =
 {
 	precache_sound ("034.wav");
@@ -440,8 +406,6 @@ void() func_pushwall =
 	self.think = pushwall_spawn_trigger;
 	self.nextthink = self.ltime + 0.1;
 };
-
-
 void() item_key =
 {
 	if (deathmatch)
@@ -464,8 +428,6 @@ void() item_key =
 	setsize (self, '-16 -16 -32', '16 16 24');
 	StartItem ();
 };
-
-
 void() life_touch =
 {
 	if (other.classname != "player")
@@ -498,11 +460,9 @@ void() life_touch =
 		self.nextthink = time + 30;
 		self.think = SUB_regen;
 	}
-
 	activator = other;
 	SUB_UseTargets();
 };
-
 void() item_life =
 {
 	precache_model("sprites/items/life.spr");
@@ -514,11 +474,8 @@ void() item_life =
 	setsize (self, '-16 -16 -32', '16 16 24');
 	StartItem ();
 };
-
-
 void() wolfdoor_go_down;
 void() wolfdoor_go_up;
-
 void() wolfdoor_blocked =
 {
 	if (self.wait >= 0)
@@ -529,20 +486,17 @@ void() wolfdoor_blocked =
 			wolfdoor_go_down ();
 	}
 };
-
 void() wolfdoor_hit_top =
 {
 	self.state = STATE_TOP;
 	self.think = wolfdoor_go_down;
 	self.nextthink = self.ltime + self.wait;
 };
-
 void() wolfdoor_hit_bottom =
 {
 	dremove(self.oldenemy);
 	self.state = STATE_BOTTOM;
 };
-
 void() wolfdoor_go_down =
 {
 	local vector	testingz;
@@ -578,7 +532,6 @@ void() wolfdoor_go_down =
 	self.state = STATE_DOWN;
 	SUB_CalcMove (self.pos1, self.speed, wolfdoor_hit_bottom);
 };
-
 void() wolfdoor_checker =
 {
 	local entity	head;
@@ -601,7 +554,6 @@ void() wolfdoor_checker =
 		}
 		return;
 	}
-
 	head = nextent(world);
 	while (head != world)
 	{
@@ -617,12 +569,10 @@ void() wolfdoor_checker =
 	}
 	self.nextthink = time + 0.1;
 };
-
 void() wolfdoor_go_up =
 {
 	if (self.state == STATE_UP)
 		return;	
-
 	if (self.state == STATE_TOP)
 	{
 		return;
@@ -642,8 +592,6 @@ void() wolfdoor_go_up =
 	SUB_CalcMove (self.pos2, self.speed, wolfdoor_hit_top);
 	SUB_UseTargets();
 };
-
-
 void() wolfdoor_fire =
 {
 	if (self.state == STATE_TOP && activator.classname == "player")
@@ -653,16 +601,11 @@ void() wolfdoor_fire =
 	}
 	wolfdoor_go_up ();
 };
-
-
 void() wolfdoor_use =
 {
-
 	self.message = "";	
 	wolfdoor_fire ();
 };
-
-
 void() wolfdoor_trigger_touch =
 {
 	local vector	testingz;
@@ -710,16 +653,12 @@ void() wolfdoor_trigger_touch =
 	self = self.owner;
 	wolfdoor_use ();
 };
-
-
 void() wolfdoor_killed =
 {
 	self.health = self.max_health;
 	self.takedamage = DAMAGE_NO;
 	wolfdoor_use ();
 };
-
-
 void() wolfdoor_touch =
 {
 	if (other.classname != "player")
@@ -732,7 +671,6 @@ void() wolfdoor_touch =
 		centerprint (other, self.message);
 	}
 };
-
 void() WolfLinkDoors;
 void() func_wolfdoor =
 {
@@ -783,7 +721,6 @@ void() func_wolfdoor =
 	self.think = WolfLinkDoors;
 	self.nextthink = self.ltime + 0.1;
 };
-
 void() WolfLinkDoors =
 {
 	if (self.health)
@@ -793,4 +730,4 @@ void() WolfLinkDoors =
 
 	self.trigger_field = spawn_field(self.mins, self.maxs);
 };
-//END 
+//END
