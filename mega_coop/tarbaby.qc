@@ -386,7 +386,6 @@ void () monster_tarbaby1 =
 	self.th_die = tbaby_die1;
 	coop_walkmonster_start ();
 };
-
 void () monster_tarbaby =
 {
 	if (deathmatch)

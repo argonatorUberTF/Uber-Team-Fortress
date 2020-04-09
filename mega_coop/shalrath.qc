@@ -4,7 +4,6 @@ void () shal_stand = [ 23, shal_stand ]
 {
 	ai_stand ();
 };
-
 void () shal_walk1 = [ 24, shal_walk2 ]
 {
 	if ((random () < 0.2))
@@ -13,12 +12,10 @@ void () shal_walk1 = [ 24, shal_walk2 ]
 	}
 	ai_walk (MOVETYPE_TOSS);
 };
-
 void () shal_walk2 = [ 25, shal_walk3 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () shal_walk3 = [ 26, shal_walk4 ]
 {
 	ai_walk (false);
@@ -28,22 +25,18 @@ void () shal_walk4 = [ 27, shal_walk5 ]
 {
 	ai_walk (false);
 };
-
 void () shal_walk5 = [ 28, shal_walk6 ]
 {
 	ai_walk (false);
 };
-
 void () shal_walk6 = [ 29, shal_walk7 ]
 {
 	ai_walk (false);
 };
-
 void () shal_walk7 = [ 30, shal_walk8 ]
 {
 	ai_walk (MOVETYPE_FLY);
 };
-
 void () shal_walk8 = [ 31, shal_walk9 ]
 {
 	ai_walk (MOVETYPE_TOSS);
@@ -264,7 +257,6 @@ void () shalrath_die =
 };
 void () ShalMissileTouch;
 void () ShalHome;
-
 void () ShalMissile =
 {
 	local entity missile;

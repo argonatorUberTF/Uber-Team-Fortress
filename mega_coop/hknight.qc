@@ -290,8 +290,7 @@ void () hknight_die3 = [ 44, hknight_die4 ]
 };
 
 void () hknight_die4 = [ 45, hknight_die5 ]
-{
-};
+{};
 
 void () hknight_die5 = [ 46, hknight_die6 ]
 {

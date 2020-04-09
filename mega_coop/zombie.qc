@@ -320,18 +320,14 @@ void() Zombie_BioInfection_Decay =
 	{
 		dremove(self);
 	}
-
 	self.nextthink = time + 2;
 	deathmsg = 13;
 	TF_T_Damage(self.owner, self, self.enemy, 3, 1, 0);
 	SpawnBlood(self.owner.origin, 30);
-
 };
-
 void () ZombieGrenadeTouch =
 {
 	local entity BioInfection;
-
 	if ((other == self.owner))
 	{
 		return;
@@ -354,7 +350,6 @@ void () ZombieGrenadeTouch =
 		remove (self);
 		return;
 	}
-	
 	sound (self, CHAN_WEAPON, "zombie/z_miss.wav", true, ATTN_NORM);
 	self.velocity = VEC_ORIGIN;
 	self.avelocity = VEC_ORIGIN;
@@ -1091,7 +1086,6 @@ void () zombie_die =
 void (entity attacker, float take) zombie_pain =
 {
 	local float r;
-
 	self.health = 60;
 	if ((take < MOVETYPE_FLYMISSILE))
 	{
@@ -1143,7 +1137,6 @@ void (entity attacker, float take) zombie_pain =
 		}
 	}
 };
-
 void () monster_zombie1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -1173,7 +1166,6 @@ void () monster_zombie1 =
 		self.flags |= #FL_FINDABLE_NONSOLID;
 	}
 };
-
 void () monster_zombie =
 {
 	if (deathmatch)

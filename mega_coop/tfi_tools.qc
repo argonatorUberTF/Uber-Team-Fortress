@@ -20,7 +20,6 @@ void ( string fname_a, string fname_b, float changeline, string changecontext, f
 	close ( dummyfile );
 	close (file);
 };
-
 float ( string fromme, string str_section, string str_value, float str_valueno ) TFI_GetLine =
 {
 	local float file;
@@ -92,7 +91,6 @@ void ( string fromme, string str_section, string str_value, float str_valueno, s
 							tln);				// and this is how many lines should be copied
 	CopyFile( "dummy_quest.tfi", fromme, 0, string_null, tln);
 };
-
 float (string fname ) TFI_ValidFileName =
 {
 	local float rtype;

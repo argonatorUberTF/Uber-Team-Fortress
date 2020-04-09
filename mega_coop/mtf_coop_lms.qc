@@ -32,7 +32,6 @@ void ( entity m_precache ) SetupMonsterPrecache =
 	m_precache.nextthink = time + 666;
 	self = oself;
 };
-
 // set up everything and spawn the goalie (depending on game mode)
 void () pre_spawnwave =
 {
@@ -77,7 +76,6 @@ void () pre_spawnwave =
 	LMS_GetTargets ( 1 );
 	spawnwave();
 };
-
 void () wait_for_players =
 {
 	if (num_players > 0) {
@@ -91,8 +89,7 @@ void () wait_for_players =
 		self.think = wait_for_players;
 		self.nextthink = time + 1;
 	}
-}
-
+};
 void () info_lmsdetect =
 {
 	local entity m_precache;
@@ -141,7 +138,6 @@ void () info_lmsdetect =
 					default_spawn = #TRUE;
 				break;
 			}
-	
 		} while (1);
 		close (file);
 	}
@@ -188,7 +184,6 @@ bprint(2,"NOT using def spawn!\n");
 
 				break;
 			}
-	
 		} while (1);
 		close(file);
 	}
@@ -235,7 +230,6 @@ bprint(2,"using def spawn!\n");
 	self.#lms_level = 1;
 	wait_for_players ();
 };
-
 float () lms_checklose =
 {
 	local entity te;	
@@ -269,7 +263,6 @@ float () lms_checklose =
 	}
 	return 0;
 };
-	
 void () lms_goalie_think =
 {
 	local float p_scale;
@@ -288,7 +281,6 @@ void () lms_goalie_think =
 	self.think = lms_goalie_think;
 	self.nextthink = time + 5;
 };
-
 void () spawnwave_resttime =
 {
 	if (self.noise2 != string_null) {		// match is over, lets do our end trigger
@@ -339,7 +331,6 @@ void () spawnwave =
 	}
 	if (self.#lms_level > #LMS_LAST_LEVEL) {
 		bprint( 2, "PLAYERS WIN!\n" );
-		
 #ifdef mtf_coop_achievements
 		Achievements_Change( world, world, ACHIEVEMENTS_GLOBALADD, ACHIEVEMENT_LMS, 1 );
 #endif
@@ -382,7 +373,6 @@ void () spawnwave =
 	self.think = spawnwave_resttime;
 	self.nextthink = time + #LMS_MATCH_TIME;
 };
-
 float ( float m_level ) GetLevelTiming =
 {
 #ifdef mtf_coop_expsys
@@ -407,7 +397,6 @@ float ( float m_level ) GetLevelTiming =
 			return 1.25;//m_level * .5;
 	}
 };
-
 void() monsterspawn_use =
 {
 	if (self.#lms_disactivated == #FALSE)
@@ -415,7 +404,6 @@ void() monsterspawn_use =
 	else
 		self.#lms_disactivated = #FALSE;
 };
-
 void () func_monsterspawn =
 {
 	local float rndthink, rndspawn, p_scale;
@@ -464,7 +452,6 @@ void () func_monsterspawn =
 	self.think = func_monsterspawn;
 	self.nextthink = time + rndthink;
 };
-
 void ( entity newmon, float m_level ) GetMonsterSpawn =
 {
 	local float rnd;
@@ -629,7 +616,6 @@ dprint(" is spawning\n");
 	}
 #endif
 };
-
 void ( float m_level ) LMS_GetTargets =
 {
 	self.noise1 = string_null;
@@ -639,7 +625,6 @@ void ( float m_level ) LMS_GetTargets =
 	local float file;
 	lname = strcat( "level_", ftos(m_level) );
 	if ( lms_entity.#lms_readfile == #TRUE ) {
-
 		fname = frik_strcat( "maps/", mapname, ".tfi" );
 		file = open (fname, 0);
 		a = "";
@@ -682,13 +667,11 @@ void ( float m_level ) LMS_GetTargets =
 					a = read (file);
 				break;
 			}
-	
 		} while (1);
 		close (file);
 	}
 #endif
 };
-
 void () usemany_use =
 {
 bprint(2,self.netname);
@@ -711,12 +694,10 @@ bprint(2," is me name\n");
 		SUB_UseTargets ();
 	}
 };
-
 void () trigger_usemany =
 {
 	self.use = usemany_use;
 };
-
 void () monsterkill_use =
 {
 	if (activator.is_monster != 1)
@@ -766,13 +747,11 @@ void () lms_multi_touch =
 	self.enemy = other;
 	multi_trigger();
 };
-
 void () monster_trigger_multiple =
 {
 	trigger_multiple();
 	self.touch = lms_multi_touch;
 };
-
 void () monstergoal_think =
 {
 	local entity head;
@@ -810,7 +789,6 @@ void () monstergoal_pain =
 	self.#last_health = self.health;	
 	self.#next_warning_time = time + 1;
 };
-
 void () monstergoal_prethink =
 {
 	self.team_no = 1;
@@ -826,7 +804,6 @@ void () monstergoal_prethink =
 	self.think = monstergoal_think;
 	self.nextthink = time + 1;
 };
-
 void () func_monstergoal =
 {
 	local entity destroyme;
@@ -845,9 +822,6 @@ void () func_monstergoal =
 	destroyme.nextthink = time;
 	setmodel(destroyme,"progs/player.mdl");
 };
-
-
-
 void () alamo_use =
 {
 	self.cnt = self.cnt - 1;
@@ -855,7 +829,6 @@ void () alamo_use =
 		self.#alamo_active = #TRUE;
 	}
 };
-
 void () alamo_touch =
 {
 	if (self.#alamo_active == #FALSE)
@@ -877,7 +850,6 @@ void () alamo_touch =
 		return;
 	self.think = SUB_Null;
 };
-
 void () func_alamo =
 {
 	self.solid = 1;

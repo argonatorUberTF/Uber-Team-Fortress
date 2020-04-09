@@ -90,7 +90,6 @@ string (float anum) Achievements_GetName =
 			return "noname";
 			break;
 	}
-//
 	return "noname";
 };
 
@@ -187,10 +186,8 @@ float (float anum) Achievements_CheckComplete =
 			return 50000;			// some insane amount.. because something is wack
 			break;
 	}
-//
 	return 5000;
 };
-
 // How much exp a player earns for completing an achievement
 float ( float anum ) Achievements_GetExp =
 {
@@ -286,7 +283,6 @@ float ( float anum ) Achievements_GetExp =
 	}
 	return 2500;
 };
-
 // Either read the file or create the file for awards/achievements (called each time a player joins in client.pqc)
 float (entity t_plyr) Achievements_Setup =
 {
@@ -301,7 +297,6 @@ float (entity t_plyr) Achievements_Setup =
 	}
 	filenamee = frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" );
 	filenamee = strzone(filenamee);
-
 	if ( invalid_exp_name(filenamee) == 1 ) {
 		strunzone(filenamee);
 		//self.#achievements = -1;
@@ -311,7 +306,6 @@ float (entity t_plyr) Achievements_Setup =
 	if ( checkfilename(filenamee) != 1 ) {	// done in C - makes sure the file name is writable
 		strunzone(filenamee);
 		//self.#achievements = -1;
-		
 		// make sure that the folder exists to be written to in the first place
 		if (checkfilename( "ranks/inv/test" ) == #FALSE)
 			achievements_enabled = #FALSE;
@@ -367,7 +361,6 @@ float (entity t_plyr) Achievements_Setup =
 	strunzone(filenamee);
 	return #TRUE;
 };
-
 // Print player's awards stats to self or other players (called from "cmd ach #" at the moment)
 //0: Print to player only the awards he/she has earned
 //1: Player says to other players the earned achievements
@@ -583,7 +576,6 @@ float (string mpn) GetEP2MapBit =
 		return 64;
 	return -1;
 };
-
 float (string mpn) GetEP3MapBit = 
 {
 	if (mpn  == "e3m1")
@@ -602,7 +594,6 @@ float (string mpn) GetEP3MapBit =
 		return 64;
 	return -1;
 };
-		
 float (string mpn) GetEP4MapBit = 
 {
 	if (mpn  == "e4m1")
@@ -644,5 +635,4 @@ float (string mpn) GetW3DMapBit =
 		return 256;
 	return -1;
 };
-
 //END

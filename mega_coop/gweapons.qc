@@ -132,7 +132,6 @@ entity (entity source) zg_findtarget =
 		else
 			sprint (source, PRINT_HIGH, "There's nothing there to pickup.\n");
 	}
-
 	return world;
 };
 void () zg_think =
@@ -182,7 +181,6 @@ void (entity pickuper, float toss) zg_drop =
 			pickupee.movetype = 10;
 			pickupee.velocity = v_forward * 700;
 		}
-
 		pickuper.owner = pickuper._oldowner;
 		pickuper.pickedupobject_hands = world;
 		if (pickuper.health > 0) {
@@ -255,7 +253,6 @@ void (entity pickuper, float toss) zg_togglepickup =
 	else
 		zg_drop (pickuper, toss);
 };
-
 #ifdef GW_ALLOW_PICKUP_ITEM
 void () ZG_ExplosiveTouch;
 float (entity test) ZG_ItemType =
@@ -274,7 +271,6 @@ float (entity test) ZG_ItemType =
 
 	return 0;
 };
-
 void(entity pickupee) ZG_FireItem = 
 {
 	if (pickupee.model == "" || !pickupee.model)
@@ -309,7 +305,6 @@ void(entity pickupee) ZG_FireItem =
 	setsize(newmis, '0 0 0', '0 0 0');
 	setorigin(newmis, pickupee.origin);
 };
-
 void () ZG_ExplosiveTouch =
 {
 	local float damg;

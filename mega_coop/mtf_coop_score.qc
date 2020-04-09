@@ -8,7 +8,6 @@ void (float clientno, float clientfrags) svcUpdateFrags;
 void (entity mnst) Monster_Stats_Send_Full;
 void (float clientno) clientSetUsed2;
 float () clientNextAvailable2;
-
 // Hack a monster score count into the QW scoreboard (logs monster frags)
 void () Monster_Stats_Create =
 {
@@ -39,7 +38,6 @@ void () Monster_Stats_Create =
 #endif
 	Monster_Stats_Send_Full( monster_score );
 };
-
 void (entity mnst) Monster_Stats_Send_Full =
 {
 	local float num;
@@ -58,7 +56,6 @@ void (entity mnst) Monster_Stats_Send_Full =
 	svcUpdateUserInfo (mnst.fClientNo, mnst.fUserID, num, num, mnst.netname, mnst.team_no, 1/*mnst.skin*/);
 	svcUpdateFrags (mnst.fClientNo, mnst.frags);
 };
-
 void (float clientno, float clientfrags) svcUpdateFrags =
 {
 	#CheckScoreCVAR
@@ -66,7 +63,6 @@ void (float clientno, float clientfrags) svcUpdateFrags =
 	WriteByte (2, clientno);
 	WriteShort (2, clientfrags);
 };
-
 void (float clientno, float clientping) svcUpdatePing =
 {
 	#CheckScoreCVAR
@@ -74,7 +70,6 @@ void (float clientno, float clientping) svcUpdatePing =
 	WriteByte (2, clientno);
 	WriteShort (2, clientping);
 };
-
 void (float clientno, float cliententertime) svcUpdateEnterTime =
 {
 	#CheckScoreCVAR
@@ -82,7 +77,6 @@ void (float clientno, float cliententertime) svcUpdateEnterTime =
 	WriteByte (2, clientno);
 	WriteLong (2, cliententertime);
 };
-
 void (float clientno, float clientid, float clientshirt, float clientpants, string clientname, float botteam, float botskin) svcUpdateUserInfo =
 {
 	#CheckScoreCVAR
@@ -372,7 +366,6 @@ void (float clientno, float clientid, float clientshirt, float clientpants, stri
 	WriteByte (2, 92);
 	WriteString (2, clientname);
 };
-
 float (float clientno) clientBitFlag2 =
 {
 	local float bitflag;
@@ -384,7 +377,6 @@ float (float clientno) clientBitFlag2 =
 	}
 	return (bitflag);
 };
-
 void (float clientno) clientSetFree2 =
 {
 	PLAYER_COUNT = PLAYER_COUNT - 1.000000;
@@ -397,7 +389,6 @@ void (float clientno) clientSetFree2 =
 		fActiveClients1 = fActiveClients1 - (fActiveClients1 & clientBitFlag2 (clientno));
 	}
 };
-
 void (float clientno) clientSetUsed2 =
 {
 	if ((clientno > 16.000000))
@@ -409,7 +400,6 @@ void (float clientno) clientSetUsed2 =
 		fActiveClients1 = fActiveClients1 | clientBitFlag2 (clientno);
 	}
 };
-
 void (float clientno) botInvalidClientNo2 =
 {
 	local entity bot;
@@ -426,7 +416,6 @@ void (float clientno) botInvalidClientNo2 =
 		bot = find (bot, classname, "player");
 	}
 };
-
 void () ClientInRankings2 =
 {
 	local float cno;
@@ -444,7 +433,6 @@ void () ClientInRankings2 =
 	self.fClientNo = cno;
 	self.ishuman = 1;
 };
-
 float (float clientno) clientIsActive2 =
 {
 	if ((clientno > 16.000000))
@@ -478,10 +466,8 @@ float () clientNextAvailable2 =
 	}
 	return (-1);
 };
-
 void ( entity ment ) Coop_ClientFixRankings =
 {
 	ment.fUserID = ment.fUserID + 1;
 };
-
 //END

@@ -69,7 +69,6 @@ void() fish_melee =
 	if (!self.enemy)
 		return;		// removed before stroke
 	delta = self.enemy.origin - self.origin;
-
 	if (vlen(delta) > 60)
 		return;
 	sound (self, CHAN_VOICE, "fish/bite.wav", 1, ATTN_NORM);

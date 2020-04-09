@@ -21,7 +21,7 @@ $frame shockc1 shockc2 shockc3 shockc4 shockc5 shockc6 shockc7 shockc8
 $frame shockc9 shockc10
 void (vector p) boss_missile;
 void () boss_missile1;
-void boss_face(float bIsIdling)
+void boss_face(float bIsIdling) =
 {	
 	if (self.enemy.health <= 0 || random() < 0.02)
 	{
@@ -32,79 +32,47 @@ void boss_face(float bIsIdling)
 	ai_face();
 	if(bIsIdling && self.enemy.health > 0)
 		boss_missile1();
-		
-}
+};
 void () boss_rise1 = [ 0, boss_rise2 ]
 {
 	sound (self, CHAN_WEAPON, "boss1/out1.wav", true, ATTN_NORM);
 };
-
 void () boss_rise2 = [ 1, boss_rise3 ]
 {
 	sound (self, CHAN_VOICE, "boss1/sight1.wav", true, ATTN_NORM);
 };
-
 void () boss_rise3 = [ 2, boss_rise4 ]
-{
-};
-
+{};
 void () boss_rise4 = [ 3, boss_rise5 ]
-{
-};
-
+{};
 void () boss_rise5 = [ 4, boss_rise6 ]
-{
-};
-
+{};
 void () boss_rise6 = [ 5, boss_rise7 ]
-{
-};
-
+{};
 void () boss_rise7 = [ 6, boss_rise8 ]
-{
-};
-
+{};
 void () boss_rise8 = [ 7, boss_rise9 ]
-{
-};
-
+{};
 void () boss_rise9 = [ 8, boss_rise10 ]
-{
-};
-
+{};
 void () boss_rise10 = [ 9, boss_rise11 ]
-{
-};
-
+{};
 void () boss_rise11 = [ 10, boss_rise12 ]
-{
-};
-
+{};
 void () boss_rise12 = [ 11, boss_rise13 ]
-{
-};
+{};
 
 void () boss_rise13 = [ 12, boss_rise14 ]
-{
-};
-
+{};
 void () boss_rise14 = [ 13, boss_rise15 ]
-{
-};
-
+{};
 void () boss_rise15 = [ 14, boss_rise16 ]
-{
-};
-
+{};
 void () boss_rise16 = [ 15, boss_rise17 ]
-{
-};
-
+{};
 void () boss_rise17 = [ 16, boss_missile1 ]
-{
-};
+{};
 void () boss_missile1;
-
 void() boss_idle1	=[	$walk1, boss_idle2 ]
 {};
 void() boss_idle2	=[	$walk2, boss_idle3 ] {boss_face(TRUE);};
@@ -234,7 +202,6 @@ void (vector p) boss_missile =
 		vVelocity = 475;
 	offang = vectoangles (self.enemy.origin - self.origin);	
 	makevectors (offang);
-
 	org = self.origin + p_x*v_forward + p_y*v_right + p_z*'0 0 1';
 	if (skill > 1)
 	{

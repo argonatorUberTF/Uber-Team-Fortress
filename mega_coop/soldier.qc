@@ -1,6 +1,5 @@
 #ifndef mtf_coop_nehahra
 void () army_fire;
-
 void () army_stand1 = [ 0, army_stand2 ]
 {
 	ai_stand ();
@@ -398,9 +397,7 @@ void () army_painc12 = [ 71, army_painc13 ]
 };
 
 void () army_painc13 = [ 72, army_run1 ]
-{
-};
-
+{};
 void (entity attacker, float damage) army_pain =
 {
 	local float r;
@@ -431,7 +428,6 @@ void (entity attacker, float damage) army_pain =
 		}
 	}
 };
-
 void () army_fire =
 {
 	local vector dir;
@@ -463,7 +459,6 @@ void () army_fire =
 	else
 		FireBullets (MOVETYPE_STEP, dir, '0.1 0.1 0');
 };
-
 void () army_die1 = [ 8, army_die2 ]
 {
 };
@@ -471,7 +466,6 @@ void () army_die1 = [ 8, army_die2 ]
 void () army_die2 = [ 9, army_die3 ]
 {
 };
-
 void () army_die3 = [ 10, army_die4 ]
 {
 	self.solid = SOLID_NOT;
@@ -600,7 +594,6 @@ void () monster_army1 =
 	self.th_missile = army_atk1;
 	self.th_pain = army_pain;
 	self.th_die = army_die;
-
 	coop_walkmonster_start ();
 };
 
@@ -633,6 +626,5 @@ void () monster_army =
 	COOP_SetLives ();
 	monster_army1 ();
 };
-
 #endif
 //END

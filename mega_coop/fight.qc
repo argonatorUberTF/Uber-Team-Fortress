@@ -27,7 +27,6 @@ void () knight_attack =
 		knight_runatk1 ();
 	}
 };
-
 float () CheckAttack =
 {
 	local vector spot1;
@@ -118,7 +117,6 @@ float () CheckAttack =
 	}
 	return (false);
 };
-
 void () ai_face =
 {
 	self.ideal_yaw = vectoyaw ((self.enemy.origin - self.origin));
@@ -126,13 +124,11 @@ void () ai_face =
 };
 float (entity targ) infront;
 float (entity targ) range;
-
 void (float d) ai_charge =
 {
 	ai_face ();
 	movetogoal (d);
 };
-
 void () ai_charge_side =
 {
 	local vector dtemp;
@@ -144,7 +140,6 @@ void () ai_charge_side =
 	heading = vectoyaw ((dtemp - self.origin));
 	walkmove (heading, 20);
 };
-
 void () ai_melee =
 {
 	local vector delta;
@@ -161,7 +156,6 @@ void () ai_melee =
 	ldmg = (((random () + random ()) + random ()) * MOVETYPE_WALK);
 	T_Damage (self.enemy, self, self, ldmg);
 };
-
 void () ai_melee_side =
 {
 	local vector delta;
@@ -244,7 +238,6 @@ float () SoldierCheckAttack =
 	}
 	return (false);
 };
-
 float () ShamCheckAttack =
 {
 	local vector spot1;
@@ -291,7 +284,6 @@ float () ShamCheckAttack =
 	SUB_AttackFinished ((FL_SWIM + (FL_SWIM * random ())));
 	return (true);
 };
-
 float () OgreCheckAttack =
 {
 	local vector spot1;
@@ -356,3 +348,4 @@ float () OgreCheckAttack =
 	SUB_AttackFinished ((true + (FL_SWIM * random ())));
 	return (true);
 };
+//END

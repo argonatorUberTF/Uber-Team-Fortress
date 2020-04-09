@@ -27,7 +27,6 @@ void (entity missile, float mspeed, float accuracy) LaunchMissile =
 };
 void () wiz_run1;
 void () wiz_side1;
-
 float () WizardCheckAttack =
 {
 	local vector spot1;
@@ -123,7 +122,6 @@ void () WizardAttackFinished =
 		self.think = wiz_side1;
 	}
 };
-
 void () Wiz_FastFire =
 {
 	local vector vec;
@@ -153,7 +151,6 @@ void () Wiz_FastFire =
 	}
 	remove (self);
 };
-
 void () Wiz_StartFast =
 {
 	local entity missile;
@@ -179,7 +176,6 @@ void () Wiz_StartFast =
 	missile.think = Wiz_FastFire;
 	missile.movedir = (VEC_ORIGIN - v_right);
 };
-
 void () Wiz_idlesound =
 {
 	local float wr;
@@ -198,12 +194,10 @@ void () Wiz_idlesound =
 	}
 	return;
 };
-
 void () wiz_stand1 = [ 0, wiz_stand2 ]
 {
 	ai_stand ();
 };
-
 void () wiz_stand2 = [ 1, wiz_stand3 ]
 {
 	ai_stand ();
@@ -480,25 +474,15 @@ void () wiz_death3 = [ 48, wiz_death4 ]
 };
 
 void () wiz_death4 = [ 49, wiz_death5 ]
-{
-};
-
+{};
 void () wiz_death5 = [ 50, wiz_death6 ]
-{
-};
-
+{};
 void () wiz_death6 = [ 51, wiz_death7 ]
-{
-};
-
+{};
 void () wiz_death7 = [ 52, wiz_death8 ]
-{
-};
-
+{};
 void () wiz_death8 = [ 53, wiz_death8 ]
-{
-};
-
+{};
 void () wiz_die =
 {
 	if ((self.health < -40))
@@ -512,7 +496,6 @@ void () wiz_die =
 	}
 	wiz_death1 ();
 };
-
 void (entity attacker, float damage) Wiz_Pain =
 {
 	sound (self, CHAN_VOICE, "wizard/wpain.wav", true, ATTN_NORM);
@@ -522,12 +505,10 @@ void (entity attacker, float damage) Wiz_Pain =
 	}
 	wiz_pain1 ();
 };
-
 void () Wiz_Missile =
 {
 	wiz_fast1 ();
 };
-
 void () monster_wizard1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -547,7 +528,6 @@ void () monster_wizard1 =
 	self.th_die = wiz_die;
 	coop_flymonster_start ();
 };
-
 void () monster_wizard =
 {
 	if (deathmatch)

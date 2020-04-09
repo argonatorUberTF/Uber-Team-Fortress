@@ -271,7 +271,6 @@ void(entity attacker, float damage)     killable_boss_pain =
 		if (self.enemy == world) killable_boss_missile1();
 	}
 };
-
 void() head_gib =
 {
 		sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
@@ -287,7 +286,6 @@ void() head_gib =
 		}
 		remove (self);         
 };
-
 void() killable_boss_gib =
 {
 		local float c;
@@ -315,7 +313,6 @@ void() killable_boss_gib =
 	self.solid = SOLID_SLIDEBOX;
 	self.th_missile = SUB_Null;
 	self.takedamage= DAMAGE_AIM; 
-
 };
 void() killable_boss_die =
 {
@@ -361,7 +358,6 @@ float() KillableBossFindTarget =   //"Borrowed" from BPlayer Bot
 		return TRUE;
 	}
 };
-
 float() KillableBossFindTargetIdle =   
 {
 	local entity head, selected;

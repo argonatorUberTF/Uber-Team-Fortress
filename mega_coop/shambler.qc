@@ -275,7 +275,6 @@ void (float side) ShamClaw =
 {
 	local vector delta;
 	local float ldmg;
-
 	if (!self.enemy)
 	{
 		return;
@@ -402,7 +401,6 @@ void () sham_swingr9 = [ 55, sham_run1 ]
 void () sham_melee =
 {
 	local float chance;
-
 	chance = random ();
 	if (((chance > 0.6) || (self.health == 600)))
 	{
@@ -508,11 +506,8 @@ void () sham_magic11 = [ 75, sham_magic12 ]
 };
 
 void () sham_magic12 = [ 76, sham_run1 ]
-{
-};
-
+{};
 // FLAME ATTACK 1
-
 void () sham_Flamer_stream_touch =
 {
 	local entity flame;

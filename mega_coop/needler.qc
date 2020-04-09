@@ -5,7 +5,7 @@ void () NeedleExplode =
 	self.owner = self.real_owner;
 	if (self.enemy.team_no != self.team_no)
 		T_Damage (self.enemy, self, self.owner, 25);
-	deathmsg = 1124;
+		deathmsg = 1124;
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
 	WriteCoord (MSG_BROADCAST, self.origin_x);
@@ -13,7 +13,6 @@ void () NeedleExplode =
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	remove(self);
 };
-
 void () NeedlePreExplode =
 {
 	local vector m_height;
@@ -29,7 +28,6 @@ void () NeedlePreExplode =
 	self.origin = self.enemy.origin + m_height;
 	self.nextthink = time + .02;
 };
-
 void ( entity f_plyr, entity t_plyr, float at_height ) Add_Needle =
 {
 	local entity needle;
@@ -70,7 +68,6 @@ void ( entity f_plyr, entity t_plyr, float at_height ) Add_Needle =
 	needle.think = NeedlePreExplode;
 	needle.nextthink = time;
 };
-
 void () Needler_Touch =
 {
 	self.owner = self.real_owner;
@@ -88,7 +85,6 @@ void () Needler_Touch =
 	
 	remove(self);
 };
-
 void() NeedlerHome =
 {
 	local vector dir, vtemp, wantdir;
@@ -131,7 +127,6 @@ void() NeedlerHome =
 	self.nextthink = (time + 0.5);
 	self.think = NeedlerHome;
 };
-	
 void() W_FireNeedler =
 {
 	local entity fshell;
@@ -156,7 +151,7 @@ void() W_FireNeedler =
 	fshell.armorvalue = time + 15;		// amount of time the needler projectile should stay alive
 	fshell.nextthink = (time + 0.2);
 	fshell.think = NeedlerHome;
-	fshell.lives = 2;					// number of times the needle will bounce off walls
+	fshell.lives = 1;					// number of times the needle will bounce off walls
 	setmodel (fshell, "progs/flare.mdl");
 	setsize (fshell, '0 0 0', '0 0 0');
 	setorigin (fshell, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (fshell, ((self.origin + (v_forward * 8)) + '0 0 16'));

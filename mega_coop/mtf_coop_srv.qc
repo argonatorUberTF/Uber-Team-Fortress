@@ -22,7 +22,6 @@ float (entity mee) aid_findplayers =
 		return 1;
 	return 0;
 };
-
 void () aid_monsterspawn =
 {
 	local entity newmon, head;
@@ -62,7 +61,6 @@ void () aid_monsterspawn =
 	newmon.owner = self;
 	setorigin( newmon, self.origin );
 };
-
 void () aidirector_monsterspawn =
 {
 	local entity m_precache;
@@ -87,7 +85,6 @@ void () aidirector_monsterspawn =
 	dremove(m_precache);
 	self.use = aid_monsterspawn;
 };
-
 void () aid_end =
 {
 // wave complete
@@ -97,7 +94,6 @@ void () aid_end =
 	}
 	dremove(self);		// gets rid of aidirector_monsterspawn ents that trigger this one
 };
-
 void () ai_director_think =
 {
 	local float next_t;
@@ -115,7 +111,6 @@ void () ai_director_think =
 		SUB_UseTargets ();
 	self.nextthink = time + (self.owner.waitmin + next_t);
 };
-
 void () aid_activate =
 {
 	local entity ai_director;
@@ -139,14 +134,12 @@ void () aid_activate =
 	}
 	self.touch = SUB_Null;
 };
-
 void () aid_touch =
 {	
 	if (other.classname != "player" || other.health <= 0)
 		return;
 	aid_activate();
 };
-
 void () trigger_aidirector =
 {
 	if (!self.target) {
@@ -175,7 +168,6 @@ void () trigger_aidirector =
 	if (!self.distance)
 		self.distance = 800;
 };
-
 float () Survival_Fail =
 {
 	local entity te;
@@ -203,7 +195,6 @@ float () Survival_Fail =
 	}
 	return #FALSE;
 };
-
 void () pdummy_think =
 {
 	local entity te, gte, oself, onewself;
@@ -251,7 +242,6 @@ void () pdummy_think =
 		dremove(self);
 		return;
 	}
-
 	if (self.monster_type == 0) {
 		if (self.enemy.health != 1) {
 			bprint(2, "****************** pdummy_think: enemy health is not 1\n");
@@ -347,7 +337,6 @@ void () pdummy_think =
 		return;
 	}
 #endif
-
 	self.nextthink = time + .5;
 };
 //end

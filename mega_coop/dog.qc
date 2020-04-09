@@ -1,6 +1,5 @@
 void () dog_leap1;
 void () dog_run1;
-
 void () dog_bite =
 {
 	local vector delta;
@@ -316,28 +315,22 @@ void () dog_pain2 = [ 27, dog_pain3 ]
 };
 
 void () dog_pain3 = [ 28, dog_pain4 ]
-{
-};
+{};
 
 void () dog_pain4 = [ 29, dog_pain5 ]
-{
-};
+{};
 
 void () dog_pain5 = [ 30, dog_pain6 ]
-{
-};
+{};
 
 void () dog_pain6 = [ 31, dog_run1 ]
-{
-};
+{};
 
 void () dog_painb1 = [ 32, dog_painb2 ]
-{
-};
+{};
 
 void () dog_painb2 = [ 33, dog_painb3 ]
-{
-};
+{};
 
 void () dog_painb3 = [ 34, dog_painb4 ]
 {
@@ -360,8 +353,7 @@ void () dog_painb6 = [ 37, dog_painb7 ]
 };
 
 void () dog_painb7 = [ 38, dog_painb8 ]
-{
-};
+{};
 
 void () dog_painb8 = [ 39, dog_painb9 ]
 {
@@ -369,8 +361,7 @@ void () dog_painb8 = [ 39, dog_painb9 ]
 };
 
 void () dog_painb9 = [ 40, dog_painb10 ]
-{
-};
+{};
 
 void () dog_painb10 = [ 41, dog_painb11 ]
 {
@@ -523,7 +514,6 @@ float () CheckDogJump =
 {
 	local vector dist;
 	local float d;
-
 	if (((self.origin_z + self.mins_z) > ((self.enemy.origin_z + self.enemy.mins_z) + (0.75 * self.enemy.size_z))))
 	{
 		return (false);

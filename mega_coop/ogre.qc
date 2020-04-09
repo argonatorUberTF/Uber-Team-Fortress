@@ -10,7 +10,6 @@ void () OgreGrenadeExplode =
 	multicast (self.origin, MULTICAST_PHS);
 	remove (self);
 };
-
 void () OgreGrenadeTouch =
 {
 	if ((other == self.owner))
@@ -28,7 +27,6 @@ void () OgreGrenadeTouch =
 		self.avelocity = VEC_ORIGIN;
 	}
 };
-
 void () OgreFireGrenade =
 {
 	local entity missile;
@@ -46,7 +44,6 @@ void () OgreFireGrenade =
 		else
 			enlen = enlen * 1.55;
 	}
-
 	makevectors (self.angles);
 	missile.velocity = normalize ((self.enemy.origin - self.origin));
 	if (self.weapon & #MWEAPON_LRG) {
@@ -74,7 +71,6 @@ void () OgreFireGrenade =
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (missile, self.origin);
 };
-
 void (float side) chainsaw =
 {
 	local vector delta;
@@ -109,27 +105,22 @@ void (float side) chainsaw =
 		}
 	}
 };
-
 void () ogre_stand1 = [ 0, ogre_stand2 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand2 = [ 1, ogre_stand3 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand3 = [ 2, ogre_stand4 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand4 = [ 3, ogre_stand5 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand5 = [ 4, ogre_stand6 ]
 {
 	if ((random () < 0.2))
@@ -138,37 +129,30 @@ void () ogre_stand5 = [ 4, ogre_stand6 ]
 	}
 	ai_stand ();
 };
-
 void () ogre_stand6 = [ 5, ogre_stand7 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand7 = [ 6, ogre_stand8 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand8 = [ 7, ogre_stand9 ]
 {
 	ai_stand ();
 };
-
 void () ogre_stand9 = [ 8, ogre_stand1 ]
 {
 	ai_stand ();
 };
-
 void () ogre_walk1 = [ 9, ogre_walk2 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk2 = [ 10, ogre_walk3 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () ogre_walk3 = [ 11, ogre_walk4 ]
 {
 	ai_walk (FL_SWIM);
@@ -713,7 +697,6 @@ void (entity attacker, float damage) ogre_pain =
 		}
 	}
 };
-
 void () ogre_die1 = [ 112, ogre_die2 ]
 {
 };
@@ -721,7 +704,6 @@ void () ogre_die1 = [ 112, ogre_die2 ]
 void () ogre_die2 = [ 113, ogre_die3 ]
 {
 };
-
 void () ogre_die3 = [ 114, ogre_die4 ]
 {
 	self.solid = SOLID_NOT;
@@ -731,11 +713,9 @@ void () ogre_die3 = [ 114, ogre_die4 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () ogre_die4 = [ 115, ogre_die5 ]
 {
 };
-
 void () ogre_die5 = [ 116, ogre_die6 ]
 {
 };
@@ -848,7 +828,6 @@ void () ogre_die =
 		ogre_bdie1 ();
 	}
 };
-
 void () ogre_melee =
 {
 	if ((random () > 0.5))
@@ -860,7 +839,6 @@ void () ogre_melee =
 		ogre_swing1 ();
 	}
 };
-
 void () monster_ogre1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -877,7 +855,6 @@ void () monster_ogre1 =
 	self.th_pain = ogre_pain;
 	coop_walkmonster_start ();
 };
-
 void () monster_ogre =
 {
 	if (deathmatch)
@@ -905,7 +882,6 @@ void () monster_ogre =
 	COOP_SetLives ();
 	monster_ogre1 ();
 };
-
 void () monster_ogre_marksman =
 {
 	monster_ogre ();

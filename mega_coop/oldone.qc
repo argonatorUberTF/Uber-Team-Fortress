@@ -5,180 +5,93 @@ void () finale_4;
 entity shub;
 vector intermission_origin;
 void () old_idle1 = [ 0, old_idle2 ]
-{
-};
-
+{};
 void () old_idle2 = [ 1, old_idle3 ]
-{
-};
-
+{};
 void () old_idle3 = [ 2, old_idle4 ]
-{
-};
-
+{};
 void () old_idle4 = [ 3, old_idle5 ]
-{
-};
-
+{};
 void () old_idle5 = [ 4, old_idle6 ]
-{
-};
-
+{};
 void () old_idle6 = [ 5, old_idle7 ]
-{
-};
-
+{};
 void () old_idle7 = [ 6, old_idle8 ]
-{
-};
-
+{};
 void () old_idle8 = [ 7, old_idle9 ]
-{
-};
-
+{};
 void () old_idle9 = [ 8, old_idle10 ]
-{
-};
-
+{};
 void () old_idle10 = [ 9, old_idle11 ]
-{
-};
-
+{};
 void () old_idle11 = [ 10, old_idle12 ]
-{
-};
-
+{};
 void () old_idle12 = [ 11, old_idle13 ]
-{
-};
-
+{};
 void () old_idle13 = [ 12, old_idle14 ]
-{
-};
-
+{};
 void () old_idle14 = [ 13, old_idle15 ]
-{
-};
-
+{};
 void () old_idle15 = [ 14, old_idle16 ]
-{
-};
-
+{};
 void () old_idle16 = [ 15, old_idle17 ]
-{
-};
-
+{};
 void () old_idle17 = [ 16, old_idle18 ]
-{
-};
-
+{};
 void () old_idle18 = [ 17, old_idle19 ]
-{
-};
-
+{};
 void () old_idle19 = [ 18, old_idle20 ]
-{
-};
-
+{};
 void () old_idle20 = [ 19, old_idle21 ]
-{
-};
-
+{};
 void () old_idle21 = [ 20, old_idle22 ]
-{
-};
-
+{};
 void () old_idle22 = [ 21, old_idle23 ]
-{
-};
-
+{};
 void () old_idle23 = [ 22, old_idle24 ]
-{
-};
-
+{};
 void () old_idle24 = [ 23, old_idle25 ]
-{
-};
-
+{};
 void () old_idle25 = [ 24, old_idle26 ]
-{
-};
-
+{};
 void () old_idle26 = [ 25, old_idle27 ]
-{
-};
-
+{};
 void () old_idle27 = [ 26, old_idle28 ]
-{
-};
-
+{};
 void () old_idle28 = [ 27, old_idle29 ]
-{
-};
-
+{};
 void () old_idle29 = [ 28, old_idle30 ]
-{
-};
-
+{};
 void () old_idle30 = [ 29, old_idle31 ]
-{
-};
-
+{};
 void () old_idle31 = [ 30, old_idle32 ]
-{
-};
-
+{};
 void () old_idle32 = [ 31, old_idle33 ]
-{
-};
-
+{};
 void () old_idle33 = [ 32, old_idle34 ]
-{
-};
-
+{};
 void () old_idle34 = [ 33, old_idle35 ]
-{
-};
-
+{};
 void () old_idle35 = [ 34, old_idle36 ]
-{
-};
-
+{};
 void () old_idle36 = [ 35, old_idle37 ]
-{
-};
-
+{};
 void () old_idle37 = [ 36, old_idle38 ]
-{
-};
-
+{};
 void () old_idle38 = [ 37, old_idle39 ]
-{
-};
-
+{};
 void () old_idle39 = [ 38, old_idle40 ]
-{
-};
-
+{};
 void () old_idle40 = [ 39, old_idle41 ]
-{
-};
-
+{};
 void () old_idle41 = [ 40, old_idle42 ]
-{
-};
-
+{};
 void () old_idle42 = [ 41, old_idle43 ]
-{
-};
-
+{};
 void () old_idle43 = [ 42, old_idle44 ]
-{
-};
-
+{};
 void () old_idle44 = [ 43, old_idle45 ]
-{
-};
+{};
 
 void () old_idle45 = [ 44, old_idle46 ]
 {

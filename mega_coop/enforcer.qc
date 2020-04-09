@@ -451,7 +451,6 @@ void (entity attacker, float damage) enf_pain =
 	}
 	if (self.building != world)
 		dremove(self.building);
-
 	if ((r < 0.5))
 	{
 		sound (self, CHAN_VOICE, "enforcer/pain1.wav", true, ATTN_NORM);
@@ -489,12 +488,10 @@ void (entity attacker, float damage) enf_pain =
 };
 
 void () enf_die1 = [ 41, enf_die2 ]
-{
-};
+{};
 
 void () enf_die2 = [ 42, enf_die3 ]
-{
-};
+{};
 
 void () enf_die3 = [ 43, enf_die4 ]
 {
@@ -587,24 +584,19 @@ void () enf_fdie6 = [ 60, enf_fdie7 ]
 };
 
 void () enf_fdie7 = [ 61, enf_fdie8 ]
-{
-};
+{};
 
 void () enf_fdie8 = [ 62, enf_fdie9 ]
-{
-};
+{};
 
 void () enf_fdie9 = [ 63, enf_fdie10 ]
-{
-};
+{};
 
 void () enf_fdie10 = [ 64, enf_fdie11 ]
-{
-};
+{};
 
 void () enf_fdie11 = [ 65, enf_fdie11 ]
-{
-};
+{};
 void () Enforcer_SniperSight_Update =
 {
 	local vector org;
@@ -731,9 +723,6 @@ void () enf_satk14 = [ 40, enf_run1 ]
 	ai_face ();
 	SUB_CheckRefire (enf_satk1);
 };
-
-
-
 void () enf_die =
 {
 	if ((self.health < -35))
@@ -755,7 +744,6 @@ void () enf_die =
 		enf_fdie1 ();
 	}
 };
-
 void () monster_enforcer1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -774,7 +762,6 @@ void () monster_enforcer1 =
 		self.th_missile = enf_atk1;
 	coop_walkmonster_start ();
 };
-
 void () monster_enforcer =
 {
 	if (deathmatch)

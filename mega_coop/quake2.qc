@@ -5,15 +5,13 @@ vector (vector veca, float scale, vector vecb, vector vecc) VectorMA =
 	vecc_z = veca_z + scale*vecb_z;
 	
 	return vecc;
-}
-
+};
 void WriteVector (float msg, vector org) =
 {
 	WriteCoord (msg, org_x);
 	WriteCoord (msg, org_y);
 	WriteCoord (msg, org_z);
 };
-
 #ifndef mtf_coop_halflife
 void () hl_rotating =
 {
@@ -34,7 +32,6 @@ void () hl_rotating =
 	}
 	SUB_CalcAngleMove (self.pos1, realmvspd, hl_rotating);
 };
-
 void () func_rotating_use =
 {
 	if (self.has_tesla == 0) {
@@ -48,12 +45,10 @@ void () func_rotating_use =
 		self.has_tesla = 0;
 	}
 };
-
 void() rot_crush =
 {
 	T_Damage (other, self, self, 1);
-}
-	
+};
 void () func_rotating =
 {
 	self.angles = '0 0 0';
@@ -80,7 +75,6 @@ void () func_rotating =
 	self.use = func_rotating_use;
 };
 #endif
-
 void () target_laser_think =
 {
 	local entity 	ignore;
@@ -129,8 +123,7 @@ void () target_laser_think =
 		start = trace_endpos;
 	}
 	self.nextthink = time + .3/*FRAMETIME*/;
-}
-
+};
 void () target_laser_on =
 {
 	if (!activator)
@@ -138,22 +131,20 @@ void () target_laser_on =
 	self.spawnflags = 1;
 	self.think = target_laser_think;
 	target_laser_think ();
-}
-
+};
 void () target_laser_off =
 {
 	self.spawnflags = 0;
 	self.think = SUB_Null;
 	self.nextthink = 0;
-}
-
+};
 void () target_laser_use =
 {
 	if (self.spawnflags & 1)
 		target_laser_off ();
 	else
 		target_laser_on ();
-}
+};
 
 void () target_laser_start =
 {
@@ -188,15 +179,12 @@ void () target_laser_start =
 		target_laser_on ();
 	else
 		target_laser_off ();
-}
-
+};
 void () target_laser =
 {
 	self.think = target_laser_start;
 	self.nextthink = time + 1;
-}
-
-
+};
 #ifdef mtf_coop_halflife
 void() func_door_rotating_q2 =
 #else
@@ -328,7 +316,6 @@ void () func_timer_execute =
 	self.think = func_timer_execute;
 	self.nextthink = time + self.wait;
 };
-
 void () func_timer_pause =
 {
 	self.think = SUB_Null;
@@ -336,7 +323,6 @@ void () func_timer_pause =
 	
 	self.use = func_timer_preuse;
 };
-
 void () func_timer_preuse =
 {
 	local float nt;
@@ -352,7 +338,6 @@ void () func_timer_preuse =
 	else 
 		func_timer_execute ();
 };
-
 void () func_timer =
 {
 	if (!self.target) {
@@ -409,8 +394,7 @@ void () target_explosion_explode =
 	self.delay = 0;
 	SUB_UseTargets();
 	self.delay = save;
-}
-
+};
 void () use_target_explosion =
 {
 	if (!self.delay)
@@ -426,7 +410,7 @@ void () use_target_explosion =
 void () target_explosion =
 {
 	self.use = use_target_explosion;
-}
+};
 void () key_power_cube_use =
 {
 	bprint(2, self.netname);
@@ -447,7 +431,6 @@ void () key_power_cube =
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 	self.touch = key_power_cube_use;
 };
-
 void () key_pyramid =
 {
 	key_power_cube ();
@@ -534,7 +517,6 @@ void () nkey_think =
 		self.frame = 1;
 	else
 		self.frame = 0;
-		
 	saf = findradius (self.origin, 40);		// orig 30 worked ok, but on ome maps was meh
 	while (saf)
 	{
@@ -544,10 +526,8 @@ void () nkey_think =
 		}
 		saf = saf.chain;
 	}
-		
 	self.nextthink = time + 0.2;
 };
-
 void () key_red_key =
 {
 	precache_model("progs/rkey.spr");
@@ -696,7 +676,6 @@ void () monster_gladiator =
 	else
 		monster_cyberdemon ();
 };
-
 void () monster_medic =
 {
 	if (#DOOM_MAP)
@@ -704,8 +683,6 @@ void () monster_medic =
 	else
 		monster_vomitus();
 };
-
-
 void () monster_soldier_ss =
 {
 	if (#DOOM_MAP)
@@ -713,12 +690,10 @@ void () monster_soldier_ss =
 	else
 		monster_axegrunt();
 };
-
 void () monster_parasite =
 {
 	monster_pinky();
 };
-
 void () monster_gunner =
 {
 	if (#DOOM_MAP)
@@ -743,14 +718,11 @@ void () monster_flyer =
 	else
 		monster_wizard();
 };
-
 void () monster_brain =
 {
 	if (#DOOM_MAP)
 		monster_dbaron();
 };
-
-
 void () monster_mutant =
 {
 	if (#DOOM_MAP) {
@@ -760,7 +732,6 @@ void () monster_mutant =
 	else
 		monster_demon ();
 };
-
 void () monster_tank_commander =
 {
 	if (#DOOM_MAP) {
@@ -780,13 +751,10 @@ void () target_goal =
 {
 	dremove(self);
 };
-
 void () target_splash =
 {
 	dremove(self);
 };
-
 void () target_spawner =
-{
-};
+{};
 //END

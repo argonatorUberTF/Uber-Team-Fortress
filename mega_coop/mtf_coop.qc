@@ -619,7 +619,6 @@ float () Hipnotic_SaveModels2 =
 
 	if (mapname == "neh1m9" || mapname == "neh2m3")
 		dfactor = 1;
-
 	return ( dfactor );
 };
 
@@ -641,7 +640,6 @@ void ( entity t_rune ) Coop_SetRune =
 		else
 			i++;
 	}
-	
 	t_rune.#rune_time = 30;
 	if (r_type == 1) {
 		t_rune.weapon = 670 + #RUNE_EXPBONUS;
@@ -920,7 +918,6 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	newmis.think = SUB_Remove;
 	newmis.touch = PreMonsterItemTouch;
 };
-
 #ifdef mtf_coop_expsys
 #include "tfi_tools.qc"
 #include "mega_coop_rankings.qc"
@@ -977,7 +974,6 @@ void ( entity to_res ) MTF_Resurrect_Player =
 		setorigin(to_res, oorigin);
 		to_res.angles = oangle;
 	}
-	
 	if (survival_mode) {
 		if (!reconplaya) {
 			// ADDME: Set ammo/health/wtva in half!
@@ -1035,14 +1031,12 @@ void () COOP_SetLives =
 		self.lives = 1;
 	}
 };
-
 float ( string mname ) Coop_SpecialEnd =
 {
 	if ( mname == "office" )
 		return 88;
 	return 0;
 };
-
 void () COOP_PreSetupRespawn =
 {
 	local entity oself;
@@ -1188,9 +1182,7 @@ void ( float preset_no, string n_name, void() spawnfunct) MTF_Setup_Monster_Pres
 	}
 		self.monsterweight = #MWEIGHT_NORMAL;
 		self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
-
 		self.#monsterflag = #STRFLAG_MONSTER;
-
 		self.#npc_origangle = self.angles;
 		self.#npc_spawndelay = 30;
 	self.#npc_spawnfunc = spawnfunct;
@@ -1203,7 +1195,6 @@ void ( float w_health, void() movefunc) MTF_Setup_Monster_Postsets =
 		self.health = MTF_Monster_Health(w_health);
 	else
 		bprint(2, "monster health is 0??\n");
-
 	movefunc();
 };
 string ( string c_name ) GetMonsterDeathstring =
@@ -1300,7 +1291,6 @@ float ( entity t_mons ) Coop_Attackable =
 	{
 		return #TRUE;
 	}
-
 	return #FALSE;
 };
 float ( entity t_mons, float m_type ) Coop_IsMonster =
@@ -1335,8 +1325,6 @@ float (float mtype) Monsterclass_allow =
 	if (mtype == 7)
 		if (mclass_available & MC_FIEND)
 			return 1;
-			
-	
 	return 0;
 };
 void ( float mtype, float wepno ) Monsterweapon_setmodel =
@@ -1363,7 +1351,6 @@ void ( entity t_plyr, float mtype) Monsterteam_setmodel =
 		m_model = "progs/ratsham5.mdl";
 	else if (mtype == 7)
 		m_model = "progs/demon.mdl";
-		
 	setmodel(t_plyr, m_model);
 };
 void () func_ladder;

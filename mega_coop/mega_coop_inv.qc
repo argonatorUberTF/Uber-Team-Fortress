@@ -28,7 +28,6 @@ float (string nname) MTF_Coop_SetupInventory =
 		strunzone(nname);
 		strunzone(filenamee);
 		self.#gold = -1;
-		
 		// make sure that the folder exists to be written to in the first place
 		if (checkfilename( "ranks/inv/test" ) == #FALSE)
 			bprint( 2, "WARNING: Folder /inv cannot be found! Server admin needs to create /fortress/ranks/inv/ folder!\n" );
@@ -47,7 +46,6 @@ float (string nname) MTF_Coop_SetupInventory =
 		bprint(2, " oopsname: ");
 		bprint(2, oopsname);
 		bprint(2,"\n");
-		
 		strunzone(filenamee);
 		strunzone(oopsname);
 		self.#gold = -1;
@@ -101,7 +99,6 @@ float ( float item_no ) Inventory_ItemIsValidPickup =
 		return #TRUE;
 	return #FALSE;
 };
-
 string ( float item_no ) Inventory_GetItemName =
 {
 	local string r_str;
@@ -168,7 +165,6 @@ string ( float item_no ) Inventory_GetItemName =
 	r_str = frik_strcat( "Item ", ftos( item_no ) );
 	return r_str;
 };
-
 float ( float item_no ) Inventory_GetItemPrice =
 {
 	if (item_no == 1)		// QUAD
@@ -215,7 +211,6 @@ float ( float item_no ) Inventory_GetItemPrice =
 		return 550;
 	return 400;			// default value
 };
-
 void ( string nname, float print_type ) Inventory_PrintItems =
 {
 	local float i;
@@ -291,7 +286,6 @@ void ( entity t_plyr ) Inventory_SaveMaxInv =
 								6 + t_plyr.#max_inv);	// and this is how many lines should be copied
 		CopyFile( "dummy_inv.tfi", frik_strcat( "ranks/inv/", t_plyr.connect_name, "_inv.tfi" ), 0, string_null,  6 + t_plyr.#max_inv);
 };
-
 void () Inventory_ClingToMonster =
 {
 	if ( self.owner == world || self.owner.health > 0 || !self.owner.classname )
@@ -339,7 +333,6 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropInventory =
 	}
 #endif
 };
-
 float ( entity t_plyr, float item_no, float item_cost ) Inventory_AddItem =
 {
 	local float free_slot;
@@ -405,16 +398,13 @@ void () Merchant_Touch =
 	if (!other.current_menu)
 		other.current_menu = 43;
 };
-
 float () Merchant_SetrRandomItem =
 {
 	local float ittype, i;
 	ittype = 1;
-	
-	if (merchant.#merchant_type == 1) {
+		if (merchant.#merchant_type == 1) {
 		i = rint(random() * 7);
 		ittype = i;
-		
 		if (random() < .15)
 			ittype = 9;
 		if (random() < .05)
@@ -459,20 +449,17 @@ float () Merchant_SetrRandomItem =
 			ittype = 4;
 		else
 			ittype = 670 + i;
-			
 		if (random() < .07)
 			ittype = 11;
 		if (random() < .04)
 			ittype = 12;
 		if (random() < .04)
 			ittype = 17;
-			
 		if (ittype == 670)
 			ittype = 679;
 	}
 	return ittype;
 };
-
 void () Inventory_SetupMerchant =
 {
 	local float rndm, i, maxmerchants, m_type;
@@ -484,8 +471,7 @@ void () Inventory_SetupMerchant =
 		rndm = random();
 		if ( rndm < (1 / maxmerchants) )
 			m_type = i;
-			
-		if (i >= maxmerchants)
+			if (i >= maxmerchants)
 			i = 1;
 		else
 			i++;

@@ -74,7 +74,6 @@ void () monster_pain =
 	{
 		return;
 	}
-	
 	if (self.monster_type == 6) {
 		sound (self, CHAN_VOICE, "shambler/shurt2.wav", true, ATTN_NORM);
 		monster_run_attack ( .5, 77, 82, SUB_Null, 0, 0 );
@@ -140,7 +139,6 @@ void () psham_smash =
 		SpawnMeatSpray ((self.origin + (v_forward * FL_INWATER)), ((crandom () * 100) * v_right));
 	}
 };
-
 void ( float side ) psham_slash =
 {
 	local float ldmg;
@@ -166,17 +164,14 @@ void ( float side ) psham_slash =
 		}
 	}
 };
-
 void () psham_swingr1 =
 {
 	psham_slash(-250);
 };
-
 void () psham_swingl1 =
 {
 	psham_slash(250);
 };
-
 void () pCastLightning =
 {
 	local vector org, source;
@@ -196,7 +191,6 @@ void () pCastLightning =
 	multicast (org, 1);
 	LightningDamage (source, (trace_endpos + (v_forward * 4)), self, 30);
 };
-
 void () psham_magic =
 {
 	local entity o;
@@ -310,7 +304,6 @@ void ( float attack_duration, float sframe, float eframe, void() atck, float att
 	self.bubble_count = attack_special;	// special instructions for attack
 	monster_attack_go();
 };
-
 void () monster_attack =
 {
 	local float chance;
