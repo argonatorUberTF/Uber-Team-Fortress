@@ -42,7 +42,6 @@ void() remove_bullethole =
       }
    numbulletholes = numbulletholes - 1;
 };
-
 void( vector pos ) placebullethole =
 {
 bprint(2, "DEV, this is being called.. not good! :D\n");

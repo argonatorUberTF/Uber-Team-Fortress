@@ -17,7 +17,6 @@ void()   decoy_stand1 =[  $axstnd1,   decoy_stand1  ]
 	if (time > self.pausetime)
 		self.th_walk ();
 };
-
 void()   decoy_walk1 =[  $rockrun1,  decoy_walk1  ]
 {
    movetogoal (8);
@@ -76,7 +75,6 @@ void() monster_decoy =
    walkmonster_start ();
    total_monsters = total_monsters - 1;
 };
-
 void(string targ, vector orig) become_decoy =
 {
    local entity decoy;

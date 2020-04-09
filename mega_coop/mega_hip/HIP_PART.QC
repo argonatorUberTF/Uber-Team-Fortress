@@ -30,7 +30,6 @@ void () particlefield_XZ =
       pos_z = pos_z + 16;
 		}
 };
-
 void () particlefield_YZ =
 {
 	local vector pos;
@@ -94,7 +93,6 @@ void () particlefield_XY =
 		pos_x = pos_x + 16;
 		}
 };
-
 void () particlefield_touch =
 {
    if ( !self.dmg )
@@ -160,7 +158,6 @@ void() func_particlefield =
       }
    self.ltime = time;
 };
-
 void () blocker_touch =
 {
    if ( !self.dmg )

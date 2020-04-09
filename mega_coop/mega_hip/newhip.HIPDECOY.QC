@@ -1,4 +1,3 @@
-
 void () decoy_stand1 = [ 17, decoy_stand1 ]
 {
 	ChangeYaw ();
@@ -13,11 +12,9 @@ void () decoy_stand1 = [ 17, decoy_stand1 ]
 		self.th_walk ();
 	}
 };
-
 void () decoy_walk1 = [ 6, decoy_walk1 ]
 {
 	local float r;
-
 	movetogoal (12);
 	self.weaponframe = 0;
 	if ((self.walkframe == 6))
@@ -74,11 +71,9 @@ void () decoy_walk1 = [ 6, decoy_walk1 ]
 	self.frame = (self.frame + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void (entity decoy) setup_decoy =
 {
 	local entity pl;
-
 	decoy.classname = "monster_decoy";
 	setmodel (decoy, "progs/player.mdl");
 	setsize (decoy, VEC_HULL_MIN, VEC_HULL_MAX);
@@ -95,7 +90,6 @@ void (entity decoy) setup_decoy =
 	pl = find (world, classname, "player");
 	decoy.colormap = pl.colormap;
 };
-
 void () monster_decoy =
 {
 	if (deathmatch)
@@ -107,13 +101,11 @@ void () monster_decoy =
 	walkmonster_start ();
 	total_monsters = (total_monsters - 1);
 };
-
 void (string targ, vector orig) become_decoy =
 {
 	local entity pl;
 	local entity decoy;
 	local entity temp;
-
 	hipdecoy = spawn ();
 	decoy = spawn ();
 	temp = self;
@@ -159,3 +151,4 @@ void (string targ, vector orig) become_decoy =
 	decoy.nextthink = (decoy.nextthink + (random () * 0.5));
 	self = temp;
 };
+//END

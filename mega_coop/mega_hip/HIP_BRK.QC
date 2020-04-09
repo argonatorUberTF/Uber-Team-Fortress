@@ -1,5 +1,5 @@
 void() damagethreshold_killed =
-	{
+{
 	self.health = self.max_health;
    activator = damage_attacker;
 	self.takedamage = DAMAGE_NO;
@@ -9,12 +9,11 @@ void() damagethreshold_killed =
 	   {
 	   remove( self );
 	   }
-	};
-
+};
 void() damagethreshold_pain =
-	{
+{
 	self.health = self.max_health;
-	};
+};
 void() trigger_damagethreshold =
 {
 	self.mangle = self.angles;
@@ -42,7 +41,7 @@ void() trigger_damagethreshold =
 	self.th_die  = damagethreshold_killed;
 };
 void() func_breakawaywall =
-	{
+{
 	self.mangle = self.angles;
 	self.angles = '0 0 0';
 	self.classname = "breakaway";
@@ -52,5 +51,5 @@ void() func_breakawaywall =
 	setmodel (self, self.model);
 	setsize (self, self.mins , self.maxs);
 	self.use = SUB_Remove;
-	};
+};
 //END

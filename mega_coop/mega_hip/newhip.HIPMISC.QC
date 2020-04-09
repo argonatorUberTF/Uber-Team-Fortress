@@ -18,11 +18,9 @@ void () play_sound_use =
 		sound (self, self.impulse, self.noise, self.volume, self.speed);
 	}
 };
-
 void () PlaySoundThink =
 {
 	local float t;
-
 	t = (self.wait * random ());
 	if ((t < self.delay))
 	{
@@ -31,7 +29,6 @@ void () PlaySoundThink =
 	self.nextthink = (time + t);
 	play_sound_use ();
 };
-
 void () play_sound_triggered =
 {
 	precache_sound (self.noise);
@@ -57,11 +54,9 @@ void () play_sound_triggered =
 	}
 	self.use = play_sound_use;
 };
-
 void () play_sound =
 {
 	local float t;
-//
 	play_sound_triggered ();
 	if ((self.wait == 0))
 	{
@@ -79,21 +74,18 @@ void () play_sound =
 	}
 	self.nextthink = (time + t);
 };
-
 void () random_thunder =
 {
 	self.noise = "ambience/thunder1.wav";
 	play_sound ();
 	self.impulse = 6;
 };
-
 void () random_thunder_triggered =
 {
 	self.noise = "ambience/thunder1.wav";
 	play_sound_triggered ();
 	self.impulse = 6;
 };
-
 void () ambient_humming =
 {
 	if ((self.volume == 0))
@@ -103,7 +95,6 @@ void () ambient_humming =
 	precache_sound ("ambient/humming.wav");
 	ambientsound (self.origin, "ambient/humming.wav", self.volume, ATTN_STATIC);
 };
-
 void () ambient_rushing =
 {
 	if ((self.volume == 0))
@@ -113,7 +104,6 @@ void () ambient_rushing =
 	precache_sound ("ambient/rushing.wav");
 	ambientsound (self.origin, "ambient/rushing.wav", self.volume, ATTN_STATIC);
 };
-
 void () ambient_running_water =
 {
 	if ((self.volume == 0))
@@ -123,7 +113,6 @@ void () ambient_running_water =
 	precache_sound ("ambient/runwater.wav");
 	ambientsound (self.origin, "ambient/runwater.wav", self.volume, ATTN_STATIC);
 };
-
 void () ambient_fan_blowing =
 {
 	if ((self.volume == 0))
@@ -133,7 +122,6 @@ void () ambient_fan_blowing =
 	precache_sound ("ambient/fanblow.wav");
 	ambientsound (self.origin, "ambient/fanblow.wav", self.volume, ATTN_STATIC);
 };
-
 void () ambient_waterfall =
 {
 	if ((self.volume == 0))
@@ -143,7 +131,6 @@ void () ambient_waterfall =
 	precache_sound ("ambient/waterfal.wav");
 	ambientsound (self.origin, "ambient/waterfal.wav", self.volume, ATTN_STATIC);
 };
-
 void () ambient_riftpower =
 {
 	if ((self.volume == 0))
@@ -153,7 +140,6 @@ void () ambient_riftpower =
 	precache_sound ("ambient/riftpowr.wav");
 	ambientsound (self.origin, "ambient/riftpowr.wav", self.volume, ATTN_STATIC);
 };
-
 void () info_command =
 {
 	if (self.message)
@@ -161,7 +147,6 @@ void () info_command =
 		localcmd (self.message);
 	}
 };
-
 void () effect_teleport_use =
 {
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
@@ -171,24 +156,20 @@ void () effect_teleport_use =
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	sound (self, CHAN_VOICE, "misc/r_tele1.wav", 1, ATTN_NORM);
 };
-
 void () effect_teleport =
 {
 	precache_sound ("misc/r_tele1.wav");
 	self.use = effect_teleport_use;
 };
 float SVC_UPDATEENTITY    = 128;
-
 void (entity me, entity camera) UpdateCamera =
 {
 };
-
 void () effect_finale_use =
 {
 	local entity pos;
 	local entity pl;
 	local entity targ;
-
 	if ((self.state == 1))
 	{
 		return;
@@ -240,7 +221,6 @@ void () effect_finale_use =
 		self.think = self.spawnfunction;
 	}
 };
-
 void () effect_finale =
 {
 	if (deathmatch)
@@ -253,16 +233,13 @@ void () effect_finale =
 	self.use = effect_finale_use;
 	self.state = 0;
 };
-
 void () info_startendtext_use =
 {
 	intermission_running = 1;
 	ExitIntermission ();
 };
-
 void () info_startendtext =
 {
 	self.use = info_startendtext_use;
 };
-
 //END

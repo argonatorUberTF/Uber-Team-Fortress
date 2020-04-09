@@ -21,7 +21,6 @@ $frame lstand18.asc lstand19.asc lstand20.asc
 $frame tranl1.asc tranl2.asc
 $frame ldie1.asc ldie2.asc ldie3.asc ldie4.asc ldie5.asc ldie6.asc
 $frame ldie7.asc ldie8.asc ldie9.asc ldie10.asc ldie11.asc ldie12.asc
-
 void(float ofs, float turn) armagon_launch_missile =
 {
    local vector   src, vec, targ;
@@ -52,11 +51,8 @@ void(float ofs, float turn) armagon_launch_missile =
    if (dist<self.worldtype)
       vec=v_forward;
    self.effects = self.effects | EF_MUZZLEFLASH;
-
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
-
 	self.punchangle_x = -2;
-
 	missile = spawn ();
 	missile.owner = self;
 	missile.movetype = MOVETYPE_FLYMISSILE;
@@ -96,7 +92,6 @@ void(float ofs) armagon_launch_laser =
 
    HIP_LaunchLaser(src, vec, 0);
 };
-
 void(float angdelta, float delta) armagon_turn =
 {
    if (fabs(angdelta)<10)
@@ -117,11 +112,8 @@ void(float angdelta, float delta) armagon_turn =
          }
       }
 };
-
 void() armagon_overleft1;
-
 void() armagon_overright1;
-
 void() armagon_think =
 {
    local float delta;
@@ -163,7 +155,6 @@ void() armagon_think =
          }
       }
 };
-
 void() armagon_walkthink =
 {
    local float delta;
@@ -213,7 +204,6 @@ void() armagon_walkthink =
       FoundTarget();
       }
 };
-
 void() armagon_overleft_think =
 {
    local float delta;
@@ -649,12 +639,10 @@ void()   armagon_body_explode1 =
       self.think = armagon_body_explode2;
       }
 };
-
 void(entity attacker, float damage) armagon_pain =
 {
    if (self.health <= 0)
 		return;		// allready dying, don't go into pain frame
-
    if (damage < 25)
       return;
 	if (self.pain_finished > time)

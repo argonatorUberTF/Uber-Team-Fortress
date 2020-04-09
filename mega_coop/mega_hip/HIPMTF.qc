@@ -1,10 +1,5 @@
 //MED 10/18/96
 void(float damage) spawn_touchblood;
-//
-//================
-//HIPNOTIC WEAPONS
-//================
-//
 void() HIP_LaserTouch =
 {
 	local vector org;
@@ -57,11 +52,9 @@ void() HIP_LaserTouch =
       }
    sound (self, CHAN_WEAPON, "enforcer/enfstop.wav", 1, ATTN_STATIC);
    remove(self);
-
 };
 void() HIP_LaserThink =
    {
-
    if (time>self.attack_finished)
       {
       remove(self);
@@ -72,14 +65,11 @@ void() HIP_LaserThink =
    self.velocity = self.old_velocity;
    self.angles = vectoangles(self.velocity);
    self.nextthink = time+0.1;
-   };
-
+};
 void(vector org, vector vec, float light12) HIP_LaunchLaser =
 {
-   sound (self ,CHAN_WEAPON, "hipweap/laserg.wav", 1, ATTN_NORM);
-
-   vec = normalize(vec);
-
+	sound (self ,CHAN_WEAPON, "hipweap/laserg.wav", 1, ATTN_NORM);
+	vec = normalize(vec);
 	newmis = spawn();
    newmis.owner = self;
    newmis.classname = "hiplaser";
@@ -88,29 +78,23 @@ void(vector org, vector vec, float light12) HIP_LaunchLaser =
    newmis.solid = SOLID_BBOX;
    if (light12)
       newmis.effects = EF_DIMLIGHT;
-
    setmodel (newmis, "progs/lasrspik.mdl");
 	setsize (newmis, '0 0 0', '0 0 0');
-
 	setorigin (newmis, org);
-
    newmis.speed = 1000;
    newmis.dmg = 18;
    newmis.velocity = vec * newmis.speed;
    newmis.old_velocity = newmis.velocity;
    newmis.angles = vectoangles(newmis.velocity);
    newmis.avelocity = '0 0 400';
-
    newmis.nextthink = time;
    newmis.attack_finished = time + 5;
    newmis.think = HIP_LaserThink;
    newmis.touch = HIP_LaserTouch;
    newmis.count = 0;
-
 };
-
 void(float stat) HIP_FireLaser =
-   {
+{
 	local vector org;
    local vector dir;
    local vector out;
@@ -160,7 +144,6 @@ void(float stat) HIP_FireLaser =
       }
    self.punchangle_x = -1;
 };
-
 void(vector p1, vector p2, entity from, float damage) HIP_HammerDamage =
 {
 	local entity		e1, e2;
@@ -172,7 +155,6 @@ void(vector p1, vector p2, entity from, float damage) HIP_HammerDamage =
 	f_z = 0;
 	f = f*16;
 	e1 = e2 = world;
-
 	traceline (p1, p2, FALSE, self);
 	if (trace_ent.takedamage && !trace_ent.wetsuit_finished )
 	{
@@ -185,7 +167,6 @@ void(vector p1, vector p2, entity from, float damage) HIP_HammerDamage =
 		}
 	}
 	e1 = trace_ent;
-
 	traceline (p1 + f, p2 + f, FALSE, self);
 	if (trace_ent != e1 && trace_ent.takedamage &&
 		!trace_ent.wetsuit_finished )
@@ -194,7 +175,6 @@ void(vector p1, vector p2, entity from, float damage) HIP_HammerDamage =
 		T_Damage (trace_ent, from, from, damage);
 	}
 	e2 = trace_ent;
-
 	traceline (p1 - f, p2 - f, FALSE, self);
 	if (trace_ent != e1 && trace_ent != e2 && trace_ent.takedamage &&
 		!trace_ent.wetsuit_finished )
@@ -205,7 +185,7 @@ void(vector p1, vector p2, entity from, float damage) HIP_HammerDamage =
 };
 
 void() HIP_LightningThink =
-   {
+{
    local vector org;
    local vector dst;
    local entity head;
@@ -216,8 +196,6 @@ void() HIP_LightningThink =
    local float dot;
    local float oldstate;
    local float dam;
-
-
    if (time > self.delay)
       {
       if (self.enemy != world)
@@ -263,9 +241,7 @@ void() HIP_LightningThink =
          org = self.owner.origin;
          end = org + v_forward*200;
          end = end + (((400*random()) - 200) * v_right);
-
          traceline (org, end, TRUE, self);
-
          WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
          WriteByte (MSG_BROADCAST, TE_LIGHTNING2);
          WriteEntity (MSG_BROADCAST, self);
@@ -275,7 +251,6 @@ void() HIP_LightningThink =
          WriteCoord (MSG_BROADCAST, trace_endpos_x);
          WriteCoord (MSG_BROADCAST, trace_endpos_y);
          WriteCoord (MSG_BROADCAST, trace_endpos_z);
-
          self.nextthink = time + 0.1;
          return;
          }
@@ -284,7 +259,6 @@ void() HIP_LightningThink =
    dst = self.enemy.absmin + 0.25*(self.enemy.absmax-self.enemy.absmin);
    dst = dst + (random()*0.5*(self.enemy.absmax-self.enemy.absmin));
    traceline (org, dst, TRUE, self.owner.owner);
-
    if (trace_fraction != 1.0 || self.enemy.health<=0)
       {
       self.enemy.struck_by_mjolnir = 0;
@@ -316,10 +290,9 @@ void() HIP_LightningThink =
    self = head;
 
    self.nextthink = time + 0.2;
-   };
-
+};
 void(entity prev, entity own, float dst) HIP_SpawnMjolnirLightning =
-   {
+{
    local entity light23;
    // spawn actual lightning
    light23 = spawn();
@@ -334,14 +307,12 @@ void(entity prev, entity own, float dst) HIP_SpawnMjolnirLightning =
    light23.origin = own.origin;
    light23.think = HIP_LightningThink;
    light23.nextthink = time;
-   };
-
+};
 void() HIP_SpawnMjolnirBase =
-   {
+{
    local entity light33;
    // spawn lightning base
    light33 = spawn();
-//   light.origin = self.origin - '0 0 24' + (32*v_forward);
    light33.origin = trace_endpos;
    light33.flags = 0;
    light33.owner = self;
@@ -356,10 +327,9 @@ void() HIP_SpawnMjolnirBase =
    HIP_SpawnMjolnirLightning( light33, light33, 350 );
    HIP_SpawnMjolnirLightning( light33, light33, 350 );
    HIP_SpawnMjolnirLightning( light33, light33, 350 );
-   };
-
+};
 void() HIP_FireMjolnirLightning =
-   {
+{
 	local	float		cells;
 	if (self.waterlevel > 1)
 	{
@@ -374,10 +344,10 @@ void() HIP_FireMjolnirLightning =
    self.currentammo = self.ammo_cells = self.ammo_cells - 15;
 
    HIP_SpawnMjolnirBase();
-   };
+};
 
 void() HIP_FireMjolnir =
-   {
+{
    local vector   org;
    local float    damage;
    local vector   source;
@@ -424,10 +394,7 @@ void() HIP_FireMjolnir =
          }
       }
    self.attack_finished = time + 0.4;
-
-   };
-
-
+};
 void() ProximityExplode =
 {
    T_RadiusDamage (self, self.owner, 95, world);
@@ -439,7 +406,6 @@ void() ProximityExplode =
 
 	BecomeExplosion ();
 };
-
 void() ProximityGrenadeExplode =
    {
    self.takedamage = DAMAGE_NO;
@@ -449,7 +415,6 @@ void() ProximityGrenadeExplode =
    self.owner = self.lastvictim;
    self.think = ProximityExplode;
 };
-
 void() ProximityGrenadeTouch =
    {
    if (other == self)
@@ -476,8 +441,7 @@ void() ProximityGrenadeTouch =
    setsize (self, '-8 -8 -8', '8 8 8');
    self.state = 1;
    self.spawnmaster = other;
-   };
-
+};
 void() ProximityBomb =
 {
    local entity   head;
@@ -492,7 +456,6 @@ void() ProximityBomb =
    self.takedamage = DAMAGE_YES;
    head = findradius(self.origin, 140);
    blowup = 0;
-
    while (head)
       {
       if ((head != self) && (head.health > 0) && (head.flags & (FL_CLIENT|FL_MONSTER)) && (head.classname!=self.classname))
@@ -513,7 +476,6 @@ void() ProximityBomb =
       }
    self.nextthink = time + 0.25;
 };
-
 void() W_FireProximityGrenade =
 {
    local entity missile;
@@ -550,6 +512,5 @@ void() W_FireProximityGrenade =
    setorigin (missile, self.origin);
    setsize (missile, '-1 -1 -1', '1 1 1');
 };
-
 //END
 

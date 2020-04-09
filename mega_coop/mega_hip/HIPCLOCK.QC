@@ -24,13 +24,11 @@ void() clock_setpos =
    RotateTargetsFinal();
    self.ltime = ang;
 };
-
 void() clock_think =
 {
    clock_setpos();
    self.nextthink = time + 1;
 };
-
 void() clock_firstthink =
 {
    LinkRotateTargets();

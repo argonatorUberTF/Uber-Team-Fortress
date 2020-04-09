@@ -1,6 +1,6 @@
 void() BecomeExplosion;
 void() exploder_fire =
-	{
+{
 	local entity temp;
 	temp = self;
 	activator = other;
@@ -25,10 +25,9 @@ void() exploder_fire =
       WriteCoord (MSG_BROADCAST, self.origin_z);
       }
    BecomeExplosion();
-	};
-
+};
 void() exploder_use =
-	{
+{
 	if (self.delay)
 		{
 		self.nextthink = time + self.delay;
@@ -41,7 +40,7 @@ void() exploder_use =
 		}
 	};
 void() func_exploder =
-	{
+{
    precache_sound ("misc/shortexp.wav");
    precache_sound ("misc/longexpl.wav");
 	self.classname = "exploder";
@@ -62,9 +61,9 @@ void() func_exploder =
 	   {
       self.volume = 1.0;
 	   }
-   };
+};
 void() multi_exploder_fire =
-	{
+{
 	local entity temp;
 	local entity expl;
    self.nextthink = time + self.wait;
@@ -105,7 +104,7 @@ void() multi_exploder_fire =
    self = temp;
 };
 void( vector loc, float rad, float damage, float dur, float pause, float vol) multi_explosion =
-	{
+{
    local entity temp;
    temp = self;
    self = spawn();
@@ -122,7 +121,7 @@ void( vector loc, float rad, float damage, float dur, float pause, float vol) mu
    self = temp;
 };
 void() multi_exploder_use =
-	{
+{
    if (self.delay)
 		{
 		self.nextthink = time + self.delay;

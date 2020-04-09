@@ -35,7 +35,6 @@ void() counter_think =
 			}
 		}
 };
-
 void() counter_on_use =
 {
 	if ( ( self.cnt != 0 ) && ( self.spawnflags & COUNTER_FINISHCOUNT ) )
@@ -47,7 +46,6 @@ void() counter_on_use =
 	self.think = SUB_Null;
 	self.aflag = FALSE;
 	};
-
 void() counter_off_use =
 {
 	self.aflag = FALSE;
@@ -75,7 +73,6 @@ void() counter_off_use =
 		counter_think();
 		}
 };
-
 float( entity counter ) counter_GetCount =
 {
 	if ( counter.classname == "counter" )
@@ -106,7 +103,6 @@ void() func_counter =
       self.nextthink = time + 0.1;
       }
 };
-
 void() oncount_use =
 {
 	if ( counter_GetCount( other ) == self.count )

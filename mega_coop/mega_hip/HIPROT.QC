@@ -63,7 +63,6 @@ void() RotateTargetsFinal =
       ent = find( ent, targetname, self.target);
       }
 };
-
 void() SetTargetOrigin =
 {
    local entity ent;
@@ -163,7 +162,6 @@ void() rotate_entity_think =
    RotateTargets();
    self.nextthink = time + 0.02;
 };
-
 void() rotate_entity_use =
 {
 	self.frame = 1 - self.frame;
@@ -476,7 +474,6 @@ void() rotate_train_next =
       self.dest1 = self.origin; // original position
       }
 };
-
 void() rotate_train_find =
 {
    local entity targ;
@@ -514,7 +511,6 @@ void() rotate_train =
 {
    objerror ("rotate_train entities should be changed to rotate_object with\nfunc_rotate_train controllers\n");
 };
-
 void() func_rotate_train =
 {
    if (!self.speed)
@@ -582,7 +578,6 @@ void() movewall_touch =
       self.owner.attack_finished = time + 0.5;
       }
 };
-
 void() movewall_blocked =
 {
    local entity temp;
@@ -607,7 +602,6 @@ void() movewall_blocked =
       self.owner.attack_finished = time + 0.5;
       }
 };
-
 void() movewall_think =
 {
    self.ltime = time;
@@ -713,7 +707,6 @@ void() rotate_door_reversedirection =
    self.endtime = time + self.speed - ( self.endtime - time );
    self.ltime = time;
 };
-
 void() rotate_door_group_reversedirection =
 {
    local string name;
@@ -732,7 +725,6 @@ void() rotate_door_group_reversedirection =
       rotate_door_reversedirection();
       }
 };
-
 void() rotate_door_use =
    {
    local vector start;

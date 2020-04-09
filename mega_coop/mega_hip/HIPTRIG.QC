@@ -57,7 +57,6 @@ void() keytrigger_use =
    sound (self, CHAN_VOICE, self.noise4, 1, ATTN_NORM);
    SUB_UseTargets();
 };
-
 void() keytrigger_touch =
 {
    activator = other;
@@ -175,7 +174,6 @@ void() trigger_decoy_use =
    InitTrigger ();
    self.touch = trigger_decoy_touch;
 };
-
 void() trigger_waterfall_touch =
 {
    if (!(other.flags & FL_CLIENT))
@@ -203,5 +201,5 @@ void() trigger_waterfall =
       {
       self.movedir = self.movedir * self.speed;
       }
-   };
+};
 //END

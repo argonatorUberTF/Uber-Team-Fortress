@@ -504,7 +504,6 @@ void() TeslaLightningThink =
    LightningDamage(self.origin, trace_endpos, self.lastvictim, self.dmg);
    self.nextthink = time + 0.1;
 };
-
 void(entity targ) SpawnTeslaLightning =
 {
    local entity lgt;
@@ -527,8 +526,7 @@ void(entity targ) SpawnTeslaLightning =
    lgt.think = TeslaLightningThink;
    lgt.nextthink = time;
    lgt.deathtype = self.deathtype;
-   };
-
+};
 void() trap_tesla_think =
 {
    if (self.state == 0)
@@ -714,7 +712,6 @@ void () SpawnLightningThink =
 	LightningDamage (self.origin, self.oldorigin, self.lastvictim, self.dmg);
 	self.nextthink = (time + 0.1);
 };
-
 void () trap_lightning_use =
 {
 	local vector p1;
@@ -795,7 +792,6 @@ void () trap_lightning_use =
 		}
 	}
 };
-
 void () lightning_think =
 {
 	local float timedelay;
@@ -929,7 +925,6 @@ void () trap_tesla_scan =
 		head = head.chain;
 	}
 };
-
 void () TeslaLightningThink =
 {
 	self.owner.attack_state = 2;
@@ -959,7 +954,6 @@ void () TeslaLightningThink =
 	LightningDamage (self.origin, trace_endpos, self.lastvictim, self.dmg);
 	self.nextthink = (time + 0.1);
 };
-
 void (entity targ) SpawnTeslaLightning =
 {
 	local entity lgt;
@@ -983,7 +977,6 @@ void (entity targ) SpawnTeslaLightning =
 	lgt.nextthink = time;
 	lgt.deathtype = self.deathtype;
 };
-
 void () trap_tesla_think =
 {
 	if ((self.state == 0))
@@ -1100,7 +1093,6 @@ void () trap_gods_wrath_use =
 		trap_tesla_think ();
 	}
 };
-
 void () trap_gods_wrath =
 {
 	if ((self.delay == 0))

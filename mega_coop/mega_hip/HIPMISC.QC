@@ -122,7 +122,7 @@ void() info_command =
    };
 
 void() effect_teleport_use =
-   {
+{
    WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_TELEPORT);
    WriteCoord (MSG_BROADCAST, self.origin_x);
@@ -133,7 +133,7 @@ void() effect_teleport_use =
    };
 
 void() effect_teleport =
-   {
+{
    precache_sound("misc/r_tele1.wav");
    self.use = effect_teleport_use;
    };
@@ -215,16 +215,14 @@ void() effect_finale =
    self.angles = self.mangle;
    self.use = effect_finale_use;
    self.state = 0;
-   };
-
+};
 void() info_startendtext_use =
    {
    intermission_running = 1;
    ExitIntermission();
-   };
-
+};
 void() info_startendtext =
-   {
+{
    self.use = info_startendtext_use;
-   };
+};
 //END

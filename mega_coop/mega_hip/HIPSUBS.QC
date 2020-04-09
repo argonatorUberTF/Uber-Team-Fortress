@@ -158,5 +158,4 @@ void (entity srcent, entity destent) SUB_CopyEntity =
    destent.spawnmaxs=srcent.spawnmaxs;
    destent.spawnclassname=srcent.spawnclassname;
    };
-
 //END
