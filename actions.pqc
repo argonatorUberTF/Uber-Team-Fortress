@@ -29,7 +29,6 @@ void (vector direction,float damage) BigAssBullet =
 
 	ApplyMultiDamage ();
 };
-
 void () DropFlag =
 {
 	local entity Item;

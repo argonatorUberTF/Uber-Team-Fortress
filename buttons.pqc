@@ -1,6 +1,5 @@
 void() button_wait;
 void() button_return;
-
 void() button_wait = 
 {
 	self.state = TF_FLARE_LIT;
@@ -10,12 +9,10 @@ void() button_wait =
 	SUB_UseTargets();
 	self.frame = TF_FLARE_OFF;
 };
-
 void() button_done = 
 {
 	self.state = TF_FLARE_OFF;
 };
-
 void() button_return = 
 {
 	self.goal_state = 2;
@@ -27,11 +24,9 @@ void() button_return =
 		self.takedamage = TF_FLARE_OFF;
 	}
 };
-
 void() button_blocked = 
 {
 };
-
 void() button_fire = 
 {
 	if (self.state == 2 || self.state == TF_FLARE_LIT)
@@ -49,7 +44,6 @@ void() button_fire =
 #endif
 	SUB_CalcMove(self.pos2, self.speed, button_wait);
 };
-
 void() button_use = 
 {
 #ifdef mtf_coop_halflife
@@ -59,7 +53,6 @@ void() button_use =
 	self.enemy = activator;
 	button_fire();
 };
-
 void() button_touch = 
 {
 	local entity te;
@@ -90,7 +83,6 @@ void() button_touch =
 	self.enemy = other;
 	button_fire();
 };
-
 void() button_killed = 
 {
 #ifdef mtf_coop_halflife
@@ -108,7 +100,6 @@ void() button_killed =
 	self.takedamage = TF_FLARE_LIT;
 	button_fire();
 };
-
 #ifdef mtf_coop
 void () movewith_think =
 {
@@ -120,7 +111,6 @@ void () movewith_think =
 	}
 	self.nextthink = time;
 };
-
 void () movewith_firstthink =
 {
 	local entity fent;
@@ -131,15 +121,12 @@ void () movewith_firstthink =
 		fent.orig_origin = ((fent.mins+fent.maxs)*0.5);
 		fent = find(fent, targetname, self.owner.movewith);
 	}
-	
 	self.think = movewith_think;
 	self.nextthink = time;
 };
-
 void (entity t_owner) SpawnMovewith =
 {
 	local entity newtent;
-	
 	newtent = spawn();
 	newtent.owner = t_owner;
 	newtent.think = movewith_firstthink;
@@ -252,8 +239,9 @@ void() func_button =
 	self.hl_use = button_use;
 #ifdef COOP_HAX
 	if (self.hl_use)
-		//if (!self.touch)
-			Create_Useme( self, ((self.absmin+self.absmax)*.5) );
+	{
+		Create_Useme( self, ((self.absmin+self.absmax)*.5) );
+	}
 #endif
 	
 	HalfLife_DoRender();
@@ -263,7 +251,8 @@ void() func_button =
 		button_fire();
 	}
 #ifdef mtf_coop
-	if (self.movewith != string_null) {
+	if (self.movewith != string_null)
+	{
 		SpawnMovewith(self);
 	}
 #endif

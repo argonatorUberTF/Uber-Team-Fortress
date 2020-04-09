@@ -30,7 +30,6 @@ void() CamLock =
 
 			te = find(te, netname, self.netname);
 		}
-
 		if (self.enemy == world)
 			sprint2(self, 2, te.netname, " not found.\n");
 	}
@@ -93,7 +92,6 @@ void() CamVecLock =
 void() CamAngleLock = 
 {
 	local vector enemyang;
-
 	if (self.tfstate & 32768)
 	{
 		sprint(self, 2, "Angle Lock OFF.\n");
@@ -177,7 +175,6 @@ void() CamRevAngleLock =
 void() CamProjectileLock = 
 {
 	local entity te;
-
 	if (self.tfstate & 512)
 	{
 		sprint(self, 2, "Projectile Lock OFF.\n");
@@ -291,7 +288,6 @@ void() CamDrop =
 	cam.origin = self.origin + self.view_ofs;
 	cam.angles = self.angles;
 	setmodel(cam,"progs/spike.mdl");
-
 	tf = 1;
 	prevte = self;
 	te = self.camera_list;
@@ -302,7 +298,6 @@ void() CamDrop =
 		te = te.camera_list;
 	}
 	prevte.camera_list = cam;
-
 	st = ftos(tf);
 	sprint3(self, 2, "Camera ", st, " dropped.\n");
 };
@@ -310,7 +305,6 @@ void() fadetoblack =
 {
 	local float fade;
 	local string x;
-
 	fade = 10;
 	while( fade <= 250 )
 	{
@@ -391,7 +385,6 @@ void (entity _p_1745, vector _p_1746, float _p_1749, float _p_1750, float _p_175
 {
 	local entity _l_1752;
 	local vector _l_1753;
-
 	_l_1752 = self;
 	_l_1753 = '0.200000 1.000000 0.200000';
 	newmis = spawn ();
@@ -516,7 +509,6 @@ vector (entity _p_1782, float _p_1783) Remove_Prop =
 {
 	local entity _l_1784;
 	local vector _l_1785;
-
 	_l_1784 = find (world, classname, "player_prop");
 	while (_l_1784)
 	{
@@ -568,7 +560,6 @@ void () Cam =
 	local entity _l_1805;
 	local entity _l_1806;
 	local vector _l_1807;
-
 	_l_1805 = find (world, classname, "camera");
 	while (_l_1805)
 	{
@@ -675,7 +666,6 @@ void () Cam =
 		self.StatusRefreshTime = (time + 0.100000);
 	}
 };
-
 void () camerathink =
 {
 	if ((self.cnt != 1.000000))
@@ -691,7 +681,6 @@ void () camerathink =
 	self.angles = vectoangles (v_forward);
 	self.nextthink = (time + 0.200000);
 };
-
 void () LookThroughCam =
 {
 	local entity _l_1853;
@@ -828,7 +817,6 @@ void () LookThroughCam =
 						_l_1853.cnt = 1.000000;
 						self.bugger = 8.000000;
 						self.impulse = 0.000000;
-//						stuffcmd (self, "r_drawviewmodel 0\n");
 						self.old_wpn_mdl = self.weaponmodel;
 						self.weaponmodel = "";
 						self.health = _l_1853.health;
@@ -860,7 +848,6 @@ void () LookThroughCam =
 	sprint (self, 2.000000, "First drop a camera with drop3 .\n");
 	self.impulse = 0.000000;
 };
-
 void () camera_expire =
 {
 	local entity _l_1909;
@@ -875,7 +862,6 @@ void () camera_expire =
 		_l_1909 = find (_l_1909, classname, "camera");
 	}
 };
-
 void (entity _p_1912) camera_die =
 {
 	local entity _l_1913;

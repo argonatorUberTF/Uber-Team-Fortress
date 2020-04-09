@@ -272,7 +272,7 @@ entity bulletholes;			//hipdefs.qc
 entity lastbullet;			//hipdefs.qc
 entity hipdecoy;			//hipdefs.qc
 entity tracetossent;			// Nehara
-entity horn_charmer;			// horn of conjuring hipnotic
+//entity horn_charmer;			// horn of conjuring hipnotic
 //.entity lastplayer;		//for half-life, unused -arg
 //entity mini_f_client; // for mini sentry guns from defs.qc -arg
 //entity damage_inflictor;  //unused ? -arg
@@ -1535,7 +1535,7 @@ void()info_tfgoal_use;
 void()tfgoal_timer_tick;
 void()item_tfgoal_touch;
 void(entity Item, entity AP, entity Goal) tfgoalitem_GiveToPlayer;
-void(entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer;
+void(entity Item, entity AP, float method2) tfgoalitem_RemoveFromPlayer;
 void() tfgoalitem_remove;
 void(entity Item, float PAlive, entity P) tfgoalitem_drop;
 void(entity Item) tfgoalitem_checkgoalreturn;
@@ -1667,7 +1667,7 @@ string(entity pl) ClipSizeToString100;
 string(entity pl) DisguiseToString;
 string(entity pl) SentryDetailsToString;
 string(entity pl) SentryHealthToString;
-void(entity targ,entity inflictor,entity attacker,float damage) T_Damage;
+void(entity targ, entity inflictor, entity attacker, float damage) T_Damage;
 float(entity e,float healamount,float ignore) T_Heal;
 float(entity targ,entity inflictor) CanDamage;
 void(entity te) dremove = 
@@ -1686,13 +1686,13 @@ void(entity te) dremove =
 	te.is_removed = 1;
 	remove(te);
 };
-void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer;
+void(entity Item, entity AP, float method2) mtf_tfgoalitem_RemoveFromPlayer;
 void() TeamFortress_GrenadePrimed;
 void() RemoveFlare;
 void() GrenadeExplode;
 void() spike_touch;
 void(entity Goal, entity Player, entity Item) DisplayItemStatus;
-void(entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer;
+void(entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer;
 void() TeamFortress_MOTD;
 void(float tno) TeamFortress_TeamSetColor;
 void() beartrap_dropBearTrap;
@@ -9115,7 +9115,10 @@ void() TeamFortress_CheckClassStats =
 	}
 	if (self.health > self.max_health && !(self.items & 65536))
 	{
-		TF_T_Damage(self, world, world, self.max_health - self.health, 0, 256);
+	local float putz;
+	putz = self.max_health - self.health;
+//		TF_T_Damage(self, world, world, self.max_health - self.health, 0, 256);
+		TF_T_Damage(self, world, world, putz, 0, 256);
 	}
 	if (self.health < 0)
 	{
@@ -9756,7 +9759,8 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
 #endif
           	if (self.th_pain)
           	{
-          		self.th_pain(attacker, take);
+          		self.th_pain(attacker, take);  //why is there 2 paramters? -arg
+//          		self.th_pain(attacker); // changed to 1 param and see what happens.
 #ifdef mtf_coop
 			self.#npc_lastruntime = 0;
 #endif
@@ -10207,7 +10211,8 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
 #endif
             	if (self.th_pain)
             	{
-            		self.th_pain(attacker, take);
+            		self.th_pain(attacker, take);  //why is there 2 parameters? -arg
+//            		self.th_pain(attacker);
 #ifdef mtf_coop
 			self.#npc_lastruntime = 0;
 #endif
@@ -13858,7 +13863,7 @@ void() ReturnItem =
 	tfgoalitem_checkgoalreturn(self.enemy);
 	dremove(self);
 };
-void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer = 
+void(entity Item, entity AP, float method2) mtf_tfgoalitem_RemoveFromPlayer = 
 {
 	local entity te;
 	local float lighton;
@@ -13941,7 +13946,7 @@ void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer =
 		}
 		te = find(te, classname, "player");
 	}
-	if ((method == TF_FLARE_LIT) || (method == 2))
+	if ((method2 == TF_FLARE_LIT) || (method2 == 2))
 	{
 		te = find(world, classname, "player");
 		while (te != world)
@@ -13983,7 +13988,7 @@ void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer =
 		{
 			if (Item.goal_activation & 4)
 			{
-				if (method == 0)
+				if (method2 == 0)
 					mtf_tfgoalitem_drop(Item);
 			}
 			else
@@ -13998,7 +14003,7 @@ void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer =
 		TeamFortress_SetSpeed(AP);
 		return;
 	}
-	if (method == TF_FLARE_OFF)
+	if (method2 == TF_FLARE_OFF)
 	{
 		if (Item.goal_activation & 16)
 		{
@@ -14015,9 +14020,9 @@ void(entity Item, entity AP, float method) mtf_tfgoalitem_RemoveFromPlayer =
 		TeamFortress_SetSpeed(AP);
 		return;
 	}
-	dprint("Invalid method passed into tfgoalitem_RemoveFromPlayer\n");
+	dprint("Invalid method passed into tfgoalitem_RemoveFromPlayer.\n");
 };
-void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
+void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 {
     local entity te;
     local float lighton;
@@ -14083,7 +14088,7 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 	    RemoveResults (Item, te);
 	te = find (te, classname, "player");
     }
-    if ((method == 0) || (method == 2)) {
+    if ((method3 == 0) || (method3 == 2)) {
 	te = find (world, classname, "player");
 	while (te != world) {
 	    if (te.team_no == Item.owned_by) {
@@ -14104,7 +14109,7 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 	if (Item.goal_activation & 8) {
 	    DelayReturn = spawn ();
 	    DelayReturn.enemy = Item;
-	    if (method == 0) {
+	    if (method3 == 0) {
 		DelayReturn.weapon = 0;
 	    } else {
 		DelayReturn.weapon = 1;
@@ -14113,7 +14118,7 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 	    DelayReturn.nextthink = time + 0.5;
 	} else {
 	    if (Item.goal_activation & 4) {
-		if ((method == 2))
+		if ((method3 == 2))
 		{
 		    tfgoalitem_drop (Item, 1, AP);
 		} else {
@@ -14131,7 +14136,7 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 	TeamFortress_SetSpeed (AP);
 	return;
     } else {
-	if (method == 1) {
+	if (method3 == 1) {
 	    if (Item.goal_activation & 16) {
 		DelayReturn = spawn ();
 		DelayReturn.enemy = Item;
@@ -14148,7 +14153,7 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
 	    return;
 	}
     }
-    objerror ("Invalid method passed into tfgoalitem_RemoveFromPlayer\n");
+    objerror ("Invalid method passed into tfgoalitem_RemoveFromPlayer.\n");
 };
 void() tfgoalitem_dropthink = 
 {
@@ -19151,10 +19156,8 @@ void() turret_findTarget =
 										  if (head.classname != "info_intermission" || attack_intermission) // efc, don't attack cam unless at intermission									  
   										  if(head.movetype != MOVETYPE_PUSH)
   										  {  										    
-  										    
     											tempDist = vlen(head.origin - self.origin);
     											traceline (self.origin, head.origin, 1, self);
-    
     											if (trace_fraction >= 1)
     												if (tempDist < dist)
     													if (turret_inFront(head))
@@ -19191,7 +19194,6 @@ float (entity e) turret_inFront =
 	}
 	return (0);
 };
-
 void() turret_attackEnemy =
 {
 	if (self.turret_timeout < time)
@@ -24066,4 +24068,4 @@ void () respawn_monster =
 		Killed (self, world);
 	}	
 };
-//END 
+//END

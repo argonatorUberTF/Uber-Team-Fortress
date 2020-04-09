@@ -4177,10 +4177,10 @@ void(entity targ, entity attacker) ClientObituary =
 						deathstring = " is taken out gangsta style by ";
 						deathstring2 = "\n";
 					}
-					if ((deathmsg == 47.000000))
+					if ((deathmsg == 44.000000))
 					{
-						deathstring = "'s ankles get chewed by ";
-						deathstring2 = "'s MiniSentry\n";
+						deathstring = "'s got lethally demoralized by ";
+						deathstring2 = "'s auto sentry gun.\n";
 					}
 					if ((deathmsg == 202))
 					{
@@ -4191,6 +4191,11 @@ void(entity targ, entity attacker) ClientObituary =
 					{
 						deathstring = "'s chokes to death on ";
 						deathstring2 = "'s bad ass farts.\n";
+					}
+					if ((deathmsg == 204))
+					{
+						deathstring = "'s was spun like a record baby by ";
+						deathstring2 = "'s gravity well.\n";
 					}
 					if (deathmsg == 8)
 					{
@@ -4769,7 +4774,7 @@ local entity te;
 					{
 						if (random() < 0.5)
 						{
-							deathstring = " gulped a load of Texas trucker matress squeezings.\n";
+							deathstring = " gulped a load of Texas trucker mattress squeezings.\n";
 						}
 						else
 						{
@@ -5105,7 +5110,6 @@ deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 	}
 };
 
-
 void(entity attacker) fertimer = 
 {
 	attacker.fertracker = 1;
@@ -5180,7 +5184,6 @@ void(entity targeh) teamchange =
 	if (targ.team_no == 2) { teamcount2 = teamcount2 - 1; }
 	if (targ.team_no == 3) { teamcount3 = teamcount3 - 1; }
 	if (targ.team_no == 4) { teamcount4 = teamcount4 - 1; }
-
 		if (targ.ischangingteams == 1)	{
 		targ.team_no = 1;
 		teamcount1 = teamcount1 + 1;

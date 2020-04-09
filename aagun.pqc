@@ -78,7 +78,6 @@ void () ballista_think =
 	local float lastdist;
 	local vector my_pitch;
 	local vector ideal_pitch;
-
 	if (((!self.enemy || !visible (self.enemy)) || !(self.enemy.flags2 & 8)))
 	{
 		targ = world;

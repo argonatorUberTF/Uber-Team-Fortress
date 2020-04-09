@@ -1,9 +1,4 @@
 void(float normal) SUB_AttackFinished;
-//float()	WizardCheckAttack;
-//float()	SoldierCheckAttack;
-//float()	ShamCheckAttack;
-//float()	DemonCheckAttack;
-//float()	OgreCheckAttack;
 void (vector megadeth, float t) ai_ledgejump;
 void (float dist) ai_run_slide2;
 float()	CheckAttack;
@@ -61,7 +56,6 @@ void() t_movetarget =
 		return;
 	}
 };
-
 void() movetarget_f = 
 {
 	if (!(self.targetname))
@@ -150,8 +144,8 @@ void() path_follow =
 };
 void() path_follow2 =
 {
-   self.solid = SOLID_TRIGGER;
-   self.touch = t_followtarget;
+	self.solid = SOLID_TRIGGER;
+	self.touch = t_followtarget;
 	setsize (self, '-8 -8 -8', '8 8 8');
 };
 #endif
@@ -190,7 +184,6 @@ float(entity targ) infront =
 	}
 	return TF_FLARE_LIT;
 };
-
 #ifdef mtf_coop
 float (entity from_ent, entity to_ent) coop_visible =
 {
@@ -203,8 +196,6 @@ float (entity from_ent, entity to_ent) coop_visible =
 		return ( 0 );
 	return ( 1 );
 };
-
-
 #endif
 float() FindTarget = 
 {

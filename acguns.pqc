@@ -18,7 +18,6 @@ void () ACprojectile_expireboom =
 	{
 	}
 };
-
 void () ACprojectile_touchboom =
 {
 	local float damg;
@@ -64,7 +63,6 @@ void () ACprojectile_touchboom =
 	BecomeExplosion ();
 	dremove (self);
 };
-
 void () ACspike_touch =
 {
 	if (((other == self.owner) || (other.owner == self.owner)))
@@ -95,7 +93,6 @@ void () ACspike_touch =
 	}
 	remove (self);
 };
-
 void () bullet_touch =
 {
 	if (((other == self.enemy) && (self.enemy != world)))
@@ -109,7 +106,6 @@ void () bullet_touch =
 	}
 	dremove (self);
 };
-
 void () AC_bullet =
 {
 	local vector org;
@@ -133,7 +129,6 @@ void () AC_bullet =
 	newmis.frame = 0;
 	newmis.skin = 0;
 };
-
 void (vector org, vector dir, entity targ) AC_spike =
 {
 	sound (self.enemy, 1, "helo/acannon.wav", 1, 1);
@@ -252,7 +247,6 @@ void () ACmissile_home =
 	self.nextthink = (time + 0.100000);
 	self.think = ACmissile_home;
 };
-
 void (vector org, vector dir, entity targ, float dm) AC_seekingmissile =
 {
 	newmis = spawn ();
@@ -298,7 +292,6 @@ void (vector org, vector dir, entity targ, float dm) AC_seekingmissile =
 	}
 	self.lastmiss = newmis;
 };
-
 void (vector org, vector dir, entity targ) AC_heatseeker =
 {
 	sound (self.enemy, 1, "helo/rocklnch.wav", 1, 1);
@@ -321,13 +314,11 @@ void (vector org, vector dir, entity targ) AC_heatseeker =
 	}
 	newmis.velocity = (dir * 800);
 };
-
 void () flare_touch =
 {
 	remove (self);
 	return;
 };
-
 void () AC_Flare =
 {
 	local entity e;
