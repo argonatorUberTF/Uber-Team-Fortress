@@ -22,12 +22,9 @@ void () revenant_stand1 = [ 0, revenant_stand1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	ai_stand (); 
-	
 	if (random () < 0.07)
 		sound (self, CHAN_VOICE, "doom_other/DSSKEACT.wav", TRUE, ATTN_IDLE);
-
 	self.cells_bonus++;
 	revenant_check_frame();
 	ai_stand (); 
@@ -55,9 +52,7 @@ void () revenant_walk1 = [ 0, revenant_walk1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	self.cells_bonus++;
-	
 	revenant_check_frame();
 	ai_walk (5 + TRUE); 
 };
@@ -67,8 +62,6 @@ void () revenant_walk =
 	self.cells_bonus = 0;
 	revenant_walk1();
 };
-
-
 void () revenant_run1 = [ 0, revenant_run1 ]
 {
 	if (self.cells_bonus < 2)
@@ -87,9 +80,7 @@ void () revenant_run1 = [ 0, revenant_run1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	self.cells_bonus++;
-	
 	revenant_check_frame();
 	ai_run (10); 
 };
@@ -97,12 +88,9 @@ void () revenant_run1 = [ 0, revenant_run1 ]
 void () revenant_run =
 {
 	local float r;
-
 	r = random ();
 	if (r < 0.36)
 		sound (self, CHAN_VOICE, "doom_other/DSSKESIT.wav", TRUE, ATTN_IDLE);
-
-
 	self.cells_bonus = 0;
 	revenant_run1();
 };
@@ -110,7 +98,6 @@ void () revenant_run =
 void () RevMissileTouch =
 {
 	local vector org;
-
 	if ((other == self.owner))
 	{
 		return;
@@ -138,7 +125,6 @@ void () RevHome =
 {
 	local vector dir;
 	local vector vtemp;
-
 	vtemp = (self.enemy.origin + '0 0 10');
 	if ((self.enemy.health < TRUE))
 	{
@@ -148,11 +134,9 @@ void () RevHome =
 	dir = normalize ((vtemp - self.origin));
 	self.angles = vectoangles (dir);
 	self.velocity = (dir * 300);
-
 	self.nextthink = (time + 0.5);
 	self.think = RevHome;
 };
-
 void () RevFireBall =
 {
 	local entity missile;
@@ -207,9 +191,7 @@ void () revenant_atk =
 {
 	if (self.attack_finished > time) 
 		return;
-		
 	sound (self, CHAN_VOICE, "doom_other/dsmanatk.wav", TRUE, ATTN_NORM);
-	
 	self.cells_bonus = 0;
 	revenant_atk1();
 };
@@ -254,7 +236,6 @@ void () revenant_melee1 = [ 0, revenant_melee1 ]
 		revenant_run1 ();
 		return;
 	}
-	
 	self.cells_bonus++;
 	revenant_check_frame();
 };
@@ -263,9 +244,7 @@ void () revenant_melee =
 {
 	if (self.attack_finished > time) 
 		return;
-		
 	sound (self, CHAN_VOICE, "doom_other/DSSKESWG.wav", TRUE, ATTN_NORM);
-	
 	self.cells_bonus = 0;
 	revenant_melee1();
 };
@@ -282,9 +261,7 @@ void () revenant_pain1 = [ 0, revenant_pain1 ]
 		revenant_run1();
 		return;
 	}
-	
 	self.cells_bonus++;
-	
 	revenant_check_frame();
 };
 
@@ -292,22 +269,18 @@ void () revenant_pain =
 {
 	if (self.pain_finished > time)
 		return;
-
 	sound (self, CHAN_VOICE, "doom_other/DSPOPAIN.wav", TRUE, ATTN_NORM);
 	self.pain_finished = (time + 0.5);
-	
 	self.cells_bonus = 0;
 	revenant_pain1();
 };
 void () revenant_die1 = [ 0, revenant_die1 ]
 {
 	self.frame = 89 + self.cells_bonus;
-	
 	if (self.frame >= 93) {
 		self.frame = 93;
 		self.cells_bonus = self.cells_bonus - 1;
 	}
-	
 	self.cells_bonus++;
 	revenant_check_frame();
 };
@@ -315,17 +288,10 @@ void () revenant_die1 = [ 0, revenant_die1 ]
 void () revenant_die =
 {
 	self.cells_bonus = 0;
-	
 	self.solid = SOLID_NOT;
-	
-	
 	revenant_die1();
-	
 	sound (self, CHAN_VOICE, "doom_other/DSSKEDTH.wav", TRUE, ATTN_NORM);
 };
-
-
-
 void () monster_revenant1 =
 {
 	self.solid = SOLID_SLIDEBOX;

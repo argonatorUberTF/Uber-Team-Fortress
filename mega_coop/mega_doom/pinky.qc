@@ -4,8 +4,6 @@ void () pinky_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
 	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
@@ -23,7 +21,6 @@ void () pinky_check_frame =
 	doom_ai_sprite_orient(56);
 	self.nextthink = time + 0.1;
 };
-
 void () pinky_stand1 = [ 0, pinky_stand2 ]
 {
 	pinky_check_frame();
@@ -295,7 +292,6 @@ void () monster_pinky1 =
 {
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-	
 	if (self.has_tesla == 1)
 		setmodel (self, "sprites/doom/spectre2.spr");
 	else
@@ -334,6 +330,3 @@ void () monster_pinky =
 	MTF_Setup_Monster_Presets ( 0, "Pinky", monster_pinky1 );
 };
 //END
-
-
-

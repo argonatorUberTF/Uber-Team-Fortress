@@ -3,8 +3,6 @@ void () lsoul_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
 	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
@@ -85,11 +83,8 @@ void()	Sol_JumpTouch =
 			T_Damage (other, self, self, ldmg);	
 		}
 	}
-
-
 	self.velocity = '0 0 0'; //set velocity to 0 after the monster has hit something. (it doesn't matter what it hit, the important thing is that velocity is 0 0 0 when AI takes over again.
 	self.movetype = MOVETYPE_STEP; //go back to movetype_step movement for monster AI
-
 	self.touch = SUB_Null; //reset touch function to nothing
 	self.think = lsoul_run1; //break out of the charge loop
 	self.nextthink = time + 0.1;
@@ -106,29 +101,22 @@ void () lsoul_charge =
 	self.frame = 16;
 	self.think = lsoul_atk1;
 	lsoul_check_frame();
-	
 };
-
-
 void () lsoul_atk1 = [ 16, lsoul_atk2 ]
 {
-
 	lsoul_check_frame();
 
 };
 
 void () lsoul_atk2 = [ 16, lsoul_atk3 ]
 {
-
 	lsoul_check_frame();
-
 };
 
 void () lsoul_atk3 = [ 24, lsoul_atk3 ]
 {		
 	if (!self.dest1)
 		self.dest1 = self.origin;
-		
 	self.dest2 = self.origin;
 		
 	if (self.dest1 == self.dest2) {
@@ -139,30 +127,24 @@ void () lsoul_atk3 = [ 24, lsoul_atk3 ]
 	self.dest1 = self.origin;
 	lsoul_check_frame();
 };
-
-
 void () lsoul_pain1 = [ 24, lsoul_pain2 ]
 {
 	lsoul_check_frame();
 };
-
 void () lsoul_pain2 = [ 24, lsoul_pain3 ]
 {
 	lsoul_check_frame();
 };
-
 void () lsoul_pain3 = [ 32, lsoul_run1 ]
 {
 	lsoul_check_frame();
 };
-
 void() soul_bite =
 {
 local vector	delta;
 local float 	ldmg;
 	if (!self.enemy)
 		return;
-
         ai_face ();
 	walkmove (self.ideal_yaw, 12);	/* allow a little closing */
 

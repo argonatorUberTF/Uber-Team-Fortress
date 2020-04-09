@@ -2,8 +2,6 @@ void () mancubus_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
 	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
@@ -21,8 +19,6 @@ void () mancubus_check_frame =
 	doom_ai_sprite_orient(64);
 	self.nextthink = time + 0.1;
 };
-
-
 void () mancubus_stand1 = [ 0, mancubus_stand1 ]
 {
 	if (self.cells_bonus < 2)
@@ -49,14 +45,11 @@ void () mancubus_stand1 = [ 0, mancubus_stand1 ]
 	mancubus_check_frame();
 	ai_stand (); 
 };
-
 void () mancubus_stand =
 {
 	self.cells_bonus = 0;
 	mancubus_stand1();
 };
-
-
 void () mancubus_walk1 = [ 0, mancubus_walk1 ]
 {
 	if (self.cells_bonus < 2)
@@ -75,13 +68,10 @@ void () mancubus_walk1 = [ 0, mancubus_walk1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	self.cells_bonus++;
-	
 	mancubus_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () mancubus_walk =
 {
 	self.cells_bonus = 0;
@@ -113,7 +103,6 @@ void () mancubus_run1 = [ 0, mancubus_run1 ]
 	mancubus_check_frame();
 	ai_run (10); 
 };
-
 void () mancubus_run =
 {
 	local float r;
@@ -123,8 +112,6 @@ void () mancubus_run =
 	self.cells_bonus = 0;
 	mancubus_run1();
 };
-
-
 void () mancuMissileTouch =
 {
 	local vector org;
@@ -154,7 +141,6 @@ void () mancuMissileTouch =
 	self.solid = SOLID_NOT;
 	s_explode1 ();
 };
-
 void (vector org, vector vec) mancuFire =
 {
 	vec = normalize (vec);
@@ -174,7 +160,6 @@ void (vector org, vector vec) mancuFire =
 	newmis.touch = mancuMissileTouch;
 	sound (newmis, CHAN_WEAPON, "doom_other/dsfirsht.wav", TRUE, ATTN_NORM);
 };
-
 void () mancuMissile =
 {
 	local vector org;
@@ -186,11 +171,9 @@ void () mancuMissile =
 	mancuFire (org, (self.enemy.origin - self.origin));
 	mancuFire (org2, (self.enemy.origin - self.origin));
 };
-
 void () mancubus_atk1 = [ 0, mancubus_atk1 ]
 {
 	ai_face ();
-	
 	if (self.cells_bonus < 3)
 		self.frame = 48;
 	else if (self.cells_bonus == 3) {
@@ -207,12 +190,9 @@ void () mancubus_atk1 = [ 0, mancubus_atk1 ]
 		mancubus_run1 ();
 		return;
 	}
-
-	
 	self.cells_bonus++;
 	mancubus_check_frame();
 };
-
 void () mancubus_atk =
 {
 	if (self.attack_finished > time) 
@@ -221,9 +201,6 @@ void () mancubus_atk =
 	self.cells_bonus = 0;
 	mancubus_atk1();
 };
-
-
-
 void () mancubus_pain1 = [ 0, mancubus_pain1 ]
 {
 	if (self.cells_bonus < 1)
@@ -239,7 +216,6 @@ void () mancubus_pain1 = [ 0, mancubus_pain1 ]
 	self.cells_bonus++;
 	mancubus_check_frame();
 };
-
 void () mancubus_pain =
 {
 	if (self.pain_finished > time)
@@ -249,7 +225,6 @@ void () mancubus_pain =
 	self.cells_bonus = 0;
 	mancubus_pain1();
 };
-
 void () mancubus_die1 = [ 0, mancubus_die1 ]
 {
 	self.frame = 66 + self.cells_bonus;
@@ -260,7 +235,6 @@ void () mancubus_die1 = [ 0, mancubus_die1 ]
 	self.cells_bonus++;
 	mancubus_check_frame();
 };
-
 void () mancubus_die =
 {
 	self.cells_bonus = 0;
@@ -268,7 +242,6 @@ void () mancubus_die =
 	mancubus_die1();
 	sound (self, CHAN_VOICE, "doom_other/dsmandth.wav", TRUE, ATTN_NORM);
 };
-
 void () monster_mancubus1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -284,7 +257,6 @@ void () monster_mancubus1 =
 	self.th_die = mancubus_die;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_mancubus =
 {
 	if (deathmatch)

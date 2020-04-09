@@ -2,8 +2,6 @@ void () hgunner_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
 	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
@@ -21,8 +19,6 @@ void () hgunner_check_frame =
 	doom_ai_sprite_orient(48);
 	self.nextthink = time + 0.1;
 };
-
-
 void () hgunner_stand1 = [ 0, hgunner_stand1 ]
 {
 	if (self.cells_bonus < 2)
@@ -42,19 +38,15 @@ void () hgunner_stand1 = [ 0, hgunner_stand1 ]
 	
 	if (random () < 0.07)
 		sound (self, CHAN_VOICE, "doom_other/dsposact.wav", TRUE, ATTN_IDLE);
-
 	self.cells_bonus++;
 	hgunner_check_frame();
 	ai_stand (); 
 };
-
 void () hgunner_stand =
 {
 	self.cells_bonus = 0;
 	hgunner_stand1();
 };
-
-
 void () hgunner_walk1 = [ 0, hgunner_walk1 ]
 {
 	if (self.cells_bonus < 2)
@@ -69,7 +61,6 @@ void () hgunner_walk1 = [ 0, hgunner_walk1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	self.cells_bonus++;
 	
 	hgunner_check_frame();
@@ -81,8 +72,6 @@ void () hgunner_walk =
 	self.cells_bonus = 0;
 	hgunner_walk1();
 };
-
-
 void () hgunner_run1 = [ 0, hgunner_run1 ]
 {
 	if (self.cells_bonus < 2)
@@ -97,9 +86,7 @@ void () hgunner_run1 = [ 0, hgunner_run1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	self.cells_bonus++;
-	
 	hgunner_check_frame();
 	ai_run (10); 
 };
@@ -116,12 +103,9 @@ void () hgunner_run =
 		else
 			if (r < TRUE)
 				sound (self, CHAN_VOICE, "doom_other/dsposit3.wav", TRUE, ATTN_IDLE);
-
 	self.cells_bonus = 0;
 	hgunner_run1();
 };
-
-
 void () hgunner_fire =
 {
 	local vector dir;
@@ -134,7 +118,6 @@ void () hgunner_fire =
 	FireBullets (3, dir, '0.1 0.1 0');
 	self.attack_finished = (time + 1.6);
 };
-
 void () hgunner_atk1 = [ 32, hgunner_atk1 ]
 {
 	ai_face ();
@@ -160,7 +143,6 @@ void () hgunner_atk =
 	self.cells_bonus = 0;
 	hgunner_atk1();
 };
-
 void () hgunner_pain1 = [ 0, hgunner_pain1 ]
 {
 	if (self.cells_bonus < 2)
@@ -174,7 +156,6 @@ void () hgunner_pain1 = [ 0, hgunner_pain1 ]
 	self.cells_bonus++;
 	hgunner_check_frame();
 };
-
 void () hgunner_pain =
 {
 	if (self.pain_finished > time)
@@ -185,16 +166,14 @@ void () hgunner_pain =
 	hgunner_pain1();
 };
 
-
-
 void () hgunner_die1 = [ 0, hgunner_die1 ]
 {
 	self.frame = 49 + self.cells_bonus;
-	if (self.frame >= 55) {
+	if (self.frame >= 55)
+	{
 		self.frame = 55;
 		self.cells_bonus = self.cells_bonus - 1;
 	}
-	
 	self.cells_bonus++;
 	hgunner_check_frame();
 };
@@ -202,11 +181,11 @@ void () hgunner_die1 = [ 0, hgunner_die1 ]
 void () hgunner_gib1 = [ 0, hgunner_gib1 ]
 {
 	self.frame = 56 + self.cells_bonus;
-	if (self.frame >= 61) {
+	if (self.frame >= 61)
+	{
 		self.frame = 61;
 		self.cells_bonus = self.cells_bonus - 1;
 	}
-	
 	self.cells_bonus++;
 	hgunner_check_frame();
 };
@@ -220,7 +199,8 @@ void () hgunner_die =
 		sound (self, CHAN_VOICE, "doom_other/dsslop.wav", TRUE, ATTN_NORM); 
 		hgunner_gib1();
 	}
-	else {
+	else
+	{
 		r = random ();
 		if (r < 0.36)
 			sound (self, CHAN_VOICE, "doom_other/dspodth1.wav", TRUE, ATTN_IDLE);
@@ -249,7 +229,6 @@ void () monster_hgunner1 =
 	self.th_die = hgunner_die;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_hgunner =
 {
 	if (deathmatch)
@@ -258,7 +237,6 @@ void () monster_hgunner =
 		return;
 	}
 	precache_model ("sprites/doom/cgguy.spr");
-	
 	precache_sound ("doom_other/dsposit3.wav");
 	precache_sound ("doom_other/dsposit2.wav");
 	precache_sound ("doom_other/dsposit1.wav");

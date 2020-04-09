@@ -39,12 +39,10 @@ void () arachnotron_stand1 = [ 0, arachnotron_stand1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	ai_stand (); 
 	
 	if (random () < 0.07)
 		sound (self, CHAN_VOICE, "doom_other/dsposact.wav", TRUE, ATTN_IDLE);
-
 	self.cells_bonus++;
 	arachnotron_check_frame();
 	ai_stand (); 
@@ -75,12 +73,10 @@ void () arachnotron_walk1 = [ 0, arachnotron_walk1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	if (random() < 0.15)
 		sound (self, CHAN_VOICE, "doom_other/dsbspwlk.wav", TRUE, ATTN_IDLE);
 	
 	self.cells_bonus++;
-	
 	arachnotron_check_frame();
 	ai_walk (5 + TRUE); 
 };
@@ -110,12 +106,10 @@ void () arachnotron_run1 = [ 0, arachnotron_run1 ]
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	if (random() < 0.15)
 		sound (self, CHAN_VOICE, "doom_other/dsbspwlk.wav", TRUE, ATTN_IDLE);
 	
 	self.cells_bonus++;
-	
 	arachnotron_check_frame();
 	ai_run (10); 
 };
@@ -123,12 +117,9 @@ void () arachnotron_run1 = [ 0, arachnotron_run1 ]
 void () arachnotron_run =
 {
 	local float r;
-
 	r = random ();
 	if (r < 0.36)
 		sound (self, CHAN_VOICE, "doom_other/dsbspsit.wav", TRUE, ATTN_IDLE);
-
-
 	self.cells_bonus = 0;
 	arachnotron_run1();
 };
@@ -168,7 +159,6 @@ void () arachexplode4 = [ 5, SUB_Remove ]
 void () ArachMissileTouch =
 {
 	local vector org;
-
 	if ((other == self.owner))
 	{
 		return;
@@ -203,21 +193,16 @@ void (vector org, vector vec) ArachFire =
 	newmis.owner = self;
 	newmis.movetype = MOVETYPE_FLY;
 	newmis.solid = SOLID_BBOX;
-	//newmis.effects = EF_DIMLIGHT;
 	setmodel (newmis, "sprites/doom/arachball.spr");
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (newmis, org);
 	newmis.velocity = (vec * 600);
 	newmis.angles = vectoangles (newmis.velocity);
-	
 	newmis.health = time + MOVETYPE_BOUNCE;
 	newmis.nextthink = time + 0.1;
 	newmis.think = arachball_flythink;
-
 	newmis.touch = ArachMissileTouch;
-
 };
-
 void () ArachMissile =
 {
 	local vector org;
@@ -229,7 +214,6 @@ void () ArachMissile =
 void () arachnotron_atk1 = [ 0, arachnotron_atk1 ]
 {
 	ai_face ();
-	
 	if (self.cells_bonus < 2)
 		self.frame = 48;
 	else if (self.cells_bonus >=2) {
@@ -243,8 +227,6 @@ void () arachnotron_atk1 = [ 0, arachnotron_atk1 ]
 			return;
 		}	
 	}
-
-	
 	self.cells_bonus++;
 	arachnotron_check_frame();
 };
@@ -253,7 +235,6 @@ void () arachnotron_atk =
 {
 	if (self.attack_finished > time) 
 		return;
-	
 	self.cells_bonus = 0;
 	arachnotron_atk1();
 };
@@ -267,7 +248,6 @@ void () arachnotron_pain1 = [ 0, arachnotron_pain1 ]
 		arachnotron_run1();
 		return;
 	}
-	
 	self.cells_bonus++;
 	arachnotron_check_frame();
 };
@@ -276,7 +256,6 @@ void () arachnotron_pain =
 {
 	if (self.pain_finished > time)
 		return;
-
 	sound (self, CHAN_VOICE, "doom_other/dsdmpain.wav", TRUE, ATTN_NORM);
 	self.pain_finished = (time + 2.5);
 	self.cells_bonus = 0;
@@ -292,7 +271,6 @@ void () arachnotron_die1 = [ 0, arachnotron_die1 ]
 		self.frame = 71;
 		self.cells_bonus = self.cells_bonus - 1;
 	}
-	
 	self.cells_bonus++;
 	arachnotron_check_frame();
 };
@@ -320,7 +298,6 @@ void () monster_arachnotron1 =
 
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_arachnotron =
 {
 	if (deathmatch)

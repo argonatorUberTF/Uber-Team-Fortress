@@ -2,9 +2,7 @@ void () sargeant_fire;
 void () sargeant_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
-	{
-
-		
+	{		
 	}
 	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
@@ -22,7 +20,6 @@ void () sargeant_check_frame =
 	doom_ai_sprite_orient(48);
 	self.nextthink = time + 0.1;
 };
-
 void () sargeant_stand1 = [ 0, sargeant_stand2 ]
 {
 	sargeant_check_frame();
@@ -32,25 +29,21 @@ void () sargeant_stand1 = [ 0, sargeant_stand2 ]
 		sound (self, CHAN_VOICE, "doom_soldier/nearby.wav", TRUE, ATTN_IDLE);
 	}
 };
-
 void () sargeant_stand2 = [ 8, sargeant_stand3 ]
 {
 	sargeant_check_frame();
 	ai_stand (); 
 };
-
 void () sargeant_stand3 = [ 16, sargeant_stand4 ]
 {
 	sargeant_check_frame();
 	ai_stand (); 
 };
-
 void () sargeant_stand4 = [ 24, sargeant_stand5 ]
 {
 	sargeant_check_frame();
 	ai_stand (); 
 };
-
 void () sargeant_stand5 = [ 16, sargeant_stand6 ]
 {
 	sargeant_check_frame();
@@ -61,8 +54,6 @@ void () sargeant_stand6 = [ 8, sargeant_stand1 ]
 	sargeant_check_frame();
 	ai_stand (); 
 };
-
-
 void () sargeant_walk1 = [ 0, sargeant_walk2 ]
 {
 	sargeant_check_frame();
@@ -72,38 +63,31 @@ void () sargeant_walk1 = [ 0, sargeant_walk2 ]
 	}
 	ai_walk (5 + TRUE); 
 };
-
 void () sargeant_walk2 = [ 8, sargeant_walk3 ]
 {
 	sargeant_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () sargeant_walk3 = [ 16, sargeant_walk4 ]
 {
 	sargeant_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () sargeant_walk4 = [ 24, sargeant_walk5 ]
 {
 	sargeant_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () sargeant_walk5 = [ 16, sargeant_walk6 ]
 {
 	sargeant_check_frame();
 	ai_walk (5 + FL_SWIM); 
 };
-
 void () sargeant_walk6 = [ 8, sargeant_walk1 ]
 {
 	sargeant_check_frame();
 	ai_walk (5 + MOVETYPE_WALK); 
 };
-
-
 void () sargeant_run1 = [ 0, sargeant_run2 ]
 {
 	if ((random () < 0.2))
@@ -113,51 +97,41 @@ void () sargeant_run1 = [ 0, sargeant_run2 ]
 	sargeant_check_frame();
 	ai_run (5 + FL_SWIM); 
 };
-
 void () sargeant_run2 = [ 8, sargeant_run3 ]
 {
 	sargeant_check_frame();
 	ai_run (5 + MOVETYPE_FLY); 
 	 
 };
-
 void () sargeant_run3 = [ 16, sargeant_run4 ]
 {
 	sargeant_check_frame();
 	ai_run (5 + MOVETYPE_STEP); 
 	 
 };
-
 void () sargeant_run4 = [ 24, sargeant_run1 ]
 {
 	sargeant_check_frame();
 	ai_run (5 + MOVETYPE_WALK); 
 	 
 };
-
 void () sargeant_run5 = [ 16, sargeant_run6 ]
 {
 	sargeant_check_frame();
 	ai_run (5 + MOVETYPE_STEP); 
 	 
 };
-
 void () sargeant_run6 = [ 8, sargeant_run1 ]
 {
 	sargeant_check_frame();
 	ai_run (5 + MOVETYPE_STEP); 
 	
 };
-
-
-
-
 void () sargeant_atk1 = [ 32, sargeant_atk2 ]
 {
 	sargeant_check_frame();
 	ai_face (); 
 };
-
 void () sargeant_atk2 = [ 40, sargeant_atk3 ]
 {
 	ai_face (); 
@@ -165,31 +139,24 @@ void () sargeant_atk2 = [ 40, sargeant_atk3 ]
 	
 	sargeant_fire ();
 };
-
 void () sargeant_atk3 = [ 40, sargeant_atk4 ]
 {
 sargeant_check_frame();
 	ai_face (); 
 };
-
 void () sargeant_atk4 = [ 32, sargeant_run1 ]
 {
 	sargeant_check_frame();
 	ai_face (); 
 };
-
-
-
 void () sargeant_pain1 = [ 48, sargeant_pain2 ]
 {
 	sargeant_check_frame();
 };
-
 void () sargeant_pain2 = [ 48, sargeant_run1 ]
 {
 	sargeant_check_frame();
 };
-
 void (entity attacker, float damage) sargeant_pain =
 {
 	if ((self.pain_finished > time))
@@ -200,11 +167,9 @@ void (entity attacker, float damage) sargeant_pain =
 	sargeant_pain1 ();
 	sound (self, CHAN_VOICE, "doom_soldier/pain.wav", TRUE, ATTN_NORM);
 };
-
 void () sargeant_run =
 {
 	local float r;
-
 	r = random ();
 	if ((r < 0.36))
 	{
@@ -226,7 +191,6 @@ void () sargeant_run =
 	}
 	sargeant_run1 ();
 };
-
 void () sargeant_fire =
 {
 	local vector dir;
@@ -239,7 +203,6 @@ void () sargeant_fire =
 	FireBullets (10, dir, '0.1 0.1 0');
 	self.attack_finished = (time + 1.6);
 };
-
 void () sargeant_die1 = [ 49, sargeant_die2 ]
 {
 	sargeant_check_frame();
@@ -247,27 +210,22 @@ void () sargeant_die1 = [ 49, sargeant_die2 ]
 	self.ammo_nails = MOVETYPE_FLY;
 	DropShot (); 
 };
-
 void () sargeant_die2 = [ 50, sargeant_die3 ]
 {
 	sargeant_check_frame();
 };
-
 void () sargeant_die3 = [ 51, sargeant_die4 ]
 {
 	sargeant_check_frame();
 };
-
 void () sargeant_die4 = [ 52, sargeant_die5 ]
 {
 	sargeant_check_frame();
 };
-
 void () sargeant_die5 = [ 53, sargeant_die5 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib1 = [ 54, sargeant_gib2 ]
 {
 sargeant_check_frame();
@@ -325,7 +283,6 @@ void () sargeant_die =
 		sargeant_gib1 (); 
 		return;
 	}
-	
 	r = random ();
 	if ((r < 0.34))
 	{

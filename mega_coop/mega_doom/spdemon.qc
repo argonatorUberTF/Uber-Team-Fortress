@@ -3,8 +3,6 @@ void () spdemon_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
 	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
@@ -50,9 +48,6 @@ void () spdemon_stand4 = [ 8, spdemon_stand1 ]
 	ai_stand (); 
 	self.nextthink = time + 0.25;
 };
-
-
-
 void () spdemon_walk1 = [ 0, spdemon_walk2 ]
 {
 	spdemon_check_frame();
@@ -328,8 +323,6 @@ void () monster_spdemon1 =
 	self.th_missile = spdemon_atk1;
 	self.th_pain = spdemon_pain;
 	self.th_die = spdemon_die;
-	
-
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
 

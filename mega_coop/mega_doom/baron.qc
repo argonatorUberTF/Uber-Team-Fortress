@@ -2,7 +2,6 @@ void () dbaron_slash1;
 void () dbaron_PreFireBall;
 void () dbaron_Slash;
 void () dbaron_atk1;
-
 void () dbaron_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
@@ -26,46 +25,37 @@ void () dbaron_check_frame =
 	doom_ai_sprite_orient(48);
 	self.nextthink = time + 0.1;
 };
-
 void () dbaron_stand1 = [ 0, dbaron_stand2 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
 
 };
-
 void () dbaron_stand2 = [ 8, dbaron_stand3 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
 };
-
 void () dbaron_stand3 = [ 16, dbaron_stand4 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
 };
-
 void () dbaron_stand4 = [ 24, dbaron_stand5 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
 };
-
 void () dbaron_stand5 = [ 16, dbaron_stand6 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
 };
-
 void () dbaron_stand6 = [ 8, dbaron_stand1 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
 };
-
-
-
 void () dbaron_walk1 = [ 0, dbaron_walk2 ]
 {
 	if ((random () < 0.4))
@@ -76,19 +66,16 @@ void () dbaron_walk1 = [ 0, dbaron_walk2 ]
 	dbaron_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () dbaron_walk2 = [ 8, dbaron_walk3 ]
 {
 	dbaron_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () dbaron_walk3 = [ 16, dbaron_walk4 ]
 {
 dbaron_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () dbaron_walk4 = [ 24, dbaron_walk5 ]
 {
 dbaron_check_frame();
@@ -100,48 +87,40 @@ void () dbaron_walk5 = [ 16, dbaron_walk6 ]
 dbaron_check_frame();
 	ai_walk (5 + FL_SWIM); 
 };
-
 void () dbaron_walk6 = [ 8, dbaron_walk1 ]
 {
 dbaron_check_frame();
 	ai_walk (5 + MOVETYPE_WALK); 
 };
-
-
 void () dbaron_run1 = [ 0, dbaron_run2 ]
 {
 	dbaron_check_frame();
 	ai_run (10 + FL_SWIM); 
 };
-
 void () dbaron_run2 = [ 8, dbaron_run3 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_FLY); 
 	 
 };
-
 void () dbaron_run3 = [ 16, dbaron_run4 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_STEP); 
 	 
 };
-
 void () dbaron_run4 = [ 24, dbaron_run1 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_WALK); 
 	 
 };
-
 void () dbaron_run5 = [ 16, dbaron_run6 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_STEP); 
 	 
 };
-
 void () dbaron_run6 = [ 8, dbaron_run1 ]
 {
 dbaron_check_frame();
@@ -173,7 +152,6 @@ void () baronFire_Touch =
 	}
 	remove (self);
 };
-
 void (vector org, vector vec) dbaron_FireBall =
 {
 	if ((self.classname == "monster_dbaron"))
@@ -196,17 +174,14 @@ void (vector org, vector vec) dbaron_FireBall =
 	newmis.touch = baronFire_Touch;
 	self.attack_finished = (time + TRUE);
 };
-
 void () dbaron_PreFireBall =
 {
 	local vector org;
 	org = (((self.origin + (v_forward * MOVETYPE_BOUNCE)) + (v_right * -10)) + '0 0 30');
 	dbaron_FireBall (org, (self.enemy.origin - self.origin));
 };
-
 void () dbaron_fire =
 {
-
 	makevectors (self.angles);
 	traceline ((self.origin + '0 0 16'), ((self.origin + '0 0 16') + (v_forward * 34)), FALSE, self);
 	if (trace_ent.takedamage)
@@ -218,8 +193,6 @@ void () dbaron_fire =
 		dbaron_atk1 ();
 	}
 };
-
-
 void () dbaron_atk1 = [ 32, dbaron_atk2 ]
 {
 dbaron_check_frame();
