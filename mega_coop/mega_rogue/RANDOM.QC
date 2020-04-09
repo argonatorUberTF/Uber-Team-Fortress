@@ -47,7 +47,6 @@ void() random_pick_type =
 		self.items2 = 0;
 	}
 };
-
 void() item_random_powerup =
 {
 	if (!deathmatch)
@@ -79,7 +78,6 @@ void() item_random_powerup =
 	random_pick_type();
 	StartItem ();
 };
-
 void() random_regen = 
 {
 	random_pick_type();

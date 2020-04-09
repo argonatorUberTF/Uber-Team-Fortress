@@ -107,3 +107,4 @@ entity(string gibname) StartGib =
 	new.flags = 0;
 	return new;
 };
+//END

@@ -21,13 +21,11 @@ void() time_chunk =
 	timeChunk.think = SUB_Remove;
 	timeChunk.nextthink = time + 5;
 };
-
 void() time_stop_shake =
 {
 	SUB_UseTargets();
 	remove (self);
 };
-
 void() time_boom =
 {
 	local entity	stopShakeEnt;
@@ -74,7 +72,6 @@ void() time_boom =
 	stopShakeEnt.think = time_stop_shake;
 	stopShakeEnt.nextthink = time + 0.7;
 };
-
 void() time_fall =
 {
 	if (!self.pain_finished)
@@ -103,7 +100,6 @@ void() time_fall =
 	self.nextthink = time + 0.1;
 	self.think = time_fall;
 };
-
 void() time_crash =
 {
 	self.takedamage = DAMAGE_NO;
@@ -117,7 +113,6 @@ void() time_crash =
 	self.target = "timeramp";
 	SUB_UseTargets();
 };
-
 void(entity attacker, float take) time_pain =
 {	
 	local entity	painEnt;

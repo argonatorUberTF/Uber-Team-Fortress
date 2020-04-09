@@ -78,7 +78,6 @@ void() lavaman_stand =
 		lavaman_hunt();
 	ai_stand ();		
 };
-
 void() lavaman_idle1	=[	$walk1, lavaman_idle2 ]
 {
 	if ( random() < 0.2 )
@@ -217,7 +216,7 @@ void() lavaman_pain =
 	}
 };
 void() lavaman_death1 = [$death1, lavaman_death2] 
-	{
+{
 sound (self, CHAN_VOICE, "boss1/death.wav", 1, ATTN_NORM);
 };
 void() lavaman_death2 = [$death2, lavaman_death3] {};
@@ -264,7 +263,6 @@ void() lavaman_touch =
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	BecomeExplosion ();
 };
-
 void(float AttackNumber) lavaman_missile =
 {
 	local entity	fireball;
@@ -306,7 +304,6 @@ void(float AttackNumber) lavaman_missile =
 	if (self.enemy.health <= 0)
 		lavaman_idle1 ();
 };
-
 void() lavaman_awake =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -343,7 +340,6 @@ void() lavaman_awake =
 	droptofloor();
 	lavaman_rise1 ();
 };
-
 void() monster_lava_man1 =
 {
     if (self.spawnflags & 2)
@@ -353,7 +349,6 @@ void() monster_lava_man1 =
     }
     lavaman_awake();
 };
-
 void() monster_lava_man =
 {
 	if (deathmatch)

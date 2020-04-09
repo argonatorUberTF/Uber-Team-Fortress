@@ -69,7 +69,6 @@ void() earthquake_touch =
 		}
 	}
 };
-
 void() earthquake_use = 
 {
 	self.delay = !self.delay;
@@ -89,7 +88,6 @@ void() trigger_earthquake =
 	}
 	InitTrigger();
 };
-
 void() kill_earthquake =
 {
 	local entity 	eq;

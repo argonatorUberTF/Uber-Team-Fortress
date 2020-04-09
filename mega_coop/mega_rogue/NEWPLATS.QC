@@ -13,7 +13,6 @@ void() dn_and_wait_hit_bottom =
 	self.think = dn_and_wait_go_up;
 	self.nextthink = self.ltime + self.health;
 };
-
 void() dn_and_wait_go_down =
 {
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
@@ -26,7 +25,6 @@ void() dn_and_wait_go_up =
 	self.state = STATE_UP;
 	SUB_CalcMove (self.pos1, self.speed, dn_and_wait_hit_top);
 };
-
 void() dn_and_wait_crush =
 {
 	T_Damage (other, self, self, 1);
@@ -51,27 +49,23 @@ void() toggle_hit_top =
 	sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
 	self.state = STATE_TOP;
 };
-
 void() toggle_hit_bottom =
 {
 	sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
 	self.state = STATE_BOTTOM;
 };
-
 void() toggle_go_down =
 {
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 	self.state = STATE_DOWN;
 	SUB_CalcMove (self.pos2, self.speed, toggle_hit_bottom);
 };
-
 void() toggle_go_up =
 {
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 	self.state = STATE_UP;
 	SUB_CalcMove (self.pos1, self.speed, toggle_hit_top);
 };
-
 void() toggle_crush =
 {
 	T_Damage (other, self, self, 1);
@@ -82,7 +76,6 @@ void() toggle_crush =
 	else
 		objerror ("plat_new_crush: bad self.state\n");
 };
-
 void() toggle_use =
 {
 	if (self.state == STATE_TOP)
@@ -91,7 +84,6 @@ void() toggle_use =
 		toggle_go_up ();
 };
 void() elvtr_crush;
-
 void() elvtr_stop =
 {
 	self.elevatorOnFloor = self.elevatorToFloor;
@@ -99,7 +91,6 @@ void() elvtr_stop =
 	self.state = STATE_BOTTOM;
 	self.elevatorLastUse = time;
 };
-
 void() elvtr_go =
 {
 	self.elevatorDestination = self.pos2;
@@ -109,7 +100,6 @@ void() elvtr_go =
 	SUB_CalcMove (self.elevatorDestination, self.speed, elvtr_stop);
 	self.elevatorLastUse = time;
 };
-
 void() elvtr_crush =
 {
 	self.elevatorToFloor = self.elevatorOnFloor;
@@ -164,13 +154,9 @@ void() elvtr_use =
 	}
 };
 void() plat2_center_touch;
-
 void() plat2_go_up;
-
 void() plat2_go_down;
-
 void() plat2_crush;
-
 void() plat2_spawn_inside_trigger =
 {
 	local entity	trigger;
@@ -198,7 +184,6 @@ void() plat2_spawn_inside_trigger =
 	}
 	setsize (trigger, tmin, tmax);
 };
-
 void() plat2_hit_top =
 {
 	sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
@@ -218,7 +203,6 @@ void() plat2_hit_top =
 		self.plat2Called = 0;
 	}
 };
-
 void() plat2_hit_bottom =
 {
 	sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
@@ -238,42 +222,35 @@ void() plat2_hit_bottom =
 		self.plat2Called = 0;
 	}
 };
-
 void() plat2_go_down =
 {
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 	self.state = STATE_DOWN;
 	SUB_CalcMove (self.pos2, self.speed, plat2_hit_bottom);
 };
-
 void() plat2_go_up =
 {
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 	self.state = STATE_UP;
 	SUB_CalcMove (self.pos1, self.speed, plat2_hit_top);
 };
-
 void() plat2_use = 
 {
 	if(self.state > 4)
 	self.state = self.state - 10;	
 	self.use = SUB_Null;
 };
-
 void() plat2_center_touch =
 {
 	local float		otherState;
 	local vector	platPosition;
-//
 	if (other.classname != "player")
 		return;
-		
 	if (other.health <= 0)
 		return;
 	self = self.enemy;
 	if ((self.plat2LastMove + 2) > time)
 		return;
-
 	if (self.state > 4)		// disabled.
 		return;
 	if (self.plat2GoTo > STATE_BOTTOM)
@@ -320,7 +297,6 @@ void() plat2_center_touch =
 	else if(self.state == STATE_TOP)
 		self.plat2GoTo = STATE_DOWN;
 };
-
 void() plat2_crush =
 {
 	T_Damage (other, self, self, 1);

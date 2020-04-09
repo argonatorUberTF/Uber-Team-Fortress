@@ -182,7 +182,6 @@ void() monster_wrath1 =
 	self.th_die = wrath_die02;
 	coop_flymonster_start ();
 };
-
 void() monster_wrath =
 {
 	if (deathmatch)
@@ -243,7 +242,6 @@ void(float AttackNumber) WrathMissile =
 	{
         org = self.origin + v_forward*20 + v_up*16;
 	}
-
 	setorigin ( missile, org + v_forward*25 );		// xav: again with the hacks :(
 	missile.velocity = dir * 400;
 	missile.avelocity = '300 300 300';
@@ -252,7 +250,6 @@ void(float AttackNumber) WrathMissile =
 	missile.nextthink = time + 0.1;
 	missile.think = WrathHome;
 	missile.owner = self;
-	
 	self.attack_finished = time + 2;
 };
 void() WrathHome =

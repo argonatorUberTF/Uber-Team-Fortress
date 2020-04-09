@@ -17,23 +17,18 @@ void(entity theEntity) UpdateAmmoCounts =
 		theEntity.ammo_cells = theEntity.ammo_cells1;
 	}
 };
-
 void() newitems_touch =
 {
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)
 		return;
-		
-	// only one per person, please.
 	if (self.classname == "item_sphere")
 		if (other.items2 & IT2_V_SPHERE)
 			return;
-
 	sprint (other, "You got the ");
 	sprint (other, self.netname);
 	sprint (other,"\n");
-
 	if (deathmatch)
 	{
 		if (self.classname == "item_random_powerup")
@@ -54,14 +49,12 @@ void() newitems_touch =
 			self.think = SUB_regen;
 		}
 	}	
-
 	sound (other, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
 	self.solid = SOLID_NOT;
 	other.items = other.items | self.items;
 	other.items2 = other.items2 | self.items2;
 	self.model = string_null;
-
 	if (self.netname == "Power Shield")
 	{
 		other.shield_time = 1;
@@ -78,11 +71,9 @@ void() newitems_touch =
 		other.items2 = other.items2 | IT2_V_SPHERE;
 		sphere_spawn();
 	}
-	
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };
-
 void() item_powerup_shield =
 {
 	self.touch = newitems_touch;
@@ -98,7 +89,6 @@ void() item_powerup_shield =
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
 };
-
 void() item_powerup_belt =
 {
 	self.touch = newitems_touch;
@@ -113,6 +103,8 @@ void() item_powerup_belt =
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
 };
+//END
+
 
 
 

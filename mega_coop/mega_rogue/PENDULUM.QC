@@ -93,8 +93,6 @@ void() pend_swing11  =[ $frame11, pend_swing12 ]
 };
 void() pend_swing12  =[ $frame12, pend_swing13 ] 
 { 
-//	pend_frame = pend_frame + 1;
-//	0 142 -50 (center)		W 60, H 76 (30, 38)
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 112 12', '8 172 88' );
 	else if ( self.spawnflags & PEND_X )
@@ -113,7 +111,6 @@ void() pend_swing14  =[ $frame13, pend_swing15 ]
 { 
 	self.nextthink = time + 0.17;
 };
-
 void() pend_swing15  =[ $frame12, pend_swing16 ] 
 { 
 	if( self.spawnflags & PEND_Y)
@@ -234,7 +231,6 @@ void() pend_touch =
 	other.velocity_z = 200;
 	SpawnMeatSpray ( other.origin, other.velocity);
 };
-
 void() pend_use = 
 {
 	self.nextthink = time + self.delay;

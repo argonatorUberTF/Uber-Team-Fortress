@@ -57,7 +57,6 @@ void()	sword_dieb8	=[	$deathb8,	sword_dieb9	] {};
 void()	sword_dieb9	=[	$deathb9,	sword_dieb10] {};
 void()	sword_dieb10 = [ $deathb10,	sword_dieb11] {};
 void()	sword_dieb11 = [ $deathb11,	sword_dieb11] {};
-
 void() sword_die =
 {
 	self.effects=0;
@@ -66,7 +65,6 @@ void() sword_die =
 	else
 		sword_dieb1 ();
 };
-
 void() sword_pause = 
 {
 	self.th_run = sword_run1; 
@@ -74,7 +72,6 @@ void() sword_pause =
 	self.nextthink = time + self.delay;
 	self.delay = 0;
 };
-
 void() sword_pain = 
 {
 	self.th_run = sword_run1; 
@@ -100,7 +97,6 @@ void() monster_sword1 =
 	self.th_pain = sword_pain;
 	coop_walkmonster_start ();
 };
-
 void() monster_sword =
 {
 	if (deathmatch)

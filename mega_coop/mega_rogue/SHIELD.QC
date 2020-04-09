@@ -1,8 +1,4 @@
-// Shield
-//
-// ===================
-// shield_think
-// ===================
+
 void() shield_think =
 {
 	if ( self.owner.shield_death_time < time)
@@ -24,14 +20,9 @@ void() shield_think =
 	self.think = shield_think;
 	self.nextthink = time + 0.05;
 };
-
-// ===================
-// shield_spawn
-// ===================
 void(entity shieldOwner, vector dir) shield_spawn = 
 {
 	local entity newShield;
-//
 	if ( shieldOwner.shield_death_time > time)
 	{
 		return;
@@ -42,8 +33,6 @@ void(entity shieldOwner, vector dir) shield_spawn =
 	newShield.takedamage = DAMAGE_NO;
 	newShield.movetype = MOVETYPE_NONE;
 	newShield.classname = "power_shield";
-// time for shield to live
-//	shieldOwner.shield_death_time = time + 0.5;
 	shieldOwner.shield_death_time = time + 0.3;
 	shieldOwner.shield_entity = newShield;
 	newShield.v_angle = shieldOwner.v_angle;
@@ -54,17 +43,11 @@ void(entity shieldOwner, vector dir) shield_spawn =
 	newShield.nextthink = time + 0.1; 		
 	newShield.think = shield_think;
 };
-
-
-// ===================
-// shield_hit
-// ===================
 float(entity targ, entity inflictor, entity attacker, float damage) shield_hit=
 {
 	local vector	dir;
 	local float		save;
 	local float		hitAngle;
-//			
 	dir = inflictor.origin - targ.origin;
 	save = vectoyaw ( dir );
 	makevectors (targ.angles);
@@ -89,5 +72,4 @@ float(entity targ, entity inflictor, entity attacker, float damage) shield_hit=
 		save = damage * 0.30;
 	return save;
 };
-
 //END

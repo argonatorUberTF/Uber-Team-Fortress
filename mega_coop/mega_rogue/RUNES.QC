@@ -32,7 +32,6 @@ void() RuneTouch =
 		centerprint(other, "Edler Magic\n\nRegeneration");
 	remove(self);
 };
-
 entity() RuneSpawnPoint =
 {
 	while (1) {
@@ -43,7 +42,6 @@ entity() RuneSpawnPoint =
 			return rune_spawn_spot;
 	}
 };
-
 void() RuneRespawn =
 {
 	local entity spot;
@@ -54,7 +52,6 @@ void() RuneRespawn =
 	self.velocity_y = -300 + (random() * 600);
 	self.nextthink = time + 120;
 };
-
 void(float r, entity spot) SpawnRune =
 {
 	local entity item;
@@ -86,7 +83,6 @@ void(float r, entity spot) SpawnRune =
 	item.nextthink = time + 120;	// remove after 2 minutes
 	item.think = RuneRespawn;
 };
-// self is player
 void() DropRune =
 {
 	if (self.rune & ITEM_RUNE1) 
@@ -99,7 +95,6 @@ void() DropRune =
 		SpawnRune(ITEM_RUNE4, self);
 	self.rune = 0;
 };
-
 void() DoSpawnRunes =
 {
 	remove(self);
@@ -108,7 +103,6 @@ void() DoSpawnRunes =
 	SpawnRune(ITEM_RUNE3, world);
 	SpawnRune(ITEM_RUNE4, world);
 };
-
 void() SpawnRunes =
 {
 	local entity spawner;
@@ -119,7 +113,6 @@ void() SpawnRunes =
 	spawner.think = DoSpawnRunes;
 	spawner.nextthink = time + 0.1;
 };
-
 float(float damage, entity who) RuneApplyEarth =
 {
 	if (who.rune & ITEM_RUNE1) {
@@ -132,7 +125,6 @@ float(float damage, entity who) RuneApplyEarth =
 	}
 	return damage;
 };
-
 void(entity who) RuneApplyBlackNoise =
 {
 	if (who.rune & ITEM_RUNE2)
@@ -142,14 +134,12 @@ void(entity who) RuneApplyBlackNoise =
 			who.rune2_last_noise_time = time + 1.0;
 		}
 };
-
 float(float damage, entity who) RuneApplyBlack =
 {
 	if (who.rune & ITEM_RUNE2)
 		return damage*2;
 	return damage;
 };
-
 float(float tvalue, entity who) RuneApplyHell =
 {
 	if (who.rune & ITEM_RUNE3) {
@@ -161,7 +151,6 @@ float(float tvalue, entity who) RuneApplyHell =
 	}
 	return tvalue;
 };
-
 void(entity who) RuneApplyElder =
 {
 	if (who.rune & ITEM_RUNE4) {
@@ -174,14 +163,12 @@ void(entity who) RuneApplyElder =
 		}
 	}
 };
-
 float(entity who) RuneHasElder =
 {
 	if (who.rune & ITEM_RUNE4)
 		return TRUE;
 	return FALSE;
 };
-
 void() RunePrecache = 
 {
 	if (cvar("deathmatch"))

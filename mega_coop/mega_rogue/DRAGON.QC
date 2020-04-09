@@ -172,8 +172,7 @@ void(float dist) dragon_move =
 	self.enemy = oldEnemy;
 };
 void() dragon_stand1 = [ $drgfly01, dragon_walk1 ] 
-{ 
-};
+{};
 void() dragon_atk_a1=[$drgfix1a, dragon_atk_a2 ] 
 	{ dragon_move(17); };
 void() dragon_atk_a2=[$drgfix1b, dragon_atk_a3 ]  
@@ -592,7 +591,6 @@ void() monster_dragon1 =
 	self.nextthink = self.nextthink + 0.1;
 	self.think = dragon_activate;
 };
-
 void() monster_dragon =
 {
 	if (deathmatch)

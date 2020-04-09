@@ -111,7 +111,6 @@ void() morph_attack09 = [ $mfatb09, morph_attack10 ] {ai_face();};
 void() morph_attack10 = [ $mfatb10, morph_attack11 ] {ai_face();};
 void() morph_attack11 = [ $mfatb11, morph_attack12 ] {ai_face();};
 void() morph_attack12 = [ $mfatb01, morph_run1     ] {ai_face();};
-
 void() morph_bigattack01 = [ $mfatc01, morph_bigattack02 ] { ai_face(); };
 void() morph_bigattack02 = [ $mfatc02, morph_bigattack03 ] { ai_face(); };
 void() morph_bigattack03 = [ $mfatc03, morph_bigattack04 ] { ai_face(); };
@@ -129,7 +128,6 @@ void() morph_bigattack14 = [ $mfatc14, morph_bigattack15 ] { ai_face(); };
 void() morph_bigattack15 = [ $mfatc15, morph_bigattack16 ] { ai_face(); };
 void() morph_bigattack16 = [ $mfatc16, morph_bigattack17 ] { ai_face(); };
 void() morph_bigattack17 = [ $mfatc01, morph_run1        ] { ai_face(); };
-
 void() morph_smack = 
 {
     local vector    delta;
@@ -152,7 +150,6 @@ void() morph_smack =
 	makevectors (self.angles);
 	self.enemy.velocity = v_forward * 100 + '0 0 100';
 };
-
 void() morph_knockback01 = [ $mfknck01, morph_knockback02 ] { ai_face(); };
 void() morph_knockback02 = [ $mfknck02, morph_knockback03 ] { ai_face(); };
 void() morph_knockback03 = [ $mfknck03, morph_knockback04 ] { ai_face(); };
@@ -165,7 +162,6 @@ void() morph_knockback09 = [ $mfknck09, morph_knockback10 ] { morph_smack(); };
 void() morph_knockback10 = [ $mfknck10, morph_knockback11 ] { ai_face(); };
 void() morph_knockback11 = [ $mfknck11, morph_knockback12 ] { ai_face(); };
 void() morph_knockback12 = [ $mfknck12, morph_run1        ] { ai_face(); };
-
 void() morph_attack =
 {
 	local float 	attackChoice;
@@ -198,7 +194,6 @@ void() morph_fire =
 	}
 
 };
-
 void() morph_fire1 = [ $mfata01, morph_fire2 ] {ai_face();};
 void() morph_fire2 = [ $mfata02, morph_fire3 ] {ai_face();};
 void() morph_fire3 = [ $mfata03, morph_fire4 ] {ai_face();};
@@ -218,7 +213,6 @@ void() morph_painA7 = [ $mfpain07, morph_painA8 ] {};
 void() morph_painA8 = [ $mfpain08, morph_painA9 ] {};
 void() morph_painA9 = [ $mfpain09, morph_painA10 ] {};
 void() morph_painA10 = [ $mfpain10, morph_run1 ] {morph_teleport();};
-
 void() morph_painB1 = [ $mfpbin01, morph_painB2 ] {};
 void() morph_painB2 = [ $mfpbin02, morph_painB3 ] {};
 void() morph_painB3 = [ $mfpbin03, morph_painB4 ] {};
@@ -226,7 +220,6 @@ void() morph_painB4 = [ $mfpbin04, morph_painB5 ] {};
 void() morph_painB5 = [ $mfpbin05, morph_painB6 ] {};
 void() morph_painB6 = [ $mfpbin06, morph_painB7 ] {};
 void() morph_painB7 = [ $mfpbin07, morph_run1 ] {morph_teleport();};
-
 void() morph_pain =
 {
 	local float painChoice;
@@ -273,7 +266,6 @@ void() morph_die21 = [ $mfdth21, morph_die21 ]
 {
 	remove(self);
 };
-
 void() morph_die =
 {
  	sound ( self, CHAN_VOICE, "guard/death.wav", 1, ATTN_NORM);
@@ -382,7 +374,6 @@ void(entity theMorph) morph_setup =
 	COOP_SetLives ();
 	self = oself;
 };
-
 void() morph_wake =
 {
 	if (isSpawnPointEmpty(self))
@@ -397,7 +388,6 @@ void() morph_wake =
 	
 	self.nextthink = time + 0.1;
 };
-
 void() morph_use =
 {
     if ( self.delay )
@@ -462,7 +452,6 @@ void() monster_morph1 =
 		morph_wake ();
 	}
 };
-
 void() monster_morph =
 {
 	if (deathmatch)

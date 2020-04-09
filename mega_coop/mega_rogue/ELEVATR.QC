@@ -48,7 +48,6 @@ void() elvtr_button_touch =
 	self.enemy = other;
 	elvtr_button_fire ();
 };
-
 void() elvtr_button_killed =
 {
 	self.enemy = damage_attacker;

@@ -4,7 +4,6 @@ void() ltrail_chain =
 
 	self.think = SUB_Null;
 };
-
 void() ltrail_fire =
 {
 	local entity myTarget;
@@ -34,7 +33,6 @@ void() ltrail_fire =
 		self.nextthink = time + 0.05;
 	}
 };
-
 void() ltrail_start_fire = 
 {
 	if (self.spawnflags & LT_TOGGLE)
@@ -119,5 +117,4 @@ void() ltrail_end =
 	if (self.frags == 0)
 		self.frags = 0.3;
 };
-
 //END

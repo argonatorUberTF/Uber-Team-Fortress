@@ -20,7 +20,6 @@ void() rubble_touch =
 		}
 	}
 };
-
 void() rubble_throw =
 {
 	local vector	throw;
@@ -75,7 +74,6 @@ void() rubble_generator =
 	if (self.spawnflags & 2)
 		rubble_use2();		
 };
-
 void() trigEx_die =
 {
 	SUB_UseTargets();
@@ -86,10 +84,8 @@ void() trigEx_die =
 void() trigger_explosion =
 {
 	InitTrigger ();
-
 	if (!self.health)
 		self.health = 20;
-	
 	self.max_health = self.health;
 	self.th_die = trigEx_die;
 	self.takedamage = DAMAGE_YES;

@@ -23,7 +23,6 @@ $frame s_wtdt01 s_wtdt02 s_wtdt03 s_wtdt04 s_wtdt05
 $frame s_wtdt06 s_wtdt07 s_wtdt08 s_wtdt09 s_wtdt10 
 $frame s_wtdt11 s_wtdt12 s_wtdt13 s_wtdt14 s_wtdt15
 $frame s_wtdt16 s_wtdt17
-
 float(entity thePoint) isSpawnPointEmpty =
 {
 	local entity	neighbors;
@@ -55,7 +54,6 @@ float(entity thePoint) isSpawnPointEmpty =
 	}
 	return 1;
 };
-
 entity() overlord_find_dest3 =
 {
     local entity    furthestDest;
@@ -136,8 +134,6 @@ entity() overlord_find_dest =
     }
 	return curDest;
 };
-
-
 void() overlord_teleport =
 {
     local float     chance;
@@ -247,7 +243,6 @@ void() overlord_smash =
 	delta = normalize (self.enemy.origin - self.origin + self.enemy.view_ofs);
 	SpawnBlood ( self.enemy.origin - delta * 30, /*delta * -100, */smashDmg);
 };
-
 void() overlord_melee =
 {
 	local float r;
@@ -265,7 +260,6 @@ void() overlord_melee =
 		overlord_at_c01 ();
 	}
 };
-
 void() overlord_msl_a01 =[ $s_wtba01, overlord_msl_a02 ] { ai_charge(12);};
 void() overlord_msl_a02 =[ $s_wtba02, overlord_msl_a03 ] { ai_charge(12);};
 void() overlord_msl_a03 =[ $s_wtba03, overlord_msl_a04 ] { ai_charge(12);};
@@ -443,7 +437,6 @@ void() monster_super_wrath =
 	COOP_SetLives ();
 	monster_super_wrath1 ();
 };
-
 void() info_overlord_destination =
 {
 	self.mangle = self.angles;
@@ -451,5 +444,4 @@ void() info_overlord_destination =
 	self.model = "";
 	self.origin = self.origin + '0 0 27';
 };
-
 //END
