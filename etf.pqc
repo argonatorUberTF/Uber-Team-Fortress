@@ -1,3 +1,5 @@
+// These two functions are here, but not called elsewhere. Just for reference
+// or be used in the future.
 void (float n) SetupStuff =
 {
 	if (n == 1)

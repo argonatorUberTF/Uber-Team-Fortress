@@ -189,6 +189,7 @@ float deathmatch /* = 0.000000 */;
 .void() th_melee;
 //.void(entity attacker, float damage) th_pain;  //originally was
 .void(entity attacker, float take) th_pain;
+//.void() th_pain;
 .void() th_die;
 .entity oldenemy;
 .float speed;

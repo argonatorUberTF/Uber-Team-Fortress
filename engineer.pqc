@@ -15,7 +15,6 @@ void () FieldGen_Think;
 void () FieldGen_Die;
 void () ForceField_Think;
 void () ForceField_Touch;
-
 void () LaserBolt_Think =
 {
 	if ((self.option6 != 0))
@@ -89,7 +88,6 @@ void(float radius, float xValue, float stretch, float dir, float fltTime) joeTra
 			joeTrail(radius - 0.6, xValue + 0.2, stretch + 10, newDir, fltTime + 0.01);
 		}
 };
-
 void () RailTimer =
 {
 	local entity te;
@@ -209,7 +207,6 @@ void () LaserBolt_Touch =
 		dremove(self);
 	}
 };
-
 void (float chargeDmg) W_FireLaser =
 {
 	local vector vec;
@@ -313,7 +310,6 @@ setmodel(newmis, "progs/beam.mdl");
 		newmis.touch = LaserBolt_Touch;
 	}
 };
-
 void () TeamFortress_EngineerBuild =
 {
 	local entity te;
@@ -573,7 +569,6 @@ void(float objtobuild) TeamFortress_Build =
 	setorigin(newmis, newmis.origin);
 	newmis.flags = newmis.flags - (newmis.flags & 512);
 };
-
 void(entity bld) CheckBelowBuilding = 
 {
 #ifdef mtf_coop
@@ -597,7 +592,6 @@ void(entity bld) CheckBelowBuilding =
 		bld.flags = bld.flags - (bld.flags & 512);
 	}
 };
-
 void() DispenserThink = 
 {
 	self.ammo_shells = self.ammo_shells + rint(400 / 20);
@@ -882,7 +876,6 @@ void() TeamFortress_FinishedBuilding =
 	}
 	W_SetCurrentAmmo();
 };
-
 void() T_Dispenser = 
 {
 	local entity dist_checker;
@@ -958,7 +951,6 @@ void(entity disp) Engineer_UseDispenser =
 	dist_checker.think = CheckDistance;
 	dist_checker.nextthink = time + 0.3;
 };
-
 void (entity gun) Engineer_UseSentryGun =
 {
 	local entity dist_checker;
@@ -1007,7 +999,6 @@ void (entity gun, entity disp) Engineer_UseRemoteTesla =
 	dist_checker.think = CheckDistance;
 	dist_checker.nextthink = time + 0.3;
 };
-
 void (entity gun) Engineer_UseTesla =
 {
 	local entity dist_checker;
@@ -1091,7 +1082,6 @@ void (entity gun) Engineer_UseTesla =
 	dist_checker.think = CheckDistance;
 	dist_checker.nextthink = (time + 0.3);
 };
-
 void (entity gunhead) CheckSentry =
 {
 #ifdef mtf_coop
@@ -1109,7 +1099,6 @@ void (entity gunhead) CheckSentry =
 	}
 #endif
 };
-
 void () CheckDistance =
 {
 	local vector dist;
@@ -1132,7 +1121,6 @@ void () CheckDistance =
 	}
 	self.nextthink = (time + 0.300000);
 };
-
 void(entity tele) Engineer_UseTeleporter =
 {
 	local entity dist_checker;
@@ -1164,7 +1152,6 @@ void(entity tele) Engineer_UseTeleporter =
 	dist_checker.think = CheckDistance;
 	dist_checker.nextthink = time + 0.3;
 };
-
 void(entity cam) Engineer_UseCamera =
 {
 	local entity dist_checker;
@@ -1190,7 +1177,6 @@ void(entity cam) Engineer_UseCamera =
 	dist_checker.think = CheckDistance;
 	dist_checker.nextthink = time + 0.3;
 };
-
 void (entity fieldgen) Engineer_UseFieldGen =
 {
 	local entity dist_checker;
@@ -1216,7 +1202,6 @@ void (entity fieldgen) Engineer_UseFieldGen =
 	dist_checker.think = CheckDistance;
 	dist_checker.nextthink = (time + 0.3);
 };
-
 void () Sentry_MuzzleFlash =
 {
 	self.effects = (self.effects | 8.000000);

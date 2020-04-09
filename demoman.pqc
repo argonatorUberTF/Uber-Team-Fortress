@@ -20,7 +20,6 @@ void () TeamFortress_DetonatePipebombs =
    }
 
 };
-
 void () PipebombTouch =
 {
 	local vector spot1;
@@ -63,7 +62,6 @@ void () PipebombTouch =
 		self.avelocity = '0.000000 0.000000 0.000000';
 	}
 };
-
 float(entity obj) DetpackCheckArea = 
 {
 	local vector src;
@@ -303,7 +301,6 @@ void () TeamFortress_DetpackTouch =
    self.observer_list = disarm;
 	}
 };
-
 void () TeamFortress_DetpackDisarmTrigger =
 {
 	local entity _l_9571;
@@ -341,7 +338,6 @@ void () TeamFortress_DetpackDisarmTrigger =
 	self.enemy = other;
 	self.observer_list = _l_9571;
 };
-
 void () TeamFortress_DetpackDisarm =
 {
 	bprint (1.000000, self.enemy.owner.netname);

@@ -4,7 +4,6 @@ void() DroppedKeyThink =
 	self.touch = key_touch;
 	self.owner = world;
 };
-
 float() DoorShouldOpen = 
 {
 	local entity ptr;
@@ -81,5 +80,4 @@ float() DoorShouldOpen =
 	bprint(2, " door has been unlocked\n");
 	return TF_FLARE_OFF;
 };
-
 //END

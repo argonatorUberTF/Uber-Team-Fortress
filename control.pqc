@@ -2,7 +2,6 @@ void () reset_mangle =
 {
 	SUB_CalcAngleMove (self.mangle, 10, SUB_Null);
 };
-
 void () control_return =
 {
 	if ((self.goalentity.classname != "catapult"))
@@ -19,7 +18,6 @@ void () control_return =
 		self.enemy = world;
 	}
 };
-
 void () control_touch =
 {
 	local vector org;
@@ -111,7 +109,6 @@ void () control_touch =
 	self.think = control_return;
 	self.nextthink = (time + 0.100000);
 };
-
 void () trigger_control_find_target =
 {
 	if (!self.target)
@@ -129,7 +126,6 @@ void () trigger_control_find_target =
 	}
 	self.goalentity.mangle = self.goalentity.angles;
 };
-
 void () trigger_control =
 {
 	self.solid = 1;

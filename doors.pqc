@@ -165,7 +165,6 @@ void() door_go_down =
 	if (self.classname == "door_rotating") {
 	}
 };
-
 void() door_go_up = 
 {
 	if (self.state == 2)
@@ -198,7 +197,6 @@ void() door_go_up =
 	if (self.classname == "door_rotating") {
 	}
 };
-
 void() door_fire = 
 {
 	local entity oself;
@@ -269,7 +267,6 @@ void() door_use =
 	door_fire();
 	self = oself;
 };
-
 void() door_trigger_touch = 
 {
 	local entity te;
@@ -298,7 +295,6 @@ void() door_trigger_touch =
 	self = self.owner;
 	door_use();
 };
-
 void() door_killed = 
 {
 	local entity oself;
@@ -309,14 +305,12 @@ void() door_killed =
 	door_use();
 	self = oself;
 };
-
 void() door_touch = 
 {
 	local entity te;
 #ifdef mtf_coop_halflife
 	local entity finder_ent;
 #endif
-	
 	if (other.classname != "player")
 	{
 		return;
@@ -473,7 +467,6 @@ void() door_touch =
 		door_use();
 	}
 };
-
 entity(vector fmins, vector fmaxs) spawn_field = 
 {
 	local entity trigger;
@@ -498,7 +491,6 @@ entity(vector fmins, vector fmaxs) spawn_field =
 	}
 #endif
 #endif
-	
 	trigger = spawn();
 	trigger.movetype = TF_FLARE_LIT;
 	trigger.solid = TF_FLARE_OFF;
@@ -522,7 +514,6 @@ entity(vector fmins, vector fmaxs) spawn_field =
 	t1 = fmins;
 	t2 = fmaxs;
 	setsize(trigger, t1 - '60 60 8', t2 + '60 60 8');
-	
 	return trigger;
 };
 float(entity e1, entity e2) EntitiesTouching = 
@@ -553,7 +544,6 @@ float(entity e1, entity e2) EntitiesTouching =
 	}
 	return TF_FLARE_OFF;
 };
-
 void() LinkDoors = 
 {
 	local entity t;
@@ -823,7 +813,6 @@ void() func_door =
 #ifdef mtf_coop
 	if (#DOOM_MAP)
 		self.dmg = self.dmg * 100;
-
 	if (mapname == "rub2m1" || mapname == "rub2m2" || mapname == "rub2m3") {
 		if (!self.movedir)
 		{
@@ -872,7 +861,6 @@ void() func_door =
 		
 	HalfLife_DoRender();
 #endif
-	
 	self.touch = door_touch;
 	self.think = LinkDoors;
 	self.nextthink = self.ltime + 0.1;

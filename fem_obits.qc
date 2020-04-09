@@ -3,8 +3,6 @@ void(entity targ, entity attacker) FemaleClientObituary =
 	local float rnum;
 	local string deathstring;
 	local string deathstring2;
-
-
 	rnum = random();
 #ifdef mtf_coop
 	if (targ.classname == "player" || targ.is_monster == 1)
@@ -13,11 +11,8 @@ void(entity targ, entity attacker) FemaleClientObituary =
 #endif
 	{
 #ifdef mtf_coop_expsys
-//if (attacker.is_monster == 1)
-//	if (attacker.netname == "")
-//		attacker.netname = attacker.classname;
 	if (attacker.coop_exp != -1 && attacker.classname == "player" && targ.is_monster == 1) {
-		//attacker.coop_exp += 5;
+		attacker.coop_exp += 10;
 		MTF_Coop_AddExperience ( attacker, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker, attacker.connect_name, attacker.coop_exp );
 	}
@@ -432,15 +427,25 @@ void(entity targ, entity attacker) FemaleClientObituary =
 						deathstring = " is taken out gangsta style by ";
 						deathstring2 = ".\n";
 					}
-					if ((deathmsg == 47.000000))
+					if ((deathmsg == 44.000000))
 					{
-						deathstring = "'s ankles get chewed by ";
-						deathstring2 = "'s MiniSentry.\n";
+						deathstring = "'s forgot to say adios to ";
+						deathstring2 = "'s auto sentry gun.\n";
 					}
-					if ((deathmsg == #DMSG_MINIFIEND))
+					if ((deathmsg == 202))
 					{
-						deathstring = "'s ass was torn off by ";
-						deathstring2 = "'s Mini Fiend.\n";
+						deathstring = "'s ass was clamped off by ";
+						deathstring2 = "'s bear trap.\n";
+					}
+					if ((deathmsg == 203))
+					{
+						deathstring = "'s chokes to death on ";
+						deathstring2 = "'s bad ass queefs.\n";
+					}					
+					if ((deathmsg == 204))
+					{
+						deathstring = "'s was torn to shreds by ";
+						deathstring2 = "'s gravity well.\n";
 					}
 					if (deathmsg == 8)
 					{
@@ -653,7 +658,6 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																										{
 																											deathstring = " was swiss-cheesed by ";
 																											deathstring2 = "'s bird gun.\n";
-//																											//shotgun_exp_gain ();
 																										}
 																										else
 																										{
@@ -666,7 +670,7 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																											{
 																												if (deathmsg == 3)
 																												{
-																													deathstring = " was capped by ";
+																													deathstring = " was bustacapped by ";
 																													deathstring2 = ".\n";
 																												}
 																												else
@@ -757,12 +761,12 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																																											}
 																																										}
 #ifdef mtf_coop																																									
-	else if (deathmsg == 1124) {
+	else if (deathmsg == 1124)
+	{
 		deathstring = " is pinned by ";
 		deathstring2 = "'s needler.\n";
 	}
 	else {
-
 // megatf coop new weapons death messages
 #elseif
 																																										else {
@@ -823,7 +827,6 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																																									deathstring = " gets cooked by ";
 																																									deathstring2 = "'s incendiary rocket.\n";
 																																								} 
-																																								// pablo. spike trap death msg.
 																																								else
 																																								{
 																																									if (deathmsg == 200)
@@ -968,7 +971,7 @@ local entity te;
 				}
 #ifdef mtf_coop_expsys
 	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1) {
-		//attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 5;
+		attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 10;
 		MTF_Coop_AddExperience ( attacker.real_owner, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker.real_owner, attacker.real_owner.connect_name, attacker.real_owner.coop_exp );
 	}
@@ -1019,11 +1022,11 @@ local entity te;
 					{
 						if (random() < 0.5)
 						{
-							deathstring = " gulped a load of slime.\n";
+							deathstring = " gulped a load of Mt. Dew.\n";
 						}
 						else
 						{
-							deathstring = " can't exist on slime alone.\n";
+							deathstring = " took a dive in the Texas trucker mattress squeezings.\n";
 						}
 					}
 					else
@@ -1107,12 +1110,9 @@ local entity te;
 														deathstring = " was shambled baby!\n";	
 													}
 #endif
-
-
 													else
 													{
 #ifdef mtf_coop
-
 														if (attacker.classname == "func_monsterkill") {
 															if (attacker.netname_broadcast != "none")
 																deathstring = attacker.netname_broadcast;
@@ -1189,15 +1189,12 @@ local entity te;
 					deathstring = strcat(" was slashed by a ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_ogre" || attacker.classname == "monster_ogre_marksman")
 					deathstring = strcat(" was destroyed by an ", GetMonsterPowers(attacker, 2));
-
 				else if (attacker.classname == "monster_boss")
 					deathstring = " burns in the flames of chthon\n";
 				else if (attacker.classname == "monster_killable_boss")
 					deathstring = " burns in the flames of uber chthon\n";
-
 				else if (attacker.classname == "monster_oldone")
 					deathstring = " became one with Shub-Niggurath\n";
-
 				else if (attacker.classname == "monster_shalrath")
 					deathstring = strcat(" was exploded by a ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_shambler")
@@ -1210,8 +1207,6 @@ local entity te;
 					deathstring = strcat(" was scragged by a ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_zombie")
 					deathstring = strcat(" joins the ", GetMonsterPowers(attacker, 2));
-
-// TRAVAIL
 				else if (attacker.classname == "monster_azoth")
 deathstring = strcat(" was vanquished by ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_vermis")
@@ -1222,8 +1217,6 @@ deathstring = strcat(" was desiccated by a ", GetMonsterPowers(attacker, 2));
 deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_ubs")
 deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
-
-// QUOTH
 				if ((attacker.classname == "monster_gaunt"))
 				{
 					if ((attacker.enemy.deathtype == "swoop"))
@@ -1245,26 +1238,21 @@ deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 					deathstring = strcat(" was popped by a ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_drole")
 					deathstring = strcat(" was decimated by a ", GetMonsterPowers(attacker, 2));
-
 				else if (attacker.classname == "monster_gug")
 					deathstring = strcat(" was obliterated by a ", GetMonsterPowers(attacker, 2));
 				else if (attacker.classname == "monster_bob")
 					deathstring = strcat(" was zapped by a ", GetMonsterPowers(attacker, 2));
 #endif
-
 #ifdef mtf_coop_hipnotic
-
             else if (attacker.classname == "monster_gremlin")
 deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
 //               bprint ("Gremlin.\n");
-
             else if (attacker.classname == "monster_scourge")
 deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
-//               bprint ("Centroid.\n");
-
+				bprint ("Centroid.\n");
             else if (attacker.classname == "monster_armagon")
 deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
-//               bprint ("Armagon.\n");
+                bprint ("Armagon.\n");
             else if (attacker.classname == "trap_spike_mine")
 deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
 #endif
@@ -1297,7 +1285,6 @@ deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
 				{
 deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 				}
-
 #endif
 #ifdef mtf_coop
 				else if (attacker.classname == "monster_cyberdemon")
