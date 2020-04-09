@@ -33,7 +33,6 @@ void () CyberDemonT_MissileTouch= {
 #else
     BecomeExplosion ();
 #endif
-
 };
 void() CyberDemonFireMissile =
 {
@@ -231,18 +230,14 @@ void()   cyber_die18   =[ $shoot3, SUB_Remove   ]
       remove (self);
       return;
    };
-
 void() cyber_die =
 {
    cyber_die1 ();
 };
-
 void() cyber_melee =
 {  
    cyber_missile1 ();
 };
-
-
 float() _CyberOnSight =
 {
 	sound (self, CHAN_VOICE, "shambler/ssight.wav", 1, #ATTN_NORM);

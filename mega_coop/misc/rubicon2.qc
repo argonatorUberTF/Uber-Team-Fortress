@@ -11,7 +11,6 @@ float (entity targ) clean_shot =
 	}
 	return (TRUE);
 };
-
 void () make_breakable_debris =
 {
 	local float i;
@@ -54,7 +53,6 @@ void () make_breakable_debris =
 		i = (i + SPAWN_CRUCIFIED);
 	}
 };
-
 void () func_breakable_die =
 {
 	self.origin = ((self.absmin + self.absmax) * 0.5);
@@ -62,21 +60,18 @@ void () func_breakable_die =
 	make_breakable_debris ();
 	remove (self);
 };
-
 void () func_breakable_killed =
 {
 	activator = damage_attacker;
 	SUB_UseTargets ();
 	func_breakable_die ();
 };
-
 void () func_breakable_use =
 {
 	activator = other;
 	SUB_UseTargets ();
 	func_breakable_die ();
 };
-
 void () func_breakable =
 {
 	self.solid = SOLID_BSP;
@@ -101,7 +96,6 @@ void () func_breakable =
 		self.th_die = func_breakable_killed;
 	}
 };
-
 void () func_explobox_explode =
 {
 	self.takedamage = DAMAGE_NO;
@@ -116,13 +110,11 @@ void () func_explobox_explode =
 	BecomeExplosion ();
 	sound (self, CHAN_VOICE, "weapons/r_exp3.wav", SPAWN_CRUCIFIED, ATTN_NORM);
 };
-
 void () func_explobox_die =
 {
 	self.nextthink = 0.2;
 	self.think = func_explobox_explode;
 };
-
 void () func_explobox =
 {
 	self.solid = SOLID_BSP;
@@ -140,7 +132,6 @@ void () func_explobox =
 	self.th_die = func_explobox_die;
 	self.takedamage = DAMAGE_AIM;
 };
-
 void () laser_helper_think =
 {
 	if ((!self.owner || (self.owner.classname != "func_laser")))
@@ -154,7 +145,6 @@ void () laser_helper_think =
 	}
 	self.nextthink = (time + 0.05);
 };
-
 void () func_laser_touch =
 {
 	if ((other.takedamage && (self.attack_finished < time)))
@@ -163,7 +153,6 @@ void () func_laser_touch =
 		self.attack_finished = (time + 0.1);
 	}
 };
-
 void () func_laser_use =
 {
 	if ((self.spawnflags & START_OFF))
@@ -187,7 +176,6 @@ void () func_laser_use =
 		}
 	}
 };
-
 void () func_laser =
 {
 	local entity helper;
@@ -224,7 +212,6 @@ void () func_laser =
 	helper.nextthink = 0.05;
 	helper.think = laser_helper_think;
 };
-
 void () circuitboard_touch =
 {
 	if ((other.classname != "player"))
@@ -242,7 +229,6 @@ void () circuitboard_touch =
 	SUB_UseTargets ();
 	remove (self);
 };
-
 void () item_circuitboard =
 {
 	precache_model ("progs/fromitz.mdl");
@@ -253,7 +239,6 @@ void () item_circuitboard =
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	StartItem ();
 };
-
 void () light_fixture1 =
 {
 	precache_model ("progs/fixture1.mdl");
@@ -261,7 +246,6 @@ void () light_fixture1 =
 	self.angles_y = self.angle2;
 	makestatic (self);
 };
-
 void () light_beacon =
 {
 	precache_model ("progs/beacon.mdl");
@@ -273,7 +257,6 @@ void () light_beacon =
 	self.angles_y = self.angle2;
 	makestatic (self);
 };
-
 void () misc_flag =
 {
 	precache_model ("progs/flag.mdl");
@@ -281,31 +264,26 @@ void () misc_flag =
 	self.frame = (self.spawnflags & AS_MELEE);
 	makestatic (self);
 };
-
 void () sparks_fade1 = [ 0, sparks_fade2 ]
 {
 	self.alpha = 0.8;
 	self.nextthink = (time + 0.05);
 };
-
 void () sparks_fade2 = [ 0, sparks_fade3 ]
 {
 	self.alpha = 0.6;
 	self.nextthink = (time + 0.05);
 };
-
 void () sparks_fade3 = [ 0, sparks_fade4 ]
 {
 	self.alpha = 0.4;
 	self.nextthink = (time + 0.05);
 };
-
 void () sparks_fade4 = [ 0, SUB_Remove ]
 {
 	self.alpha = 0.2;
 	self.nextthink = (time + 0.05);
 };
-
 void () sparks_use =
 {
 	if ((self.spawnflags & START_OFF))
@@ -318,14 +296,12 @@ void () sparks_use =
 	}
 };
 void () make_sparks;
-
 void () spark_turnofflight =
 {
 	SUB_UseTargets ();
 	self.think = make_sparks;
 	self.nextthink = ((time + ((random () + 0.5) * self.wait)) - 0.15);
 };
-
 void () make_sparks =
 {
 	local float i;
@@ -393,7 +369,6 @@ void () make_sparks =
 		self.think = spark_turnofflight;
 	}
 };
-
 void () misc_sparks =
 {
 	precache_model ("progs/spark.mdl");
@@ -414,7 +389,6 @@ void () misc_sparks =
 	self.nextthink = (time + (random () * 0.1));
 	self.think = make_sparks;
 };
-
 void () smoke_touch =
 {
 	if ((other == self.owner))
@@ -434,7 +408,6 @@ void () smoke_touch =
 	self.movedir = VEC_ORIGIN;
 	self.movedir2 = '0 0 15';
 };
-
 void () smoke_rise =
 {
 	self.cnt = (self.cnt + SPAWN_CRUCIFIED);
@@ -448,7 +421,6 @@ void () smoke_rise =
 	self.nextthink = ((time + 0.1) + (random () * 0.05));
 	self.think = smoke_rise;
 };
-
 void () smoke_think =
 {
 	local entity smoke;
@@ -499,7 +471,6 @@ void () smoke_think =
 		}
 	}
 };
-
 void () smoke_use =
 {
 	if ((self.spawnflags & START_OFF))
@@ -519,7 +490,6 @@ void () smoke_use =
 		}
 	}
 };
-
 void () smoke_firstthink =
 {
 	if (self.sounds)
@@ -531,7 +501,6 @@ void () smoke_firstthink =
 	}
 	smoke_think ();
 };
-
 void () misc_smoke =
 {
 	precache_model ("progs/s_smoke.spr");
@@ -557,7 +526,6 @@ void () misc_smoke =
 	self.nextthink = (time + 0.5);
 	self.think = smoke_firstthink;
 };
-
 void () splash_think =
 {
 	local vector vec;
@@ -569,7 +537,6 @@ void () splash_think =
 	//particle (self.origin, vec, self.color, self.volume);
 	self.nextthink = (time + self.wait);
 };
-
 void () misc_splash =
 {
 	if (!self.wait)
@@ -588,7 +555,6 @@ void () misc_splash =
 	self.nextthink = (time + self.wait);
 	self.think = splash_think;
 };
-
 void () ambient_general =
 {
 	precache_sound (self.noise);
@@ -603,5 +569,4 @@ void () ambient_general =
 	ambientsound (self.origin, self.noise, self.volume, self.speed);
 	remove (self);
 };
-
 //END

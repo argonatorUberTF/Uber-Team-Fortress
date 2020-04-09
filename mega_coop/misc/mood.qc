@@ -59,7 +59,6 @@ void () come_back_again =
 	self.think = come_back_again;
 	self.nextthink = FL_SWIM;
 };
-
 void () amb_mood =
 {
 	setmodel (self, self.model);
@@ -75,9 +74,6 @@ void () amb_mood =
 	self.think = come_back_again;
 	self.nextthink = FL_SWIM;
 };
-
-// AOP
-
 void () DebrisBounceSound =
 {
 	local float r;
@@ -131,11 +127,9 @@ void () DebrisBounceSound =
 		self.avelocity = VEC_ORIGIN;
 	}
 };
-
 void () throw_debris =
 {
 	local entity missile;
-	//local entity mpuff;
 	local entity targ;
 	targ = find (world, targetname, self.target);
 	missile = spawn ();
@@ -285,7 +279,6 @@ void () throw_debris =
 	missile.origin_z = (self.absmin_z + (self.size_z * random ()));
 	setsize (missile, VEC_ORIGIN, VEC_ORIGIN);
 };
-
 void () wall_die =
 {
 	local entity targ;
@@ -401,7 +394,6 @@ void () wall_die =
 	SUB_UseTargets ();
 	remove (self);
 };
-
 void () wall_touch =
 {
 	if ((self.cnt == SPAWNFLAG_SUPERSPIKE))
@@ -416,7 +408,6 @@ void () wall_touch =
 	self.nextthink = (self.ltime + 0.1);
 	self.cnt = SPAWNFLAG_SUPERSPIKE;
 };
-
 void () wall_explode =
 {
 	precache_model2 ("progs/sglass.mdl");
@@ -451,30 +442,24 @@ void () wall_explode =
 		self.th_die = wall_die;
 	}
 };
-
-
 void () weapon_napalm =
 {
 	self.classname = "item_artifact_super_damage";
 	item_artifact_super_damage();
 };
-
 void () weapon_lightme =
 {
 	self.classname = "item_artifact_super_damage";
 	item_artifact_super_damage();
 };
-
 void () weapon_not_a_spear =
 {
 	self.classname = "item_artifact_super_damage";
 	item_artifact_super_damage();
 };
-
 void () monster_azoth;
 void () monster_legond =
 {
 	monster_azoth ();
 };
-
 //END

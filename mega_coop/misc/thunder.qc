@@ -4,7 +4,6 @@ void () trig_target =
 	SUB_UseTargets ();
 	return;
 };
-
 void () come_back_for_more =
 {
 	if ((FLASH_ON > TRUE))
@@ -47,7 +46,6 @@ void () come_back_for_more =
 	self.think = come_back_for_more;
 	self.nextthink = FL_SWIM;
 };
-
 void () amb_thunder =
 {
 	setmodel (self, self.model);
@@ -58,5 +56,4 @@ void () amb_thunder =
 	self.think = come_back_for_more;
 	self.nextthink = FL_SWIM;
 };
-
 //END
