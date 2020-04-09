@@ -1,20 +1,6 @@
-// Spectator functions
-// Added Aug11'97 by Zoid <zoid@idsoftware.com>
-//
-// These functions are called from the server if they exist.
-// Note that Spectators only have one think since they movement code doesn't
-// track them much.  Impulse commands work as usual, but don't call
-// the regular ImpulseCommand handler in weapons.qc since Spectators don't
-// have any weapons and things can explode.
-//
-//   --- Zoid.
-
 void () SpectatorDisconnect;
-
 void () SpectatorImpulseCommand;
-
 void () SpectatorThink;
-
 void () SpectatorConnect =
 {
 #ifdef botprogs
@@ -37,7 +23,6 @@ void () SpectatorConnect =
     st = infokey (self, "apw");
     if (st == string_null)
 	st = infokey (self, "adminpwd");
-
     if (((st2 != string_null) && (st != string_null)) && (st == st2)) {
 	TeamFortress_Alias ("countplayers", 192, 0);
 	TeamFortress_Alias ("deal", 189, 0);
@@ -81,13 +66,9 @@ void () SpectatorConnect =
     self.StatusBarSize = stof (st);
     if ((self.StatusBarSize > 2) || (self.StatusBarSize < 0))
 	self.StatusBarSize = 0;
-
 };
-
 void () SpectatorDisconnect =
-{
-};
-
+{};
 void () SpectatorImpulseCommand =
 {
     if (self.impulse == 1) {
@@ -102,7 +83,6 @@ void () SpectatorImpulseCommand =
     }
     self.impulse = 0;
 };
-
 void () SpectatorThink =
 {
     if (self.impulse)
@@ -114,5 +94,4 @@ void () SpectatorThink =
     if ((time > self.StatusRefreshTime) && (self.StatusBarSize != 0))
 	RefreshStatusBar (self);
 };
-
 //END

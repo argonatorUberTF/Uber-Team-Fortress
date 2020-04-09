@@ -5,11 +5,10 @@ void() gravity_touch =
 {
 	if (other.takedamage && other.health > 13)
 	{
-
+		deathmsg = 204;
 		T_Damage (other, self, self.owner, 5000); // was 5000 SH*
 	}
 };
-
 void() gravity_pull =
 {
 	local entity e;
@@ -90,7 +89,7 @@ if (e.classname != "merchant") // don't grab the merchant
 								}	
 							}
 		e = e.chain;
-//		deathmsg = 204; // Set death type for obituary. -arg
+		deathmsg = 204; // Set death type for obituary. -arg
 	}
 };
 void() gravity_pulse1 = [ $cubelf01, gravity_pulse2 ]

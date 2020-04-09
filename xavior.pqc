@@ -8,7 +8,6 @@ void() messagetimer =
 		newmis.think = display_message;
 	}
 };
-
 void() display_message =
 {
 	if (msg1first == 0)
@@ -43,7 +42,6 @@ void() display_message =
 	messagetimer ();
 	dremove (self);
 };
-
 void() messagetimer2 =
 {
 	if (infokey (world, "message2"))
@@ -54,7 +52,6 @@ void() messagetimer2 =
 		newmis.think = display_message2;
 	}
 };
-
 void() display_message2 =
 {
 	if (msg2first == 0)
@@ -89,7 +86,6 @@ void() display_message2 =
 	messagetimer2 ();
 	dremove (self);
 };
-
 void() pre_messagetimer2 =
 {
 	local string msgd;
@@ -108,7 +104,6 @@ void() pre_messagetimer2 =
 		messagetimer2 ();
 	}
 };
-
 void() display_message3 =
 {
 	if (msg3first == 0)
@@ -189,8 +184,6 @@ void() pm_list =
 		entar = find(entar, classname, "player");
 	}
 };
-
-// Random movie quotes?! :D
 void() quotetimer =
 {
 	if (infokey (world, "moviequotes"))
@@ -226,20 +219,20 @@ void() display_quote =
 };
 void () EntityCount =
 {
-local float counter;
-local entity current;
-local string output;
-counter = 0;
-current = world;
-current = nextent(current);
-while (current != world)
-{
-counter = counter + 1;
-current = nextent(current);
-}
-output = ftos(counter);
-dprint ("\nTotal entities currently: ");
-dprint (output);
+	local float counter;
+	local entity current;
+	local string output;
+	counter = 0;
+	current = world;
+	current = nextent(current);
+	while (current != world)
+	{
+		counter = counter + 1;
+		current = nextent(current);
+	}
+	output = ftos(counter);
+	dprint ("\nTotal entities currently: ");
+	dprint (output);
 }; 
 void (entity e, float flt) Rank_FragIncrease;
 void() tester =
@@ -249,7 +242,6 @@ bprint(2, " - angle\n");
 bprint(2, vtos(self.origin));
 bprint(2, " - origin\n");
 };
-
 string(float whee) quotetostring =
 {
 	local float val;
@@ -668,4 +660,4 @@ void() func_nobuild =
 	self.classname = "func_nobuild";
 	self.touch = SUB_Null;
 };
-//end
+//end 

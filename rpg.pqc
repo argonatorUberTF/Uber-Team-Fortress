@@ -668,8 +668,6 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 			localcmd("localinfo votestring ");
 			localcmd(vote_string);
 			localcmd("\n");
-			//votestring = vote_string;
-			//votestring = strzone(votestring);
 		}
 		strunzone(vote_string);
 		Vote_CheckWin ();
@@ -865,7 +863,6 @@ void(string put) votemap_start =
 		if (head.classname == "player") { stuffcmd(head, "play misc/runekey.wav \n"); }
 		head = nextent(head); 
 		}
-
 		num_votes = num_votes + 1;
 		self.has_voted = 1;
 		self.vote_wait = (time + 10);
@@ -1162,7 +1159,6 @@ void(float btype) bot_list =
 		entar = find(entar, classname, "player");
 	}
 };
-
 void (float clientno) bot_kick =
 {
 	local entity bot;
@@ -1183,7 +1179,6 @@ void (float clientno) bot_kick =
 #endif
 float (string votemap_name) Check_For_Bmodel =
 {
-	// Is this map a bmodel? can't play bmodels!
 	if (votemap_name == "rfort" || votemap_name == "bfort" || votemap_name == "control2" || // 2fort5p|| 2fort5p || colony1 i think?
 		votemap_name == "b_batt0" || votemap_name == "b_batt1" || votemap_name == "b_bh10" || //id1 pak0.pak bmodels
 		votemap_name == "b_bh100" || votemap_name == "b_bh25" || votemap_name == "b_explob" ||

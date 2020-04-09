@@ -394,7 +394,6 @@ void(entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBou
 		head = head.chain;
 	}
 };
-
 entity(entity scanner, float scanrange, float enemies, float friends) T_RadiusScan = 
 {
 	local entity head;

@@ -183,7 +183,6 @@ void () SniperSight_Update =
 	}
 	self.nextthink = (time + 0.100000);
 };
-
 void () SniperSight_Create =
 {
 	local entity sight;
@@ -240,7 +239,6 @@ void () SniperSight_Create =
 	}
 	sight.nextthink = (time + 0.050000);
 };
-
 void() TeamFortress_AutoZoomToggle = 
 {
 	if (self.tfstate & 4096)

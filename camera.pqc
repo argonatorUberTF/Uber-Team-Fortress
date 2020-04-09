@@ -63,7 +63,6 @@ void() CamVecLock =
 	}
 	else
 	{
-		// Make sure Vector Lock isn't on
 		if (self.tfstate & 32768)
 		{
 			sprint(self, 2, "Angle Lock OFF.\n");
@@ -99,7 +98,6 @@ void() CamAngleLock =
 	}
 	else
 	{
-		// Make sure Vector Lock isn't on
 		if (self.tfstate & 2048)
 		{
 			sprint(self, 2, "Vector Lock OFF.\n");
@@ -228,7 +226,6 @@ void() CamProjectileLockOn =
 			}
 			else
 			{
-				// See if the camera is within sight
 				traceline(te.origin, self.origin, 0, te);
 				if (trace_ent == self)
 					lockon = 1;
@@ -252,7 +249,6 @@ void() CamProjectileLockOn =
 				}
 			}
 		}
-
 		te = find(te, classname, "player");
 	}
 };
@@ -316,7 +312,6 @@ void() fadetoblack =
 	}
 	stuffcmd( self, "v_cshift 0 0 0 255\n" );
 };
-
 void() fadefromblack =
 {
 	local float fade;
@@ -332,8 +327,6 @@ void() fadefromblack =
 	}
 	stuffcmd( self, "v_cshift 0 0 0 0\n" );
 };
-
-
 void() fadetowhite =
 {
 	local float fade;
@@ -349,7 +342,6 @@ void() fadetowhite =
 	}
 	stuffcmd( self, "v_cshift 255 255 255 255\n" );
 };
-
 void() fadefromwhite =
 {
 	local float fade;
@@ -372,7 +364,6 @@ void () prop_die =
 	self = self.owner;
 	LookThroughCam ();
 };
-
 void () prop_think =
 {
 	if ((self.origin != self.cam_origin))
@@ -546,7 +537,6 @@ vector (entity _p_1782, float _p_1783) Remove_Prop =
 	}
 	return '0 0 0';
 };
-
 void () CamAttach =
 {
 	self.think = SUB_Null;

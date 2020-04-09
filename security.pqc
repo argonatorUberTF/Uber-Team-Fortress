@@ -21,7 +21,6 @@ float /*WARNING: could not determine return type*/ (entity targ, entity check) v
 	}
 	return (0);
 };
-
 float /*WARNING: could not determine return type*/ (entity targ, entity checker, float chkvis, float chkrng, float istesla, float chkcease) Pharse_Client =
 {
 	local float r;
@@ -139,7 +138,6 @@ float /*WARNING: could not determine return type*/ (entity targ, entity checker,
 	}
 	return (1);
 };
-
 void () Security_Camera_Idle =
 {
 	if (Security_Camera_FindTarget ())
@@ -152,7 +150,6 @@ void () Security_Camera_Idle =
 	}
 	self.think = Security_Camera_Idle;
 };
-
 float /*WARNING: could not determine return type*/ () Security_Camera_FindTarget =
 {
 	local entity t_client;
@@ -206,12 +203,10 @@ float /*WARNING: could not determine return type*/ () Security_Camera_FindTarget
 	Security_Camera_PrintTarget ();
 	return (1);
 };
-
 void () Security_Camera_Pain =
 {
 	sound (self, 1, "weapons/camera_beep.wav", 1, 1);
 };
-
 void () Security_Camera_Die =
 {
 	sprint (self.real_owner, 2, "Your security camera was destroyed.\n");
@@ -224,7 +219,6 @@ void () Security_Camera_Die =
 	multicast (self.origin, 1);
 	BecomeExplosion ();
 };
-
 void () Security_Camera_PrintTarget =
 {
 	local string st;
@@ -242,7 +236,6 @@ void () Security_Camera_PrintTarget =
 	sprint (self.real_owner, 2, self.enemy.netname);
 	sprint (self.real_owner, 2, ").\n");
 };
-
 void () Security_Camera_Spawn =
 {
 	if ((self.ammo_cells < 55))
@@ -256,7 +249,6 @@ void () Security_Camera_Spawn =
 		newmis = spawn ();
 		newmis.movetype = 10;
 		setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
-		//newmis.solid = SOLID_BBOX;
 		newmis.solid = 1;
 		newmis.takedamage = 2;
 		newmis.classname = "building_camera";
@@ -282,7 +274,6 @@ void () Security_Camera_Spawn =
 		W_SetCurrentAmmo ();
 	}
 };
-
 void () SecurityCameraTossTouch =
 {
 	if (((other != world) || (other == self.real_owner)))

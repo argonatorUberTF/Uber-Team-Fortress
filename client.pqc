@@ -5,19 +5,14 @@ void () AC_Eject;
 void() PlayerPostThink;
 void () Stinger_TryLock;
 void (float modelindex_ac) AC_MaintainAircraft;
-
 float FTE_Server;
-// Rank stuff
 void (entity rank_ent) Rank_FindStats;
 void (entity rank_ent) Rank_UpdateStats;
 void (entity rank_ent, float addscore) Rank_AddRank;
 void (entity rank_ent, float addscore) Rank_AddFrags;
 void (entity rank_ent, float addscore) Rank_AddFers;
 void (entity rank_ent, float addscore) Rank_AddDeaths;
-
-// pablo. prematch
 void () SetUpPrematch;
-//
 void() set_suicide_frame;
 void() player_touch;
 void() TeamFortress_SetEquipment;
@@ -49,7 +44,6 @@ void(entity Goal, entity AP, entity ActivatingGoal) AttemptToActivate;
 void() CTF_FlagCheck;
 void () exit_vehicle;
 void () Sub_Speed;
-
 void() info_intermission = 
 {
 	if (CheckExistence() == 0)
@@ -58,7 +52,6 @@ void() info_intermission =
 		return;
 	}
 };
-
 void() SetChangeParms = 
 {
 	if (self.health <= 0)
@@ -659,7 +652,6 @@ if (!coop) {
 	newmis.enemy = self;
 	newmis.think = FixSoundCrap;
 };
-
 float /*WARNING: could not determine return type*/ (entity _p_5763) IsLegalClient =
 {
 	local string _l_5764;
@@ -992,7 +984,6 @@ void() ExitIntermission =
 	dprint("Exit Intermission.\n");
 	GotoNextMap();
 };
-
 void() IntermissionThink = 
 {
 	if (time < intermission_exittime)
@@ -1053,9 +1044,7 @@ void() changelevel_use =
 	}
 
 #endif
-
 	other = activator; 
-	
 #ifndef COOP_HAX
 	if (other.classname != "player")
 		return;

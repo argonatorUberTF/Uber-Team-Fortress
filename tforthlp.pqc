@@ -139,7 +139,6 @@ void() TeamFortress_MOTD =
 #endif
 	}
 };
-
 void() TeamFortress_HelpMap = 
 {
 	local entity te;
@@ -150,9 +149,6 @@ void() TeamFortress_HelpMap =
 		{
 			sprint(self, 2, te.non_team_broadcast);
 			sprint(self, 2, "\nNew Commands:\n");
-			sprint(self, 2, " 'bic' to flick your bic!\n");
-			sprint(self, 2, " 'Hey' to yell 'hey!'\n");
-			sprint(self, 2, " 'bHole' to taunt player!\n");
 			sprint(self, 2, " 'holo' to activate holographic replica!\n");
 			sprint(self, 2, " 'jetjump' to activate AirScout jetPack.\n");
 			sprint(self, 2, " 'lay' to activate laydown mode.\n");
@@ -164,9 +160,6 @@ void() TeamFortress_HelpMap =
 		}
 	}
 	sprint(self, 2, "\nNew Commands:\n");
-	sprint(self, 2, " 'bic' to flick your bic!\n");
-	sprint(self, 2, " 'Hey' to yell 'hey!'\n");
-	sprint(self, 2, " 'bHole' to taunt player!\n");
 	sprint(self, 2, " 'holo' to activate holographic replica!\n");
 	sprint(self, 2, " 'jetjump' to activate AirScout jetPack.\n");
 	sprint(self, 2, " 'lay' to activate laydown mode.\n");

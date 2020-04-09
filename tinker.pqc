@@ -1,15 +1,3 @@
-// MegaTF:United Tinker code
-// By avirox (aka XavioR)
-//
-//~//~// Notes \\~\\~\\
-// Just like the one Prozac Custom TF has, except this one is geared towars megaTF features :p
-// It is NOT an exact copy of prozac CuTF's though - I've changed certain aspects..
-//
-// The amount of Tinker upgrades a tesla has is it's .ammo_medikit property.
-//-- moved to defs:
-//.float cells_bonus;
-
-// A bad Tinkering (aka your tesla blows up :D)
 void () BadTinker =
 {
 	local float prob;
@@ -31,13 +19,10 @@ void () BadTinker =
 		self.building.health = self.building.max_health;
 	}
 };
-
-// Lets Thinker!
 void () DoTinker =
 {
 	float prob;		// probability of what upgrade you'll get
 	float thresh;	// probability the tesla will blow itself up
-
 	if (self.building.currentammo < 6) {
 		sprint(self,2,"You have to fully upgrade before tinkering.\n");
 		return;
@@ -53,29 +38,20 @@ void () DoTinker =
 	}
 	else
 		self.ammo_cells = self.ammo_cells - 100;
-
 	self.building.lip = self.building.lip + 1; // Increment Tinker Count
-
-	// Decide probability of bad tinker
-	// 1st time 25%
-	// 2nd and 3rd time 50%
-	// 4th up 75%
 	if (self.building.lip == 1)
                         thresh = 0.25;
 	else if (self.building.lip <= 3)
                         thresh = 0.5;
 	else
                         thresh = 0.75;
-
 	self.building.ammo_medikit = self.building.ammo_medikit - 1;	// take away a tinker upgrade
 	if (random() <= thresh)	// HEHE, BOOM
 	{
 		BadTinker();
 		return;
 	}
-
 	prob = random();		// here's the main deciding factor for what you'll get
-
 	if (prob <= .2) {
 		sprint(self,2, "Nothing Happened.\n");
 	}
@@ -101,7 +77,6 @@ void () DoTinker =
 		sprint(self,2,"The tesla got more health.\n");
 	}
 	else if (prob <= 1) {
-//		self.building.maxammo_cells = self.building.maxammo_cells + 100;	
 		self.building.cells_bonus = self.building.cells_bonus + 100;
 		self.building.ammo_cells = self.building.ammo_cells + 100;
 		sprint(self,2,"The tesla got more cells.\n");

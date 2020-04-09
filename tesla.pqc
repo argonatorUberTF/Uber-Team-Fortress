@@ -1,7 +1,4 @@
-//float /*WARNING: could not determine return type*/ () Tesla_Fire;
-//float /*WARNING: could not determine return type*/ () Tesla_FindTarget;
 void () Tesla_FoundTarget;
-
 void () Tesla_Idle =
 {
 #ifdef mtf_coop
@@ -34,7 +31,6 @@ void () Tesla_Idle =
 	}
 	self.think = Tesla_Idle;
 };
-
 float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 {
 	local entity t_client;
@@ -45,7 +41,6 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 #ifdef mtf_coop
 	local entity head;
 #endif
-
 	if ((self.tf_items & 2))
 	{
 		self.origin_z = (self.origin_z - 40);
@@ -142,7 +137,6 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 		{
 			gotone = 0;
 		}
-// Added for balance (though I doubt anyone will be this far away in a map)
 		if (((self.ammo_shells == 3) && (r > 1600)))
 		{
 			gotone = 0;
@@ -208,7 +202,6 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 	Tesla_FoundTarget ();
 	return (1);
 };
-
 void () Tesla_FoundTarget =
 {
 	if ((self.ammo_cells > self.waitmin))
@@ -224,7 +217,6 @@ void () Tesla_FoundTarget =
 #endif
 	self.effects = (self.effects | 8);
 	self.goalentity = self.enemy;
-
 	local float tesladelay;
 	if (self.ammo_nails == 0) //Initial delay based on AMPS
 		tesladelay = 0.5;
@@ -234,27 +226,9 @@ void () Tesla_FoundTarget =
 		tesladelay = 1;
 	else
 		tesladelay = 1.5;
-
-	// add even more delay for enemies that are moving fast (harder to lock on to)
 	if (self.enemy.velocity_z > 425 ||  self.enemy.velocity_y > 425 || self.enemy.velocity_x > 425)
 		tesladelay = tesladelay + 1.5;
-
 	self.nextthink = time + tesladelay;
-/*	if ((self.ammo_nails <= 1))		// old tesla lock-on code
-	{
-		self.nextthink = (time + 1);
-	}
-	else
-	{
-		if ((self.ammo_nails == 2))
-		{
-			self.nextthink = (time + 0.500000);
-		}
-		else
-		{
-			self.nextthink = (time + 1.500000);
-		}
-	}*/
 	if ((self.enemy.modelindex == modelindex_null))
 	{
 		self.nextthink = (self.nextthink + 2);
@@ -263,7 +237,6 @@ void () Tesla_FoundTarget =
 	{
 		if ((self.enemy.modelindex == modelindex_eyes))
 		{
-//			self.nextthink = (self.nextthink + 1.500000);
 			self.nextthink = (self.nextthink + 1);
 		}
 	}
@@ -272,12 +245,10 @@ void () Tesla_FoundTarget =
 		self.nextthink = (time + 0.500000);
 	}
 };
-
 void () Tesla_Pain =
 {
 	self.real_owner.StatusRefreshTime = (time + 0.200000);
 };
-
 void () Tesla_Die =
 {
 	sprint (self.real_owner, 2, "Your tesla coil was destroyed.\n");
@@ -294,7 +265,6 @@ void () Tesla_Die =
 	multicast (self.origin, 1);
 	BecomeExplosion ();
 };
-
 float /*WARNING: could not determine return type*/ () Tesla_Fire =
 {
 	local vector dir;
@@ -316,7 +286,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 			sprint(self.real_owner, 2, "Tesla fires with less power without a ground source.\n");
 			self.autoid = 1;
 		}
-		//return (0);
 	}
 	if (self.enemy.classname == "player" || self.enemy.classname == "bot")
 	{
@@ -493,7 +462,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	}
 	return (1);
 };
-
 void () Tesla_Touch =
 {
 	local float damage;
@@ -519,7 +487,6 @@ void () Tesla_Touch =
 #else
 	damage = 400;
 #endif
-	
 	if ((pointcontents (self.origin) == -6))
 	{
 		sprint (self.real_owner, 2, "Your sentry gun flew away.\n");
@@ -563,4 +530,3 @@ void () Tesla_Touch =
 	}
 };
 //END
-

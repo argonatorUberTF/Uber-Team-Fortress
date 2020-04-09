@@ -1,6 +1,4 @@
-// BTF Submarine
 void() SubTouch;
-
 void () Sub_Speed =
 {
 	self.air_finished = (time + 20);
@@ -70,7 +68,6 @@ void () Sub_Speed =
 		self.NoFuel_Velocity = self.velocity;
 	}
 };
-
 void () PreTouch =
 {
 	if (!(other.flags & 16))
@@ -122,7 +119,6 @@ void () PreTouch =
 		self.nextthink = (time + 4);
 	}
 };
-
 void () SubTouch =
 {
 	if (!(other.flags & 16))
@@ -176,7 +172,6 @@ void () SubTouch =
 	other.vw_index = 31;
 #endif
 };
-
 void () Vehicle_DieTime =
 {
 	if (self.resup_vehicle < time)
@@ -185,8 +180,7 @@ void () Vehicle_DieTime =
 	}
 	else
 		self.nextthink = time + .5;
-}
-
+};
 void () become_active =
 {
 	Vehicle_DieTime();
@@ -204,7 +198,6 @@ void () become_active =
 	}
 	self.nextthink = (time + 0.100000);
 };
-
 void () exit_vehicle =
 {
 	self.old_position = self.velocity;
@@ -274,7 +267,6 @@ void () exit_vehicle =
 	W_SetCurrentAmmo ();
 	player_run ();
 };
-
 void () Sub_ChangeWeapon =
 {
 	local vector dir;
@@ -349,7 +341,6 @@ void () Sub_ChangeWeapon =
 	self.weaponframe = 0;
 };
 void () Sub_FireTorpedo;
-
 void () Sub_Attack =
 {
 	if ((self.Sub_Weapon == 1))
@@ -369,13 +360,11 @@ void () Sub_Attack =
 void () SubTrackTarget;
 void () SubBecomeReal;
 void () Sub_TorpTouch;
-
 void () SubHomeTarget =
 {
 	local vector dir;
 	local vector plane;
 	local vector trajectory;
-
 	self.playerclass = (self.playerclass + 1);
 	if ((self.owner.tools != (self.owner.tools | 32)))
 	{
@@ -422,11 +411,9 @@ void () SubHomeTarget =
 		remove (newmis);
 	}
 };
-
 void () Subsightthink =
 {
 	local vector dir;
-
 	dir = normalize ((self.owner.owner.origin - self.owner.enemy.origin));
 	setorigin (self, (((dir * -7) + self.owner.owner.origin) + '0.000000 0.000000 22.000000'));
 	self.nextthink = (time + 0.050000);
@@ -439,7 +426,6 @@ void () Subsightthink =
 		remove (self);
 	}
 };
-
 void () Submakesight =
 {
 	newmis = spawn ();
@@ -460,7 +446,6 @@ void () Submakesight =
 	newmis.nextthink = time;
 	self.holo_owner = newmis;
 };
-
 void () Subkilldatarget =
 {
 	if (self.holo_owner)
@@ -469,11 +454,9 @@ void () Subkilldatarget =
 	}
 	Sub_TorpTouch ();
 };
-
 void () SubTrackTarget =
 {
 	local entity targ;
-
 	if ((other.team_no == self.team_no))
 	{
 		return;
@@ -525,7 +508,6 @@ void () SubTrackTarget =
 		self.think = SUB_Remove;
 	}
 };
-
 void () Sub_FireTorpedo =
 {
 	sound (self, 1, "weapons/torpedo.wav", 1, 1);
@@ -565,11 +547,9 @@ void () Sub_FireTorpedo =
 	}
 	self.tube_wing = (self.tube_wing + 1);
 };
-
 void () Sub_TorpTouch =
 {
 	local float damg;
-
 	if ((other.team_no == self.team_no))
 	{
 		return;
@@ -600,7 +580,6 @@ void () Sub_TorpTouch =
 	WriteCoord (0, self.origin_z);
 	BecomeExplosion ();
 };
-
 void () SubBecomeReal =
 {
 	self.movetype = 10;

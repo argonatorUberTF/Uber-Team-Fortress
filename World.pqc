@@ -1,4 +1,3 @@
-
 void () main =
 {
 	dprint ("main function\n");
@@ -114,12 +113,8 @@ void () main =
 	precache_file2 ("maps/dm5.bsp");
 	precache_file2 ("maps/dm6.bsp");
 };
-
-
-/* UPTIME FUNCTIONS */
 void () uptime_think; // btf'd
 float server_time; // btf'd
-
 #ifdef mtf_coop
 void() Monster_Stats_Create;
 #endif
@@ -136,7 +131,6 @@ void () worldspawn =
 #ifdef mtf_coop_packet
 	#SETVERSION
 #endif
-	
 	uptime = spawn ();
 	uptime.owner = world;
 	uptime.classname = "uptime";
@@ -144,7 +138,6 @@ void () worldspawn =
 	uptime.impulse = 1;
 	uptime.nextthink = time;
 	server_time = stof (infokey (world, "sv_time"));
-
 	lastspawn = world;
 	InitBodyQue ();
 	if ((infokey (world, "*gamedir") != "fortress"))
@@ -230,23 +223,16 @@ void () worldspawn =
 #endif
 	precache_model ("progs/s_bubble.spr");
 	precache_model ("progs/s_explod.spr");
-//	precache_model ("progs/throwaxe.mdl");
 	precache_model ("progs/v_axe.mdl");
 	precache_model (#MODEL_V_SHOTGUN);
-//	precache_model ("progs/v_moss.mdl");
 	precache_model ("progs/v_nail2.mdl");
 	precache_model ("progs/v_rock.mdl");
 	precache_model ("progs/v_shot2.mdl");
-//	precache_model ("progs/w_uzi.mdl");
 	precache_model ("progs/v_rock2.mdl");
 	precache_model ("progs/grenade.mdl");
-//	precache_model ("progs/bolt.mdl");
-//	precache_model ("progs/bolt2.mdl");
-//	precache_model ("progs/bolt3.mdl");
 	precache_model ("progs/lavaball.mdl");
 	precache_model ("progs/missile.mdl");
 	precache_model ("progs/spike.mdl");
-//	precache_model ("progs/s_spike.mdl");
 	precache_model ("progs/backpack.mdl");
 #ifdef mtf_coop_hipnotic
 	MTF_Priority_Precache();
@@ -257,28 +243,23 @@ void () worldspawn =
 #ifdef mtf_coop_hipnotic
 	}
 #endif
-//	precache_model ("progs/v_light.mdl");
 	precache_model2 ("progs/laser.mdl");
 #ifndef mtf_coop
 	precache_sound2 ("enforcer/enfire.wav");
 	precache_sound2 ("enforcer/enfstop.wav");
 	precache_sound2 ("hknight/attack1.wav");
 #endif
-//	precache_model2 ("progs/cross1.mdl");
 	precache_model2 ("progs/v_medi.mdl");
 	precache_model2 ("progs/v_bio.mdl");
 	precache_model2 (#MODEL_HGREN2);
 	precache_model2 ("progs/biggren.mdl");
 	precache_model2 ("progs/flare.mdl");
 	precache_model2 ("progs/v_srifle.mdl");
-//	precache_model2 ("progs/v_gatgun.mdl");
 	precache_model2 ("progs/detpack.mdl");
 	precache_model2 ("progs/ammobox.mdl");
 	precache_model2 ("progs/v_knife.mdl");
 	precache_model2 ("progs/v_knife2.mdl");
 	precache_model2 ("progs/v_span.mdl");
-//	precache_model2 ("progs/e_spike1.mdl");
-//	precache_model2 ("progs/e_spike2.mdl");
 	precache_model2 ("progs/v_rail.mdl");
 	precache_model2 ("progs/turrgun.mdl");
 	precache_model2 ("progs/turrbase.mdl");
@@ -292,17 +273,14 @@ void () worldspawn =
 	precache_model2 ("progs/grenade2.mdl");
 	precache_model2 ("progs/v_grap.mdl");
 	precache_model2 ("progs/hook.mdl");
-//	precache_model2 ("progs/caltrop.mdl");
 	precache_sound2 ("speech/saveme1.wav");
 #ifndef mtf_coop
 	precache_sound2 ("knight/sword2.wav");
 #endif
 	precache_sound2 ("speech/saveme2.wav");
-//	precache_sound ("ambience/subaqua.wav");
 	precache_sound ("weapons/rifle.wav");
 	precache_sound ("buttons/switch21.wav");
 	precache_sound ("buttons/airbut1.wav");
-//	precache_sound ("weapons/fith.wav");
 	precache_sound ("weapons/detpack.wav");
 	precache_sound ("weapons/radioair.wav");
 	precache_sound ("weapons/notarget.wav");
@@ -310,7 +288,6 @@ void () worldspawn =
 	precache_sound ("weapons/fighter.wav");
 	precache_sound ("weapons/throw.wav");
 	precache_sound ("weapons/prime.wav");
-// nu 20mm sound!
 	precache_sound ("weapons/20mm.wav");
 	precache_sound ("player/step1l.wav");
 	precache_sound ("player/step2l.wav");
@@ -321,27 +298,15 @@ void () worldspawn =
 #ifndef mtf_coop
 	precache_sound ("speech/pekaboo.wav");
 #endif
-	//precache_sound ("speech/idoasskk.wav");
-#ifdef mtf_coop_birthday
-	//precache_sound ("taunts/makeitso.wav");
-#else
-	//precache_sound ("speech/pathetic.wav");
-#endif
-	//precache_sound ("speech/call911.wav");
-	//precache_sound ("speech/kicknads.wav");
 	precache_sound ("speech/radio/taken.wav");
 	precache_sound ("speech/radio/capped.wav");
 	precache_sound ("player/gas_mask.wav");
 	precache_sound ("items/nightvis.wav");
 	precache_sound ("speech/threat.wav");
-	//precache_sound ("speech/hey.wav");
-	//precache_sound ("speech/cmyhole.wav");
-	//precache_sound ("speech/pantsdwn.wav");
 	precache_sound ("misc/eject.wav");
 	precache_sound ("misc/update.wav");
 	precache_sound ("misc/startup.wav");
 	precache_sound ("misc/enemy.wav");
-//	precache_sound ("artifact/charging.wav");
 #ifndef mtf_coop
 	precache_sound ("zombie/z_hit.wav");
 #endif
@@ -358,16 +323,12 @@ void () worldspawn =
 	precache_sound2 ("enforcer/enfire.wav");
 	precache_sound2 ("hknight/attack1.wav");
 	precache_model ("progs/incenrkt.mdl");
-//	precache_model ("progs/v_m162.mdl");
 	precache_model ("progs/lavapool.mdl");
 	precache_model ("progs/zom_gib.mdl");
-//	precache_model ("progs/v_light.mdl");
 	precache_model2 ("progs/v_bio.mdl");
 	precache_model2 (#MODEL_HGREN2);
 	precache_model2 ("progs/biggren.mdl");
 	precache_model2 ("progs/flare.mdl");
-	// pablo's precaching.
-	// models
 	precache_model ("progs/proxgren.mdl");
 	precache_model ("progs/v_asscan.mdl");
 	precache_model ("progs/v_mac10.mdl");
@@ -378,9 +339,8 @@ void () worldspawn =
 	precache_model ("progs/dot3.spr");	// also used for airstrike.. right..
 #endif
 #ifndef mtf_coop
-// only blue team anyways..
 	precache_model ("progs/dot2.spr");
-//	precache_model ("progs/dot3.spr"); //yes you need this dot to spot summons in coop -arg
+	precache_model ("progs/dot3.spr"); //yes you need this dot to spot summons in coop -arg
 	precache_model ("progs/dot4.spr");
 #endif
 	precache_model ("progs/rope.mdl");
@@ -393,23 +353,17 @@ void () worldspawn =
 #ifdef mtf_coop
 	if (mapname == "r2m4")
 		precache_model ("progs/tf_flag.mdl");
-
 //	MTF_Priority_Precache();
 #endif
-
 #ifdef mega_hats
 	precache_model( #HAT_MODEL );
 #endif
-
-	// sounds
 	precache_sound ("effects/beep.wav");
 	precache_sound ("buttons/switch02.wav");
 	precache_sound ("player/gib3.wav");
 	precache_sound ("player/gib2.wav");
 	precache_sound ("weapons/no_ammo.wav");
 	precache_sound ("weapons/pkup.wav");
-	//
-
 	lightstyle (0.000000, "m");
 	lightstyle (1, "mmnmmommommnonmmonqnmmo");
 	lightstyle (2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
@@ -423,7 +377,6 @@ void () worldspawn =
 	lightstyle (10, "mmamammmmammamamaaamammma");
 	lightstyle (11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
 	lightstyle (63, "a");
-
 #ifdef mtf_coop
 	skill = 2;
 #else
@@ -437,7 +390,6 @@ void () worldspawn =
 //	coop = 1;
 //	deathmatch = 0;
 #endif
-
 #ifdef mtfcoop_uberhardmode
 	uberhardmode = stof(infokey(world, "uberhardmode"));
 	if (uberhardmode)
@@ -448,7 +400,6 @@ void () worldspawn =
 	vw_available = checkextension("ZQ_VWEP");
 
 	if (vw_available) {
-        // precache our vwep models
         precache_vwep_model ("progs/vwplayer.mdl");  // vwep-enabled player model to use
         precache_vwep_model ( "progs/w_axe.mdl");
         precache_vwep_model ( "progs/w_shot.mdl");
@@ -471,7 +422,6 @@ void () worldspawn =
 		precache_vwep_model ( "progs/w_grap.mdl");	// #19
 	}
 #endif
-
 #ifdef mtf_coop
 	if (infokey(world,"survival") == "1")
 		if (lms_entity == world)
@@ -506,7 +456,6 @@ void () worldspawn =
 	}
 #endif
 };
-
 void () StartFrame =
 {
 #ifdef botprogs
@@ -527,10 +476,8 @@ entity bodyque_head;
 void () bodyque =
 {
 };
-
 void () InitBodyQue =
 {
-
 	bodyque_head = spawn ();
 	bodyque_head.classname = "bodyque";
 	bodyque_head.owner = spawn ();
@@ -553,7 +500,6 @@ void () GibHead =
 	setmodel (self, string_null);
 	self.solid = 0.000000;
 };
-
 void (entity ent) CopyToBodyQue =
 {
 	bodyque_head.angles = ent.angles;
@@ -577,8 +523,6 @@ void (entity ent) CopyToBodyQue =
 	setsize (bodyque_head, ent.mins, ent.maxs);
 	bodyque_head = bodyque_head.owner;
 };
-
-
 void() setup_strcat =
 {
 	if (strcat)	//we already set it up.
@@ -607,24 +551,17 @@ void() setup_strcat =
 			}
 		}
 	}
-//I don't know how to detect if it's cpqwsv
-//the serverinfo *version key will contain CPQWSV, but it'll contain other things too, which we can't test for.
-//standard qc doesn't support substring comparisons, and the extra info in there make it unusable.
 	if (infokey(world, "prozacserver") != "1" && infokey(world, "c7server") != "1") {
 	dprint("Warning: could not detect an strcat builtin, assuming cpqwsv - If this is a server running Often's cpqwsv please set localinfo prozacserver 1\n");
 	dprint("Warning: If this is an equake server with vote support or if you dont want to see this message again set localinfo prozacvote 1\n");
-//	dprint("Warning: If this is a server running Often's cpqwsv please set localinfo prozacserver 1\n");
 	}
 	strcat = cpqwsv_strcat;
 	if (infokey(world, "prozacserver") == "1" || infokey(world, "c7server") == "1") {
 	canusenew = 1; }
 };
-
-// BTF Uptime code
 void (string info, float value) flocalinfo_add =
 {
 	local string tmp;
-
 	localcmd ("localinfo ");
 	localcmd (info);
 	localcmd (" ");
@@ -640,17 +577,14 @@ void (string info, float value) flocalinfo_add =
 	localcmd (tmp);
 	localcmd ("\"\n");
 };
-
 void (float interv) set_server_time =
 {
 	server_time = server_time + interv;
 	flocalinfo_add ("sv_time", server_time);
 };
-
 float (float t) f_uptime_d =
 {
 	local float d;
-
 	d = t / 86400;
 	d = floor (d);
 	return (d);
@@ -660,33 +594,28 @@ float (float t) f_uptime_h =
 {
 	local float d;
 	local float h;
-
 	d = t / 86400;
 	d = floor (d);
 	h = floor (((t - (d * 86400)) / 3600));
 	return (h);
 };
-
 float (float t) f_uptime_m =
 {
 	local float d;
 	local float h;
 	local float m;
-
 	d = t / 86400;
 	d = floor (d);
 	h = floor (((t - (d * 86400)) / 3600));
 	m = floor ((((t - (d * 86400)) - (h * 3600)) / 60));
 	return (m);
 };
-
 float (float t) f_uptime_s =
 {
 	local float d;
 	local float h;
 	local float m;
 	local float s;
-
 	d = t / 86400;
 	d = floor (d);
 	h = floor (((t - (d * 86400)) / 3600));
@@ -700,7 +629,6 @@ void () uptime_think =
 	local float t;
 	local string s;
 	local float i;
-
 	set_server_time (1);
 	if ((i == 60))
 	{
@@ -715,30 +643,22 @@ void () uptime_think =
 		localcmd (s);
 		localcmd (" h:");
 		t = f_uptime_h (server_time);
-		//localcmd ("h:");
 		s = ftos (t);
 		localcmd (s);
 		localcmd (" m:");
 		t = f_uptime_m (server_time);
-		//localcmd ("m:");
 		s = ftos (t);
 		localcmd (s);
-		//localcmd ("\"");
 		localcmd ("\"\n");
-//		localcmd (localcmd (s)); // decompiler glitch?
 	}
 	i = i + 1;
 	self.nextthink = (time + 1);
 };
-
-// XavioR's Uptime code :P
 void () Show_Uptime =
 {
 	local float t;
 	local string s;
-
 	sprint(self, 2, " Σεςφες Υπτινε \n"); // Server Uptime:
-
 	sprint(self, 2, "Δαωσ: ");		//Days:
 	t = f_uptime_d (server_time);
 	s = ftos (t);

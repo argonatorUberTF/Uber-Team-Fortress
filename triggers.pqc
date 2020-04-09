@@ -45,13 +45,11 @@ void() multi_trigger =
 		self.think = SUB_Remove;
 	}
 };
-
 void() multi_killed = 
 {
 	self.enemy = damage_attacker;
 	multi_trigger();
 };
-
 void() multi_use = 
 {
 #ifdef mtf_coop_halflife
@@ -61,7 +59,6 @@ void() multi_use =
 	self.enemy = activator;
 	multi_trigger();
 };
-
 void() multi_touch = 
 {
 	local entity te;
@@ -103,7 +100,6 @@ void() multi_touch =
 	self.enemy = other;
 	multi_trigger();
 };
-
 void() trigger_multiple = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -166,7 +162,6 @@ void() trigger_multiple =
 			self.touch = multi_touch;		// no SPAWNFLAG_NOTOUCH for half-life multi triggers
 #endif
 };
-
 void() trigger_once = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -184,7 +179,6 @@ void() trigger_once =
 #endif
 	trigger_multiple();
 };
-
 #ifdef mtf_coop_halflife
 void () trigger_relay_checktargs =
 {
@@ -207,13 +201,11 @@ void () trigger_relay_checktargs =
 		hldprint(2, "Am targeted!\n");
 	}
 };
-
 void () trigger_relay_use =
 {
 	SUB_UseTargets();
 };
 #endif
-
 void() trigger_relay = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -236,7 +228,6 @@ void() trigger_relay =
 	self.use = SUB_UseTargets;
 #endif
 };
-
 void() trigger_secret = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -269,7 +260,6 @@ void() trigger_secret =
 	}
 	trigger_multiple();
 };
-
 void() counter_use = 
 {
 	self.count = self.count - TF_FLARE_OFF;
@@ -313,7 +303,6 @@ void() counter_use =
 	self.enemy = activator;
 	multi_trigger();
 };
-
 void() trigger_counter = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -328,7 +317,6 @@ void() trigger_counter =
 	}
 	self.use = counter_use;
 };
-
 void() play_teleport = 
 {
 	local float v;
@@ -366,7 +354,6 @@ void() play_teleport =
 	sound(self, 2, tmpstr, TF_FLARE_OFF, TF_FLARE_OFF);
 	remove(self);
 };
-
 void(vector org) spawn_tfog = 
 {
 	local entity s;
@@ -381,7 +368,6 @@ void(vector org) spawn_tfog =
 	WriteCoord(4, org_z);
 	multicast(org, TF_FLARE_OFF);
 };
-
 void() tdeath_touch = 
 {
 	if (other == self.owner)
@@ -405,7 +391,6 @@ void() tdeath_touch =
 		T_Damage(other, self, self, 5000);
 	}
 };
-
 void(vector org, entity death_owner) spawn_tdeath = 
 {
 	local entity death;
@@ -422,7 +407,6 @@ void(vector org, entity death_owner) spawn_tdeath =
 	death.owner = death_owner;
 	force_retouch = 2;
 };
-
 void() teleport_touch = 
 {
 	local entity t;
@@ -532,7 +516,6 @@ void() teleport_touch =
 	}
 	other.flags = other.flags - (other.flags & 512);
 };
-
 void() info_teleport_destination = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -552,14 +535,12 @@ void() info_teleport_destination =
 		objerror("no targetname");
 	}
 };
-
 void() teleport_use = 
 {
 	self.nextthink = time + 0.2;
 	force_retouch = 2;
 	self.think = SUB_Null;
 };
-
 void () trigger_teleport =
 {
 	local vector _l_6970;
@@ -583,7 +564,6 @@ void () trigger_teleport =
 		ambientsound (_l_6970, "ambience/hum1.wav", 0.500000, 3.000000);
 	}
 };
-
 void() trigger_skill_touch = 
 {
 	local entity te;
@@ -605,13 +585,11 @@ void() trigger_skill_touch =
 	}
 	cvar_set("skill", self.message);
 };
-
 void() trigger_setskill = 
 {
 	dremove(self);
 	return;
 };
-
 void() trigger_onlyregistered_touch = 
 {
 	local entity te;
@@ -656,7 +634,6 @@ void() trigger_onlyregistered_touch =
 		}
 	}
 };
-
 void() trigger_onlyregistered = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -668,7 +645,6 @@ void() trigger_onlyregistered =
 	InitTrigger();
 	self.touch = trigger_onlyregistered_touch;
 };
-
 #ifdef mtf_coop_hipnotic
 void( entity ent, float amount ) hurt_setdamage =
    {
@@ -684,13 +660,11 @@ void( entity ent, float amount ) hurt_setdamage =
    ent.nextthink = -1;
    };
 #endif
-
 void() hurt_on = 
 {
 	self.solid = TF_FLARE_OFF;
 	self.nextthink = -1;
 };
-
 void() hurt_touch = 
 {
 	local entity te;
@@ -734,7 +708,6 @@ void() hurt_touch =
 		self.nextthink = time + TF_FLARE_OFF;
 	}
 };
-
 #ifdef mtf_coop_halflife
 void() trigger_hurt_use = 
 {
@@ -749,7 +722,6 @@ void() trigger_hurt_use =
 		self.use = SUB_Null;
 };
 #endif
-
 #ifdef mtf_coop
 void () hurt_use =
 {
@@ -761,7 +733,6 @@ void () hurt_use =
 		self.use = SUB_Null;
 };
 #endif
-
 void() trigger_hurt = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -800,7 +771,6 @@ void() trigger_hurt =
 	}
 #endif
 };
-
 void() trigger_push_touch = 
 {
 	local entity te;
@@ -856,7 +826,6 @@ void() trigger_push_touch =
 		dremove(self);
 	}
 };
-
 #ifdef mtf_coop
 void () trigger_push_mtf_use =
 {
@@ -867,7 +836,6 @@ void () trigger_push_mtf_use =
 	dremove(self);
 };
 #endif
-
 #ifdef HALFLIFE
 void () func_ladder;
 void () trigger_push_use =
@@ -918,7 +886,6 @@ void() trigger_push =
 void () trigger_jumper_touch =
 {
 	local entity _l_7024;
-
 	if (!Activated (self, other))
 	{
 		if ((self.else_goal != 0.000000))
@@ -958,7 +925,6 @@ void () trigger_jumper_touch =
 		dremove (self);
 	}
 };
-
 void () trigger_jumper =
 {
 	if ((CheckExistence () == 0.000000))
@@ -989,7 +955,6 @@ void() trigger_monsterjump_touch =
 	other.flags = other.flags - 512;
 	other.velocity_z = self.height;
 };
-
 void() trigger_monsterjump = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
