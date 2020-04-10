@@ -87,7 +87,6 @@ void () target_laser_think =
 		cout = 8;
 	else
 		cout = 4;
-
 	if (self.enemy)
 	{
 		last_movedir = self.movedir;
@@ -145,7 +144,6 @@ void () target_laser_use =
 	else
 		target_laser_on ();
 };
-
 void () target_laser_start =
 {
 	local entity ent;
@@ -359,7 +357,6 @@ void () func_timer =
 			func_timer_preuse ();
 	}
 };
-
 #ifndef mtf_coop_halflife
 void () ladder_touch_old =
 {
@@ -406,7 +403,6 @@ void () use_target_explosion =
 	self.think = target_explosion_explode;
 	self.nextthink = time + self.delay;
 };
-
 void () target_explosion =
 {
 	self.use = use_target_explosion;
@@ -418,7 +414,6 @@ void () key_power_cube_use =
 	SUB_UseTargets();
 	dremove(self);
 };
-
 void () key_power_cube =
 {
 	precache_model2("progs/v_spike.mdl");
@@ -435,12 +430,10 @@ void () key_pyramid =
 {
 	key_power_cube ();
 };
-
 void () func_explosive =
 {
 	func_explodable(); // from nehahra
 };
-
 void () target_changelevel =
 {
 	trigger_changelevel ();
@@ -449,7 +442,6 @@ void () func_water =
 {
 	func_wall(); 		// yes, because as we all know water is really solid
 };
-
 void () target_help_use =
 {
 	bprint(2,self.message);
@@ -463,7 +455,6 @@ void () target_lightramp =
 {
 	trigger_once ();
 };
-
 void () misc_teleporter =
 {
 	local vector _l_6970;
@@ -486,17 +477,14 @@ void () misc_teleporter =
 		ambientsound (_l_6970, "ambience/hum1.wav", 0.500000, 3.000000);
 	}
 };
-
 void () misc_teleporter_dest =
 {
 	info_teleport_destination ();
 };
-
 void () trigger_teleporter =
 {
 	trigger_teleport();
 };
-
 void () key_remove =
 {
 	if (other.classname != "player")
@@ -509,7 +497,6 @@ void () key_remove =
 	setmodel(self, string_null);
 	self.think = SUB_Null;
 };
-
 void () nkey_think =
 {
 	local entity saf;
@@ -541,7 +528,6 @@ void () key_red_key =
 	self.think = nkey_think;
 	self.nextthink = time + 0.2;
 };
-
 void () key_blue_key =
 {
 	precache_model("progs/bkey.spr");
@@ -555,7 +541,6 @@ void () key_blue_key =
 	self.think = nkey_think;
 	self.nextthink = time + 0.2;
 };
-
 void () key_pass =
 {
 	precache_model("progs/ykey.spr");
@@ -569,7 +554,6 @@ void () key_pass =
 	self.think = nkey_think;
 	self.nextthink = time + 0.2;
 };
-
 void () trigger_key_use =
 {
 	local entity te;
@@ -597,7 +581,6 @@ void () trigger_key_use =
 	}
 
 };
-
 void () trigger_key =
 {
 	trigger_once ();
@@ -606,18 +589,15 @@ void () trigger_key =
 		self.touch = SUB_Null;
 	}
 };
-
 void () point_combat =
 {
 	path_corner ();
 };
-
 void () target_secret =
 {
 	self.classname = "trigger_secret";
 	trigger_secret();
 };
-
 void () trigger_always =
 {
 	if (self.delay < 0.2)
@@ -625,7 +605,6 @@ void () trigger_always =
 	self.think = SUB_UseTargets;
 	self.nextthink = time + .2;		// give a slight delay i guess
 };
-
 void () target_crosslevel_target =
 {
 	trigger_always ();			// xavior is teh lazy
@@ -659,13 +638,11 @@ void () monster_chick =
 		else
 			monster_pinky();
 };
-
 void () monster_hover =
 {
 	if (#DOOM_MAP)
 		monster_lsoul();
 };
-
 void () monster_gladiator =
 {
 	if (#DOOM_MAP)

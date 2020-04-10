@@ -274,8 +274,7 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 		return ( origdmg );
 		
 	if (atckr.team_no == targ.team_no && inflictor.is_minion == #TRUE)
-		return ( 0 );		// so minions don't damage or inflict players
-
+		return ( 0 );
 	if (atckr.monster_items & MITEM_QUAD)
 	{
 		if (atckr.super_sound < time)
@@ -314,7 +313,6 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 			{
 				if (targ.tfstate & 32768)
 				{
-					// do nothing for now, I have pity on the poor bastid :)
 				}
 				else
 				{
@@ -798,7 +796,6 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 			newmis.weapon = 668;	// 1000 exp
 			newmis.effects = EF_RED;
 		}
-
 		setmodel(newmis, "progs/potion2.mdl");
 		newmis.noise = "items/protect.wav";
 	}
@@ -903,16 +900,18 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		newmis.noise = "items/protect.wav";
 		Coop_SetRune(newmis);
 	}	
-	if (spawn_cube) {
+	if (spawn_cube)
+	{
 		bprint(2, "€A RESURRECTION CUBE has been dropped‚\n");
 		setmodel(newmis, "progs/v_spike.mdl");
 		newmis.weapon = 20;
 		newmis.effects = #EF_GREEN;
 		newmis.noise = "items/protect.wav";
 	}
-	if (mkiller.classname == "player") {			// if a monster dies by something besides a player, don't make everyone wait..
+	if (mkiller.classname == "player")
+	{
 		newmis.#loot_owner = mkiller;
-		newmis.#loot_owner_time = time + 10;		// time the owner of the loot has so that only he/she can pickup the dropped loot.
+		newmis.#loot_owner_time = time + 10;
 	}
 	newmis.nextthink = time + 30;
 	newmis.think = SUB_Remove;
