@@ -1,4 +1,3 @@
-// cmd telem works in survival mode -arg
 #ifdef BATTLE_ROYALE
 void () br_subthink;
 #endif
@@ -454,7 +453,7 @@ void() voteyes =
 //Why don't we just check for file exist of the map first. Then just do it.  If the map is bad, then it's on the server operator.			
 			newmis = spawn();
 			newmis.classname = "timer";
-			newmis.nextthink = time + 5;  //changed to 5 seconds for slow servers. -arg maybe that's the issue -arg
+			newmis.nextthink = time +2;
 			newmis.think = MapNotFound;
 			return;
 		}
@@ -1126,7 +1125,6 @@ float (entity the_player, float amount, string give_what) Extra_Stuff =
 	return 0;
 };
 #ifdef botprogs
-// spawns a list of bots only
 #define BOTLIST_NORM			0
 #define BOTLIST_TEAMCLASS		1
 #define BOTLIST_FULLDEBUG		2
