@@ -36,7 +36,6 @@ float		killed_monsters;	// number of monsters killed
 // spawnparms are used to encode information about clients across server
 // level changes
 float		parm1, parm2, parm3, parm4, parm5, parm6, parm7, parm8, parm9, parm10, parm11, parm12, parm13, parm14, parm15, parm16;
-
 //
 // global variables set by built in functions
 //	
@@ -72,7 +71,6 @@ void()		SetChangeParms;			// call to set parms for self so they can
 //================================================
 void		end_sys_globals;		// flag for structure dumping
 //================================================
-
 /*
 ==============================================================================
 
@@ -80,7 +78,6 @@ void		end_sys_globals;		// flag for structure dumping
 
 ==============================================================================
 */
-
 //
 // system fields (*** = do not set in prog code, maintained by C code)
 //
@@ -1466,5 +1463,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v4.07.20United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v4.10.20United\n");
 //END
