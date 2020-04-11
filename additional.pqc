@@ -663,9 +663,7 @@ entity tracetossent;			// Nehara
 //.float m_fControl;				// for half-life unused -arg
 //.float m_iCount;					// for half-life unused -arg
 //.float m_flSpread;				// for half-life unused -arg
-
 .string old_wpn_mdl;				//camera.pqc
-
 #ifdef weapon_bat
 .float FlashTime;
 void () FlashTimer;
@@ -947,7 +945,6 @@ float FlagTag;	// mega2k feature (used in map Insanity.bsp)
 float coop = 1;
 #endif
 //float SECRET_NO_SHOOT = 8.00000;	//unused
-
 //						END FLOAT CONSTANTS
 //
 #ifdef botprogs
@@ -2034,7 +2031,6 @@ void() func_wall_use =
 #endif
 	self.frame = TF_FLARE_OFF - self.frame;
 };
-
 void(float psize, entity p) KickPlayer = 
 {
 	msg_entity = p;
@@ -2067,13 +2063,11 @@ void(entity pl, string s1) CenterPrint =
 };
 void (entity _p_3723, string _p_3724, string _p_3725) CenterPrint2 =
 {
-
 	centerprint (_p_3723, _p_3724, "\n", _p_3725);
 	_p_3723.StatusRefreshTime = (time + 1.500000);
 };
 void (entity _p_3729, float _p_3730, string _p_3731) StatusPrint =
 {
-
 	centerprint (_p_3729, _p_3731);
 	_p_3729.StatusRefreshTime = (time + _p_3730);
 };
@@ -2273,7 +2267,6 @@ float (float tno) TeamFortress_GetRealScore =
 	}
 	return total;
 };
-
 float() TeamFortress_TeamPutPlayerInTeam = 
 {
 	local float i;
@@ -2370,7 +2363,6 @@ void(float tno) TeamFortress_TeamSetColor =
 		return;
 	}
 };
-
 string(float tno) GetTeamName = 
 {
 	local string st;
@@ -3481,7 +3473,6 @@ float(entity targ, entity attacker, float damage) TeamEqualiseDamage =
 	newdam = newdam * (TF_FLARE_OFF / adv);
 	return newdam;
 };
-
 void() TeamFortress_StatusQuery = 
 {
 	local float ft;
@@ -3760,7 +3751,6 @@ void() TeamFortress_ChangeClass =
 		}
 	}
 #endif
-
 #ifdef mtf_coop
 	if (self.monster_type > 0) {
 		
@@ -3972,7 +3962,6 @@ void() TeamFortress_ChangeClass =
 #ifdef APRIL_FOOLS
 	setmodel(self, "progs/a1player.mdl");
 #else
-
 #ifdef PL_FEM
 	setmodel (self, GetPlayerModel(self));
 #else
@@ -4098,7 +4087,6 @@ void() execute_changelevel =
 		other = find(other, classname, "player");
 	}
 };
-
 void(entity Viewer, float pc, float rpc, float xavior_Var) TeamFortress_PrintClassName = 
 {
 	local string st;
@@ -4117,7 +4105,6 @@ void(entity Viewer, float pc, float rpc, float xavior_Var) TeamFortress_PrintCla
 		sprint(Viewer, 2, "\n");
 	}
 };
-
 void(entity Goal) UpdateAbbreviations = 
 {
 	if (Goal.has_disconnected == TF_FLARE_LIT)
@@ -4590,7 +4577,6 @@ void() TeamFortress_DisplayLegalClasses =
 	}
 	sprint(self, 2, ".\n");
 };
-
 float(float pc) IsRestrictedClass = 
 {
 	local float NumOnTeam;
@@ -4664,7 +4650,6 @@ float(float pc) IsRestrictedClass =
 	else
 		return NumAllowed;
 };
-
 entity() SelectSpawnPoint = 
 {
 	local entity spot;
@@ -4764,9 +4749,9 @@ entity() SelectSpawnPoint =
 #ifdef HALFLIFE
 float (entity tcl) hlt_think =
 {
-local string lmstats;
-local vector lmsv, neworg;
-local entity ips, nips;
+	local string lmstats;
+	local vector lmsv, neworg;
+	local entity ips, nips;
 	if ( landmarked )
 		return ( #FALSE );
 	lmstats = infokey (world, "landmark");
@@ -4873,7 +4858,6 @@ entity(entity start_point) FindNextIntermission =
 	}
 	return FindIntermission();
 };
-
 void () ReCheckRestrictions =
 {
 	if (infokey(world, "quickswitch") == "off" || infokey(world, "quickswitch") == "0")
@@ -4906,13 +4890,13 @@ void () ReCheckRestrictions =
 };
 void (entity pl, float fr) TF_AddFrags =
 {
-    local entity e;
-    if ((intermission_running != 0) || (intermission_exittime > time))
+	local entity e;
+	if ((intermission_running != 0) || (intermission_exittime > time))
 	return;
-    pl.real_frags = pl.real_frags + fr;
-    if (!pl.team_no)
+	pl.real_frags = pl.real_frags + fr;
+	if (!pl.team_no)
 	return;
-    if (toggleflags & 2048) {
+	if (toggleflags & 2048) {
 	if (pl.team_no == 1)
 	    team1score = team1score + fr;
 	else if (pl.team_no == 2)
@@ -4921,23 +4905,23 @@ void (entity pl, float fr) TF_AddFrags =
 	    team3score = team3score + fr;
 	else if (pl.team_no == 4)
 	    team4score = team4score + fr;
-    }
-    if (pl.team_no == 1)
+	}
+	if (pl.team_no == 1)
 	team1frags = team1frags + fr;
-    else if (pl.team_no == 2)
+	else if (pl.team_no == 2)
 	team2frags = team2frags + fr;
-    else if (pl.team_no == 3)
+	else if (pl.team_no == 3)
 	team3frags = team3frags + fr;
-    else if (pl.team_no == 4)
+	else if (pl.team_no == 4)
 	team4frags = team4frags + fr;
-    if (toggleflags & 2048) {
+	if (toggleflags & 2048) {
 	e = find (world, classname, "player");
 	while (e) {
-	    if (e.team_no == pl.team_no)
+		if (e.team_no == pl.team_no)
 		e.frags = TeamFortress_TeamGetScore (e.team_no);
-	    e = find (e, classname, "player");
+		e = find (e, classname, "player");
 	}
-    } else if (!(toggleflags & 128))
+	} else if (!(toggleflags & 128))
 	pl.frags = pl.real_frags;
 };
 
@@ -5125,7 +5109,6 @@ bprint(2, "\n");
 #endif
 	self = _l_1251;
 };
-
 void (float _p_10461) TeamFortress_DropAmmo =
 {
 	local float _l_10462;
@@ -5565,7 +5548,6 @@ void(float tno) increment_team_ammoboxes =
 		}
 	}
 };
-
 void(float tno) decrement_team_ammoboxes = 
 {
 	if (tno == 1)
@@ -5864,17 +5846,16 @@ void(entity p) TeamFortress_SetSpeed =
 	stuffcmd(p, sp);
 	stuffcmd(p, "\n");
 };
-
-  void() monster_death_use = 
-  {
-    	if (self.flags & TF_FLARE_OFF)
-    	{
-    		self.flags = self.flags - TF_FLARE_OFF;
-    	}
-    	if (self.flags & 2)
-    	{
-    		self.flags = self.flags - 2;
-    	}
+void() monster_death_use = 
+{
+		if (self.flags & TF_FLARE_OFF)
+		{
+			self.flags = self.flags - TF_FLARE_OFF;
+		}
+			if (self.flags & 2)
+			{
+			self.flags = self.flags - 2;
+			}
 #ifdef HALFLIFE
 	if (!#HL_MAP) {
     	if (!(self.target))
@@ -5902,58 +5883,56 @@ void(entity p) TeamFortress_SetSpeed =
 		}
 	}
 #else
-    	if (!(self.target))
-    	{
-    		return;
-    	}
-    	activator = self.enemy;
-    	SUB_UseTargets();
+		if (!(self.target))
+		{
+			return;
+		}
+		activator = self.enemy;
+		SUB_UseTargets();
 #endif
-    };
-
+};
 float(entity targ, entity inflictor) CanDamage = 
 {
-      	if (targ.movetype == 7)
-      	{
-      		traceline(inflictor.origin, 0.5 * (targ.absmin + targ.absmax), TF_FLARE_OFF, self);
-      		if (trace_fraction == TF_FLARE_OFF)
-      		{
-      			return TF_FLARE_OFF;
-      		}
-      		if (trace_ent == targ)
-      		{
-      			return TF_FLARE_OFF;
-      		}
-      		return TF_FLARE_LIT;
-      	}
-      	traceline(inflictor.origin, targ.origin, TF_FLARE_OFF, self);
-      	if (trace_fraction == TF_FLARE_OFF)
-      	{
-      		return TF_FLARE_OFF;
-      	}
-      	traceline(inflictor.origin, targ.origin + '15 15 0', TF_FLARE_OFF, self);
-      	if (trace_fraction == TF_FLARE_OFF)
-      	{
-      		return TF_FLARE_OFF;
-      	}
-      	traceline(inflictor.origin, targ.origin + '-15 -15 0', TF_FLARE_OFF, self);
-      	if (trace_fraction == TF_FLARE_OFF)
-      	{
-      		return TF_FLARE_OFF;
-      	}
-      	traceline(inflictor.origin, targ.origin + '-15 15 0', TF_FLARE_OFF, self);
-      	if (trace_fraction == TF_FLARE_OFF)
-      	{
-      		return TF_FLARE_OFF;
-      	}
-      	traceline(inflictor.origin, targ.origin + '15 -15 0', TF_FLARE_OFF, self);
-      	if (trace_fraction == TF_FLARE_OFF)
-      	{
-      		return TF_FLARE_OFF;
-      	}
-      	return TF_FLARE_LIT;
+	if (targ.movetype == 7)
+	{
+		traceline(inflictor.origin, 0.5 * (targ.absmin + targ.absmax), TF_FLARE_OFF, self);
+		if (trace_fraction == TF_FLARE_OFF)
+		{
+			return TF_FLARE_OFF;
+		}
+		if (trace_ent == targ)
+		{
+			return TF_FLARE_OFF;
+		}
+		return TF_FLARE_LIT;
+	}
+	traceline(inflictor.origin, targ.origin, TF_FLARE_OFF, self);
+		if (trace_fraction == TF_FLARE_OFF)
+		{
+			return TF_FLARE_OFF;
+		}
+		traceline(inflictor.origin, targ.origin + '15 15 0', TF_FLARE_OFF, self);
+			if (trace_fraction == TF_FLARE_OFF)
+			{
+				return TF_FLARE_OFF;
+			}
+		traceline(inflictor.origin, targ.origin + '-15 -15 0', TF_FLARE_OFF, self);
+		if (trace_fraction == TF_FLARE_OFF)
+		{
+			return TF_FLARE_OFF;
+		}
+		traceline(inflictor.origin, targ.origin + '-15 15 0', TF_FLARE_OFF, self);
+		if (trace_fraction == TF_FLARE_OFF)
+		{
+			return TF_FLARE_OFF;
+		}
+		traceline(inflictor.origin, targ.origin + '15 -15 0', TF_FLARE_OFF, self);
+		if (trace_fraction == TF_FLARE_OFF)
+		{
+			return TF_FLARE_OFF;
+		}
+		return TF_FLARE_LIT;
 };
-
 void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 {
 	local entity newmon;
@@ -6455,7 +6434,6 @@ void(entity p) TeamFortress_SetSkin =
 		stuffcmd(p, "skin base\n");
 	}
 };
-// For those maps that have too many model precaches, lets precache the important ones first
 void () MTF_Priority_Precache =
 {
 	if (mapname == "qte1m3" || mapname == "qte1m4" || mapname == "qte2m2" 
@@ -6674,10 +6652,11 @@ void () W_SetCurrentAmmo =
 		{
 			self.weaponmodel = "progs/v_knife2.mdl";//self.weaponmodel = "progs/v_axe.mdl";
 		}
-if (allow_bat == 1) {
-		if (self.playerclass == 1)
-			self.weaponmodel = "progs/v_bat.mdl";
-}
+if (allow_bat == 1)
+	{
+	if (self.playerclass == 1)
+	self.weaponmodel = "progs/v_bat.mdl";
+	}
 		self.weaponframe = 0.000000;
 	}
 #ifdef mtf_coop
@@ -7208,7 +7187,6 @@ void (float _p_10136) TeamFortress_ItemStatus =
 		return;
 	}
 };
-
 void () TeamFortress_Inventory =
 {
 	local entity _l_10154;
@@ -8175,7 +8153,6 @@ void() TeamFortress_SetHealth =
 											}
 #endif
 										}
-
 									}
 								}
 							}
@@ -8185,7 +8162,6 @@ void() TeamFortress_SetHealth =
 			}
 		}
 	}
-
 	self.max_health = ceil( self.max_health * MTF_Coop_AttribGain(self, #ATTRIB_HEALTH) );
 	self.health = self.max_health;
 };
@@ -8931,7 +8907,6 @@ void() TeamFortress_RemoveTimers =
 	self.current_menu = 1;
 	self.impulse = 0;
 };
-
 void(float Suicided) TeamFortress_SetupRespawn = 
 {
 	local float restime;
@@ -9038,7 +9013,6 @@ void(float Suicided) TeamFortress_SetupRespawn =
 		sprint(self, 2, " seconds till respawn.\n");
 	}
 };
-
 void() TeamFortress_CheckClassStats = 
 {
 	if (self.armortype > self.armor_allowed)
@@ -9117,7 +9091,6 @@ void() TeamFortress_CheckClassStats =
 	{
 	local float putz;
 	putz = self.max_health - self.health;
-//		TF_T_Damage(self, world, world, self.max_health - self.health, 0, 256);
 		TF_T_Damage(self, world, world, putz, 0, 256);
 	}
 	if (self.health < 0)
@@ -9144,7 +9117,6 @@ void() TeamFortress_CheckClassStats =
 		}
 	}
 };
-
 void() TeamFortress_ExplodePerson = 
 {
 	local entity te;
@@ -9295,7 +9267,6 @@ void() NormalGrenadeExplode =
 	self.owner.active_grenades_1 = (self.owner.active_grenades_1 - 1.000000);
 	dremove(self);
 };
-
 void () TeamFortress_DisplayDetectionItems =
 {
 	local entity _l_10555;
@@ -9370,7 +9341,6 @@ void () TeamFortress_DisplayDetectionItems =
 		}
 	}
 };
-
 void() BioInfection_Decay = 
 {
 	if (teamplay & 16 && self.owner.team_no == self.enemy.team_no && self.owner.team_no != 0)
@@ -9414,7 +9384,6 @@ void() BioInfection_MonsterDecay =
 		dremove(self);
 	}
 };
-
 void(string halias, float himpulse1, float himpulse2) TeamFortress_Alias = 
 {
 	local string imp;
@@ -9459,7 +9428,6 @@ void() TeamFortress_Regenerate =
 		}
 	}
 };
-
 void() TeamFortress_RegenerateCells = 
 {
 	if (self.owner.playerclass == 8)
@@ -9539,8 +9507,8 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
           	local float take;
           	if (!(targ.takedamage))
           	{
-          		return;
-          	}
+				return;
+			}
 			#ifdef mtf_coop
 			if (inflictor.monster_type > 0)
 				damage *= 4.5;
@@ -9771,7 +9739,6 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
           	}
           	self = oldself;
 };
-
 void(entity targ, entity inflictor, entity attacker, float damage, float T_flags, float T_AttackType) TF_T_Damage = 
 {
             	local vector dir;
@@ -9975,11 +9942,11 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 			if ( random() <= .075 )	// 7.5% chance	// if ( random() < ((attacker.crit_attr) * .055) )
 			{
 				stuffcmd (attacker, "bf\n");
-	          		damage = damage * (1 + MTF_Coop_AttribGain( attacker, #ATTRIB_CRIT ));
+				damage = damage * (1 + MTF_Coop_AttribGain( attacker, #ATTRIB_CRIT ));
 			}
 		}
 #endif
-            	if (targ.team_no == attacker.team_no && targ != attacker)
+	if (targ.team_no == attacker.team_no && targ != attacker)
             	{
             		damage = TF_FLARE_LIT;
             	}
@@ -10211,8 +10178,7 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
 #endif
             	if (self.th_pain)
             	{
-            		self.th_pain(attacker, take);  //why is there 2 parameters? -arg
-//            		self.th_pain(attacker);
+            		self.th_pain(attacker, take);
 #ifdef mtf_coop
 			self.#npc_lastruntime = 0;
 #endif
@@ -10285,40 +10251,39 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 	{
 		return;
 	}
-
 #endif
-              					org = head.origin + (head.mins + head.maxs) * 0.5;
-              					points = 0.5 * vlen(inflictor.origin - org);
-              					if (points < TF_FLARE_LIT)
-              					{
-              						points = TF_FLARE_LIT;
-              					}
-              					points = damage - points;
-              					if (head == attacker)
-              					{
-              						points = points * 0.75;
-              					}
-              					if (points > TF_FLARE_LIT)
-              					{
-              						if (CanDamage(head, inflictor))
-              						{
-              							if (head.classname == "minifiend")
-              							{
-              								T_Damage(head, inflictor, attacker, points * 0.75);
-              							}
-              							else if (head.classname == "monster_shambler")
-              							{
-              								T_Damage(head, inflictor, attacker, points * 0.5);
-              							}
-              							else
-              							{
+					org = head.origin + (head.mins + head.maxs) * 0.5;
+					points = 0.5 * vlen(inflictor.origin - org);
+					if (points < TF_FLARE_LIT)
+					{
+						points = TF_FLARE_LIT;
+					}
+					points = damage - points;
+					if (head == attacker)
+					{
+						points = points * 0.75;
+					}
+					if (points > TF_FLARE_LIT)
+					{
+						if (CanDamage(head, inflictor))
+						{
+							if (head.classname == "minifiend")
+							{
+								T_Damage(head, inflictor, attacker, points * 0.75);
+							}
+							else if (head.classname == "monster_shambler")
+							{
+								T_Damage(head, inflictor, attacker, points * 0.5);
+							}
+							else
+							{
 #ifndef mtf_coop
 											if (head != attacker && attacker.classname == "player" && inflictor.touch == T_MissileTouch && attacker != head)
 												head.being_juggled = head.being_juggled + 1;
 #endif
-              								TF_T_Damage(head, inflictor, attacker, points, 2, 4);
-              							}
-              						}
+								TF_T_Damage(head, inflictor, attacker, points, 2, 4);
+							}
+						}
 						else
 						{
 							if (((((((head.classname == "building_sentrygun") || (head.classname == "building_tesla")) || (head.classname == "building_fieldgen")) || (head.classname == "building_camera")) || (head.classname == "building_teleporter")) && (head.tf_items & 2)))
@@ -10336,33 +10301,33 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 };
 void(entity attacker, float damage) T_BeamDamage = 
 {
-                	local float points;
-                	local entity head;
-                	head = findradius(attacker.origin, damage + 40);
-                	while (head)
-                	{
-                		if (head.takedamage)
-                		{
-                			points = 0.5 * vlen(attacker.origin - head.origin);
-                			if (points < TF_FLARE_LIT)
-                			{
-                				points = TF_FLARE_LIT;
-                			}
-                			points = damage - points;
-                			if (head == attacker)
-                			{
-                				points = points * 0.5;
-                			}
-                			if (points > TF_FLARE_LIT)
-                			{
-                				if (CanDamage(head, attacker))
-                				{
-                					T_Damage(head, attacker, attacker, points);
-                				}
-                			}
-                		}
-                		head = head.chain;
-                	}
+	local float points;
+	local entity head;
+	head = findradius(attacker.origin, damage + 40);
+	while (head)
+	{
+		if (head.takedamage)
+		{
+			points = 0.5 * vlen(attacker.origin - head.origin);
+			if (points < TF_FLARE_LIT)
+			{
+				points = TF_FLARE_LIT;
+			}
+		points = damage - points;
+			if (head == attacker)
+			{
+				points = points * 0.5;
+			}
+			if (points > TF_FLARE_LIT)
+			{
+				if (CanDamage(head, attacker))
+				{
+					T_Damage(head, attacker, attacker, points);
+				}
+			}
+		}
+		head = head.chain;
+	}
 };
 float () mtf_saveentity =
 {
@@ -10385,8 +10350,7 @@ float () mtf_saveentity =
 	if (mapname == "insane")
 		dfactor = 1;		
 	return ( dfactor );
-}
-
+};
 void () FlameMonster_Flame =
 {
 	local float fls;
@@ -10440,7 +10404,6 @@ void () MTF_RemoveMonster =
 		dremove(self.enemy);
 	dremove(self);
 };
-
 void() changelevel_touch = 
 {
 #ifdef mtf_coop
@@ -10493,7 +10456,6 @@ void() changelevel_touch =
 	self.think = execute_changelevel;
 	self.nextthink = time + 0.1;
 };
-
 void () summon_respawn_think =
 {
 	local entity head;
@@ -10522,7 +10484,6 @@ void (vector org,float damage) SpawnBlood =
 	WriteCoord (4, org_z);
 	multicast (org, 2);
 };
-
 entity(float team_num) FindTeamSpawnPoint = 
 {
 	local entity spot;
@@ -11040,36 +11001,35 @@ void() Napalm_touch =
 };
 void () MirvGrenadeTouch =
 {
-   sound (self,TF_FLARE_OFF,"weapons/bounce.wav",TF_FLARE_OFF,TF_FLARE_OFF);
-   if (self.velocity == '0 0 0')
-   {
-      self.avelocity = '0 0 0';
-   }
-
+	sound (self,TF_FLARE_OFF,"weapons/bounce.wav",TF_FLARE_OFF,TF_FLARE_OFF);
+	if (self.velocity == '0 0 0')
+	{
+	self.avelocity = '0 0 0';
+	}
 };
 void () MirvGrenadeExplode =
 {
-   local float i;
-   deathmsg = 10;
+	local float i;
+	deathmsg = 10;
 #ifdef mtf_coop
 	T_RadiusDamage (self,self.owner,200,world);
 #else
-   T_RadiusDamage (self,self.owner,100,world);
+	T_RadiusDamage (self,self.owner,100,world);
 #endif
-   WriteByte (4,23);
-   WriteByte (4,3);
-   WriteCoord (4,self.origin_x);
-   WriteCoord (4,self.origin_y);
-   WriteCoord (4,self.origin_z);
-   multicast (self.origin,TF_FLARE_OFF);
-   self.solid = TF_FLARE_LIT;
-   i = TF_FLARE_LIT;
-   while (i < 6) 
-   {
-      MirvGrenadeLaunch ((self.origin + '0 0 -1'),self.owner);
-      i = (i + TF_FLARE_OFF);
-   }
-   BecomeExplosion ();
+	WriteByte (4,23);
+	WriteByte (4,3);
+	WriteCoord (4,self.origin_x);
+	WriteCoord (4,self.origin_y);
+	WriteCoord (4,self.origin_z);
+	multicast (self.origin,TF_FLARE_OFF);
+	self.solid = TF_FLARE_LIT;
+	i = TF_FLARE_LIT;
+	while (i < 6) 
+	{
+		MirvGrenadeLaunch ((self.origin + '0 0 -1'),self.owner);
+		i = (i + TF_FLARE_OFF);
+	}
+	BecomeExplosion ();
 };
 void() T_IncendiaryTouch = 
 {
@@ -11232,7 +11192,6 @@ void (entity t_other) MTF_DoEndBonus =
 			}
 		}
 	}
-
 	if (total_secrets > 0)
 	{
 		if (found_secrets == total_secrets)
@@ -11274,7 +11233,6 @@ stuffcmd(te, "cmd sayexp\n");
 	no_more_exp = #TRUE;	// dont award any more exp.
 };
 #endif
-
 void() GotoNextMap = 
 {
 	local float nextlevel;
@@ -11325,7 +11283,6 @@ void() GotoNextMap =
 		already_chosen_map = 0;
 	}
 };
-
 void() NapalmGrenadeTouch = 
 {
 	sound(self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -11334,7 +11291,6 @@ void() NapalmGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void(entity Goal, entity AP, float addb) DoResults = 
 {
 	local entity te;
@@ -11617,7 +11573,6 @@ void () Bounce_Off_Walls =
 	if (self.velocity == '0 0 0')
 		dremove(self);
 };
-
 void() GasGrenadeTouch = 
 {
 	sound(self, 1, "weapons/bounce.wav", 1, 1);
@@ -11820,7 +11775,6 @@ void () MTF_Coop_UpdateMapRanks =
 	}
 	else if (killed_monsters < total_monsters)
 			return;
-
 	filename = frik_strcat( "ranks/maps/", mapname, ".tfi" );
 	new_best_time = time;
 	plyr = find ( world, classname, "player" );
@@ -12002,7 +11956,6 @@ void() EMPGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 entity(string type, entity p_owner) FlameSpawn = 
 {
 	num_world_flames = num_world_flames + TF_FLARE_OFF;
@@ -12062,29 +12015,29 @@ entity(string type, entity p_owner) FlameSpawn =
 	return newmis;
 };
 void (vector org, entity shooter) MirvGrenadeLaunch =
- {
-   local float xdir;
-   local float ydir;
-   local float zdir;
-   xdir = ((150 * random ()) - 75);
-   ydir = ((150 * random ()) - 75);
-   zdir = (40 * random ());
-   newmis = spawn ();
-   newmis.owner = shooter;
-   newmis.movetype = 10;
-   newmis.solid = 2;
-   newmis.classname = "grenade";
-   newmis.weapon = 10;
-   newmis.touch = GrenadeTouch;
-   newmis.think = GrenadeExplode;
-   newmis.nextthink = ((time + 2) + random ());
-   newmis.velocity_x = (xdir * 2);
-   newmis.velocity_y = (ydir * 2);
-   newmis.velocity_z = (zdir * 15);
-   newmis.avelocity = '250 300 400';
-   setmodel (newmis,"progs/grenade2.mdl");
-   setsize (newmis,'0 0 0','0 0 0');
-   setorigin (newmis,org);
+{
+	local float xdir;
+	local float ydir;
+	local float zdir;
+	xdir = ((150 * random ()) - 75);
+	ydir = ((150 * random ()) - 75);
+	zdir = (40 * random ());
+	newmis = spawn ();
+	newmis.owner = shooter;
+	newmis.movetype = 10;
+	newmis.solid = 2;
+	newmis.classname = "grenade";
+	newmis.weapon = 10;
+	newmis.touch = GrenadeTouch;
+	newmis.think = GrenadeExplode;
+	newmis.nextthink = ((time + 2) + random ());
+	newmis.velocity_x = (xdir * 2);
+	newmis.velocity_y = (ydir * 2);
+	newmis.velocity_z = (zdir * 15);
+	newmis.avelocity = '250 300 400';
+	setmodel (newmis,"progs/grenade2.mdl");
+	setsize (newmis,'0 0 0','0 0 0');
+	setorigin (newmis,org);
 };
 void() MoveFlag = 
 {
@@ -12155,18 +12108,18 @@ void () TF_PlaceGoal =
 		self.nextthink = (time + self.search_time);
 		self.classname = "info_tfgoal";
 	}
-    if (self.goal_activation & 2048) {
+	if (self.goal_activation & 2048) {
 	self.movetype = MOVETYPE_TOSS;
 	self.origin_z = self.origin_z + 6;
 	oldz = self.origin_z;
 	if (!droptofloor ()) {
-	    dprint ("Goal fell out of level at ");
-	    dprint (vtos (self.origin));
-	    dprint ("\n");
-	    dremove (self);
-	    return;
+		dprint ("Goal fell out of level at ");
+		dprint (vtos (self.origin));
+		dprint ("\n");
+		dremove (self);
+		return;
 	}
-    }
+	}
 	self.flags = 256.000000;
 	self.movetype = 0.000000;
 	self.velocity = '0.000000 0.000000 0.000000';
@@ -12185,30 +12138,29 @@ void () TF_StartGoal =
 };
 void () info_tfdetect = 
 {
-   local entity te;
-   local string st;
-   UpdateAbbreviations (self);
-   te = find (world,classname,"countdown");
-   if (te != world) 
-   { 
-	   return;
-   }
-   st = infokey (world,"time");
-   if (st == "off")
-   {
-	   return;
-   }
-   newmis = spawn ();
-   newmis.classname = "countdown";
-   newmis.no_grenades_1 = 0;
-   st = infokey (world,"timelimit");
-   newmis.health = stof(st);
-   newmis.think = review_timeleft;
-   newmis.nextthink = (time + 1);
+	local entity te;
+	local string st;
+	UpdateAbbreviations (self);
+	te = find (world,classname,"countdown");
+	if (te != world) 
+	{
+	return;
+	}
+	st = infokey (world,"time");
+	if (st == "off")
+	{
+	return;
+	}
+	newmis = spawn ();
+	newmis.classname = "countdown";
+	newmis.no_grenades_1 = 0;
+	st = infokey (world,"timelimit");
+	newmis.health = stof(st);
+	newmis.think = review_timeleft;
+	newmis.nextthink = (time + 1);
 	if (haltloop1 != 1) 
 	{
 		local string msg1timer;
-
 		msg1timer = infokey (world, "svmsg1");
 		msg1time = stof(msg1timer);
 
@@ -12223,7 +12175,6 @@ void () info_tfdetect =
 		local string msg2timer;
 		msg2timer = infokey (world, "svmsg2");
 		msg2time = stof(msg2timer);
-
 		if (msg2time > 0)
 		{
 			pre_messagetimer2 ();
@@ -12233,10 +12184,8 @@ void () info_tfdetect =
 	if (haltloop3 != 1)
 	{
 		local string msg3timer;
-
 		msg3timer = infokey (world, "svmsg3");
 		msg3time = stof(msg3timer);
-
 		if (msg3time > 0)
 		{
 			pre_messagetimer3 ();
@@ -12605,7 +12554,6 @@ entity(float gno) Findteamspawn =
 	dprint(".\n");
 	return(tg);		// is returning an empty entity safe? hmm
 };
-
 void(entity Goal) InactivateGoal = 
 {
 	if (Goal.goal_state == TF_FLARE_OFF)
@@ -12641,7 +12589,6 @@ void(entity Goal) RestoreGoal =
 		}
 	}
 };
-
 void(entity Goal) RemoveGoal = 
 {
 	Goal.solid = TF_FLARE_LIT;
@@ -12713,7 +12660,6 @@ float(entity Goal, entity Player, entity AP) IsAffectedBy =
 	}
 	return TF_FLARE_LIT;
 };
-
 void(entity Goal, entity Player, entity AP, float addb) Apply_Results = 
 {
 	local entity oldself;
@@ -13176,7 +13122,7 @@ float(entity Goal, entity AP) APMeetsCriteria =
 			}
 		}
 	}
-    if (AP != world) {
+	if (AP != world) {
 	gotone = 0;
 	if (Goal.has_item_from_group) {
 	    te = find (world, classname, "item_tfgoal");
@@ -13184,20 +13130,20 @@ float(entity Goal, entity AP) APMeetsCriteria =
 		if ((te.group_no == Goal.has_item_from_group) && (te.owner == AP))
 		    gotone = 1;
 		te = find (te, classname, "item_tfgoal");
-	    }
-	    if (!gotone)
+		}
+		if (!gotone)
 		return (0);
 	}
 	if (Goal.hasnt_item_from_group) {
-	    te = find (world, classname, "item_tfgoal");
-	    while ((te != world) && !gotone) {
+		te = find (world, classname, "item_tfgoal");
+		while ((te != world) && !gotone) {
 		if ((te.group_no == Goal.hasnt_item_from_group) && (te.owner == AP))
 		    return (0);
 		te = find (te, classname, "item_tfgoal");
 	    }
 	}
-    }
-    return (1);
+	}
+	return (1);
 };
 void(entity Goal) SetupRespawn = 
 {
@@ -13779,7 +13725,6 @@ void() item_tfgoal_touch =
 		}
 	}
 };
-
 void(entity Item, entity AP, entity Goal) tfgoalitem_GiveToPlayer = 
 {
 	Item.owner = AP;
@@ -14024,74 +13969,69 @@ void(entity Item, entity AP, float method2) mtf_tfgoalitem_RemoveFromPlayer =
 };
 void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 {
-    local entity te;
-    local float lighton;
-    local float slowon;
-    local float key1on;
-    local float key2on;
-    local float spyoff;
-    local entity DelayReturn;
-    if (Item == world)
+	local entity te;
+	local float lighton;
+	local float slowon;
+	local float key1on;
+	local float key2on;
+	local float spyoff;
+	local entity DelayReturn;
+	if (Item == world)
 	{
 	objerror ("error: tfgoalitem_RemoveFromPlayer(): Item == world");
 	return;
-    }
-    lighton = 0;
-    slowon = 0;
-    key1on = 0;
-    key2on = 0;
-    spyoff = 0;
-    te = find (world, classname, "item_tfgoal");
-    while (te) {
+	}
+	lighton = 0;
+	slowon = 0;
+	key1on = 0;
+	key2on = 0;
+	spyoff = 0;
+	te = find (world, classname, "item_tfgoal");
+	while (te) {
 	if ((te.owner == AP) && (te != Item)) {
-	    if (te.goal_activation & 1)
+		if (te.goal_activation & 1)
 		lighton = 1;
-
-	    if (te.goal_activation & 2)
+		if (te.goal_activation & 2)
 		slowon = 1;
-
-	    if (te.items & 131072)
+		if (te.items & 131072)
 		key1on = 1;
-
-	    if (te.items & 262144)
+		if (te.items & 262144)
 		key2on = 1;
-
-	    if (te.goal_result & 16)
+		if (te.goal_result & 16)
 		spyoff = 1;
 	}
 	te = find (te, classname, "item_tfgoal");
-    }
-    if (!lighton) {
-	if (AP.invincible_finished > (time + 3)) {
-	    lighton = 1;
-	} else if (AP.super_damage_finished > (time + 3)) {
-	    lighton = 1;
 	}
-    }
-    if (!lighton) {
+	if (!lighton) {
+	if (AP.invincible_finished > (time + 3)) {
+		lighton = 1;
+	} else if (AP.super_damage_finished > (time + 3)) {
+		lighton = 1;
+	}
+	}
+	if (!lighton) {
 	AP.effects = AP.effects - (AP.effects & 8);
 	AP.effects = AP.effects - (AP.effects & 64);
 	AP.effects = AP.effects - (AP.effects & 128);
-    }
-    if (Item.goal_activation & 512)
+	}
+	if (Item.goal_activation & 512)
 	Item.effects = Item.effects | 8;
-
-    if (!spyoff)
+	if (!spyoff)
 	AP.is_unabletospy = 0;
-    if (!key1on)
+	if (!key1on)
 	AP.items = AP.items - (AP.items & 131072);
-    if (!key2on)
+	if (!key2on)
 	AP.items = AP.items - (AP.items & 262144);
-    te = find (world, classname, "player");
-    while (te != world) {
+	te = find (world, classname, "player");
+	while (te != world) {
 	if (IsAffectedBy (Item, te, AP))
 	    RemoveResults (Item, te);
 	te = find (te, classname, "player");
-    }
-    if ((method3 == 0) || (method3 == 2)) {
+	}
+	if ((method3 == 0) || (method3 == 2)) {
 	te = find (world, classname, "player");
 	while (te != world) {
-	    if (te.team_no == Item.owned_by) {
+		if (te.team_no == Item.owned_by) {
 		if (Item.team_drop != string_null)
 		    CenterPrint2 (te, "\n\n\n", Item.team_drop);
 		if (Item.netname_team_drop != string_null) {
@@ -14152,8 +14092,8 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	    TeamFortress_SetSpeed (AP);
 	    return;
 	}
-    }
-    objerror ("Invalid method passed into tfgoalitem_RemoveFromPlayer.\n");
+	}
+	objerror ("Invalid method passed into tfgoalitem_RemoveFromPlayer.\n");
 };
 void() tfgoalitem_dropthink = 
 {
@@ -14192,9 +14132,9 @@ void() tfgoalitem_dropthink =
 };
 void () tfgoalitem_droptouch =
 {
-    self.touch = item_tfgoal_touch;
-    self.nextthink = time + .25;
-    self.think = tfgoalitem_dropthink;
+	self.touch = item_tfgoal_touch;
+	self.nextthink = time + .25;
+	self.think = tfgoalitem_dropthink;
 };
 void(entity Item) mtf_tfgoalitem_drop = 
 {
@@ -14217,46 +14157,46 @@ void(entity Item) mtf_tfgoalitem_drop =
 };
 void (entity Item, float PAlive, entity P) tfgoalitem_drop =
 {
-    Item.origin = Item.owner.origin;
-    setorigin (Item, Item.origin);
-    Item.camangle = Item.owner.origin - '0 0 8';
-    Item.camdist = 0;
-    Item.velocity_z = 400;
-    Item.velocity_x = -50 + (random () * 100);
-    Item.velocity_y = -50 + (random () * 100);
-    Item.goal_state = 2;
-    Item.movetype = 6;
-    if (Item.goal_activation & 8192) {
+	Item.origin = Item.owner.origin;
+	setorigin (Item, Item.origin);
+	Item.camangle = Item.owner.origin - '0 0 8';
+	Item.camdist = 0;
+	Item.velocity_z = 400;
+	Item.velocity_x = -50 + (random () * 100);
+	Item.velocity_y = -50 + (random () * 100);
+	Item.goal_state = 2;
+	Item.movetype = 6;
+	if (Item.goal_activation & 8192) {
 	Item.solid = 2;
     } else {
 	Item.solid = 1;
-    }
-    if (Item.mdl != string_null) {
+	}
+	if (Item.mdl != string_null) {
 	setmodel (Item, Item.mdl);
-    }
+	}
 	setsize(Item, '-16 -16 0', '16 16 56');		// replaced!
-    Item.owner = P;
-    if (PAlive == 1) {
+	Item.owner = P;
+	if (PAlive == 1) {
 	setsize(Item, '-16 -16 0', '16 16 56');
 	makevectors (P.v_angle);
-	if (P.v_angle_x) {
-	    Item.velocity = (v_forward * 400) + (v_up * 200);
+	if (P.v_angle_x)
+	{
+		Item.velocity = (v_forward * 400) + (v_up * 200);
 	} else {
-	    Item.velocity = aim (P, 10000);
-	    Item.velocity = Item.velocity * 400;
-	    Item.velocity_z = 200;
+		Item.velocity = aim (P, 10000);
+		Item.velocity = Item.velocity * 400;
+		Item.velocity_z = 200;
 	}
 	Item.userid = 1;
 	Item.touch = SUB_Null;
 	Item.nextthink = time + 0.25;
 	Item.think = tfgoalitem_droptouch;
-    } else {
+	} else {
 	Item.touch = item_tfgoal_touch;
 	Item.nextthink = time + 5;
 	Item.think = tfgoalitem_dropthink;
-    }
+	}
 };
-
 void() tfgoalitem_remove = 
 {
 	local entity te;
@@ -14296,7 +14236,6 @@ void() tfgoalitem_remove =
 	}
 	dremove(self);
 };
-
 void(entity Item) tfgoalitem_checkgoalreturn = 
 {
 	local entity te;
@@ -14615,13 +14554,13 @@ void (entity P) ForceRespawn =
 };
 void () DropGoalItems =
 {
-    local entity te;
-    newmis = spawn ();
-    makevectors (self.v_angle);
-    v_forward = normalize (v_forward) * 64;
-    newmis.origin = self.origin + v_forward;
-    te = find (world, classname, "item_tfgoal");
-    while (te) {
+	local entity te;
+	newmis = spawn ();
+	makevectors (self.v_angle);
+	v_forward = normalize (v_forward) * 64;
+	newmis.origin = self.origin + v_forward;
+	te = find (world, classname, "item_tfgoal");
+	while (te) {
 	if (te.owner == self)
 	    if (te.goal_activation & 4096 || te.owner == self)
 		{
@@ -14632,8 +14571,8 @@ void () DropGoalItems =
 		}
 	
 	te = find (te, classname, "item_tfgoal");
-    }
-    dremove (newmis);
+	}
+	dremove (newmis);
 };
 vector(entity proj) bounce_off_wall =		// returns the velocity for bouncing off walls
 {
@@ -14663,7 +14602,6 @@ vector(entity proj) bounce_off_wall =		// returns the velocity for bouncing off 
 	proj.flags = proj.flags - ( proj.flags & FL_ONGROUND );
 	return vec;
 };
-
 void() EMPGrenadeExplode = 
 {
 	local float expsize;
@@ -15236,7 +15174,6 @@ void ( float exptotal, string reason, float sayamount ) MTF_Coop_AddExpToAll =
 		te = find (te, classname, "player");
 	}
 };
-
 void() FlameFollow = 
 {
 	local vector dir;
@@ -15502,15 +15439,15 @@ void() GrenadeExplode =
 void () review_timeleft =
 {
 	local string st;
-   	local float minutes;
-   	local float seconds;
-   	local float remaining;
-   	self.no_grenades_1 = self.no_grenades_1 + 1;
-   	self.nextthink = (time + 1);
-   	st = infokey (world,"timelimit");
-   	minutes = stof(st);
-   	seconds = minutes * 60;
-   	if (st == "0") 
+	local float minutes;
+	local float seconds;
+	local float remaining;
+	self.no_grenades_1 = self.no_grenades_1 + 1;
+	self.nextthink = (time + 1);
+	st = infokey (world,"timelimit");
+	minutes = stof(st);
+	seconds = minutes * 60;
+	if (st == "0") 
 	   	return;
 	votetimeleft = seconds - self.no_grenades_1;
    	remaining = seconds - self.no_grenades_1;
@@ -15521,15 +15458,15 @@ void () review_timeleft =
    	else if ((remaining == 30) & (seconds >= 30))
    	{
 		 bprint(2,"³° óåãïîäó remaining.\n");
-   	}
-   	else if ((remaining == 60) & (seconds >= 60))
-   	{
+	}
+	else if ((remaining == 60) & (seconds >= 60))
+	{
 		 bprint(2,"± íéîõôå remaining.\n");
-   	}
-   	else if ((remaining == 300) & (seconds >= 300))
-   	{
+	}
+	else if ((remaining == 300) & (seconds >= 300))
+	{
 		 bprint(2,"µ íéîõôåó remaining.\n");
-   	}
+	}
 	else if ((remaining == 900) & (seconds >= 900))
 	{
 		bprint(2, "±µ íéîõôåó remaining.\n");
@@ -15658,7 +15595,6 @@ float (float attrib_count) CheckAttributes =
 	}
 	return 0;
 };
-
 void (float file) MTF_Coop_GetAttributes =
 {
 	local string b;
@@ -16013,7 +15949,6 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank =
 	close( file );
 	close( dummyfile );
 };
-
 void () MTF_Coop_RanksExperienceSet =
 {
 	local entity t_plyr;
@@ -16045,7 +15980,6 @@ void () MTF_Coop_RanksExperienceSet =
 	dremove(self);
 	close (file);
 };
-
 void (string nname, float exp) MTF_Coop_RanksExperience =
 {
 	local entity rank_ent, te, trank;
@@ -16068,8 +16002,6 @@ void (string nname, float exp) MTF_Coop_RanksExperience =
 	rank_ent.think = MTF_Coop_RanksExperienceSet;
 	rank_ent.nextthink = time + .4 + random();
 };
-
-
 float ( float getlevel ) Coop_ExpReq =
 {
 	switch  ( getlevel )
@@ -16325,10 +16257,6 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 	newlvl = 0;
 	// fixme addme: stop messing around and add a while() loop here
 	lvlg = #COOP_LEVEL_ONE;
-//bprint(2,"checking?\n");
-//bprint(2, ftos(origexp));
-//bprint(2, ftos(newexp));
-//bprint(2,"\n");
 	if (origexp < lvlg && newexp >= lvlg) {
 		newlvl = 1;
 		self.attribute_points += 1;
@@ -16378,7 +16306,6 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 		newlvl = 10;
 		self.attribute_points += 1;
 	}
-	// After level 10, all levels are acquired in a pattern of multiples of 100k exp
 //fixme: goes from 200k to 300k and then to 500k - should be 400k then 500k
 	lvlg = #COOP_LEVEL_AFTERTEN;
 	if (newexp >= lvlg) {
@@ -16386,11 +16313,6 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 		while (chklvl)
 		{
 			lvlg += ((chklvl - 1) * 100000);
-/*
-bprint(2, "this is ");
-bprint(2, ftos(lvlg));
-bprint(2, " eh?\n");
-*/
 			if (origexp < lvlg && newexp >= lvlg) {
 				newlvl = 10 + chklvl;
 				chklvl = 0;
@@ -16400,9 +16322,7 @@ bprint(2, " eh?\n");
 			else
 				chklvl = 0;
 		}
-//		self.attribute_points += 1;
 	}
-
 	if (newlvl > 0) {
 		bprint(2, self.netname);
 		bprint(2, " is now level ");
@@ -16514,7 +16434,6 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 	sprint( self, 2, ftos( howmany ) );
 	sprint( self, 2, " RANKING PLAYERS (sorted by exp) --\n" );
 	sprint( self, 2, "Rank *       Name      *       Exp        *  Level\n" );
-
 	if (file == -1) {
 		bprint(2,"topranks.tfi does not exist! Add it to /fortress directory, or experience unholy amounts of crashes!\n");
 		return;
@@ -16535,7 +16454,6 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 		sprint( self, 2, ": " );
 		rank = stof(read(file));
 		sprint( self, 2, substr( frik_strcat( ftos(rank), "                      " ), 0, 9) );
-		//level:
 		sprint( self, 2, "         ¨ìåöåì: " );
 		level = Coop_GetLevel(rank);
 		sprint( self, 2, ftos(level) );
@@ -17706,9 +17624,9 @@ void() weapon_touch =
 							other.ammo_cells = other.ammo_cells + 15;
 						}
 #ifdef mtf_coop_hipnotic
-   else if (self.classname == "weapon_laser_gun")
+	else if (self.classname == "weapon_laser_gun")
 	{
-      if (leave && (other.items & IT_LASER_CANNON) )
+	if (leave && (other.items & IT_LASER_CANNON) )
 			return;
 		hadammo = other.ammo_rockets;
       new = IT_LASER_CANNON;
@@ -17908,7 +17826,6 @@ void(entity spy) TeamFortress_SpyCalcName =
 		}
 	}
 };
-
 void (entity vwup) VWEPS_Update =
 {
 	local entity rpl;
@@ -17925,26 +17842,26 @@ void (float damage) spawn_touchblood =
 };
 void () TeamFortress_DetpackExplode =
 {
-   local float pos;
-   bprint (TF_FLARE_OFF,"FIRE IN THE HOLE!\n");
-   sound (self,TF_FLARE_OFF,"weapons/detpack.wav",TF_FLARE_OFF,TF_FLARE_LIT);
-   pos = pointcontents (self.origin);
-   if ((pos != -2) && (pos != -6)) 
-   {
-      deathmsg = 12;
-      T_RadiusDamage (self,self.owner,700,world);
-      WriteByte (4,23);
-      WriteByte (4,3);
-      WriteCoord (4,self.origin_x);
-      WriteCoord (4,self.origin_y);
-      WriteCoord (4,self.origin_z);
-      multicast (self.origin,TF_FLARE_OFF);
-   if (self.weaponmode == TF_FLARE_OFF)
-      TeamFortress_SetSpeed (self.enemy);
-      dremove (self.oldenemy);
-      dremove (self.observer_list);
-   }
-   BecomeExplosion ();
+	local float pos;
+	bprint (TF_FLARE_OFF,"FIRE IN THE HOLE!\n");
+	sound (self,TF_FLARE_OFF,"weapons/detpack.wav",TF_FLARE_OFF,TF_FLARE_LIT);
+	pos = pointcontents (self.origin);
+	if ((pos != -2) && (pos != -6)) 
+	{
+		deathmsg = 12;
+		T_RadiusDamage (self,self.owner,700,world);
+		WriteByte (4,23);
+		WriteByte (4,3);
+		WriteCoord (4,self.origin_x);
+		WriteCoord (4,self.origin_y);
+		WriteCoord (4,self.origin_z);
+		multicast (self.origin,TF_FLARE_OFF);
+	if (self.weaponmode == TF_FLARE_OFF)
+		TeamFortress_SetSpeed (self.enemy);
+		dremove (self.oldenemy);
+		dremove (self.observer_list);
+	}
+	BecomeExplosion ();
 };
 float () W_BestWeapon =
 {
@@ -18117,7 +18034,7 @@ void () BackpackTouch =
 		TeamFortress_Discard ();
 	}
 	sound (other, 3.000000, "weapons/lock4.wav", 1.000000, 1.000000);
-//		stuffcmd (other, "bf\n");
+//		stuffcmd (other, "bf\n");  // what does this do? 
 	dremove (self);
 	self = other;
 	sprint5(other, 2, "You picked up 1 beartrap.\n ");  //report pk goodies -arg
@@ -18194,7 +18111,6 @@ vector () wall_velocity =
 	vel = (vel * 200);
 	return (vel);
 };
-
 void (string nname, float exp) MTF_Coop_WriteExperience =
 {
 	local string filename;
@@ -18291,7 +18207,6 @@ void (string nname, float exp) MTF_Coop_WriteExperience =
 	MTF_Coop_RanksExperience ( nname, exp );
 	strunzone(nname);
 };
-
 void() PlaceItem = 
 {
 	local float oldz;
@@ -18311,7 +18226,6 @@ void() PlaceItem =
 		return;
 	}
 };
-
 void(entity pl, float typ) PrintGrenadeType = 
 {
 	local string st;
@@ -18377,7 +18291,6 @@ void(entity pl, float typ) PrintGrenadeType =
 	}
 	sprint(pl, 2, st);
 };
-
 void() SUB_regen = 
 {
 	if (self.active_vehicle == 1)
@@ -18391,7 +18304,6 @@ void() SUB_regen =
 	sound(self, 2, "items/itembk2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	setorigin(self, self.origin);
 };
-
 float() Sentry_FindTarget = 
 {
 	local entity the_client;
@@ -18510,24 +18422,24 @@ float() Sentry_FindTarget =
 };
 float turret_clearGround (entity head) =
 {
-  local entity e, parent;
-  local float radius;
-  local float childrenOfHeadOnGround;  
+	local entity e, parent;
+	local float radius;
+	local float childrenOfHeadOnGround;  
 	radius = vlen (head.size);
 	e = findradius (head.origin, radius);	
 	childrenOfHeadOnGround = FALSE;
 	parent = head;
 	while(e)
-  { 
-    if(e != parent && e.groundentity == parent && e.flags & FL_ONGROUND)
-    {  
-      childrenOfHeadOnGround = TRUE;
-      parent = e;
-    	radius = vlen (parent.size);
-    	e = findradius (parent.origin, radius);	
-    }else{
-      e = e.chain; 
-    }
+	{
+	if(e != parent && e.groundentity == parent && e.flags & FL_ONGROUND)
+	{
+	childrenOfHeadOnGround = TRUE;
+	parent = e;
+		radius = vlen (parent.size);
+		e = findradius (parent.origin, radius);	
+	}else{
+		e = e.chain; 
+	}
 	}
 	parent.flags = parent.flags - FL_ONGROUND;	
 	if(childrenOfHeadOnGround){
@@ -18967,7 +18879,6 @@ float() Sentry_Fire =
 	}
 	return (1.000000);
 };
-
 void (float shotcount,vector dir,vector spread) FireBullets =
 {
 	local vector direction;
@@ -19247,10 +19158,9 @@ void() turret_attackEnemy =
 			if (self.ammo_cells > 0)
 			{ 
 				local vector firePosition;
-				makevectors (self.angles);				
-				
+				makevectors (self.angles);
 				local vector projectedPosition;
-              projectedPosition = self.enemy.origin; // + enemyVelocity * timeToEnemy;
+				projectedPosition = self.enemy.origin; // + enemyVelocity * timeToEnemy;
 				if (self.frame == 1)
 				{
 					firePosition = self.origin + (v_forward * 21) - (v_right * 3);					
@@ -19589,7 +19499,6 @@ void() CheckWaterLevels =
 					}
 				}
 			}
-
 		}
 		e = find (e, water_notify, "yes");
 	}
@@ -19673,7 +19582,6 @@ void() player_run = [6, player_run]
 				}
 				if (self.waterlevel == TF_FLARE_LIT)
 				{
-
 					if (rnum < 0.6)
 					{
 						sound(self, 4, "player/step1l.wav", 0.8, 1);
@@ -19730,7 +19638,6 @@ void () check_shot_idle =
 		return;
 	}
 };
-
 void() TeamFortress_NightVision = 
 {
 	local entity te;
@@ -19837,7 +19744,6 @@ void() ambient_suck_wind =
 {
 #ifdef mtf_coop_hipnotic
 	suckwind = suckwind + 1;
-
 	if (suckwind > 4)
 		dremove(self);
 #endif
@@ -19873,8 +19779,8 @@ void() SUB_Null =
 {};
 void() SUB_RemoveClearGround =
 {
-  if(self.flags & FL_ONGROUND)
-    while(turret_clearGround(self)) {}
+	if(self.flags & FL_ONGROUND)
+	while(turret_clearGround(self)) {}
 	remove (self);
 };
 void() InitTrigger =
@@ -19894,7 +19800,6 @@ void (entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt =
 	local entity stemp;
 	stemp = self;
 	self = ent;
-
 	SUB_CalcMove (tdest, tspeed, func);
 	self = stemp;
 };
@@ -19978,7 +19883,6 @@ void() SUB_UseTargets =
 		do
 		{
 			t = find (t, targetname, self.killtarget);
-
 			if (!t)
 				return;
 
@@ -19990,7 +19894,6 @@ void() SUB_UseTargets =
 	{
 		act = activator;
 		t = world;
-
 		do
 		{
 			t = find (t, targetname, self.target);
@@ -20015,7 +19918,6 @@ void() SUB_UseTargets =
 		while (1);
 	}
 };
-
 float (entity mnst) Is_Monster =
 {
 	local string mname;
@@ -20231,7 +20133,6 @@ void () Rank_UpdateStatsGlobal =
 	if (Ranks_Updated == 1)
 		return;
 	Ranks_Updated = 1;
-
 	local entity head;
 	head = nextent(world);
 	while (head != world)
@@ -20402,7 +20303,6 @@ if (other.takedamage)
 	sound (self, CHAN_AUTO, "weapons/btrap/btrap_1.wav", 1, ATTN_NORM);
 }
 };
-
 void() beartrap_dropBearTrap =
 {
 	if (self.pk_beartrapammo <= 0)
@@ -20487,7 +20387,6 @@ void() BTF_Precache =
 		BTF_Cached = 1;
 	}
 };
-
 float ( float pclass ) COOP_GetMaxGrensForClass =
 {
 	float rtrn;
@@ -20496,7 +20395,6 @@ self.no_grenades_1 = rtrn;
 self.no_grenades_2 = rtrn;
 	return (rtrn);
 };
-
 string (float anum) Achievements_GetName =
 {
 	switch(anum)
@@ -20685,7 +20583,6 @@ float (float anum) Achievements_CheckComplete =
 	}
 	return 5000;
 };
-
 float ( float anum ) Achievements_GetExp =
 {
 	switch(anum)
@@ -21235,11 +21132,9 @@ void ( entity to_summon ) BeginSummon =
 #else
 	setmodel (goalie, "progs/dot3.spr"); // yes, precache this model also.
 #endif
-
 	sprint( self, 2, "You are attempting to summon a minion...\n" );
 	self.#allow_next_summon_time = (time + 5) - self.minion_attr; // was 18 but we need armies of summons to fight with in multi-team mode. -arg
 };
-
 void () MTF_Coop_SummonMinion =
 {
 	local entity te, tgood;
@@ -21722,7 +21617,6 @@ float ( string nname, float inv_slot, float return_type ) Inventory_GetItem =
 	a = read (file);
 	maxitems = stof(a);
 	a = read (file);
-	// now read the inventory items based on player's max inv
 	i = 1;
 	while (i < maxitems + 1) {
 		a = read (file);
@@ -23016,7 +22910,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 #ifdef mtf_coop_expsys
 	else if (s1 == "sendpacket")
 	{
-//		QC_SendPacket(s2, "fewwww \n\n\n asf\n");
+//		QC_SendPacket(s2, "fewwww \n\n\n asf\n");  // disabled until there are more servers- arg
 		return 1;
 	}
 #endif
@@ -23532,7 +23426,6 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	local vector source;
 	local vector org;
 	local vector def;
-
 	makevectors (self.v_angle);
 	source = (self.origin + '0 0 16');
 	traceline (source, (source + (v_forward * 64)), 0.000000, self);
@@ -23802,12 +23695,11 @@ void() monster_use =
 	self.think = FoundTarget;
 };
 void() FoundTarget = 
-{                   
+{
 #ifdef mtf_coop
 	if (IsBuilding(self.enemy) || self.enemy.classname == "player" || self.enemy.classname == "bot" || self.enemy.classname == "monster_dog" || self.enemy.classname == "monster_fish" || Coop_Attackable(self.enemy) == #TRUE || self.enemy.classname == "func_monstergoal")
 #else
 	if (self.enemy.classname == "player" || self.enemy.classname == "bot" || self.enemy.classname == "monster_dog")
-
 #endif
 	{
 		sight_entity = self;
@@ -23983,7 +23875,6 @@ void() HuntTarget =
 	self.nextthink = time + 0.1;
 	SUB_AttackFinished(TF_FLARE_OFF);
 };
-
 void () respawn_think =
 {
 	local entity head;
