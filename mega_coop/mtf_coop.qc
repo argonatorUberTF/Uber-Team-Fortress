@@ -749,10 +749,10 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	if (survival_mode) {
 		if (mkiller.frags > 200 && mkiller.frags < 240) {
 			if (mapname == "08" || mapname == "04") {
-				if (random() < .01)
+				if (random() < .03)
 					spawn_cube = 1;
 			}
-			else if (random() < .03)
+			else if (random() < .04) //Was .03 chance -arg
 				spawn_cube = 1;
 		}
 	}
@@ -806,8 +806,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		cake_dispensed = #TRUE;
 		newmis.weapon = 669;
 		setmodel(newmis, #MODEL_CAKE);
-		bprint(2, "ÃÁËÅ¡ ÃÁËÅ¡ ÃÁËÅ¡\n");
-		bprint(2, "ƒƒ ÔÈÅ ÃÁËÅ ÉÓ Á ÌÉÅ ƒƒ\n");
+		bprint(2, "CAKE! CAKE! CAKE!\n");
+		bprint(2, "The CAKE is a LIE!\n");
 		bprint(2, "... or is it?\n");
 	}
 #endif
@@ -962,8 +962,12 @@ void ( entity to_res ) MTF_Resurrect_Player =
 	if (pointcontents(oorigin) == CONTENT_LAVA || pointcontents(oorigin) == CONTENT_SLIME || to_res.ammo_cells == 666)
 		bts = #TRUE;
 	self = to_res;
-	if (reconplaya) {
-		TeamFortress_TeamSet(1);
+	if (reconplaya)
+	{
+	Menu_Team_Input(self.team_no); // Display menu, provide a team to choose. -arg
+	//Get the keystroke for team number -arg
+		//TeamFortress_TeamSet(1);
+		// check to see if its possibly to ressurect the player to the team he was on before he died. -arg
 		ResetMenu();
 	}
 	else
@@ -976,7 +980,7 @@ void ( entity to_res ) MTF_Resurrect_Player =
 	if (survival_mode) {
 		if (!reconplaya) {
 			// ADDME: Set ammo/health/wtva in half!
-			to_res.health = to_res.health * .75;
+			to_res.health = to_res.health * .75;  //was .5 -arg
 			to_res.armorvalue = to_res.armorvalue * .75;
 		}
 	}

@@ -973,7 +973,6 @@ void ( entity newmon, string newmon_cln ) SetSpawnFunc =
 		newmon.netname = "rotfish";
 		newmon.classname = "monster_fish";
 	}
-
 	else
 	{
 //		bprint(2, "SetSpawnFunc: Invalid or unsupported monster classname: ");

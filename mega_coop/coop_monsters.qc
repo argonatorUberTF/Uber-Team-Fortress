@@ -34,7 +34,6 @@ void() monster_spawner_spawn = {
 			self.state = 0;
 		self.think = SUB_Null;
 	}
-
 	e = spawn();
 	e.target = self.targetname;
 	e.angles = self.angles;
@@ -84,7 +83,6 @@ void() monster_spawner_spawn = {
 			ftmp = 1;
 		}
 	} while ( ftmp );
-
 	self = oself;
 	// set monster specific things
 	e.is_monster = 1;

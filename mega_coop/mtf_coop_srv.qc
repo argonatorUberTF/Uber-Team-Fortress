@@ -181,8 +181,10 @@ float () Survival_Fail =
 	}
 	if (survival_mode) {
 		te = find(world, classname, "player");
-		while (te) {
-			if (te.health > 0 && te.current_menu != 2 && te.has_disconnected != #TRUE && te.monster_type == 0) {
+		while (te)
+		{
+			if (te.health > 0 && te.current_menu != 2 && te.has_disconnected != #TRUE && te.monster_type == 0)
+			{
 				survivors++;
 			}
 			te = find(te, classname, "player");
@@ -209,15 +211,17 @@ void () pdummy_think =
 		self.health = 0;
 	if (self.monster_type == 1) {			// awaiting disconnected player 
 		if (self.real_owner != world)
-			if (self.owner != self.real_owner) {
+			if (self.owner != self.real_owner)
+			{
 				// it's necessary.. stupid engine bug (?)
 				self.owner = self.real_owner;
 			}
-		if (self.owner.has_tesla == 0) {
+		if (self.owner.has_tesla == 0)
+		{
 			self.nextthink = time + .5;			// we wait
 			return;
 		}
-		else {									// player has reconnected..
+		else {				// player has reconnected..
 			onewself = self.owner;
 			self.enemy = self.owner.real_owner;
 		}
@@ -226,7 +230,8 @@ void () pdummy_think =
 	te = findradius(self.enemy.finaldest, 7000);
 	while (te)
 	{
-		if (te.classname == "player" && te.health > 0) {
+		if (te.classname == "player" && te.health > 0)
+		{
 			fp = 1;
 			break;
 		}
@@ -243,9 +248,12 @@ void () pdummy_think =
 		return;
 	}
 	if (self.monster_type == 0) {
-		if (self.enemy.health != 1) {
-			bprint(2, "****************** pdummy_think: enemy health is not 1\n");
-			dremove(self);
+		if (self.enemy.health != 1)
+		{
+//			bprint(2, "****************** pdummy_think: enemy health is not 1\n");
+// This is a bad thing if it was a monster, however there are now teams 3 and 4 to account for
+// So say nothing to alert people. carry on -arg
+//			dremove(self);  // no don't remove the entity, it is most likely a player. -arg
 			return;
 		}
 	}
@@ -278,20 +286,23 @@ void () pdummy_think =
 			self.enemy.origin = self.origin + '0 0 1';
 			te = self.enemy;
 			self = gte;
+			te.ammo_cells = 666; //Make extra sure that the flag to respawn at start is set. -arg
 			MTF_Resurrect_Player ( te );
 			self = oself;
 			dremove(self);
 			return;
 		}
 	}
-	if (self.health > 9) {
+	if (self.health > 9)
+	{
 		if (vlen(gte.origin - self.origin) <= 56) {
 			self.health = 10;
 			sprint (gte, PRINT_HIGH, "You cannot stand on ");
 			sprint (gte, PRINT_HIGH, self.enemy.netname);
-			sprint (gte, PRINT_HIGH, " and resurrect him at the same time!\n");
+			sprint (gte, PRINT_HIGH, " and resurrect him at the same time! Are you teabagging?\n");
 			self.nextthink = time + .5;
 			return;
+// possibly add teabagging report when the enemy is standing on your corpse. no res'd for you!
 		}
 		centerprint(gte,"\n");
 		if (self.enemy != world)
@@ -302,12 +313,16 @@ void () pdummy_think =
 			self.enemy.origin = self.origin + '0 0 24';
 		te = self.enemy;
 		self = gte;
+	if (te.team_no == self.team_no)
+		{
 		MTF_Resurrect_Player ( te );
 		self = oself;
 		dremove(self);
 		return;
+		}
 	}
-	if (gte.classname == "player") {
+	if (gte.classname == "player" && (te.team_no == self.team_no)) //Only res for same team_no -arg
+	{
 		centerprint(gte, "Resurrecting ", self.enemy.netname, ": ", ftos((self.health/10)*100), "%\n");
 		centerprint(self.enemy, "You are being resurrected!\n\n", ftos((self.health/10)*100), "%\n");
 	}

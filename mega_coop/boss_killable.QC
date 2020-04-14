@@ -246,7 +246,6 @@ void() killable_boss_awake =
 #endif
 	killable_boss_rise1 ();
 };
-
 void(entity attacker, float damage)     killable_boss_pain =
 {
 	local float     r;

@@ -1,3 +1,4 @@
+// This mode is turned on/off for compilation in usecoop.pqc which is loaded first -arg
 #ifdef mtfcoop_uberhardmode
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage;
 float uberhardmode;		// are we playing uberhardmode?
@@ -41,4 +42,3 @@ void (entity p) uberhardmode_SpawnHealthTimer =
 };
 #endif
 //END
-	
