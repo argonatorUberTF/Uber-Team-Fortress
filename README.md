@@ -36,7 +36,7 @@ Uber Team Fortress. A four player teams, capture the flag, coop against monsters
 cmd changeteam blue, red, green, and yellow always enabled. You can fight alongside the monsters or summon more.
 precache models and sounds missing fixed. 
 
-It still gets unto warnings on the console when there are more precached than it's limit on some maps
+It still gets into warnings on the console when there are more precached than it's limit on some maps
 but still a minimum has been increased.
 
 Removed sounds for taunts, yells. In order to add weapons and sound effects.
@@ -48,10 +48,10 @@ Fixed grenade allocation at spawn based on 3 X ammo attribute with a minimum of 
 
 Now you can plant a prox at even newb levels regardless of ammo pack settings within each map.
 
-Edited monster summon time, damage, quantity based on attribute summon.
+Edited player monster summon  interval time, damage, quantity, and summoned lifespan based on the players attribute of summon.
 
 Fixed the attribute saving feature for each player name logged on.
-It's important to remember your Quake name with special characters.
+It's important to remember your exact Quakeworld user name with special characters.
 
 Removed packet transmission to central hub for sharing of user profiles across multiple
 servers. Since Uber TF is not similar to Mega TF COOP, they shouldn't talk with each other.
@@ -105,7 +105,7 @@ Volunteer devs of code/fixes/features gladly accepted.
 
 # TODO:
 Clean up source code for easy compiliation in fteccgui and 64bit versions. - 99% -arg
-Down to 7-13 warnings on ftegccui compiler in Windows. 
+Down to 4 warnings on ftegccui compiler in Windows. It's the grappling hook, and it works. 
 
 Submit said source to github for Open Source under GNU/GPL. - here now -arg
 
@@ -114,11 +114,14 @@ If possible upgrade the lightning gun to the painkeep chain lightning gun.
 
 Not tested on FTE or Prozac server yet. Volunteers ? 
 
-Upgrade medic nail gun to lava nails ala rogue. - done -arg.
+Upgraded medic nail gun to nails with more damage, similar to the lava nails, but not quad damage. - done -arg.
 
 Adjust starting armor and speeds to rebalance things.
 
-Put in an anti-bunny hopping system to remove the game glitch of angled bouncing.
+All players start with at least 3 of each type of the two kinds of grenades. So drops require two type 2 work from the spawn on any map regardless for faster combat action. Besides some maps didn't have grenade ammo or some of the backpacks did not give grenades.
+This makes it possible to plant a prox mine from the start as soldier for example.
+
+Possibly put in an anti-bunny hopping system to remove the game glitch of angled bouncing.
 It was never intended in the design and unbalances gameplay. A cheese.
 It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing a scout.
 (Possibly add this as an anti-cheat system)
@@ -126,7 +129,7 @@ It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing
 Add another weapon to the Pyro for even more destructive backup. multi pyro rockets?
 Allow the lightning gun to be toggled with the single barrel shotgun.
 
-Add Ratbert's nuke grenades to drop4 for demoman or pyro. ?
+Add Ratbert's nuke grenades to drop4 for demoman or pyro. ? Perhaps.
 Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players are affected more
 by plasma or fire damage than blast/nail damage.
 
@@ -142,7 +145,9 @@ Amount of grenades is 3X your ammo attribute gained from experience.
 
 All classes get bonus health, armor, ammo, reload time, summoning etc from the 
 attribute system based on experience points gained from frags and captures.
-At level 80 you get the Xav Needler gun and lightning gun weapons.
+At level 80 you get the Xav Needler gun.  Use impulse 9 to toggle between shotguns and needler/electric gun.
+
+The lightning gun weapon comes up by selecting 2 and having the ammo masters skill.
 Achievement system similar to Xbox for bragging rights just like MegaTF COOP was.
 
 Scout class has a bat for the axe, jetpack uses less cells, a bit more fire damage.
@@ -150,14 +155,14 @@ Scout class has a bat for the axe, jetpack uses less cells, a bit more fire dama
 The sniper class had little changed. Already powerful and deadly enough. 
 The soldier class gets a bit more dangerous with the upgraded amounts of grenades. The attributes system can boost this class to very powerful levels.
 
-The Demoman gets sticky pipebombs and laser trip bombs added.
+The Demoman gets sticky pipebombs and laser trip bombs added. Impulse 4 for sticky pipebombs and drop3 for laser trip bombs.
 
-Medic can heal with cmd aura regardless of level, further than players can with attribute of masters of healing.
-Medic gets an upgrade of the super nailgun with lava nails.
+Medic can heal with cmd aura regardless of level, and further distance than players can with attribute of masters of healing.
+Medic gets an upgrade of the super nailgun with lava nails. More damage per nail fired.
 
 Heavy Weapons Guy can spool up assault cannon a bit faster, and uses less ammo per shot on 20mm mode.
 
-Pyro can fire faster flame rockets, has a chainsaw, and gets results.
+Pyro can fire faster flame rockets, has a chainsaw, and gets results. He might get the lightning gun by default soon.
 
 The Spy has a grappling hook that uses less cells, and can "poon" enemies for gibs. Just like in Pain Keep.
 
@@ -169,6 +174,14 @@ All classes can buy weapon upgrades, powerups, and inventory then with the merch
 Custom skins are possible. Not restricted per class. Use "cmd customskin" Frag with your favorite character on.
 
 Deployment of client and server files see releases.
+
+A new combat rule. If you fight, you fight to the death.
+
+If you suicide after fighting, you will be punished 5 additional frags for denying your opponent their prey.
+
+Another new combat rule. Doing a "cmd beg" in non-survival mode punishes you for teleporting for no purpose to the start spawn to prevent spamming of ammo and once again denying the opponent their prey.
+
+In survival mode you are not punished for the use of "cmd beg". If there are multiple human teams involved, that is for the admin or mod to police abuse. It can be set to punish if you were in combat and teleporting to home for no good reason.
 
 Donations glady accepted by bitcoin to address: 3J2nKrotxfP7mqQgTBotn4rgAvRqVhD1hh
 
