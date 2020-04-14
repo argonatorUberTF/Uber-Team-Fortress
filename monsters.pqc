@@ -5,52 +5,38 @@ void() monster_ogre =
 	self.light_lev = 1;		//useless, just helps with the decompiler warnings >.<
 	dremove(self);
 };
-
 void() monster_knight = 
 {
 	dremove(self);
 };
-
-//void() monster_shambler = 
-//{
-//	dremove(self);
-//};
-
 void() monster_demon1 = 
 {
 	dremove(self);
 };
-
 void() monster_wizard = 
 {
 	dremove(self);
 };
-
 void() monster_hell_knight = 
 {
 	dremove(self);
 };
-
 void() monster_tarbaby = 
 {
 	dremove(self);
 };
-
 void() monster_vomit = 
 {
 	dremove(self);
 };
-
 void() monster_enforcer = 
 {
 	dremove(self);
 };
-
 void() monster_shalrath = 
 {
 	dremove(self);
 };
-
 void() monster_dragon = 
 {
 	dremove(self);
@@ -99,7 +85,6 @@ void() flymonster_start_go =
 		self.th_stand();
 	}
 };
-
 void() flymonster_start = 
 {
 	self.nextthink = self.nextthink + random() * 0.5;
@@ -109,7 +94,6 @@ void() flymonster_start =
 #endif
 	set_monster_health();
 };
-
 void() swimmonster_start_go = 
 {
 	self.takedamage = 2;
@@ -130,9 +114,6 @@ void() swimmonster_start_go =
 		self.goalentity = self.movetarget = find(world, targetname, self.target);
 		if (!(self.movetarget))
 		{
-//			dprint("Monster can't find target at ");
-//			dprint(vtos(self.origin));
-//			dprint("\n");
 		}
 		self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
 		self.th_walk();
@@ -149,7 +130,6 @@ void() swimmonster_start_go =
 	}
 	self.nextthink = self.nextthink + random() * 0.5;
 };
-
 void() swimmonster_start = 
 {
 	self.nextthink = self.nextthink + random() * 0.5;

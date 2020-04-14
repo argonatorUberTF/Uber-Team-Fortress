@@ -63,9 +63,7 @@ void(float radius, float xValue, float stretch, float dir, float fltTime) joeTra
 	makevectors (self.v_angle);
 	org = self.origin + (v_forward * stretch) + '0 0 16';
 	dir1 = ( ( normalize(v_up) * yValue ) + ( normalize(v_right) * xValue ) ) * radius;
-	
 	side1 = org + dir1;
-
 	bubble1 = spawn();
 	bubble1.movetype = #MOVETYPE_NONE;
 	bubble1.solid = SOLID_NOT;
@@ -113,8 +111,6 @@ void () RailTimer =
 	stuffcmd (te, "\n");
 	self.nextthink = (time + 0.1);
 };
-
-
 void () LaserBolt_Touch =
 {
 	local vector org;
@@ -214,7 +210,6 @@ void (float chargeDmg) W_FireLaser =
 	if ((self.option6 != 0))
 	{
 		if (infokey (world, "superrail") == "1") {
-
 			self.ammo_nails = (self.ammo_nails - 5);
 			self.currentammo = (self.ammo_nails);
 			self.heat = TF_FLARE_LIT;
@@ -313,7 +308,6 @@ setmodel(newmis, "progs/beam.mdl");
 void () TeamFortress_EngineerBuild =
 {
 	local entity te;
-
 	if ((self.is_building == 0.000000))
 	{
 		self.current_menu = 15.000000;
@@ -422,28 +416,26 @@ void(float objtobuild) TeamFortress_Build =
 	if (objtobuild == 4)
 	{
 		dremove(newmis);
-
-        if (self.has_camera)
+	if (self.has_camera)
 		{
 			sprint(self, 2, "You can only have one security camera.\nTry dismantling your old one.\n");
-        	return;
+			return;
 		}		
-        Security_Camera_Spawn();
-        return;
+		Security_Camera_Spawn();
+		return;
 	}
 	if (objtobuild == 5)
 	{
 		if (self.has_teleporter >= 2)
 		{
 			sprint(self, 2, "You can only have 2 teleporters.\nTry dismantling an old one.\n");
-            dremove(newmis);
+			dremove(newmis);
 			return;
 		}
 		tmp1 = '-16 -16 0';
 		tmp2 = '16 16 4';
 		newmis.mdl = "progs/telepad.mdl";
 		newmis.netname = "teleporter";
-	
 		btime = time + 3;
 		if (self.has_teleporter == 1)
 		{
@@ -621,7 +613,6 @@ void() DispenserThink =
 	}
 	self.nextthink = time + 10;
 };
-
 void() TeamFortress_FinishedBuilding = 
 {
 	local entity oldself;
@@ -809,10 +800,9 @@ void() TeamFortress_FinishedBuilding =
 	{
 		self.has_teleporter = (self.has_teleporter + 1);
 		sprint (self, 2, "You finish building the Teleporter Pad.\n");
-        teamsprint(self.team_no, self, self.netname);
+		teamsprint(self.team_no, self, self.netname);
 		teamsprint(self.team_no, self, " has built a Teleporter Pad.\n");
 		sound (oldself, 3, "weapons/guerset.wav", 1, 1);
-
 		self.ammo_cells = self.ammo_cells - 90;
 		oldself.classname = "building_teleporter";
 		oldself.netname = "teleporter";
@@ -840,7 +830,7 @@ void() TeamFortress_FinishedBuilding =
 		oldself.nextthink = time + 1;
 		oldself.spawnflags = 4; //CH cause extensive checks for height
 		oldself.is_malfunctioning = 0;
-	        oldself.all_active=0; // OfN - reset HACKER improvements
+		oldself.all_active=0; // OfN - reset HACKER improvements
 		}
 		}
 	}
@@ -902,7 +892,6 @@ void() T_Dispenser =
 		dist_checker.nextthink = time + 0.3;
 	}
 };
-
 void() Dispenser_Die = 
 {
 	self.real_owner.has_dispenser = TF_FLARE_LIT;
@@ -917,7 +906,6 @@ void() Dispenser_Die =
 	multicast(self.origin, TF_FLARE_OFF);
 	BecomeExplosion();
 };
-
 void(entity disp) Engineer_UseDispenser = 
 {
 	local entity dist_checker;
@@ -986,7 +974,6 @@ void (entity gun) Engineer_UseSentryGun =
 void (entity gun, entity disp) Engineer_UseRemoteTesla =
 {
 	local entity dist_checker;
-
 	self.current_menu = 18;
 	self.menu_count = 25;
 	self.building = gun;
@@ -1102,7 +1089,6 @@ void (entity gunhead) CheckSentry =
 void () CheckDistance =
 {
 	local vector dist;
-
 	if (!(self.owner.building.classname == "building_tesla" && self.enemy.classname == "building_dispenser")) {
 	if ((self.owner.building != self.enemy))
 	{

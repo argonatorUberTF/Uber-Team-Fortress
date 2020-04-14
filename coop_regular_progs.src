@@ -1,14 +1,14 @@
 qwprogs.dat
 
-usecoop.pqc
-defs.pqc
+usecoop.pqc	//Compiler switches used for compilation of regular, halloween, christmas modes. -arg
+defs.pqc	//Main definitions for all modes and specific engine hooks, don't edit it. -arg
 mega_coop/mega_hip/hipdefs.qc		// Quake MP1 support
 mega_coop/mega_rogue/mtf_rogue.qc	// Quake MP2 support
 additional.pqc // vars for coopmtf and painkeep addons. Some modules can be commented out and still have vars declared for smaller compilation -arg.
-mega_coop/mega_halflife/hl_defs.qc
-ss_csqc.qc
-mega_coop/uberhard.qc
-mega_coop/mega_nehahra/neh_defsfuncs.qc
+mega_coop/mega_halflife/hl_defs.qc	////Only loaded and compiled if the #define in defs.pqc is turned on. Beware though it is a large partially complete addon -arg
+ss_csqc.qc							//functions to animated reload bar. The rest of file read/write specific to mvdsv tweaks was merged into additional.pqc -arg
+mega_coop/uberhard.qc		//functions to uberhard mode at compilation. turned on/off in usecoop.pqc -arg
+mega_coop/mega_nehahra/neh_defsfuncs.qc  //nehara monsters
 
 menu.pqc
 //subs.pqc //moved to additional.pqc
@@ -159,6 +159,7 @@ mega_coop/mega_rogue/morph.qc
 mega_coop/mega_rogue/ending.qc
 mega_coop/mega_rogue/mummy.qc
 mega_coop/mega_rogue/timemach.qc
+//mega_coop/mega_rogue/runes.qc // old rune code -unused -arg
 
 // QUOTH
 /*
@@ -268,4 +269,4 @@ rpg.pqc
 //minifiend.qc	// MINI FIEND -- your very own mini pet :D -0 kludgey needs work to use. -arg
 
 spectator.pqc
-//END
+//END 

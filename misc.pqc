@@ -20,10 +20,8 @@ void() info_null =
 {
 	dremove(self);
 };
-
 void() info_notnull = 
-{
-};
+{};
 void() light_use = 
 {
 	if (self.spawnflags & TF_FLARE_OFF)
@@ -37,7 +35,6 @@ void() light_use =
 		self.spawnflags = self.spawnflags + TF_FLARE_OFF;
 	}
 };
-
 void() light = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -63,7 +60,6 @@ void() light =
 		}
 	}
 };
-
 void() light_fluoro = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -101,7 +97,6 @@ void() light_fluorospark =
 	precache_sound("ambience/buzz1.wav");
 	ambientsound(self.origin, "ambience/buzz1.wav", 0.8, 3);
 };
-
 void() light_globe = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -113,13 +108,11 @@ void() light_globe =
 	setmodel(self, "progs/s_light.spr");
 	makestatic(self);
 };
-
 void() FireAmbient = 
 {
 	precache_sound("ambience/fire1.wav");
 	ambientsound(self.origin, "ambience/fire1.wav", 0.3, 3);
 };
-
 void() light_torch_small_walltorch = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -132,7 +125,6 @@ void() light_torch_small_walltorch =
 	FireAmbient();
 	makestatic(self);
 };
-
 void() light_flame_large_yellow = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -159,7 +151,6 @@ void() light_flame_small_yellow =
 	FireAmbient();
 	makestatic(self);
 };
-
 void() light_flame_small_white = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -172,7 +163,6 @@ void() light_flame_small_white =
 	FireAmbient();
 	makestatic(self);
 };
-
 void() misc_fireball = 
 {
 	precache_model("progs/lavaball.mdl");
@@ -189,7 +179,6 @@ void() misc_fireball =
 		self.speed = 1000;
 	}
 };
-
 void() fire_fly = 
 {
 	newmis = spawn();
@@ -209,7 +198,6 @@ void() fire_fly =
 	self.nextthink = time + random() * 5 + 3;
 	self.think = fire_fly;
 };
-
 void() fire_touch = 
 {
 	if (other.takedamage)
@@ -218,7 +206,6 @@ void() fire_touch =
 	}
 	dremove(self);
 };
-
 void() barrel_explode = 
 {
 	self.takedamage = TF_FLARE_LIT;
@@ -232,7 +219,6 @@ void() barrel_explode =
 	multicast(self.origin, TF_FLARE_OFF);
 	remove(self);
 };
-
 void() misc_explobox = 
 {
 	local float oldz;
@@ -261,7 +247,6 @@ void() misc_explobox =
 		dremove(self);
 	}
 };
-
 void() misc_explobox2 = 
 {
 	local float oldz;
@@ -290,7 +275,6 @@ void() misc_explobox2 =
 		dremove(self);
 	}
 };
-
 float(float min, float max) RandomRange = 
 {
 	local float width;
@@ -301,7 +285,6 @@ float(float min, float max) RandomRange =
 	result = offset + min;
 	return result;
 };
-
 void() Laser_Touch = 
 {
 	local vector org;
@@ -333,7 +316,6 @@ void() Laser_Touch =
 	}
 	dremove(self);
 };
-
 void(vector org, vector vec) LaunchLaser = 
 {
 	if (self.classname == "monster_enforcer")
@@ -363,17 +345,14 @@ void(vector org, vector vec) LaunchLaser =
 	newmis.nextthink = time + 5;
 	newmis.think = SUB_Remove;
 };
-
 #ifdef mtf_coop_rogue
 float SPAWNFLAG_LAVASPIKE = 4;
 float SPAWNFLAG_SUPERLAVA = 8;
 float SPAWNFLAG_LAVASKILL = 16;
 float SPAWNFLAG_FIREBALL = 32;
-
 void(vector org, vector vec) LaunchLaser;
 void(vector org, vector dir) launch_lava_spike;
 void(vector org, vector dir) launch_fireball;
-
 void() spikeshooter_use =
 {
 	if (self.spawnflags & SPAWNFLAG_SUPERSPIKE || !(self.spawnflags))
@@ -389,24 +368,23 @@ void() spikeshooter_use =
 		sound (self, CHAN_VOICE, "enforcer/enfire.wav", 1, ATTN_NORM);
 		LaunchLaser (self.origin, self.movedir);
 	}
-    else if (self.spawnflags & SPAWNFLAG_FIREBALL)
-    {
-        launch_fireball (self.origin, self.movedir);
-    }
+	else if (self.spawnflags & SPAWNFLAG_FIREBALL)
+	{
+		launch_fireball (self.origin, self.movedir);
+	}
 	else
 	{
 		sound (self, CHAN_VOICE, "weapons/spike2.wav", 1, ATTN_NORM);
-	    if (self.spawnflags & SPAWNFLAG_LAVASKILL)
-	    {
+		if (self.spawnflags & SPAWNFLAG_LAVASKILL)
+		{
 		launch_lava_spike (self.origin, self.movedir);
-	    }
-	    else
+		}
+		else
 		launch_spike(self.origin, self.movedir);
-
 		newmis.velocity = self.movedir * 500;
 		if (self.spawnflags & SPAWNFLAG_SUPERLAVA)
 			newmis.touch = superlavaspike_touch;
-        else if((self.spawnflags & SPAWNFLAG_LAVASKILL) && (skill > 1))
+		else if((self.spawnflags & SPAWNFLAG_LAVASKILL) && (skill > 1))
 			newmis.touch = superlavaspike_touch;
 	}
 };
@@ -439,7 +417,6 @@ void() spikeshooter_use =
 	}
 };
 #endif
-
 void() shooter_think = 
 {
 	spikeshooter_use();
@@ -476,17 +453,17 @@ void() trap_spikeshooter =
 		precache_sound2 ("lavagun/snail.wav");		// lava nail gun cooldown
 		precache_sound2 ("weapons/spike2.wav");
 	}
-    else if (self.spawnflags & SPAWNFLAG_LAVASKILL)
-    {
+	else if (self.spawnflags & SPAWNFLAG_LAVASKILL)
+	{
 		precache_model2 ("progs/lspike.mdl");
 		precache_sound2 ("lavagun/snail.wav");		// lava nail gun cooldown
 		precache_sound2 ("weapons/rocket1i.wav");
 		precache_sound2 ("weapons/spike2.wav");
-    }
-    else if (self.spawnflags & SPAWNFLAG_FIREBALL)
-    {
-        precache_model ("progs/fireball.mdl");
-    }
+	}
+	else if (self.spawnflags & SPAWNFLAG_FIREBALL)
+	{
+		precache_model ("progs/fireball.mdl");
+	}
 	else
 		precache_sound ("weapons/spike2.wav");
 	if (self.spawnflags & SPAWNFLAG_LAVASPIKE)
@@ -517,7 +494,6 @@ void() trap_spikeshooter =
 	}
 #endif
 };
-
 void() trap_shooter = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -560,7 +536,6 @@ void() func_wall =
 	HalfLife_DoRender();
 #endif
 };
-
 void() func_illusionary = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -594,7 +569,6 @@ void() func_episodegate =
 	self.use = func_wall_use;
 	setmodel(self, self.model);
 };
-
 void() func_bossgate = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -612,7 +586,6 @@ void() func_bossgate =
 	self.use = func_wall_use;
 	setmodel(self, self.model);
 };
-
 void() ambient_brook = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -627,7 +600,6 @@ void() ambient_brook =
 	precache_sound("ambience/brook.wav");
 	ambientsound(self.origin, "ambience/brook.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_jungle = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -642,7 +614,6 @@ void() ambient_jungle =
 	precache_sound("ambience/jungle.wav");
 	ambientsound(self.origin, "ambience/jungle.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_nightpond = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -657,7 +628,6 @@ void() ambient_nightpond =
 	precache_sound("ambience/nitepond.wav");
 	ambientsound(self.origin, "ambience/nitepond.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_alert = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -672,7 +642,6 @@ void() ambient_alert =
 	precache_sound("ambience/redalert.wav");
 	ambientsound(self.origin, "ambience/redalert.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_onboard = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -694,7 +663,6 @@ void() ambient_onboard =
 		ambientsound(self.origin, "ambience/onboard.wav", self.volume, TF_FLARE_OFF);
 	}
 };
-
 void() ambient_unholy = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -709,7 +677,6 @@ void() ambient_unholy =
 	precache_sound("ambience/unholy.wav");
 	ambientsound(self.origin, "ambience/unholy.wav", self.volume, TF_FLARE_LIT);
 };
-
 void() ambient_rocket_engine = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -724,7 +691,6 @@ void() ambient_rocket_engine =
 	precache_sound("ambience/onboard.wav");
 	ambientsound(self.origin, "ambience/onboard.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_high_wind = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -739,7 +705,6 @@ void() ambient_high_wind =
 	precache_sound("ambience/2windy.wav");
 	ambientsound(self.origin, "ambience/2windy.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_peakwind = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -754,7 +719,6 @@ void() ambient_peakwind =
 	precache_sound("ambience/peakwind.wav");
 	ambientsound(self.origin, "ambience/peakwind.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_chant = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -769,7 +733,6 @@ void() ambient_chant =
 	precache_sound("ambience/chant.wav");
 	ambientsound(self.origin, "ambience/chant.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_meadow = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -784,7 +747,6 @@ void() ambient_meadow =
 	precache_sound("ambience/meadow.wav");
 	ambientsound(self.origin, "ambience/meadow.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_ocean = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -799,7 +761,6 @@ void() ambient_ocean =
 	precache_sound("ambience/ocean.wav");
 	ambientsound(self.origin, "ambience/ocean.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_ice_moving = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -814,7 +775,6 @@ void() ambient_ice_moving =
 	precache_sound("ambience/icemove.wav");
 	ambientsound(self.origin, "ambience/icemove.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_eerie = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -829,7 +789,6 @@ void() ambient_eerie =
 	precache_sound("ambience/eerie.wav");
 	ambientsound(self.origin, "ambience/eerie.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_flagflap = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -844,7 +803,6 @@ void() ambient_flagflap =
 	precache_sound("ambience/flagflap.wav");
 	ambientsound(self.origin, "ambience/flagflap.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_diesel = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -859,7 +817,6 @@ void() ambient_diesel =
 	precache_sound("ambience/diesel.wav");
 	ambientsound(self.origin, "ambience/diesel.wav", self.volume, TF_FLARE_OFF);
 };
-
 void() ambient_chopper = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -874,8 +831,6 @@ void() ambient_chopper =
 	precache_sound("ambience/chopper.wav");
 	ambientsound(self.origin, "ambience/chopper.wav", self.volume, TF_FLARE_OFF);
 };
-
-
 void() ambient_drone = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -890,7 +845,6 @@ void() ambient_drone =
 	precache_sound("ambience/drone6.wav");
 	ambientsound(self.origin, "ambience/drone6.wav", self.volume, 2);
 };
-
 void() ambient_flouro_buzz = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -911,7 +865,6 @@ void() ambient_comp_hum =
 	precache_sound("ambience/comp1.wav");
 	ambientsound(self.origin, "ambience/comp1.wav", TF_FLARE_OFF, 3);
 };
-
 void() ambient_thunder = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -922,7 +875,6 @@ void() ambient_thunder =
 	precache_sound("ambience/thunder1.wav");
 	ambientsound(self.origin, "ambience/thunder1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
-
 void() ambient_light_buzz = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -933,7 +885,6 @@ void() ambient_light_buzz =
 	precache_sound("ambience/fl_hum1.wav");
 	ambientsound(self.origin, "ambience/fl_hum1.wav", 0.8, 3);
 };
-
 void() ambient_swamp1 = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -944,7 +895,6 @@ void() ambient_swamp1 =
 	precache_sound("ambience/swamp1.wav");
 	ambientsound(self.origin, "ambience/swamp1.wav", 0.8, 3);
 };
-
 void() ambient_swamp2 = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -955,7 +905,6 @@ void() ambient_swamp2 =
 	precache_sound("ambience/swamp2.wav");
 	ambientsound(self.origin, "ambience/swamp2.wav", 0.6, 3);
 };
-
 void() ambient_weaponfire = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -976,7 +925,6 @@ void() ambient_weaponfire =
 	self.nextthink = time + random() * 5;
 	self.think = fire_burst;
 };
-
 void() fire_burst = 
 {
 	local float rs;
@@ -1005,8 +953,7 @@ void() fire_burst =
 	self.nextthink = time + random() * 5 + TF_FLARE_OFF;
 	self.think = fire_burst;
 };
-
-void() effect_burner = 
+Void() effect_burner = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
@@ -1017,7 +964,6 @@ void() effect_burner =
 	self.nextthink = time + 3;
 	self.think = make_burns;
 };
-
 void() make_burns = 
 {
 	newmis = spawn();
@@ -1034,7 +980,6 @@ void() make_burns =
 	self.nextthink = time + random() + 0.2;
 	self.think = make_burns;
 };
-
 void() effect_airburst = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1048,7 +993,6 @@ void() effect_airburst =
 	self.nextthink = time + random() * 20;
 	self.think = make_burst;
 };
-
 void() make_burst = 
 {
 	local float abx;
@@ -1082,7 +1026,6 @@ void() make_burst =
 	self.nextthink = time + random() * 20;
 	self.think = make_burst;
 };
-
 void() ambient_sound = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1108,7 +1051,6 @@ void() ambient_sound =
 		ambientsound(self.origin, self.noise, self.volume, TF_FLARE_OFF);
 	}
 };
-
 void(vector DropOrg) MakeDrop = 
 {
 	local entity Drop;
@@ -1124,7 +1066,6 @@ void(vector DropOrg) MakeDrop =
 	Drop.nextthink = time + RandomRange(0.6, 1.2);
 	setsize(Drop, '-8 -8 -8', '8 8 8');
 };
-
 void(vector FlakeOrg) MakeFlake = 
 {
 	local entity Flake;
@@ -1142,7 +1083,6 @@ void(vector FlakeOrg) MakeFlake =
 	Flake.cnt = TF_FLARE_LIT;
 	setsize(Flake, '-8 -8 -8', '8 8 8');
 };
-
 void() effect_lightning = 
 {
 	precache_sound("ambience/thunder1.wav");
@@ -1151,7 +1091,6 @@ void() effect_lightning =
 	self.nextthink = time + RandomRange(5, 20);
 	self.think = Effect_Attack;
 };
-
 void() Effect_Attack = 
 {
 	local vector org;
@@ -1206,14 +1145,12 @@ void() Effect_Attack =
 	WriteCoord(4, targ_z);
 	multicast(targ, 2);
 };
-
 void() effect_rain = 
 {
 	self.classname = "effect_rain";
 	self.nextthink = 0.1;
 	self.think = effect2_spawn;
 };
-
 void() effect2_spawn = 
 {
 	local float n;
@@ -1231,7 +1168,6 @@ void() effect2_spawn =
 	self.nextthink = time + RandomRange(0.3, 0.4);
 	self.think = effect2_spawn;
 };
-
 void() effect_snow = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1243,7 +1179,6 @@ void() effect_snow =
 	self.nextthink = 0.1;
 	self.think = effect3_spawn;
 };
-
 void() effect3_spawn = 
 {
 	local float n;
@@ -1261,7 +1196,6 @@ void() effect3_spawn =
 	self.nextthink = time + RandomRange(1.5, 2);
 	self.think = effect3_spawn;
 };
-
 void() FlakeFloat = 
 {
 	local float rnd1;
@@ -1294,8 +1228,6 @@ void() FlakeFloat =
 	self.nextthink = time + 0.7;
 	self.think = FlakeFloat;
 };
-
-
 void() effect_rockfall = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1313,7 +1245,6 @@ void() effect_rockfall =
 	setsize(self, '-64 -64 0', '64 64 64');
 	self.touch = drop_rock;
 };
-
 void() drop_rock = 
 {
 	if (self.last_used > time)
@@ -1338,14 +1269,12 @@ void() drop_rock =
 	}
 	return;
 };
-
 void() rock_splash = 
 {
 	sound(self, 3, "effects/rcksplsh.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	self.origin_z = self.origin_z + self.height;
 	return;
 };
-
 void() blocker_use = 
 {
 	if (!(self.state))
@@ -1361,7 +1290,6 @@ void() blocker_use =
 		sound(self, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
 	}
 };
-
 void(entity attacker, float damage) glass_pain = 
 {
 	if (self.spawnflags & 8)
@@ -1369,7 +1297,6 @@ void(entity attacker, float damage) glass_pain =
 		self.health = self.max_health;
 	}
 };
-
 void() glass_die = 
 {
 	local entity new;
@@ -1427,7 +1354,6 @@ void() glass_die =
 	}
 	remove(self);
 };
-
 void() func_glass = 
 {
 	local vector tmpvec;
@@ -1540,7 +1466,6 @@ void() func_glass =
 	precache_sound(self.noise1);
 	precache_sound(self.noise2);
 };
-
 void() bobbingwater_think = 
 {
 	local vector ang;
@@ -1558,7 +1483,6 @@ void() bobbingwater_think =
 	self.ltime = time;
 	self.nextthink = time + 0.020000;
 };
-
 void() func_bobbingwater = 
 {
 #ifdef mtf_coop_hipnotic
@@ -1579,7 +1503,6 @@ void() func_bobbingwater =
 	self.nextthink = time + 0.020000;
 	self.ltime = time;
 };
-
 #ifndef mtf_coop
 void() effect_strobe = 
 {
@@ -1601,7 +1524,6 @@ void() effect_strobe =
 	self.nextthink = time + 2;
 	self.think = make_flashes1;
 };
-
 void() make_flashes1 = 
 {
 	self.effects = TF_FLARE_LIT;
@@ -1621,7 +1543,6 @@ void() make_flashes =
 	self.nextthink = time + 0.9;
 	self.think = make_flashes2;
 };
-
 void() make_flashes2 = 
 {
 #ifdef NEW_DOT
@@ -1634,7 +1555,6 @@ void() make_flashes2 =
 	self.nextthink = time + 0.1;
 	self.think = make_flashes;
 };
-
 void() BallTouch = 
 {
 	if (other.classname == "player" && self.last_used <= time)
@@ -1653,14 +1573,12 @@ void() BallTouch =
 		self.lastplayer = other;
 	}
 };
-
 void() BallCheck = 
 {
 	self.movetype = 10;
 	self.nextthink = time + 15;
 	self.effects = TF_FLARE_LIT;
 };
-
 void() ballstart = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1669,7 +1587,6 @@ void() ballstart =
 		return;
 	}
 };
-
 void() BallStart = 
 {
 	local entity te;
@@ -1685,7 +1602,6 @@ void() BallStart =
 	self.movetype = 10;
 	self.velocity_z = 40;
 };
-
 void() ball = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1704,7 +1620,6 @@ void() ball =
 	self.nextthink = time + 15;
 	self.oldorigin = self.origin;
 };
-
 void() GoalTouch = 
 {
 	local entity te;
@@ -1743,7 +1658,6 @@ void() GoalTouch =
 	other.velocity_z = 40;
 	other.effects = self.team_no * 64;
 };
-
 void() sandball_goal = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1763,7 +1677,6 @@ void() sandball_goal =
 	self.effects = TF_FLARE_LIT;
 	self.touch = GoalTouch;
 };
-
 void() skeet_die = 
 {
 	if (other == self.owner)
@@ -1780,7 +1693,6 @@ void() skeet_die =
 	glass_die();
 	dremove(self);
 };
-
 void() givepoint = 
 {
 	make_explosion();
@@ -1791,7 +1703,6 @@ void() givepoint =
 	glass_die();
 	dremove(self);
 };
-
 void() skeet_shooter = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1819,14 +1730,12 @@ void() skeet_shooter =
 	self.origin_z = self.origin_z + 2;
 	droptofloor();
 };
-
 void() skeet_sound = 
 {
 	sound(self, 3, "plats/plat2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	self.think = skeet_fly;
 	self.nextthink = time + 1.5;
 };
-
 void() skeet_fly = 
 {
 	sound(self, 3, "plats/plat2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -1868,7 +1777,6 @@ void() Random_Play =
 	}
 	self.nextthink = time + RandomRange(self.option, self.option2);
 };
-
 void() effect_random_sound = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1911,7 +1819,6 @@ void () effect_duckpond =
 	self.oldorigin = self.origin;
 	droptofloor ();
 };
-
 void () duck_scare =
 {
 	if ((self.last_used > time))
@@ -1938,7 +1845,6 @@ void () duck_scare =
 	self.angles = vectoangles (self.velocity);
 	return;
 };
-
 void () duck_fly =
 {
 	self.playerclass = (self.playerclass + 1.000000);

@@ -6947,7 +6947,6 @@ void () TeamFortress_SaveMe =
 	local entity tl;
 	if (self.bugger == 8)	// player is looking through spycam
 		return;
-		
 	if (self.team_no == 0)
 		return;
 
@@ -6985,7 +6984,6 @@ void () TeamFortress_SaveMe =
 		}
 		te = te.chain;
 	}
-
 		WriteByte(4, 23);
 		WriteByte(4, 11);
 		WriteCoord(4, self.origin_x);
@@ -7044,7 +7042,7 @@ void () TeamFortress_ID =
 		if (((trace_ent.classname == "player") && (trace_ent.health > TF_FLARE_LIT)))
 		{
 			self.StatusRefreshTime = (time + 1.5);
-			if (((self.team_no != TF_FLARE_LIT) && (self.team_no == trace_ent.team_no)))
+			if (((self.team_no != TF_FLARE_LIT) && (self.team_no =self.team_no == trace_ent.team_no)))
 			{
 				cls = TeamFortress_GetClassName (trace_ent.playerclass);
 				if ((self.playerclass == 5))

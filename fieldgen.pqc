@@ -4,7 +4,6 @@ void () FieldGen_Die;
 void () ForceField_Think;
 void () ForceField_Touch;
 void (entity field, float downtime) ForceField_Remove;
-
 // The actual field-gen code (no, this is not Prozac CTF's)
 void () FieldGen_Think =
 {
@@ -15,7 +14,6 @@ void () FieldGen_Think =
 	local vector base_size;
 	local vector min_size;
 	local vector max_size;
-
 	targ = world;
 	dist = 600;
 	if ((pointcontents (self.origin) == -3))
@@ -132,11 +130,9 @@ void () FieldGen_Think =
 	}
 	self.nextthink = (time + 5);
 };
-
 void () FieldGen_Die =
 {
 	local entity te;
-
 	self.real_owner.has_fieldgen = (self.real_owner.has_fieldgen - TF_FLARE_OFF);
 	te = find (world, classname, "force_field");
 	while (te)
@@ -175,7 +171,6 @@ void () FieldGen_Die =
 	}
 	dremove (self);
 };
-
 void () electro_bubble =
 {
 	if ((pointcontents (self.origin) != -3))
@@ -184,7 +179,6 @@ void () electro_bubble =
 	}
 	self.nextthink = (time + 0.5);
 };
-
 void () ForceField_Think =
 {
 	local vector pos;
@@ -196,7 +190,6 @@ void () ForceField_Think =
 	local float factor;
 	local entity te;
 	local entity snd;
-
 	traceline ((self.owner.origin + '0 0 16'), (self.gen_slave.origin + '0 0 16'), TF_FLARE_LIT, self);
 	if ((trace_fraction == TF_FLARE_OFF))
 	{
@@ -290,10 +283,8 @@ void () ForceField_Think =
 	multicast (pos, 5);
 	self.nextthink = (time + 0.34);
 };
-
 void () ForceField_Touch =
 {
-
 	if ((other.health > TF_FLARE_LIT))
 	{
 		if ((other.classname == "player"))
@@ -347,7 +338,6 @@ void () ForceField_Touch =
 	setorigin (other, (other.origin + '0 0 4'));
 	other.flags = (other.flags - (other.flags & 512));
 };
-
 void (entity field, float downtime) ForceField_Remove =
 {
 	if (((field.gen_slave.origin_y - field.owner.origin_y) > TF_FLARE_LIT))

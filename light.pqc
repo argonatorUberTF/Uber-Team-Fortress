@@ -49,7 +49,6 @@ void () Flash_Think =
 	self.think = Flash_Think;
 	self.nextthink = (time + 0.050000);
 };
-
 void (float up, float right) Make_Flash =
 {
 	local entity dude;

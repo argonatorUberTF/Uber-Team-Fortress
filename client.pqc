@@ -176,7 +176,7 @@ void() DecodeLevelParms =
 			ParseTFDetect(ent);
 			if (number_of_teams <= 0 || number_of_teams >= 5)
 			{
-				number_of_teams = 2;
+				number_of_teams = 4; //why only 2 teams there are 4 team teamfortress maps. -arg
 			}
 		}
 		else
@@ -195,14 +195,15 @@ if (!coop) {
 				ent = spawn();
 				ent.nextthink = time + 30;
 				ent.think = CTF_FlagCheck;
-				number_of_teams = 2; //changed to 4 from 2 -arg
+				number_of_teams = 2; // because this is for ctf only maps. -arg
 #ifdef mtf_coop
 }
 #endif
 			}
 			else
 			{
-				number_of_teams = 4;  //I think this is right -arg
+				number_of_teams = 4;  //I think this is right, regardless of whatever map -arg
+//however the map has to have a teamspawn for teams 1-4 at least 2 teams.
 			}
 #ifndef mtf_coop
 			cvar_set("sv_aim", "1");
@@ -1201,8 +1202,8 @@ void() respawn =
 		setspawnparms(self);
 		self.pk_turretammo = 6;
 		self.pk_beartrapammo = 12;
-		self.pk_gravitywellammo = 4;
-		self.pk_canpabammo = 4;
+		self.pk_gravitywellammo = 2;
+		self.pk_canpabammo = 2;
 		PutClientInServer();
 	}
 	else
@@ -1211,6 +1212,10 @@ void() respawn =
 		{
 			CopyToBodyQue(self);
 			SetNewParms();
+			self.pk_turretammo = 6;
+			self.pk_beartrapammo = 12;
+			self.pk_gravitywellammo = 2;
+			self.pk_canpabammo = 4;
 			PutClientInServer();
 		}
 		else
@@ -1298,6 +1303,12 @@ void() ClientKill =
 	}
 	TeamFortress_RemoveTimers();
 	TeamFortress_SetupRespawn(TF_FLARE_OFF);
+	if (self.health < self.max_health)//Which means they were in combat..damaged or was in combat
+		{
+		sprint(self, 2, self.netname);
+		sprint(self, 2, " was alive. For being a wuss for suiciding in combat, subtracting 6 points from him.\n");
+		self.real_frags = self.real_frags - (TF_FLARE_OFF * 5 );
+		}
 	self.health = self.health - (self.health + TF_FLARE_OFF);
 	self.th_die();
 	self.deadflag = 3;
@@ -1314,8 +1325,8 @@ void() PutClientInServer =
 {
 	self.pk_turretammo = 6;  //set painkeep weapon ammo amounts. -arg
 	self.pk_beartrapammo = 12;
-	self.pk_gravitywellammo = 4;
-	self.pk_canpabammo = 4;
+	self.pk_gravitywellammo = 2;
+	self.pk_canpabammo = 2;
 	local float tc;
 	local string st;
 	local float iszoom;
@@ -1357,7 +1368,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	MTF_Coop_ResetItems();
 	self.#rune_finished = 0;
 	self.#rune_time = 0;
-	
 	self.reload_rail_gun = 0;
 #endif
 	self.effects = 0;
@@ -1405,12 +1415,13 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	st = infokey (self, "*ip");
 	if ((st != ""))
 	{
-		st = infokey (self, "*ver");
-		if ((st == "2.40-0858"))
-		{
-			stuffcmd (self, "aa_enabled");
-			stuffcmd (self, "\n");
-		}
+// There shouldn't be no auto aiming at all ffs -arg
+//		st = infokey (self, "*ver");
+//		if ((st == "2.40-0858"))
+//		{
+//			stuffcmd (self, "aa_enabled");
+//			stuffcmd (self, "\n");
+//		}
 	}
 	st = infokey (self, "*z_ver");
 	if ((st != ""))
@@ -1748,7 +1759,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		}
 		else
 		{
-			bprint (1.000000, "an unknown client");
+			bprint (1.000000, "an unknown client. Check for shady activity.");
 		}
 		bprint (1.000000, "\n");
 		if (self.stats_on)
@@ -1782,11 +1793,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		sound (self, 2.000000, "player/malive5.wav", 1.000000, 1.000000);
 	}
 	self.killstack = 0;
-	if (self.has_mini == 1)
-	{
-		sprint(self, 2, "You lose your Mini Turret.\n");
-		self.has_mini = 0;
-	}
 };
 void() info_player_start = 
 {
@@ -2034,7 +2040,11 @@ void () pdummy_spawn_think =
 	pdummy.classname = "resdummy";
 	pdummy.think = pdummy_think;
 	pdummy.nextthink = time + 1;
-	if (self.monster_type == 1) {
+	pdummy.team_no = self.team_no;  //Assign a team number to the dead survivor player just in case.
+//That way only team members of the same team can only ressurrect you, not just any player. -arg
+//Also if someone uses a cube, it can only res those on the same team.
+	if (self.monster_type == 1)
+	{
 		setsize(pdummy, self.mins, self.maxs);
 		setorigin(pdummy, self.origin);
 		setmodel(pdummy, "progs/player.mdl");
@@ -2047,9 +2057,14 @@ void () pdummy_spawn_think =
 		self.enemy = pdummy;
 		self.think = pdummy_wait_on_reconnect;
 		self.nextthink = time + .5;
+		pdummy.team_no = 2;  // Hey, I am a dead monster, I belong on team 2 only. -arg
+//I will put in a check to make sure only players on team 2 are resurrected, not monsters -arg
 		return;
 	}
 	sprint( self.owner, 2, "Call a Player to resurrect you using \"saveme\". DO NOT RECONNECT!\n" );
+	pdummy.team_no = self.team_no;  //Assign a team number to the dead survivor player just in case.
+//That way only team members of the same team can only ressurrect you, not just any player. -arg
+
 	pdummy.enemy = self.owner;
 	pdummy.owner = self.owner;		// used for saveme
 	setsize(pdummy, pdummy.owner.mins, pdummy.owner.maxs);
@@ -2096,7 +2111,8 @@ void () PlayerDeathThink =
 #ifdef mtf_coop
 	local entity te;
 	local float foundme;
-	if (survival_mode) {	
+	if (survival_mode)
+	{
 			if (self.monster_type != 0)
 			{
 				if ((self.respawn_time <= time))
@@ -2115,8 +2131,7 @@ void () PlayerDeathThink =
 			
 					te = find(world, classname, "resdummy");
 					while (te)
-				{
-			}	
+					{
 						if (te.owner == self)
 						{
 							WriteByte(4, 23);
@@ -2132,6 +2147,7 @@ void () PlayerDeathThink =
 							foundme = TRUE;
 						}
 						te = find(te, classname, "resdummy");
+					}
 					if (!foundme && (self.view_ofs != '0 0 -8') ) {
 						bprint(2,"PlayerDeathThink: PDUMMY Not Found - Take a screenshot of your console and send it to DEV\n");
 						self.ammo_cells = 666;				// so we spawn at the beginning
@@ -2141,11 +2157,14 @@ void () PlayerDeathThink =
 					{
 						if (self.velocity_x < 1 && self.velocity_x > -1 &&
 						self.velocity_y < 1 && self.velocity_y > -1 &&
-						self.velocity_z < 1 && self.velocity_z > -1) {
+						self.velocity_z < 1 && self.velocity_z > -1)
+						{
 							bprint(2,"Somebody is impatient.. You can beg for the answer...\n");
 							Survival_MakeDummy( 0 );
 							self.ammo_cells = 666;				// so we spawn at the beginning
-							MTF_Resurrect_Player ( self );
+//							MTF_Resurrect_Player ( self );
+// make em wait for a res cube or cmd beg for it. -arg 
+						}
 					}
 					else
 					{
@@ -2153,6 +2172,7 @@ void () PlayerDeathThink =
 					return;
 					}
 					}
+	}
 #endif
 	if ((self.flags & 512.000000))
 	{
@@ -2181,7 +2201,7 @@ void () PlayerDeathThink =
 	{
 		if ((self.tfstate & 8192.000000))
 		{
-			if ((self.respawn_time <= time))
+			if ((self.respawn_time <= time) && !(survival_mode))
 			{
 				self.button0 = 0.000000;
 				self.button1 = 0.000000;
@@ -2191,8 +2211,10 @@ void () PlayerDeathThink =
 		}
 		return;
 	}
+	}
 	else
 	{
+	
 		self.tfstate = (self.tfstate | 8192.000000);
 		if ((self.respawn_time <= time))
 		{
@@ -2203,14 +2225,6 @@ void () PlayerDeathThink =
 		}
 		return;
 	}
-}
-}
-}
-			if (self.button0 && !survival_mode)
-			{
-			self.ammo_cells = 666;			
-			respawn();
-			}
 };
 void () PlayerJump =
 {
@@ -3097,6 +3111,7 @@ void() PlayerPostThink =
 };
 void() ClientConnect = 
 {
+//This is the switch for midair mode -arg
 #ifdef midair_switch
 	localcmd("sv_progsname qwprogs\n");
 	localcmd("timelimit 25\n");
@@ -3151,7 +3166,6 @@ void() ClientConnect =
 		self.mtf_items |= MTFITEM_LIGHTGUN;
 	if (self.coop_exp >= Coop_ExpReq(80))
 		self.mtf_items |= MTFITEM_NEEDLER;
-	
 #ifdef mtf_coop_achievements
 	if (Achievements_Setup(self) == 1) {
 	}
@@ -3210,9 +3224,13 @@ void() ClientConnect =
 	}
 	self.motd = 0;
 	self.got_aliases = 0;
-   if ( (self.netname == string_null) ) {
-      stuffcmd (self, "disconnect\n");
-   }
+	if ( (self.netname == string_null) )
+	{
+	sprint (self, 0, "You cannot connect with a NULL name bozo. Quit trying to hack. Bye!\n");
+	sprint (self, 2, "You cannot connect with a NULL name bozo. Quit trying to hack. Bye!\n");
+	bprint (0, "Someone just tried to connect with a NULL name. Dumbass! Begone!\n");
+		stuffcmd (self, "disconnect\n");
+	}
 	local string msg;
 	if (infokey(world, "modelcheck") == "1" || infokey(world, "modelcheck") == "on")
 	{
@@ -4263,7 +4281,7 @@ void(entity targ, entity attacker) ClientObituary =
 														{
 															if (deathmsg == 204)
 															{
-																deathstring = " gets squarshed ";
+																deathstring = " gets squarshed by ";
 																deathstring2 = "'s gravity well.\n";
 															}
 															else

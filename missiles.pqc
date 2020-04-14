@@ -5,7 +5,6 @@ void() M_Missile_Touch;
 void() M_Spike_Touch;
 void() M_Arrow_Point;
 void() M_Arrow_Touch;
-
 entity(string mismodel, vector misorigin, vector misvelocity) launch_missile = 
 {
 	local entity missile;
@@ -157,24 +156,11 @@ entity(string mismodel, vector misorigin, vector misvelocity) launch_missile =
 	}
 	return missile;
 };
-
 void(entity missile, float basedamage, float randdamage) setdmg_missile = 
 {
 	missile.ammo_shells = basedamage;
 	missile.ammo_nails = randdamage;
 };
-
-// pablo. f u decompiler! luckily it's never called :)
-/*
-//void(entity missile, float misnextthink, <function> misthink, <function> mistouch, float basedamage, float randdamage) setup_missile = 
-{
-	missile.nextthink = time + misnextthink;
-	missile.think = misthink;
-	missile.touch = mistouch;
-	missile.ammo_shells = basedamage;
-	missile.ammo_nails = randdamage;
-};*/
-
 void(entity missile, vector mistarget, float targeting) target_missile = 
 {
 	local vector misvelocity;
@@ -225,7 +211,6 @@ void(entity missile, vector mistarget, float targeting) target_missile =
 	}
 	missile.angles = vectoangles(missile.velocity);
 };
-
 void() M_Grenade_Explode = 
 {
 	local float totaldmg;
@@ -233,7 +218,6 @@ void() M_Grenade_Explode =
 	T_RadiusDamage(self, self.owner, totaldmg, world);
 	BecomeExplosion();
 };
-
 void() M_Grenade_Touch = 
 {
 	if (other == self.owner)
@@ -251,7 +235,6 @@ void() M_Grenade_Touch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void() M_Laser_Touch = 
 {
 	local float totaldmg;
@@ -281,7 +264,6 @@ void() M_Laser_Touch =
 	}
 	remove(self);
 };
-
 void() M_Missile_Touch = 
 {
 	local float totaldmg;
@@ -345,7 +327,6 @@ void() M_Missile_Touch =
 	sound(self, TF_FLARE_OFF, "weapons/r_exp3.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	BecomeExplosion();
 };
-
 void() M_Spike_Touch = 
 {
 	local float totaldmg;
@@ -376,13 +357,11 @@ void() M_Spike_Touch =
 	}
 	remove(self);
 };
-
 void() M_Arrow_Point = 
 {
 	self.nextthink = time + 0.05;
 	self.angles = vectoangles(self.velocity);
 };
-
 void() M_Arrow_Touch = 
 {
 	local float totaldmg;
@@ -410,5 +389,4 @@ void() M_Arrow_Touch =
 	self.nextthink = time + TF_FLARE_OFF + random() * TF_FLARE_OFF;
 	self.think = SUB_Remove;
 };
-
 //END

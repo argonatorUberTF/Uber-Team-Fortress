@@ -7,23 +7,19 @@ void () ac_cruise = [ 0, ac_cruise ]
 {
 	self.weaponframe = 0;
 };
-
 void () ac_firevc1 = [ 2, ac_firevc2 ]
 {
 	self.weaponframe = 2;
 };
-
 void () ac_firevc2 = [ 1, ac_firevc3 ]
 {
 	self.weaponframe = 1;
 };
-
 void () ac_firevc3 = [ 0, ac_cruise ]
 {
 	self.weaponframe = 0;
 	W_SetCurrentAmmo ();
 };
-
 void () AC_PilotTouch2 =
 {
 	local float tempx;
@@ -106,7 +102,6 @@ void () AC_PilotTouch2 =
 		}
 	}
 };
-
 void () AC_PilotTouch =
 {
 	local float tempx;
@@ -183,7 +178,6 @@ void () AC_PilotTouch =
 		}
 	}
 };
-
 void (float modelindex_ac) AC_MaintainAircraft =
 {
 	local float rn;
@@ -334,7 +328,6 @@ void (float modelindex_ac) AC_MaintainAircraft =
 	}
 	self.armorvalue = self.Aircraft_Fuel;
 };
-
 void (entity pilot, float fuel, float shells, float Aircraft_Health) AC_MakePilot =
 {
 	setorigin (pilot, (pilot.origin + '0.000000 0.000000 32.000000'));
@@ -364,7 +357,6 @@ void (entity pilot, float fuel, float shells, float Aircraft_Health) AC_MakePilo
 	stuffcmd (pilot, "cl_bob 0\n");
 	pilot.ffar_reloaded = time;
 };
-
 void () Aircraft_Touch =
 {
 	local float falldamage;
@@ -474,7 +466,6 @@ void () Aircraft_Touch =
 	}
 #endif
 };
-
 void () AC_Destroyed =
 {
 	if (self.owned_vehicle)
@@ -500,7 +491,6 @@ void () AC_Destroyed =
 	AC_ThrowGib ("progs/acgib1.mdl", 0, 1, 0);
 	remove (self);
 };
-
 void () AC_Crash =
 {
 	local entity item66;
@@ -558,7 +548,6 @@ void () AC_Crash =
 	item66.Aircraft_Falltime = time;
 	self.Old_Health = 0;
 };
-
 void () AC_Eject =
 {
 	local float swap;
@@ -596,7 +585,6 @@ void () AC_Eject =
 	self.ammo_shells = self.Old_Shells;
 	self.attack_finished = (time + 1.300000);
 };
-
 void () AC_ShotDown =
 {
 	local float swap;
@@ -613,7 +601,6 @@ void () AC_ShotDown =
 		AC_Eject ();
 	}
 };
-
 void () AC_ChangeWeapon =
 {
 	local vector dir;
@@ -729,7 +716,6 @@ void () AC_ChangeWeapon =
 	self.impulse = 0;
 	self.weaponframe = 0;
 };
-
 void () bomb_touch =
 {
 	local float damg;
@@ -756,7 +742,6 @@ void () bomb_touch =
 	BecomeExplosion ();
 	dremove (self);
 };
-
 void () drop_bomb =
 {
 	local entity bomb;
@@ -778,7 +763,6 @@ void () drop_bomb =
 };
 void (vector org) AC_SpawnShrapnel2;
 void () AC_RocketAway;
-
 void () FFAR_Touch =
 {
 	local float damg;
@@ -812,7 +796,6 @@ void () FFAR_Touch =
 	BecomeExplosion ();
 	dremove (self);
 };
-
 void (float delay_time2, float side) AC_FireRocket =
 {
 	local entity missile;
@@ -834,7 +817,6 @@ void (float delay_time2, float side) AC_FireRocket =
 		missile.last_side = 2;
 	}
 };
-
 void () AC_RocketAway =
 {
 
@@ -861,7 +843,6 @@ void () AC_RocketAway =
 	self.think = SUB_Remove;
 };
 void () AC_bullet;
-
 void () AC_FireVulcan =
 {
 	local vector dir;
@@ -883,7 +864,6 @@ void () AC_FireVulcan =
 	FireBullets (6, dir, '0.040000 0.040000 0.000000');
 	self.ammo_shells = (self.ammo_shells - 1);
 };
-
 void () mini_gun_touch =
 {
 	if ((other == self.owner))
@@ -1002,7 +982,6 @@ void () Aircraft_Attack =
 		}
 	}
 };
-
 void () AC_TrailFire =
 {
 	local entity new;
@@ -1027,7 +1006,6 @@ void () AC_TrailFire =
 		remove (self);
 	}
 };
-
 void () ShrapGrenadeExplode =
 {
 	deathmsg = 59;
@@ -1041,7 +1019,6 @@ void () ShrapGrenadeExplode =
 	BecomeExplosion ();
 	dremove (self);
 };
-
 void (string gibname, float dm, float explode, float firetrail) AC_ThrowGib =
 {
 	local entity new;
@@ -1098,7 +1075,6 @@ void (string gibname, float dm, float explode, float firetrail) AC_ThrowGib =
 	deathmsg = 59;
 	setsize (new, '-3.000000 -3.000000 -3.000000', '3.000000 3.000000 3.000000');
 };
-
 void (vector org) AC_SpawnShrapnel2 =
 {
 	local entity new;
@@ -1123,7 +1099,6 @@ void (vector org) AC_SpawnShrapnel2 =
 	new.frame = 0;
 	new.flags = 0;
 };
-
 void (vector org) AC_SpawnShrapnel =
 {
 	local entity new;
@@ -1242,7 +1217,6 @@ void () Stinger_Stage2 =
 	self.touch = TT_MissileTouch;
 	self.Aircraft_Fuel = (time + 10);
 };
-
 void () HW_LaunchStinger =
 {
 	local entity missile;
@@ -1288,7 +1262,6 @@ void () HW_LaunchStinger =
 		missile.Aircraft_Owner = 1;
 	}
 };
-
 void () Stinger_TryLock =
 {
 	makevectors (self.v_angle);
@@ -1322,7 +1295,6 @@ void () Stinger_TryLock =
 };
 void () TrackTarget;
 void () sightthink;
-
 void () HomeTarget =
 {
 	local vector dir;
@@ -1374,7 +1346,6 @@ void () HomeTarget =
 		remove (newmis);
 	}
 };
-
 void () sightthink =
 {
 	local vector dir;
@@ -1390,7 +1361,6 @@ void () sightthink =
 		remove (self);
 	}
 };
-
 void () makesight =
 {
 	newmis = spawn ();
@@ -1407,7 +1377,6 @@ void () makesight =
 	newmis.think = sightthink;
 	newmis.nextthink = time;
 };
-
 void () killdatarget =
 {
 	if (self.helo_owner)
@@ -1416,7 +1385,6 @@ void () killdatarget =
 	}
 	T_TorpTouch ();
 };
-
 void () TrackTarget =
 {
 	local entity targ;
@@ -1471,7 +1439,6 @@ void () TrackTarget =
 		return;
 	}
 };
-
 void () W_FireTorpedo =
 {
 	sound (self, 1, "weapons/ffar2.wav", 1, 1);
@@ -1509,7 +1476,6 @@ void () W_FireTorpedo =
 	}
 	self.tube_wing = (self.tube_wing + 1);
 };
-
 void () T_TorpTouch =
 {
 	local float damg;
@@ -1544,4 +1510,3 @@ void () T_TorpTouch =
 	BecomeExplosion ();
 };
 //END
- 

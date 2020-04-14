@@ -23,7 +23,7 @@ void () SpectatorConnect =
     st = infokey (self, "apw");
     if (st == string_null)
 	st = infokey (self, "adminpwd");
-    if (((st2 != string_null) && (st != string_null)) && (st == st2)) {
+	if (((st2 != string_null) && (st != string_null)) && (st == st2)) {
 	TeamFortress_Alias ("countplayers", 192, 0);
 	TeamFortress_Alias ("deal", 189, 0);
 	TeamFortress_Alias ("kick", 190, 0);
@@ -41,30 +41,30 @@ void () SpectatorConnect =
 	stuffcmd (self, "exec ");
 	stuffcmd (self, mapname);
 	stuffcmd (self, ".cfg\n");
-    }
-    self.motd = 0;
-    st = infokey (self, "sbar_res");
-    if (st == "768")
+	}
+	self.motd = 0;
+	st = infokey (self, "sbar_res");
+	if (st == "768")
 	self.StatusBarRes = 8;
-    else if (st == "600")
-        self.StatusBarRes = 7;
-    else if (st == "480")
+	else if (st == "600")
+		self.StatusBarRes = 7;
+	else if (st == "480")
 	self.StatusBarRes = 6;
-    else if (st == "400")
+	else if (st == "400")
 	self.StatusBarRes = 5;
-    else if (st == "384")
+	else if (st == "384")
 	self.StatusBarRes = 4;
-    else if (st == "350")
+	else if (st == "350")
 	self.StatusBarRes = 3;
-    else if (st == "300")
+	else if (st == "300")
 	self.StatusBarRes = 2;
-    else if (st == "240")
+	else if (st == "240")
 	self.StatusBarRes = 1;
-    else
+	else
 	self.StatusBarRes = 0;
-    st = infokey (self, "sbar_size");
-    self.StatusBarSize = stof (st);
-    if ((self.StatusBarSize > 2) || (self.StatusBarSize < 0))
+	st = infokey (self, "sbar_size");
+	self.StatusBarSize = stof (st);
+	if ((self.StatusBarSize > 2) || (self.StatusBarSize < 0))
 	self.StatusBarSize = 0;
 };
 void () SpectatorDisconnect =
@@ -85,13 +85,11 @@ void () SpectatorImpulseCommand =
 };
 void () SpectatorThink =
 {
-    if (self.impulse)
+	if (self.impulse)
 	SpectatorImpulseCommand ();
-
-    if (self.motd <= 95)
+	if (self.motd <= 95)
 	TeamFortress_MOTD ();
-
-    if ((time > self.StatusRefreshTime) && (self.StatusBarSize != 0))
+	if ((time > self.StatusRefreshTime) && (self.StatusBarSize != 0))
 	RefreshStatusBar (self);
 };
 //END

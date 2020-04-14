@@ -3,7 +3,7 @@
 #define mtf_coop
 #define mtf_coop_bbelief
 //#define mtfcoop_uberhardmode
-//#define mtf_coop_halloween //halloween monster models and potions.
+//#define mtf_coop_halloween //halloween monster models and potions. Requires a recompile. -arg
 #ifdef mtf_coop_halloween
 //#define mtf_coop_halloween2		// make sure server has progs/pkin.mdl
 #define mtf_coop_bonus

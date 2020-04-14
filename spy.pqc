@@ -382,9 +382,9 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 		}
 		if (CTF_Map == 1) {
 		    if (te.goal_no == 1)
-			bprint (PRINT_HIGH, self.netname, " ÌÏÓÔ the ÂÌÕÅ flag!\n");
+			bprint (PRINT_HIGH, self.netname, " has the BLUE flag!\n");
 		    else if (te.goal_no == 2)
-			bprint (PRINT_HIGH, self.netname, " ÌÏÓÔ the ÒÅÄ flag!\n");
+			bprint (PRINT_HIGH, self.netname, " has the RED flag!\n");
 		}
 	    }
 	    te = find (te, classname, "item_tfgoal");
@@ -484,7 +484,7 @@ void() TeamFortress_SpyUndercoverThink =
 	{
 		if (infokey(world, "spymsgs") == "1")
 		{
-			sprint(self.owner, 2, "Ùïõ áòå äéóçõéóåä\n");
+			sprint(self.owner, 2, "You are disguised.\n");
 		}
 		if (invis_only == 1)
 		{
@@ -498,7 +498,7 @@ void() TeamFortress_SpyUndercoverThink =
 			self.owner.immune_to_check = time + 20;
 			if (self.skin != 0)
 			{
-				sprint(self.owner, 2, "Óëéî óåô ôï ");
+				sprint(self.owner, 2, "You are a: ");
 				TeamFortress_PrintClassName(self.owner, self.skin, 0, 2);
 				self.owner.undercover_skin = self.skin;
 				TeamFortress_SetSkin(self.owner);

@@ -58,7 +58,7 @@
 //
 //								TODO:
 //	Clean up source code for easy compiliation in fteccgui and 64bit versions.
-// 	- Down to 7 warnings on ftegccui compiler in Windows. 
+// 	- Down to 4 warnings on ftegccui compiler in Windows. 
 //	Submit said source to github for Open Source under GNU/GPL.
 //	Make the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
 //	Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
@@ -118,6 +118,7 @@
 // Generally in this order:
 // #defines, .floats, .entities, vectors, static floats , floats, float functions, and then void().
 // Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, etc.
+#define TRAIN_RETRIGGER		1 //johnfitz -- retriggerable trains plats.pqc
 #define ZG_PICKUPDIST_EXTRA			48	// extra distance added to pickupee's maxs, was 32
 #define TFI_MAXLINES		350			// no TFI file should exceed this many lines
 #define LOAD_THINKWALK					1
@@ -260,8 +261,9 @@ void(string blah) strunzone;
 .entity beartrap_target;				//Painkeep
 .entity turret_base;					// PAINKEEP
 .entity turret_base;					//PAINKEEP
-entity bt;							//the beartrap is an entity with a team_no now. -arg
-entity tesla_target;			//hiptems.qc
+entity egravity;						//needs to be an entity for collision detection with backbacks and other things. -arg
+entity bt;								//the beartrap is an entity with a team_no now. -arg
+entity tesla_target;					//hiptems.qc
 entity lastspawn_team1, lastspawn_team2, lastspawn_team3, lastspawn_team4;
 entity multi_ent;  //from weapons.pqc in the middle of the code.  Like everyone knows about it. -arg
 entity lastspawn;
@@ -272,6 +274,7 @@ entity bulletholes;			//hipdefs.qc
 entity lastbullet;			//hipdefs.qc
 entity hipdecoy;			//hipdefs.qc
 entity tracetossent;			// Nehara
+//entity rune_spawn_spot;					//spawn spot for runes	//runes.qc unused?
 //entity horn_charmer;			// horn of conjuring hipnotic
 //.entity lastplayer;		//for half-life, unused -arg
 //entity mini_f_client; // for mini sentry guns from defs.qc -arg
@@ -350,6 +353,12 @@ entity tracetossent;			// Nehara
 .float dragonInTransit;			// dragon specific fields mtf_rogue
 .float dragonAttacking;			// dragon specific fields mtf_rogue
 .float dragonPainSequence;		// dragon specific fields mtf_rogue
+//.float rune;					// what rune does this guy have? 	//runes.qc unused? -arg
+//.float runetime;				// last time we told him he's already got a rune	//runes.qc
+//.float rune1_last_noise_time;		//runes.qc unused?
+//.float rune2_last_noise_time;		//runes.qc unused?
+//.float rune3_last_noise_time;		//runes.qc unused?
+//.float rune4_last_regen_time;		//runes.qc unused?
 .float childrenSpawned;	// Other Rogue Fields
 .float ltrailLastUsed;		// Other Rogue Fields
 .float shield_death_time;	// Other Rogue Fields
@@ -393,16 +402,16 @@ entity tracetossent;			// Nehara
 .float fspec;					//light
 .float fspec2;
 .float tfstate;
-.float 		elevatorLastUse;		// elevator fields mtf_rogue
-.float		elevatorOnFloor;		// elevator fields mtf_rogue
-.float		elevatorToFloor;		// elevator fields mtf_rogue
-.float		plat2Called;			// plat2 fields mtf_rogue
-.float		plat2LastMove;			// plat2 fields mtf_rogue
-.float		plat2GoTime;			// plat2 fields mtf_rogue
-.float		plat2GoTo;				// plat2 fields mtf_rogue
-.float		shield_finished, antigrav_finished;	//MTF ROGUE
-.float		shield_time, antigrav_time;	//MTF ROGUE
-.float		items2;					//MTF_ROGUE
+.float	elevatorLastUse;		// elevator fields mtf_rogue
+.float	elevatorOnFloor;		// elevator fields mtf_rogue
+.float	elevatorToFloor;		// elevator fields mtf_rogue
+.float	plat2Called;			// plat2 fields mtf_rogue
+.float	plat2LastMove;			// plat2 fields mtf_rogue
+.float	plat2GoTime;			// plat2 fields mtf_rogue
+.float	plat2GoTo;				// plat2 fields mtf_rogue
+.float	shield_finished, antigrav_finished;	//MTF ROGUE
+.float	shield_time, antigrav_time;	//MTF ROGUE
+.float	items2;					//MTF_ROGUE
 .float 		inpain;					//MTF_ROGUE mummy.qc	
 .float		ammo_shells1, ammo_nails1, ammo_rockets1, ammo_cells1; //MTF_ROGUE
 .float		ammo_lava_nails;		//MTF_ROGUE
@@ -443,7 +452,7 @@ entity tracetossent;			// Nehara
 .float has_holo;
 .float oldweapon;
 .float oldcurrentammo;
-.float	dmgtime, gravity;
+.float dmgtime, gravity;
 .float oframe;
 .float playerclass;
 .float nextpc;
@@ -455,7 +464,7 @@ entity tracetossent;			// Nehara
 .float no_grenades_2;
 .float h_i_g, r_i_g, a_s, a_n, a_r, a_c, rv_s_h, rs_s_h, rv_gr, rs_gr, rs_g;
 .float rv_g;
-.float	area;
+.float area;
 .float area;
 .float area1;
 .float area2;
@@ -551,29 +560,29 @@ entity tracetossent;			// Nehara
 .float wetsuit_time;
 .float color;
 .float inpain;
-.float  endtime;		// Rotation	
-.float  rotate_type;	// Rotation
-.float      huntingcharmer;		// Hipnotic horn of conjuring	
-.float      charmed;			// Hipnotic horn of conjuring
-.float      duration;				// Hipnotic misc
-.float      items2;				// Hipnotic entry
-.float      gorging;			// Hipnotic 
-.float      stoleweapon;		// Hipnotic 
-.float      spawnsolidtype;		// Hipnotic 
-.float      spawnsilent;		// Hipnotic
-.float      spawnmulti;			// Hipnotic	
+.float endtime;		// Rotation	
+.float rotate_type;	// Rotation
+.float huntingcharmer;		// Hipnotic horn of conjuring	
+.float charmed;			// Hipnotic horn of conjuring
+.float duration;				// Hipnotic misc
+.float items2;				// Hipnotic entry
+.float gorging;			// Hipnotic 
+.float stoleweapon;		// Hipnotic 
+.float spawnsolidtype;		// Hipnotic 
+.float spawnsilent;		// Hipnotic
+.float spawnmulti;			// Hipnotic	
 .float gravity;
 .float DropFlagDelay; 			// from actions.pqc where this was hiding in duplicate code commented out ? -arg
-.float		idealpitch;			// calculated pitch angle for lookup up slopes
+.float idealpitch;				// calculated pitch angle for lookup up slopes
 .float aagun_nextfire; 		   //btf?
 .float fEnterTime, fUserID, fClientNo;
-.float      struck_by_mjolnir;	// Mjolnir
+.float struck_by_mjolnir;	// Mjolnir
 .float ishuman;					// frik code
 .float Next_Aircraft_Time;		// next time player can enter helo after ejecting - should fix some bugs i hope
 .float rotate_type;				//from hiprot.pqc
 .float endtime;					//from hiprot.pqc
 .float duration;				//from hiprot.pqc
-.float	healamount, healtype;
+.float healamount, healtype;
 .float active_vehicle;
 .float resup_vehicle;
 .float color, option2; 			//func_rotating
@@ -758,13 +767,13 @@ void () FlashTimer;
 //.string m_iszXController;	// for half-life unused -arg
 //
 //REGULAR STRINGS AND STRING FUNCTIONS.
-string burn_pain_sound_1;		// Nehara
-string burn_pain_sound_2;		// Nehara
-string burn_extinguish_sound;	// Nehara
-string burn_light_sound;		// Nehara
-string weld_fire_sound_1;		// Nehara
-string weld_fire_sound_2;		// Nehara
-string weld_explode_sound;		// Nehara
+string burn_pain_sound_1;				// Nehara
+string burn_pain_sound_2;				// Nehara
+string burn_extinguish_sound;			// Nehara
+string burn_light_sound;				// Nehara
+string weld_fire_sound_1;				// Nehara
+string weld_fire_sound_2;				// Nehara
+string weld_explode_sound;				// Nehara
 string nextmap;
 #ifdef mtf_coop_packet
 string (string packet_cmd) Packet_Slashpass; // not used really since the funcs are disabled -arg
@@ -788,26 +797,26 @@ string team_menu_string /* = "" */;
 .vector head_shot_vector;
 .vector oldangle;
 .vector cam_origin;
-.vector old_velocity;	//laser cannon Hipnotic
-.vector neworigin;		// Rotation
-.vector rotate;			// Rotation
-.vector spawnmins;			// Hipnotic
-.vector spawnmaxs;			// Hipnotic
-.vector neworigin;	//from hiprot.pqc
-.vector rotate;		//from hiprot.pqc
+.vector old_velocity;				//laser cannon Hipnotic
+.vector neworigin;					// Rotation
+.vector rotate;						// Rotation
+.vector spawnmins;					// Hipnotic
+.vector spawnmaxs;					// Hipnotic
+.vector neworigin;					//from hiprot.pqc
+.vector rotate;						//from hiprot.pqc
 #ifdef mtf_coop
 .vector orig_origin;
 #endif
-//.vector oldenemyorigin; // was used in vermis. quoth and other routines, unused -arg
-//.vector oldangles; // from dog.pqc, rat.pqc, and shambler.qc unused vars -arg
-//.vector origin2;  // from gaunt.qc not used? -arg
-//.vector origin3;	// from gaunt.qc not used? -arg
+//.vector oldenemyorigin;			// was used in vermis. quoth and other routines, unused -arg
+//.vector oldangles;				// from dog.pqc, rat.pqc, and shambler.qc unused vars -arg
+//.vector origin2;					// from gaunt.qc not used? -arg
+//.vector origin3;					// from gaunt.qc not used? -arg
 //.vector orig_angles;				// angles that an entity spawns with, generally. unused -arg
-//.vector spawnorigin;	// used for half-life, unused -arg
-//.vector rendercolor;		// for half-life unused -arg
-//.vector m_center;		// for half-life unused -arg
-//.vector m_start;		// for half-life unused -arg
-//.vector g_vecZero;	// for half-life unused -arg
+//.vector spawnorigin;				// used for half-life, unused -arg
+//.vector rendercolor;				// for half-life unused -arg
+//.vector m_center;					// for half-life unused -arg
+//.vector m_start;					// for half-life unused -arg
+//.vector g_vecZero;				// for half-life unused -arg
 vector blood_org /* = '0 0 0' */;
 vector puff_org /* = '0 0 0' */;
 vector tower    = '1664 -1664 0';	//azothfight.qc
@@ -820,20 +829,24 @@ vector GUN_FLAGROOM    = '325 -3280 -428'; //from frik2.qc -arg
 #else
 float TF_FLARE_OFF    = 1;
 #endif
-float IT_SWORD    = 4096;			//Nehara
-float MC_CONTROL    = 1;			//Nehara
-float MC_UP    = 2;					//Nehara
-float NAVLOGIC    = 1;				//Nehara
-float INTREPID    = 2;				//Nehara
-float BLINK    = 4;					//Nehara
-float TRIGGER_SPAWN    = 32;		//Nehara
-float EF_NODRAW    = 16;			//Nehara
-float NO_SWIM    = 16;				//Nehara
-float FL_BLOODLESS    = 8192;		//Nehara
-float FL_FLEE    = 16384;			//Nehara
-float FL_FREE    = 32768;			//Nehara
-float FL_COMMAND  = 65536;			//Nehara
-float FL_STRAT = 131072;			//Nehara
+float ITEM_RUNE1 = 1;				// Rune of Earth Magic:  Resistance		//runes.qc
+float ITEM_RUNE2 = 2;				// Rune of Black Magic:  Strength		//runes.qc
+float ITEM_RUNE3 = 4;				// Rune of Hell Magic:  Haste			//runes.qc
+float ITEM_RUNE4 = 8;				// Rune of Edler Magic:  Regeneration	//runes.qc
+float IT_SWORD   = 4096;			//Nehara
+float MC_CONTROL = 1;				//Nehara
+float MC_UP      = 2;				//Nehara
+float NAVLOGIC   = 1;				//Nehara
+float INTREPID   = 2;				//Nehara
+float BLINK      = 4;				//Nehara
+float TRIGGER_SPAWN = 32;			//Nehara
+float EF_NODRAW  = 16;				//Nehara
+float NO_SWIM	 = 16;				//Nehara
+float FL_BLOODLESS = 8192;			//Nehara
+float FL_FLEE      = 16384;			//Nehara
+float FL_FREE      = 32768;			//Nehara
+float FL_COMMAND   = 65536;			//Nehara
+float FL_STRAT   = 131072;			//Nehara
 float IT_AUTO_SHOTGUN    = 8388608;	//Nehara
 float IT_SPROCKET  = 128;			//Nehara
 float WELD_DAMAGE_RADIUS    = 70;	//Nehara	
@@ -953,26 +966,27 @@ float MAX_WAYPOINT_TIME;
 #endif
 //
 //FLOATS REGULAR
-float global_noticedelay;		//ai.pqc
-float strategy_move;			// Nehara
-float hknight_type;				// Nehara
-float panzy_mode;				// Nehara
-float irespawn;					// Nehara
-float tesla_numtargets;			//hipitems.qc
-float CHOOSE_ATMOS;				//thunder.qc
-float FLASH_ON;					//thunder.qc
-float COUNT_ON;					//thunder.qc
-float COUNT_THUNDER;			//thunder.qc
-float OFFSET_RAND;				//thunder.qc
-float actorStage;				//Rogue ending.qc
-float STAGE_START		= 0;	//Rogue ending.qc
-float STAGE_TO_POINT1 = 1;	//Rogue ending.qc
-float STAGE_AT_POINT1 = 2;	//Rogue ending.qc
-float STAGE_TO_POINT2 = 3;	//Rogue ending.qc
-float STAGE_AT_POINT2 = 4;	//Rogue ending.qc
-float STAGE_FIRING	= 5;	//Rogue ending.qc
-float MUMMY_STRONG = 4;			//Rogue mummy.qc
-float earthquake_active;				//MTF ROGUE
+//float runespawn;	// have we spawned runes?	//runes.qc old ? unused? -arg
+float global_noticedelay;			//ai.pqc
+float strategy_move;				// Nehara
+float hknight_type;					// Nehara
+float panzy_mode;					// Nehara
+float irespawn;						// Nehara
+float tesla_numtargets;				//hipitems.qc
+float CHOOSE_ATMOS;					//thunder.qc
+float FLASH_ON;						//thunder.qc
+float COUNT_ON;						//thunder.qc
+float COUNT_THUNDER;				//thunder.qc
+float OFFSET_RAND;					//thunder.qc
+float actorStage;					//Rogue ending.qc
+float STAGE_START = 0;				//Rogue ending.qc
+float STAGE_TO_POINT1 = 1;			//Rogue ending.qc
+float STAGE_AT_POINT1 = 2;			//Rogue ending.qc
+float STAGE_TO_POINT2 = 3;			//Rogue ending.qc
+float STAGE_AT_POINT2 = 4;			//Rogue ending.qc
+float STAGE_FIRING	= 5;			//Rogue ending.qc
+float MUMMY_STRONG = 4;				//Rogue mummy.qc
+float earthquake_active;			//MTF ROGUE
 float earthquake_intensity;			//MTF ROGUE
 float cutscene_running;				//MTF ROGUE
 float IT2_ARMOR1				= 1;	//24 Other Rogue Fields
@@ -1163,7 +1177,7 @@ float (entity e) turret_inFront;				// PAINKEEP
 //float landmarked; //Tells us that there is a landmark entity in the map being used for halflife maps. -arg
 //
 //				Unused function with float returns.
-//float (entity check, entity checkFor) bolt_checkForLoops;		// PAINKEEP chain lightning gun
+//float (entity check, entity checkFor) bolt_checkForLoops;		// PAINKEEP chain lightning gun,not yet
 //float (entity targetEntity) bolt_infront;						// PAINKEEP
 //
 //===============================================================================
@@ -1180,18 +1194,19 @@ float (entity e) turret_inFront;				// PAINKEEP
 .void() spawnthink;			// Hipnotic 
 .void() splash_func; // The function to call to make the splash splash.qc -arg
 entity(float team_num) FindTeamSpawnPoint;
+void() respawn;  //client.pqc but can be addressed here -arg
 entity() SelectSpawnPoint;
-entity () FindIntermission;
+entity() FindIntermission;
 entity(entity scanner, float scanrange, float enemies, float friends) T_RadiusScan;
 entity (float gno) Findgoal;
-void() monster_spawner_spawn; //fix for 2fortfood_coop.bsp -arg
-void() BTF_Precache;
+void () monster_spawner_spawn; //fix for 2fortfood_coop.bsp -arg
+void () BTF_Precache;
 void () missing_precaches;  //put sounds and models missing here to load first absolutely -arg
 //						FLOAT FUNCTIONS and voids
 void () MTF_RemoveMonster;  //This was called in middle of mtf_coop.qc But should be defined first for summon_think to
 // prevent crashes -arg
-void ( float howmany ) MTF_Coop_ViewTopRanks;
-float ( float currexp ) Coop_ExpForNextLevel;
+void( float howmany ) MTF_Coop_ViewTopRanks;
+float( float currexp ) Coop_ExpForNextLevel;
 void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank;
 void () MTF_Resurrect_Player_Find;
 void () Vote_CheckWin;
@@ -1250,6 +1265,7 @@ void (float playerid, float item_slot, float item_price)  Inventory_TradeItem;
 float (string s1, string s2, string s3, string s4, string s5, string s6) More_Commands;
 float(float num_args, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) ClientCommand;
 float() crandom;
+void() Menu_StuffClassHelp;
 void ( entity to_summon ) BeginSummon;
 void () MTF_Coop_SummonMinion;
 float() DoorShouldOpen; // from doors.pqc
@@ -1716,10 +1732,8 @@ void() TeamFortress_DisplayDetectionItems;
 void() TeamFortress_SetHealth;
 void() TeamFortress_SetEquipment;
 void() TeamFortress_RemoveTimers;
-void(float Suicided) TeamFortress_SetupRespawn;
 void() TeamFortress_CheckClassStats;
 void(entity Player, float Armorclass) TeamFortress_DescribeArmor;
-void() TeamFortress_AmmoboxTouch;
 void() TeamFortress_ExplodePerson;
 void() NormalGrenadeTouch;
 void() NormalGrenadeExplode;
@@ -1727,8 +1741,8 @@ void() PlayerObserverMode;
 void(string halias, float himpulse1, float himpulse2) TeamFortress_Alias;
 void() TeamFortress_Regenerate;
 void() TeamFortress_RegenerateCells;
-void() Menu_Res;
-void(float inp) Menu_Res_Input;
+//void() Menu_Res;						//These were mentioned, but never defined -arg
+//void(float inp) Menu_Res_Input;		//These were mentioned, but never defined -arg
 void() Menu_VoteChoice;
 void(float inp) Menu_VoteChoice_Input;
 void() Menu_Merchant;
@@ -2489,11 +2503,13 @@ float(float tno) TeamFortress_TeamSet =
 {
 	local string st;
 	local float tc;
-	if (teamplay < TF_FLARE_OFF)
-	{
-		sprint(self, 2, "Teamplay is not On, so FortressTeams are inactive.\n");
-		return 0;
-	}
+//	if (teamplay < TF_FLARE_OFF)
+//	{
+//		sprint(self, 2, "Teamplay is not On, so FortressTeams are inactive.\n");
+//		return 0;
+//	}  // Complete bs there is always 1 team, blue and we want any team on any map. -arg
+//Whether there are maps that can deal with 1,2, or 4 teams, they should make it better.
+// or users should know that a 2 team only map might hve problem with 4. -arg
 #ifdef mtf_coop_lms
 	local entity te;
 	te = find ( world, classname, "info_lmsdetect" );
@@ -2516,21 +2532,24 @@ float(float tno) TeamFortress_TeamSet =
 		te = find (te, classname, "info_lmsdetect");
 	}
 #endif
-	if (tno > number_of_teams && number_of_teams != 0)
-	{
-		sprint(self, 2, "There can be only ");
-		st = ftos(number_of_teams);
-		sprint(self, 2, st);
-		sprint(self, 2, " teams on this map.\nTry again\n");
-		return 0;
-	}
+//Nice check, but there are maps that can have 1,2,3,4 teams and not codified by the map creator.
+//This is what changes team fortress maps into mega/uber regardless of creator.
+//Let the players decide if the bugs and quirks are there. Just play the map. -arg
+//	if (tno > number_of_teams && number_of_teams != 0)
+//	{
+//		sprint(self, 2, "There can only be ");  //fixed wording -arg
+//		st = ftos(number_of_teams);
+//		sprint(self, 2, st);
+//		sprint(self, 2, " teams on this map.\nTry again\n");
+//		return 0;
+//	}
 	if (self.team_no > 0)
 	{
 		sprint(self, 2, "You're already in Team No ");
 		st = ftos(self.team_no);
 		sprint(self, 2, st);
 		sprint(self, 2, ".\n");
-		return 0;
+//		return 0;  //Don't follow what the map.bsp file says , we can play 4 teams. -arg
 	}
 	tc = TeamFortress_TeamGetNoPlayers(tno);
 #ifdef mtf_coop
@@ -2539,8 +2558,8 @@ float(float tno) TeamFortress_TeamSet =
 	if (tc >= TeamFortress_TeamGetMaxPlayers(tno))
 #endif
 	{
-		sprint(self, 2, "That team is full. Pick another.\n");
-		return 0;
+		sprint(self, 2, "That team is full. Go ahead, but consider picking another.\n");
+//		return 0;  // So, maybe everyone wants to be on the same team, they will balance it themselves, if it's a match. -arg
 	}
 	if (TeamFortress_TeamGetColor(tno) == 0)
 	{
@@ -2548,8 +2567,8 @@ float(float tno) TeamFortress_TeamSet =
 		if (TeamFortress_TeamGetColor(tno) == 0)
 		{
 			sprint(self, 2, "You can't start a new team with your color, since another ");
-			sprint(self, 2, "already using that color. Change your pants color, then try again.\n");
-			return 0;
+			sprint(self, 2, "change your pants color, someone is already using that color or it is zero. Change your team with [cmd changeteam].\n");
+//			return 0; //Who cares, we have autoid anyway as enemy or friendly.  perfidy allowed, customskins are allowed anyway. -arg
 		}
 		bprint(2, self.netname);
 		bprint(2, " has started Team No ");
@@ -3471,7 +3490,7 @@ float(entity targ, entity attacker, float damage) TeamEqualiseDamage =
 		adv = 0.1;
 	}
 	newdam = newdam * (TF_FLARE_OFF / adv);
-	return newdam;
+	return damage; //This can get screwy with one player gaming this against a large team like monsters. So just send back damage -arg
 };
 void() TeamFortress_StatusQuery = 
 {
@@ -3752,9 +3771,8 @@ void() TeamFortress_ChangeClass =
 	}
 #endif
 #ifdef mtf_coop
-	if (self.monster_type > 0) {
-		
-	}
+	if (self.monster_type > 0)
+	{}
 	else
 #endif
 	if (self.playerclass != 0)
@@ -3899,7 +3917,7 @@ void() TeamFortress_ChangeClass =
 	}
 	if (!IsLegalClass(self.impulse - 100) && self.impulse != 1)
 	{
-		sprint(self, 2, "You cannot play that playerclass on this map. \n");
+		sprint(self, 2, "You cannot play that player class on this map. \n");
 		TeamFortress_DisplayLegalClasses();
 		return;
 	}
@@ -4482,7 +4500,7 @@ void() TeamFortress_DisplayLegalClasses =
 {
 	local float gotone;
 	local float ill;
-	sprint(self, 2, "Legal Classes for your team are:\n");
+	sprint(self, 2, "Legal classes for your team are:\n");
 	gotone = 0;
 	ill = TeamFortress_TeamGetIllegalClasses(self.team_no);
 	if (!(illegalclasses & 1) && !(ill & 1))
@@ -5508,13 +5526,7 @@ void() TeamFortress_AmmoboxTouch =
 		TeamFortress_Discard ();
 		self = _l_10486;
 	}
-	sprint(other, 2, "You picked up 1 beartrap.\n ");
-	sprint(other, 2, "You picked up 1 gravity well.\n ");
-	sprint(other, 2, "You picked up 1 can of pork n beans.\n");
-	sprint(other, 2, "You picked up 1 auto sentry gun. \n");
-	self.pk_gravitywellammo = self.pk_gravitywellammo +1;
-	self.pk_turretammo = self.pk_turretammo +1;
-	self.pk_canpabammo = self.pk_canpabammo +1;
+	sprint(other, 2, "You picked up some ammo, and 1 beartrap.\n ");
 	self.pk_beartrapammo = self.pk_beartrapammo +1;
 	dremove(self);
 	self = other;
@@ -7072,7 +7084,7 @@ void() UseSpecialSkill =
 											}
 											else
 											{
-												sprint(self, 2, "Removed Lock\n");
+												sprint(self, 2, "Removed lock.\n");
 												self.enemy = world;
 											}
 										}
@@ -7199,19 +7211,19 @@ void () TeamFortress_Inventory =
 	_l_10157 = ftos (self.team_no);
 	if ((_l_10157 == "1"))
 	{
-		sprint (self, 2.000000, "ÂÌÕÅ");
+		sprint (self, 2.000000, "BLUE");
 	}
 	if ((_l_10157 == "2"))
 	{
-		sprint (self, 2.000000, "ÒÅÄ");
+		sprint (self, 2.000000, "RED");
 	}
 	if ((_l_10157 == "3"))
 	{
-		sprint (self, 2.000000, "ÙÅÌÌÏ×");
+		sprint (self, 2.000000, "YELLOW");
 	}
 	if ((_l_10157 == "4"))
 	{
-		sprint (self, 2.000000, "ÇÒÅÅÎ");
+		sprint (self, 2.000000, "GREEN");
 	}
 	sprint (self, 2.000000, " team.\n");
 	if ((self.lives != -1.000000))
@@ -7230,10 +7242,10 @@ void () TeamFortress_Inventory =
 	}
 	if ((self.no_grenades_1 > 0.000000))
 	{
-		sprint (self, 2.000000, " Û");
+		sprint (self, 2.000000, "[");
 		_l_10157 = ftos (self.no_grenades_1);
 		sprint (self, 2.000000, _l_10157);
-		sprint (self, 2.000000, "Ý ");
+		sprint (self, 2.000000, "]");
 		if ((self.tp_grenades_1 == 1.000000))
 		{
 			sprint (self, 2.000000, "normal grenade");
@@ -7306,10 +7318,10 @@ void () TeamFortress_Inventory =
 	}
 	if ((self.no_grenades_2 > 0.000000))
 	{
-		sprint (self, 2.000000, " Û");
+		sprint (self, 2.000000, "[ ");
 		_l_10157 = ftos (self.no_grenades_2);
 		sprint (self, 2.000000, _l_10157);
-		sprint (self, 2.000000, "Ý ");
+		sprint (self, 2.000000, " ]");
 		if ((self.tp_grenades_2 == 1.000000))
 		{
 			sprint (self, 2.000000, "normal grenade");
@@ -7633,7 +7645,7 @@ void () TeamFortress_ShowTF =
 		sprint (self, 2.000000, "   Grapple Off.\n");
 	}
 	ReCheckRestrictions ();
-	sprint (self, 2.000000, "\n\n\nÃìáóó Òåóôòéãôéïîóº\n\n");
+	sprint (self, 2.000000, "\n\n RESTRICTIONS \n\n");
 	_l_10205 = 0.000000;
 	_l_10205 = _l_10205 + ShowTF_PrintCR ("   Scout   : ", cr_scout);
 	_l_10205 = _l_10205 + ShowTF_PrintCR ("   Sniper  : ", cr_sniper);
@@ -7646,7 +7658,7 @@ void () TeamFortress_ShowTF =
 	_l_10205 = _l_10205 + ShowTF_PrintCR ("   Engineer: ", cr_engineer);
 	if (!_l_10205)
 	{
-		sprint (self, 2.000000, "   none set\n");
+		sprint (self, 2.000000, "   none set.\n");
 	}
 };
 void () TeamFortress_PrimeGrenade =
@@ -9479,7 +9491,7 @@ void() PlayerObserverMode =
 	if (self.#lms_lives < 0)
 		self.lives = -1;
 #endif
-	self.team_no = -1;
+	self.team_no = -1; // Just in case, forces you to pick a team on join. grav well should not suck observers in. -arg
 	self.flags = 8 | 128 | 512;
 	self.waterlevel = 3;
 	self.takedamage = 0;
@@ -9549,8 +9561,8 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 						targ.being_juggled = 1;
 						targ.flags = targ.flags - FL_ONGROUND;
 						targ.velocity_z += 325;		// was 300
-						targ.velocity = targ.velocity + dir * damage * 4;			
-				}		
+						targ.velocity = targ.velocity + dir * damage * 4;
+				}
 			}
 			damage = MTF_Monster_Take_Damage( attacker, targ, damage );
 		}
@@ -9727,8 +9739,7 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
 #endif
           	if (self.th_pain)
           	{
-          		self.th_pain(attacker, take);  //why is there 2 paramters? -arg
-//          		self.th_pain(attacker); // changed to 1 param and see what happens.
+          		self.th_pain(attacker, take);  
 #ifdef mtf_coop
 			self.#npc_lastruntime = 0;
 #endif
@@ -11114,7 +11125,7 @@ void (entity t_other) MTF_DoEndBonus =
 	other = world;
 	if (no_more_exp == #FALSE) {
 	if (survival_mode) {
-		bprint(2,"Players have completed survival mode! Good work!\n");
+		bprint(2,"Players have completed survival mode! Good team work!\n");
 		te = find ( world, classname, "player" );
 		while (te)
 		{
@@ -11152,7 +11163,10 @@ void (entity t_other) MTF_DoEndBonus =
 #ifdef mtf_coop_achievements
 			Achievements_Change( world, world, ACHIEVEMENTS_GLOBALADD, ACHIEVEMENT_COMPLETIONIST, 1 );
 #endif
-			exptotal = ceil(total_monsters*3.5);
+//You have to have some exp for completing survival mode that might not have monsters on the map at all. -arg
+//So all players get 500 exp at a minimum.
+//TODO: Give more exp to the winning team based on frag count 1st,2nd,3rd place when there is/no monsters.
+			exptotal = (ceil(total_monsters*3.5)+ 500);
 
 			te = find ( world, classname, "monster_score" );
 			if (te.netname == "Monsters") {
@@ -11489,10 +11503,10 @@ float(entity targ) visible =
 	local vector spot2;
 	spot1 = self.origin + self.view_ofs;
 	spot2 = targ.origin + targ.view_ofs;
-#ifdef mtf_coop_expsys
+//	if ((self.#is_minion == #TRUE && targ == self.owner) && (self.team_no != #is_minion.team_no))		// follow owner, if not on the same team no, shoot him! -arg 
+//		return 1;
 	if (self.#is_minion == #TRUE && targ == self.owner)		// follow owner, don't shoot him
 		return 0;
-#endif
 	traceline(spot1, spot2, TF_FLARE_OFF, self);
 	if (trace_inopen && trace_inwater)
 	{
@@ -11678,7 +11692,7 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 	if (targ.monster_items & MITEM_QUAD) { addexp += 5; }
 	if (targ.monster_items & MITEM_INVISIBLE) { addexp += 5; }
 	if (targ.monster_items & MITEM_SPEED) { addexp += 5; }
-	if (targ.monster_items & MITEM_MEGAHEALTH) { addexp += 5; }
+	if (targ.monster_items & MITEM_MEGAHEALTH) { addexp += 10; }
 	if (targ.monster_items & MITEM_FLAME) { addexp += 5; }
 	if (targ.monster_items & MITEM_ICE) { addexp += 5; }
 	if (targ.monster_items & MITEM_LIGHTNING) { addexp += 5; }
@@ -16454,10 +16468,10 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 		sprint( self, 2, ": " );
 		rank = stof(read(file));
 		sprint( self, 2, substr( frik_strcat( ftos(rank), "                      " ), 0, 9) );
-		sprint( self, 2, "         ¨ìåöåì: " );
+		sprint( self, 2, "         level: " );
 		level = Coop_GetLevel(rank);
 		sprint( self, 2, ftos(level) );
-		sprint( self, 2, "©\n" );
+		sprint( self, 2, " \n" );
 
 		strunzone(rname);
 	}	
@@ -16471,14 +16485,14 @@ void () MTF_Coop_ViewTopMapRanks =
 	file = open (fname, 0);
 	if ( file == -1 )
 	{
-		sprint( self, 2, "No top ranks recorded for " );
+		sprint( self, 2, "No top ranks recorded for [" );
 		sprint( self, 2, mapname );
-		sprint( self, 2, " .\n" );
+		sprint( self, 2, "].\n" );
 		return;
 	}
-	sprint( self, 2, "Ôïð Òáîëó æïòº " );
+	sprint( self, 2, "Top frags for map [" );
 	sprint( self, 2, mapname );
-	sprint( self, 2, " .\n" );
+	sprint( self, 2, "].\n" );
 	read(file);		// skip line 1
 	rname = strzone(read(file));
 	rname = strzone(rname);
@@ -17867,12 +17881,14 @@ float () W_BestWeapon =
 {
 	local float it;
 	it = self.weapons_carried;
+//this is where I think you can't switch to elec gun with 0 shotgun shells. -arg
 	if ((((self.ammo_cells >= 1) && (it & 65536)) && (self.waterlevel <= 1)))
 	{
 		return (65536);
 	}
 	else
 	{
+
 		if ((((self.ammo_cells >= 6) && (self.ammo_shells >= 1)) && (it & 32768)))
 		{
 			return (32768);
@@ -17975,10 +17991,15 @@ void () BackpackTouch =
 	if (other.is_monster == 1)
 		return;
 #endif
-	if ((other.classname != "player") && other.classname != "bot")
+	if (other.classname != "player")
 	{
 		return;
 	}
+//	if ((other.netname = "Gravity_Well") 
+//Don't try to give ammo to gravity well -arg
+//	{
+//	return;
+//	}
 	if ((other.health <= 0.000000))
 	{
 		return;
@@ -18034,13 +18055,11 @@ void () BackpackTouch =
 		TeamFortress_Discard ();
 	}
 	sound (other, 3.000000, "weapons/lock4.wav", 1.000000, 1.000000);
-//		stuffcmd (other, "bf\n");  // what does this do? 
+		stuffcmd (other, "bf\n");  // what does this do? 
 	dremove (self);
 	self = other;
-	sprint5(other, 2, "You picked up 1 beartrap.\n ");  //report pk goodies -arg
-	sprint5(other, 2, "You picked up 1 gravity well.\n ");
-	sprint5(other, 2, "You picked up 1 can of pork n beans.\n");
-	sprint5(other, 2, "You picked up 1 auto sentry gun. \n");
+	sprint5(other, 2, "You picked up some misc ammunition.\n ");
+	sprint5(other, 2, "You picked up 1 beartrap, 1 gravity well, 1 can of pork n beans, 1 auto sentry turrret.\n ");  //report pk goodies -arg
 	self.pk_gravitywellammo = self.pk_gravitywellammo +1;
 	self.pk_turretammo = self.pk_turretammo +1;
 	self.pk_canpabammo = self.pk_canpabammo +1;
@@ -19003,8 +19022,12 @@ float() turret_dropTurret =
 	turret.velocity = aim (self, 800); // efc aiming
 	turret.velocity = turret.velocity * (500 + random() * 20) + '0 0 200'; // efc aiming
 	turret.turret_base.v_angle = self.v_angle;
-	turret.turret_timeout = time + 120;																																							//SH* Turret life in secs
+	turret.turret_timeout = time + 120;			//SH* Turret life in secs
 	turret.nextthink = time + 0.1;
+		if (self.super_damage_finished > time)
+		{
+			turret.effects = EF_BLUE;   // Make turret blue when player is on quad. :} -arg
+		}
 	turret.think = turret_searchForEnemy;
 	setmodel (turret.turret_base, "progs/turstand.mdl");
 	setsize (turret, '-5 -5 -18', '5 5 1');
@@ -19292,7 +19315,7 @@ void() turret_nailTouch =
 		SpawnBlood (org, 15);
 		deathmsg = 44;
 		T_Damage (other, self, self.owner, 40);
-		if (self.super_damage_finished < time)  // add damage if player is on quad.
+		if (self.super_damage_finished > time)  // add damage if player is on quad.
 		{
 			deathmsg = 44;
 			T_Damage (other, self, self.owner, 200);	
@@ -20860,7 +20883,7 @@ void () Achievements_Set =
 			else
 				ach_total = 0;
 			if (Achievements_CheckComplete(a_type) <= ach_total) {
-				bprint(2, "ÎE× AÃHÉEÖEÍEÎT ");
+				bprint(2, "Achievement earned! ");
 				bprint(2, t_plyr.connect_name);
 				bprint(2, " has earned the achievement: ");
 				bprint(2, Achievements_GetName(a_type) );
@@ -21030,9 +21053,9 @@ void (entity plyr, float amnt, float rcrd) Record_Check =
 			return;
 		if (amnt > record_fer)
 		{
-			bprint(2, "ÎÅ× ÒÅÃÏÒÄº ");
+			bprint(2, "NEW RECORD! ");
 			bprint(2, plyr.netname);
-			bprint(2, " has ÂÒÏËÅÎ the last ÆÅÒ record of ");
+			bprint(2, " has BROKEN the last FER record of ");
 			bprint(2, ftos(record_fer));
 			bprint(2, " by getting a ");
 			bprint(2, ftos(amnt));
@@ -21048,9 +21071,9 @@ void (entity plyr, float amnt, float rcrd) Record_Check =
 		{
 			if (record_fragholder != plyr.netname)
 			{
-				bprint(2, "ÎÅ× ÒÅÃÏÒÄº ");
+				bprint(2, "New RECORD! ");
 				bprint(2, plyr.netname);
-				bprint(2, " has ÂÒÏËÅÎ the last ÆÒÁÇ record of ");
+				bprint(2, " has BROKEN the last FRAG record of ");
 				bprint(2, ftos(record_frags));
 				bprint(2, " by getting a frag score of ");
 				bprint(2, ftos(amnt));
@@ -21110,7 +21133,7 @@ void ( entity to_summon ) BeginSummon =
 	newmon.nextthink = time + 1;
 	newmon.think = summon_respawn_think;
 	newmon.lives = -1;
-	newmon.team_no = self.team_no;
+	newmon.team_no = self.team_no; //Same team number as summoner -arg
 	newmon.monster_string = "false";		// not "off".. so we can't re-resurrect 
 	newmon.is_monster = 1;
 	newmon.effects = #EF_GREEN; // color the summoned monsters green to easily spot them for Fortress One, older clients.
@@ -21123,7 +21146,7 @@ void ( entity to_summon ) BeginSummon =
 	goalie.armorvalue = time + goalie.health;
 	goalie.think = summon_think;
 	goalie.nextthink = time + .1;
-	goalie.team_no = self.team_no;
+	goalie.team_no = self.team_no; //Same team number as summoner -arg
 	goalie.touch = Coop_MinionMonsterTouch;
 	goalie.effects = #EF_GREEN;
 #ifdef NEW_DOT
@@ -21133,7 +21156,7 @@ void ( entity to_summon ) BeginSummon =
 	setmodel (goalie, "progs/dot3.spr"); // yes, precache this model also.
 #endif
 	sprint( self, 2, "You are attempting to summon a minion...\n" );
-	self.#allow_next_summon_time = (time + 5) - self.minion_attr; // was 18 but we need armies of summons to fight with in multi-team mode. -arg
+	self.#allow_next_summon_time = (time + 5) - self.minion_attr; // was 18 but we need armies of summons to fight within multi-team mode. -arg
 };
 void () MTF_Coop_SummonMinion =
 {
@@ -21218,14 +21241,14 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 					{
 						gotthrough = 1;
 						stuffcmd(te, "play misc/talk.wav\n");
-sprint(te, 2, "?? ¨");
+sprint(te, 2, "From ");
 sprint(te, 2, self.netname );
-sprint(te, 2, "©? ");
+sprint(te, 2, "message ");
 sprint(te, 2, arg3);
 sprint(te, 2, "\n");
 sprint(self, 2, "PM to ");
 sprint(self, 2, te.netname );
-sprint(self, 2, " sent\n");
+sprint(self, 2, " sent.\n");
 						stuffcmd(self, "play misc/talk.wav\n");
 						self.cooldown = (time + 4);
 						return 1;
@@ -21249,7 +21272,7 @@ sprint(self, 2, " sent\n");
 	if (!strcasecmp("votemap",arg1))
 	{
 		if (!strcasecmp("hippos",arg2)) {
-			if (num_players < 3) {
+			if (num_players < 2) {
 				sprint(self, 2, "More players are required to initiate this vote.\n");
 				return 1;
 			}
@@ -21288,9 +21311,9 @@ sprint(self, 2, " sent\n");
 		}
  		else
 		{
-			sprint(self,2,"The server doesn't have the ?");
+			sprint(self,2,"The server doesn't have the [");
 			sprint(self,2,arg2);
-			sprint(self,2,"? map.\n");
+			sprint(self,2,"] map.\n");
                         return 1;
 		}
 	}
@@ -22024,7 +22047,8 @@ void ( ) MTF_Resurrect_Player_Find =
 	}
 	while (head)
 	{
-		if (head.is_monster < 1 && head.classname == "player" && head.has_disconnected == 0 && head.health <= 0)
+		if (head.is_monster < 1 && head.classname == "player" && head.has_disconnected == 0 && head.health <= 0 && (head.team_no == self.team_no))
+		//added logic to only allow cmd res on team members of the same team. Don't assume there is only team 1 and monsters only. -arg
 		{
 			if (vlen(head.origin - self.origin) <= 56) {
 				sprint (self, PRINT_HIGH, "You cannot stand on ");
@@ -22037,7 +22061,7 @@ void ( ) MTF_Resurrect_Player_Find =
 		}
 		head = head.chain;
 	}
-	sprint(self, 2, "Nobody's close enough to resurrect.\n");
+	sprint(self, 2, "Nobody's close enough to resurrect on your team.\n"); //changed wording to deal with more than 1 team.
 };
 void () TradeThink =
 {
@@ -22425,17 +22449,20 @@ void (float can_be_dead) MonsterItemTouch =
 #endif
 	else if (self.weapon == 20) {		// resurrection cube
 		bprint(2, other.netname);
-		bprint(2, " has used the resurrection cube! Players can now resurrect or reconnect\n");
+		bprint(2, " has used the resurrection cube for their team! Players on that team can now resurrect or reconnect.\n");
 		oldself = self;
 		self = world;
-		
 		hax = find(world, classname, "resdummy");
 		while (hax)
 		{
-			if (hax.monster_type != 1) {						// don't res disconnected players
+			if (hax.monster_type != 1) {	// don't res disconnected players, they can use cmd beg
 				hax.enemy.origin = hax.origin + '0 0 24';
-				MTF_Resurrect_Player (hax.enemy);
-				dremove( hax );
+//put in logic to only resurrect team members, not everyone. -arg
+				if (hax.team_no == self.team_no)
+				{
+					MTF_Resurrect_Player (hax.enemy);
+					dremove( hax );
+				}
 			}
 			hax = find(hax, classname, "resdummy");
 		}
@@ -22492,7 +22519,7 @@ void (float can_be_dead) MonsterItemTouch =
 			lvl2 = Coop_GetLevel(other.coop_exp - 2000);
 			if ( lvl1 == lvl2 )
 			{
-				sprint(other, 2, "Rut Roh! The cake is a lie! You lose 2000 exp :(.\n");	
+				sprint(other, 2, "Rut Roh! The cake is a lie! You lose 2000 exp :( .\n");	
 				other.coop_exp = other.coop_exp - 2000;
 				MTF_Coop_PreWriteExperience( other, other.connect_name, other.coop_exp );
 			}
@@ -22604,17 +22631,18 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		Inventory_TradeItemDecision (0);
 	}
 	
-	else if (s1 == "count")
+	else if (s1 == "extrahelp")
 	{
 		bprint(2, ftos(strcount()) );
 		bprint(2, " is the str count.\n");
+		Menu_StuffClassHelp();
 	}
 #endif
 	else if (s1 == "help")
 	{
 		if (!s2 || s2 == "")
 		{
-			sprint( self, 2, "General help. \n" );
+			sprint( self, 2, "General help. \n" );
 			sprint( self, 2, "Usage: cmd help <topic> .\n");
 			sprint( self, 2, "EXP - Will provide help on experience points.\n");
 			sprint( self, 2, "AVAILABLE TOPICS\n");
@@ -22632,7 +22660,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost. Farts damage enemies.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
 			sprint (self, 2.000000, "impulse  68 - Throws a beartrap.\n");
-			sprint( self, 2, "End of help.\n");
+			sprint( self, 2, "Press 8 in game for more menus, or use [cmd extrahelp] .\n");
 			return 1;
 		}
 #ifdef mtf_coop_expsys
@@ -23116,10 +23144,32 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	}
 	else if (s1 == "beg")
 	{
-	sprint(self, 2, self.netname);
-			sprint(self, 2, " begs for forgivness from dropping connection, and is resurrected.\n");
-	MTF_Resurrect_Player (self);
+	if ((self.deadflag) && survival_mode)
+	{
+		sprint(self, 2, self.netname);
+		sprint(self, 2, " begs for forgiveness from dropping connection, and is resurrected.\n");
+		self.ammo_cells = 666; // set to respawn at beginning -arg
+		MTF_Resurrect_Player (self);
 		return 1;
+	}
+	if (!(self.deadflag) && survival_mode)
+	{
+		sprint(self, 2, self.netname);
+		sprint(self, 2, " asked to be moved to the start of the map in survival mode. Done.\n");
+		self.ammo_cells = 666;	// set to respawn at beginning -arg
+		spawn_tfog (self.origin);	//wink them out -arg
+		PutClientInServer();	//wink them back in without killing them and ending survival mode if they are the only player. -arg :}
+		return 1;
+	}
+	else
+	{
+	sprint(self, 2, self.netname);
+	sprint(self, 2, " was alive. The server killed him and respawned him for being a wuss begging to leave combat. -6 points.\n");
+	self.real_frags = self.real_frags - (TF_FLARE_OFF *5 ); // The player should just kill instead. I had to code this in to deal with users using cmd beg in non survival and not dead states. So be it. -arg
+	ClientKill();
+	respawn();
+		return 1;
+	}
 	}
 	else if (s1 == "saymdl")
 	{
@@ -23959,4 +24009,4 @@ void () respawn_monster =
 		Killed (self, world);
 	}	
 };
-//END
+//END 

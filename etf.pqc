@@ -23,6 +23,7 @@ void () func_goalitem =
 			self.owned_by = 1;
 			SetupStuff(1);
 		}
+//TODO: copy the above if and make teams 3 and 4 goals ? -arg
 	}
 	self.message = self.carried_message;
 	self.noise = self.carried_sound;

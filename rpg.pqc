@@ -196,25 +196,25 @@ void SV_ParseClientCommand (string st) =
 			teamct	= 4;
 			teamp = teamcount4;
 		}
-		if (self.team_no == 1) { if ((teamcount1 - 1) < teamp) {
-				sprint (self, 2.000000, "You cannot switch to that team.\n");
-				return;
-			}
+//		if (self.team_no == 1) { if ((teamcount1 - 1) < teamp) {
+//				sprint (self, 2.000000, "You cannot switch to that team.\n");
+//				return;
+//			}
 		}
-		if (self.team_no == 2) { if ((teamcount2 - 1) < teamp) {
-				sprint (self, 2.000000, "You cannot switch to that team.\n");
-				return;
-			}
+//		if (self.team_no == 2) { if ((teamcount2 - 1) < teamp) {
+//				sprint (self, 2.000000, "You cannot switch to that team.\n");
+//				return;
+//			}
 		}
-		if (self.team_no == 3) { if ((teamcount3 - 1) < teamp) {
-				sprint (self, 2.000000, "You cannot switch to that team.\n");
-				return;
-			}
+//		if (self.team_no == 3) { if ((teamcount3 - 1) < teamp) {
+//				sprint (self, 2.000000, "You cannot switch to that team.\n");
+//				return;
+//			}
 		}
-		if (self.team_no == 4) { if ((teamcount4 - 1) < teamp) {
-				sprint (self, 2.000000, "You cannot switch to that team.\n");
-				return;
-			}
+//		if (self.team_no == 4) { if ((teamcount4 - 1) < teamp) {
+//				sprint (self, 2.000000, "You cannot switch to that team.\n");
+//				return;
+//			}
 		}
 		if (teamp == 0)
 		{
@@ -279,8 +279,8 @@ void SV_ParseClientCommand (string st) =
 					{
 						gotthrough = 1;
 						stuffcmd(te, "play misc/talk.wav\n");
-						sprint(te, 2, "ÐÍ ¨",self.netname,"©º ",f,"\n");
-						sprint(self, 2, "PM to ",te.netname," sent\n");
+						sprint(te, 2, " ",self.netname,"  ",f,"\n");
+						sprint(self, 2, "PM to ",te.netname," sent.\n");
 						stuffcmd(self, "play misc/talk.wav\n");
 						self.cooldown = (time + 4);
 						return;
@@ -468,10 +468,10 @@ void() voteyes =
 		{
 			bprint (1.000000, votesneeded);
 			bprint (1.000000, " more votes needed");
-			bprint (1, " ");
+			bprint (1, " FOR [");
 			themap = infokey (world, "themap");
 			bprint (1, themap);
-			bprint (1, "‘ \n");
+			bprint (1, "] \n");
 		}
 	}
 };
@@ -610,9 +610,9 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 			return;
 		}
 		if (!validatemap(vote_string)) {
-			sprint(self,2,"The server doesn't have map ");
+			sprint(self,2,"The server doesn't have map [");
 			sprint(self,2,vote_string);
-			sprint(self,2,".\n");
+			sprint(self,2,"].\n");
 			return;
 		}
 		if (Check_For_Bmodel(vote_string)) {
@@ -827,9 +827,9 @@ void(string put) votemap_start =
 	}
 	if (infokey(world, "prozacserver") == "1" || infokey(world, "c7server") == "1") {
 		if (!validatemap(put)) {
-			sprint(self,2,"The server doesn't have the ¢");
+			sprint(self,2,"The server doesn't have the [");
 			sprint(self,2,put);
-			sprint(self,2,"¢ map.\n");
+			sprint(self,2,"] map. Try [cmd maplist].\n");
 			return;
 		}
 	}
@@ -895,10 +895,10 @@ void(string put) votemap_start =
 		{
 			bprint (1.000000, votesneeded);
 			bprint (1.000000, " more votes needed");
-			bprint (1, " ");
+			bprint (1, " FOR [");
 			themap = infokey (world, "themap");
 			bprint (1, mapdispfix);
-			bprint (1, "‘ \n");
+			bprint (1, "] \n");
 		}
 	}
 };

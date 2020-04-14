@@ -405,8 +405,6 @@ void(entity targ, entity attacker) FemaleClientObituary =
 						deathstring = " is smeared all over the walls by ";
 						deathstring2 = "'s laser trip wire!\n";
 					}
-
-
 					if (deathmsg == 45)
 					{
 						deathstring = " gets too friendly with ";
@@ -482,7 +480,7 @@ void(entity targ, entity attacker) FemaleClientObituary =
 								{
 									if (deathmsg == 11)
 									{
-										deathstring = " is shreaded by ";
+										deathstring = " is shreded by ";
 										deathstring2 = "'s pipebomb trap.\n";
 									}
 									else
@@ -589,7 +587,7 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																					{
 																						if (deathmsg == 44)
 																						{
-																							deathstring = " was stopped by an enemy autoturret";
+																							deathstring = " was lethally demoralized by an enemy autoturret";
 																							deathstring2 = ".\n";
 																						}
 																						else
@@ -751,7 +749,7 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																																										{
 																																											if ((rnum < 0.5))
 																																											{
-																																												deathstring = " is disentegrated by ";
+																																												deathstring = " is disintegrated by ";
 																																												deathstring2 = "'s Sentry Point Defense System.\n";
 																																											}
 																																											else
@@ -834,7 +832,6 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																																										deathstring = "'s leg was amputated by ";
 																																										deathstring2 = "'s spike.\n";
 																																									}
-																																									// pablo. dispenser death msg.
 																																									else
 																																									{
 																																										if (deathmsg == 201)
@@ -844,7 +841,7 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																																										}
 																																									}
 																																								}
-																																							}																																						
+																																							}
 																																						}
 																																					}
 																																				}
@@ -1244,16 +1241,16 @@ deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 					deathstring = strcat(" was zapped by a ", GetMonsterPowers(attacker, 2));
 #endif
 #ifdef mtf_coop_hipnotic
-            else if (attacker.classname == "monster_gremlin")
+			else if (attacker.classname == "monster_gremlin")
 deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
-//               bprint ("Gremlin.\n");
-            else if (attacker.classname == "monster_scourge")
+			bprint ("Gremlin.\n");
+			else if (attacker.classname == "monster_scourge")
 deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
 				bprint ("Centroid.\n");
             else if (attacker.classname == "monster_armagon")
 deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
-                bprint ("Armagon.\n");
-            else if (attacker.classname == "trap_spike_mine")
+				bprint ("Armagon.\n");
+			else if (attacker.classname == "trap_spike_mine")
 deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
 #endif
 #ifdef mtf_coop_rogue
@@ -1349,4 +1346,4 @@ deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 		}
 	}
 };
-//END 
+//END

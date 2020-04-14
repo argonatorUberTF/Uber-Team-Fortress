@@ -1142,6 +1142,8 @@ void () DropBackpack =
 	newmis.flags = 256.000000;
 	newmis.solid = 1.000000;
 	newmis.movetype = 6.000000;
+	newmis.team_no = self.team_no; // give it a team number so the grav well leave it alone. -arg
+	newmis.classname = "backpack"; //assigning this so the gravity well won't pull them in. -arg
 	setmodel (newmis, "progs/backpack.mdl");
 	setsize (newmis, '-16.000000 -16.000000 0.000000', '16.000000 16.000000 56.000000');
 	newmis.touch = BackpackTouch;

@@ -89,9 +89,7 @@ void (float inp) Menu_Quest_Input;
 #ifdef CSQC
 float (float tmno) TeamFortress_TeamGetIllegalClasses;
 #endif
-
 void (float tno,entity ignore,string st) teamsprint;
-
 void () Player_Menu =
 {
 	if ((self.menu_count > 25.000000))
@@ -387,11 +385,11 @@ void () Menu_Team =
 	{
 		if (MONSTER_TEAM_ENABLED)
 		{
-			CenterPrint4 (self, "\n\n“.. Survivors (Blue)    \n”.. Monsters (Red)      \n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player ressurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him up before it's too late.\n");
+			CenterPrint4 (self, "\n\n“.. Survivors (Blue)    \n”.. Monsters (Red)      \n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player resurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him up before it's too late.\n");
 		}
 		else
 		{
-			CenterPrint4 (self, "\n\n\" Welcome to Survival Mode \n\n“.. Survivors (Blue)    \n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player ressurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him/her up before it's too late.\n");
+			CenterPrint4 (self, "\n\n\" Welcome to Survival Mode \n\n“Select team [1 to 4]. Survivors     \n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player resurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him/her up before it's too late.\n");
 		return;
 		}
 	}
@@ -456,14 +454,18 @@ void(float inp) Menu_Team_Input =
 #ifdef mtf_coop
 	local float args, i;
 	local entity ipl;
-	if (survival_mode) {
+	if (survival_mode)
+	{
 		ipl = find(world,classname,"monster_score");
-		if (ipl != world) {
+		if (ipl != world)
+		{
 			i = 0;
 			args = tokenize(ipl.noise1);
-			while (i<args) {
-				if (argv(i) == infokey(self, "ip")) {
-					sprint(self,2,"You have died and cannot reconnect until a player finds a resurrect cube\nor until a new map is started.\nNote: You can still vote even though you are not in the game.\n");
+			while (i<args)
+			{
+				if (argv(i) == infokey(self, "ip"))
+				{
+					sprint(self,2,"You have died and cannot reconnect until a player finds a resurrection cube\nor until a new map is started.\nNote: You can still vote even though you are not in the game.\n");
 					ResetMenu();
 					self.impulse = 0;
 					return;
@@ -482,13 +484,25 @@ void(float inp) Menu_Team_Input =
 					TeamFortress_TeamSet(2);
 				}
 		}
-		else if (inp)
+		else if (inp == 1)
+		{
 			TeamFortress_TeamSet(1);
+		}
+		if (inp == 2)
+		{
+			TeamFortress_TeamSet(2);
+		}
+		if (inp == 3)
+		{
+			TeamFortress_TeamSet(3);
+		}
+		if (inp == 4)
+		{
+		TeamFortress_TeamSet(4);
+		}
 	}
-	else {
-		if (inp != 1)
-			return;
-	}
+	else
+	return;
 #endif
 	if (inp == 5)
 	{
@@ -528,8 +542,6 @@ void(float inp) Menu_Team_Input =
 	stuffcmd(self, mapname);
 	stuffcmd(self, ".cfg\n");
 };
-
-
 void() Menu_Class = 
 {
 #ifdef mtf_coop
@@ -1161,7 +1173,7 @@ void(float inp) Menu_Yell_Input =
 
 	if (inp == TF_FLARE_OFF)
 	{
-		//sound(self, TF_FLARE_OFF, "speech/yell/coverme.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+		sound(self, TF_FLARE_OFF, "speech/yell/coverme.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 		bprint (1, self.netname);
 		bprint (1.000000, " yells cover me!\n");
 	}

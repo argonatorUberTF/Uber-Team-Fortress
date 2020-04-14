@@ -83,7 +83,6 @@ void () HealSelf =
 		sprint (self, 2, "The flames have been doused!\n");
 		healed = 1;
 	}
-
 	if (healed == 0)
 	{
 		sprint(self, 2, "You have nothing to cure.\n");
@@ -100,8 +99,7 @@ void () HealSelf =
 		multicast(self.origin, TF_FLARE_OFF);
 		sound (self, 3, "items/r_item2.wav", 1, 1);
 	}
-}
-
+};
 void () medpack_touch;
 void () medpack_remove;
 void () Throw_Health =
@@ -144,7 +142,6 @@ void () Throw_Health =
 	newmis.health = 75;
 	self.has_drop4 = 1;
 };
-
 void () medpack_touch =
 {
 	if (self.last_saveme_sound > time)
@@ -177,9 +174,7 @@ void () medpack_touch =
 			medpack_remove();
 		}
 	}
-
 };
-
 void () medpack_remove =
 {
 	kill_medpack(self);

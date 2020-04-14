@@ -16,7 +16,6 @@ void (entity t_plyr, float mons_currhp, float mons_maxhp) CSQC_SendMonsterbar =
 	stuffcmd( t_plyr, ftos(mons_maxhp) );
 	stuffcmd( t_plyr, "\n" );
 };
-
 void (entity t_plyr, float t_menu, float mflg_one, float mflg_two) CSQC_SendMenu =
 {
 	if (!t_plyr.csqc_client)

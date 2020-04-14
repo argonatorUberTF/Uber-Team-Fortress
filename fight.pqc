@@ -110,7 +110,6 @@ void() ai_charge_side =
 	heading = vectoyaw(dtemp - self.origin);
 	walkmove(heading, 20);
 };
-
 void() ai_melee = 
 {
 	local vector delta;
@@ -157,7 +156,6 @@ void() ai_melee =
 #endif
 	T_Damage(self.enemy, self, self, ldmg);
 };
-
 void() ai_melee_side = 
 {
 	local vector delta;
