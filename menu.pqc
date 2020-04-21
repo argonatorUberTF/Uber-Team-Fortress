@@ -475,11 +475,13 @@ void(float inp) Menu_Team_Input =
 		}
 		else 
 			bprint(2,"ERROR!!! monster_score not found! Tell DEV!\n");
-		if (MONSTER_TEAM_ENABLED) {
+		if (MONSTER_TEAM_ENABLED)
+		{
 			if (inp == 1 || inp > 2)
 				TeamFortress_TeamSet(1);
 			else if (inp == 2)
-				if (!Monsterteam_full()) {
+				if (!Monsterteam_full())
+				{
 					self.monster_type = 10;
 					TeamFortress_TeamSet(2);
 				}

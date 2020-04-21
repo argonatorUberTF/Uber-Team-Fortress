@@ -1325,8 +1325,9 @@ void() PutClientInServer =
 {
 	self.pk_turretammo = 6;  //set painkeep weapon ammo amounts. -arg
 	self.pk_beartrapammo = 12;
-	self.pk_gravitywellammo = 2;
+	self.pk_gravitywellammo = 4;
 	self.pk_canpabammo = 2;
+	self.vote_wait = time; // This allows new connected users to start a vote after 1 second from joining. -arg
 	local float tc;
 	local string st;
 	local float iszoom;
@@ -3191,7 +3192,6 @@ void() ClientConnect =
 	local string st;
 	setup_strcat ();
 	if (infokey(world, "fteserver") == "1" || infokey(world, "fteserver") == "on")
-		FTE_Server = 1;
 	if (FTE_Server)
 		Rank_FindStats (self);
 	bprint(2, self.netname);
@@ -4203,6 +4203,11 @@ void(entity targ, entity attacker) ClientObituary =
 					{
 						deathstring = "'s was spun like a record baby by ";
 						deathstring2 = "'s gravity well.\n";
+					}
+					if ((deathmsg == 205))
+					{
+						deathstring = "'s was pooned painkeep style by ";
+						deathstring2 = "'s harpoon.\n";
 					}
 					if (deathmsg == 8)
 					{

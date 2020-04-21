@@ -37,9 +37,9 @@
 // Addons and variables used by some modules that are commented out but need to be declared after defs.pqc
 // Also added on painkeep vars for their modules of .qc code for functions.
 // Use "cmd changeteam (color)" to join any 4 teams. You can load any non-coop map and just frag or CTF.
-// You can even CTF/deathmatch on "coop" maps by not loading the .ENT file for that map.
+// You can even CTF/deathmatch with "coop" maps by not loading the .ENT file for that map.
 // Regular deathmatch is possible by just loading a map without monsters.
-// The medic class cam heal with masters skill "cmd aura" when spawned.							
+// The medic class can heal with masters skill "cmd aura" when spawned.							
 //		Quirks:
 //	Summoned monsters might only target the RED team if monster maps are selected.
 //	Beartraps stick where you place them and cannot be shot off you once clamped.
@@ -59,24 +59,24 @@
 //								TODO:
 //	Clean up source code for easy compiliation in fteccgui and 64bit versions.
 // 	- Down to 4 warnings on ftegccui compiler in Windows. 
-//	Submit said source to github for Open Source under GNU/GPL.
 //	Make the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
 //	Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 //	If possible upgrade the lightning gun to the painkeep chain lightning gun.
 //  Not tested on FTE or Prozac server yet.
-//	Upgrade medic nail gun to lava nails ala rogue.
+//	Upgrade medic nail gun to lava nails ala rogue. - Set to 2.5 damage per nail now -arg
 //	Adjust starting armor and speeds to rebalance things.
 //	Put in an anti-bunny hopping system to remove the game glitch of angled bouncing.
 //	It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing a scout.
 //	(Possibly add this as an anti-cheat system)
 //	Add another weapon to the Pyro for even destructive backup. multi pyro rockets?
-//	Add Ratbert's nuke grenades to drop4 for demoman or pyro.
+// partial - sped up flame rockets and flamethrower. -arg 3/2020
+//	Add Ratbert's nuke grenades to drop4 for demoman or pyro.  ?
 //	Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players are affected more
 //	by plasma or fire damage than blast/nail damage.
 //	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
 //	Then again, the map makers should be aware of this and not use so many spawns.
-//	Finish HALF-LIFE support. 
-//	Reaplace the lightning gun with the chain lightning gun. 
+//	Finish HALF-LIFE support. (long march if asked for)
+//	Replace the lightning gun with the chain lightning gun. 
 //
 //					Changes to existing classes:
 //GOAL - Make it tougher to last to capture the flag with faster action, heinous
@@ -84,17 +84,17 @@
 // that take advantage of the bunny hop.
 // All classes spawn with a minimum of 3 type 1, and 3 type 2 grenades.
 // If a map doesn't have ammo bags that give grenades, fix the maps.
-// Amount of grenades is 3X your ammo attribute gained from experience.
+// The amount of additional grenades is 3X your ammo attribute gained from experience.
 // All classes get bonus health, armor, ammo, reload time, summoning etc from the 
 // attribute system based on experience points gain for frags.
-// At level 80 you get the Xav Needler gun and lightning gun weapons.
+// At level 80 you get the Xav Needler gun and lightning gun weapons. Bringover from Mega COOP.
 // Achievement system similar to Xbox for bragging rights just like MegaTF COOP was.
 // Scout has a bat for the axe, jetpack uses less cells, a bit more fire damage.
 // Sniper had little changed. Already powerful and deadly enough. 
 // Soldier. The attributes system can boost this class to very powerful levels.
 // Demoman. Sticky pipebombs and laser trip bombs added.
 // Medic can heal with cmd aura regardless of level, further than players can with attribute of masters of healing.
-// Medic gets an upgrade of the super nailgun with lava nails.
+// Medic gets an upgrade of the super nailgun with 2.5 X "lava" nails.
 // Heavy Weapons Guy can spool up assault cannon a bit faster, and uses less ammo per shot on 20mm mode.
 // Pyro can fire faster flame rockets, has a chainsaw, and gets results.
 // Spy has a grappling hook that uses less cells, and can "poon" enemies for gibs.
@@ -102,7 +102,7 @@
 // Engineer gets a gravity gun, and can have a Tesla and Sentry built at the same time.
 // All classes can buy weapon upgrades, powerups, and inventory then with the merchant
 // and used them with cmd inv.
-// Custom skins are possible. Not restricted per class.
+// Custom skins are possible. Not restricted per class. Pants color is still enforced like usual for regular TF skins.
 //
 //						CODING TIPS
 // Don't leave blank lines, or use /* /* comments, adds to code size by 12%, slows things down a lot.
@@ -111,13 +111,14 @@
 // This particular build only runs in window with MSDSV .28BXE build.
 // XAV did some tweaks to that build used here.
 // Don't change defs.pqc or run the risk of the dreaded, "You must have progs.dat installed" server error/crash messages.
-// Add additional variables HERE, additional code or #includes here. Not defs.pqc.  
+// Add additional variables HERE, additional code or #includes here. Not in defs.pqc.  
 // Global variables merged into this file can be then referenced by all functions which makes it easier to
 // write newer functions.  Sorted by mod addons. Basic functions are here that were referenced several times throughout
 // many mods. 
 // Generally in this order:
 // #defines, .floats, .entities, vectors, static floats , floats, float functions, and then void().
 // Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, etc.
+#define NEW_DOT  // use dots color coded for the team numbers of summoned.
 #define TRAIN_RETRIGGER		1 //johnfitz -- retriggerable trains plats.pqc
 #define ZG_PICKUPDIST_EXTRA			48	// extra distance added to pickupee's maxs, was 32
 #define TFI_MAXLINES		350			// no TFI file should exceed this many lines
@@ -460,8 +461,8 @@ entity tracetossent;			// Nehara
 .float armorclass;
 .float tf_items;
 .float tf_items_flags;
-.float no_grenades_1;
-.float no_grenades_2;
+.float no_grenades_1;	// The amount of type 1 grenades.
+.float no_grenades_2;	// The amount of type 2 grenades.
 .float h_i_g, r_i_g, a_s, a_n, a_r, a_c, rv_s_h, rs_s_h, rv_gr, rs_gr, rs_g;
 .float rv_g;
 .float area;
@@ -552,7 +553,6 @@ entity tracetossent;			// Nehara
 .float StatusBarRes;
 .float Old_Health;
 .float motd;
-.float current_menu;
 .float menu_count;
 .float menu_displaytime;
 .float inwater;				 // The water type the entity was in at last check
@@ -829,6 +829,9 @@ vector GUN_FLAGROOM    = '325 -3280 -428'; //from frik2.qc -arg
 #else
 float TF_FLARE_OFF    = 1;
 #endif
+float	MASK_ENGINE		= 1;	//this is special. Any entities known by the engine but not the csqc will be added.
+//you can add any other masks below, remember, use bits. from csqc.defs -arg
+float	MASK_NORMAL		= 2;
 float ITEM_RUNE1 = 1;				// Rune of Earth Magic:  Resistance		//runes.qc
 float ITEM_RUNE2 = 2;				// Rune of Black Magic:  Strength		//runes.qc
 float ITEM_RUNE3 = 4;				// Rune of Hell Magic:  Haste			//runes.qc
@@ -1194,6 +1197,8 @@ float (entity e) turret_inFront;				// PAINKEEP
 .void() spawnthink;			// Hipnotic 
 .void() splash_func; // The function to call to make the splash splash.qc -arg
 entity(float team_num) FindTeamSpawnPoint;
+void () Merchant_SayWares;
+void () Merchant_GenerateEntity ;
 void() respawn;  //client.pqc but can be addressed here -arg
 entity() SelectSpawnPoint;
 entity() FindIntermission;
@@ -2509,7 +2514,7 @@ float(float tno) TeamFortress_TeamSet =
 //		return 0;
 //	}  // Complete bs there is always 1 team, blue and we want any team on any map. -arg
 //Whether there are maps that can deal with 1,2, or 4 teams, they should make it better.
-// or users should know that a 2 team only map might hve problem with 4. -arg
+// or users should know that a 2 team only map might have a problem with 4. -arg
 #ifdef mtf_coop_lms
 	local entity te;
 	te = find ( world, classname, "info_lmsdetect" );
@@ -2535,6 +2540,7 @@ float(float tno) TeamFortress_TeamSet =
 //Nice check, but there are maps that can have 1,2,3,4 teams and not codified by the map creator.
 //This is what changes team fortress maps into mega/uber regardless of creator.
 //Let the players decide if the bugs and quirks are there. Just play the map. -arg
+// Also an .ent file goes a long way to add spawns for other teams 3 4 if someone wants to mod a coop map or mega tf map to 4 teams -arg
 //	if (tno > number_of_teams && number_of_teams != 0)
 //	{
 //		sprint(self, 2, "There can only be ");  //fixed wording -arg
@@ -2566,7 +2572,7 @@ float(float tno) TeamFortress_TeamSet =
 		TeamFortress_TeamSetColor(tno);
 		if (TeamFortress_TeamGetColor(tno) == 0)
 		{
-			sprint(self, 2, "You can't start a new team with your color, since another ");
+//			sprint(self, 2, "You can't start a new team with your color, since another ");
 			sprint(self, 2, "change your pants color, someone is already using that color or it is zero. Change your team with [cmd changeteam].\n");
 //			return 0; //Who cares, we have autoid anyway as enemy or friendly.  perfidy allowed, customskins are allowed anyway. -arg
 		}
@@ -2669,10 +2675,10 @@ void() TeamFortress_CheckTeamCheats =
 			{
 				stuffcmd(self, "color ");
 				tc = TeamFortress_TeamGetColor(self.undercover_team) - TF_FLARE_OFF;
-				st = ftos(tc);
-				stuffcmd(self, st);
-				stuffcmd(self, "\n");
-				bprint2(TF_FLARE_OFF, self.netname, " has been kicked for changing color.\n");
+//				st = ftos(tc);
+//				stuffcmd(self, st);
+//				stuffcmd(self, "\n");
+//				bprint2(TF_FLARE_OFF, self.netname, " has been kicked for changing color.\n");
 				return;
 			}
 		}
@@ -2685,8 +2691,8 @@ void() TeamFortress_CheckTeamCheats =
 				st = ftos(tc);
 				stuffcmd(self, st);
 				stuffcmd(self, "\n");
-				bprint2(TF_FLARE_OFF, self.netname, " has been kicked for changing color.\n");
-				sprint(self, 2, "You have been kicked for changing your pants color. Don't do it.\n");
+//				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing pants color.\n");
+				sprint(self, 2, "You have been warned for changing your pants color. Don't do it.\n");
 				return;
 			}
 		}
@@ -2781,7 +2787,7 @@ void() TeamFortress_CheckTeamCheats =
 #endif
 #ifndef mtf_coop_halloween
 				TeamFortress_SetSkin(self);
-				bprint2(TF_FLARE_OFF, self.netname, " has been kicked for changing skin.\n");
+				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
 				sprint(self, 2, "You have been warned for changing your skin. Use CMD CUSTOMSKIN instead.\n");
 				return;
 #endif
@@ -2795,7 +2801,7 @@ void() TeamFortress_CheckTeamCheats =
 		if (st != infokey(self, "team"))
 		{
 			SetTeamName(self);
-			sprint(self, 2, "You have been warned for changing your team. Use cmd changeteam instead in console.\n");
+			sprint(self, 2, "You have been warned for changing your team. Use [cmd changeteam (color)] instead in console.\n");
 			return;
 		}
 	}
@@ -5092,7 +5098,6 @@ bprint(2, "\n");
 	self.takedamage = 0.000000;
 	self.touch = SUB_Null;
 	monster_death_use ();
-
 	self.th_die ();
 #ifdef mtf_coop
 	if (self.classname == "player" && self.monster_type == 0)
@@ -5710,9 +5715,9 @@ void(entity p) TeamFortress_SetSpeed =
 					{
 						if (p.playerclass == 6)
 						{
-							p.maxfbspeed = 230;
-							p.maxspeed = 230;
-							p.maxstrafespeed = 230;
+							p.maxfbspeed = 250;  //Was 230 speed -arg
+							p.maxspeed = 250;
+							p.maxstrafespeed = 250;
 						}
 						else
 						{
@@ -21151,7 +21156,7 @@ void ( entity to_summon ) BeginSummon =
 	goalie.effects = #EF_GREEN;
 #ifdef NEW_DOT
 	setmodel (goalie, "progs/newdot.spr");
-	goalie.frame = 2;
+	goalie.frame = self.team_no;  // Instead of 2, why not the team number to rotate colors?
 #else
 	setmodel (goalie, "progs/dot3.spr"); // yes, precache this model also.
 #endif
@@ -22706,7 +22711,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "-- Miscellaneous Coop Features --\n");
 			sprint( self, 2, "customskin <skinname> - Allows players to use a custom skin.\n");
 			sprint( self, 2, "res - Resurrects a nearby player.\n");
-			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode.\n");
+			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode.\nDo not use it non-survival mode./n");
 			sprint( self, 2, "powerleft - Shows your invicibility, quad, and invisbility time left.\n");		
 			
 			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun.\n");
@@ -22723,6 +22728,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "votenext - Vote for the next map to be played after someone exits.\n");
 			sprint( self, 2, "votemode - Change game mode to Survival for the next played map.\n");
 			sprint( self, 2, "votekick <userid> - Kick a user in the game based on userid (cmd pm).\n");
+sprint( self, 2, "There is a minimum ten second interval per user vote.\n However, multiple plyers can start a vote after the first vote succeeds.\n");
 #ifndef mtf_coop
 			sprint( self, 2, "voteprogs <progsname> - Vote on playing a different version of megatf on the next map.\n");
 #endif
@@ -22859,7 +22865,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	{
 	sprint(self, 2, "Killing Pete the undead head...searching...\n");
 	local entity head;
-	head = findradius (self.origin, 100);
+	head = findradius (self.origin, 120);
 	if ((head.classname != "player") || (head.classname != "merchant" ))
 	{
 		dremove(head);
@@ -24009,4 +24015,5 @@ void () respawn_monster =
 		Killed (self, world);
 	}	
 };
+
 //END 

@@ -7042,106 +7042,9 @@ void () TeamFortress_ID =
 		if (((trace_ent.classname == "player") && (trace_ent.health > TF_FLARE_LIT)))
 		{
 			self.StatusRefreshTime = (time + 1.5);
-			if (((self.team_no != TF_FLARE_LIT) && (self.team_no =self.team_no == trace_ent.team_no)))
-			{
-				cls = TeamFortress_GetClassName (trace_ent.playerclass);
-				if ((self.playerclass == 5))
-				{
-					st = NumberToString1000 (trace_ent.health);
-					centerprint (self, "\n\n\n", trace_ent.netname, "\nFriendly ", cls, "\n", st, " health\n");
-					return;
-				}
-				else
-				{
-					if ((self.playerclass == 9))
-					{
-						st = NumberToString1000 (trace_ent.armorvalue);
-						centerprint (self, "\n\n\n", trace_ent.netname, "\nFriendly ", cls, "\n", st, " armor\n");
-						return;
-					}
-				}
-				centerprint (self, "\n\n\n", trace_ent.netname, "\nFriendly ", cls);
-				return;
-			}
-			if ((trace_ent.playerclass == 8))
-			{
-				cls = TeamFortress_GetClassName (trace_ent.undercover_skin);
-				if (((self.team_no != TF_FLARE_LIT) && (self.team_no == trace_ent.undercover_team)))
-				{
-					if ((self.playerclass == 5))
-					{
-						st = NumberToString1000 (trace_ent.health);
-						if ((trace_ent.undercover_skin != TF_FLARE_LIT))
-						{
-							centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nFriendly ", cls, "\n", st, " health\n");
-						}
-						else
-						{
-							centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nFriendly Spy\n", st, " health\n");
-						}
-						return;
-					}
-					else
-					{
-						if ((self.playerclass == 9))
-						{
-							st = NumberToString1000 (trace_ent.armorvalue);
-							if ((trace_ent.undercover_skin != TF_FLARE_LIT))
-							{
-								centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nFriendly ", cls, "\n", st, " armor\n");
-							}
-							else
-							{
-								centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nFriendly Spy\n", st, " armor\n");
-							}
-							return;
-						}
-						else
-						{
-							st = NumberToString1000 (trace_ent.armorvalue);
-							if ((trace_ent.undercover_skin != TF_FLARE_LIT))
-							{
-								centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nFriendly ", cls);
-							}
-							else
-							{
-								centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nFriendly Spy\n");
-							}
-							return;
-						}
-					}
-				}
-				if ((trace_ent.undercover_name != string_null))
-				{
-					if ((trace_ent.undercover_skin != TF_FLARE_LIT))
-					{
-						centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nEnemy ", cls);
-					}
-					else
-					{
-						centerprint (self, "\n\n\n\n", trace_ent.undercover_name, "\nEnemy Spy");
-					}
-				}
-				else
-				{
-					if ((trace_ent.undercover_skin != TF_FLARE_LIT))
-					{
-						centerprint (self, "\n\n\n\n", trace_ent.netname, "\nEnemy ", cls);
-					}
-					else
-					{
-						centerprint (self, "\n\n\n\n", trace_ent.netname, "\nEnemy Spy");
-					}
-				}
-			}
-			else
-			{
-				cls = TeamFortress_GetClassName (trace_ent.playerclass);
-				centerprint (self, "\n\n\n\n", trace_ent.netname, "\nEnemy ", cls);
-			}
+			centerprint (self, "\n\n\n", trace_ent.netname, "\n");
+			return;
 		}
-		else
-		{
 			if ((trace_ent.classname == "building_dispenser"))
 			{
 				self.StatusRefreshTime = (time + 1.5);
@@ -7213,7 +7116,6 @@ void () TeamFortress_ID =
 				}
 			}
 		}
-	}
 };
 void () TeamFortress_ReloadCurrentWeapon =
 {
@@ -8324,7 +8226,7 @@ void () Anchor_Grapple =
 	self.avelocity = '0 0 0';
 	sound (self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	sound (self.owner, TF_FLARE_LIT, "weapons/retract.wav", 0.8, TF_FLARE_OFF);
-	self.ammo_cells = self.ammo_cells - 23;
+	self.ammo_cells = self.ammo_cells - 33;
 	W_SetCurrentAmmo ();
 	if (!self.owner.button0)
 	{
@@ -8365,7 +8267,7 @@ void () Throw_Grapple =
 	makevectors (self.v_angle);
 	newmis.velocity = (v_forward * 2000);
 	newmis.angles = vectoangles (newmis.velocity);
-	newmis.team_no = self.team_no;  // prevents mini sentry from firing on hook. For that matter, any new toy that wants to fire on other teams. -arg
+	newmis.team_no = self.team_no;  // prevents auto sentry from firing on hook. For that matter, any new toy that wants to fire on other teams. -arg
 	newmis.touch = Anchor_Grapple;
 	newmis.think = Build_Chain;
 	newmis.nextthink = (time + 0.1);
@@ -8879,12 +8781,12 @@ void (entity inflictor, entity attacker, float damage, entity ignore, float radi
 	while (head)
 	{
 		if (head != ignore)
+		if (head.team_no != self.team_no)  // Don't damage players/minions on the same team.
 		{
 			if (head.takedamage)
 			{
 				if (CanDamage (head, inflictor))
 				{
-					if (head.classname != "beartrap")
 						if (head.classname != "turret")
 							if (head.classname != "turret_base")
 							{
