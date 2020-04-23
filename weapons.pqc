@@ -7036,17 +7036,26 @@ void () TeamFortress_ID =
 	local string cls;
 	src = (self.origin + (v_forward * 10));
 	src_z = (self.absmin_z + (self.size_z * 0.7));
+	
 	traceline (src, (src + (v_forward * 2048)), TF_FLARE_LIT, self);
 	if (((trace_ent != world) && (trace_ent.origin != world.origin)))
 	{
-		if (((trace_ent.classname == "player") && (trace_ent.health > TF_FLARE_LIT)))
+	if (trace_ent.classname == "player" && trace_ent.is_feigning)	//Do not ID spies feigning death, let the player shoot them to find out. -arg
+	{
+		return;
+	}
+	if (trace_ent.invisible_time > time)
 		{
-			self.StatusRefreshTime = (time + 1.5);
+		return; // don't report if they are invisible.
+		}
+	if (((trace_ent.classname == "player") && (trace_ent.health > TF_FLARE_LIT)))
+		{
+			self.StatusRefreshTime = (time + .5);
 			centerprint (self, "\n\n\n", trace_ent.netname, "\n");
 			return;
 		}
-			if ((trace_ent.classname == "building_dispenser"))
-			{
+	if ((trace_ent.classname == "building_dispenser"))
+				{
 				self.StatusRefreshTime = (time + 1.5);
 				if ((self == trace_ent.real_owner))
 				{
@@ -7163,7 +7172,7 @@ void () TeamFortress_ReloadCurrentWeapon =
 		{
 			if ((self.reload_super_shotgun == TF_FLARE_LIT))
 			{
-				sprint (self, 2, "Magazine full. Rage on brother.\n");
+				sprint (self, 2, "Magazine full. Groovy.\n");
 				return;
 			}
 			if ((self.reload_super_shotgun < self.ammo_shells) || (self.reload_super_shotgun >= GetClipSize(256)))

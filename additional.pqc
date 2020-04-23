@@ -76,7 +76,7 @@
 //	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
 //	Then again, the map makers should be aware of this and not use so many spawns.
 //	Finish HALF-LIFE support. (long march if asked for)
-//	Replace the lightning gun with the chain lightning gun. 
+//	Replace the lightning gun with the chain lightning gun ala pain keep. 
 //
 //					Changes to existing classes:
 //GOAL - Make it tougher to last to capture the flag with faster action, heinous
@@ -118,7 +118,6 @@
 // Generally in this order:
 // #defines, .floats, .entities, vectors, static floats , floats, float functions, and then void().
 // Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, etc.
-#define NEW_DOT  // use dots color coded for the team numbers of summoned.
 #define TRAIN_RETRIGGER		1 //johnfitz -- retriggerable trains plats.pqc
 #define ZG_PICKUPDIST_EXTRA			48	// extra distance added to pickupee's maxs, was 32
 #define TFI_MAXLINES		350			// no TFI file should exceed this many lines
@@ -260,8 +259,10 @@ void(string blah) strunzone;
 .entity	shield_entity;				//MTF ROGUE
 .entity nutarget;					// Rogue cutscene.qc
 .entity beartrap_target;				//Painkeep
+.entity playerfob_target;				//player fob to follow player
 .entity turret_base;					// PAINKEEP
 .entity turret_base;					//PAINKEEP
+//entity playerfob;  //The color coded sprite for team that follows players except when invisible or in spy disguise.
 entity egravity;						//needs to be an entity for collision detection with backbacks and other things. -arg
 entity bt;								//the beartrap is an entity with a team_no now. -arg
 entity tesla_target;					//hiptems.qc
@@ -5101,6 +5102,9 @@ bprint(2, "\n");
 	self.th_die ();
 #ifdef mtf_coop
 	if (self.classname == "player" && self.monster_type == 0)
+//make the player colored teamfob dissappear to remove clutter and prevent too many ents spawned when the player
+//respawns. 
+//		remove(self.playerfob); //don't worry you get another one when you respawn();
 		if (survival_mode)
 			if (Survival_Fail() == #TRUE)
 				{}
@@ -16832,6 +16836,7 @@ void () summon_think =
 			self.owner.deathtype = "monster_respawn";
 			self.owner.health = -60;
 			Killed (self.owner, world);
+//TODO put in a function to kill the head too. no pete monsters? -arg
 			self.enemy = self.owner;
 			self.think = MTF_RemoveMonster;
 			self.nextthink = time + 5;
@@ -20286,9 +20291,7 @@ void() beartrapFollow =
 		deathmsg = 202; // Set death type for obituary. -arg
 		T_Damage (self.beartrap_target, self, self.owner, PK_BT_DMG);
 		self.dodmg = 0;
-		
 		}
-		
 		self.beartrapdmg_time = 0;
 	}
 	if (self.beartrap_time > PK_BT_TIMETOFOLLOW)
@@ -21151,15 +21154,12 @@ void ( entity to_summon ) BeginSummon =
 	goalie.armorvalue = time + goalie.health;
 	goalie.think = summon_think;
 	goalie.nextthink = time + .1;
-	goalie.team_no = self.team_no; //Same team number as summoner -arg
+	goalie.team_no = self.team_no; //Set the same team number as summoner -arg
+//TODO: reset team number as the user changes teams for frag count and targeting.
+//Currently the summoned won't target you even if you change to red team. :}
 	goalie.touch = Coop_MinionMonsterTouch;
-	goalie.effects = #EF_GREEN;
-#ifdef NEW_DOT
 	setmodel (goalie, "progs/newdot.spr");
-	goalie.frame = self.team_no;  // Instead of 2, why not the team number to rotate colors?
-#else
-	setmodel (goalie, "progs/dot3.spr"); // yes, precache this model also.
-#endif
+	goalie.frame = self.team_no - 1;  // Instead of 2, why not the team number to rotate colors?
 	sprint( self, 2, "You are attempting to summon a minion...\n" );
 	self.#allow_next_summon_time = (time + 5) - self.minion_attr; // was 18 but we need armies of summons to fight within multi-team mode. -arg
 };
@@ -24016,4 +24016,4 @@ void () respawn_monster =
 	}	
 };
 
-//END 
+//END

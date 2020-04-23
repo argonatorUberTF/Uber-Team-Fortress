@@ -306,6 +306,7 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 					else
 					{
 						spy_upe1 ();
+						attachplayerfob();
 					}
 				}
 			}
@@ -436,6 +437,7 @@ void() TeamFortress_SpyGoUndercover =
 		{
 			self.is_undercover = 0;
 			self.modelindex = modelindex_player;
+			
 			self.items = self.items - (self.items & 524288);
 		}
 		else
