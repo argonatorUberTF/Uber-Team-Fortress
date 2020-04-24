@@ -504,7 +504,6 @@ void () traceon;
 void () traceoff;
 void (entity e) eprint;
 float (float yaw, float dist) walkmove;
-float () droptofloor;
 void (float style, string value) lightstyle;
 float (float v) rint;
 float (float v) floor;
@@ -4640,4 +4639,4 @@ void () monster_swim =
 		}
 	}
 };
-//END
+//END 
