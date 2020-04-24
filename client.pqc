@@ -1472,7 +1472,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	{
 		if (!IsLegalClient (self))
 		{
-			stuffcmd (self, "disconnect\necho\necho Âillegal client, restrictions in effect\necho\n");
+			stuffcmd (self, "disconnect\necho\necho illegal client, restrictions in effect\necho\n");
 			bprint (1.000000, self.netname);
 			bprint (1.000000, " tried to join using an illegal client.\n");
 			return;
@@ -3079,9 +3079,9 @@ void() PlayerPostThink =
 			setsize(self.hat, '0 0 30', '0 0 60');
 			self.hat.think = hat_checkowner;
 			self.hat.nextthink = time + .2;
-			if (self.connect_name == "Ã˜avioÃ’")
+			if (self.connect_name == "ØavioÒ")
 				self.hat.frame = 0;
-			else if (self.connect_name == "Ã“Ã°Ã¡Ã­Lite")
+			else if (self.connect_name == "ÓğáíLite")
 				self.hat.frame = 2;
 			else
 				self.hat.frame = 1;
@@ -3756,7 +3756,7 @@ void(entity targ, entity attacker) ClientObituary =
 	if (targ.being_juggled > 1 && targ.is_monster == 1 && attacker.classname == "player" && targ != attacker)
 	{
 		bprint(2,targ.netname);
-		bprint(2," got ÃŠÃ•Ã‡Ã‡ÃŒÃ…Ã„ by ");
+		bprint(2," got ÊÕÇÇÌÅÄ by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
 		sound (world, 4, "misc/juggled2.wav", 1, 0);
@@ -5244,4 +5244,4 @@ void () FixSoundCrap =
 	dremove (self);
 };
 
-//End
+//End

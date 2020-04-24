@@ -1792,35 +1792,7 @@ void(float inp) Menu_Spy_Skin_Input =
 
 void() Menu_Spy_Color = 
 {
-	if (number_of_teams == TF_FLARE_LIT)
-	{
-		sprint(self, 2, "No Color changing allowed in deathmatch.\n");
-		ResetMenu();
-		self.impulse = TF_FLARE_LIT;
-		return;
-	}
-	if (number_of_teams == TF_FLARE_OFF)
-	{
-		CenterPrint(self, "=== Change Color to the Same Color as  ===\n\n“.. Team One  \n\n");
-	}
-	else
-	{
-		if (number_of_teams == 2)
-		{
-			CenterPrint(self, "=== Change Color to the Same Color as  ===\n\n“.. Team One  \n”.. Team Two  \n\n");
-		}
-		else
-		{
-			if (number_of_teams == 3)
-			{
-				CenterPrint(self, "=== Change Color to the Same Color as  ===\n\n“.. Team One  \n”.. Team Two  \n•.. Team Three\n\n");
-			}
-			else
-			{
 				CenterPrint(self, "=== Change Color to the Same Color as  ===\n\n“.. Team One  \n”.. Team Two  \n•.. Team Three\n–.. Team Four \n\n");
-			}
-		}
-	}
 };
 
 void(float inp) Menu_Spy_Color_Input = 

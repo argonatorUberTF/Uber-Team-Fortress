@@ -2797,9 +2797,9 @@ void() TeamFortress_CheckTeamCheats =
 #endif
 #ifndef mtf_coop_halloween
 				TeamFortress_SetSkin(self);
-				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
-				sprint(self, 2, "You have been warned for changing your skin. Use CMD CUSTOMSKIN instead.\n");
-				return;
+//				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
+//				sprint(self, 2, "You have been warned for changing your skin. Use CMD CUSTOMSKIN instead.\n");
+//				return;
 #endif
 			}
 			if (tc == 8)
