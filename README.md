@@ -36,6 +36,8 @@ Uber Team Fortress. A four player teams, capture the flag, coop against monsters
 cmd changeteam blue, red, green, and yellow always enabled. You can fight alongside the monsters or summon more.
 precache models and sounds missing fixed. 
 
+"cmd help" and "cmd help misc" updated with more command references. Some new, some binds, some already there but never mentioned.
+
 It still gets into warnings on the console when there are more precached than it's limit on some maps
 but still a minimum has been increased.
 
@@ -76,6 +78,8 @@ Use "cmd changeteam (color)" to join any 4 teams. You can load any non-coop map 
 You can even CTF/deathmatch on "coop" maps by not loading the .ENT file for that map.
 
 Regular deathmatch is possible by just loading a map without monsters. Pick opposing teams.
+Some "coop" maps can have no monsters or you can remove the .ent file for no monsters on some.
+
 The medic class cam heal with masters skill "cmd aura" when spawned. Regardless of masters level of the
 health attribute.							
  
@@ -97,8 +101,6 @@ Ogre cook, Vermis(lame), eel, and gremlin which didn't work.
 The minipet is superflous since you can cmd summon and the code needs work. Removed.
 			
 # BUGS:
-The obituary messages need an overhaul and sometimes cause the server to spew word salad.
-The problem starts when a large amount of frags against monsters beyond 16-24 and causes a message flood.
 
 New bugs can be submitted to Github for tracking and resolution be unbiased.
 Volunteer devs of code/fixes/features gladly accepted.
@@ -112,7 +114,7 @@ Submit said source to github for Open Source under GNU/GPL. - here now -arg
 Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 If possible upgrade the lightning gun to the painkeep chain lightning gun.
 
-Not tested on FTE or Prozac server yet. Volunteers ? 
+Not tested on FTE or Prozac server yet. Volunteers ? The united code switches are not complete dealing with engine hooks.
 
 Upgraded medic nail gun to nails with more damage, similar to the lava nails, but not quad damage. - done -arg.
 
@@ -135,12 +137,26 @@ by plasma or fire damage than blast/nail damage.
 
 Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
 Then again, the map makers should be aware of this and not use so many spawns.
+Add monsters to a map with a .ent file so regular MegaTF/UberTF matches can be done on the same map.
 
 Finish HALF-LIFE map support. ?
 
+
 # Changes to existing classes:
+Since custom player skin can be uploaded to the server, it's hard to identify which team is which player.
+Also the spy can ue custom skins, change colors, and top/bottom pants colors. So be on the lookout.
+The spy was minimized and nerf with auto ID ON. So you have to check yourself now.
+Auto ID just tells you the name of the player or whose sentry gun/tesla built.
+Each player gets a colored spot representing their team color that meanders nearby that player.
+
 All classes spawn with a minimum of 3 type 1, and 3 type 2 grenades at level 0 newb starter.
+
 If a map doesn't have ammo bags that give grenades, fix the maps.
+
+Some monsters drop misc ammo and a few Painkeep items in the backpacks now.
+
+Player dropped backpacks are different and include some more Painkeep items and misc ammo not related to their actual amount(random).
+
 Amount of grenades is 3X your ammo attribute gained from experience.
 
 All classes get bonus health, armor, ammo, reload time, summoning etc from the 
@@ -167,6 +183,11 @@ Pyro can fire faster flame rockets, has a chainsaw, and gets results. He might g
 The Spy has a grappling hook that uses less cells, and can "poon" enemies for gibs. Just like in Pain Keep.
 
 The Engineer can launch drones in a shorter timeframe, does a bit more damage per beam.
+
+The Engineer spanner attack adds concussion to their enemies and sometimes himself/herself as the heavy tool bounces back.
+
+The Engineer spanner also reduces armor on the opponent and the attacker gets misc cells from the players ammo vest that is ripped off with the tool. 
+
 The Engineer gets a gravity gun, and can have a Tesla and Sentry built at the same time. Stack the death dealing high, rawhide!
 
 All classes can buy weapon upgrades, powerups, and inventory then with the merchant and used them with "cmd inv".
@@ -178,8 +199,9 @@ Deployment of client and server files see releases.
 A new combat rule. If you fight, you fight to the death.
 
 If you suicide after fighting, you will be punished 5 additional frags for denying your opponent their prey.
+If you splash damage yourself dead, you might be punished for palying sloppily. However, if you are good overall, you will get points back and average out the misfortunes.
 
-Another new combat rule. Doing a "cmd beg" in non-survival mode punishes you for teleporting for no purpose to the start spawn to prevent spamming of ammo and once again denying the opponent their prey.
+Another new combat rule. Doing a "cmd beg" in NON-survival mode punishes you for teleporting for no purpose to the start spawn to prevent spamming of ammo and once again denying the opponent their prey.
 
 In survival mode you are not punished for the use of "cmd beg". If there are multiple human teams involved, that is for the admin or mod to police abuse. It can be set to punish if you were in combat and teleporting to home for no good reason.
 
