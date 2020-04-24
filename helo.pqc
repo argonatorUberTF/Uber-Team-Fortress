@@ -283,7 +283,7 @@ void (float modelindex_ac) AC_MaintainAircraft =
 	{
 		if (((self.Aircraft_Fuel < 20) && (self.Aircraft_Fuel > 1)))
 		{
-			centerprint (self, "FUEL LOW\n");
+			centerprint (self, "FUEL LOW!\n");
 			sound (self, 3, "helo/fuellow.wav", 1, 1);
 		}
 		else
@@ -588,7 +588,7 @@ void () AC_Eject =
 void () AC_ShotDown =
 {
 	local float swap;
-	centerprint (self, "Mayday! Mayday!\n");
+	centerprint (self, "Mayday! Mayday! Black Hawk down! \n");
 	self.think = AC_TrailFire;
 	self.nextthink = time;
 	self.movetype = 3;

@@ -1324,12 +1324,10 @@ float(string sender, string contents) SV_ParseConnectionlessPacket =
 	local float namepos;
 	local float allow_old_pw;			// allow older server to be linked for chat and other non-exp things
 	local float args, i;
-	local float tmp_float;
-	local entity pent, oself;
+	local entity oself;
 	local float cont_size;
 	local string newcontents;
 	local string send_what;
-	local entity plyr;
 	local string packet_pw;
 	packet_pw = infokey (world, "packet_password");
 	cont_size = strlen(contents);

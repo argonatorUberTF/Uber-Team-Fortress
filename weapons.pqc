@@ -1087,7 +1087,6 @@ void() HoloDood =
 	holo.solid = TF_FLARE_OFF;
 	holo.effects = 8;
 	holo.movetype = 6;
-	
 	holo.team_no = self.team_no; //assign a team number for this item. make monsters "see" it an attack it.  -arg
 #ifdef PL_FEM
 	setmodel (holo, GetPlayerModel(self));
@@ -1572,7 +1571,7 @@ void () W_FireSpanner =
 					{
 						if ((trace_ent.classname == "player"))
 						{
-							if (((((trace_ent.team_no == self.team_no) && (self.team_no != 0.000000)) && teamplay) || coop))
+							if (trace_ent.team_no == self.team_no) 
 							{
 								healam = 10;
 								if ((self.ammo_cells < healam))
@@ -1607,11 +1606,21 @@ void () W_FireSpanner =
 								}
 								return;
 							}
-						}
+						//rip the armor down a bit with the tool on the enemy and steal some ammo and convert to cells/shells from their vest. -arg
+						self.ammo_cells = self.ammo_cells +50;
+						self.ammo_shells = self.ammo_shells + 30;
+						trace_ent.armorvalue = (trace_ent.armorvalue - 50);
 						trace_ent.axhitme = 1;
 						SpawnBlood (org, 20);
 						deathmsg = 32;
-						TF_T_Damage (trace_ent, self, self, 20, 2, 0.000000);
+						TF_T_Damage (trace_ent, self, self, 40, 2, 0.000000);
+						//concuss the poor bastard to get spanner whacked. -arg
+						T_RadiusBounce(trace_ent, self, 240, world);
+						trace_ent.axhitme = 1;
+						SpawnBlood (org, 20);
+						deathmsg = 32;
+						TF_T_Damage (trace_ent, self, self, 40, 2, 0.000000);
+					}
 					}
 				}
 			}
@@ -7032,25 +7041,22 @@ void () TeamFortress_SaveMe =
 void () TeamFortress_ID =
 {
 	local vector src;
-	local string st;
-	local string cls;
 	src = (self.origin + (v_forward * 10));
 	src_z = (self.absmin_z + (self.size_z * 0.7));
-	
 	traceline (src, (src + (v_forward * 2048)), TF_FLARE_LIT, self);
 	if (((trace_ent != world) && (trace_ent.origin != world.origin)))
 	{
-	if (trace_ent.classname == "player" && trace_ent.is_feigning)	//Do not ID spies feigning death, let the player shoot them to find out. -arg
+	if (trace_ent.classname == "player" && trace_ent.playerclass == 8)	//Do not ID spies, let the player shoot them to find out. -arg
 	{
 		return;
 	}
-	if (trace_ent.invisible_time > time)
-		{
-		return; // don't report if they are invisible.
-		}
+	if (trace_ent.classname == "player" && (trace_ent.invisible_finished > time))	//Do not ID invisible players. Let the viewer shoot them to find out. -arg
+	{
+		return;
+	}
 	if (((trace_ent.classname == "player") && (trace_ent.health > TF_FLARE_LIT)))
 		{
-			self.StatusRefreshTime = (time + .5);
+			self.StatusRefreshTime = (time + .25);
 			centerprint (self, "\n\n\n", trace_ent.netname, "\n");
 			return;
 		}
@@ -7070,7 +7076,7 @@ void () TeamFortress_ID =
 			{
 				if (((trace_ent.classname == "building_sentrygun") || (trace_ent.classname == "building_sentrygun_base")))
 				{
-					self.StatusRefreshTime = (time + 1.5);
+					self.StatusRefreshTime = (time + 1);
 					if ((self == trace_ent.real_owner))
 					{
 						centerprint (self, "\n\n\n\nYour SentryGun");
@@ -7098,7 +7104,7 @@ void () TeamFortress_ID =
 				{
 					if ((trace_ent.classname == "building_tesla"))
 					{
-						self.StatusRefreshTime = (time + 1.5);
+						self.StatusRefreshTime = (time + 1);
 						if ((self == trace_ent.real_owner))
 						{
 							centerprint (self, "\n\n\n\nYour Tesla Coil");
@@ -7330,8 +7336,6 @@ void () TeamFortress_ReloadCurrentWeapon =
 	}
 #endif
 };
-
-
 void () Drone =
 {
 	if (self.ammo_cells < 100)
@@ -7471,9 +7475,8 @@ void () DroneFall =
 	self.th_die = DroneDie;
 	self.touch = DroneDoneTouch;
 	self.think = DroneDie;
-	self.nextthink = (time + 20); //was 20, get rid of it so we don't have too many entities. -arg
+	self.nextthink = (time + 10); //was 20, get rid of it so we don't have too many entities. -arg
 };
-
 void () DroneJet =
 {
 	local entity te;
@@ -7594,7 +7597,6 @@ te = find (world, monster_string, "on");
 		self.think = DroneFall;
 	}
 };
-
 vector (vector ang) SUB_NormalizeAngles =
 {
 	while ((ang_x > 360))
@@ -7637,7 +7639,6 @@ void () Prox_Disarm =
 	}
 	return;
 };
-
 void () ProxiDie =
 {
 	self.effects = 4;
@@ -7683,7 +7684,6 @@ void () FoundBastard =
 		dremove (self);
 	}
 };
-
 void () ProxArmed =
 {
 	local entity _l_11392;
@@ -7758,7 +7758,6 @@ void () ProxArmed =
 		dremove (self);
 	}
 };
-
 void () ProxAttach =
 {
 	self.touch = SUB_Null;
@@ -7766,7 +7765,6 @@ void () ProxAttach =
 	self.nextthink = (time + 0.5);
 	sound (newmis, TF_FLARE_LIT, "buttons/switch02.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
-
 void () OneProx =
 {
 		sprint (self, 2.000000, "1 proximity grenade at a time!\n");
@@ -7780,7 +7778,6 @@ void () OneProx =
 			self.StatusRefreshTime = (time + 0.100000);
 		}
 };
-
 void () Prox =
 {
 	local vector _l_11458;
@@ -7888,9 +7885,7 @@ void () Prox =
 		VWEPS_SetModel ();
 #endif
 };
-
 void (vector _p_11412, float _p_11415) BigAssBullet;
-
 void () W_FireBigAss =
 {
 	local vector dir;
@@ -7912,7 +7907,6 @@ void () W_FireBigAss =
 	{
 		sound(self, TF_FLARE_OFF, "weapons/sgun1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	}
-
 	KickPlayer (-5, self);
 	muzzleflash ();
 	stuffcmd (self, "bf\n");
@@ -7943,7 +7937,6 @@ void () BigAssCarry =
 	self.think = BigAssCarry;
 	self.nextthink = (time + 0.02);
 };
-
 void () CanisterTouch =
 {
 	sound (self, 1, "weapons/tink1.wav", 1, 1);
@@ -7952,7 +7945,6 @@ void () CanisterTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-
 void () CaltropTouch =
 {
 	if ((((other.classname != "player") || !(other.flags & 512)) || other.deadflag))
@@ -7974,7 +7966,6 @@ void () CaltropTouch =
 	T_Damage (other, self, self.owner, 10);
 	dremove (self);
 };
-
 void () CaltropScatterThink =
 {
 	self.nextthink = (time + 0.2);
@@ -8017,7 +8008,6 @@ void () CaltropScatterThink =
 		return;
 	}
 };
-
 void () ScatterCaltrops =
 {
 	local float num;
@@ -8126,7 +8116,6 @@ void () Remove_Chain =
 		}
 	}
 };
-
 void () Update_Chain =
 {
 	local vector temp;
@@ -8479,7 +8468,6 @@ void (vector org, vector dir) launch_arrow =
 	setorigin (newmis, org);
 	newmis.velocity = (dir * 1000);
 };
-
 void () W_FireCrossbowArrow =
 {
 	if ((self.ammo_nails < WEAPON_SHOTGUN))
@@ -8498,7 +8486,6 @@ void () W_FireCrossbowArrow =
 	newmis.heat = 65;
 	self.punchangle_x = CONTENT_SOLID;
 };
-
 void () W_FireDoubleThumper =
 {
 	local vector dir;
@@ -8639,44 +8626,41 @@ void () W_FireLTB =
 	sound (self, CHAN_WEAPON, "weapons/tripplac.wav", WEAPON_SHOTGUN, ATTN_NORM);
 };
 #endif
-
 void () TeamFortress_Timeleft =
 {
-   local string st;
-   local float seconds;
-   local float remaining;
-   local float intplaceholder;
-   local float intseconds;
-   local entity te;
-   st = infokey (world,"time");
-   te = find (world,classname,"countdown");
-   if ((st == "off") && (te == world))
-   {
-	   sprint(self,2,"Timeleft has been disabled.\n");
-	   return;
-   }
-   else if ((st != "off") && (te == world))
-   { 
-	   sprint(self,2,"Unknown.\n");
-	   return;
-   }
-
-   st = infokey (world,"timelimit");
-   if (st == "0")
-   {
-	   sprint(self,2,"There is no timelimit.\n");
-	   return;
-   }
-   seconds = stof(st);
-   seconds = seconds * 60;
-   st = ftos(seconds);
-   remaining = seconds - te.no_grenades_1;
-   if (remaining <= 0) 
-   {
-	   sprint(self,2,"Time is up.\n");
-	   return;
-   }
-
+	local string st;
+	local float seconds;
+	local float remaining;
+	local float intplaceholder;
+	local float intseconds;
+	local entity te;
+	st = infokey (world,"time");
+	te = find (world,classname,"countdown");
+	if ((st == "off") && (te == world))
+	{
+		sprint(self,2,"Timeleft has been disabled.\n");
+		return;
+	}
+	else if ((st != "off") && (te == world))
+	{
+		sprint(self,2,"Unknown.\n");
+		return;
+	}
+	st = infokey (world,"timelimit");
+	if (st == "0")
+	{
+		sprint(self,2,"There is no timelimit.\n");
+		return;
+	}
+	seconds = stof(st);
+	seconds = seconds * 60;
+	st = ftos(seconds);
+	remaining = seconds - te.no_grenades_1;
+	if (remaining <= 0) 
+	{
+		sprint(self,2,"Time is up.\n");
+		return;
+	}
 	sprint(self,2,"");
 	intplaceholder = remaining;
 	remaining = remaining / 60;
@@ -8685,7 +8669,7 @@ void () TeamFortress_Timeleft =
 	{
 		seconds = seconds + 1;
 	}
-    seconds = seconds - 1;
+	seconds = seconds - 1;
 	intseconds = seconds * 60;
 	intseconds = intplaceholder - intseconds;
 	if (seconds > 0) 
@@ -8715,7 +8699,6 @@ void () TeamFortress_Timeleft =
 			}
 		}
 		sprint(self,2," remaining.\n");
-
 	}
 	else
 	{
@@ -8723,48 +8706,6 @@ void () TeamFortress_Timeleft =
 		sprint(self,2,st);
 		sprint(self,2," seconds remaining.\n");
 	}
-};
-void() beartrapDie =
-{
-	local float numOfGibs;
-	beartrap_throwGib ("progs/beargib1.mdl", -50);
-	beartrap_throwGib ("progs/beargib2.mdl", -50);
-	beartrap_throwGib ("progs/beargib3.mdl", -50);
-	numOfGibs = random() * 5;
-	local float dam;
-	while (numOfGibs > 0)
-	{
-		dam = random() * -75;
-		beartrap_throwGib ("progs/beargib4.mdl", dam);
-		numOfGibs = numOfGibs - 1;
-	}
-	sound (self, CHAN_AUTO, "weapons/btrap/btrap_3.wav", 1, ATTN_NORM);
-	remove (self);
-};
-
-void (string gibname, float dm) beartrap_throwGib =
-{
-	local entity new;
-	new = spawn();
-	new.origin = self.origin;
-	setmodel (new, gibname);
-	setsize (new, '0 0 0', '0 0 0');
-	new.pk_currentitem = PK_IT_BEARTRAP; // Doc changed == to =
-	new.velocity = VelocityForDamage (dm);
-	new.movetype = MOVETYPE_BOUNCE;
-	new.solid = SOLID_NOT;
-	new.avelocity_x = random() * 600;
-	new.avelocity_y = random() * 600;
-	new.avelocity_z = random() * 600;
-	new.think = SUB_Remove;
-	new.ltime = time;
-	new.nextthink = time + 3 + random() * 3;
-	new.frame = 0;
-	new.flags = 0;
-	new.classname = "beartrap_gib";
-	new.owner = other.owner; // changed to other.owner from self.owner to make it trap everyone, don't be dumbass and step on your own traps.
-	new.think = SUB_Remove;
-	AddToSplash (new);
 };
 void() copb_eatCan =
 {
@@ -8780,7 +8721,6 @@ void() copb_eatCan =
 	self.search_time = time + (random() * 1);
 	copb_checkFart();
 };
-
 void (entity inflictor, entity attacker, float damage, entity ignore, float radius) T_BeanDamage =
 {
 	local entity head;
@@ -8808,7 +8748,6 @@ void (entity inflictor, entity attacker, float damage, entity ignore, float radi
 		head = head.chain;
 	}
 };
-
 void() copb_checkFart =
 {
 	if (self.copb_nextFartTimeout < time) 
@@ -8841,4 +8780,4 @@ void() copb_checkFart =
 			}
 	}	
 };
-//end
+//end 

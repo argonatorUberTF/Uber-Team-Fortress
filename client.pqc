@@ -1,5 +1,3 @@
-void () playerfob_think;
-void() attachplayerfob;
 void() KickHead;
 void () setup_strcat;
 void() FixSoundCrap;
@@ -7,7 +5,6 @@ void () AC_Eject;
 void() PlayerPostThink;
 void () Stinger_TryLock;
 void (float modelindex_ac) AC_MaintainAircraft;
-float FTE_Server;
 void (entity rank_ent) Rank_FindStats;
 void (entity rank_ent) Rank_UpdateStats;
 void (entity rank_ent, float addscore) Rank_AddRank;
@@ -1331,6 +1328,7 @@ void() PutClientInServer =
 	self.pk_gravitywellammo = 4;
 	self.pk_canpabammo = 2;
 	self.vote_wait = time; // This allows new connected users to start a vote after 1 second from joining. -arg
+	CenterPrint (self, "Fight till you die./n");
 	local float tc;
 	local string st;
 	local float iszoom;
@@ -1775,10 +1773,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	}
 	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
 	self.view_ofs = '0.000000 0.000000 22.000000';
-//create fob for player and spawn it. attach think to player stand() -arg
-//start the colored playerfob and assign it to player_stand1 for think to update it as
-// the players team color changes. Each time they spawn or put in server they get the fob in this loop.
-	attachplayerfob(); //new function.
 	player_stand1 ();
 	if ((deathmatch || coop))
 	{
@@ -2683,7 +2677,6 @@ void() CheckPowerups =
 						stuffcmd(self, "bf\n");
 						sound(self, 0, "items/inv2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 						self.invisible_time = time + TF_FLARE_OFF;
-						attachplayerfob();  // Reattach the colored playerfob to player
 					}
 					if (self.invisible_time < time)
 					{
@@ -3355,6 +3348,10 @@ void() ClientConnect =
 		self.StatusBarSize = 0;
 	}
 	self.has_disconnected = 0;
+//create fob for player and spawn it. attach think to player -arg
+//start the colored playerfob and assign it to player_stand1 for think to update it as
+// the players team color changes. Each time they spawn or put in server they get the fob in this loop.
+	attachplayerfob(); //new function.
 	if (intermission_running)
 	{
 		GotoNextMap();
@@ -3603,6 +3600,7 @@ void() ClientDisconnect =
 	self.team_no = 0;
 	self.solid = 0;
 	setsize(self, '0 0 0', '0 0 0');
+	removeplayerfob();  // remove 
 };
 void() Grapple_Track;
 void() Reset_My_Grapple;
@@ -5245,74 +5243,5 @@ void () FixSoundCrap =
 	stuffcmd (playername, "_snd_mixahead .1\n");
 	dremove (self);
 };
-void() attachplayerfob =
-{
 
-local entity playerfob;
-	playerfob = spawn();
-	playerfob.classname = "player_teamfob";
-	playerfob.owner = self;
-	playerfob.real_owner = self;
-	playerfob.health = 999;		
-	playerfob.armorvalue = time + playerfob.health;
-	playerfob.think = playerfob_think;
-	playerfob.nextthink = time + .1;
-	playerfob.velocity = self.velocity; // move at the same rate as player. ?
-	playerfob.team_no = self.team_no; //Same team number as the player -arg
-	playerfob.origin = self.origin + '0 0 50'; //put fob above the player.
-	playerfob.touch = SUB_Null; // it does nothing, if touched.
-	self.playerfob_target = self; // for following with beartrap logic code.
-	setmodel (playerfob, "progs/newdot.spr");
-	playerfob.frame = self.team_no - 1; //color fob dot same as player's team color. except green team is a purple dot. go figure. maybe a new sprite someday. -arg
-//end playerfob added -arg
-};
-void () playerfob_think =
-{
-	if (self.disconnectPlayer || self.deadflag)
-	{
-		remove (self); //self as defined within playerfob //dissapear with player if they die or disconnect. -arg
-		return;
-	}
-	if (self.owner.owner != self.real_owner)  //from summon_think for goalie. -arg
-		{
-		self.owner.owner = self.real_owner;
-		}
-	if (self.owner.is_feigning)		//if you are a spy feigning don't advertise with a dot
-		{
-		remove(self);  //self being the playerfob.
-		return;
-		}
-	if (self.owner.invisible_time > time)
-		{
-		remove(self);		// remove fob if you are invisible.
-		return;
-		}
-	local float fls, mhp;
-	local vector endp;
-	fls = self.owner.maxs_z * 1;
-	endp = self.owner.origin;
-	endp_z += fls;
-	if (endp == self.orig_origin)	// save some bandwidth player is not moving
-	{
-		self.nextthink = time + .1;
-		return;
-	}
-//move with player.
-	if (self.origin != self.playerfob_target.origin || self.angles != self.owner.angles)
-	{
-	setorigin (self, (self.playerfob_target.origin));
-	}
-	if (self.angles != self.owner.angles) //follow in 3D space like the beartrap :} -arg
-	{
-			self.angles = self.owner.angles;
-	}
-	self.orig_origin = endp;
-	setorigin(self, endp);
-	self.frame = self.owner.team_no - 1; //always display the color as the player's team color.
-	if (self.owner.is_undercover == 2)
-		{
-		self.frame = self.owner.undercover_team - 1 ;   //if you are a spy undercover, change the color to match -arg
-		}
-	self.nextthink = time + .1;
-};
 //End

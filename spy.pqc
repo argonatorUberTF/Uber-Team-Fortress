@@ -306,7 +306,6 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 					else
 					{
 						spy_upe1 ();
-						attachplayerfob();
 					}
 				}
 			}
@@ -500,7 +499,7 @@ void() TeamFortress_SpyUndercoverThink =
 			self.owner.immune_to_check = time + 20;
 			if (self.skin != 0)
 			{
-				sprint(self.owner, 2, "You are a: ");
+				sprint(self.owner, 2, "You are a: ");
 				TeamFortress_PrintClassName(self.owner, self.skin, 0, 2);
 				self.owner.undercover_skin = self.skin;
 				TeamFortress_SetSkin(self.owner);
@@ -564,7 +563,9 @@ void(float teamno) TeamFortress_SpyChangeColor =
 	local string st;
 	local float tc;
 	if (self.is_undercover && (self.undercover_team == teamno) )
+	{
 		return;
+	}
 	if (teamno == self.team_no)
 	{
 		sprint(self, 2, "Γομοςσ ςεσετ®\n");
