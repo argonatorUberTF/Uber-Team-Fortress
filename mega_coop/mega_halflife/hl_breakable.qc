@@ -10,7 +10,6 @@
 #define matRocks		8
 #define matNone			9
 #define matLastMaterial	10
-
 void () pSoundsWood  = 
 {
 	precache_model ("progs/gibs/wood2.mdl");
@@ -19,7 +18,6 @@ void () pSoundsWood  =
 	precache_sound( "debris/wood2.wav" );
 	precache_sound( "debris/wood3.wav" );
 };
-
 void () pSoundsFlesh  = 
 {
 	precache_model ("progs/gibs/flesh1.mdl");
@@ -32,7 +30,6 @@ void () pSoundsFlesh  =
 	precache_sound( "debris/flesh6.wav" );
 	precache_sound( "debris/flesh7.wav" );
 };
-
 void () pSoundsMetal  = 
 {
 	precache_model ("progs/gibs/vent1.mdl");
@@ -46,7 +43,6 @@ void () pSoundsMetal  =
 	precache_sound( "debris/metal2.wav" );
 	precache_sound( "debris/metal3.wav" );
 };
-
 void () pSoundsConcrete  = 
 {
 	precache_model ("progs/gibs/rockgib_big.mdl");
@@ -56,8 +52,6 @@ void () pSoundsConcrete  =
 	precache_sound( "debris/concrete2.wav" );
 	precache_sound( "debris/concrete3.wav" );
 };
-
-
 void () pSoundsGlass  = 
 {
 	precache_model ("progs/gibs/glass1.mdl");
@@ -70,9 +64,6 @@ void () pSoundsGlass  =
 	precache_sound( "debris/glass2.wav" );
 	precache_sound( "debris/glass3.wav" );
 };	
-
-
-
 void () vyrovnani =
 {
 	self.angles_x = 0;
@@ -80,7 +71,6 @@ void () vyrovnani =
 	self.think = SUB_Remove;
 	self.nextthink = ((time + TE_LAVASPLASH) + (random () * TE_LAVASPLASH));
 };
-
 void (string gibname, float dm) ThrowGlass =
 {
 	local entity glass;
@@ -98,7 +88,6 @@ void (string gibname, float dm) ThrowGlass =
 	glass.think = vyrovnani;
 	glass.nextthink = (time + 1.5);
 };
-
 void ( string bksnd ) set_break_sound =
 {
 	precache_sound(bksnd);
@@ -107,7 +96,6 @@ void ( string bksnd ) set_break_sound =
 	else
 		self.noise2 = bksnd;
 };
-
 void ( string psnd ) random_pain_sound =
 {
 	if (!self.noise3)
@@ -115,11 +103,10 @@ void ( string psnd ) random_pain_sound =
 	else if (random() < .3)
 		self.noise3 = psnd;
 };
-
 void () nmsound =
 {
-// FIXME: BROKEN: volume = 510 error.. wtf?
-return;
+//return;
+// FIXME: BROKEN: volume = 510 error.. wtf? //fixed --arg /agent
 	if (self.has_tesla == 1)
 		sound (self, CHAN_VOICE, self.owner.noise1, 1, ATTN_NORM);
 	else if (self.has_tesla == 2)
@@ -127,8 +114,7 @@ return;
 	else
 		sound (self, CHAN_VOICE, self.owner.noise3, 1, ATTN_NORM);
 	dremove(self);
-};
-
+}; //missing semicolon. That brings the total to 2.3145 pounds 4/26/2020
 void () func_breakable_pain =
 {
 	local float i;
@@ -179,7 +165,8 @@ void () func_breakable_pain =
 			i = 0;
 			break;
 	}
-	if (self.noise3) {
+	if (self.noise3)
+	{
 		newmis = spawn();
 		newmis.owner = self;
 		newmis.origin = ((self.absmax+self.absmin)*.5);
@@ -188,7 +175,6 @@ void () func_breakable_pain =
 		self = oself;
 	}
 };
-
 void(string rubblename) hlThrowRubble =
 {
 	local	entity new;
@@ -212,8 +198,8 @@ void(string rubblename) hlThrowRubble =
 	new.frame = 0;
 	new.flags = 0;
 };
-
-void () Breakaway  = {
+void () Breakaway  =
+{
 	local entity itsp, oself;
 	local float usesnd;
 	self.use = SUB_Null;
@@ -240,7 +226,6 @@ void () Breakaway  = {
 		nmsound();
 		self = oself;
 	}
-
 	// throw rubble
 	switch (self.material)
 	{
@@ -306,17 +291,16 @@ void () Breakaway  = {
 	  SUB_UseTargets();
 	  dremove(self);		// don't stick around, since we're not a multiplayer game
  };
-
-
-void () Breakuse = {
+void () Breakuse =
+{
 	self.use = SUB_Null;
-      Breakaway();
-      self.spawnflags = (self.spawnflags - 1.000);
+	Breakaway();
+	self.spawnflags = (self.spawnflags - 1.000);
 };
-
-void () Breaktouch = {
-  if (other.classname != "player") return;
-      Breakaway();
+void () Breaktouch =
+{
+	if (other.classname != "player") return;
+Breakaway();
 };
  
 void () bk_think =
@@ -357,22 +341,27 @@ void () func_breakable = {
 	}
 	else
 		setorigin (self, self.origin);
-      self.mdl = self.model;
-	setmodel (self, self.mdl);
-	setsize (self, self.mins , self.maxs);
-    if (self.spawnflags & 1.000){ 
-      if (self.targetname)
-         self.use = Breakuse; 
-     } else {
-         if (self.health) {
-            self.takedamage = 1.000;
-            self.th_die = Breakaway;
-         }
-      }
-      if (self.spawnflags & 2.000){ 
-         self.touch = Breaktouch;
-      }
-	    if (self.targetname)
+		self.mdl = self.model;
+		setmodel (self, self.mdl);
+		setsize (self, self.mins , self.maxs);
+	if (self.spawnflags & 1.000)
+	{ 
+		if (self.targetname)
+			self.use = Breakuse; 
+	}
+	 else
+	 {
+	if (self.health)
+		{
+			self.takedamage = 1.000;
+			self.th_die = Breakaway;
+		}
+	}
+	if (self.spawnflags & 2.000)
+	{ 
+		self.touch = Breaktouch;
+	}
+	if (self.targetname)
 			self.use = Breakuse; 
 	if (mapname == "c2a3e" && self.targetname == "intro_box")
 	{
@@ -398,7 +387,7 @@ void () func_breakable = {
 	else 
 		pSoundsGlass();
 		
-    switch (self.material) 
+	switch (self.material) 
 	{
 		case matWood:
 			set_break_sound("debris/bustcrate1.wav");
@@ -442,5 +431,4 @@ void () func_breakable = {
 		self.solid = SOLID_NOT;
 #endif
 };
-
 //END
