@@ -88,6 +88,8 @@ Summoned monsters might only target the RED team if monster maps are selected.
 
 Beartraps stick where you place them and cannot be shot off you once clamped.
 
+If you move they do more damage. Stand your ground or fight it out.
+
 Beartraps will follow you through the teleporters once clamped.
 
 Regular sentry guns and tesla coils envy the auto sentry guns and will target them as an enemy on your team.
@@ -120,6 +122,8 @@ Upgraded medic nail gun to nails with more damage, similar to the lava nails, bu
 
 Adjust starting armor and speeds to rebalance things.
 
+Added the original caltrops from original Team Fortress. The scout, medic and spy can drop them separatly with impulse 121 or with drop 1 as a combo. 
+
 All players start with at least 3 of each type of the two kinds of grenades. So drops require two type 2 work from the spawn on any map regardless for faster combat action. Besides some maps didn't have grenade ammo or some of the backpacks did not give grenades.
 This makes it possible to plant a prox mine from the start as soldier for example.
 
@@ -147,7 +151,7 @@ Since custom player skin can be uploaded to the server, it's hard to identify wh
 Also the spy can ue custom skins, change colors, and top/bottom pants colors. So be on the lookout.
 The spy was minimized and nerf with auto ID ON. So you have to check yourself now.
 Auto ID just tells you the name of the player or whose sentry gun/tesla built.
-Each player gets a colored spot representing their team color that meanders nearby that player.
+Each player gets a colored spot fob representing their team color that meanders nearby that player.
 
 All classes spawn with a minimum of 3 type 1, and 3 type 2 grenades at level 0 newb starter.
 
@@ -166,7 +170,7 @@ At level 80 you get the Xav Needler gun.  Use impulse 9 to toggle between shotgu
 The lightning gun weapon comes up by selecting 2 and having the ammo masters skill.
 Achievement system similar to Xbox for bragging rights just like MegaTF COOP was.
 
-Scout class has a bat for the axe, jetpack uses less cells, a bit more fire damage.
+Scout class has a bat for the axe, jetpack uses less cells, a bit more fire damage. He can deploy caltrops with flash mines on drop1 or impulse 121.
 
 The sniper class had little changed. Already powerful and deadly enough. 
 The soldier class gets a bit more dangerous with the upgraded amounts of grenades. The attributes system can boost this class to very powerful levels.
@@ -174,13 +178,16 @@ The soldier class gets a bit more dangerous with the upgraded amounts of grenade
 The Demoman gets sticky pipebombs and laser trip bombs added. Impulse 4 for sticky pipebombs and drop3 for laser trip bombs.
 
 Medic can heal with cmd aura regardless of level, and further distance than players can with attribute of masters of healing.
-Medic gets an upgrade of the super nailgun with lava nails. More damage per nail fired.
+Medic gets an upgrade of the super nailgun with lava nails. More damage per nail fired. Medics can drop caltrops with impulse 121 or the needler with drop1.
 
 Heavy Weapons Guy can spool up assault cannon a bit faster, and uses less ammo per shot on 20mm mode.
+
+It packs a heftier punch and 20mm range has been extended. New slugs and higher pressure guns are a thing now. 
 
 Pyro can fire faster flame rockets, has a chainsaw, and gets results. He might get the lightning gun by default soon.
 
 The Spy has a grappling hook that uses less cells, and can "poon" enemies for gibs. Just like in Pain Keep.
+The spy can sprinkle caltrops with the ammo trap, and impulse 121.
 
 The Engineer can launch drones in a shorter timeframe, does a bit more damage per beam.
 
@@ -193,13 +200,14 @@ The Engineer gets a gravity gun, and can have a Tesla and Sentry built at the sa
 All classes can buy weapon upgrades, powerups, and inventory then with the merchant and used them with "cmd inv".
 
 Custom skins are possible. Not restricted per class. Use "cmd customskin" Frag with your favorite character on.
+You can color your stock skin as you like, complete perfidy is impossible since the color dotted playerfob that shows your real team is visible.
 
 Deployment of client and server files see releases.
 
 A new combat rule. If you fight, you fight to the death.
 
 If you suicide after fighting, you will be punished 5 additional frags for denying your opponent their prey.
-If you splash damage yourself dead, you might be punished for palying sloppily. However, if you are good overall, you will get points back and average out the misfortunes.
+If you splash damage yourself dead, you might be punished for playing sloppily. However, if you are good overall, you will get points back and average out the misfortunes.  Be aware of the triple damage explosive rune, it can bite back. Ratbert calls the author a showoff once in a while. 
 
 Another new combat rule. Doing a "cmd beg" in NON-survival mode punishes you for teleporting for no purpose to the start spawn to prevent spamming of ammo and once again denying the opponent their prey.
 
@@ -212,3 +220,4 @@ email: forgetitanyway@gmail.com
 Discord: argonator#1511
 
 Coders see addtional.pqc for notes and references.
+New code additions get their variables documented and comments for functions greatly appreciated to create some form of library spanning the different server platforms. That is what the purpose of United was, and shall be upheld.
