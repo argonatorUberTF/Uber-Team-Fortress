@@ -266,7 +266,8 @@ mega_coop/mtf_coop_lms.qc		// Last Man Standing game mode, must be compiled. sti
 mega_coop/mtf_coop_srv.qc  //survival mode
 mega_coop/coop_monsters.qc
 rpg.pqc
+fireworks.qc //functions added for marioworld by agent maps. -arg
 //minifiend.qc	// MINI FIEND -- your very own mini pet :D -0 kludgey needs work to use. -arg
 
 spectator.pqc
-//END 
+//END

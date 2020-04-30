@@ -65,7 +65,7 @@ float() DoorShouldOpen =
 		{
 			bprint(2, "gold");
 		}
-		bprint(2, " door\n");
+		bprint(2, " door.\n");
 		return TF_FLARE_LIT;
 	}
 	bprint(2, "The ");
@@ -77,7 +77,7 @@ float() DoorShouldOpen =
 	{
 		bprint(2, "gold");
 	}
-	bprint(2, " door has been unlocked\n");
+	bprint(2, " door has been unlocked.\n");
 	return TF_FLARE_OFF;
 };
 //END

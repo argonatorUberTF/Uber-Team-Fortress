@@ -212,6 +212,8 @@
 #define EF_DIMLIGHT=8;
 //
 //					ENGINE HOOKS not defined in defs.pqc .
+float (float n) sin = #60;
+float (float n) cos = #61;
 void (...) AdvanceFrame = #63;  //from aagun.pqc
 float(string st1, string st2) strcasecmp = #87;
 float(string filename, float mode) fopen = #110;
@@ -293,6 +295,7 @@ entity tracetossent;			// Nehara
 //.entity bolt_lightningFire;  // Used as the lightning fire source entity so that the "player" can fire lightning himself
 //
 //							.floats go here
+.float fob;  //player's colored fob dot status, 0 = off 1= has one already. -arg
 .float DropFlagDelay;		//camera.pqc
 .float nojumptime; //moved here from client.pqc
 .float saved_ent;
@@ -820,7 +823,7 @@ string team_menu_string /* = "" */;
 //.vector origin3;					// from gaunt.qc not used? -arg
 //.vector orig_angles;				// angles that an entity spawns with, generally. unused -arg
 //.vector spawnorigin;				// used for half-life, unused -arg
-//.vector rendercolor;				// for half-life unused -arg
+.vector rendercolor;				// for half-life unused -arg marioworld maps from agent.
 //.vector m_center;					// for half-life unused -arg
 //.vector m_start;					// for half-life unused -arg
 //.vector g_vecZero;				// for half-life unused -arg
@@ -1204,6 +1207,7 @@ float (entity e) turret_inFront;				// PAINKEEP
 .void() spawnthink;			// Hipnotic 
 .void() splash_func; // The function to call to make the splash splash.qc -arg
 entity(float team_num) FindTeamSpawnPoint;
+void () ScatterCaltrops;
 void () removeplayerfob;
 void () playerfob_think;
 void () attachplayerfob; //The colored dot fob thing that tracks players even though their skin or colors are changed.
@@ -5964,6 +5968,8 @@ float(entity targ, entity inflictor) CanDamage =
 };
 void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 {
+	local entity te;
+	local float tm;
 	local entity newmon;
 	local float rtime;
 	local entity hax;	
@@ -5973,10 +5979,8 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 	special_end = Coop_SpecialEnd( mapname );
 	self.flags = #FL_FINDABLE_NONSOLID;		// for minion summon
 	self.monster_string = "off";
-#ifdef mtf_coop_nehahra
 	if (self.classname == "the_mister")
 		return;
-#endif
 	if (intermission_running)
 		return;
 	if (self.monster_items & MITEM_INVISIBLE)
@@ -5992,7 +5996,6 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 		newmis.nextthink = time + 5;
 		newmis.enemy = self;
 	}
-#ifdef mtf_coop_expsys
 	if (self.#is_minion == #TRUE) {
 		newmis = spawn();
 		newmis.think = MTF_RemoveMonster;
@@ -6000,7 +6003,6 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 		newmis.enemy = self;	
 		return;
 	}
-#endif
 	if (self.lives <= 0) {
 		killed_monsters = killed_monsters + 1.000000;
 		hax = find(world, monster_string, "on");
@@ -6056,15 +6058,21 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 	newmon.lives = self.lives - 1;
 	setorigin (newmon, self.npc_originalloc);
 	rtime = cvar ("monster_respawndelay");
-	if (survival_mode) {
-		rtime = random() * 30;
+	if (survival_mode)
+	{
+		rtime = random() * 15;  //was 30, but takes forever on the end of some maps. -arg
 	}
-	if ( self.respawn_time > 0 ) {
+	if ( self.respawn_time > 0 )
+	{
+		if (self.respawn_time > 10)  
+			{
+			rtime = rtime / 2;
+			}
 		rtime = self.respawn_time;
 		newmon.respawn_time = rtime;
 	}
 	if (!rtime || rtime < 1)
-		rtime = 0;	
+		rtime = .5;
 	if (rtime > 0)
 		newmon.nextthink = time + rtime;
 	else
@@ -20264,17 +20272,19 @@ void (entity plyr, float addfrags) Rank_FragIncrease =
 };
 void () missing_precaches =
 {
-precache_model("progs/ammobox2.mdl");
-precache_model("progs/proxbomb.mdl");
-precache_model("progs/s_splava.spr");
-precache_sound("sets/dml1_4.wav");
-precache_sound("items/protect.wav");
-precache_sound("items/protect2.wav");
-precache_model("progs/jagger.mdl");
-precache_model("progs/medex.spr");
-precache_sound("sound/fish/bite.wav");
-precache_sound("sound/fish/idle.bite.wav");
-precache_sound("sound/fish/death.wav");
+	precache_sound("wall/push.wav");
+	precache_model("progs/ammobox2.mdl");
+	precache_model("progs/null.mdl");
+	precache_sound ("items/inv3.wav");
+	precache_model("progs/proxbomb.mdl");
+	precache_model("progs/s_splava.spr");
+	precache_sound("sets/dml1_4.wav");
+	precache_sound("items/protect.wav");
+	precache_sound("items/protect2.wav");
+	precache_model("progs/jagger.mdl");	
+	precache_sound("fish/bite.wav");
+	precache_sound("fish/idle.wav");
+	precache_sound("fish/death.wav");
 };
 void() beartrapDie =
 {
@@ -22770,6 +22780,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode.\nDo not use it non-survival mode(penalty applies).\n");
 			sprint( self, 2, "powerleft - Shows your invicibility, quad, and invisbility time left.\n");		
 			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun.\n");
+			sprint (self, 2.000000, "Impulse 121 - Sprinkles some caltrops if you are Scout, Medic, or Spy. It costs you a type one grenade.\n");
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
 			sprint (self, 2.000000, "impulse  68 - Throws a beartrap.\n");
@@ -22941,6 +22952,7 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 				sprint(self, 2, "A dead monster will respawn in ");
 				sprint(self, 2, ftos(te.nextthink - time));
 				sprint(self, 2, " seconds.\n");
+				te.nextthink = time + 1;
 				break;
 			}
 			te = find(te, monster_string, "on");
@@ -24076,29 +24088,24 @@ void () respawn_monster =
 };
 void () playerfob_think =
 {
-	if (self.owner.deadflag)
+	local float fls;
+	local vector endp;
+	if (self.owner.playerclass == 8 && self.owner.is_undercover)
 	{
-		setorigin (self, (self.playerfob_target.origin)); //stick the dot in the corpse until respawn() -arg
-		return;
+	self.frame = self.owner.undercover_team - 1; //the selected color undercover -arg
+	self.nextthink = time + .1;
 	}
-	if (self.owner.invisible_finished > time)
+	else
 	{
-		setorigin (self, (self.playerfob_target.origin));
+	self.frame = self.owner.team_no - 1;
 	}
 	if (self.owner.owner != self.real_owner)  //from summon_think for goalie. -arg
 	{
 		self.owner.owner = self.real_owner;
 	}
-	local float fls;
-	local vector endp;
 	fls = self.owner.maxs_z * 1;
 	endp = self.owner.origin;
 	endp_z += fls;
-	if (endp == self.orig_origin)	// save some bandwidth player is not moving
-	{
-		self.nextthink = time + .1; // a little laggy but doesn't make for a target to shoot at exactly.
-		return;
-	}
 //move with player. -arg
 	if (self.origin != self.playerfob_target.origin || self.angles != self.owner.angles)
 	{
@@ -24108,13 +24115,20 @@ void () playerfob_think =
 	{
 			self.angles = self.owner.angles;
 	}
-	self.orig_origin = endp;
-	setorigin(self, endp);
-	self.frame = self.owner.team_no - 1; //always display the color as the player's team color.
-	if (self.owner == world)
+		self.orig_origin = endp;
+	if (self.owner.is_feigning)
 	{
-	removeplayerfob();
+	setorigin (self, (endp + ' 900 900 950'));
+	self.nextthink = time + 1;
+	return;
 	}
+	if (self.owner.invisible_finished > time)
+	{
+		setorigin(self, (endp + ' 900 900 950'));
+		self.nextthink = time + 1;
+		return;
+	}
+	setorigin(self, endp);
 	self.nextthink = time + .1;
 };
 void () attachplayerfob =
@@ -24132,7 +24146,7 @@ local entity playerfob;
 	playerfob.nextthink = time + .1;
 	playerfob.velocity = self.velocity; // move at the same rate as player. ?
 	playerfob.team_no = self.team_no; //Same team number as the player -arg
-	playerfob.origin = self.origin + '0 0 50'; //put fob above the player.
+	playerfob.origin = self.origin + '0 0 60'; //put fob above the player.
 	playerfob.touch = SUB_Null; // it does nothing, if touched.
 	self.playerfob_target = self; // for following with beartrap logic code.
 	setmodel (playerfob, "progs/newdot.spr");
@@ -24143,4 +24157,14 @@ void () removeplayerfob =
 {
 	dremove(self);
 };
+float (entity Top, entity bottom) IsOnTopOf; // from neh_defsfuncs.qc -arg for marioworld maps agent.
+.void() hl_use;				// half-life 1 Use properties for marioworld maps. -arg
+.vector rendercolor;		// from half life 1, for marioworld maps. -arg 
+.float rendermode;			// from half life 1, for marioworld maps. -arg 
+.float renderamt;			// from half life 1, for marioworld maps. -arg 
+.float buoyancy;			// for func_pushable hl for marioworld agent maps.
+.float material;			// from half life 1, for marioworld maps. -arg 
+.float spawnobject;			// spawn object on destruction
+//#include "mega_coop/mega_halflife/hl_breakable.qc" //includes for marioworld maps for agent.
+//#include "mega_coop/mega_halflife/hl_pushable.qc" // from half life 1, for marioworld maps. -arg 
 //END

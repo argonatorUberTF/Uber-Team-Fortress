@@ -134,6 +134,7 @@ void() TeamFortress_CTF_FlagInfo;
 void() TF_MovePlayer;
 void() W_Precache = 
 {
+missing_precaches(); //precache the stuff missing or overlooked or called all the time -arg
 #ifdef mtf_coop_hipnotic
 	if (mapname == "hip1m4") {
 precache_model("progs/b_s_key.mdl");
@@ -664,7 +665,8 @@ void() SpyPack =
 		}
 		te = find(te, classname, "drop1");
 	}
-	sprint(self, 2, "You set an Ammo Trap!\n");
+	sprint(self, 2, "You set an Ammo Trap! With caltrop sprinkles.\n");
+	ScatterCaltrops(); //requires 1 type 1 grenade, self terminating. -arg death msg 48 for it.
 	sound(self, 3, "weapons/lock4.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	newmis = spawn();
 	newmis.owner = self;
@@ -2850,9 +2852,9 @@ void () C_Mine =
 		}
 		te = find (te, classname, "drop1");
 	}
-
 	ThrowMine (3);
-	sprint (self, 2, "You set a Flash mine!\n");
+	sprint (self, 2, "You set a Flash mine! With caltrop sprinkles. \n");
+	ScatterCaltrops();	//requires 1 type 1 grenade, self terminating. -arg death msg 48 for it.
 	sound (self, 2, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
 
@@ -5965,6 +5967,13 @@ void() ImpulseCommands =
 	{
 	turret_dropTurret();
 	}
+	if(self.impulse == 121)
+	{
+		if (self.playerclass == 8 || self.playerclass == 5 || self.playerclass == 1)
+		{
+		ScatterCaltrops();
+		}
+	}
 	if(self.impulse == 204)
 	{
 		DropFlag();
@@ -7912,12 +7921,12 @@ void () W_FireBigAss =
 	stuffcmd (self, "bf\n");
 	self.currentammo = self.ammo_shells = self.ammo_shells - 10;
 	makevectors (self.v_angle);
-	dir = v_forward;
+	dir = v_forward *3; //now 3x range. Shotgun high psi rounds are a thing now. -arg
 	deathmsg = 46;
 #ifdef mtf_coop
-	BigAssBullet (dir, 70);
+	BigAssBullet (dir, 90);  //was 70 tungsten slugs -arg
 #else
-	BigAssBullet (dir, 50);
+	BigAssBullet (dir, 60); // was 50 -arg
 #endif
 	EjectShell ();
 	if (old20mm)
@@ -7962,8 +7971,8 @@ void () CaltropTouch =
 	sprint (other, 2, "Ow, Ow, Ow! Caltrops!\n");
 	other.leg_damage = (other.leg_damage + 2);
 	TeamFortress_SetSpeed (other);
-	deathmsg = 48;
-	T_Damage (other, self, self.owner, 10);
+	deathmsg = 48; //added to clientobituary and female versions.
+	T_Damage (other, self, self.owner, 20); //was 10 -arg
 	dremove (self);
 };
 void () CaltropScatterThink =

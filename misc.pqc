@@ -1874,7 +1874,6 @@ void () duck_fly =
 			self.nextthink = (time + 2.000000);
 		}
 		self.velocity = '0.000000 0.000000 0.000000';
-		//setorigin (self, (self.origin + '0.000000 0.000000 1000.000000'));
 		setorigin (self, (self.oldorigin - '0 0 20'));
 		self.think = Random_Play;
 		self.playerclass = 0.500000;

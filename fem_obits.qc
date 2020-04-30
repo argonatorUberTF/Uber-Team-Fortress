@@ -583,6 +583,12 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																						deathstring = " was torn up by an enemy Rottweiler";
 																						deathstring2 = ".\n";
 																					}
+																					{
+																					if (deathmsg == 48)
+																					{
+																						deathstring = " had her implants deflated by caltrops";
+																						deathstring2 = ".\n";
+																					}
 																					else
 																					{
 																						if (deathmsg == 44)

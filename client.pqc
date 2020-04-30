@@ -1322,7 +1322,11 @@ void(entity e) ValidateUser =
 {};
 void() PutClientInServer = 
 {
-// refers to entity playerfob;  //This is what follows the player and is colored to their team.
+	if (self.fob == 0)  //only attach one fob to player, it stays or hides until you disconnect with removeplayerfob() -arg
+	{
+	attachplayerfob();
+	self.fob = 1;
+	}
 	self.pk_turretammo = 6;  //set painkeep weapon ammo amounts. -arg
 	self.pk_beartrapammo = 12;
 	self.pk_gravitywellammo = 4;
@@ -3348,10 +3352,6 @@ void() ClientConnect =
 		self.StatusBarSize = 0;
 	}
 	self.has_disconnected = 0;
-//create fob for player and spawn it. attach think to player -arg
-//start the colored playerfob and assign it to player_stand1 for think to update it as
-// the players team color changes. Each time they spawn or put in server they get the fob in this loop.
-	attachplayerfob(); //new function.
 	if (intermission_running)
 	{
 		GotoNextMap();
@@ -3600,7 +3600,8 @@ void() ClientDisconnect =
 	self.team_no = 0;
 	self.solid = 0;
 	setsize(self, '0 0 0', '0 0 0');
-	removeplayerfob();  // remove 
+	self.fob = 0;
+	removeplayerfob();  // remove the colored dot spot fob -arg
 };
 void() Grapple_Track;
 void() Reset_My_Grapple;
@@ -4358,11 +4359,18 @@ void(entity targ, entity attacker) ClientObituary =
 																						if (deathmsg == 44)
 																						{
 																							deathstring = " was stopped by an enemy autoturret.";
+																							deathstring2 = "\n";
+																						}
+																						else
+																						{
+																						if (deathmsg == 48)
+																						{
+																							deathstring = " was deflated by caltrops.";
 																							deathstring2 = ".\n";
 																						}
 																						else
 																						{
-																							if (deathmsg == 15)
+																						if (deathmsg == 15)
 																							{
 																								if (rnum < 0.2)
 																								{
@@ -4681,6 +4689,7 @@ void(entity targ, entity attacker) ClientObituary =
 				}
 			}
 			return;
+		}
 		}
 		else
 		{
@@ -5244,4 +5253,4 @@ void () FixSoundCrap =
 	dremove (self);
 };
 
-//End
+//End 
