@@ -36,6 +36,7 @@ void() monster_spawner_spawn = {
 	}
 	e = spawn();
 	e.target = self.targetname;
+	e.team_no = 2;	// if it isn't set, set the team_no so the attachplayerfob will color it right. Jeesh. Assuming that teams are determined by other/self/owner is trashy. -arg
 	e.angles = self.angles;
 	if ( self.netname )
 		e.targetname = self.netname;
@@ -89,8 +90,8 @@ void() monster_spawner_spawn = {
 	e.#npc_useTargetsOnRespawn = #TRUE;	// make sure we always fire our targets
 	e.lives = 0;
 	e.endtime = self.endtime;
-	if ( self.team_no )
-		e.team_no = self.team_no;
+//	if ( self.team_no )
+//		e.team_no = self.team_no; // what ? 
 	// check for randomizing the spawn position
 	if ( self.spawnflags & 1 || self.spawnflags & 2 || InSolid( e ) ) {
 		maxCount = 100;
@@ -133,9 +134,6 @@ void() monster_spawner_spawn = {
 	}
 	e.#npc_spawndelay = 1;
 	e.is_monster = 1;
-	//e.nextthink = time + 1;
-	//e.think = respawn_think;
-	//e.team_no = 0;
 	e.lives = -1;
 	e.monster_string = "on";
 	SetSpawnFunc(e, e.classname);
@@ -212,7 +210,8 @@ void() monster_spawner_use = {
 	} else
 		monster_spawner_spawn();
 };
-void() monster_spawner = {
+void() monster_spawner =
+{
 	local entity	temp, oself;
 	local float		ftmp;
 	// this is stored in the #isCoopMonster field, so make sure it's greater than 1
