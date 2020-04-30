@@ -932,7 +932,7 @@ void ( entity newmon, string newmon_cln ) SetSpawnFunc =
 		newmon.think1 = monster_scourge1;
 		newmon.netname = "centroid";
 	} else if (newmon_cln == "monster_gremlin") {  //It was monster_gremlin here but swapped him for a scourge instead. -arg
-		newmon.#spawnfunc =monster_scourge;
+		newmon.#spawnfunc = monster_scourge;
 		newmon.think1 = monster_scourge1;
 		newmon.netname = "centroid";
 	} else if (newmon_cln == "monster_morph") {
