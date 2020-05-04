@@ -4,5 +4,4 @@
 //	It's not perfect, but hey it works (tm)
 //
 // Special Flags:
-
 //END

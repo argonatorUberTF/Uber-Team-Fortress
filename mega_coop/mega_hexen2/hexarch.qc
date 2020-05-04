@@ -32,7 +32,6 @@ $frame redraw11     redraw12
 $frame tranA1       tranA2       tranA3       tranA4       tranA5       
 $frame tranA6       tranA7       tranA8       tranA9       tranA10      
 $frame tranA11      tranA12      tranA13      
-
 $frame tranB1       tranB2       tranB3       tranB4       tranB5       
 $frame tranB6       tranB7       tranB8       tranB9       tranB10      
 $frame tranB11      tranB12      tranB13      tranB14      tranB15      
@@ -181,7 +180,6 @@ void archer_dying (void) [++ $deathA1..$deathA22]
 		chunk_death();
 		remove(self);
 	}
-
 	if (cycle_wrapped)
 	{
 		self.frame = $deathA22;
@@ -213,7 +211,6 @@ void archer_pain_anim () [++ $pain1 .. $pain16]
 		else
 			sound (self, CHAN_VOICE, "archer/pain2.wav", 1, ATTN_NORM);
 	}
-
 	if (self.frame==$pain16)
 	{
 		self.pain_finished = time + random(4,6);
@@ -269,7 +266,6 @@ void archerdrawdone () [-- $tranA7..$tranA1]
 	{
 		self.pausetime = time + random(.5,2);
 		self.attack_state = AS_WAIT;
-
 		archer_run();
 	}
 };
@@ -296,23 +292,20 @@ vector spot1, spot2;
 			if(tspeed>100)
 				spot2=extrapolate_pos_for_speed(spot1,1000,self.enemy,0.3);
 		}
-
 		if(spot2=='0 0 0')
 		{
 			spot2 = self.enemy.origin + self.enemy.view_ofs;
 			traceline (spot1, spot2, FALSE, self);
-
 			if(trace_ent.thingtype>=THINGTYPE_WEBS)
 				traceline (trace_endpos, spot2, FALSE, trace_ent);
-
 			if (trace_ent == self.enemy) 
 				ok=TRUE;
-			else if((trace_ent.health<=25||trace_ent.thingtype>=THINGTYPE_WEBS)&&trace_ent.takedamage&&(!trace_ent.flags&FL_MONSTER||trace_ent.classname=="player_sheep"))
+			else
+			if((trace_ent.health<=25||trace_ent.thingtype>=THINGTYPE_WEBS)&&trace_ent.takedamage&&(!trace_ent.flags&FL_MONSTER||trace_ent.classname=="player_sheep"))
 				ok=TRUE;
 		}
 		else
 			ok=TRUE;
-
 		if(ok)
 		{	
 			enemy_range = range(self.enemy);
@@ -342,7 +335,6 @@ vector spot1, spot2;
 			if(!self.skin)
 				chance-=0.3;
 			chance+=skill/10;
-
 			if (random () > chance)	// Is he done?
 				archerdrawdone();
 		}
@@ -416,7 +408,7 @@ float chance,startframe,endframe;
 		if (!archer_check_shot())
 		{
 			stopSound(self,CHAN_WEAPON);
-			self.attack_state = AS_STRAIGHT;					
+			self.attack_state = AS_STRAIGHT;
 			self.think = archer_run;
 			thinktime self : HX_FRAME_TIME;
 			return;
@@ -434,12 +426,10 @@ float chance,startframe,endframe;
 		}
 		else
 			chance = 1;
-
 		if (random() < chance)
 			archermissile();
 	}
 };
-
 void archerdraw () [++ $tranA1..$tranA13]
 {
 	archer_check_defense();
@@ -455,7 +445,6 @@ void archerdraw () [++ $tranA1..$tranA13]
 	}
 	if (self.frame == $tranA6)
 		sound (self, CHAN_WEAPON, "archer/draw.wav", 1, ATTN_NORM);
-
 	if ((self.frame >= $tranA1) && (self.frame <= $tranA13))
 		walkmove(self.angles_y+180,.28,FALSE);
 	if (cycle_wrapped)  // Archer has drawn the arrow
@@ -478,7 +467,6 @@ void archerdraw () [++ $tranA1..$tranA13]
 				sound (self, CHAN_BODY, "archer/growl2.wav", 1, ATTN_NORM);
 			else
 				sound (self, CHAN_BODY, "archer/growl3.wav", 1, ATTN_NORM);
-
 		}
 	}
 };
@@ -525,7 +513,7 @@ void archer_walk(void) [++ $patrol1..$patrol22]
 			else
 				sound (self, CHAN_VOICE, "archer/growl3.wav", 1, ATTN_NORM);
 		}
-	}	
+	}
 	if  (self.spawnflags & ARCHER_STUCK)	// No moving
 	{
 		self.frame = $patrol1;				// FIXME: this should be the wait animations
@@ -534,17 +522,14 @@ void archer_walk(void) [++ $patrol1..$patrol22]
 	else
 		ai_walk(2.3);
 };
-
 void archer_stand(void) [++ $waitA1..$waitA18]
 {
 	if (random()<0.5)
 	{
-		
 		archer_check_defense();
 		ai_stand();
 	}
 };
-
 void monster_archer ()
 {
 	if (deathmatch)
@@ -552,7 +537,6 @@ void monster_archer ()
 		remove(self);
 		return;
 	}
-
 	if (!self.flags2 & FL_SUMMONED)
 	{
 		precache_archer();
@@ -644,7 +628,7 @@ float ArcherCheckAttack (void)
 	if (trace_ent != targ)
 		if((trace_ent.health>25&&trace_ent.thingtype!=THINGTYPE_GLASS)||!trace_ent.takedamage||(trace_ent.flags&FL_MONSTER&&trace_ent.classname!="player_sheep"))
 		{	
-			self.attack_state = AS_STRAIGHT;					
+			self.attack_state = AS_STRAIGHT;
 			return FALSE;
 		}
 	enemy_range = range(self.enemy);
@@ -673,7 +657,6 @@ float ArcherCheckAttack (void)
 		if (self.attack_state != AS_SLIDING)
 			self.attack_state = AS_SLIDING;
 	}
-
 	return FALSE;
 };
 //END
