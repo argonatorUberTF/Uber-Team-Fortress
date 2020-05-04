@@ -20,7 +20,6 @@ void () lsoul_check_frame =
 	doom_ai_sprite_orient(32);
 	self.nextthink = time + 0.1;
 };
-
 void () lsoul_stand1 = [ 0, lsoul_stand2 ]
 {
 	if ((random () < 0.1))
@@ -29,16 +28,12 @@ void () lsoul_stand1 = [ 0, lsoul_stand2 ]
 	}
 	lsoul_check_frame();
 	ai_stand (); 
-
 };
-
 void () lsoul_stand2 = [ 8, lsoul_stand1 ]
 {
 	lsoul_check_frame();
 	ai_stand (); 
-
 };
-
 void () lsoul_walk1 = [ 0, lsoul_walk2 ]
 {
 	if ((random () < 0.4))
@@ -48,33 +43,26 @@ void () lsoul_walk1 = [ 0, lsoul_walk2 ]
 	lsoul_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () lsoul_walk2 = [ 8, lsoul_walk1 ]
 {
 	lsoul_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
-
 void () lsoul_run1 = [ 0, lsoul_run2 ]
 {
 	lsoul_check_frame();
 	ai_run (10 + FL_SWIM); 
 };
-
 void () lsoul_run2 = [ 8, lsoul_run1 ]
 {
 	lsoul_check_frame();
 	ai_run (10 + FL_SWIM); 
 };
-
-
 void()	Sol_JumpTouch =
 {
 	local	float	ldmg;
 	if (self.health <= 0)
 		return;
-		
 	if (other.takedamage) //lost soul hit a target that can be damaged
 	{
 		if ( vlen(self.velocity) > 300 )
@@ -105,14 +93,11 @@ void () lsoul_charge =
 void () lsoul_atk1 = [ 16, lsoul_atk2 ]
 {
 	lsoul_check_frame();
-
 };
-
 void () lsoul_atk2 = [ 16, lsoul_atk3 ]
 {
 	lsoul_check_frame();
 };
-
 void () lsoul_atk3 = [ 24, lsoul_atk3 ]
 {		
 	if (!self.dest1)
@@ -145,43 +130,35 @@ local vector	delta;
 local float 	ldmg;
 	if (!self.enemy)
 		return;
-        ai_face ();
+		ai_face ();
 	walkmove (self.ideal_yaw, 12);	/* allow a little closing */
-
 	delta = self.enemy.origin - self.origin;
 	if (vlen(delta) > 100)
 		return;
 	ldmg = 10 + 5*random();
 	T_Damage (self.enemy, self, self, ldmg);
 };
-
 void () lsoul_bite = [ 16, lsoul_bite2 ]
 {
 	lsoul_check_frame();
-}
-
+};
 void () lsoul_bite2 = [ 24, lsoul_bite3 ]
 {
 	soul_bite();
 	lsoul_check_frame();
-}
-
+};
 void () lsoul_bite3 = [ 24, lsoul_bite4 ]
 {
 	lsoul_check_frame();
-}
-
+};
 void () lsoul_bite4 = [ 16, lsoul_run1 ]
 {
 	lsoul_check_frame();
-}
-
-
+};
 void () lsoul_run =
 {
 	lsoul_run1 ();
 };
-
 void (entity attacker, float damage) lsoul_pain =
 {
 	if ((self.pain_finished > time))
@@ -192,44 +169,36 @@ void (entity attacker, float damage) lsoul_pain =
 	lsoul_pain1 ();
 	sound (self, CHAN_VOICE, "doom_pinky/pain.wav", TRUE, ATTN_NORM);
 };
-
 void () lsoul_die1 = [ 33, lsoul_die2 ]
 {
 	self.solid = SOLID_NOT;
 	sound (self, CHAN_VOICE, "doom_lsoul/die.wav", TRUE, ATTN_NORM);
 lsoul_check_frame();
 };
-
 void () lsoul_die2 = [ 34, lsoul_die3 ]
 {
 lsoul_check_frame();
 };
-
 void () lsoul_die3 = [ 35, lsoul_die4 ]
 {
 lsoul_check_frame();
 };
-
 void () lsoul_die4 = [ 36, lsoul_die5 ]
 {
 lsoul_check_frame();
 };
-
 void () lsoul_die5 = [ 37, lsoul_die6 ]
 {
 lsoul_check_frame();
 };
-
 void () lsoul_die6 = [ 38, lsoul_die7 ]
 {
 lsoul_check_frame();
 };
-
 void () lsoul_die7 = [ 39, lsoul_die7 ]
 {
 lsoul_check_frame();
 };
-
 void () monster_lsoul1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -247,7 +216,6 @@ void () monster_lsoul1 =
 	self.th_die = lsoul_die1;
 	MTF_Setup_Monster_Postsets( self.health, coop_flymonster_start);
 };
-
 void () monster_lsoul =
 {
 	if (deathmatch)

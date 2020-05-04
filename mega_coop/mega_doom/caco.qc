@@ -19,12 +19,10 @@ void () caco_check_frame =
 	doom_ai_sprite_orient(40);
 	self.nextthink = time + 0.1;
 };
-
 void () caco_stand1 = [ 0, caco_stand1 ]
 {
 	caco_check_frame();
 	ai_stand (); 
-
 };
 void () caco_walk1 = [ 0, caco_walk1 ]
 {
@@ -65,7 +63,6 @@ void () CacoBall_Touch =
 	}
 	remove (self);
 };
-
 void (vector org, vector vec) LaunchCacoBall =
 {
 	vec = normalize (vec);
@@ -82,7 +79,6 @@ void (vector org, vector vec) LaunchCacoBall =
 	newmis.think = SUB_Remove;
 	newmis.touch = CacoBall_Touch;
 };
-
 void () caco_fire =
 {
 	local vector org;
@@ -90,54 +86,43 @@ void () caco_fire =
 	org = ((((self.origin + (v_forward * SVC_INTERMISSION)) + (v_right * 8.5)) + (v_up * CONTENT_LAVA)) + '0 0 8');
 	LaunchCacoBall (org, (self.enemy.origin - self.origin));
 };
-
-
 void () caco_atk1 = [ 8, caco_atk2 ]
 {
 caco_check_frame();
 	ai_face (); 
 };
-
 void () caco_atk2 = [ 16, caco_atk3 ]
 {
 caco_check_frame();
 	ai_face (); 
 };
-
 void () caco_atk3 = [ 24, caco_atk4 ]
 {
 	caco_check_frame();
 	ai_face (); 
 	caco_fire ();
 };
-
 void () caco_atk4 = [ 16, caco_run1 ]
 {
 	caco_check_frame();
 	ai_face ();
 };
-
-
 void () caco_pain1 = [ 32, caco_pain2 ]
 {
 	caco_check_frame();
 };
-
 void () caco_pain2 = [ 32, caco_pain3 ]
 {
 	caco_check_frame();
 };
-
 void () caco_pain3 = [ 40, caco_pain4 ]
 {
 	caco_check_frame();
 };
-
 void () caco_pain4 = [ 40, caco_run1 ]
 {
 	caco_check_frame();
 };
-
 void () caco_run =
 {
 	if ((random () < 0.4))
@@ -146,7 +131,6 @@ void () caco_run =
 	}
 	caco_run1 ();
 };
-
 void (entity attacker, float damage) caco_pain =
 {
 	if ((self.pain_finished > time))
@@ -157,7 +141,6 @@ void (entity attacker, float damage) caco_pain =
 	caco_pain1 ();
 	sound (self, CHAN_VOICE, "doom_caco/pain.wav", TRUE, ATTN_NORM);
 };
-
 void () caco_die1 = [ 41, caco_die2 ]
 {
 	self.solid = SOLID_NOT;
@@ -166,37 +149,28 @@ void () caco_die1 = [ 41, caco_die2 ]
 	self.velocity_z = (100 + (100 * random ()));
 	self.flags = (self.flags - (self.flags & FL_ONGROUND));
 	sound (self, CHAN_VOICE, "doom_caco/die.wav", TRUE, ATTN_NORM);
-
 caco_check_frame();
 };
-
 void () caco_die2 = [ 42, caco_die3 ]
 {
 caco_check_frame();
 };
-
 void () caco_die3 = [ 43, caco_die4 ]
 {
 caco_check_frame();
 };
-
 void () caco_die4 = [ 44, caco_die5 ]
 {
 caco_check_frame();
 };
-
 void () caco_die5 = [ 45, caco_die6 ]
 {
 caco_check_frame();
 };
-
 void () caco_die6 = [ 46, caco_die6 ]
 {
 caco_check_frame();
 };
-
-
-
 void () monster_caco1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -211,10 +185,8 @@ void () monster_caco1 =
 	self.th_missile = caco_atk1;
 	self.th_pain = caco_pain;
 	self.th_die = caco_die1;
-	
 	MTF_Setup_Monster_Postsets( self.health, coop_flymonster_start);
 };
-
 void () monster_caco =
 {
 	if (deathmatch)

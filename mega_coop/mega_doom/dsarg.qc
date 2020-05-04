@@ -2,18 +2,21 @@ void () sargeant_fire;
 void () sargeant_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
-	{		
-	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	{}
+	else
+	if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+	if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+	if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+	if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;
@@ -233,47 +236,38 @@ sargeant_check_frame();
 	self.ammo_nails = MOVETYPE_FLY;
 	DropShot (); 
 };
-
 void () sargeant_gib2 = [ 55, sargeant_gib3 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib3 = [ 56, sargeant_gib4 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib4 = [ 57, sargeant_gib5 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib5 = [ 58, sargeant_gib6 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib6 = [ 59, sargeant_gib7 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib7 = [ 60, sargeant_gib8 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib8 = [ 61, sargeant_gib9 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_gib9 = [ 62, sargeant_gib9 ]
 {
 sargeant_check_frame();
 };
-
 void () sargeant_die =
 {
 	local float r;
@@ -304,7 +298,6 @@ void () sargeant_die =
 	}
 	sargeant_die1 ();
 };
-
 void () monster_sargeant1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -320,7 +313,6 @@ void () monster_sargeant1 =
 	self.th_die = sargeant_die;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_sargeant =
 {
 	if (deathmatch)

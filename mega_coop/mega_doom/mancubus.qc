@@ -3,16 +3,20 @@ void () mancubus_check_frame =
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
 	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	else
+	if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+	if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+	if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+	if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;
@@ -23,21 +27,26 @@ void () mancubus_stand1 = [ 0, mancubus_stand1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	ai_stand (); 
 	if (random () < 0.07)
 		sound (self, CHAN_VOICE, "doom_other/dsposact.wav", TRUE, ATTN_IDLE);
@@ -54,17 +63,23 @@ void () mancubus_walk1 = [ 0, mancubus_walk1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
@@ -77,29 +92,31 @@ void () mancubus_walk =
 	self.cells_bonus = 0;
 	mancubus_walk1();
 };
-
-
 void () mancubus_run1 = [ 0, mancubus_run1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	self.cells_bonus++;
-	
 	mancubus_check_frame();
 	ai_run (10); 
 };
@@ -176,17 +193,23 @@ void () mancubus_atk1 = [ 0, mancubus_atk1 ]
 	ai_face ();
 	if (self.cells_bonus < 3)
 		self.frame = 48;
-	else if (self.cells_bonus == 3) {
-		if (coop_visible(self, self.enemy)) {
+	else
+	if (self.cells_bonus == 3)
+	{
+		if (coop_visible(self, self.enemy))
+		{
 			self.frame = 56;
 			mancuMissile();
 		}
 	}
-	else if (self.cells_bonus == 4)
+	else
+	if (self.cells_bonus == 4)
 		self.frame = 56;
-	else if (self.cells_bonus == 5 || self.cells_bonus == 6)
+	else 
+	if (self.cells_bonus == 5 || self.cells_bonus == 6)
 		self.frame = 48;
-	else	{
+	else
+	{
 		mancubus_run1 ();
 		return;
 	}
@@ -205,9 +228,11 @@ void () mancubus_pain1 = [ 0, mancubus_pain1 ]
 {
 	if (self.cells_bonus < 1)
 		self.frame = 64;
-	else if (self.cells_bonus < 3)
+	else
+	if (self.cells_bonus < 3)
 		self.frame = 65;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 		mancubus_run1();
@@ -275,6 +300,3 @@ void () monster_mancubus =
 	MTF_Setup_Monster_Presets ( 0, "Mancubus", monster_mancubus1 );
 };
 //END
-
-
-

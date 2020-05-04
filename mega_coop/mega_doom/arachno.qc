@@ -2,19 +2,21 @@ void () arachnotron_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	else
+	if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+	if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+	if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+	if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;
@@ -25,95 +27,103 @@ void () arachnotron_stand1 = [ 0, arachnotron_stand1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
 	ai_stand (); 
-	
 	if (random () < 0.07)
 		sound (self, CHAN_VOICE, "doom_other/dsposact.wav", TRUE, ATTN_IDLE);
 	self.cells_bonus++;
 	arachnotron_check_frame();
 	ai_stand (); 
 };
-
 void () arachnotron_stand =
 {
 	self.cells_bonus = 0;
 	arachnotron_stand1();
 };
-
-
 void () arachnotron_walk1 = [ 0, arachnotron_walk1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else 
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else 
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
 	if (random() < 0.15)
 		sound (self, CHAN_VOICE, "doom_other/dsbspwlk.wav", TRUE, ATTN_IDLE);
-	
 	self.cells_bonus++;
 	arachnotron_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () arachnotron_walk =
 {
 	self.cells_bonus = 0;
 	arachnotron_walk1();
 };
-
-
 void () arachnotron_run1 = [ 0, arachnotron_run1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
 	if (random() < 0.15)
 		sound (self, CHAN_VOICE, "doom_other/dsbspwlk.wav", TRUE, ATTN_IDLE);
-	
 	self.cells_bonus++;
 	arachnotron_check_frame();
 	ai_run (10); 
 };
-
 void () arachnotron_run =
 {
 	local float r;
@@ -123,8 +133,6 @@ void () arachnotron_run =
 	self.cells_bonus = 0;
 	arachnotron_run1();
 };
-
-
 void () arachball_flythink =
 {
 	if (self.frame == 1)
@@ -132,30 +140,20 @@ void () arachball_flythink =
 	else
 		self.frame = 1;
 		
-	if (time > self.health) {
+	if (time > self.health)
+	{
 		SUB_Remove();
 	}
-	
 	self.nextthink = time + 0.1;
 };
-
-
 void () arachexplode1 = [ 2, arachexplode2 ]
-{
-};
-
+{};
 void () arachexplode2 = [ 3, arachexplode3 ]
-{
-};
-
+{};
 void () arachexplode3 = [ 4, arachexplode4 ]
-{
-};
-
+{};
 void () arachexplode4 = [ 5, SUB_Remove ]
-{
-};
-
+{};
 void () ArachMissileTouch =
 {
 	local vector org;
@@ -184,7 +182,6 @@ void () ArachMissileTouch =
 	self.solid = SOLID_NOT;
 	arachexplode1 ();
 };
-
 void (vector org, vector vec) ArachFire =
 {
 	vec = normalize (vec);
@@ -210,19 +207,22 @@ void () ArachMissile =
 	org = ((self.origin + (v_forward * SVC_INTERMISSION)) + '0 0 30');
 	ArachFire (org, (self.enemy.origin - self.origin));
 };
-
 void () arachnotron_atk1 = [ 0, arachnotron_atk1 ]
 {
 	ai_face ();
 	if (self.cells_bonus < 2)
 		self.frame = 48;
-	else if (self.cells_bonus >=2) {
-		if (coop_visible(self, self.enemy) && self.enemy.health >= 1) {
+	else
+	if (self.cells_bonus >=2)
+	{
+		if (coop_visible(self, self.enemy) && self.enemy.health >= 1)
+		{
 			self.frame = 56;
 			ArachMissile();
 			self.cells_bonus = 0;
 		}
-		else {
+		else
+		{
 			arachnotron_run1();
 			return;
 		}	
@@ -230,7 +230,6 @@ void () arachnotron_atk1 = [ 0, arachnotron_atk1 ]
 	self.cells_bonus++;
 	arachnotron_check_frame();
 };
-
 void () arachnotron_atk =
 {
 	if (self.attack_finished > time) 
@@ -242,7 +241,8 @@ void () arachnotron_pain1 = [ 0, arachnotron_pain1 ]
 {
 	if (self.cells_bonus < 3)
 		self.frame = 64;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 		arachnotron_run1();
@@ -251,7 +251,6 @@ void () arachnotron_pain1 = [ 0, arachnotron_pain1 ]
 	self.cells_bonus++;
 	arachnotron_check_frame();
 };
-
 void () arachnotron_pain =
 {
 	if (self.pain_finished > time)
@@ -261,9 +260,6 @@ void () arachnotron_pain =
 	self.cells_bonus = 0;
 	arachnotron_pain1();
 };
-
-
-
 void () arachnotron_die1 = [ 0, arachnotron_die1 ]
 {
 	self.frame = 65 + self.cells_bonus;
@@ -274,7 +270,6 @@ void () arachnotron_die1 = [ 0, arachnotron_die1 ]
 	self.cells_bonus++;
 	arachnotron_check_frame();
 };
-
 void () arachnotron_die =
 {
 	self.cells_bonus = 0;
@@ -295,7 +290,6 @@ void () monster_arachnotron1 =
 	self.th_missile = arachnotron_atk;
 	self.th_pain = arachnotron_pain;
 	self.th_die = arachnotron_die;
-
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
 void () monster_arachnotron =
@@ -317,6 +311,3 @@ void () monster_arachnotron =
 	MTF_Setup_Monster_Presets ( 0, "Arachnotron", monster_arachnotron1 );
 };
 //END
-
-
-

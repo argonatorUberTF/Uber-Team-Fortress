@@ -3,16 +3,20 @@ void () hgunner_check_frame =
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
 	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	else
+	if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+	if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+	if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+	if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;
@@ -23,19 +27,21 @@ void () hgunner_stand1 = [ 0, hgunner_stand1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
-	
 	ai_stand (); 
-	
 	if (random () < 0.07)
 		sound (self, CHAN_VOICE, "doom_other/dsposact.wav", TRUE, ATTN_IDLE);
 	self.cells_bonus++;
@@ -51,13 +57,17 @@ void () hgunner_walk1 = [ 0, hgunner_walk1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
@@ -66,7 +76,6 @@ void () hgunner_walk1 = [ 0, hgunner_walk1 ]
 	hgunner_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () hgunner_walk =
 {
 	self.cells_bonus = 0;
@@ -76,13 +85,17 @@ void () hgunner_run1 = [ 0, hgunner_run1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
@@ -90,7 +103,6 @@ void () hgunner_run1 = [ 0, hgunner_run1 ]
 	hgunner_check_frame();
 	ai_run (10); 
 };
-
 void () hgunner_run =
 {
 	local float r;
@@ -123,13 +135,17 @@ void () hgunner_atk1 = [ 32, hgunner_atk1 ]
 	ai_face ();
 	if (self.cells_bonus < 2)
 		self.frame = 32;
-	else if (self.cells_bonus >=2) {
-		if (coop_visible(self, self.enemy) && self.enemy.health >= 1) {
+	else
+	if (self.cells_bonus >=2)
+	{
+		if (coop_visible(self, self.enemy) && self.enemy.health >= 1)
+		{
 			self.frame = 40;
 			hgunner_fire();
 			self.cells_bonus = 0;
 		}
-		else {
+		else
+		{
 			hgunner_run();
 			return;
 		}	
@@ -137,7 +153,6 @@ void () hgunner_atk1 = [ 32, hgunner_atk1 ]
 	self.cells_bonus++;
 	hgunner_check_frame();
 };
-
 void () hgunner_atk =
 {
 	self.cells_bonus = 0;
@@ -147,7 +162,8 @@ void () hgunner_pain1 = [ 0, hgunner_pain1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 48;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 		hgunner_run();
@@ -165,7 +181,6 @@ void () hgunner_pain =
 	self.cells_bonus = 0;
 	hgunner_pain1();
 };
-
 void () hgunner_die1 = [ 0, hgunner_die1 ]
 {
 	self.frame = 49 + self.cells_bonus;
@@ -177,7 +192,6 @@ void () hgunner_die1 = [ 0, hgunner_die1 ]
 	self.cells_bonus++;
 	hgunner_check_frame();
 };
-
 void () hgunner_gib1 = [ 0, hgunner_gib1 ]
 {
 	self.frame = 56 + self.cells_bonus;
@@ -189,13 +203,13 @@ void () hgunner_gib1 = [ 0, hgunner_gib1 ]
 	self.cells_bonus++;
 	hgunner_check_frame();
 };
-
 void () hgunner_die =
 {
 	local float r;
 	self.cells_bonus = 0;
 	self.solid = SOLID_NOT;
-	if (self.health < -65) {			// Gib'd
+	if (self.health < -65)
+	{			// Gib'd
 		sound (self, CHAN_VOICE, "doom_other/dsslop.wav", TRUE, ATTN_NORM); 
 		hgunner_gib1();
 	}
@@ -210,7 +224,6 @@ void () hgunner_die =
 			else
 				if (r < TRUE)
 					sound (self, CHAN_VOICE, "doom_other/dspodth3.wav", TRUE, ATTN_IDLE);
-	
 		hgunner_die1();
 	}
 };
@@ -250,5 +263,3 @@ void () monster_hgunner =
 	MTF_Setup_Monster_Presets ( 0, "Heavy Weapon Dude", monster_hgunner1 );
 };
 //END
-
-

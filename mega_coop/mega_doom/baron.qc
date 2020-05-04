@@ -6,19 +6,21 @@ void () dbaron_check_frame =
 {
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
-
-		
 	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	else
+	if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+	if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+	if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+	if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;
@@ -29,7 +31,6 @@ void () dbaron_stand1 = [ 0, dbaron_stand2 ]
 {
 	dbaron_check_frame();
 	ai_stand (); 
-
 };
 void () dbaron_stand2 = [ 8, dbaron_stand3 ]
 {
@@ -62,7 +63,6 @@ void () dbaron_walk1 = [ 0, dbaron_walk2 ]
 	{
 		sound (self, CHAN_VOICE, "doom_knight/nearby.wav", TRUE, ATTN_IDLE);
 	}
-
 	dbaron_check_frame();
 	ai_walk (5 + TRUE); 
 };
@@ -81,7 +81,6 @@ void () dbaron_walk4 = [ 24, dbaron_walk5 ]
 dbaron_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () dbaron_walk5 = [ 16, dbaron_walk6 ]
 {
 dbaron_check_frame();
@@ -101,31 +100,26 @@ void () dbaron_run2 = [ 8, dbaron_run3 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_FLY); 
-	 
 };
 void () dbaron_run3 = [ 16, dbaron_run4 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_STEP); 
-	 
 };
 void () dbaron_run4 = [ 24, dbaron_run1 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_WALK); 
-	 
 };
 void () dbaron_run5 = [ 16, dbaron_run6 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_STEP); 
-	 
 };
 void () dbaron_run6 = [ 8, dbaron_run1 ]
 {
 dbaron_check_frame();
 	ai_run (10 + MOVETYPE_STEP); 
-	
 };
 void () baronFire_Touch =
 {
@@ -198,38 +192,32 @@ void () dbaron_atk1 = [ 32, dbaron_atk2 ]
 dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_atk2 = [ 32, dbaron_atk3 ]
 {
 dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_atk3 = [ 40, dbaron_atk4 ]
 {
 dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_atk4 = [ 48, dbaron_atk5 ]
 {
 	dbaron_check_frame();
 	ai_face ();
 	dbaron_PreFireBall ();
 };
-
 void () dbaron_atk5 = [ 48, dbaron_atk6 ]
 {
 	dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_atk6 = [ 56, dbaron_run1 ]
 {
 	dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_Slash =
 {
 	local float Idmg;
@@ -237,48 +225,39 @@ void () dbaron_Slash =
 	Idmg = ((random () * MOVETYPE_BOUNCE) + 14);
 	T_Damage (self.enemy, self, self, Idmg);
 };
-
 void () dbaron_slash1 = [ 32, dbaron_slash2 ]
 {
 	dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_slash2 = [ 40, dbaron_slash3 ]
 {
 	dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_slash3 = [ 48, dbaron_slash4 ]
 {
 	dbaron_Slash ();
 	dbaron_check_frame();
 	ai_face (); 
 };
-
 void () dbaron_slash4 = [ 48, dbaron_run1 ]
 {
 	ai_face (); 
 };
-
-
 void () dbaron_pain1 = [ 56, dbaron_pain2 ]
 {
 	dbaron_check_frame();
 };
-
 void () dbaron_pain2 = [ 56, dbaron_run1 ]
 {
 	dbaron_check_frame();
 };
-
 void () dbaron_run =
 {
 	sound (self, CHAN_VOICE, "doom_knight/site.wav", TRUE, ATTN_IDLE);
 	dbaron_run1 ();
 };
-
 void (entity attacker, float damage) dbaron_pain =
 {
 	local float r;
@@ -287,11 +266,9 @@ void (entity attacker, float damage) dbaron_pain =
 	{
 		return;
 	}
-	
 	dbaron_pain1 ();
 	sound (self, CHAN_VOICE, "doom_knight/pain.wav", TRUE, ATTN_NORM);
 };
-
 void () dbaron_die1 = [ 57, dbaron_die2 ]
 {
 dbaron_check_frame();
@@ -299,44 +276,35 @@ dbaron_check_frame();
 	self.ammo_nails = MOVETYPE_FLY;
 	DropClip (); 
 };
-
 void () dbaron_die2 = [ 58, dbaron_die3 ]
 {
 dbaron_check_frame();
 };
-
 void () dbaron_die3 = [ 59, dbaron_die4 ]
 {
 dbaron_check_frame();
 };
-
 void () dbaron_die4 = [ 60, dbaron_die5 ]
 {
 dbaron_check_frame();
 };
-
 void () dbaron_die5 = [ 61, dbaron_die6 ]
 {
 dbaron_check_frame();
 };
-
 void () dbaron_die6 = [ 62, dbaron_die7 ]
 {
 dbaron_check_frame();
 };
-
 void () dbaron_die7 = [ 63, dbaron_die7 ]
 {
 dbaron_check_frame();
 };
-
-
 void () dbaron_die =
 {
 	sound (self, CHAN_VOICE, "doom_knight/die.wav", TRUE, ATTN_NORM);
 	dbaron_die1 ();
 };
-
 void () monster_dbaron1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -351,10 +319,8 @@ void () monster_dbaron1 =
 	self.th_missile = dbaron_fire;
 	self.th_pain = dbaron_pain;
 	self.th_die = dbaron_die;
-	
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_dbaron =
 {
 	if (deathmatch)

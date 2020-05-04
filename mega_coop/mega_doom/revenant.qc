@@ -8,17 +8,23 @@ void () revenant_stand1 = [ 0, revenant_stand1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else 
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
@@ -38,17 +44,23 @@ void () revenant_walk1 = [ 0, revenant_walk1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else 
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
@@ -56,7 +68,6 @@ void () revenant_walk1 = [ 0, revenant_walk1 ]
 	revenant_check_frame();
 	ai_walk (5 + TRUE); 
 };
-
 void () revenant_walk =
 {
 	self.cells_bonus = 0;
@@ -66,17 +77,23 @@ void () revenant_run1 = [ 0, revenant_run1 ]
 {
 	if (self.cells_bonus < 2)
 		self.frame = 0;
-	else if (self.cells_bonus < 4)
+	else
+	if (self.cells_bonus < 4)
 		self.frame = 8;
-	else if (self.cells_bonus < 6)
+	else
+	if (self.cells_bonus < 6)
 		self.frame = 16;
-	else if (self.cells_bonus < 8)
+	else
+	if (self.cells_bonus < 8)
 		self.frame = 24;
-	else if (self.cells_bonus < 10)
+	else
+	if (self.cells_bonus < 10)
 		self.frame = 32;
-	else if (self.cells_bonus < 12)
+	else
+	if (self.cells_bonus < 12)
 		self.frame = 40;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 	}
@@ -84,7 +101,6 @@ void () revenant_run1 = [ 0, revenant_run1 ]
 	revenant_check_frame();
 	ai_run (10); 
 };
-
 void () revenant_run =
 {
 	local float r;
@@ -94,7 +110,6 @@ void () revenant_run =
 	self.cells_bonus = 0;
 	revenant_run1();
 };
-
 void () RevMissileTouch =
 {
 	local vector org;
@@ -120,7 +135,6 @@ void () RevMissileTouch =
 	}
 	remove (self);
 };
-
 void () RevHome =
 {
 	local vector dir;
@@ -216,30 +230,37 @@ void () Rev_Punch =
 };
 void () revenant_melee1 = [ 0, revenant_melee1 ]
 {
-	if (self.cells_bonus < 2) {
+	if (self.cells_bonus < 2)
+	{
 		self.frame = 48;
 		ai_charge(5);
 	}
-	else if (self.cells_bonus < 3) {
+	else
+	if (self.cells_bonus < 3)
+	{
 		self.frame = 56;
 		ai_charge(5);
 	}
-	else if (self.cells_bonus < 4) {
-		if (coop_visible(self, self.enemy)) {
+	else
+	if (self.cells_bonus < 4)
+	{
+		if (coop_visible(self, self.enemy))
+		{
 			self.frame = 64;
 			Rev_Punch();
 		}
 	}
-	else if (self.cells_bonus < 5)
+	else
+	if (self.cells_bonus < 5)
 		self.frame = 64;
-	else	{
+	else
+	{
 		revenant_run1 ();
 		return;
 	}
 	self.cells_bonus++;
 	revenant_check_frame();
 };
-
 void () revenant_melee =
 {
 	if (self.attack_finished > time) 
@@ -248,14 +269,15 @@ void () revenant_melee =
 	self.cells_bonus = 0;
 	revenant_melee1();
 };
-
 void () revenant_pain1 = [ 0, revenant_pain1 ]
 {
 	if (self.cells_bonus < 1)
 		self.frame = 88;
-	else if (self.cells_bonus < 3)
+	else
+	if (self.cells_bonus < 3)
 		self.frame = 88;
-	else {
+	else
+	{
 		self.frame = 0;
 		self.cells_bonus = 0;
 		revenant_run1();
@@ -264,7 +286,6 @@ void () revenant_pain1 = [ 0, revenant_pain1 ]
 	self.cells_bonus++;
 	revenant_check_frame();
 };
-
 void () revenant_pain =
 {
 	if (self.pain_finished > time)
@@ -277,14 +298,14 @@ void () revenant_pain =
 void () revenant_die1 = [ 0, revenant_die1 ]
 {
 	self.frame = 89 + self.cells_bonus;
-	if (self.frame >= 93) {
+	if (self.frame >= 93)
+	{
 		self.frame = 93;
 		self.cells_bonus = self.cells_bonus - 1;
 	}
 	self.cells_bonus++;
 	revenant_check_frame();
 };
-
 void () revenant_die =
 {
 	self.cells_bonus = 0;
@@ -308,7 +329,6 @@ void () monster_revenant1 =
 	self.th_die = revenant_die;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_revenant =
 {
 	if (deathmatch)
@@ -328,6 +348,3 @@ void () monster_revenant =
 	MTF_Setup_Monster_Presets ( 0, "Revenant", monster_revenant1 );
 };
 //END
-
-
-
