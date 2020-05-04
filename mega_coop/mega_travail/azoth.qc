@@ -1,3 +1,4 @@
+void () azoth_run2;
 void () azoth_stand2;
 void () rift_hold;
 void () azoth_stand1 = [ 0, azoth_stand2 ]
@@ -5,244 +6,203 @@ void () azoth_stand1 = [ 0, azoth_stand2 ]
 	ai_stand ();
 };
 void () azoth_stand3;
-
 void () azoth_stand2 = [ 1, azoth_stand3 ]
 {
 	ai_stand ();
 };
 void () azoth_stand4;
-
 void () azoth_stand3 = [ 2, azoth_stand4 ]
 {
 	ai_stand ();
 };
 void () azoth_stand5;
-
 void () azoth_stand4 = [ 3, azoth_stand5 ]
 {
 	ai_stand ();
 };
 void () azoth_stand6;
-
 void () azoth_stand5 = [ 4, azoth_stand6 ]
 {
 	ai_stand ();
 };
 void () azoth_stand7;
-
 void () azoth_stand6 = [ 5, azoth_stand7 ]
 {
 	ai_stand ();
 };
 void () azoth_stand8;
-
 void () azoth_stand7 = [ 6, azoth_stand8 ]
 {
 	ai_stand ();
 };
 void () azoth_stand9;
-
 void () azoth_stand8 = [ 7, azoth_stand9 ]
 {
 	ai_stand ();
 };
 void () azoth_stand10;
-
 void () azoth_stand9 = [ 8, azoth_stand10 ]
 {
 	ai_stand ();
 };
 void () azoth_stand11;
-
 void () azoth_stand10 = [ 9, azoth_stand11 ]
 {
 	ai_stand ();
 };
-
 void () azoth_stand11 = [ 10, azoth_stand1 ]
 {
 	ai_stand ();
 };
 void () azoth_walk2;
-
 void () azoth_walk1 = [ 11, azoth_walk2 ]
 {
 	ai_walk (FL_INWATER);
 };
 void () azoth_walk3;
-
 void () azoth_walk2 = [ 12, azoth_walk3 ]
 {
 	ai_walk (FL_INWATER);
 };
 void () azoth_walk4;
-
 void () azoth_walk3 = [ 13, azoth_walk4 ]
 {
 	ai_walk (FL_INWATER);
 };
 void () azoth_walk5;
-
 void () azoth_walk4 = [ 14, azoth_walk5 ]
 {
 	ai_walk (MOVETYPE_BOUNCE);
 };
 void () azoth_walk6;
-
 void () azoth_walk5 = [ 15, azoth_walk6 ]
 {
 	ai_walk (17);
 };
 void () azoth_walk7;
-
 void () azoth_walk6 = [ 16, azoth_walk7 ]
 {
 	ai_walk (11);
 };
 void () azoth_walk8;
-
 void () azoth_walk7 = [ 17, azoth_walk8 ]
 {
 	ai_walk (20);
 };
 void () azoth_walk9;
-
 void () azoth_walk8 = [ 18, azoth_walk9 ]
 {
 	ai_walk (26);
 };
 void () azoth_walk10;
-
 void () azoth_walk9 = [ 19, azoth_walk10 ]
 {
 	ai_walk (14);
 };
 void () azoth_walk11;
-
 void () azoth_walk10 = [ 20, azoth_walk11 ]
 {
 	ai_walk (FL_INWATER);
 };
 void () azoth_walk12;
-
 void () azoth_walk11 = [ 21, azoth_walk12 ]
 {
 	ai_walk (MOVETYPE_BOUNCE);
 };
-
 void () azoth_walk12 = [ 22, azoth_walk1 ]
 {
 	ai_walk (14);
 };
-
 void () azoth_out1 = [ 11, azoth_out2 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (FL_INWATER);
 };
-
 void () azoth_out2 = [ 12, azoth_out3 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (FL_INWATER);
 };
-
 void () azoth_out3 = [ 13, azoth_out4 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (FL_INWATER);
 };
-
 void () azoth_out4 = [ 14, azoth_out5 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (MOVETYPE_BOUNCE);
 };
-
 void () azoth_out5 = [ 15, azoth_out6 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	movetogoal (17);
 };
-
 void () azoth_out6 = [ 16, azoth_stand1 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	self.th_stand = azoth_stand1;
 };
-void () azoth_run2;
-
 void () azoth_run1 = [ 11, azoth_run2 ]
 {
 	ai_run (FL_INWATER);
 };
 void () azoth_run3;
-
 void () azoth_run2 = [ 12, azoth_run3 ]
 {
 	ai_run (FL_INWATER);
 };
 void () azoth_run4;
-
 void () azoth_run3 = [ 13, azoth_run4 ]
 {
 	ai_run (FL_INWATER);
 };
 void () azoth_run5;
-
 void () azoth_run4 = [ 14, azoth_run5 ]
 {
 	ai_run (MOVETYPE_BOUNCE);
 };
 void () azoth_run6;
-
 void () azoth_run5 = [ 15, azoth_run6 ]
 {
 	ai_run (17);
 };
 void () azoth_run7;
-
 void () azoth_run6 = [ 16, azoth_run7 ]
 {
 	ai_run (11);
 };
 void () azoth_run8;
-
 void () azoth_run7 = [ 17, azoth_run8 ]
 {
 	ai_run (20);
 };
 void () azoth_run9;
-
 void () azoth_run8 = [ 18, azoth_run9 ]
 {
 	ai_run (26);
 };
 void () azoth_run10;
-
 void () azoth_run9 = [ 19, azoth_run10 ]
 {
 	ai_run (14);
 };
 void () azoth_run11;
-
 void () azoth_run10 = [ 20, azoth_run11 ]
 {
 	ai_run (FL_INWATER);
 };
 void () azoth_run12;
-
 void () azoth_run11 = [ 21, azoth_run12 ]
 {
 	ai_run (MOVETYPE_BOUNCE);
 };
-
 void () azoth_run12 = [ 22, azoth_run1 ]
 {
 	ai_run (14);
@@ -267,7 +227,6 @@ float () check_chargerange =
 	}
 	return (FALSE);
 };
-
 void () azoth_s_stand_think =
 {
 	if (check_chargerange ())
@@ -284,7 +243,6 @@ void () azoth_s_stand_think =
 	walkmove (FALSE, FALSE);
 };
 void () azoth_s_stand2;
-
 void () azoth_s_stand1 = [ 167, azoth_s_stand2 ]
 {
 	azoth_s_stand_think ();
@@ -295,63 +253,52 @@ void () azoth_s_stand1 = [ 167, azoth_s_stand2 ]
 	}
 };
 void () azoth_s_stand3;
-
 void () azoth_s_stand2 = [ 168, azoth_s_stand3 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand4;
-
 void () azoth_s_stand3 = [ 169, azoth_s_stand4 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand5;
-
 void () azoth_s_stand4 = [ 170, azoth_s_stand5 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand6;
-
 void () azoth_s_stand5 = [ 171, azoth_s_stand6 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand7;
-
 void () azoth_s_stand6 = [ 172, azoth_s_stand7 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand8;
-
 void () azoth_s_stand7 = [ 173, azoth_s_stand8 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand9;
-
 void () azoth_s_stand8 = [ 174, azoth_s_stand9 ]
 {
 	azoth_s_stand_think ();
 };
 void () azoth_s_stand10;
-
 void () azoth_s_stand9 = [ 175, azoth_s_stand10 ]
 {
 	azoth_s_stand_think ();
 };
-
 void () azoth_s_stand10 = [ 176, azoth_s_stand1 ]
 {
 	azoth_s_stand_think ();
 };
-
 void (float dist) shield_run =
 {
 	local float facing;
-
 	if (!IsAlive (self.enemy))
 	{
 		self.th_stand ();
@@ -374,89 +321,76 @@ void (float dist) shield_run =
 		self.bubble_count = FL_SWIM;
 	}
 };
-
 void () azoth_s_run1 = [ 23, azoth_s_run2 ]
 {
 	shield_run (FL_INWATER);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run3;
-
 void () azoth_s_run2 = [ 24, azoth_s_run3 ]
 {
 	shield_run (FL_INWATER);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run4;
-
 void () azoth_s_run3 = [ 25, azoth_s_run4 ]
 {
 	shield_run (FL_INWATER);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run5;
-
 void () azoth_s_run4 = [ 26, azoth_s_run5 ]
 {
 	shield_run (MOVETYPE_BOUNCE);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run6;
-
 void () azoth_s_run5 = [ 27, azoth_s_run6 ]
 {
 	shield_run (17);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run7;
-
 void () azoth_s_run6 = [ 28, azoth_s_run7 ]
 {
 	shield_run (11);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run8;
-
 void () azoth_s_run7 = [ 29, azoth_s_run8 ]
 {
 	shield_run (20);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run9;
-
 void () azoth_s_run8 = [ 30, azoth_s_run9 ]
 {
 	shield_run (26);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run10;
-
 void () azoth_s_run9 = [ 31, azoth_s_run10 ]
 {
 	shield_run (14);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run11;
-
 void () azoth_s_run10 = [ 32, azoth_s_run11 ]
 {
 	shield_run (FL_INWATER);
 	self.takedamage = FALSE;
 };
 void () azoth_s_run12;
-
 void () azoth_s_run11 = [ 33, azoth_s_run12 ]
 {
 	shield_run (MOVETYPE_BOUNCE);
 	self.takedamage = FALSE;
 };
-
 void () azoth_s_run12 = [ 34, azoth_s_run1 ]
 {
 	shield_run (14);
 	self.takedamage = FALSE;
 };
-
 void (float dist) shield_charge =
 {
 	local float facing;
@@ -502,59 +436,50 @@ void () azoth_s_charge4 = [ 27, azoth_s_charge6 ]
 	self.takedamage = FALSE;
 };
 void () azoth_s_charge8;
-
 void () azoth_s_charge6 = [ 29, azoth_s_charge8 ]
 {
 	shield_charge (45);
 	self.takedamage = FALSE;
 };
 void () azoth_s_charge9;
-
 void () azoth_s_charge8 = [ 30, azoth_s_charge9 ]
 {
 	shield_charge (39);
 	self.takedamage = FALSE;
 };
 void () azoth_s_charge10;
-
 void () azoth_s_charge9 = [ 31, azoth_s_charge10 ]
 {
 	shield_charge (21);
 	self.takedamage = FALSE;
 };
 void () azoth_s_charge11;
-
 void () azoth_s_charge10 = [ 33, azoth_s_charge11 ]
 {
 	shield_charge (39);
 	self.takedamage = FALSE;
 };
 void () azoth_s_charge12;
-
 void () azoth_s_charge11 = [ 23, azoth_s_charge12 ]
 {
 	shield_charge (45);
 	self.takedamage = FALSE;
 };
-
 void () azoth_s_charge12 = [ 24, azoth_s_charge3 ]
 {
 	shield_charge (24);
 	self.takedamage = FALSE;
 };
 void () azoth_swipe2;
-
 void () azoth_swipe1 = [ 35, azoth_swipe2 ]
 {
 	ai_charge (20);
 };
 void () azoth_swipe3;
-
 void () azoth_swipe2 = [ 36, azoth_swipe3 ]
 {
 	ai_face ();
 };
-
 void () azoth_swipe3 = [ 37, azoth_swipe4 ]
 {
 	local vector delta;
@@ -571,42 +496,35 @@ void () azoth_swipe3 = [ 37, azoth_swipe4 ]
 	}
 };
 void () azoth_swipe5;
-
 void () azoth_swipe4 = [ 38, azoth_swipe5 ]
 {
 	ai_face ();
 };
 void () azoth_swipe6;
-
 void () azoth_swipe5 = [ 39, azoth_swipe6 ]
 {
 	ai_face ();
 };
 void () azoth_swipe7;
-
 void () azoth_swipe6 = [ 40, azoth_swipe7 ]
 {
 	ai_face ();
 };
 void () azoth_swipe8;
-
 void () azoth_swipe7 = [ 41, azoth_swipe8 ]
 {
 	ai_face ();
 };
 void () azoth_swipe9;
-
 void () azoth_swipe8 = [ 42, azoth_swipe9 ]
 {
 	ai_face ();
 };
 void () azoth_swipe10;
-
 void () azoth_swipe9 = [ 43, azoth_swipe10 ]
 {
 	ai_face ();
 };
-
 void () azoth_swipe10 = [ 44, azoth_swipe11 ]
 {
 	local vector delta;
@@ -650,37 +568,31 @@ void () azoth_swipe11 = [ 45, azoth_swipe12 ]
 	T_Damage (self.enemy, self, self, ldmg);
 };
 void () azoth_swipe13;
-
 void () azoth_swipe12 = [ 46, azoth_swipe13 ]
 {
 	ai_face ();
 };
 void () azoth_swipe14;
-
 void () azoth_swipe13 = [ 47, azoth_swipe14 ]
 {
 	ai_face ();
 };
 void () azoth_swipe15;
-
 void () azoth_swipe14 = [ 48, azoth_swipe15 ]
 {
 	ai_face ();
 };
 void () azoth_swipe16;
-
 void () azoth_swipe15 = [ 49, azoth_swipe16 ]
 {
 	ai_face ();
 };
 void () azoth_swipe17;
-
 void () azoth_swipe16 = [ 50, azoth_swipe17 ]
 {
 	ai_face ();
 	self.takedamage = FALSE;
 };
-
 void () azoth_swipe17 = [ 51, azoth_s_run1 ]
 {
 	ai_face ();
@@ -690,108 +602,91 @@ void () azoth_swipe17 = [ 51, azoth_s_run1 ]
 	}
 };
 void () azoth_deflect2;
-
 void () azoth_deflect1 = [ 49, azoth_deflect2 ]
 {
 	ai_charge (26);
 };
 void () azoth_deflect3;
-
 void () azoth_deflect2 = [ 50, azoth_deflect3 ]
 {
 	ai_charge (26);
 	self.takedamage = FALSE;
 };
 void () azoth_deflect4;
-
 void () azoth_deflect3 = [ 51, azoth_deflect4 ]
 {
 	ai_charge (26);
 };
 void () azoth_deflect5;
-
 void () azoth_deflect4 = [ 30, azoth_deflect5 ]
 {
 	ai_charge (36);
 	self.takedamage = FALSE;
 };
 void () azoth_deflect6;
-
 void () azoth_deflect5 = [ 31, azoth_deflect6 ]
 {
 	ai_charge (24);
 	self.takedamage = FALSE;
 };
 void () azoth_deflect7;
-
 void () azoth_deflect6 = [ 32, azoth_deflect7 ]
 {
 	ai_charge (26);
 	self.takedamage = FALSE;
 };
 void () azoth_deflect8;
-
 void () azoth_deflect7 = [ 33, azoth_deflect8 ]
 {
 	ai_charge (20);
 	self.takedamage = FALSE;
 };
 void () azoth_deflect9;
-
 void () azoth_deflect8 = [ 34, azoth_deflect9 ]
 {
 	ai_charge (24);
 	self.takedamage = FALSE;
 };
 void () azoth_deflect10;
-
 void () azoth_deflect9 = [ 35, azoth_deflect10 ]
 {
 	ai_charge (SVC_INTERMISSION);
 };
 void () azoth_deflect11;
-
 void () azoth_deflect10 = [ 36, azoth_deflect11 ]
 {
 	ai_charge (26);
 	self.takedamage = FL_SWIM;
 };
-
 void () azoth_deflect11 = [ 37, azoth_run1 ]
 {
 	ai_charge (20);
 };
 void () azoth_hammer2;
-
 void () azoth_hammer1 = [ 66, azoth_hammer2 ]
 {
 	ai_face ();
 };
 void () azoth_hammer3;
-
 void () azoth_hammer2 = [ 67, azoth_hammer3 ]
 {
 	ai_face ();
 };
 void () azoth_hammer4;
-
 void () azoth_hammer3 = [ 68, azoth_hammer4 ]
 {
 	ai_face ();
 };
 void () azoth_hammer5;
-
 void () azoth_hammer4 = [ 69, azoth_hammer5 ]
 {
 	ai_charge (MOVETYPE_FLY);
 };
 void () azoth_hammer6;
-
 void () azoth_hammer5 = [ 70, azoth_hammer6 ]
 {
 	ai_charge (15);
 };
-
 void () azoth_hammer6 = [ 71, azoth_hammer7 ]
 {
 	local vector delta;
@@ -815,24 +710,20 @@ void () azoth_hammer6 = [ 71, azoth_hammer7 ]
 	T_Damage (self.enemy, self, self, ldmg);
 };
 void () azoth_hammer8;
-
 void () azoth_hammer7 = [ 72, azoth_hammer8 ]
 {
 	ai_charge (MOVETYPE_BOUNCE);
 };
 void () azoth_hammer9;
-
 void () azoth_hammer8 = [ 73, azoth_hammer9 ]
 {
 	ai_charge (MOVETYPE_FLY);
 };
 void () azoth_hammer10;
-
 void () azoth_hammer9 = [ 74, azoth_hammer10 ]
 {
 	ai_charge (MOVETYPE_FLY);
 };
-
 void () azoth_hammer10 = [ 75, azoth_run1 ]
 {
 	ai_charge (MOVETYPE_BOUNCE);
@@ -841,7 +732,6 @@ void () azoth_hammer10 = [ 75, azoth_run1 ]
 		self.think = azoth_land2;
 	}
 };
-
 void () flame_burn =
 {
 	self.velocity = '0 0 100';
@@ -850,7 +740,6 @@ void () flame_burn =
 	setmodel (self, "progs/s_explod.spr");
 	s_explode1 ();
 };
-
 void () flame_move =
 {
 	local vector o;
@@ -865,7 +754,6 @@ void () flame_move =
 	self.nextthink = (time + 0.5);
 	self.think = flame_burn;
 };
-
 void () flame_touch =
 {
 	if ((other.solid != MOVETYPE_STEP))
@@ -881,24 +769,20 @@ void () flame_touch =
 	self.think = flame_move;
 	self.frame = FL_SWIM;
 };
-
 void () flame_2 =
 {
 	self.frame = FL_SWIM;
 	self.nextthink = (time + 1.8);
 	self.think = flame_burn;
 };
-
 void () flame_1 =
 {
 	self.frame = TRUE;
 	self.nextthink = (time + 0.1);
 	self.think = flame_2;
 };
-
 void (vector org, vector dir) launch_flame =
 {
-
 	newmis = spawn ();
 	newmis.owner = self;
 	newmis.movetype = MOVETYPE_FLYMISSILE;
@@ -914,30 +798,25 @@ void (vector org, vector dir) launch_flame =
 	newmis.velocity = (dir * 950);
 	newmis.pos1 = dir;
 };
-
 void (vector head) breathe_fire =
 {
 	makevectors ((self.angles + head));
 	launch_flame (((self.origin + '0 0 100') + (v_forward * 34)), ((v_forward * 0.8) - ('0 0 3' * 0.2)));
 };
-
 void () azoth_fire1 = [ 52, azoth_fire2 ]
 {
 	ai_face ();
 };
 void () azoth_fire3;
-
 void () azoth_fire2 = [ 53, azoth_fire3 ]
 {
 	ai_face ();
 };
 void () azoth_fire4;
-
 void () azoth_fire3 = [ 54, azoth_fire4 ]
 {
 	ai_face ();
 };
-
 void () azoth_fire4 = [ 55, azoth_fire5 ]
 {
 	sound (self, FL_SWIM, "azoth/fire.wav", TRUE, TRUE);
@@ -945,28 +824,24 @@ void () azoth_fire4 = [ 55, azoth_fire5 ]
 	self.ideal_yaw = vectoyaw ((self.pos1 - self.origin));
 	ChangeYaw ();
 };
-
 void () azoth_fire5 = [ 56, azoth_fire6 ]
 {
 	self.ideal_yaw = vectoyaw ((self.pos1 - self.origin));
 	ChangeYaw ();
 };
 void () azoth_fire6b;
-
 void () azoth_fire6 = [ 57, azoth_fire6b ]
 {
 	breathe_fire ('0 -20 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire7;
-
 void () azoth_fire6b = [ 57, azoth_fire7 ]
 {
 	breathe_fire ('0 -18 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire7b;
-
 void () azoth_fire7 = [ 58, azoth_fire7b ]
 {
 	ai_forward (MOVETYPE_BOUNCE);
@@ -974,73 +849,62 @@ void () azoth_fire7 = [ 58, azoth_fire7b ]
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire8;
-
 void () azoth_fire7b = [ 58, azoth_fire8 ]
 {
 	breathe_fire ('0 -11 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire8b;
-
 void () azoth_fire8 = [ 59, azoth_fire8b ]
 {
 	breathe_fire ('0 -8 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire9;
-
 void () azoth_fire8b = [ 59, azoth_fire9 ]
 {
 	breathe_fire ('0 -4 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire9b;
-
 void () azoth_fire9 = [ 60, azoth_fire9b ]
 {
 	breathe_fire (VEC_ORIGIN);
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire10;
-
 void () azoth_fire9b = [ 60, azoth_fire10 ]
 {
 	breathe_fire ('0 3 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire10b;
-
 void () azoth_fire10 = [ 61, azoth_fire10b ]
 {
 	breathe_fire ('0 7 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire11;
-
 void () azoth_fire10b = [ 61, azoth_fire11 ]
 {
 	breathe_fire ('0 11 0');
 	self.nextthink = (time + 0.05);
 };
 void () azoth_fire12;
-
 void () azoth_fire11 = [ 62, azoth_fire12 ]
 {
 	breathe_fire ('0 15 0');
 };
 void () azoth_fire13;
-
 void () azoth_fire12 = [ 63, azoth_fire13 ]
 {
 	ai_face ();
 };
 void () azoth_fire14;
-
 void () azoth_fire13 = [ 64, azoth_fire14 ]
 {
 	ai_charge (MOVETYPE_STEP);
 };
-
 void () azoth_fire14 = [ 65, azoth_run1 ]
 {
 	ai_charge (MOVETYPE_TOSS);
@@ -1056,7 +920,6 @@ void () azoth_fire14 = [ 65, azoth_run1 ]
 		}
 	}
 };
-
 void () skullearlymissiletouch =
 {
 	if (((other == self.owner) || (other == world)))
@@ -1081,7 +944,6 @@ void () skullearlymissiletouch =
 	self.solid = FALSE;
 	s_explode1 ();
 };
-
 void () skullmissiletouch =
 {
 	if ((other == self.owner))
@@ -1106,13 +968,11 @@ void () skullmissiletouch =
 	self.solid = FALSE;
 	s_explode1 ();
 };
-
 void () skull_makesolid =
 {
 	self.touch = skullmissiletouch;
 	force_retouch = FL_SWIM;
 };
-
 void () azoth_throw_direct =
 {
 	local entity missile;
@@ -1143,7 +1003,6 @@ void () azoth_throw_direct =
 	missile.touch = skullearlymissiletouch;
 	self.angles_y = vectoyaw (dir);
 };
-
 void () skull_retarget =
 {
 	if ((other != self.goalentity))
@@ -1157,7 +1016,6 @@ void () skull_retarget =
 	other.solid = FL_SWIM;
 	setsize (other, '-4 -4 -4', '4 4 4');
 };
-
 void () skullhome =
 {
 	local vector dir;
@@ -1185,7 +1043,6 @@ void () skullhome =
 	self.nextthink = (time + 0.2);
 	self.think = skullhome;
 };
-
 void () skullhomemakesolid =
 {
 	self.solid = FL_SWIM;
@@ -1194,7 +1051,6 @@ void () skullhomemakesolid =
 	self.think = skullhome;
 	force_retouch = FL_SWIM;
 };
-
 void () azoth_throw_indirect =
 {
 	local entity missile;
@@ -1264,43 +1120,36 @@ void () azoth_throw_indirect =
 };
 void () azoth_throwindirect7;
 void () azoth_throw2;
-
 void () azoth_throw1 = [ 89, azoth_throw2 ]
 {
 	ai_face ();
 };
 void () azoth_throw3;
-
 void () azoth_throw2 = [ 90, azoth_throw3 ]
 {
 	ai_back (MOVETYPE_WALK);
 };
 void () azoth_throw4;
-
 void () azoth_throw3 = [ 91, azoth_throw4 ]
 {
 	ai_back (FL_SWIM);
 };
 void () azoth_throw5;
-
 void () azoth_throw4 = [ 92, azoth_throw5 ]
 {
 	ai_back (FL_SWIM);
 };
 void () azoth_throw6;
-
 void () azoth_throw5 = [ 93, azoth_throw6 ]
 {
 	ai_back (MOVETYPE_WALK);
 };
 void () azoth_throw7;
-
 void () azoth_throw6 = [ 94, azoth_throw7 ]
 {
 	ai_back (MOVETYPE_WALK);
 };
 void () azoth_throw8;
-
 void () azoth_throw7 = [ 95, azoth_throw8 ]
 {
 	if (!AzothCheckMissile ())
@@ -1310,61 +1159,51 @@ void () azoth_throw7 = [ 95, azoth_throw8 ]
 	ai_face ();
 };
 void () azoth_throw9;
-
 void () azoth_throw8 = [ 96, azoth_throw9 ]
 {
 	ai_face ();
 };
 void () azoth_throw10;
-
 void () azoth_throw9 = [ 97, azoth_throw10 ]
 {
 	ai_face ();
 };
 void () azoth_throw11;
-
 void () azoth_throw10 = [ 98, azoth_throw11 ]
 {
 	ai_face ();
 	azoth_throw_direct ();
 };
 void () azoth_throw12;
-
 void () azoth_throw11 = [ 99, azoth_throw12 ]
 {
 	ai_forward (SVC_TEMPENTITY);
 };
 void () azoth_throw13;
-
 void () azoth_throw12 = [ 100, azoth_throw13 ]
 {
 	ai_forward (37);
 };
 void () azoth_throw14;
-
 void () azoth_throw13 = [ 101, azoth_throw14 ]
 {
 	ai_forward (29);
 };
 void () azoth_throw15;
-
 void () azoth_throw14 = [ 102, azoth_throw15 ]
 {
 	ai_charge (21);
 };
 void () azoth_throw16;
-
 void () azoth_throw15 = [ 103, azoth_throw16 ]
 {
 	ai_charge (20);
 };
 void () azoth_throw17;
-
 void () azoth_throw16 = [ 104, azoth_throw17 ]
 {
 	ai_charge (MOVETYPE_TOSS);
 };
-
 void () azoth_throw17 = [ 105, azoth_run1 ]
 {
 	ai_charge (MOVETYPE_FLY);
@@ -1373,32 +1212,27 @@ void () azoth_throw17 = [ 105, azoth_run1 ]
 		self.think = azoth_land2;
 	}
 };
-
 void () azoth_throwindirect7 = [ 95, azoth_throwindirect8 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 };
-
 void () azoth_throwindirect8 = [ 96, azoth_throwindirect9 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 };
-
 void () azoth_throwindirect9 = [ 97, azoth_throwindirect10 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 };
-
 void () azoth_throwindirect10 = [ 98, azoth_throw11 ]
 {
 	self.ideal_yaw = (vectoyaw ((tower - self.origin)) + 180);
 	ChangeYaw ();
 	azoth_throw_indirect ();
 };
-
 void (float cel) azoth_fly =
 {
 	local vector d;
@@ -1426,49 +1260,41 @@ void (float cel) azoth_fly =
 	self.velocity_y = ((self.velocity_y + (random () * SVC_INTERMISSION)) - 15);
 };
 void () azoth_fly2;
-
 void () azoth_fly1 = [ 136, azoth_fly2 ]
 {
 	azoth_fly (150);
 	sound (self, FL_SWIM, "azoth/flap.wav", TRUE, FALSE);
 };
 void () azoth_fly3;
-
 void () azoth_fly2 = [ 137, azoth_fly3 ]
 {
 	azoth_fly (150);
 };
 void () azoth_fly4;
-
 void () azoth_fly3 = [ 138, azoth_fly4 ]
 {
 	azoth_fly (200);
 };
 void () azoth_fly5;
-
 void () azoth_fly4 = [ 139, azoth_fly5 ]
 {
 	azoth_fly (130);
 };
 void () azoth_fly6;
-
 void () azoth_fly5 = [ 140, azoth_fly6 ]
 {
 	azoth_fly (130);
 };
 void () azoth_fly7;
-
 void () azoth_fly6 = [ 139, azoth_fly7 ]
 {
 	azoth_fly (130);
 };
 void () azoth_fly8;
-
 void () azoth_fly7 = [ 138, azoth_fly8 ]
 {
 	azoth_fly (100);
 };
-
 void () azoth_fly8 = [ 137, azoth_fly1 ]
 {
 	azoth_fly (100);
@@ -1505,14 +1331,12 @@ void () azoth_leap5 = [ 80, azoth_fly1 ]
 void () azoth_free =
 {
 	local vector d;
-
 	d = normalize (((self.origin - tower) - (self.origin_z * '0 0 1')));
 	self.velocity_x = (-300 * d_y);
 	self.velocity_y = (300 * d_x);
 	self.velocity_z = 175;
 };
 void () azoth_land3;
-
 void () azoth_land1 = [ 81, azoth_land2 ]
 {
 	self.movetype = MOVETYPE_STEP;
@@ -1551,12 +1375,10 @@ void () azoth_land8 = [ 88, azoth_land9 ]
 {};
 void () azoth_land9 =
 {
-
 	self.attack_finished = (time - 0.2);
 	self.th_run ();
 };
 void () azoth_dive3;
-
 void () azoth_divecollide =
 {
 	if ((other == self.enemy))
@@ -1565,7 +1387,6 @@ void () azoth_divecollide =
 	}
 };
 void () azoth_dive2;
-
 void () azoth_dive1 = [ 81, azoth_dive2 ]
 {
 	self.movetype = MOVETYPE_STEP;
@@ -1574,12 +1395,10 @@ void () azoth_dive1 = [ 81, azoth_dive2 ]
 	self.nextthink = (time + 0.4);
 };
 void () azoth_dive2b;
-
 void () azoth_dive2 = [ 81, azoth_dive2b ]
 {
 	self.velocity = '0 0 -800';
 };
-
 void () azoth_dive2b = [ 82, azoth_dive2b ]
 {
 	if ((self.flags & FL_ONGROUND))
@@ -1613,7 +1432,6 @@ void () azoth_dive3 = [ 83, azoth_land4 ]
 	self.touch = SUB_Null;
 };
 void () rift_open_start;
-
 void (vector dir) rift_lightning =
 {
 	local vector org;
@@ -1629,19 +1447,16 @@ void (vector dir) rift_lightning =
 	WriteCoord (FALSE, rift.origin_y);
 	WriteCoord (FALSE, rift.origin_z);
 };
-
 void () azoth_diec1 = [ 126, azoth_diec2 ]
 {
 	rift_lightning ('-9 5 150');
 };
 void () azoth_diec3;
-
 void () azoth_diec2 = [ 127, azoth_diec3 ]
 {
 	rift_lightning ('-16 18 152');
 };
 void () azoth_diec4;
-
 void () azoth_diec3 = [ 128, azoth_diec4 ]
 {
 	rift_lightning ('-12 12 154');
@@ -1649,7 +1464,6 @@ void () azoth_diec3 = [ 128, azoth_diec4 ]
 	rift_open_start ();
 };
 void () azoth_diec5;
-
 void () azoth_diec4 = [ 129, azoth_diec5 ]
 {
 	rift_lightning ('-5 -4 150');
@@ -1661,16 +1475,11 @@ void () azoth_diec5 = [ 128, azoth_diec6 ]
 	rift_lightning ('-9 5 150');
 };
 void () azoth_diec7;
-
 void () azoth_diec6 = [ 127, azoth_diec7 ]
-{
-};
+{};
 void () azoth_died1;
-
 void () azoth_diec7 = [ 126, azoth_died1 ]
-{
-};
-
+{};
 void (float cel) azoth_fly_death =
 {
 	local vector d;
@@ -1685,7 +1494,6 @@ void (float cel) azoth_fly_death =
 	self.velocity = ((1.6 * (cel / (r + TRUE))) * d);
 };
 void () azoth_died2;
-
 void () azoth_died1 = [ 130, azoth_died2 ]
 {};
 void () azoth_died3;
@@ -1733,7 +1541,6 @@ void () azoth_diee4 = [ 139, azoth_diee5 ]
 	azoth_fly_death (90);
 };
 void () azoth_diee6;
-
 void () azoth_diee5 = [ 140, azoth_diee6 ]
 {
 	if (self.lip)
@@ -1796,7 +1603,6 @@ void () leg10 = [ 8, leg10 ]
 		Become_Corpse ();
 	}
 };
-
 void () leg_touch =
 {
 	self.touch = SUB_Null;
@@ -1806,7 +1612,6 @@ void () leg_touch =
 };
 void () rift_close;
 void () azoth_dief2;
-
 void () azoth_dief1 = [ 141, azoth_dief2 ]
 {
 	rift.think = rift_hold;
@@ -1815,7 +1620,6 @@ void () azoth_dief1 = [ 141, azoth_dief2 ]
 	rift.frame = 39;
 };
 void () azoth_dief3;
-
 void () azoth_dief2 = [ 142, azoth_dief3 ]
 {
 	azoth_fly_death (20);
@@ -1824,7 +1628,6 @@ void () azoth_dief2 = [ 142, azoth_dief3 ]
 	sound (self, FL_SWIM, "azoth/pain.wav", TRUE, FALSE);
 };
 void () azoth_dief4;
-
 void () azoth_dief3 = [ 143, azoth_dief4 ]
 {
 	azoth_fly_death (20);
@@ -1832,7 +1635,6 @@ void () azoth_dief3 = [ 143, azoth_dief4 ]
 	rift.frame = 37;
 };
 void () azoth_dief5;
-
 void () azoth_dief4 = [ 144, azoth_dief5 ]
 {
 	azoth_fly_death (20);
@@ -1840,7 +1642,6 @@ void () azoth_dief4 = [ 144, azoth_dief5 ]
 	rift.frame = 36;
 };
 void () azoth_dief6;
-
 void () azoth_dief5 = [ 145, azoth_dief6 ]
 {
 	azoth_fly_death (20);
@@ -1848,7 +1649,6 @@ void () azoth_dief5 = [ 145, azoth_dief6 ]
 	rift.frame = 35;
 };
 void () azoth_dief7;
-
 void () azoth_dief6 = [ 146, azoth_dief7 ]
 {
 	azoth_fly_death (20);
@@ -1856,7 +1656,6 @@ void () azoth_dief6 = [ 146, azoth_dief7 ]
 	rift.frame = 34;
 };
 void () azoth_dief8;
-
 void () azoth_dief7 = [ 147, azoth_dief8 ]
 {
 	azoth_fly_death (20);
@@ -1864,7 +1663,6 @@ void () azoth_dief7 = [ 147, azoth_dief8 ]
 	rift.frame = 34;
 };
 void () azoth_dief9;
-
 void () azoth_dief8 = [ 148, azoth_dief9 ]
 {
 	azoth_fly_death (20);
@@ -1872,7 +1670,6 @@ void () azoth_dief8 = [ 148, azoth_dief9 ]
 	rift.frame = SVC_SELLSCREEN;
 };
 void () azoth_dief10;
-
 void () azoth_dief9 = [ 149, azoth_dief10 ]
 {
 	azoth_fly_death (20);
@@ -1880,7 +1677,6 @@ void () azoth_dief9 = [ 149, azoth_dief10 ]
 	rift.frame = 34;
 };
 void () azoth_dief11;
-
 void () azoth_dief10 = [ 150, azoth_dief11 ]
 {
 	azoth_fly_death (20);
@@ -1888,7 +1684,6 @@ void () azoth_dief10 = [ 150, azoth_dief11 ]
 	rift.frame = 35;
 };
 void () azoth_dief12;
-
 void () azoth_dief11 = [ 151, azoth_dief12 ]
 {
 	azoth_fly_death (20);
@@ -1896,7 +1691,6 @@ void () azoth_dief11 = [ 151, azoth_dief12 ]
 	rift.frame = 36;
 };
 void () azoth_dief13;
-
 void () azoth_dief12 = [ 152, azoth_dief13 ]
 {
 	azoth_fly_death (20);
@@ -1904,7 +1698,6 @@ void () azoth_dief12 = [ 152, azoth_dief13 ]
 	rift.frame = 37;
 };
 void () azoth_dief14;
-
 void () azoth_dief13 = [ 153, azoth_dief14 ]
 {
 	azoth_fly_death (20);
@@ -1912,7 +1705,6 @@ void () azoth_dief13 = [ 153, azoth_dief14 ]
 	rift.frame = 38;
 };
 void () azoth_dief15;
-
 void () azoth_dief14 = [ 154, azoth_dief15 ]
 {
 	azoth_fly_death (20);
@@ -1920,7 +1712,6 @@ void () azoth_dief14 = [ 154, azoth_dief15 ]
 	rift.frame = 39;
 };
 void () azoth_dief16;
-
 void () azoth_dief15 = [ 155, azoth_dief16 ]
 {
 	azoth_fly_death (70);
@@ -1928,7 +1719,6 @@ void () azoth_dief15 = [ 155, azoth_dief16 ]
 	rift.frame = 40;
 };
 void () azoth_dief17;
-
 void () azoth_dief16 = [ 156, azoth_dief17 ]
 {
 	azoth_fly_death (70);
@@ -1936,7 +1726,6 @@ void () azoth_dief16 = [ 156, azoth_dief17 ]
 	rift.frame = 40;
 };
 void () azoth_dief18;
-
 void () azoth_dief17 = [ 157, azoth_dief18 ]
 {
 	azoth_fly_death (70);
@@ -1944,7 +1733,6 @@ void () azoth_dief17 = [ 157, azoth_dief18 ]
 	rift.frame = 40;
 };
 void () azoth_dief19;
-
 void () azoth_dief18 = [ 158, azoth_dief19 ]
 {
 	azoth_fly_death (70);
@@ -1952,7 +1740,6 @@ void () azoth_dief18 = [ 158, azoth_dief19 ]
 	rift.frame = 40;
 };
 void () azoth_dief20;
-
 void () azoth_dief19 = [ 159, azoth_dief20 ]
 {
 	azoth_fly_death (50);
@@ -1960,7 +1747,6 @@ void () azoth_dief19 = [ 159, azoth_dief20 ]
 	rift.frame = 40;
 };
 void () azoth_dief21;
-
 void () azoth_dief20 = [ 160, azoth_dief21 ]
 {
 	azoth_fly_death (20);
@@ -1969,7 +1755,6 @@ void () azoth_dief20 = [ 160, azoth_dief21 ]
 	sound (self, FL_SWIM, "azoth/awake.wav", TRUE, TRUE);
 };
 void () azoth_dief22;
-
 void () azoth_dief21 = [ 161, azoth_dief22 ]
 {
 	azoth_fly_death (20);
@@ -1977,7 +1762,6 @@ void () azoth_dief21 = [ 161, azoth_dief22 ]
 	rift.frame = 38;
 };
 void () azoth_dief23;
-
 void () azoth_dief22 = [ 162, azoth_dief23 ]
 {
 	azoth_fly_death (20);
@@ -1985,7 +1769,6 @@ void () azoth_dief22 = [ 162, azoth_dief23 ]
 	rift.frame = 37;
 };
 void () azoth_dief24;
-
 void () azoth_dief23 = [ 163, azoth_dief24 ]
 {
 	azoth_fly_death (20);
@@ -1993,7 +1776,6 @@ void () azoth_dief23 = [ 163, azoth_dief24 ]
 	rift.frame = 37;
 };
 void () azoth_dief25;
-
 void () azoth_dief24 = [ 164, azoth_dief25 ]
 {
 	azoth_fly_death (20);
@@ -2002,13 +1784,11 @@ void () azoth_dief24 = [ 164, azoth_dief25 ]
 	rift.think = rift_close;
 };
 void () azoth_dief26;
-
 void () azoth_dief25 = [ 165, azoth_dief26 ]
 {
 	azoth_fly_death (20);
 	self.height = 100;
 };
-
 void () azoth_dief26 = [ 165, azoth_dief25 ]
 {
 	local entity gib;
@@ -2035,7 +1815,6 @@ void () azoth_dief26 = [ 165, azoth_dief25 ]
 	killed_monster ();
 	remove (self);
 };
-
 void () dummy_test =
 {
 	local entity dummy;
@@ -2065,7 +1844,6 @@ void () dummy_test =
 	}
 };
 void () azoth_dieb1;
-
 void () trigger_stairpoint =
 {
 	if ((other.movetarget == self))
@@ -2079,14 +1857,12 @@ void () trigger_stairpoint =
 		}
 	}
 };
-
 void () stairpoint_think2 =
 {
 	self.solid = TRUE;
 	setsize (self, '-16 -16 -32', VEC_HULL_MAX);
 	force_retouch = FL_SWIM;
 };
-
 void () stairpoint_think =
 {
 	while (walkmove (75, MOVETYPE_BOUNCE))
@@ -2095,7 +1871,6 @@ void () stairpoint_think =
 	self.nextthink = (time + 0.1);
 	self.think = stairpoint_think2;
 };
-
 void () SpawnStairWaypoint =
 {
 	local entity waypoint;
@@ -2122,14 +1897,12 @@ void () SpawnStairWaypoint =
 	self.movetarget = waypoint;
 };
 void () azoth_die2;
-
 void () azoth_die1 = [ 107, azoth_die2 ]
 {
 	movetogoal (20);
 	sound (self, FL_SWIM, "azoth/pain.wav", TRUE, TRUE);
 };
 void () azoth_die3;
-
 void () azoth_die2 = [ 108, azoth_die3 ]
 {
 	movetogoal (MOVETYPE_FLY);
@@ -2139,7 +1912,6 @@ void () azoth_die2 = [ 108, azoth_die3 ]
 	}
 };
 void () azoth_die4;
-
 void () azoth_die3 = [ 109, azoth_die4 ]
 {
 	if ((self.origin_z < 216))
@@ -2153,7 +1925,6 @@ void () azoth_die3 = [ 109, azoth_die4 ]
 	}
 };
 void () azoth_die5;
-
 void () azoth_die4 = [ 110, azoth_die5 ]
 {
 	if ((self.origin_z < 216))
@@ -2167,7 +1938,6 @@ void () azoth_die4 = [ 110, azoth_die5 ]
 	}
 };
 void () azoth_die6;
-
 void () azoth_die5 = [ 111, azoth_die6 ]
 {
 	if ((self.origin_z < 216))
@@ -2181,7 +1951,6 @@ void () azoth_die5 = [ 111, azoth_die6 ]
 	}
 };
 void () azoth_die7;
-
 void () azoth_die6 = [ 112, azoth_die7 ]
 {
 	if ((self.origin_z < 216))
@@ -2195,7 +1964,6 @@ void () azoth_die6 = [ 112, azoth_die7 ]
 	}
 };
 void () azoth_die8;
-
 void () azoth_die7 = [ 113, azoth_die8 ]
 {
 	if ((self.origin_z < 216))
@@ -2205,7 +1973,6 @@ void () azoth_die7 = [ 113, azoth_die8 ]
 	movetogoal (MOVETYPE_BOUNCE);
 };
 void () azoth_die9;
-
 void () azoth_die8 = [ 114, azoth_die9 ]
 {
 	if ((self.origin_z < 216))
@@ -2215,7 +1982,6 @@ void () azoth_die8 = [ 114, azoth_die9 ]
 	movetogoal (15);
 };
 void () azoth_die10;
-
 void () azoth_die9 = [ 115, azoth_die10 ]
 {
 	if ((self.origin_z < 216))
@@ -2225,7 +1991,6 @@ void () azoth_die9 = [ 115, azoth_die10 ]
 	movetogoal (20);
 };
 void () azoth_die11;
-
 void () azoth_die10 = [ 116, azoth_die11 ]
 {
 	if ((self.origin_z < 216))
@@ -2235,7 +2000,6 @@ void () azoth_die10 = [ 116, azoth_die11 ]
 	movetogoal (15);
 };
 void () azoth_die12;
-
 void () azoth_die11 = [ 117, azoth_die12 ]
 {
 	if ((self.origin_z < 216))
@@ -2250,7 +2014,6 @@ void () azoth_die11 = [ 117, azoth_die12 ]
 	}
 };
 void () azoth_die13;
-
 void () azoth_die12 = [ 118, azoth_die13 ]
 {
 	if ((self.origin_z < 216))
@@ -2264,7 +2027,6 @@ void () azoth_die12 = [ 118, azoth_die13 ]
 		self.think = azoth_dieb1;
 	}
 };
-
 void () azoth_die13 = [ 107, azoth_die2 ]
 {
 	if ((self.origin_z < 216))
@@ -2279,46 +2041,30 @@ void () azoth_die13 = [ 107, azoth_die2 ]
 	}
 };
 void () azoth_dieb2;
-
 void () azoth_dieb1 = [ 107, azoth_dieb2 ]
 {
 	movetogoal (20);
 };
 void () azoth_dieb3;
-
 void () azoth_dieb2 = [ 119, azoth_dieb3 ]
-{
-};
+{};
 void () azoth_dieb4;
-
 void () azoth_dieb3 = [ 120, azoth_dieb4 ]
-{
-};
+{};
 void () azoth_dieb5;
-
 void () azoth_dieb4 = [ 121, azoth_dieb5 ]
-{
-};
+{};
 void () azoth_dieb6;
-
 void () azoth_dieb5 = [ 122, azoth_dieb6 ]
-{
-};
+{};
 void () azoth_dieb7;
-
 void () azoth_dieb6 = [ 123, azoth_dieb7 ]
-{
-};
+{};
 void () azoth_dieb8;
-
 void () azoth_dieb7 = [ 124, azoth_dieb8 ]
-{
-};
-
+{};
 void () azoth_dieb8 = [ 125, azoth_diec1 ]
-{
-};
-
+{};
 void () trigger_dieb =
 {
 	if ((other.movetarget == self))
@@ -2329,7 +2075,6 @@ void () trigger_dieb =
 		}
 	}
 };
-
 void () azoth_die =
 {
 	local entity waypoint;
@@ -2358,7 +2103,6 @@ void () azoth_die =
 	droptofloor ();
 	self = oself;
 };
-
 void () azoth_die_special =
 {
 	self.frame = 125;
@@ -2367,7 +2111,6 @@ void () azoth_die_special =
 	self.map = "start";
 	self.touch = changelevel_touch;
 };
-
 void () azoth_phase1 =
 {
 	sound (self, FL_SWIM, "azoth/pain.wav", TRUE, TRUE);
@@ -2381,7 +2124,6 @@ void () azoth_phase1 =
 	SUB_AttackFinished (TRUE);
 	azoth_run1 ();
 };
-
 void () azoth_phase2b =
 {
 	self.solid = MOVETYPE_WALK;
@@ -2400,7 +2142,6 @@ void () azoth_phase2b =
 	self.attack_finished = (time + TRUE);
 	azoth_land1 ();
 };
-
 void () azoth_phase2 =
 {
 	local vector spot;
@@ -2441,56 +2182,35 @@ void () azoth_phase2 =
 	}
 };
 void () azoth_tele2;
-
 void () azoth_tele1 = [ 0, azoth_tele2 ]
-{
-};
+{};
 void () azoth_tele3;
-
 void () azoth_tele2 = [ 1, azoth_tele3 ]
-{
-};
+{};
 void () azoth_tele4;
-
 void () azoth_tele3 = [ 2, azoth_tele4 ]
-{
-};
+{};
 void () azoth_tele5;
-
 void () azoth_tele4 = [ 3, azoth_tele5 ]
-{
-};
+{};
 void () azoth_tele6;
-
 void () azoth_tele5 = [ 4, azoth_tele6 ]
-{
-};
+{};
 void () azoth_tele7;
-
 void () azoth_tele6 = [ 5, azoth_tele7 ]
-{
-};
+{};
 void () azoth_tele8;
-
 void () azoth_tele7 = [ 6, azoth_tele8 ]
-{
-};
+{};
 void () azoth_tele9;
-
 void () azoth_tele8 = [ 7, azoth_tele9 ]
-{
-};
+{};
 void () azoth_tele10;
-
 void () azoth_tele9 = [ 8, azoth_tele10 ]
-{
-};
+{};
 void () azoth_tele11;
-
 void () azoth_tele10 = [ 9, azoth_tele11 ]
-{
-};
-
+{};
 void () azoth_tele11 = [ 10, azoth_tele1 ]
 {
 	if ((self.rad_time < time))
@@ -2500,7 +2220,6 @@ void () azoth_tele11 = [ 10, azoth_tele1 ]
 		remove (self);
 	}
 };
-
 void () azoth_flee2 =
 {
 	self.th_run = SUB_Null;
@@ -2508,7 +2227,6 @@ void () azoth_flee2 =
 	SUB_UseTargets ();
 	self.rad_time = (time + FL_SWIM);
 };
-
 void () azoth_flee =
 {
 	self.th_run = azoth_flee2;
@@ -2528,7 +2246,6 @@ void () azoth_flee =
 	self.flags = (self.flags - (self.flags & FL_ONGROUND));
 	self.velocity = '0 0 200';
 };
-
 void () azoth_phase5 =
 {
 	local float q;
@@ -2544,7 +2261,6 @@ void () azoth_phase5 =
 	self.pos1 = '2290 -1940 920';
 	self.state = FALSE;
 };
-
 void () azoth_phase4 =
 {
 	self.health = MTF_Monster_Health((1700 + (skill * 300)));
@@ -2555,7 +2271,6 @@ void () azoth_phase4 =
 	self.th_missile = azoth_throw1;
 	self.takedamage = FL_SWIM;
 };
-
 void () azoth_phase7b =
 {
 	self.solid = MOVETYPE_WALK;
@@ -2574,7 +2289,6 @@ void () azoth_phase7b =
 	SUB_AttackFinished (TRUE);
 	azoth_land1 ();
 };
-
 void () azoth_phase7 =
 {
 	if ((vlen (((self.origin - rift.origin) + '0 0 500')) > 200))
@@ -2592,7 +2306,6 @@ void () azoth_phase7 =
 		azoth_swipe15 ();
 	}
 };
-
 void () monster_azoth_restart_go =
 {
 	self.classname = "monster_azoth";
@@ -2621,7 +2334,6 @@ void () monster_azoth_restart_go =
 	self.enemy = activator;
 	self.think = FoundTarget;
 };
-
 void () monster_azoth;
 void () monster_azoth_restart =
 {
@@ -2651,7 +2363,6 @@ void () monster_azoth_restart =
 	self.#npc_spawnfunc = monster_azoth;
 	COOP_SetLives ();
 };
-
 void () monster_azoth =
 {
 	self.classname = "monster_azoth";
@@ -2708,45 +2419,37 @@ void () monster_azoth =
 	if (mapname == "aopend")
 		self.lives = 0;
 };
-
 void (entity sky) spawn_blacksky =
 {
 	setmodel (sky, sky.model);
 };
 void () nightfall3;
-
 void () nightfall2 = [ 0, nightfall3 ]
 {
 	lightstyle (FALSE, "k");
 };
 void () nightfall4;
-
 void () nightfall3 = [ 0, nightfall4 ]
 {
 	lightstyle (FALSE, "j");
 };
 void () nightfall5;
-
 void () nightfall4 = [ 0, nightfall5 ]
 {
 	lightstyle (FALSE, "i");
 };
 void () nightfall6;
-
 void () nightfall5 = [ 0, nightfall6 ]
 {
 	lightstyle (FALSE, "h");
 };
-
 void () nightfall6 = [ 0, SUB_Null ]
 {
 	lightstyle (FALSE, "g");
 };
-
 void () event_nightfall =
 {
 	local entity sky23a;
-
 	lightstyle (FALSE, "l");
 	sky23a = find (world, classname, "func_blacksky");
 	while (sky23a)
@@ -2767,7 +2470,6 @@ void () sky_open =
 	setorigin (sky24, self.origin);
 	self.enemy = sky24;
 };
-
 void () rift_hold =
 {
 	local float r;
@@ -2785,7 +2487,6 @@ void () rift_hold =
 	self.think = rift_hold;
 	self.skin = (TRUE - self.skin);
 };
-
 void () rift_close =
 {
 	local float r;
@@ -2813,11 +2514,9 @@ void () rift_close =
 	self.think = rift_close;
 	self.skin = (TRUE - self.skin);
 };
-
 void () rift_open =
 {
 	local float r;
-
 	if ((self.frame < 40))
 	{
 		self.frame = (self.frame + TRUE);
@@ -2844,7 +2543,6 @@ void () rift_open =
 	self.think = rift_open;
 	self.skin = (TRUE - self.skin);
 };
-
 void () rift_open_start =
 {
 	setmodel (self, "progs/rift.mdl");
@@ -2855,7 +2553,6 @@ void () rift_open_start =
 	self.think = rift_open;
 	sound (self, FL_SWIM, "azoth/portal.wav", TRUE, FALSE);
 };
-
 void () info_rift =
 {
 	precache_model ("progs/rift.mdl");

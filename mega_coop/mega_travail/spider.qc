@@ -21,7 +21,6 @@ void () spid_walk2 = [ 1, spid_walk3 ]
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_walk4;
-
 void () spid_walk3 = [ 2, spid_walk4 ]
 {
 	ai_walk (MOVETYPE_STEP);
@@ -65,7 +64,6 @@ void () spid_walk10 = [ 9, spid_walk1 ]
 	ai_walk (MOVETYPE_STEP);
 };
 void () spid_run2;
-
 void () spid_run1 = [ 0, spid_run2 ]
 {
 	if ((random () < 0.2))
@@ -75,90 +73,76 @@ void () spid_run1 = [ 0, spid_run2 ]
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run3;
-
 void () spid_run2 = [ 2, spid_run3 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run4;
-
 void () spid_run3 = [ 4, spid_run4 ]
 {
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run5;
-
 void () spid_run4 = [ 6, spid_run5 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run6;
-
 void () spid_run5 = [ 8, spid_run6 ]
 {
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run7;
-
 void () spid_run6 = [ 0, spid_run7 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run8;
-
 void () spid_run7 = [ 2, spid_run8 ]
 {
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run9;
-
 void () spid_run8 = [ 4, spid_run9 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_run10;
-
 void () spid_run9 = [ 6, spid_run10 ]
 {
 	ai_run (STAT_TOTALMONSTERS);
 };
-
 void () spid_run10 = [ 8, spid_run1 ]
 {
 	sound (self, FL_SWIM, "spider/swalk.wav", TRUE, FL_SWIM);
 	ai_run (STAT_TOTALMONSTERS);
 };
 void () spid_melee2;
-
 void () spid_melee1 = [ 0, spid_melee2 ]
 {
 	sound (self, FL_SWIM, "spider/shit.wav", TRUE, TRUE);
 	ai_charge (FL_INWATER);
 };
 void () spid_melee3;
-
 void () spid_melee2 = [ 2, spid_melee3 ]
 {
 	ai_charge (FL_INWATER);
 };
 void () spid_melee4;
-
 void () spid_melee3 = [ 4, spid_melee4 ]
 {
 	ai_charge (FL_INWATER);
 };
 void () spid_melee5;
-
 void () spid_melee4 = [ 6, spid_melee5 ]
 {
 	ai_charge (FL_INWATER);
 };
 void () spid_melee6;
-
 void () spid_melee5 = [ 8, spid_melee6 ]
 {
 	ai_melee ();
@@ -174,30 +158,25 @@ void () spid_melee5 = [ 8, spid_melee6 ]
 	}
 };
 void () spid_melee7;
-
 void () spid_melee6 = [ 0, spid_melee7 ]
 {
 	ai_charge (STAT_TOTALMONSTERS);
 };
 void () spid_melee8;
-
 void () spid_melee7 = [ 2, spid_melee8 ]
 {
 	ai_charge (STAT_TOTALMONSTERS);
 };
 void () spid_melee9;
-
 void () spid_melee8 = [ 4, spid_melee9 ]
 {
 	ai_charge (STAT_TOTALMONSTERS);
 };
 void () spid_melee10;
-
 void () spid_melee9 = [ 6, spid_melee10 ]
 {
 	ai_charge (STAT_TOTALMONSTERS);
 };
-
 void () spid_melee10 = [ 8, spid_run1 ]
 {
 	ai_charge (STAT_TOTALMONSTERS);

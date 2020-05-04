@@ -1,12 +1,3 @@
-.float ident;
-.float temp6;
-.entity ubs_point;
-.float ubs_deflapped;
-.float is_poisoned;
-.float pcolor;
-float poison_globaltime;
-.float poison_time;
-.void() th_jugg;
 float (entity ent) IsAlive =
 {
 	if (ent.model)

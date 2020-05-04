@@ -1,4 +1,3 @@
-entity rift;
 void () azoth_fire1;
 void () azoth_throw1;
 void () azoth_leap1;
@@ -15,6 +14,7 @@ void () azoth_phase4;
 void () azoth_phase5;
 void () azoth_phase7;
 void () azoth_phase7b;
+void () azoth_dief1;
 float () azoth_new_flightpoint =
 {
 	local vector d;
@@ -740,7 +740,6 @@ float () AzothCheckAttack_Phase4 =
 	}
 	return (FALSE);
 };
-void () azoth_dief1;
 float () AzothCheckAttack =
 {
 	if ((self.origin_z < -200))
