@@ -10,7 +10,8 @@ void() ai_sprite_orient =
 		while (clienta) {
 			if (coop_visible(self, clienta))
 				break;
-			if (vlen (self.origin - clienta.origin) < best_client_dist) {
+			if (vlen (self.origin - clienta.origin) < best_client_dist)
+			{
 				best_client_dist = vlen (self.origin - clienta.origin);
 				closest_client = clienta;
 			}
@@ -25,17 +26,23 @@ void() ai_sprite_orient =
 		totang = mathlib_anglemod(self.angles_y - tmpang);
 		if (totang < 157.5 && totang >= 112.5)
 			self.frame = self.frame + 1;
-		else if (totang < 112.5 && totang >= 67.5)
+		else
+		if (totang < 112.5 && totang >= 67.5)
 			self.frame = self.frame + 2;
-		else if (totang < 67.5 && totang >= 22.5)
+		else
+		if (totang < 67.5 && totang >= 22.5)
 			self.frame = self.frame + 3;
-		else if (totang < 22.5 || totang >= 337.5)
+		else
+		if (totang < 22.5 || totang >= 337.5)
 			self.frame = self.frame + 4;
-		else if (totang < 337.5 && totang >= 292.5)
+		else
+		if (totang < 337.5 && totang >= 292.5)
 			self.frame = self.frame + 5;
-		else if (totang < 292.5 && totang >= 247.5)
+		else
+		if (totang < 292.5 && totang >= 247.5)
 			self.frame = self.frame + 6;
-		else if (totang < 247.5 && totang >= 202.5)
+		else
+		if (totang < 247.5 && totang >= 202.5)
 			self.frame = self.frame + 7;
 };
 void(vector dir) FireMonsterBullets =
@@ -72,22 +79,17 @@ void(vector dir) FireMonsterBullets =
 			if (endist < 2)
 			{
 				damg = rint(random()*64);
-
 			}
 			else if (endist < 4)
 			{
 				damg = rint(random()*32);
-
 			}
 			else
 			{
 				damg = rint(random()*16);
-
 			}
-
 			T_Damage (trace_ent, self, self, damg);
 		}
-
 	}
 };
 void(string muzspr, float muztime, float mzlfrm) ai_monster_fire =
@@ -157,12 +159,14 @@ void() treasure_touch =
 		self.ammo_nails = 5;
 		sound (other, CHAN_ITEM, "lsfx/036.wav", 1, ATTN_NORM);
 	}
-	else if (self.frame == 2)
+	else
+	if (self.frame == 2)
 	{
 		self.ammo_nails = 10;
 		sound (other, CHAN_ITEM, "lsfx/037.wav", 1, ATTN_NORM);
 	}
-	else if (self.frame == 3)
+	else
+	if (self.frame == 3)
 	{
 		self.ammo_nails = 50;
 		sound (other, CHAN_ITEM, "lsfx/045.wav", 1, ATTN_NORM);
@@ -187,7 +191,6 @@ void() treasure_touch =
 					other.ammo_cells = other.ammo_cells + 1;
 			}
 		}
-
 		other.armorvalue = other.ammo_nails;
 	}
 	stuffcmd (other, "bf\n");
@@ -309,7 +312,6 @@ void() pushwall_use =
 	sound (self, CHAN_VOICE, "034.wav", 1, ATTN_NORM);
 	self.state = STATE_UP;
 	SUB_CalcMove (self.pos2, self.speed, pushwall_done);
-
 };
 void() pushwall_blocked =
 {
@@ -441,7 +443,6 @@ void() life_touch =
 	{
 		if (other.ammo_cells < 9)
 			other.ammo_cells = other.ammo_cells + 1;
-
 		other.health = 100;
 	}
 	other.ammo_shells = other.ammo_shells + 25;
@@ -582,7 +583,6 @@ void() wolfdoor_go_up =
 		newmis = spawn ();
 		newmis.owner = self;
 		newmis.origin = '0 0 0';
-
 		newmis.nextthink = time + 0.1;
 		newmis.think = wolfdoor_checker;
 		self.oldenemy = newmis;
@@ -636,7 +636,6 @@ void() wolfdoor_trigger_touch =
 	}
 	self = sstemp;
 	dremove(testorz);
-
 	if ( (self.owner.items & other.items) != self.owner.items)
 	{
 		if (!deathmatch)
@@ -648,7 +647,6 @@ void() wolfdoor_trigger_touch =
 	}
 	if (self.owner.items)
 		self.owner.items = self.owner.items - (self.owner.items & self.owner.items);
-
 	activator = other;
 	self = self.owner;
 	wolfdoor_use ();
@@ -727,7 +725,6 @@ void() WolfLinkDoors =
 		return;
 	if (self.targetname)
 		return;
-
 	self.trigger_field = spawn_field(self.mins, self.maxs);
 };
 //END
