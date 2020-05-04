@@ -75,7 +75,6 @@ void() fish_melee =
 	ldmg = (random() + random()) * 3;
 	T_Damage (self.enemy, self, self, ldmg);
 };
-
 void() f_attack1        =[      $attack1,       f_attack2 ] {ai_charge(10);};
 void() f_attack2        =[      $attack2,       f_attack3 ] {ai_charge(10);};
 void() f_attack3        =[      $attack3,       f_attack4 ] {fish_melee();};
@@ -131,7 +130,6 @@ void() fish_die =
 	}
    f_death1 ();
 };
-
 void() f_pain1  =[      $pain1, f_pain2 ] {};
 void() f_pain2  =[      $pain2, f_pain3 ] {ai_pain(6);};
 void() f_pain3  =[      $pain3, f_pain4 ] {ai_pain(6);};
@@ -141,10 +139,8 @@ void() f_pain6  =[      $pain6, f_pain7 ] {ai_pain(6);};
 void() f_pain7  =[      $pain7, f_pain8 ] {ai_pain(6);};
 void() f_pain8  =[      $pain8, f_pain9 ] {ai_pain(6);};
 void() f_pain9  =[      $pain9, f_run1 ] {ai_pain(6);};
-
 void(entity attacker, float damage)	fish_pain =
 {
-
 	f_pain1 ();
 };
 void() monster_fish1 =
@@ -162,7 +158,6 @@ void() monster_fish1 =
 	self.th_melee = f_attack1;
 	coop_swimmonster_start ();
 };
-
 void() monster_fish =
 {
 	if (deathmatch)

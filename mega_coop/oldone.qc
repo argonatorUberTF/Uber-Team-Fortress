@@ -92,85 +92,66 @@ void () old_idle43 = [ 42, old_idle44 ]
 {};
 void () old_idle44 = [ 43, old_idle45 ]
 {};
-
 void () old_idle45 = [ 44, old_idle46 ]
-{
-};
-
+{};
 void () old_idle46 = [ 45, old_idle1 ]
-{
-};
-
+{};
 void () old_thrash1 = [ 46, old_thrash2 ]
 {
 	lightstyle (false, "m");
 };
-
 void () old_thrash2 = [ 47, old_thrash3 ]
 {
 	lightstyle (false, "k");
 };
-
 void () old_thrash3 = [ 48, old_thrash4 ]
 {
 	lightstyle (false, "k");
 };
-
 void () old_thrash4 = [ 49, old_thrash5 ]
 {
 	lightstyle (false, "i");
 };
-
 void () old_thrash5 = [ 50, old_thrash6 ]
 {
 	lightstyle (false, "g");
 };
-
 void () old_thrash6 = [ 51, old_thrash7 ]
 {
 	lightstyle (false, "e");
 };
-
 void () old_thrash7 = [ 52, old_thrash8 ]
 {
 	lightstyle (false, "c");
 };
-
 void () old_thrash8 = [ 53, old_thrash9 ]
 {
 	lightstyle (false, "a");
 };
-
 void () old_thrash9 = [ 54, old_thrash10 ]
 {
 	lightstyle (false, "c");
 };
-
 void () old_thrash10 = [ 55, old_thrash11 ]
 {
 	lightstyle (false, "e");
 };
-
 void () old_thrash11 = [ 56, old_thrash12 ]
 {
 	lightstyle (false, "g");
 };
-
 void () old_thrash12 = [ 57, old_thrash13 ]
 {
 	lightstyle (false, "i");
 };
-
 void () old_thrash13 = [ 59, old_thrash14 ]
 {
 	lightstyle (false, "k");
 };
-
 void () old_thrash14 = [ 60, old_thrash15 ]
 {
 	lightstyle (false, "m");
 };
-
 void () old_thrash15 = [ 61, old_thrash16 ]
 {
 	lightstyle (false, "m");
@@ -180,27 +161,22 @@ void () old_thrash15 = [ 61, old_thrash16 ]
 		self.think = old_thrash1;
 	}
 };
-
 void () old_thrash16 = [ 62, old_thrash17 ]
 {
 	lightstyle (false, "g");
 };
-
 void () old_thrash17 = [ 63, old_thrash18 ]
 {
 	lightstyle (false, "c");
 };
-
 void () old_thrash18 = [ 64, old_thrash19 ]
 {
 	lightstyle (false, "b");
 };
-
 void () old_thrash19 = [ 65, old_thrash20 ]
 {
 	lightstyle (false, "a");
 };
-
 void () old_thrash20 = [ 66, old_thrash20 ]
 {
 	finale_4 ();
@@ -248,7 +224,6 @@ void () finale_1 =
 	timer.nextthink = (time + true);
 	timer.think = finale_2;
 };
-
 void () finale_2 =
 {
 	local vector o;
@@ -262,14 +237,12 @@ void () finale_2 =
 	self.nextthink = (time + FL_SWIM);
 	self.think = finale_3;
 };
-
 void () finale_3 =
 {
 	shub.think = old_thrash1;
 	sound (shub, CHAN_VOICE, "boss2/death.wav", true, ATTN_NORM);
 	lightstyle (false, "abcdefghijklmlkjihgfedcb");
 };
-
 void () finale_4 =
 {
 	local vector oldo;
@@ -328,14 +301,12 @@ void () finale_4 =
 	lightstyle (false, "m");
 	serverflags = 0;
 };
-
 void () nopain =
 {
 	self.health = 40000;
 	if (damage_attacker.classname == "teledeath" || damage_attacker.classname == "teledeath2")
 		finale_1 ();
 };
-
 void () monster_oldone =
 {
 	if (deathmatch)

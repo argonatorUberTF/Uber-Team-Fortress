@@ -34,7 +34,8 @@ void () hl_rotating =
 };
 void () func_rotating_use =
 {
-	if (self.has_tesla == 0) {
+	if (self.has_tesla == 0)
+	{
 		hl_rotating();
 		self.has_tesla = 1;
 	}
@@ -69,7 +70,8 @@ void () func_rotating =
 	if (mapname == "c1a1f" && self.classname == "func_rotating")
 		self.solid = SOLID_NOT;
 	setmodel(self, self.model);
-	if (self.spawnflags & 1) {	// start on
+	if (self.spawnflags & 1)
+	{	// start on
 		func_rotating_use();
 	}
 	self.use = func_rotating_use;
@@ -117,7 +119,6 @@ void () target_laser_think =
 			}
 			break;
 		}
-
 		ignore = trace_ent;
 		start = trace_endpos;
 	}
@@ -193,10 +194,11 @@ void() func_door_rotating =
 #endif
 {
 	local vector blah;
-   if ( (CheckExistence () == 0.000) ) {
-      dremove (self);
-      return ;
-   }
+	if ( (CheckExistence () == 0.000) )
+	{
+		dremove (self);
+		return ;
+	}
 	if (world.worldtype == 0)
 	{
 		precache_sound ("doors/medtry.wav");
@@ -399,7 +401,6 @@ void () use_target_explosion =
 		target_explosion_explode ();
 		return;
 	}
-
 	self.think = target_explosion_explode;
 	self.nextthink = time + self.delay;
 };
@@ -579,7 +580,6 @@ void () trigger_key_use =
 		dremove(self);
 		return;
 	}
-
 };
 void () trigger_key =
 {

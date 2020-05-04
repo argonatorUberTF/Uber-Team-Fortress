@@ -33,9 +33,7 @@ void () Monster_Stats_Create =
 	ClientInRankings2 ();
 	self.ishuman = 0;
 	self = uself;
-#ifdef LAZY_WAY
 	monster_score.fClientNo = fMaxClients2 + 1;
-#endif
 	Monster_Stats_Send_Full( monster_score );
 };
 void (entity mnst) Monster_Stats_Send_Full =
@@ -451,7 +449,6 @@ float (float clientno) clientIsActive2 =
 	}
 	return (0.000000);
 };
-
 float () clientNextAvailable2 =
 {
 	local float clientno;

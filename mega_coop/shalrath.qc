@@ -1,3 +1,5 @@
+void () ShalMissileTouch;
+void () ShalHome;
 void () shalrath_pain;
 void () ShalMissile;
 void () shal_stand = [ 23, shal_stand ]
@@ -20,7 +22,6 @@ void () shal_walk3 = [ 26, shal_walk4 ]
 {
 	ai_walk (false);
 };
-
 void () shal_walk4 = [ 27, shal_walk5 ]
 {
 	ai_walk (false);
@@ -41,27 +42,22 @@ void () shal_walk8 = [ 31, shal_walk9 ]
 {
 	ai_walk (MOVETYPE_TOSS);
 };
-
 void () shal_walk9 = [ 32, shal_walk10 ]
 {
 	ai_walk (MOVETYPE_FLY);
 };
-
 void () shal_walk10 = [ 33, shal_walk11 ]
 {
 	ai_walk (false);
 };
-
 void () shal_walk11 = [ 34, shal_walk12 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () shal_walk12 = [ 23, shal_walk1 ]
 {
 	ai_walk (MOVETYPE_FLY);
 };
-
 void () shal_run1 = [ 24, shal_run2 ]
 {
 	if ((random () < 0.2))
@@ -70,165 +66,117 @@ void () shal_run1 = [ 24, shal_run2 ]
 	}
 	ai_run (MOVETYPE_TOSS);
 };
-
 void () shal_run2 = [ 25, shal_run3 ]
 {
 	ai_run (MOVETYPE_STEP);
 };
-
 void () shal_run3 = [ 26, shal_run4 ]
 {
 	ai_run (false);
 };
-
 void () shal_run4 = [ 27, shal_run5 ]
 {
 	ai_run (false);
 };
-
 void () shal_run5 = [ 28, shal_run6 ]
 {
 	ai_run (false);
 };
-
 void () shal_run6 = [ 29, shal_run7 ]
 {
 	ai_run (false);
 };
-
 void () shal_run7 = [ 30, shal_run8 ]
 {
 	ai_run (MOVETYPE_FLY);
 };
-
 void () shal_run8 = [ 31, shal_run9 ]
 {
 	ai_run (MOVETYPE_TOSS);
 };
-
 void () shal_run9 = [ 32, shal_run10 ]
 {
 	ai_run (MOVETYPE_FLY);
 };
-
 void () shal_run10 = [ 33, shal_run11 ]
 {
 	ai_run (false);
 };
-
 void () shal_run11 = [ 34, shal_run12 ]
 {
 	ai_run (MOVETYPE_STEP);
 };
-
 void () shal_run12 = [ 23, shal_run1 ]
 {
 	ai_run (MOVETYPE_FLY);
 };
-
 void () shal_attack1 = [ 0, shal_attack2 ]
 {
 	sound (self, CHAN_VOICE, "shalrath/attack.wav", true, ATTN_NORM);
 	ai_face ();
 };
-
 void () shal_attack2 = [ 1, shal_attack3 ]
 {
 	ai_face ();
 };
-
 void () shal_attack3 = [ 2, shal_attack4 ]
 {
 	ai_face ();
 };
-
 void () shal_attack4 = [ 3, shal_attack5 ]
 {
 	ai_face ();
 };
-
 void () shal_attack5 = [ 4, shal_attack6 ]
 {
 	ai_face ();
 };
-
 void () shal_attack6 = [ 5, shal_attack7 ]
 {
 	ai_face ();
 };
-
 void () shal_attack7 = [ 6, shal_attack8 ]
 {
 	ai_face ();
 };
-
 void () shal_attack8 = [ 7, shal_attack9 ]
 {
 	ai_face ();
 };
-
 void () shal_attack9 = [ 8, shal_attack10 ]
 {
 	ShalMissile ();
 };
-
 void () shal_attack10 = [ 9, shal_attack11 ]
 {
 	ai_face ();
 };
-
 void () shal_attack11 = [ 10, shal_run1 ]
-{
-};
-
+{};
 void () shal_pain1 = [ 11, shal_pain2 ]
-{
-};
-
+{};
 void () shal_pain2 = [ 12, shal_pain3 ]
-{
-};
-
+{};
 void () shal_pain3 = [ 13, shal_pain4 ]
-{
-};
-
+{};
 void () shal_pain4 = [ 14, shal_pain5 ]
-{
-};
-
+{};
 void () shal_pain5 = [ 15, shal_run1 ]
-{
-};
-
+{};
 void () shal_death1 = [ 16, shal_death2 ]
-{
-};
-
+{};
 void () shal_death2 = [ 17, shal_death3 ]
-{
-};
-
+{};
 void () shal_death3 = [ 18, shal_death4 ]
-{
-};
-
+{};
 void () shal_death4 = [ 19, shal_death5 ]
-{
-};
-
+{};
 void () shal_death5 = [ 20, shal_death6 ]
-{
-};
-
+{};
 void () shal_death6 = [ 21, shal_death7 ]
-{
-};
-
+{};
 void () shal_death7 = [ 22, shal_death7 ]
-{
-};
-
+{};
 void () shalrath_pain =
 {
 	if ((self.pain_finished > time))
@@ -239,7 +187,6 @@ void () shalrath_pain =
 	shal_pain1 ();
 	self.pain_finished = (time + MOVETYPE_WALK);
 };
-
 void () shalrath_die =
 {
 	if ((self.health < -90))
@@ -255,8 +202,6 @@ void () shalrath_die =
 	shal_death1 ();
 	self.solid = SOLID_NOT;
 };
-void () ShalMissileTouch;
-void () ShalHome;
 void () ShalMissile =
 {
 	local entity missile;
@@ -286,7 +231,6 @@ void () ShalMissile =
 	missile.enemy = self.enemy;
 	missile.touch = ShalMissileTouch;
 };
-
 void () ShalHome =
 {
 	local vector dir;
@@ -309,7 +253,6 @@ void () ShalHome =
 	self.nextthink = (time + 0.2);
 	self.think = ShalHome;
 };
-
 void () ShalMissileTouch =
 {
 	if ((other == self.owner))
@@ -320,14 +263,12 @@ void () ShalMissileTouch =
 	{
 		T_Damage (other, self, self, 110);
 	}
-#ifdef mtf_coop
 	if (self.real_owner.classname == "building_sentrygun") {
 		deathmsg = 27;
 		self.owner = self.real_owner;
 		T_RadiusDamage (self, self.owner, 130, world/*, "shalrath"*/);
 	}
 	else
-#endif
 	T_RadiusDamage (self, self.owner, 40, world/*, "shalrath"*/);
 	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", true, ATTN_NORM);
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
@@ -338,7 +279,6 @@ void () ShalMissileTouch =
 	multicast (self.origin, MULTICAST_PHS);
 	remove (self);
 };
-
 void () monster_shalrath1 =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -355,7 +295,6 @@ void () monster_shalrath1 =
 	self.think = coop_walkmonster_start;
 	self.nextthink = ((time + 0.1) + (random () * 0.1));
 };
-
 void () monster_shalrath =
 {
 	if (deathmatch)
@@ -383,4 +322,3 @@ void () monster_shalrath =
 	monster_shalrath1 ();
 };
 //END
-

@@ -1,3 +1,5 @@
+void () Merchant_GenerateEntity ;
+void () Merchant_SayWares;
 float (string nname) MTF_Coop_SetupInventory =
 {	
 	local string a;
@@ -368,7 +370,6 @@ float ( entity t_plyr, float item_no, float item_cost ) Inventory_AddItem =
 	sprint( t_plyr, 2, ".\n" );
 	return #TRUE;
 };
-void () Merchant_SayWares;
 void () Merchant_SayWares =
 {
 	if ( self.#merchant_type == 1 )
@@ -524,24 +525,20 @@ void () Inventory_SetupMerchant =
 	merchant.nextthink = time + 120;
 	merchant.touch = Merchant_Touch;
 };
-void () Merchant_GenerateEntity ;
 void ( vector m_org ) Inventory_SpawnMerchant =
 {
 	if (random() < .02)
 		return;
 	if (merchant != world)
 		return;
-#ifdef mtf_coop_lms
 	if (lms_entity != world)
 		return;
-#endif
 	merchant = spawn ();
 	newmis = spawn();
 	newmis.origin = m_org;
 	newmis.think = Merchant_GenerateEntity;
 	newmis.nextthink = time + 1;
 };
-
 void () Merchant_GenerateEntity =
 {
 	merchant.classname = "merchant";

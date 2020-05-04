@@ -11,9 +11,11 @@ void() monster_spawner_spawn = {
 	// if lives are up, then all monsters are or have been spawned
 	// only time this can happen is if this gets called too much
 	// because we check below after we spawn if lives went to 0 and when a monster dies we also check then
-	if ( !self.lives || self.cnt == self.count ) {
+	if ( !self.lives || self.cnt == self.count )
+	{
 		// if OFF_AT_COUNT then make sure it's off
-		if ( self.spawnflags & 32 ) {
+		if ( self.spawnflags & 32 )
+		{
 			self.state = 0;
 			self.think = SUB_Null;
 		}
@@ -28,7 +30,8 @@ void() monster_spawner_spawn = {
 	// subtract a life when a monster spawns
 	self.lives = self.lives - 1;
 	// if the new monster reaches our limit then stop spawning
-	if ( self.cnt == self.count || !self.lives ) {
+	if ( self.cnt == self.count || !self.lives )
+	{
 		// if OFF_AT_COUNT then turn it off
 		if ( self.spawnflags & 32 )
 			self.state = 0;
@@ -47,43 +50,82 @@ void() monster_spawner_spawn = {
 	maxCount = 100;
 	// .currentammo is checked for being zero before this is performed
 	rchance = 1 / oself.currentammo;
-	do {
+	do
+	{
 		ftmp = 0;
 		// call random multiple times to keep things easy and easy to add more monsters
-		if ( oself.aflag & 1 && random() < rchance ){
-			monster_zombie1();self.classname = "monster_zombie";}
-		else if ( oself.aflag & 2 && random() < rchance ){
-			monster_shambler1();self.classname = "monster_shambler";}
-		else if ( oself.aflag & 4 && random() < rchance ){
+		if ( oself.aflag & 1 && random() < rchance )
+		{
+			monster_zombie1();self.classname = "monster_zombie";
+		}
+		else
+		if ( oself.aflag & 2 && random() < rchance )
+		{
+			monster_shambler1();self.classname = "monster_shambler";
+		}
+		else
+		if ( oself.aflag & 4 && random() < rchance )
+		{
 			monster_knight1();self.classname = "monster_knight";}
-		else if ( oself.aflag & 8 && random() < rchance ){
-			monster_enforcer1();self.classname = "monster_enforcer";}
-		else if ( oself.aflag & 16 && random() < rchance ){
-			monster_demon2();self.classname = "monster_demon1";}
-		else if ( oself.aflag & 32 && random() < rchance ){
-			monster_army1();self.classname = "monster_army";}
-		else if ( oself.aflag & 64 && random() < rchance ){
-			monster_ogre1();self.classname = "monster_ogre";}
-		else if ( oself.aflag & 128 && random() < rchance ){
-			monster_shalrath1();self.classname = "monster_shalrath";}
-		else if ( oself.aflag & 256 && random() < rchance ){
-			monster_wizard1();self.classname = "monster_wizard";}
-		else if ( oself.aflag & 512 && random() < rchance ){
+		else
+		if ( oself.aflag & 8 && random() < rchance )
+		{
+			monster_enforcer1();self.classname = "monster_enforcer";
+		}
+		else
+		if ( oself.aflag & 16 && random() < rchance )
+		{
+			monster_demon2();self.classname = "monster_demon1";
+		}
+		else
+		if ( oself.aflag & 32 && random() < rchance )
+		{
+			monster_army1();self.classname = "monster_army";
+		}
+		else
+		if ( oself.aflag & 64 && random() < rchance )
+		{
+			monster_ogre1();self.classname = "monster_ogre";
+		}
+		else
+		if ( oself.aflag & 128 && random() < rchance )
+		{
+			monster_shalrath1();self.classname = "monster_shalrath";
+		}
+		else
+		if ( oself.aflag & 256 && random() < rchance )
+		{
+			monster_wizard1();self.classname = "monster_wizard";
+		}
+		else
+		if ( oself.aflag & 512 && random() < rchance )
+		{
 			monster_dog1();self.classname = "monster_dog";}
-		else if ( oself.aflag & 1024 && random() < rchance ){
-			monster_fish1();self.classname = "monster_fish";}
-		else if ( oself.aflag & 2048 && random() < rchance ){
-			monster_hell_knight1();self.classname = "monster_hell_knight";}
-		else if ( oself.aflag & 4096 && random() < rchance ){
-			monster_tarbaby1();self.classname = "monster_tarbaby";}
-		else {
+		else
+		if ( oself.aflag & 1024 && random() < rchance )
+		{
+			monster_fish1();self.classname = "monster_fish";
+		}
+		else
+		if ( oself.aflag & 2048 && random() < rchance )
+		{
+			monster_hell_knight1();self.classname = "monster_hell_knight";
+		}
+		else
+		if ( oself.aflag & 4096 && random() < rchance )
+		{
+			monster_tarbaby1();self.classname = "monster_tarbaby";
+		}
+		else
+		{
 			maxCount = maxCount - 1;
 			// if we failed to spawn one then force one to spawn
 			if ( !maxCount )
 				rchance = 1;
 			ftmp = 1;
 		}
-	} while ( ftmp );
+	}
+	while ( ftmp );
 	self = oself;
 	// set monster specific things
 	e.is_monster = 1;
@@ -91,11 +133,13 @@ void() monster_spawner_spawn = {
 	e.lives = 0;
 	e.endtime = self.endtime;
 //	if ( self.team_no )
-//		e.team_no = self.team_no; // what ? 
+//		e.team_no = self.team_no; // what ? -arg
 	// check for randomizing the spawn position
-	if ( self.spawnflags & 1 || self.spawnflags & 2 || InSolid( e ) ) {
+	if ( self.spawnflags & 1 || self.spawnflags & 2 || InSolid( e ) )
+	{
 		maxCount = 100;
-		while ( maxCount ) {
+		while ( maxCount )
+		{
 			if ( random() < 0.5 )
 				e.origin_x = e.origin_x - random() * self.t_length;
 			else
@@ -108,10 +152,12 @@ void() monster_spawner_spawn = {
 			// check for invalid positions
 			traceline( e.origin, e.origin + '0 0 -8192', #TL_BSP_ONLY, e );
 			// if spawnflags 2 is set, then the position must be visible to the spawner
-			if ( trace_fraction == 1 || InSolid( e ) || ( self.spawnflags & 2 && !visible( e ) ) ) {
+			if ( trace_fraction == 1 || InSolid( e ) || ( self.spawnflags & 2 && !visible( e ) ) )
+			{
 				setorigin( e, self.origin );
 				maxCount = maxCount - 1;
-			} else
+			}
+			else
 				maxCount = 0;
 		}
 	}
@@ -138,24 +184,29 @@ void() monster_spawner_spawn = {
 	e.monster_string = "on";
 	SetSpawnFunc(e, e.classname);
 };
-void() monster_spawner_use = {
+void() monster_spawner_use =
+{
 	if ( self.classname != "monster_spawner" )
 		return;
 	// check if we're being used because of a monster death
 	// map monsters can have a monster_spawner as a target and things will work fine
 	//if ( COOP_IsCoopMonster( other ) && other.enemy == activator && other.#npc_isCoopMonster == self.ammo_detpack ) {
-	if (other.is_monster == #TRUE) {
+	if (other.is_monster == #TRUE)
+	{
 		self.cnt = self.cnt - 1;
 		// since one died, the only way we can't spawn another one is
 		// if our lives are up
-		if ( !self.lives ) {
+		if ( !self.lives )
+		{
 			// only remove it if all monsters are dead
-			if ( !self.cnt ) {
+			if ( !self.cnt )
+			{
 				self.targetname = "";
 				self.use = SUB_Null;
 				self.nextthink = time + 0.1;
 				self.think = SUB_Remove;
-			} else
+			}
+			else
 				self.think = SUB_Null;
 			// fire our targets when a monster dies
 			SUB_UseTargets();
@@ -163,19 +214,24 @@ void() monster_spawner_use = {
 		}
 		// if spawning is enabled then spawn a new monster after the wait time
 		if ( self.wait > 0 ) {
-			if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME ) {
+			if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+			{
 				self.nextthink = time + self.wait;
 				self.think = monster_spawner_spawn;
-			} else {
-				if ( self.state ) {
+			}
+			else
+			{
+				if ( self.state )
+				{
 					self.nextthink = time + self.wait;
 					self.think = monster_spawner_spawn;
-				} else
+				}
+				else
 					self.think = SUB_Null;
 			}
-		} else if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+		}
+		else if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 			monster_spawner_spawn();
-
 		// fire our targets when a monster dies
 		SUB_UseTargets();
 		return;
@@ -185,29 +241,36 @@ void() monster_spawner_use = {
 	if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 		return;
 	// check if we should be toggled on/off
-	if ( self.wait > 0 ) {
-		if ( !self.state ) {
+	if ( self.wait > 0 )
+	{
+		if ( !self.state )
+		{
 			self.state = 1;
 			self.nextthink = time + self.wait;
 			self.think = monster_spawner_spawn;
-
 			// the code below, if used, won't break as nextthink is reset when a spawned monster dies
 			// and monster_spawner_spawn checks count and lives before spawning a monster
 			// also state is managed in monster_spawner_spawn()
 			// check if SPAWN_COUNT_TOGGLE or SPAWN_TOGGLE are set
-			if ( self.spawnflags & 512 ) {
+			if ( self.spawnflags & 512 )
+			{
 				// spawn up to count now that we're toggled on, this may not spawn any at all
 				while ( self.cnt < self.count && self.lives )
 					monster_spawner_spawn();
-			} else if ( self.spawnflags & 256 ) {
+			}
+			else if ( self.spawnflags & 256 )
+			{
 				// spawn one right away (if we're suppose to)
 				monster_spawner_spawn();
 			}
-		} else {
+		}
+		else
+		{
 			self.state = 0;
 			self.think = SUB_Null;
 		}
-	} else
+	}
+	else
 		monster_spawner_spawn();
 };
 void() monster_spawner =
@@ -221,7 +284,8 @@ void() monster_spawner =
 		dremove( self );
 		return;
 	}
-	if ( deathmatch ) {
+	if ( deathmatch )
+	{
 		remove( self );
 		return;
 	}
@@ -238,7 +302,9 @@ void() monster_spawner =
 		// only valid if targetname and wait are present
 		if ( self.wait <= 0 || self.targetname == "" )
 			objerror( "start_on is only valid if targetname and wait are set" );
-	} else {
+	}
+	else
+	{
 		if ( self.wait > 0 && self.targetname != "" )
 		if ( self.spawnflags & 8 || self.spawnflags & 16 )
 			objerror( "spawn_first and spawn_count_first are not valid without start_on when wait and targetname are set" );
@@ -247,7 +313,8 @@ void() monster_spawner =
 	if ( self.target )
 	if ( self.target == self.targetname )
 		objerror( "target == targetname" );
-	if ( self.wait <= 0 || self.targetname == "" ) {
+	if ( self.wait <= 0 || self.targetname == "" )
+	{
 		if ( self.spawnflags & 32 )
 			objerror( "off_at_count is only valid if targetname and wait are set" );
 		if ( self.spawnflags & 256 || self.spawnflags & 512 )
@@ -271,11 +338,13 @@ void() monster_spawner =
 	// set the default targetname to notify us of monster deaths
 	if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 		objerror( "invalid targetname for monster_spawner\n" );
-	if ( !self.targetname ) {
+	if ( !self.targetname )
+	{
 		self.ammo_detpack = spawner_noTriggerId;
 		spawner_noTriggerId = spawner_noTriggerId + 1;
 		self.targetname = #DEFAULT_SPAWNER_TARGETNAME;
-	} else
+	}
+	else
 		self.ammo_detpack = 2;				// doesn't have to be unique if a targetname was specified
 #ifndef nofixcount
 	// only increase monster count if we're not on a team or we're not on team one
@@ -289,55 +358,68 @@ void() monster_spawner =
 	oself = self;
 	self = temp;
 	oself.currentammo = 0;
-	if ( oself.aflag & 1 ) {
+	if ( oself.aflag & 1 )
+	{
 		monster_zombie();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 2 ) {
+	if ( oself.aflag & 2 )
+	{
 		monster_shambler();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 4 ) {
+	if ( oself.aflag & 4 )
+	{
 		monster_knight();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 8 ) {
+	if ( oself.aflag & 8 )
+	{
 		monster_enforcer();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 16 ) {
+	if ( oself.aflag & 16 )
+	{
 		monster_demon1();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 32 ) {
+	if ( oself.aflag & 32 )
+	{
 		monster_army();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 64 ) {
+	if ( oself.aflag & 64 )
+	{
 		monster_ogre();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 128 ) {
+	if ( oself.aflag & 128 )
+	{
 		monster_shalrath();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 256 ) {
+	if ( oself.aflag & 256 )
+	{
 		monster_wizard();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 512 ) {
+	if ( oself.aflag & 512 )
+	{
 		monster_dog();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 1024 ) {
+	if ( oself.aflag & 1024 )
+	{
 		monster_fish();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 2048 ) {
+	if ( oself.aflag & 2048 )
+	{
 		monster_hell_knight();
 		oself.currentammo = oself.currentammo + 1;
 	}
-	if ( oself.aflag & 4096 ) {
+	if ( oself.aflag & 4096 )
+	{
 		monster_tarbaby();
 		oself.currentammo = oself.currentammo + 1;
 	}
@@ -346,27 +428,42 @@ void() monster_spawner =
 	// setup to be triggered, even if no targetname, because we need to know when a monster dies
 	self.use = monster_spawner_use;
 	// check for START_ON
-	if ( self.spawnflags & 4 ) {
+	if ( self.spawnflags & 4 )
+	{
 		// state is only used when wait and targetname (toggle mode) are set
 		self.state = 1;
-		if ( self.spawnflags & 16 ) {
-			do {
+		if ( self.spawnflags & 16 )
+		{
+			do 
+			{
 				monster_spawner_spawn();
-			} while ( self.cnt < self.count && self.lives );
-		} else {
+			}
+			while ( self.cnt < self.count && self.lives );
+		}
+		else
+		{
 			// spawn one right away
 			if ( self.spawnflags & 8 )
 				monster_spawner_spawn();
 			self.nextthink = time + self.wait;
 			self.think = monster_spawner_spawn;
 		}
-	} else if ( self.wait > 0 ) {	// if self.wait > 0 and self.targetname is set and START_ON isn't set, then we don't need to do anything
-		if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME ) {
-			if ( self.spawnflags & 16 ) {
-				do {
+	}
+	else if ( self.wait > 0 )
+	{
+	// if self.wait > 0 and self.targetname is set and START_ON isn't set, then we don't need to do anything
+		if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+		{
+			if ( self.spawnflags & 16 )
+			{
+				do
+				{
 					monster_spawner_spawn();
-				} while ( self.cnt < self.count && self.lives );
-			} else {
+				}
+				while ( self.cnt < self.count && self.lives );
+			}
+			else
+			{
 				// spawn one right away
 				if ( self.spawnflags & 8 )
 					monster_spawner_spawn();
@@ -374,16 +471,24 @@ void() monster_spawner =
 				self.think = monster_spawner_spawn;
 			}
 		}
-	} else if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME ) {
-		do {
+	} else if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+	{
+		do
+		{
 			monster_spawner_spawn();
 		} while ( self.cnt < self.count && self.lives );
-	} else {
-		if ( self.spawnflags & 16 ) {
-			do {
+	}
+	else
+	{
+		if ( self.spawnflags & 16 )
+		{
+			do
+			{
 				monster_spawner_spawn();
 			} while ( self.cnt < self.count && self.lives );
-		} else {
+		}
+		else
+		{
 			// spawn one right away
 			if ( self.spawnflags & 8 )
 				monster_spawner_spawn();
@@ -394,7 +499,8 @@ void() monster_spawner =
 	total_monsters = ftmp;
 #endif
 };
-void() monsterteam_touch = {
+void() monsterteam_touch =
+{
 	local entity	te;
 	if ( other.takedamage )
 	if ( other.health <= 0 )
@@ -405,20 +511,26 @@ void() monsterteam_touch = {
 		return;				// not a coop monster
 	if ( other.deadflag )
 		return;
-	if ( self.team_no ) {
+	if ( self.team_no )
+	{
 		if ( other.team_no != self.team_no )
 			return;			// wrong team
 	}
-	if ( self.targetname ) {
+	if ( self.targetname )
+	{
 		if ( self.nextthink < time )
 			return;			// not fired yet
-		else {
-			if ( self.spawnflags & 2 ) {
-				if ( other == self.enemy ) {
+		else
+		{
+			if ( self.spawnflags & 2 )
+			{
+				if ( other == self.enemy )
+				{
 					self.enemy = world;
 					return;
 				}
-			} else if ( self.spawnflags & 4 ) {
+			} else if ( self.spawnflags & 4 )
+			{
 				if ( other == self.enemy )	// if it's the activator, reset .enemy and fire the targets
 					self.enemy = world;
 				else					// some other monster besides the activator, just return
@@ -444,17 +556,21 @@ void() monsterteam_touch = {
 	activator = other;
 	SUB_UseTargets();				// could do some neat stuff here when a monster touches
 };
-void() monsterteam_use = {
+void() monsterteam_use =
+{
 	local entity	te;
 	local float		numChanged;
 	// don't allow non-players to fire the trigger if spawnflags 1 is present
 	if ( self.spawnflags & 1 && !( activator.flags & FL_CLIENT ) )
 		return;
-	if ( self.event ) {
+	if ( self.event )
+	{
 		numChanged = 0;
 		te = find( world, targetname, self.event );
-		while ( te ) {
-			if ( ( te.deadflag == DEAD_NO && te.is_monster == 1/*COOP_IsCoopMonster( te )*/ ) || te.classname == "respawning monster" ) {
+		while ( te )
+		{
+			if ( ( te.deadflag == DEAD_NO && te.is_monster == 1/*COOP_IsCoopMonster( te )*/ ) || te.classname == "respawning monster" )
+			{
 				if ( !( self.spawnflags & 2 ) || te != activator )
 				if ( !( self.spawnflags & 4 ) || te == activator )
 				if ( !self.team_no || te.team_no == self.team_no )
@@ -463,7 +579,6 @@ void() monsterteam_use = {
 					numChanged = 1;	// for now we don't care how many, just that some were
 				}
 			}
-
 			te = find( te, targetname, self.event );
 		}
 		if ( numChanged )
@@ -480,12 +595,15 @@ void() monsterteam_use = {
 	force_retouch = 2;		// make sure even still objects get hit
 	self.think = SUB_Null;
 };
-void() trigger_monsterteam = {
-	if ( CheckExistence() == #FALSE ) {
+void() trigger_monsterteam =
+{
+	if ( CheckExistence() == #FALSE )
+	{
 		dremove( self );
 		return;
 	}
-	if ( deathmatch ) {
+	if ( deathmatch )
+	{
 		remove( self );
 		return;
 	}

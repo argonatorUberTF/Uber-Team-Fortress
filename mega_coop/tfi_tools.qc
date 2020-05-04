@@ -27,23 +27,28 @@ float ( string fromme, string str_section, string str_value, float str_valueno )
 	local string a;
 	if (str_section == string_null)
 		sectioned = 1;
-	if (!fromme || validatefile(fromme) == #FALSE) {
+	if (!fromme || validatefile(fromme) == #FALSE)
+	{
 		bprint( 2, ( frik_strcat( "TFI_GetLine: No such file: ", fromme ) ) );
 		return -1;
 	}
-	if (!str_value) {
+	if (!str_value)
+	{
 		bprint( 2, ( frik_strcat( "TFI_GetLine: Invalid String Value", str_value ) ) );
 		return -1;
 	}
 	i=1;
 	file = open (fromme, 0);
-	while ( i < #TFI_MAXLINES ) {
+	while ( i < #TFI_MAXLINES )
+	{
 		a = read(file);
 		a = strzone(a);
 		if (sectioned)
-			if (a == str_value) {
+			if (a == str_value)
+			{
 				strunzone(a);
-				if (str_valueno == 0) {
+				if (str_valueno == 0)
+				{
 					close (file);
 					return i;
 				}
@@ -51,7 +56,8 @@ float ( string fromme, string str_section, string str_value, float str_valueno )
 				{
 					i2++;
 					a = read(file);
-					if (i2 >= str_valueno) {
+					if (i2 >= str_valueno)
+					{
 						close (file);
 						return (i + i2);
 					}

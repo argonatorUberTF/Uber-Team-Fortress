@@ -92,7 +92,6 @@ string (float anum) Achievements_GetName =
 	}
 	return "noname";
 };
-
 // How many points a player needs at least to earn an achievement
 float (float anum) Achievements_CheckComplete =
 {
@@ -291,26 +290,28 @@ float (entity t_plyr) Achievements_Setup =
 	local float filee;
 	local float i;
 	local string tstr;
-	if ( t_plyr.connect_name == "" || !t_plyr.connect_name ) {
+	if ( t_plyr.connect_name == "" || !t_plyr.connect_name )
+	{
 		//self.#achievements = -1;
 		return ( -1 );
 	}
 	filenamee = frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" );
 	filenamee = strzone(filenamee);
-	if ( invalid_exp_name(filenamee) == 1 ) {
+	if ( invalid_exp_name(filenamee) == 1 )
+	{
 		strunzone(filenamee);
 		//self.#achievements = -1;
 		return ( -1 );
 	}
 	achievements_enabled = #TRUE;
-	if ( checkfilename(filenamee) != 1 ) {	// done in C - makes sure the file name is writable
+	if ( checkfilename(filenamee) != 1 )
+	{	// done in C - makes sure the file name is writable
 		strunzone(filenamee);
 		//self.#achievements = -1;
 		// make sure that the folder exists to be written to in the first place
 		if (checkfilename( "ranks/inv/test" ) == #FALSE)
 			achievements_enabled = #FALSE;
 			bprint( 2, "WARNING: Folder /inv cannot be found! Server admin needs to create /fortress/ranks/inv/ folder!\n" );
-		
 		return ( -1 );
 	}
 	oopsname = frik_strcat( "ranks/inv/", self.connect_name, "_awd.tfi" );
@@ -327,7 +328,6 @@ float (entity t_plyr) Achievements_Setup =
 		bprint(2,"\n");
 		strunzone(filenamee);
 		strunzone(oopsname);
-		//self.#achievements = -1;
 		return ( -1 );
 	}
 	strunzone(oopsname);
@@ -347,7 +347,8 @@ float (entity t_plyr) Achievements_Setup =
 				write (filee, "0\n");
 			else if (tstr == "endname")
 				break;
-			else {
+			else
+			{
 				write (filee, tstr);
 				write (filee, "\n");
 			}
@@ -374,16 +375,21 @@ void ( float p_type, entity t_plyr ) Achievements_Print =
 		return;
 	if (p_type == 0)
 		sprint(self, 2, "Your achievements:\n");
-	else if (p_type == 1) {
+	else
+	if (p_type == 1)
+	{
 		stuffcmd(self, "say \"My achievements\n");
 	}
 	else if (p_type == 2)
 		sprint(self, 2, "Your achievements (detailed):\n");
 	i = 1;
 	file = open (frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" ), 0);
-	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) ) {
-		if (i >= #FIRST_AWD_LINE) {
-			if (Achievements_GetName(i - #FIRST_AWD_LINE) != "noname") {
+	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) )
+	{
+		if (i >= #FIRST_AWD_LINE)
+		{
+			if (Achievements_GetName(i - #FIRST_AWD_LINE) != "noname")
+			{
 				read(file);
 				infa = stof( read(file) );
 				infb = stof( read(file) );
@@ -394,14 +400,17 @@ void ( float p_type, entity t_plyr ) Achievements_Print =
 						sprint(self, 2, ftos(infb));
 						sprint(self, 2, ").\n");
 					}
-					else if (p_type == 1) {
+					else
+					if (p_type == 1)
+					{
 						bprint(2, Achievements_GetName(i - #FIRST_AWD_LINE));
 						bprint(2, "(" );
 						bprint(2, ftos(infb));
 						bprint(2, ") ");
 					}
 				}
-				if (p_type == 2) {
+				if (p_type == 2)
+				{
 					sprint(self, 2, Achievements_GetName(i - #FIRST_AWD_LINE));
 					sprint(self, 2, "(" );
 					sprint(self, 2, ftos(infb));
@@ -440,41 +449,52 @@ void () Achievements_Set =
 	s_type = self.health;
 	a_type = self.ammo_shells;
 	a_var = self.armorvalue;
-	if (t_plyr.coop_exp != -1 && t_plyr != other && t_plyr.has_disconnected != 1) {
+	if (t_plyr.coop_exp != -1 && t_plyr != other && t_plyr.has_disconnected != 1)
+	{
 	}
-	else {
+	else
+	{
 		bprint(2, "Achievements_Set: Tried to set on world or disconnected player or something\n");
 		dremove(self);
 		return;
 	}
 	file = open (frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" ), 0);
 	dummyfile = open ("dummy_awd.tfi", 2);
-	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) ) {
-		if (i == (#FIRST_AWD_LINE + a_type)) {
+	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) )
+	{
+		if (i == (#FIRST_AWD_LINE + a_type))
+		{
 			write( dummyfile, Achievements_GetName(a_type) );
 			write( dummyfile, "\n" );
 			read(file);
 		}
-		else if (i == (#FIRST_AWD_LINE + a_type + 1)) {
+		else
+		if (i == (#FIRST_AWD_LINE + a_type + 1))
+		{
 			a = read(file);
-			if (s_type == ACHIEVEMENTS_ADD) {
+			if (s_type == ACHIEVEMENTS_ADD)
+			{
 				ach_total = stof(a) + a_var;
 				if (ach_total < 0)		// since you can add negatives
 					ach_total = 0;
 			}
-			else if (s_type == ACHIEVEMENTS_ADDBIT) {
+			else
+			if (s_type == ACHIEVEMENTS_ADDBIT)
+			{
 				ach_total = stof(a);
 				if (!ach_total & a_var)
 					ach_total += a_var;
 				if (ach_total < 0)		// since you can add negatives
 					ach_total = 0;
 			}
-			else if (s_type == ACHIEVEMENTS_SET) {
+			else if (s_type == ACHIEVEMENTS_SET)
+			{
 					ach_total = a_var;
 			}
 			else
 				ach_total = 0;
-			if (Achievements_CheckComplete(a_type) <= ach_total) {
+			if (Achievements_CheckComplete(a_type) <= ach_total)
+			{
 				bprint(2, "‰‰‰ÎE× AÃHÉEÖEÍEÎT‰‰‰ ");
 				bprint(2, t_plyr.connect_name);
 				bprint(2, " has earned the achievement: ");
@@ -490,12 +510,14 @@ void () Achievements_Set =
 				write( dummyfile, "\n" );
 				i++;
 			}
-			else {
+			else
+			{
 				write( dummyfile, ftos( ach_total ) );
 				write( dummyfile, "\n" );
 			}
 		}
-		else {
+		else
+		{
 			write( dummyfile, read(file) );
 			write( dummyfile, "\n" );
 		}
@@ -513,11 +535,13 @@ void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) 
 	local entity ach_ent, te;
 	if (achievements_enabled == #FALSE)
 		return;
-	if (s_type == ACHIEVEMENTS_GLOBALADD) {			// add to every player in the game (used for flawless, completionist, lms, etc.)
+	if (s_type == ACHIEVEMENTS_GLOBALADD)
+	{			// add to every player in the game (used for flawless, completionist, lms, etc.)
 		te = find ( world, classname, "player" );
 		while (te)
 		{
-			if (te.coop_exp != -1 && te.has_disconnected != 1) {
+			if (te.coop_exp != -1 && te.has_disconnected != 1)
+			{
 				Achievements_Change( te, world, ACHIEVEMENTS_ADD, a_type, a_var );
 			}
 			te = find (te, classname, "player");
@@ -537,7 +561,6 @@ void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) 
 	ach_ent.think = Achievements_Set;
 	ach_ent.nextthink = time + .6 + random();
 };
-
 float (string mpn) GetEP1MapBit = 
 {
 	if (mpn  == "e1m1")
@@ -557,7 +580,6 @@ float (string mpn) GetEP1MapBit =
 		
 	return -1;
 };
-
 float (string mpn) GetEP2MapBit = 
 {
 	if (mpn  == "e2m1")
@@ -612,7 +634,6 @@ float (string mpn) GetEP4MapBit =
 		return 64;
 	return -1;
 };
-
 float (string mpn) GetW3DMapBit = 
 {
 	if (mpn  == "e1f1")

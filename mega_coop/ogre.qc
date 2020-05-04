@@ -50,19 +50,22 @@ void () OgreFireGrenade =
 		missile.velocity = missile.velocity * enlen;
 		missile.velocity_z = missile.velocity_z + 200;
 	}
-	else {
+	else
+	{
 		missile.velocity = (missile.velocity * 600);
 		missile.velocity_z = 200;
 	}
 	missile.avelocity = '300 300 300';
 	missile.angles = vectoangles (missile.velocity);
-	if (self.weapon & #MWEAPON_MIRV && vlen(self.enemy.origin - self.origin) > 500 && random() < .35) {
+	if (self.weapon & #MWEAPON_MIRV && vlen(self.enemy.origin - self.origin) > 500 && random() < .35)
+	{
 		missile.touch = MirvGrenadeTouch;
 		missile.nextthink = (time + 2.0);
 		missile.think = MirvGrenadeExplode;
 		setmodel (missile, "progs/biggren.mdl");
 	}
-	else {
+	else
+	{
 		missile.touch = OgreGrenadeTouch;
 		missile.nextthink = (time + 2.5);
 		missile.think = OgreGrenadeExplode;
@@ -161,17 +164,14 @@ void () ogre_walk3 = [ 11, ogre_walk4 ]
 		sound (self, CHAN_VOICE, "ogre/ogidle.wav", true, ATTN_IDLE);
 	}
 };
-
 void () ogre_walk4 = [ 12, ogre_walk5 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () ogre_walk5 = [ 13, ogre_walk6 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () ogre_walk6 = [ 14, ogre_walk7 ]
 {
 	ai_walk (MOVETYPE_FLY);
@@ -180,57 +180,46 @@ void () ogre_walk6 = [ 14, ogre_walk7 ]
 		sound (self, CHAN_VOICE, "ogre/ogdrag.wav", true, ATTN_IDLE);
 	}
 };
-
 void () ogre_walk7 = [ 15, ogre_walk8 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk8 = [ 16, ogre_walk9 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () ogre_walk9 = [ 17, ogre_walk10 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk10 = [ 18, ogre_walk11 ]
 {
 	ai_walk (true);
 };
-
 void () ogre_walk11 = [ 19, ogre_walk12 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () ogre_walk12 = [ 20, ogre_walk13 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk13 = [ 21, ogre_walk14 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk14 = [ 22, ogre_walk15 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk15 = [ 23, ogre_walk16 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () ogre_walk16 = [ 24, ogre_walk1 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () ogre_run1 = [ 25, ogre_run2 ]
 {
 	ai_run (MOVETYPE_FLYMISSILE);
@@ -239,420 +228,293 @@ void () ogre_run1 = [ 25, ogre_run2 ]
 		sound (self, CHAN_VOICE, "ogre/ogidle2.wav", true, ATTN_IDLE);
 	}
 };
-
 void () ogre_run2 = [ 26, ogre_run3 ]
 {
 	ai_run (TE_BLOOD);
 };
-
 void () ogre_run3 = [ 27, ogre_run4 ]
 {
 	ai_run (FL_CLIENT);
 };
-
 void () ogre_run4 = [ 28, ogre_run5 ]
 {
 	ai_run (22);
 };
-
 void () ogre_run5 = [ 29, ogre_run6 ]
 {
 	ai_run (FL_INWATER);
 };
-
 void () ogre_run6 = [ 30, ogre_run7 ]
 {
 	ai_run (MOVETYPE_STEP);
 };
-
 void () ogre_run7 = [ 31, ogre_run8 ]
 {
 	ai_run (TE_LIGHTNINGBLOOD);
 };
-
 void () ogre_run8 = [ 32, ogre_run1 ]
 {
 	ai_run (24);
 };
-
 void () ogre_swing1 = [ 33, ogre_swing2 ]
 {
 	ai_charge (MOVETYPE_BOUNCEMISSILE);
 	sound (self, CHAN_WEAPON, "ogre/ogsawatk.wav", true, ATTN_NORM);
 };
-
 void () ogre_swing2 = [ 34, ogre_swing3 ]
 {
 	ai_charge (true);
 };
-
 void () ogre_swing3 = [ 35, ogre_swing4 ]
 {
 	ai_charge (MOVETYPE_STEP);
 };
-
 void () ogre_swing4 = [ 36, ogre_swing5 ]
 {
 	ai_charge (TE_LIGHTNINGBLOOD);
 };
-
 void () ogre_swing5 = [ 37, ogre_swing6 ]
 {
 	ai_charge (MOVETYPE_FLYMISSILE);
 	chainsaw (false);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing6 = [ 38, ogre_swing7 ]
 {
 	chainsaw (200);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing7 = [ 39, ogre_swing8 ]
 {
 	chainsaw (false);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing8 = [ 40, ogre_swing9 ]
 {
 	chainsaw (false);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing9 = [ 41, ogre_swing10 ]
 {
 	chainsaw (false);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing10 = [ 42, ogre_swing11 ]
 {
 	chainsaw (-200);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing11 = [ 43, ogre_swing12 ]
 {
 	chainsaw (false);
 	self.angles_y = (self.angles_y + (random () * 25));
 };
-
 void () ogre_swing12 = [ 44, ogre_swing13 ]
 {
 	ai_charge (MOVETYPE_WALK);
 };
-
 void () ogre_swing13 = [ 45, ogre_swing14 ]
 {
 	ai_charge (FL_CLIENT);
 };
-
 void () ogre_swing14 = [ 46, ogre_run1 ]
 {
 	ai_charge (MOVETYPE_FLYMISSILE);
 };
-
 void () ogre_smash1 = [ 47, ogre_smash2 ]
 {
 	ai_charge (MOVETYPE_TOSS);
 	sound (self, CHAN_WEAPON, "ogre/ogsawatk.wav", true, ATTN_NORM);
 };
-
 void () ogre_smash2 = [ 48, ogre_smash3 ]
 {
 	ai_charge (false);
 };
-
 void () ogre_smash3 = [ 49, ogre_smash4 ]
 {
 	ai_charge (false);
 };
-
 void () ogre_smash4 = [ 50, ogre_smash5 ]
 {
 	ai_charge (true);
 };
-
 void () ogre_smash5 = [ 51, ogre_smash6 ]
 {
 	ai_charge (MOVETYPE_STEP);
 };
-
 void () ogre_smash6 = [ 52, ogre_smash7 ]
 {
 	ai_charge (MOVETYPE_STEP);
 	chainsaw (false);
 };
-
 void () ogre_smash7 = [ 53, ogre_smash8 ]
 {
 	ai_charge (MOVETYPE_STEP);
 	chainsaw (false);
 };
-
 void () ogre_smash8 = [ 54, ogre_smash9 ]
 {
 	ai_charge (MOVETYPE_BOUNCE);
 	chainsaw (false);
 };
-
 void () ogre_smash9 = [ 55, ogre_smash10 ]
 {
 	ai_charge (TE_LIGHTNINGBLOOD);
 	chainsaw (false);
 };
-
 void () ogre_smash10 = [ 56, ogre_smash11 ]
 {
 	chainsaw (true);
 };
-
 void () ogre_smash11 = [ 57, ogre_smash12 ]
 {
 	ai_charge (FL_SWIM);
 	chainsaw (false);
 	self.nextthink = (self.nextthink + (random () * 0.2));
 };
-
 void () ogre_smash12 = [ 58, ogre_smash13 ]
 {
 	ai_charge (false);
 };
-
 void () ogre_smash13 = [ 59, ogre_smash14 ]
 {
 	ai_charge (MOVETYPE_STEP);
 };
-
 void () ogre_smash14 = [ 60, ogre_run1 ]
 {
 	ai_charge (TE_BLOOD);
 };
-
 void () ogre_nail1 = [ 61, ogre_nail2 ]
 {
 	ai_face ();
 };
-
 void () ogre_nail2 = [ 62, ogre_nail3 ]
 {
 	ai_face ();
 };
-
 void () ogre_nail3 = [ 62, ogre_nail4 ]
 {
 	ai_face ();
 };
-
 void () ogre_nail4 = [ 63, ogre_nail5 ]
 {
 	ai_face ();
 	OgreFireGrenade ();
 };
-
 void () ogre_nail5 = [ 64, ogre_nail6 ]
 {
 	ai_face ();
 };
-
 void () ogre_nail6 = [ 65, ogre_nail7 ]
 {
 	ai_face ();
 };
-
 void () ogre_nail7 = [ 66, ogre_run1 ]
 {
 	ai_face ();
 };
-
 void () ogre_pain1 = [ 67, ogre_pain2 ]
-{
-};
-
+{};
 void () ogre_pain2 = [ 68, ogre_pain3 ]
-{
-};
-
+{};
 void () ogre_pain3 = [ 69, ogre_pain4 ]
-{
-};
-
+{};
 void () ogre_pain4 = [ 70, ogre_pain5 ]
-{
-};
-
+{};
 void () ogre_pain5 = [ 71, ogre_run1 ]
-{
-};
-
+{};
 void () ogre_painb1 = [ 72, ogre_painb2 ]
-{
-};
-
+{};
 void () ogre_painb2 = [ 73, ogre_painb3 ]
-{
-};
-
+{};
 void () ogre_painb3 = [ 74, ogre_run1 ]
-{
-};
-
+{};
 void () ogre_painc1 = [ 75, ogre_painc2 ]
-{
-};
-
+{};
 void () ogre_painc2 = [ 76, ogre_painc3 ]
-{
-};
-
+{};
 void () ogre_painc3 = [ 77, ogre_painc4 ]
-{
-};
-
+{};
 void () ogre_painc4 = [ 78, ogre_painc5 ]
-{
-};
-
+{};
 void () ogre_painc5 = [ 79, ogre_painc6 ]
-{
-};
-
+{};
 void () ogre_painc6 = [ 80, ogre_run1 ]
-{
-};
-
+{};
 void () ogre_paind1 = [ 81, ogre_paind2 ]
-{
-};
-
+{};
 void () ogre_paind2 = [ 82, ogre_paind3 ]
 {
 	ai_pain (MOVETYPE_BOUNCE);
 };
-
 void () ogre_paind3 = [ 83, ogre_paind4 ]
 {
 	ai_pain (MOVETYPE_FLYMISSILE);
 };
-
 void () ogre_paind4 = [ 84, ogre_paind5 ]
 {
 	ai_pain (MOVETYPE_STEP);
 };
-
 void () ogre_paind5 = [ 85, ogre_paind6 ]
-{
-};
-
+{};
 void () ogre_paind6 = [ 86, ogre_paind7 ]
-{
-};
-
+{};
 void () ogre_paind7 = [ 87, ogre_paind8 ]
-{
-};
-
+{};
 void () ogre_paind8 = [ 88, ogre_paind9 ]
-{
-};
-
+{};
 void () ogre_paind9 = [ 89, ogre_paind10 ]
-{
-};
-
+{};
 void () ogre_paind10 = [ 90, ogre_paind11 ]
-{
-};
-
+{};
 void () ogre_paind11 = [ 91, ogre_paind12 ]
-{
-};
-
+{};
 void () ogre_paind12 = [ 92, ogre_paind13 ]
-{
-};
-
+{};
 void () ogre_paind13 = [ 93, ogre_paind14 ]
-{
-};
-
+{};
 void () ogre_paind14 = [ 94, ogre_paind15 ]
-{
-};
-
+{};
 void () ogre_paind15 = [ 95, ogre_paind16 ]
-{
-};
-
+{};
 void () ogre_paind16 = [ 96, ogre_run1 ]
-{
-};
-
+{};
 void () ogre_paine1 = [ 97, ogre_paine2 ]
-{
-};
-
+{};
 void () ogre_paine2 = [ 98, ogre_paine3 ]
 {
 	ai_pain (MOVETYPE_BOUNCE);
 };
-
 void () ogre_paine3 = [ 99, ogre_paine4 ]
 {
 	ai_pain (MOVETYPE_FLYMISSILE);
 };
-
 void () ogre_paine4 = [ 100, ogre_paine5 ]
 {
 	ai_pain (MOVETYPE_STEP);
 };
-
 void () ogre_paine5 = [ 101, ogre_paine6 ]
-{
-};
-
+{};
 void () ogre_paine6 = [ 102, ogre_paine7 ]
-{
-};
-
+{};
 void () ogre_paine7 = [ 103, ogre_paine8 ]
-{
-};
-
+{};
 void () ogre_paine8 = [ 104, ogre_paine9 ]
-{
-};
-
+{};
 void () ogre_paine9 = [ 105, ogre_paine10 ]
-{
-};
-
+{};
 void () ogre_paine10 = [ 106, ogre_paine11 ]
-{
-};
-
+{};
 void () ogre_paine11 = [ 107, ogre_paine12 ]
-{
-};
-
+{};
 void () ogre_paine12 = [ 108, ogre_paine13 ]
-{
-};
-
+{};
 void () ogre_paine13 = [ 109, ogre_paine14 ]
-{
-};
-
+{};
 void () ogre_paine14 = [ 110, ogre_paine15 ]
-{
-};
-
+{};
 void () ogre_paine15 = [ 111, ogre_run1 ]
-{
-};
-
+{};
 void (entity attacker, float damage) ogre_pain =
 {
 	local float r;
@@ -698,12 +560,9 @@ void (entity attacker, float damage) ogre_pain =
 	}
 };
 void () ogre_die1 = [ 112, ogre_die2 ]
-{
-};
-
+{};
 void () ogre_die2 = [ 113, ogre_die3 ]
-{
-};
+{};
 void () ogre_die3 = [ 114, ogre_die4 ]
 {
 	self.solid = SOLID_NOT;
@@ -714,57 +573,33 @@ void () ogre_die3 = [ 114, ogre_die4 ]
 	DropBackpack ();
 };
 void () ogre_die4 = [ 115, ogre_die5 ]
-{
-};
+{};
 void () ogre_die5 = [ 116, ogre_die6 ]
-{
-};
-
+{};
 void () ogre_die6 = [ 117, ogre_die7 ]
-{
-};
-
+{};
 void () ogre_die7 = [ 118, ogre_die8 ]
-{
-};
-
+{};
 void () ogre_die8 = [ 119, ogre_die9 ]
-{
-};
-
+{};
 void () ogre_die9 = [ 120, ogre_die10 ]
-{
-};
-
+{};
 void () ogre_die10 = [ 121, ogre_die11 ]
-{
-};
-
+{};
 void () ogre_die11 = [ 122, ogre_die12 ]
-{
-};
-
+{};
 void () ogre_die12 = [ 123, ogre_die13 ]
-{
-};
-
+{};
 void () ogre_die13 = [ 124, ogre_die14 ]
-{
-};
-
+{};
 void () ogre_die14 = [ 125, ogre_die14 ]
-{
-};
-
+{};
 void () ogre_bdie1 = [ 126, ogre_bdie2 ]
-{
-};
-
+{};
 void () ogre_bdie2 = [ 127, ogre_bdie3 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () ogre_bdie3 = [ 128, ogre_bdie4 ]
 {
 	self.solid = SOLID_NOT;
@@ -774,39 +609,28 @@ void () ogre_bdie3 = [ 128, ogre_bdie4 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () ogre_bdie4 = [ 129, ogre_bdie5 ]
 {
 	ai_forward (true);
 };
-
 void () ogre_bdie5 = [ 130, ogre_bdie6 ]
 {
 	ai_forward (MOVETYPE_WALK);
 };
-
 void () ogre_bdie6 = [ 131, ogre_bdie7 ]
 {
 	ai_forward (MOVETYPE_PUSH);
 };
-
 void () ogre_bdie7 = [ 132, ogre_bdie8 ]
 {
 	ai_forward (25);
 };
-
 void () ogre_bdie8 = [ 133, ogre_bdie9 ]
-{
-};
-
+{};
 void () ogre_bdie9 = [ 134, ogre_bdie10 ]
-{
-};
-
+{};
 void () ogre_bdie10 = [ 135, ogre_bdie10 ]
-{
-};
-
+{};
 void () ogre_die =
 {
 	if ((self.health < -80))
@@ -886,5 +710,5 @@ void () monster_ogre_marksman =
 {
 	monster_ogre ();
 };
-//end
+//END
 

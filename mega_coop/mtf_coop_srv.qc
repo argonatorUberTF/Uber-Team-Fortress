@@ -31,13 +31,13 @@ void () aid_monsterspawn =
 	head = nextent(world);
 	while (head != world)
 	{
-		if (head.owner == self) { 
+		if (head.owner == self)
+		{ 
 			if (head.health > 0)
 				myspawns++;
 		}
 		head = nextent(head); 
 	}
-	
 	if (myspawns >= self.count)
 		return;
 	newang_x = self.angles_x;
@@ -64,7 +64,8 @@ void () aid_monsterspawn =
 void () aidirector_monsterspawn =
 {
 	local entity m_precache;
-	if (!self.targetname) {
+	if (!self.targetname)
+	{
 		bprint(2, "aidirector_monsterspawn at ");
 		bprint(2, vtos(self.origin));
 		bprint(2, " has no targetname - FIXME\n");
@@ -88,7 +89,8 @@ void () aidirector_monsterspawn =
 void () aid_end =
 {
 // wave complete
-	if (self.owner.noise2) {		// trigger after wave ends
+	if (self.owner.noise2)
+	{		// trigger after wave ends
 		self.target = self.owner.noise2;
 		SUB_UseTargets();
 	}
@@ -98,8 +100,10 @@ void () ai_director_think =
 {
 	local float next_t;
 	next_t = random() * (self.owner.waitmax - self.owner.waitmin);
-	if (!self.owner.spawnflags & #SF_AID_TRIGGEREND) {
-		if ( (time - self.health)  >= self.owner.pausetime ) {
+	if (!self.owner.spawnflags & #SF_AID_TRIGGEREND)
+	{
+		if ( (time - self.health)  >= self.owner.pausetime )
+		{
 			self.think = aid_end;
 		}
 	}
@@ -117,7 +121,8 @@ void () aid_activate =
 	self.health = time;
 	if (self.spawnflags & #SF_AID_TRIGGEREND)
 		self.use = aid_end;
-	if (!self.has_tesla) {
+	if (!self.has_tesla)
+	{
 		ai_director = spawn();
 		ai_director.owner = self;
 		ai_director.target = self.target;
@@ -128,7 +133,8 @@ void () aid_activate =
 		setorigin(ai_director, ((self.mins+self.maxs)*.5));			// only takes into account SOLID_BSP.. fix?
 		self.has_tesla = #TRUE;
 	}
-	if (self.noise1) {		// trigger after wave ends
+	if (self.noise1)
+	{		// trigger after wave ends
 		self.target = self.noise1;
 		SUB_UseTargets();
 	}
@@ -142,13 +148,15 @@ void () aid_touch =
 };
 void () trigger_aidirector =
 {
-	if (!self.target) {
+	if (!self.target)
+	{
 		bprint(2, "aidirector_monsterspawn with model ");
 		bprint(2, self.model);
 		bprint(2, " has no target - must target at least one aidirector_monsterspawn!\n");
 		return;
 	}
-	if (self.spawnflags & #SF_AID_RANDOMACTIVE) {			// randomly enable/disable
+	if (self.spawnflags & #SF_AID_RANDOMACTIVE)
+	{			// randomly enable/disable
 		if (random() < .50)
 			return;
 	}
@@ -175,11 +183,13 @@ float () Survival_Fail =
 	if (self.classname == "player")
 		if (self.monster_type != 0)
 			return 0;
-	if (!survival_mode) {
+	if (!survival_mode)
+	{
 		bprint(2, "Survival_Fail: being called on non-survival game mode\n");
 		return #FALSE;
 	}
-	if (survival_mode) {
+	if (survival_mode)
+	{
 		te = find(world, classname, "player");
 		while (te)
 		{
@@ -238,22 +248,25 @@ void () pdummy_think =
 		te = te.chain;
 	}
 	te = world;
-	if (!fp && !intermission_running) {
+	if (!fp && !intermission_running)
+	{
 		bprint(2, "********************** pdummy_think: player body fell out of map. d'oh\n");
 		self.origin = self.enemy.finaldest;				// reset our origin to the last known spot where a player died
 	}
-	if (self.enemy == world) {
+	if (self.enemy == world)
+	{
 		bprint(2, "********************** pdummy_think: enemy is world\n");
 		dremove(self);
 		return;
 	}
-	if (self.monster_type == 0) {
+	if (self.monster_type == 0)
+	{
 		if (self.enemy.health != 1)
 		{
 //			bprint(2, "****************** pdummy_think: enemy health is not 1\n");
 // This is a bad thing if it was a monster, however there are now teams 3 and 4 to account for
 // So say nothing to alert people. carry on -arg
-//			dremove(self);  // no don't remove the entity, it is most likely a player. -arg
+			dremove(self);  // remove the entity, it is most likely not a player? -arg
 			return;
 		}
 	}
@@ -267,7 +280,8 @@ void () pdummy_think =
 	te = findradius(self.origin, 325);
 	while (te)
 	{
-		if (te.classname == "player" && te.health > 0) {
+		if (te.classname == "player" && te.health > 0)
+		{
 			self.health++;self.health++;
 			if (te.playerclass == 5)
 				self.health++;
@@ -282,7 +296,8 @@ void () pdummy_think =
 			else
 				sprint( self.enemy, 2, "Your body is disintegrating..\n" );
 		self.armorvalue++;
-		if (self.armorvalue > 45) {
+		if (self.armorvalue > 45)
+		{
 			self.enemy.origin = self.origin + '0 0 1';
 			te = self.enemy;
 			self = gte;
@@ -330,7 +345,8 @@ void () pdummy_think =
 	te = find(world, classname, "player");
 	while (te)
 	{
-		if (vlen(te.origin - self.origin) < 4500) {
+		if (vlen(te.origin - self.origin) < 4500)
+		{
 			found_player = 1;
 		}
 		te = find(te, classname, "player");
@@ -338,13 +354,15 @@ void () pdummy_think =
 	te = find(world, classname, "observer");
 	while (te)
 	{
-		if (vlen(te.origin - self.origin) < 4500) {
+		if (vlen(te.origin - self.origin) < 4500)
+		{
 			found_player = 1;
 		}
 		te = find(te, classname, "player");
 	}
 		
-	if (!found_player) {
+	if (!found_player)
+	{
 		self.enemy.origin = self.origin + '0 0 1';
 		self.enemy.ammo_cells = 666;
 		MTF_Resurrect_Player (self.enemy);
@@ -354,4 +372,4 @@ void () pdummy_think =
 #endif
 	self.nextthink = time + .5;
 };
-//end
+//END

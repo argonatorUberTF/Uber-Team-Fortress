@@ -1,18 +1,16 @@
 #include "../gweapons.qc"
+#include "mtf_coop_monsterteam.qc"
+void () func_ladder;
 void () MTF_Setup_Monster =
 {
 	local float fls, rnd;
 	local vector endp;
 	self.is_monster = 1;
-#ifdef mtf_coop_expsys
 	if (self.#is_minion == #TRUE)
 		self.team_no = 1;
 	else
-#endif
 	self.team_no = 2;
-#ifdef mtf_coop_expsys
 	if (self.#is_minion != #TRUE)
-#endif
 	self.monster_string = "on";	// string identifier
 	rnd = cvar ("monster_throwrunes");
 	if (rnd == 0)
@@ -22,9 +20,7 @@ void () MTF_Setup_Monster =
 	else if (rnd > 1)
 		rnd = 1;
 	if (random() < rnd)
-#ifdef mtf_coop_expsys
 		if (self.#is_minion != #TRUE)
-#endif
 			Coop_ThrowRune();
 	Inventory_SpawnMerchant( self.origin );
 	if (self.monster_items == 0)
@@ -116,7 +112,6 @@ void () MTF_Setup_Monster =
 	{
 		self.old_model = self.model;
 		setmodel(self, "progs/eyes.mdl");
-		//self.effects = self.effects | 8;	// glow while invisible just aint as fun
 	}
 	if (self.monster_items & MITEM_SPEED)
 	{
@@ -153,12 +148,8 @@ void () MTF_Setup_Monster =
 		newmis.movetype = 9;
 		newmis.solid = 0/*SOLID_NOT*/;
 		newmis.effects = EF_BLUE;
-#ifdef NEW_DOT
 		setmodel(newmis, "progs/newdot.spr");
 		newmis.frame = 0;
-#else
-		setmodel(newmis, "progs/dot1.spr");
-#endif
 		setsize(newmis, '0 0 0', '0 0 0');
 		setorigin(newmis, endp);
 		newmis.orig_origin = self.origin;
@@ -215,7 +206,6 @@ float (float orighp) MTF_Monster_Health =
 	MTF_Setup_Monster ();
 	return ( MTF_Monster_Health2(orighp) );
 };
-void () SUB_Remove;
 void () MonsterLightningDamage =
 {
 	local float nhp;
@@ -253,9 +243,7 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 	local entity flame, timer;
 	local vector vtemp;
 	local float s_mult, no_conc, entv;
-#ifdef mtf_coop_expsys
 	local float dmg_mult, crit_mult;
-#endif
 	s_mult = cvar ("monster_inflictdamage");
 	if (!s_mult || s_mult == 0)
 		s_mult = 1;
@@ -380,47 +368,56 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 		}
 		if (atckr.monster_items & #MITEM_POWERSTEALER)
 		{
-			if (targ.rune_time > time) {
+			if (targ.rune_time > time)
+			{
 				origdmg = 0;
 				targ.rune_time = time;
 				sprint(targ, 2, "Your RUNE time was stolen by a ÐÏ×ÅÒÓÔÅÁÌÅÒ monster.\n");
 				if (atckr.health > 0)
 					atckr.health = atckr.health + 200;
 			}
-			else if (targ.invisible_finished > time) {
+			else if (targ.invisible_finished > time)
+			{
 				origdmg = 0;
 				targ.invisible_finished = time + 3;
 				sprint(targ, 2, "Your INVISIBILITY was stolen by a ÐÏ×ÅÒÓÔÅÁÌÅÒ monster.\n");
-				if (!(atckr.monster_items & MITEM_INVISIBLE)) {
+				if (!(atckr.monster_items & MITEM_INVISIBLE))
+				{
 					atckr.monster_items = atckr.monster_items | MITEM_INVISIBLE;
 					atckr.old_model = atckr.model;
 					setmodel(atckr, "progs/eyes.mdl");
 				}
 			}			
-			else if (targ.super_damage_finished > time) {
+			else if (targ.super_damage_finished > time)
+			{
 				origdmg = 0;
 				targ.super_damage_finished = time;
 				sprint(targ, 2, "Your QUAD was stolen by a ÐÏ×ÅÒÓÔÅÁÌÅÒ monster.\n");
-				if (!(atckr.monster_items & MITEM_QUAD)) {
+				if (!(atckr.monster_items & MITEM_QUAD))
+				{
 					atckr.monster_items = atckr.monster_items | MITEM_QUAD;
 					atckr.effects = atckr.effects | EF_BLUE;
 				}
 			}
-			else if (targ.invincible_finished > time) {
+			else if (targ.invincible_finished > time)
+			{
 				origdmg = 0;
 				atckr.invincible_finished = time + (targ.invincible_finished - time);
 				if ((atckr.invincible_finished - time) > 15)
 					atckr.invincible_finished = 15;
-				if (targ.invincible_finished >= (time+3)) {
+				if (targ.invincible_finished >= (time+3))
+				{
 					targ.invincible_finished = time + 3;
 					sprint(targ, 2, "Your PENT time was stolen by a ÐÏ×ÅÒÓÔÅÁÌÅÒ monster - you have 3 seconds left!\n");
 				}
 				else
-					{}				
-			}			
-		}	
+					{
+					}
+			}
+		}
 	}
-	if (targ.playerclass == 1) {
+	if (targ.playerclass == 1)
+	{
 		entv = vlen(targ.velocity);
 		if (entv > 350)
 			origdmg *= .35;
@@ -431,21 +428,16 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 		else
 			origdmg *= .5;
 	}
-#ifdef mtf_coop_expsys
 	dmg_mult = ( MTF_Coop_AttribGain ( targ, #ATTRIB_DAMAGE ) - 1) * .4;		// 04/02/08: was .5, but .4 seems somewhat less brutal..
 	if ( random() <= .05 ) //((targ.crit_attr) * .045) )
 		if (targ.crit_attr > 0)
 			crit_mult = MTF_Coop_AttribGain( targ, #ATTRIB_CRIT ) * .5;
 	else
 		crit_mult = 0;
-
 	s_mult = s_mult + dmg_mult + crit_mult;
-#endif
-
 	if ( targ.#rune_time > time )
 		if ( targ.#rune_type == #RUNE_RESISTANCE )
 			origdmg = origdmg * .35;
-	
 	return ( s_mult * (origdmg * 5) );
 };
 float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
@@ -464,9 +456,7 @@ float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
 		if (s_mult < 1)
 			s_mult = 1;
 	}
-#ifdef mtf_coop_expsys
 	s_mult = s_mult * MTF_Coop_AttribGain( atckr, #ATTRIB_DAMAGE );
-#endif
 	if (atckr == world || targ == world)
 		return ( origdmg );
 	if (deathmsg == 3)	// MAC 10
@@ -506,45 +496,55 @@ float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
 			targ.#other_possible_atacker = world;
 			targ.#other_attacker = atckr;
 			targ.#reset_other_attacker = time + 15;
-		}		
+		}
 	}
 	if ( atckr.#rune_time > time )
 	{
-		if ( Coop_IsMonster(targ, #MONSTERTYPE_NORMAL) ) {
-			if ( atckr.#rune_type == #RUNE_VAMPRIC ) {	
-				if ( atckr.health < atckr.max_health && atckr.health != 0 ) {
+		if ( Coop_IsMonster(targ, #MONSTERTYPE_NORMAL) )
+		{
+			if ( atckr.#rune_type == #RUNE_VAMPRIC )
+			{	
+				if ( atckr.health < atckr.max_health && atckr.health != 0 )
+				{
 					atckr.health = atckr.health + ceil( origdmg * .23 );
 					if (atckr.health > atckr.max_health)
 						atckr.health = atckr.max_health;
 				}
-				if (targ.monster_items & MITEM_QUAD) {
+				if (targ.monster_items & MITEM_QUAD)
+				{
 					if (atckr.super_damage_finished < (time + 20))
 						atckr.super_damage_finished = time + 2;
 				}
-				if (targ.monster_items & MITEM_INVISIBLE) {
+				if (targ.monster_items & MITEM_INVISIBLE)
+				{
 					if (atckr.invisible_finished < (time + 20))
 						atckr.invisible_finished = time + 2;
 				}		
-				if (targ.invincible_finished > time) {
+				if (targ.invincible_finished > time)
+				{
 					sprint(atckr, 2, "Your vampric rune negates the monster's invincibility.\n");
 					targ.invincible_finished = time;
 					if (atckr.invisible_finished < (time + 20))
 						atckr.invisible_finished = time + 10;
 				}					
 			}
-			if ( atckr.#rune_type == #RUNE_BERSERKER ) {
+			if ( atckr.#rune_type == #RUNE_BERSERKER )
+			{
 				if (self.current_weapon != 16 && self.current_weapon != 8 && self.current_weapon != 4 && self.current_weapon != 2) {}
 				else
 					origdmg *= 2.75;
 			}
-			if ( atckr.#rune_type == #RUNE_ARMOR ) {	
-				if ( atckr.armorvalue < atckr.maxarmor ) {
+			if ( atckr.#rune_type == #RUNE_ARMOR )
+			{
+				if ( atckr.armorvalue < atckr.maxarmor )
+				{
 					atckr.armorvalue = atckr.armorvalue + ceil( origdmg * .15 );
 					if (atckr.armorvalue > atckr.maxarmor)
 						atckr.armorvalue = atckr.maxarmor;
 				}
 			}
-			if ( atckr.#rune_type == #RUNE_UBEREXP ) {	
+			if ( atckr.#rune_type == #RUNE_UBEREXP )
+			{
 				origdmg *= .5;
 			}
 		}
@@ -609,18 +609,14 @@ float () Hipnotic_SaveModels2 =
 		dfactor = 1;
 	if (mapname == "r2m6")
 		dfactor = 1;
-
 	if (mapname == "qte1m3" || mapname == "qte1m4")
 		dfactor = 1;
 	if (mapname == "qte2m2" || mapname == "qte2m3"/* || mapname == "qte2m4"*/)
 		dfactor = 1;
-
 	if (mapname == "neh1m9" || mapname == "neh2m3")
 		dfactor = 1;
 	return ( dfactor );
 };
-
-
 void ( entity t_rune ) Coop_SetRune =
 {
 	local float rndm, i, maxrunes, r_type;
@@ -628,7 +624,7 @@ void ( entity t_rune ) Coop_SetRune =
 	r_type = 0;
 	i = rint(random() * maxrunes);
 	while (r_type == 0)
-	{		
+	{
 		rndm = random();
 		if ( rndm < (1 / maxrunes) )
 			r_type = i;
@@ -639,46 +635,59 @@ void ( entity t_rune ) Coop_SetRune =
 			i++;
 	}
 	t_rune.#rune_time = 30;
-	if (r_type == 1) {
+	if (r_type == 1)
+	{
 		t_rune.weapon = 670 + #RUNE_EXPBONUS;
 		t_rune.frame = 1;
 	}
-	else if (r_type == 2) {
+	else
+	if (r_type == 2)
+	{
 		t_rune.weapon = 670 + #RUNE_VAMPRIC;
 		t_rune.frame = 2;
 	}
-	else if (r_type == 3) {
+	else
+	if (r_type == 3)
+	{
 		t_rune.weapon = 670 + #RUNE_RESISTANCE;
 		t_rune.frame = 3;
 	}
-	else if (r_type == 4)
+	else 
+	if (r_type == 4)
 	{
 		t_rune.weapon = 670 + #RUNE_BERSERKER;
 		t_rune.frame = 4;
 	}
-	else if (r_type == 5)
+	else
+	if (r_type == 5)
 	{
 		t_rune.weapon = 670 + #RUNE_AMMO;
 		t_rune.frame = 4;
 		t_rune.effects = t_rune.effects & EF_RED;
 	}
-	else if (r_type == 6)
+	else
+	if (r_type == 6)
 	{
 		t_rune.weapon = 670 + #RUNE_ARMOR;
 		t_rune.frame = 2;
 		t_rune.effects = t_rune.effects & EF_RED;
 	}
-	else if (r_type == 7) {
+	else
+	if (r_type == 7)
+	{
 		t_rune.weapon = 670 + #RUNE_UBEREXP;
 		t_rune.frame = 1;
 		t_rune.effects = t_rune.effects & EF_RED;
 	}
-	else if (r_type == 8) {
+	else
+	if (r_type == 8)
+	{
 		t_rune.weapon = 670 + #RUNE_EXPLOSIVE;
 		t_rune.frame = 4;
 		t_rune.effects = t_rune.effects & EF_BLUE;
 	}
-	else if (r_type == 9) {
+	if (r_type == 9)
+	{
 		t_rune.weapon = 670 + #RUNE_ELERESIST;
 		t_rune.frame = 3;
 		t_rune.effects = EF_BLUE;
@@ -690,7 +699,6 @@ void ( entity t_rune ) Coop_SetRune =
 		bprint( 2, "\n" );
 	}
 };
-
 void () Coop_ThrowRune =
 {
 	newmis = spawn ();
@@ -712,42 +720,31 @@ void () Coop_ThrowRune =
 	}
 	newmis.touch = PreMonsterItemTouch;
 };
-
 // Item(s) that monster drops on death
 void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 {
 	local float pent_probability, rune_probability;
 	local float spawn_cube;
 	local float misc_modifier;
-#ifdef mtf_coop_bonus
 	local float exp_probability;
 	misc_modifier = (0.01 * mkiller.misc_attr);
 	exp_probability = .17;
-#endif
-#ifdef mtf_coop_expsys
 	if (monster.#is_minion == #TRUE)		// minion monsters don't drop loot.
 		return;
-#endif
 	if (monster.monster_items == 0)
 		return;
-#ifdef mtf_coop_expsys
 	if (mkiller.playerclass == 8)		// Spy kills = better loot
 	{
 		if (random() < (.38 - misc_modifier))
 			return;
 	}
-#else
-	if (mkiller.playerclass == 8)		// Spy kills = better loot
-	{
-		if (random() < (.25 - misc_modifier) )
-			return;
-	}
-#endif
 	else
 		if (random() < .45)
 			return;
-	if (survival_mode) {
-		if (mkiller.frags > 200 && mkiller.frags < 240) {
+	if (survival_mode)
+	{
+		if (mkiller.frags > 200 && mkiller.frags < 240)
+		{
 			if (mapname == "08" || mapname == "04") {
 				if (random() < .03)
 					spawn_cube = 1;
@@ -758,12 +755,10 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	}
 	pent_probability = .05;			// old: .04 3/4/13
 	rune_probability = .05;
-#ifdef mtf_coop_expsys
 	if (mkiller.misc_attr > 0)
 		pent_probability = 0.05 + (0.05 * mkiller.misc_attr);		// old: 0.05 and 0.05 3/4/13
 	if (pent_probability > .55)
 		pent_probability = .55;
-#endif
 	newmis = spawn ();
 	newmis.origin = (self.origin - '0 0 24');
 	newmis.velocity_z = 300;
@@ -773,11 +768,9 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	setsize (newmis, '-16 -16 0', '16 16 56');
 	if (random() < pent_probability)
 	{
-#ifdef mtf_coop_expsys
 		if (checkmodelprecache("progs/invulner.mdl") == 1)
 			setmodel(newmis, "progs/invulner.mdl");
 		else
-#endif
 		setmodel(newmis, "progs/invisibl.mdl");
 		newmis.effects = EF_RED;
 		newmis.weapon = 7;
@@ -792,7 +785,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 			newmis.weapon = 667;	// 250 exp
 			newmis.effects = EF_BLUE;
 		}
-		if (random() < .04) {
+		if (random() < .04)
+		{
 			newmis.weapon = 668;	// 1000 exp
 			newmis.effects = EF_RED;
 		}
@@ -811,41 +805,44 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		bprint(2, "... or is it?\n");
 	}
 #endif
-#ifdef mtf_coop_bonus
 	else if (random() < exp_probability && lms_entity == world)
 	{
 		setmodel(newmis, "progs/grenade3.mdl");
 		newmis.skin = 1;
 		newmis.effects = 8;
 		newmis.weapon = 666;	// 50 exp
-		if (random() < .20) {
+		if (random() < .20)
+		{
 			newmis.weapon = 667;	// 250 exp
 			newmis.effects = EF_BLUE;
 			newmis.skin = 2;
 		}
-		if (random() < .04) {
+		if (random() < .04)
+		{
 			newmis.weapon = 668;	// 1000 exp
 			newmis.effects = EF_RED;
 			newmis.skin = 3;
 		}
 		newmis.noise = "items/protect.wav";
 	}
-#endif
-	else if (monster.monster_items & MITEM_QUAD)
+	else
+	if (monster.monster_items & MITEM_QUAD)
 	{
 		setmodel(newmis, #MODEL_QUAD);
 		newmis.weapon = 1;
 		newmis.noise = "items/damage.wav";
 		newmis.items = 4194304;
 	}
-	else if (monster.monster_items & MITEM_INVISIBLE)
+	else
+	if (monster.monster_items & MITEM_INVISIBLE)
 	{
 		setmodel(newmis, "progs/invisibl.mdl");
 		newmis.weapon = 2;
 		newmis.noise = "items/inv1.wav";
 		newmis.items = 524288;
 	}
-	else if (monster.monster_items & MITEM_SPEED)
+	else
+	if (monster.monster_items & MITEM_SPEED)
 	{
 		if (mkiller.playerclass == 9) {	// Spy kills = better loot
 			if (random() > .1) {
@@ -853,7 +850,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 				newmis.effects = newmis.effects | EF_RED;
 			}
 		}
-		else {
+		else 
+		{
 			if (random() < .55) {
 				newmis.speed_time = 20;
 				newmis.effects = newmis.effects | EF_RED;
@@ -863,7 +861,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		newmis.skin = 1;
 		newmis.weapon = 3;
 	}
-	else if (monster.monster_items & MITEM_MEGAHEALTH)
+	else
+	if (monster.monster_items & MITEM_MEGAHEALTH)
 	{
 		if (mkiller.playerclass == 9)		// Spy kills = better loot
 		{
@@ -878,6 +877,7 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 			newmis.noise = "items/r_item2.wav";
 			newmis.healamount = 100;
 			newmis.healtype = 2;
+//FIXME: Actually make this model touch work when palyers pick it up.
 		}
 		else	{
 			newmis.weapon = 6;
@@ -887,7 +887,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 			newmis.healtype = 1;
 		}
 	}
-	else if (monster.monster_items & MITEM_FLAME || monster.monster_items & MITEM_ICE)
+	else 
+	if (monster.monster_items & MITEM_FLAME || monster.monster_items & MITEM_ICE)
 	{
 		setmodel(newmis, "progs/armor.mdl");
 		newmis.weapon = 5;
@@ -902,7 +903,7 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	}	
 	if (spawn_cube)
 	{
-		bprint(2, "€A RESURRECTION CUBE has been dropped‚\n");
+		bprint(2, "A RESURRECTION CUBE has been dropped‚\n");
 		setmodel(newmis, "progs/v_spike.mdl");
 		newmis.weapon = 20;
 		newmis.effects = #EF_GREEN;
@@ -917,11 +918,9 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	newmis.think = SUB_Remove;
 	newmis.touch = PreMonsterItemTouch;
 };
-#ifdef mtf_coop_expsys
 #include "tfi_tools.qc"
 #include "mega_coop_rankings.qc"
 #include "mega_coop_inv.qc"
-#endif
 void ( entity to_res ) MTF_Resurrect_Player =
 {
 	local entity oself;
@@ -973,12 +972,15 @@ void ( entity to_res ) MTF_Resurrect_Player =
 	else
 		PutClientInServer();
 	self = oself;
-	if (!bts) {
+	if (!bts)
+	{
 		setorigin(to_res, oorigin);
 		to_res.angles = oangle;
 	}
-	if (survival_mode) {
-		if (!reconplaya) {
+	if (survival_mode)
+	{
+		if (!reconplaya)
+		{
 			// ADDME: Set ammo/health/wtva in half!
 			to_res.health = to_res.health * .75;  //was .5 -arg
 			to_res.armorvalue = to_res.armorvalue * .75;
@@ -989,12 +991,8 @@ void ( entity to_res ) MTF_Resurrect_Player =
 			self.monsterweight = time + 30;
 		else
 			self.monsterweight = time + 60;
-#ifdef mtf_coop_expsys				
 		MTF_Coop_AddServiceExp( self, world, 6, #SRV_RESURRECT );
-#endif
-#ifdef mtf_coop_achievements
 		Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_RESURRECT, 1 );
-#endif
 	}
 	to_res.classname = "player";			// seems like the resurrect cube needs this
 };
@@ -1002,7 +1000,8 @@ void () COOP_SetLives =
 {
 	local string temps;
 	total_monsters += 1;
-	if ( self.lives ) {
+	if ( self.lives )
+	{
 		self.lives = self.lives - 1;
 		return;
 	}
@@ -1011,15 +1010,18 @@ void () COOP_SetLives =
 	if (!self.lives)
 		self.lives = 3;
 #ifdef mtfcoop_uberhardmode
-	if (uberhardmode) {
+	if (uberhardmode)
+	{
 		self.lives = 999;
 		self.#npc_spawndelay = 45;
 	}
 #endif
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		self.lives = 1;
-		if (random() > .6) {
+		if (random() > .6)
+		{
 			self.lives = 2;
 			self.#npc_spawndelay = 2;
 		}
@@ -1055,7 +1057,7 @@ void () Coop_NewSpawnThink =
 	self.movetype = self.owner.movetype;
 	setmodel (self, self.owner.model);
 	if (self.owner.model == "progs/eyes.mdl")
-		setmodel (self, self.owner.old_model);
+	setmodel (self, self.owner.old_model);
 	self.size = self.owner.size;
 	self.mins = self.owner.mins;
 	self.maxs = self.owner.maxs;
@@ -1092,7 +1094,8 @@ void() coop_walkmonster_start =
 {
 	local entity monsterwarp, te;
 	local float i, crazyspawn;
-	if (CheckExistence() == #FALSE) {
+	if (CheckExistence() == #FALSE)
+	{
 		remove(self);
 		return;
 	}
@@ -1102,7 +1105,8 @@ void() coop_walkmonster_start =
 	self.#npc_originalloc = self.origin;
 	self.nextthink = self.nextthink + random()*0.5;
 	self.think = walkmonster_start;
-	if (!self.takedamage && self.health > 0) {
+	if (!self.takedamage && self.health > 0)
+	{
 		self.takedamage = 2;
 	}
 	crazyspawn = cvar ("monster_crazyspawn");
@@ -1110,22 +1114,24 @@ void() coop_walkmonster_start =
 		crazyspawn = 1;
 	if (self.classname == "monster_rider")				// disable multiple spawns for the(se) monster(s)
 		crazyspawn = 0;
-	if ( crazyspawn >= 1 && self.#is_warped == #FALSE ) {
-#ifdef mtf_coop_lms
+	if ( crazyspawn >= 1 && self.#is_warped == #FALSE )
+	{
 		if (lms_entity != world)
 			return;
-#endif
-		while ( i <= crazyspawn) {
+		while ( i <= crazyspawn)
+		{
 			monsterwarp = spawn();
 			monsterwarp.size = self.size;
 			monsterwarp.mins = self.mins;
 			monsterwarp.maxs = self.maxs;
 			monsterwarp.movetype = MOVETYPE_BOUNCE;
-			if (survival_mode) {
+			if (survival_mode)
+			{
 				te = find(world,monster_string,"on");
 				while (te)
 				{
-					if (random()<.07 ) {
+					if (random()<.07 )
+					{
 						monsterwarp.owner = te;
 						monsterwarp.origin = (te.origin/* - '0 0 24'*/);
 						break;
@@ -1133,7 +1139,8 @@ void() coop_walkmonster_start =
 					te = find(te,monster_string,"on");
 				}
 			}
-			if (monsterwarp.owner == world) {
+			if (monsterwarp.owner == world)
+			{
 			bprint(2,"mixing monsterspawn\n");
 				monsterwarp.owner = self;
 				monsterwarp.origin = (self.origin/* - '0 0 24'*/);
@@ -1150,21 +1157,22 @@ void() coop_walkmonster_start =
 };
 void() coop_flymonster_start =
 {
-	if (CheckExistence() == #FALSE) {
+	if (CheckExistence() == #FALSE)
+	{
 		remove(self);
 		return;
 	}
 #ifdef CSQC
 	self.max_health = self.health;
 #endif
-	
 	self.#npc_originalloc = self.origin;
 	self.nextthink = self.nextthink + random()*0.5;
 	self.think = flymonster_start_go;
 };
 void() coop_swimmonster_start =
 {
-	if (CheckExistence() == #FALSE) {
+	if (CheckExistence() == #FALSE)
+	{
 		remove(self);
 		return;
 	}
@@ -1172,16 +1180,12 @@ void() coop_swimmonster_start =
 	self.nextthink = self.nextthink + random()*0.5;
 	self.think = swimmonster_start_go;
 };
-#ifdef mtf_coop_nehahra
-.string soul;
-#endif
 void ( float preset_no, string n_name, void() spawnfunct) MTF_Setup_Monster_Presets =
 {
-#ifdef mtf_coop_nehahra
 	self.soul = "yes";
-#endif
 	self.netname = n_name;
-	if (preset_no == 0) {
+	if (preset_no == 0)
+	{
 	}
 		self.monsterweight = #MWEIGHT_NORMAL;
 		self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
@@ -1202,8 +1206,8 @@ void ( float w_health, void() movefunc) MTF_Setup_Monster_Postsets =
 };
 string ( string c_name ) GetMonsterDeathstring =
 {
-	if ( c_name != "" ) {
-#ifdef mtf_coop_nehahra
+	if ( c_name != "" )
+	{
 		if (c_name == "monster_qguy")
 		{
 			return (" is outgunned by a ");
@@ -1278,7 +1282,6 @@ string ( string c_name ) GetMonsterDeathstring =
 		{
 			return (" was destroyed by ");
 		}
-#endif
 	}
 	return ( " was killed by a " );
 };
@@ -1315,7 +1318,6 @@ void () MTF_Coop_ResetItems =
 	if (self.mtf_items & MTFITEM_CROUCH)
 		self.mtf_items -= MTFITEM_CROUCH;
 };
-#include "mtf_coop_monsterteam.qc"
 float () Monsterteam_full =
 {
 	return #FALSE;
@@ -1356,7 +1358,6 @@ void ( entity t_plyr, float mtype) Monsterteam_setmodel =
 		m_model = "progs/demon.mdl";
 	setmodel(t_plyr, m_model);
 };
-void () func_ladder;
 void () trigger_ladder =
 {
 	func_ladder();

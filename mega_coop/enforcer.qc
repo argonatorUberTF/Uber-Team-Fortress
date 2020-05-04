@@ -62,32 +62,26 @@ void () enf_stand2 = [ 1, enf_stand3 ]
 {
 	ai_stand ();
 };
-
 void () enf_stand3 = [ 2, enf_stand4 ]
 {
 	ai_stand ();
 };
-
 void () enf_stand4 = [ 3, enf_stand5 ]
 {
 	ai_stand ();
 };
-
 void () enf_stand5 = [ 4, enf_stand6 ]
 {
 	ai_stand ();
 };
-
 void () enf_stand6 = [ 5, enf_stand7 ]
 {
 	ai_stand ();
 };
-
 void () enf_stand7 = [ 6, enf_stand1 ]
 {
 	ai_stand ();
 };
-
 void () enf_walk1 = [ 7, enf_walk2 ]
 {
 	if ((random () < 0.2))
@@ -96,82 +90,66 @@ void () enf_walk1 = [ 7, enf_walk2 ]
 	}
 	ai_walk (FL_SWIM);
 };
-
 void () enf_walk2 = [ 8, enf_walk3 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () enf_walk3 = [ 9, enf_walk4 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () enf_walk4 = [ 10, enf_walk5 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () enf_walk5 = [ 11, enf_walk6 ]
 {
 	ai_walk (true);
 };
-
 void () enf_walk6 = [ 12, enf_walk7 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () enf_walk7 = [ 13, enf_walk8 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () enf_walk8 = [ 14, enf_walk9 ]
 {
 	ai_walk (true);
 };
-
 void () enf_walk9 = [ 15, enf_walk10 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () enf_walk10 = [ 16, enf_walk11 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () enf_walk11 = [ 17, enf_walk12 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () enf_walk12 = [ 18, enf_walk13 ]
 {
 	ai_walk (true);
 };
-
 void () enf_walk13 = [ 19, enf_walk14 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () enf_walk14 = [ 20, enf_walk15 ]
 {
 	ai_walk (MOVETYPE_WALK);
 };
-
 void () enf_walk15 = [ 21, enf_walk16 ]
 {
 	ai_walk (MOVETYPE_STEP);
 };
-
 void () enf_walk16 = [ 22, enf_walk1 ]
 {
 	ai_walk (FL_SWIM);
 };
-
 void () enf_run1 = [ 23, enf_run2 ]
 {
 	if ((random () < 0.2))
@@ -180,107 +158,86 @@ void () enf_run1 = [ 23, enf_run2 ]
 	}
 	ai_run (18);
 };
-
 void () enf_run2 = [ 24, enf_run3 ]
 {
 	ai_run (14);
 };
-
 void () enf_run3 = [ 25, enf_run4 ]
 {
 	ai_run (MOVETYPE_PUSH);
 };
-
 void () enf_run4 = [ 26, enf_run5 ]
 {
 	ai_run (TE_BLOOD);
 };
-
 void () enf_run5 = [ 27, enf_run6 ]
 {
 	ai_run (14);
 };
-
 void () enf_run6 = [ 28, enf_run7 ]
 {
 	ai_run (14);
 };
-
 void () enf_run7 = [ 29, enf_run8 ]
 {
 	ai_run (MOVETYPE_PUSH);
 };
-
 void () enf_run8 = [ 30, enf_run1 ]
 {
 	ai_run (MOVETYPE_BOUNCEMISSILE);
 };
-
 void () enf_atk1 = [ 31, enf_atk2 ]
 {
 	ai_face ();
 };
-
 void () enf_atk2 = [ 32, enf_atk3 ]
 {
 	ai_face ();
 };
-
 void () enf_atk3 = [ 33, enf_atk4 ]
 {
 	ai_face ();
 };
-
 void () enf_atk4 = [ 34, enf_atk5 ]
 {
 	ai_face ();
 };
-
 void () enf_atk5 = [ 35, enf_atk6 ]
 {
 	ai_face ();
 };
-
 void () enf_atk6 = [ 36, enf_atk7 ]
 {
 	enforcer_fire ();
 };
-
 void () enf_atk7 = [ 37, enf_atk8 ]
 {
 	ai_face ();
 };
-
 void () enf_atk8 = [ 38, enf_atk9 ]
 {
 	ai_face ();
 };
-
 void () enf_atk9 = [ 35, enf_atk10 ]
 {
 	ai_face ();
 };
-
 void () enf_atk10 = [ 36, enf_atk11 ]
 {
 	enforcer_fire ();
 };
-
 void () enf_atk11 = [ 37, enf_atk12 ]
 {
 	ai_face ();
 };
-
 void () enf_atk12 = [ 38, enf_atk13 ]
 {
 	ai_face ();
 };
-
 void () enf_atk13 = [ 39, enf_atk14 ]
 {
 	ai_face ();
 };
-
 void () enf_atk14 = [ 40, enf_run1 ]
 {
 	ai_face ();
@@ -289,158 +246,92 @@ void () enf_atk14 = [ 40, enf_run1 ]
 	else
 		SUB_CheckRefire (enf_atk1);
 };
-
 void () enf_paina1 = [ 66, enf_paina2 ]
-{
-};
-
+{};
 void () enf_paina2 = [ 67, enf_paina3 ]
-{
-};
-
+{};
 void () enf_paina3 = [ 68, enf_paina4 ]
-{
-};
-
+{};
 void () enf_paina4 = [ 69, enf_run1 ]
-{
-};
-
+{};
 void () enf_painb1 = [ 70, enf_painb2 ]
-{
-};
-
+{};
 void () enf_painb2 = [ 71, enf_painb3 ]
-{
-};
-
+{};
 void () enf_painb3 = [ 72, enf_painb4 ]
-{
-};
-
+{};
 void () enf_painb4 = [ 73, enf_painb5 ]
-{
-};
-
+{};
 void () enf_painb5 = [ 74, enf_run1 ]
-{
-};
-
+{};
 void () enf_painc1 = [ 75, enf_painc2 ]
-{
-};
-
+{};
 void () enf_painc2 = [ 76, enf_painc3 ]
-{
-};
-
+{};
 void () enf_painc3 = [ 77, enf_painc4 ]
-{
-};
-
+{};
 void () enf_painc4 = [ 78, enf_painc5 ]
-{
-};
-
+{};
 void () enf_painc5 = [ 79, enf_painc6 ]
-{
-};
-
+{};
 void () enf_painc6 = [ 80, enf_painc7 ]
-{
-};
-
+{};
 void () enf_painc7 = [ 81, enf_painc8 ]
-{
-};
-
+{};
 void () enf_painc8 = [ 82, enf_run1 ]
-{
-};
-
+{};
 void () enf_paind1 = [ 83, enf_paind2 ]
-{
-};
-
+{};
 void () enf_paind2 = [ 84, enf_paind3 ]
-{
-};
-
+{};
 void () enf_paind3 = [ 85, enf_paind4 ]
-{
-};
-
+{};
 void () enf_paind4 = [ 86, enf_paind5 ]
 {
 	ai_painforward (FL_SWIM);
 };
-
 void () enf_paind5 = [ 87, enf_paind6 ]
 {
 	ai_painforward (true);
 };
-
 void () enf_paind6 = [ 88, enf_paind7 ]
-{
-};
-
+{};
 void () enf_paind7 = [ 89, enf_paind8 ]
-{
-};
-
+{};
 void () enf_paind8 = [ 90, enf_paind9 ]
-{
-};
-
+{};
 void () enf_paind9 = [ 91, enf_paind10 ]
-{
-};
-
+{};
 void () enf_paind10 = [ 92, enf_paind11 ]
-{
-};
-
+{};
 void () enf_paind11 = [ 93, enf_paind12 ]
 {
 	ai_painforward (true);
 };
-
 void () enf_paind12 = [ 94, enf_paind13 ]
 {
 	ai_painforward (true);
 };
-
 void () enf_paind13 = [ 95, enf_paind14 ]
 {
 	ai_painforward (true);
 };
-
 void () enf_paind14 = [ 96, enf_paind15 ]
-{
-};
-
+{};
 void () enf_paind15 = [ 97, enf_paind16 ]
-{
-};
-
+{};
 void () enf_paind16 = [ 98, enf_paind17 ]
 {
 	ai_pain (true);
 };
-
 void () enf_paind17 = [ 99, enf_paind18 ]
 {
 	ai_pain (true);
 };
-
 void () enf_paind18 = [ 100, enf_paind19 ]
-{
-};
-
+{};
 void () enf_paind19 = [ 101, enf_run1 ]
-{
-};
-
+{};
 void (entity attacker, float damage) enf_pain =
 {
 	local float r;
@@ -486,13 +377,10 @@ void (entity attacker, float damage) enf_pain =
 		}
 	}
 };
-
 void () enf_die1 = [ 41, enf_die2 ]
 {};
-
 void () enf_die2 = [ 42, enf_die3 ]
 {};
-
 void () enf_die3 = [ 43, enf_die4 ]
 {
 	self.solid = SOLID_NOT;
@@ -502,65 +390,44 @@ void () enf_die3 = [ 43, enf_die4 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () enf_die4 = [ 44, enf_die5 ]
 {
 	ai_forward (14);
 };
-
 void () enf_die5 = [ 45, enf_die6 ]
 {
 	ai_forward (FL_SWIM);
 };
-
 void () enf_die6 = [ 46, enf_die7 ]
-{
-};
-
+{};
 void () enf_die7 = [ 47, enf_die8 ]
-{
-};
-
+{};
 void () enf_die8 = [ 48, enf_die9 ]
-{
-};
-
+{};
 void () enf_die9 = [ 49, enf_die10 ]
 {
 	ai_forward (MOVETYPE_WALK);
 };
-
 void () enf_die10 = [ 50, enf_die11 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () enf_die11 = [ 51, enf_die12 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () enf_die12 = [ 52, enf_die13 ]
 {
 	ai_forward (MOVETYPE_FLY);
 };
-
 void () enf_die13 = [ 53, enf_die14 ]
-{
-};
-
+{};
 void () enf_die14 = [ 54, enf_die14 ]
-{
-};
-
+{};
 void () enf_fdie1 = [ 55, enf_fdie2 ]
-{
-};
-
+{};
 void () enf_fdie2 = [ 56, enf_fdie3 ]
-{
-};
-
+{};
 void () enf_fdie3 = [ 57, enf_fdie4 ]
 {
 	self.solid = SOLID_NOT;
@@ -570,31 +437,20 @@ void () enf_fdie3 = [ 57, enf_fdie4 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () enf_fdie4 = [ 58, enf_fdie5 ]
-{
-};
-
+{};
 void () enf_fdie5 = [ 59, enf_fdie6 ]
-{
-};
-
+{};
 void () enf_fdie6 = [ 60, enf_fdie7 ]
-{
-};
-
+{};
 void () enf_fdie7 = [ 61, enf_fdie8 ]
 {};
-
 void () enf_fdie8 = [ 62, enf_fdie9 ]
 {};
-
 void () enf_fdie9 = [ 63, enf_fdie10 ]
 {};
-
 void () enf_fdie10 = [ 64, enf_fdie11 ]
 {};
-
 void () enf_fdie11 = [ 65, enf_fdie11 ]
 {};
 void () Enforcer_SniperSight_Update =
@@ -602,9 +458,7 @@ void () Enforcer_SniperSight_Update =
 	local vector org;
 	if (self.owner.health <= 0 || self.owner == world || self.owner.is_monster != #TRUE)
 		dremove(self);
-#ifndef NEW_DOT
 	self.frame = 0.000000;
-#endif
 	org = self.owner.origin;// + (v_forward * 10.000000);
 	traceline (org, self.owner.enemy.origin + '0 0 11', 0, self);
 	self.angles = vectoangles (v_forward);
@@ -621,14 +475,8 @@ void () Enforcer_SniperSight_Create =
 	sight.owner = self;
 	sight.movetype = 8.000000;
 	sight.solid = 0.000000;
-#ifdef NEW_DOT
 	setmodel (sight, "progs/newdot.spr");
 	sight.frame = 1;
-#else
-	setmodel (sight, "progs/dot1.spr");	// eh, dot2 would be more practical (red team) but I don't like to precache so many models
-							// TODO: maybe make all sniper dots use one model and multiple skins??
-							// xav: fix! define NEW_DOT somewhere - thanks SS!
-#endif
 	sight.classname = "timer";
 	setorigin (sight, self.origin);
 	sight.think = Enforcer_SniperSight_Update;
@@ -640,84 +488,68 @@ void () enf_satk1 = [ 31, enf_satk2 ]
 	Enforcer_SniperSight_Create ();
 	ai_face ();
 };
-
 void () enf_satk2 = [ 32, enf_satk3 ]
 {
 	ai_face ();
 };
-
 void () enf_satk3 = [ 33, enf_satk4 ]
 {
 	ai_face ();
 };
-
 void () enf_satk4 = [ 34, enf_satk5 ]
 {
 	ai_face ();
 };
-
 void () enf_satk5 = [ 35, enf_satk6 ]
 {
 	ai_face ();
 };
-
 void () enf_satk6 = [ 35, enf_satk7 ]
 {
 	ai_face ();
 };
-
 void () enf_satk7 = [ 35, enf_satk8 ]
 {
 	ai_face ();
 };
-
 void () enf_satk8 = [ 35, enf_satk9 ]
 {
 	ai_face ();
 };
-
 void () enf_satk9 = [ 35, enf_satk9a ]
 {
 	ai_face ();
 };
-
 void () enf_satk9a = [ 35, enf_satk9b ]
 {
 	ai_face ();
 };
-
 void () enf_satk9b = [ 35, enf_satk9c ]
 {
 	ai_face ();
 };
-
 void () enf_satk9c = [ 35, enf_satk10 ]
 {
 	ai_face ();
 };
-
 void () enf_satk10 = [ 36, enf_satk11]
 {
 	ai_face ();
 //	SUB_CheckRefire (enf_satk1);
 };
-
 void () enf_satk11 = [ 37, enf_satk12 ]
 {
 	enforcer_fire ();
 	ai_face ();
 };
-
 void () enf_satk12 = [ 38, enf_satk13 ]
 {
 	ai_face ();
 };
-
 void () enf_satk13 = [ 39, enf_satk14 ]
 {
 	ai_face ();
 };
-
 void () enf_satk14 = [ 40, enf_run1 ]
 {
 	ai_face ();
@@ -792,4 +624,4 @@ void () monster_enforcer =
 	COOP_SetLives ();
 	monster_enforcer1 ();
 };
-//end
+//END

@@ -1,3 +1,5 @@
+float (entity targ) infront;
+float (entity targ) range;
 float (float v) anglemod;
 void () knight_atk1;
 void () knight_runatk1;
@@ -122,8 +124,6 @@ void () ai_face =
 	self.ideal_yaw = vectoyaw ((self.enemy.origin - self.origin));
 	ChangeYaw ();
 };
-float (entity targ) infront;
-float (entity targ) range;
 void (float d) ai_charge =
 {
 	ai_face ();
@@ -177,7 +177,6 @@ void () ai_melee_side =
 	ldmg = (((random () + random ()) + random ()) * MOVETYPE_WALK);
 	T_Damage (self.enemy, self, self, ldmg);
 };
-
 float () SoldierCheckAttack =
 {
 	local vector spot1;

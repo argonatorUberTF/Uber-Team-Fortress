@@ -1,3 +1,6 @@
+void (entity pickuper, float toss) zg_drop;
+float (entity pickupee) zg_getpickupdist;
+float (entity ent) InSolid;	// XavioR: moved to mtf_coop.qc
 #ifdef GW_ALLOW_PICKUP_ITEM
 void(entity pickupee) ZG_FireItem;
 float (entity test) ZG_ItemType;
@@ -19,9 +22,6 @@ float(entity tester_e) IsBuilding =
 		return #TRUE;
 	return #FALSE;
 };
-void (entity pickuper, float toss) zg_drop;
-float (entity pickupee) zg_getpickupdist;
-float (entity ent) InSolid;	// XavioR: moved to mtf_coop.qc
 void (entity pickuper, entity pickupee, vector destt) zg_movetowards =
 {
 	local float vel, distfrompickuper;
@@ -36,7 +36,6 @@ void (entity pickuper, entity pickupee, vector destt) zg_movetowards =
 		zg_drop (pickuper, /*FALSE*/2);
 		return;
 	}
-
 	if (pickupee.origin != destt)
 		pickupee.velocity = pickuper.velocity + ((normalize(destt - pickupee.origin) * vel) * 10);
 	else
@@ -81,7 +80,6 @@ float (entity tester_e, entity test) zg_invalidtarget =
 	if (test.flags & FL_ITEM) {
 		if (ZG_ItemType(test) > 0)
 			return FALSE;
-
 		return 3;
 	}
 #endif
@@ -194,7 +192,6 @@ void (entity pickuper, float toss) zg_drop =
 #endif
 	if (toss == 1) {
 		pickupee.velocity = v_forward * 500;
-
 		if (pickupee.oldmovetype != MOVETYPE_FLY && pickupee.oldmovetype != MOVETYPE_FLYMISSILE)
 			pickupee.velocity = pickupee.velocity + v_up * 200;
 	} else
@@ -268,7 +265,6 @@ float (entity test) ZG_ItemType =
 	if (test.model == "maps/b_bh25.bsp" || test.model == #MODEL_HEALTH_TEN
 		|| test.model == #MODEL_HEALTH_HUNDRED)
 		return 2;
-
 	return 0;
 };
 void(entity pickupee) ZG_FireItem = 
@@ -294,9 +290,7 @@ void(entity pickupee) ZG_FireItem =
 	else
 	{
 		newmis.velocity = aim(self, 10000);
-
 		newmis.velocity = newmis.velocity * 1200;
-
 		newmis.velocity_z = 200;
 	}
 	newmis.angles = vectoangles(newmis.velocity);

@@ -61,7 +61,6 @@ void () boss_rise11 = [ 10, boss_rise12 ]
 {};
 void () boss_rise12 = [ 11, boss_rise13 ]
 {};
-
 void () boss_rise13 = [ 12, boss_rise14 ]
 {};
 void () boss_rise14 = [ 13, boss_rise15 ]

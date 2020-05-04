@@ -1,4 +1,3 @@
-#ifdef xavioraddedneedler
 void () NeedleExplode =
 {
 	self.enemy.needles -= 1;
@@ -17,11 +16,13 @@ void () NeedlePreExplode =
 {
 	local vector m_height;
 	m_height_x = self.armorvalue;
-	if (self.enemy.health <= 0) {
+	if (self.enemy.health <= 0)
+	{
 		remove(self);
 		return;
 	}
-	if (time > self.health) {
+	if (time > self.health)
+	{
 		NeedleExplode();
 		return;
 	}
@@ -33,14 +34,16 @@ void ( entity f_plyr, entity t_plyr, float at_height ) Add_Needle =
 	local entity needle;
 	local float f_p_height;
 	f_p_height = at_height - t_plyr.origin_x;
-	if (other == world) {
+	if (other == world)
+	{
 		bprint( 2, "Add_Needle: Cannot assign to world! FIX!!\n");
 		return;
 	}
 	if (other.health <= 0)
 		return;
 	t_plyr.needles += 1;
-	if (t_plyr.needles >= 7) {
+	if (t_plyr.needles >= 7)
+	{
 		t_plyr.needles -= 7;
 		if (t_plyr.team_no != f_plyr.team_no)
 			T_Damage (t_plyr, self, f_plyr, 150);
@@ -82,7 +85,6 @@ void () Needler_Touch =
 		self.lives -= 1;
 		return;
 	}
-	
 	remove(self);
 };
 void() NeedlerHome =
@@ -91,7 +93,8 @@ void() NeedlerHome =
 	local entity te;
 	local float maxmove;
 	maxmove = 55;		// maximum xyz value we're allowed to change in mid-air
-	if (self.enemy != world && self.enemy.health > 0) {
+	if (self.enemy != world && self.enemy.health > 0)
+	{
 		vtemp = (self.enemy.origin + '0 0 10');
 		dir = normalize ((vtemp - self.origin));
 		wantdir = (dir * 550);
@@ -112,7 +115,8 @@ void() NeedlerHome =
 			wantdir_z = -maxmove;
 		self.velocity += wantdir;//(dir * 550);
 	}
-	else {
+	else
+	{
 		te = findradius(self.origin, 950);
 		while (te)
 		{
@@ -156,5 +160,4 @@ void() W_FireNeedler =
 	setsize (fshell, '0 0 0', '0 0 0');
 	setorigin (fshell, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (fshell, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
-#endif
 //END

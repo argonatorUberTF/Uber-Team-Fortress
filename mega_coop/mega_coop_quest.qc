@@ -11,14 +11,9 @@
 // .tfi files instead of making all quests hardcoded. Quests are read from files
 // and can be a simple one stage quest or retain the ability to be executed in
 // multiple stages linked to each other.
-
-
-
 #define QUESTLISTPATH			ranks/quests/questlist
 #define QUESTSPATH				ranks/quests
-
 void ( entity qplayer ) Quest_WriteStats;
-
 // Grab some info from the quest itself based on the owner's progress
 string ( float grabtype, float quest_id, entity qowner ) Quest_GetValueFor =
 {
@@ -59,7 +54,6 @@ string ( float grabtype, float quest_id, entity qowner ) Quest_GetValueFor =
 //		
 	return (desc_str);
 };
-
 // set a NEW quest for player
 void ( entity qplayer, float quest_id ) Quest_SetFor =
 {
@@ -67,7 +61,6 @@ void ( entity qplayer, float quest_id ) Quest_SetFor =
 		// can't write any stats for this player
 		return;
 	}
-//
 	sprint( qplayer, 2, "You are now engaged in the quest: " );
 	sprint( qplayer, 2, Quest_GetValueFor( #QUESTINFO_DESCRIPTION, quest_id, qplayer ) );
 	sprint( qplayer, 2, ".\n" );
@@ -79,18 +72,15 @@ void ( entity qplayer, float quest_id ) Quest_SetFor =
 //	
 	Quest_WriteStats ( qplayer );
 };
-
 // This is called when the player connects and we set up his files/info
 void ( entity qplayer ) Quest_SetupPlayer =
 {
 	local string filenamee;
 	local float filee, newfile;
-//	
 	if (!qplayer.connect_name) {
 		qplayer.#questid = -1;
 		return;
 	}
-//	
 // make sure that the folder exists to be written to in the first place
 	filee = open ("#QUESTLISTPATH/test", 2);
 	close(filee);
@@ -99,26 +89,19 @@ void ( entity qplayer ) Quest_SetupPlayer =
 		qplayer.#questid = -1;
 		return;
 	}
-//	
 	filenamee = frik_strcat( "#QUESTSPATH/", qplayer.connect_name, "_quest.tfi" );
 	filenamee = strzone(filenamee);
-//
-//
 	newfile = TFI_ValidFileName( filenamee );
 	if ( newfile == #FALSE ) {
 		qplayer.#questid = -1;
 		strunzone( filenamee );
 		return;
 	}
-//	
 // Now all checks are done, and we now know that the player's file can be written to!
-//
 //newfile 2 means it was created by the TFI_ValidFileName check
 	if ( newfile == 2 ) {
 		filee = open (filenamee, 2);
-//
 		self.#questid = 0;
-//	
 		write (filee, "// MegaTF Coop Quest Status file\n");
 		write (filee, "//QuestID\n");
 		write (filee, "0\n");
@@ -147,52 +130,41 @@ void ( entity qplayer ) Quest_SetupPlayer =
 //		bprint(2, ftos(self.#questvar3) );
 //		bprint(2, "\n");
 	}
-//
 	strunzone(filenamee);
 };
-
 void ( entity qplayer ) Quest_WriteStats =
 {
 	local string filenamee;
-//
 	if ( qplayer.#questid == -1 ) {
 		// can't write any stats for this player
 		return;
 	}
-//	
 	filenamee = frik_strcat( "#QUESTSPATH/", qplayer.connect_name, "_quest.tfi" );
 	filenamee = strzone(filenamee);
-//	
 	TFI_WriteValueFor( filenamee, string_null, "//QuestID", 1, ftos(qplayer.#questid) );
 	TFI_WriteValueFor( filenamee, string_null, "//QuestStage", 1, ftos(qplayer.#queststage) );
 	TFI_WriteValueFor( filenamee, string_null, "//QuestVars", 1, ftos(qplayer.#questvar1) );
 	TFI_WriteValueFor( filenamee, string_null, "//QuestVars", 2, ftos(qplayer.#questvar2) );
 	TFI_WriteValueFor( filenamee, string_null, "//QuestVars", 3, ftos(qplayer.#questvar3) );
 };
-
 // Checks to see if any progress is made in a player's quest
 void ( entity qplayer, float qvtype, entity qvent ) Quest_ProgressUpdate =
 {
 	local float quest_rules, quest_v_a, quest_v_b, i, pstat_var, progressok;
 	local string qstage, qfname, quest_v_c, quest_v_d;
-//
 	if ( qplayer.classname != "player" )
 		return;
 	if ( qplayer.#questid < 1 )
 		return;
-//	
 // Dont call this function too much or else an infinite loop will have our asses on a stick..
 	if ( qplayer.#quest_nextwrite > time )
 		return;
 	qplayer.#quest_nextwrite = time + .1;
-//
 	qstage = frik_strcat( "//Stage", ftos(qplayer.#queststage) );
 	qstage = strzone(qstage);
 	qfname = frik_strcat( "#QUESTLISTPATH/quest", ftos(qplayer.#questid), ".tfi" );
 	qfname = strzone(qfname);
-//	
 	quest_rules = stof( TFI_GetValueFor( qfname, "//Rules", 1, qstage ) );
-//	
 	i = 1;
 	while ( i < 4 ) {
 		bprint(2,"TEST3\n");
@@ -209,21 +181,17 @@ void ( entity qplayer, float qvtype, entity qvent ) Quest_ProgressUpdate =
 				pstat_var = qplayer.#questvar3;
 				
 			if ( pstat_var < quest_v_b ) {
-//			
 				if (quest_v_a & #QVAR_KILLMONSTER)
 					if (quest_v_c == qvent.classname)
 						progressok = 1;
 				if (quest_v_a & #QVAR_KILLMONSTERANY)
 					if (qvent.is_monster == 1)
 						progressok = 1;
-//			
 				if ( progressok ) {
 					pstat_var += 1;
 					quest_v_d = TFI_GetValueFor( qfname, frik_strcat( "//QuestVar", ftos(i) ), 4, qstage );
-//					
 					if ( quest_v_d )
 						sprint( qplayer, 2, frik_strcat( quest_v_d, ".\n" ) );
-//						
 					if (i == 1)
 						qplayer.#questvar1 = pstat_var;
 					else if (i == 2)
@@ -244,5 +212,4 @@ void ( entity qplayer, float qvtype, entity qvent ) Quest_ProgressUpdate =
 	strunzone(qstage);
 	strunzone(qfname);
 };
-
 //END
