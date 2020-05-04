@@ -3,21 +3,15 @@ entity		other;
 entity		world;
 float		time;
 float		frametime;      //time since last CSQC_UpdateView;
-
 float		player_localentnum;     //the entnum (can change when svc_setview is received. 0 is unknown)
 float		player_localnum;        //the playernum (0 to maxclients-1)
 float		maxclients;     //a constant filled in by the engine. gah, portability eh?
-
 float		clientcommandframe;     //player movement (getinputstate(clientcommandframe-1) is the most recent available full frame)
 float		servercommandframe;     //clientframe echoed off the server. By the time the client receives this, the command has been applied. Thus the first frame that needs predicting is servercommandframe+1. If this is 0, then prediction is not supported in the current network protocol (demos, legacy server - depends how csqc is authorised).
-
 string		mapname;        //the map as found in the map command. Will not contain non-filename charactures. (expected to be used with fopen type things). Contains no directory or extension information.
-
 vector		v_forward, v_up, v_right;
 vector		view_angles;	//set at the start of each frame to state the current view angles.
-
 // set by traceline / tracebox
-
 float		trace_allsolid;
 float		trace_startsolid;
 float		trace_fraction;
@@ -27,66 +21,48 @@ float		trace_plane_dist;
 entity		trace_ent;
 float		trace_inopen;
 float		trace_inwater;
-
 //retrieved from the current movement commands (read by player physics), set via getinputstate
-
 float		input_timelength;
 vector		input_angles;
 vector		input_movevalues;       //forwards, right, up.
 float		input_buttons;          //attack, use, jump (default physics only uses jump)
 float		input_impulse;
-
 //CSQC Field Variables:
-
 //
 // system fields (*** = do not set in prog code, maintained by C code)
 //
 .float		modelindex; 	// *** model index in the precached list
 .vector		absmin, absmax;	// *** origin + mins / maxs
-
 .float		entnum;	// *** the ent number as on the server
 .float		drawmask;
 .void()		predraw;
 .float		renderflags; //See RF constants
-
 .float		movetype;	//FIXME: should this be implemented?
 .float		solid;
-
 .vector		origin;		// *** use setorigin to change this.
 .vector		oldorigin;
 .vector		velocity;
 .vector		angles;
 .vector		avelocity;
 .float		pmove_flags;	//used for prediction. Its contents must be preserved between calls. And reset whenever prediction is reverted.
-
 .string		classname;	// for debugging engines. not really required.
 .string		model;
 .float		frame;
 .float		frame2;
 .float		lerpfrac;	//this is how much of frame2 should be used.
 .float		skin;
-
 .vector		mins, maxs; // bounding box extents reletive to origin
 .vector		size; // maxs - mins
-
 .void()		touch;
 .void()		think;
 .void()		blocked;	// for doors or plats, called when can't push other
-
 .float		nextthink;
-
 .entity		chain;
-
 .entity		enemy;
-
 .float		flags;
-
 .float		colormap;
-
 .entity		owner; // who launched a missile
-
 //CSQC Constants:
-
 //renderflags field uses these:
 float RF_VIEWMODEL = 1;
 /*
@@ -94,17 +70,14 @@ float RF_VIEWMODEL = 1;
 	It is drawn on the screen in the center, where the weapon would normally be.
 	View model bobbing is applied to this entity.
 */
-
 float RF_EXTERNALMODEL = 2;
 /*
 	The entity is appears in mirrors but not in the normal view. It does still cast shadows in engines with realtime lighting.
 */
-
 float RF_DEPTHHACK = 4;
 /*
 	The entity appears closer to the view than normal, either by scaling it wierdly or by just using a depthrange. This will usually be found in conjunction with RF_VIEWMODEL
 */
-
 float RF_USEAXIS = 16;
 /*
 	When set, the entity will use the v_forward, v_right and v_up globals instead of it's angles field for orientation. Angles will be ignored compleatly.
@@ -112,9 +85,7 @@ float RF_USEAXIS = 16;
 	An engine only needs to implement this if tags are supported.
 */
 
-
 //3d scene management:
-
 void() clearscene = #300;
 /*
 	Clear the scene, reset the view values to default.
@@ -126,13 +97,11 @@ void(float mask) addentities = #301;
 	Acts as if R_AddEntity was called for each one of them.
 	For each entity added, the predraw of that entity function will be called before being any fields are read.
 */
-
 void(entity e) addentity = #302;
 /*
 	Add a single entity to the scene. It's fields are copied out immediatly. This allows for repeated calling.
 	Does NOT call the predraw function. This is useful for adding the entity within a predraw function from addentitymask without recursion. (think Quad shells).
 */
-
 float(float propertyindex, ...) setviewprop = #303;
 /*
 	Change a property of the 3d view.
@@ -176,7 +145,6 @@ float(float propertyindex, ...) setviewprop = #303;
 #define STAT_ACTIVEWEAPON 10	//the one shown on the hud
 #define STAT_ITEMS 15
 //stats 32 onwards are filled by the csqc.
-
 enum
 {
 	VF_MIN = 1,
@@ -202,7 +170,6 @@ enum
 	VF_DRAWCROSSHAIR = 21,
 	VF_PERSPECTIVE = 200
 };
-
 enumflags {
 	RF_VIEWMODEL,
 	RF_EXTERNALMODEL,
@@ -210,11 +177,9 @@ enumflags {
 	RF_ADDATIVE,
 	RF_USEAXIS
 };
-
 float	MASK_ENGINE		= 1;	//this is special. Any entities known by the engine but not the csqc will be added.
 //you can add any other masks below, remember, use bits.
 float	MASK_NORMAL		= 2;
-
 
 float(float propertyindex) getviewpropf = #309;
 vector(float propertyindex) getviewpropv = #309;
@@ -223,19 +188,16 @@ vector(float propertyindex) getviewpropv = #309;
 	Return type is dictated by propertyindex. Ensure you use the correct form.
 	Paranoid engines are fully within their rights to return '0 0 0' for VF_ORIGIN (and sub componants). 
 */
-
 void(vector org, float radius, vector rgb) adddynamiclight = #305;
 /*
 	Adds a light to the scene with the specified properties.
 	Engines without coloured lighting can average out the light colours.
 */
-
 void() renderscene = #304;
 /*
 	Invokes the renderer to actually draw the scene inside the call.
 	Does not clear the display lists.
 */
-
 float(string s) precache_model = #20;
 /*
 	Precaches a model for clientside usage. If the server qc already precached it, reuse that instead.
@@ -245,94 +207,78 @@ float(string s) precache_model = #20;
 	Note that this is the same builtin as the server, but the return value is different, in order to be more useful.
 	If the model does not exist, an engine may trigger a download request and load the model when it arrives (with a valid index returned), or may return 0.
 */
-
 vector (vector v) unproject            = #310;
 /*
 	Converts from 2d-space to 3d-space. Uses the currently set viewport, origin, angles, and projection info from the current view properties (setviewprop).
 	Note that 2d space contains depth info, in the range of 0 to 1.
 */
-
 vector (vector v) project              = #311;
 /*
 	Converts from 3d-space to 2d space. Uses the currently set viewport, origin, angles, and projection info from the current view properties (setviewprop).
 	Note that 2d space contains depth info, in the range of 0 to 1.
 */
-
 /*
 2d display:
-
 2d display Note that the vectors only use the first two componants, the third is ignored. With texture names, should the csqc leave off the filename extension, The engine should scan through all the extensions that it supports. The engine must support lmp files, and 32bit bottom up tgas should be supported, pngs and jpegs are just bonuses.
 Images without paths may be obtained from the gfx.wad.
 */
-
 void(vector pos, vector size, float paletteindex) drawfillpal = #314;
 /*
 	Draws a single block of colour.
 	Obtains the pixel colour from the palette. If no palette could be loaded, use an r3g3b2 palette (FIXME: sane?).
 */
-
 float(string name) is_cached_pic = #316;
 /*
 	Returns true only if an image is already cached.
 	An engine which doesn't support unloading may attempt to cache the image before checking.
 	To see if a picture is valid, drawgetimagesize instead.
 */
-
 void(string name) precache_pic = #317;
 /*
 	Attempts to precache an image without drawing it.
 */
-
 vector(string picname) drawgetimagesize = #318;
 /*
 	Retrieves the size of an image that the engine believes it to be.
 	Note that image replacement on hud elements may do inaccurate things to image scale. If a replacement image is used, it is unspecified whether the size comes from a lmp or a replacement png.
 	Returns '0 0 0' if the image failed to load (FIXME: DP replaces with a replacement image, with size 64*64, this is incompatible with that).
 */
-
 void(string name) free_pic = #319;
 /*
 	Un-caches an image.
 	An engine is not required to implement this - can be a no-op.
 */
-
 void(vector pos, float char, vector size, vector rgb, float alpha) drawcharacter = #320;
 /*
 	Draws a quake character using the quake font.
 	A software rendering engine is not required to honour the size, rgb, or alpha parameters, size may be forced to '8 8 0'.
 */
-
 void(vector pos, string text, vector size, vector rgb, float alpha) drawstring = #321;
 /*
 	Draws a text string using the quake font. Size is per-characture.
 	A software rendering engine is not required to honour the size, rgb, or alpha parameters, size may be forced to '8 8 0'.
 */
-
 void(vector pos, string picname, vector size, vector rgb, float alpha) drawpic = #322;
 /*
 	Draws an image.
 	A software rendering engine is permitted to ignore size, rgb, and alpha parameters.
 	Alpha testing or blending from transparencies in lmp files must be supported.
 */
-
 void(vector pos, vector size, vector rgb, float alpha) drawfillrgb = #323;
 /*
 	Draws a single block of colour.
 	A software renderer is not required to implement this function.
 */
 
-
 void(entity e, float modelindex) setmodelindex = #333;
 /*
 	Sets an entity's model according to a modelindex.
 	This is useful when transfering modelindexes across the network but otherwise should not be used.
 */
-
 string(float modelindex) modelnameforindex = #334;
 /*
 	Retrieves the modelname from an assosiated modelindex, as a tempstring.
 */
-
 void(float scale) setsensitivityscaler = #346;
 /*
 	Scales the user's sensitivity by the parameter.
@@ -341,25 +287,21 @@ void(float scale) setsensitivityscaler = #346;
 	It is not reset by the engine until the csprogs is closed.
 	The default is 1.
 */
-
 void(string s, ...) cprint = #338;
 /*
 	Directs the engine to draw centered text over the screen using it's regular code as if responding to the server.
 	This is a convienience function. Does not trigger CSQC_Parse_CenterPrint.
 	FIXME: under which conditions is centerprint text shown? Part of hud, or world, or a new viewprop?
 */
-
 void(string s, ...) print = #339;
 /*
 	print text on the console and notifiction lines. Like dprint, but doesn't need developer set.
-
 void(float effectnum, vector org, vector vel, float countmultiplier) pointparticles = #337;
 /*
 	Spawns particles in the style of an ef_efname effect.
 	Doesn't play sound. Doesn't spawn a dynamic light.
 	The normal 'particle' builtin also works, and should be used in that event.
 */
-
 void(float effectnum, entity ent, vector start, vector end) trailparticles = #336;
 /*
 	Spawns particles in the style of an ef_efname effect.
@@ -367,7 +309,6 @@ void(float effectnum, entity ent, vector start, vector end) trailparticles = #33
 	The normal 'particle' builtin also works, and should be used in that event.
 	The ent parameter is used to track trail states (eg: sparse trails and high framerates). You can use 'world' if you want an independant non-progressive beam.
 */
-
 float(string efname) particleeffectnum = #335;
 /*
 	Returns an effect number which can be passed into one of the particle effect spawn functions.
@@ -376,7 +317,6 @@ float(string efname) particleeffectnum = #335;
 	These are the non-extended names that should be supported:
                te_explosion (rockets), te_tarexplosion (tarbaby), te_gunshot, te_wizspike, te_knightspike, te_spike, te_superspike, te_teleport, te_lavasplash
 */
-
 float(float framenum) getinputstate = #345;
 /*
 	Reads view-angles and other properties into csqc's input_* globals.
@@ -386,7 +326,6 @@ float(float framenum) getinputstate = #345;
 	Thus frames (servercommandframe+1) to (clientcommandframe-1), inclusive, must be applied to the player's entity state in order for prediction to work.
 */
 
-
 void(entity ent) runplayerphysics = #347;
 /*
 	Runs the engine's standard prediction algorithms.
@@ -395,41 +334,34 @@ void(entity ent) runplayerphysics = #347;
 	Reads input_* globals.
 	Changes origin, velocity, pmove_flags. Triggers touch functions.
 */
-
 float() isdemo = #349;
 /*
 	Returns non-zero if playing a demo.
 */
-
 float() isserver = #350;
 /*
 	Returns true if the mod can communicate with the server via cvars and console commands and things (eg: map).
 	This is intended for admin/single-player purposes. A mod with full voting will not want to use this.
 */
 
-
 string(float keynum) keynumtostring = #340;
 /*
 	Retrieves the name of a key (as used by the bind console command)
 */
-
 float(string keyname) stringtokeynum = #341;
 /*
 	Finds the key number of the named keyboard/mouse/joystick button/key.
 */
-
 string(float keynum) getkeybind = #342;
 /*
 	Obtains the full command that a button is bound to.
 	To set the key binding, use localcmd with the bind console command, preferably do not force it.
 */
-
 void(vector origin, vector forward, vector right, vector up) setlistener = #351;
 /*
 	Updates the sound listener origin and orientation.
 	Should be done once per frame. Failure to do so will revert to the engine's default, which will be inaccurate if you're using player prediction.
 */
-
 void(string model, void(float isnew) updatefunc, float flags) deltalisten = #371;
 /*
 	Registers a function to be called whenever a delta entity with a model matching the given name would be linked.
@@ -464,7 +396,6 @@ void(string model, void(float isnew) updatefunc, float flags) deltalisten = #371
 #define RSES_NOTRAILS 4
 #define RSES_AUTOLIGHTS 0
 #define RSES_NOLIGHTS 8
-
 float() readbyte = #360;
 float() readchar = #361;
 float() readshort = #362;
@@ -476,19 +407,16 @@ float() readfloat = #367;
 float() readentitynum = #368;
 /*
 	Reads a part of a network message.
-
 	Note that these builtins are only valid when the engine directs the csqc to start reading. Valid only during that call.
 	In the case of readstring, it is returned within a temporary string.
 	It is up to the engine exactly how big coords and angles are, so the csqc must ensure correct matching.
 	For entities, readentitynum reads only an entity number. This must be matched to an entity with a matching .entnum field. The given entity may not always be known, so matching up in the parse function may not be advantageous.
 */
-
 float(float statnum) getstatf = #330;
 /*
 	Returns the floating point value of a client stat.
 	It is not recommended to use this builtin for STAT_ITEMS due to overflowing floats, but is fine for any of the other standard stats.
 */
-
 float(float statnum) getstati = #331;
 float(float statnum, float first, float count) getstati_bits = #331;
 /*
@@ -496,31 +424,26 @@ float(float statnum, float first, float count) getstati_bits = #331;
 	If first and count are used, retrieves only the bits specified and shifts down (this is used for sigils in the STAT_ITEMS stat)
 	FIXME: Is it sane that this returns a float when its obtaining an int?
 */
-
 string(float statnum) getstats = #332;
 /*
 	Returns a client stat string. String stats have independant stat indexes from numerical stats.
 	This will return a temp string.
 */
-
 string(float playernum, string keyname) getplayerkey = #348;
 /*
 	Obtains various player specific things. Items that must be supported are:
 	name, frags, bottomcolor, topcolor.
 	This info is required for scoreboards.
-
 	Negative player indexes are interpreted as frag-sorted. -1 is the leading player, -2 is the second best player. There is no explicit teamplay support.
 	This is akin to quakeworld's infokey builtin with a player number.
 	Note: QuakeWorld engines normally provide a team field. NQ engines typically use bottomcolor.
 */
-
 string(string key) serverkey = #354;
 /*
 	Obtains various server related things. Items that must be supported are:
 	ip.
 	This is akin to quakeworld's infokey builtin with serverinfo.
 */
-
 string() getentitytoken = #355;
 /*
 	This builtin is valid only inside CSQC_WorldLoaded.
@@ -530,24 +453,20 @@ string() getentitytoken = #355;
 	Returns the null string when there are no more tokens. This is distinct from an empty string.
 	Tokenizing rules match the server loading.
 */
-
 void(string name, string value) registercvar = #93;
 void(string str) registercommand = #352;
 /*
 	Registers a console command. Any commands that are registered will cause CSQC_ConsoleCommand to be called any time the user tries using the command. The command should have top-most priority, above even aliases.
 */
-
 float() wasfreed = #353;
 /*
 	Returns true if the entity was recently freed with the remove builtin, and hasn't been reused yet. Note that at the start of a map this builtin can be unreliable. Otherwise it should have 2 seconds to be reliable (before the entity is reused). This makes the physics code with touch/think functions easier.
 	Avoid using this builtin unless you know the entity was valid before a function was called.
 */
-
 //void(vector org, vector forward, vector right, vector up) setlistener = #351;
 /*
 	This builtin allows the csqc to position the 'listener'. This will affect the volume of sounds playing nearby. The directions are required for correct audio spacialisation (just use makevectors).
 */
-
 void(string evname, string evargs, ...) sendevent = #359;
 /*
 	When called, sends an event to the server gamecode.
@@ -559,7 +478,6 @@ void(string evname, string evargs, ...) sendevent = #359;
 	This function is limited to 6 custom arguments.
 	There is nothing stopping you from packing multiple floats into a vector if you need more arguments.
 */
-
 // More builtins
 void(...) localcmd = #46;
 float(string s) tokenize = #441;
@@ -572,61 +490,47 @@ entity() spawn						= #14;
 string(string s) cvar_string = #448;
 string (vector v) vtos = #27; 
 string(string s, float start, float length) substring = #116;
-
 void (entity e) remove = #15; 
 float (vector v) vlen = #12; 
-
 float () random = #7; 
-
 // Misc
 #define TRUE	1
 #define FALSE	0
 float csqc_sent;				// tell the server that we support csqc
 entity monsterbar;
-
 // GiffE's status bar stuff
 float vid_conwidth, vid_conheight;
 float progress;
-
-
 // TF reload status bar
 float reloadtime_begin, reloadtime_end;
 float cltime;
 float cgrentimer;
 float coop_exp;
 float illegalclasses, illegal_team_classes;
-
 // CSQC GUI
 float in_menu, menu_selected, menu_impulse, mouse_branch;
 float global_bt_no, global_menu_flags;
 vector mousepos, testsize_one;
 .string bt_text, bt_cmd, bt_img;
 .float bt_flags, bt_no;
-
 float () MouseInBox;
 void (string menu_name, float menu_flags) InitMenu;
 void (string button_text, string button_cmd, vector button_spawnpos, string button_image, vector button_size, float button_flags) CreateButton;
-
 #define MENU_CLASS_SELECT		3
 #define MENU_TEST1 				666
 #define MENU_TEST_DROPDOWN		663
-
 // global menu flags
 #define MFG_NOCURSOR			1
 #define MFG_KEYBOARDINPUT		2
-
 // menu flags
 #define MENUFLAG_DISABLED		1
 #define MENUFLAG_BRANCH			2
-
 vector p_org;
 vector pmove_org;
 vector p_ang;
-
 void (entity e, vector o) setorigin = #2; 
 void (entity e, string m) setmodel = #3; 
 void (entity e, vector min, vector max) setsize = #4; 
-
 #define ODE_PHYSICS
 #ifdef ODE_PHYSICS
 float physics_cleanup_time;
@@ -644,7 +548,6 @@ float MOVETYPE_PHYSICS = 32;
 #define JOINTTYPE_UNIVERSAL 4
 #define JOINTTYPE_HINGE2 5
 #define JOINTTYPE_FIXED -1
-
 .entity aiment;
 .vector movedir;
 .float bouncefactor;

@@ -262,15 +262,12 @@ float(float eventtype, float param1, float param2) CSQC_InputEvent =
 		}
 		if (eventtype == 2 && !(global_menu_flags & MFG_NOCURSOR))	//mouse
 		{
-
 			mousepos_x += param1;
 			mousepos_y += param2;
-
 			if (mousepos_x < 0)
 				mousepos_x = 0;
 			if (mousepos_y < 0)
 				mousepos_y = 0;
-
 			if (mousepos_x > vid_conwidth)
 				mousepos_x = vid_conwidth;
 			if (mousepos_y > vid_conheight)
@@ -316,14 +313,12 @@ void () DrawMonsterBar =
 		monsterbar.alpha -= .01;
 	}
 };
-
 void (float width, float height) HUD_Render =
 {
 	if (getstati(STAT_HEALTH) < 1) {
 		reloadtime_end = 0;
 		return;
 	}
-
 	if (cvar("c_grenadetimer") > 0)
 		grentimer(width, height);
 	
@@ -334,7 +329,6 @@ void (float width, float height) HUD_Render =
 	DrawMonsterBar();
 	CSQCGUI_Render();
 };
-
 #ifdef ODE_PHYSICS
 void () Physics_Cleanup =
 {

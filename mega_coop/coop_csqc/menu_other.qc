@@ -1,5 +1,4 @@
 // other menus
-
 void () Menu_MegaTF =
 {
 	local vector men;
@@ -20,6 +19,5 @@ void () Menu_MegaTF =
 	CreateButton( "8. Yell Menu", 			"default", men, "progs/csqc/csqcguiback.tga", but_size, 0); men_y+=but_size_y;
 	CreateButton( "9. Vote Menu", 			"default", men, "progs/csqc/csqcguiback.tga", but_size, 0); men_y+=but_size_y;
 	CreateButton( "0. Nothing", 			"default", men, "progs/csqc/csqcguiback.tga", but_size, 0);
-
 };
 //END

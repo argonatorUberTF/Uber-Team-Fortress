@@ -74,7 +74,6 @@ float(float pc, float meflag_a, float meflag_b) IsLegalClass =
 	}
 	return 0;
 };
-
 void (float meflag_a, float meflag_b) Menu_ClassSelect =
 {
 	local vector men;
@@ -124,7 +123,6 @@ void () Menu_SpySpecial =
 	CreateButton( "3. Start Feigning", 		"default", men, "progs/csqc/csqcguiback.tga", but_size, 0); men_y+=but_size_y;
 	CreateButton( "4. Nothing", 			"default", men, "progs/csqc/csqcguiback.tga", but_size, 0); men_y+=but_size_y;
 };
-
 void () Menu_SpyChangeColor =
 {
 	local vector men;
@@ -144,7 +142,6 @@ void () Menu_SpyChangeColor =
 	CreateButton( "1. Team Blue", 			"impulse 1", men, "progs/csqc/csqcguiback.tga", but_size, 0); men_y+=but_size_y;
 	CreateButton( "2. Team Red", 			"impulse 2", men, "progs/csqc/csqcguiback.tga", but_size, 0); men_y+=but_size_y;
 };
-
 void () Menu_SpyChangeSkin =
 {
 	local vector men;
@@ -210,7 +207,6 @@ void (float cno, vector text_startpos) TF_Class_Info =
 	drawstring(text_startpos + '0 48 0', l7, '8 8 0', '1 1 1', 1);
 	drawstring(text_startpos + '0 56 0', l8, '8 8 0', '1 1 1', 1);
 };
-
 void () Menu_TestMenu =
 {
 	local vector men;						// position of the first menu button
@@ -227,7 +223,6 @@ void () Menu_TestMenu =
 	CreateButton( "Go Apes**t!", 		"cl_yawspeed 2000\n;+right\n;testmenu", 				men, buttonback, but_size, 0); men_y+=but_size_y;
 	CreateButton( "Back to normal!!", 	"cl_yawspeed 5\n;-right\n;-jump\n;-attack\n;testmenu", 	men, buttonback, but_size, 0); men_y+=but_size_y;
 };
-
 void (float mn_flags) Menu_DropdownMenu =
 {
 	local vector men;						// position of the first menu button
@@ -236,7 +231,6 @@ void (float mn_flags) Menu_DropdownMenu =
 	local float button_flag;
 	if (mn_flags > 0)
 		button_flag = MENUFLAG_DISABLED;		// disable the other buttons when the drop-down menu is active
-
 	but_size = '145 35 0';
 	men_x = vid_conwidth*0.1;
 	men_y = vid_conheight*0.2;							// first button will be displayed 20% of the vertical value from the top of the screen
@@ -250,7 +244,6 @@ void (float mn_flags) Menu_DropdownMenu =
 		CreateButton( "-",			"testmenu2",			men, buttonback, '25 35 0',				MENUFLAG_BRANCH);
 	else
 		CreateButton( "+",			"testmenu2 1",			men, buttonback, '25 35 0',				MENUFLAG_BRANCH);	
-
 	if (mn_flags > 0) {
 		men_x-=(but_size_x - 25);	//
 		men_y+=but_size_y;			// draw new menu items below the "More Options" button

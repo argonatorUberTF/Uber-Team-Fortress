@@ -214,7 +214,6 @@ void(string cmd) CSQC_Parse_StuffCmd =
 	localcmd(cmd);
 	localcmd("\n");
 };
-
 #ifdef ODE_PHYSICS
 entity (vector entorg, string entmodel, float turnangle, float entmass, float x) Bone_MakeCloth =
 {
