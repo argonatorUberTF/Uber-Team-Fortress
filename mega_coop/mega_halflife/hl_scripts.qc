@@ -3,7 +3,6 @@
 // as scientists and barneys are monsters in Quake-Life. scripted sequences 
 // are only added here so players can make progress through maps.
 // Note 2: scripted_sentence arein hl_sound.qc
-
 void () script_path_remove =
 {
 	if (other != self.enemy)
@@ -12,7 +11,6 @@ void () script_path_remove =
 		other.enemy = world;
 	dremove(self);
 };
-
 void () move_actor =
 {
 	local entity oself;
@@ -42,7 +40,6 @@ void () move_actor =
 	self.nextthink = time + 20;
 	//SUB_CalcMoveEnt ( self.enemy, self.origin, 50, self.enemy.th_stand );
 };
-
 void () scripted_sequence_use =
 {
 //_bprint(ftos(self.spawnflags), " is me spawnflags and ", self.targetname, " is me targetname and ", self.target, " is me target\n");
@@ -81,7 +78,6 @@ void () scripted_sequence_use =
 	SUB_UseTargets();
 	dremove(self);
 };
-
 void () scripted_sequence_touch =
 {
 	local entity te;
@@ -95,7 +91,6 @@ void () scripted_sequence_touch =
 	}
 	scripted_sequence_use();
 };
-
 void () scripted_sequence_findtrigger =
 {
 	local entity head;
@@ -110,7 +105,6 @@ void () scripted_sequence_findtrigger =
 	}
 	self.nextthink = time + .5;
 };
-
 void () scripted_sequence_fix =
 {
 	hldprint(2,"scripted_sequence_fix: nothing triggers me\n");
@@ -118,7 +112,6 @@ void () scripted_sequence_fix =
 	self.think = scripted_sequence_findtrigger;
 	self.nextthink = time + 1;
 };
-
 void () FindMyTrigger_think =
 {
 	local entity te, oself;
@@ -160,7 +153,6 @@ void () FindMyTrigger_think =
 	self = oself;
 	dremove(self);
 };
-
 void ( entity for_ent, float wait_time, void() found, void() notfound ) FindMyTrigger =
 {
 	local entity finder;
@@ -171,7 +163,6 @@ void ( entity for_ent, float wait_time, void() found, void() notfound ) FindMyTr
 	finder.th_die = notfound;
 	finder.nextthink = time + wait_time;
 };
-
 void () scripted_sequence =
 {
 	if (self.m_iszEntity) {
@@ -188,7 +179,6 @@ void () scripted_sequence =
 	else
 		trigger_once();
 };
-
 // parse centerprint text from titles.txt
 void () env_message_use =
 {
@@ -225,7 +215,6 @@ void () env_message_use =
 	bprint(2,msgstr);
 	strunzone(msgstr);
 };
-
 void () env_message =
 {
 	self.use = env_message_use;

@@ -2,9 +2,7 @@
 $frame stand1
 $frame shot1 shot2 shot3 shot4 shot5 shot6 shot7 shot8
 $frame spin1 spin2 spin3 spin4 spin5 spin6 spin7 spin8
-
 .float aflag;
-
 void() OgreGrenadeExplode_b =
 {
 	T_RadiusDamage (self, self.owner, 40, world);
@@ -20,7 +18,6 @@ void() OgreGrenadeExplode_b =
 	self.solid = SOLID_NOT;
 	s_explode1 ();
 };
-
 void() stry_spike =
 {
     local vector    dir;
@@ -31,7 +28,6 @@ void() stry_spike =
     setmodel (newmis, "progs/s_spike.mdl");
     setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
 };
-
 void () stry_stand =
 {
     local float r;
@@ -44,13 +40,11 @@ void () stry_stand =
         {
             self.enemy = world;
         }
-
         if (!visible (self.enemy))
         {
             self.enemy = world;
         }
     }
-
     if (self.enemy == world)
     {
         if (self.aflag > 0)
@@ -60,14 +54,12 @@ void () stry_stand =
             self.aflag = 0;
             self.frame = $stand1;
         }
-
 // seeks for enemies
         self.angles_y = self.angles_y + 3;
         if (self.angles_y > 359)
         {
             self.angles_y = self.angles_y - 359;
         }
-
         if (self.wait < time)
         {
             sound (self, CHAN_VOICE, "misc/talk.wav", 1, ATTN_NORM);
@@ -122,7 +114,6 @@ void () stry_stand =
     self.think = stry_stand;
     self.nextthink = time + 0.1;
 };
-
 void () stry_die =
 {
     local float r;
@@ -147,7 +138,6 @@ void () stry_die =
         ThrowGib ("progs/strygib2.mdl", -120);
     }
 };
-
 void () monster_sentry =
 {
     precache_model ("progs/sentry.mdl");

@@ -1,16 +1,12 @@
 float total_sparks;			// remember, we're also catering to quakeworld clients here
 #define MAX_SPARKS			30
 #define SILENT				2
-
 //
 //	Written by Frank Condello <pox@planetquake.com>
 //	
 //	Audio/Visual effect mapping entities, and weapon effects.
 //
-
 // SHELLEJECT ==================================================================
-
-
 // For Shotguns and Super Nailgun
 void() eject_shell =
 {	
@@ -53,13 +49,11 @@ void() spark_touch =
 		remove(self);
 	}
 };
-
 void() spark_start =
 {
 	self.use = spark_pause;// next use stops it
 	self.nextthink = time +  (random() + self.wait);
 };
-
 void() spark_think =
 {
 	if (self.attack_finished < time) {
@@ -74,13 +68,11 @@ void() spark_think =
 	}
 	self.nextthink = time + 0.1;
 };
-
 void() spark_pause =
 {
 	self.nextthink = -1;
 	self.use = spark_start;
 };
-
 void() spark_spawn =
 {	
 	local entity spark;
@@ -118,7 +110,6 @@ void() spark_spawn =
 	}
 	self.nextthink = time +  (random() + self.wait);
 };
-
 void() fx_spark =
 {	
 	if (!(self.spawnflags & SILENT)) {
@@ -127,7 +118,6 @@ void() fx_spark =
 		precache_sound ("misc/spark3.wav");
 		precache_sound ("misc/spark4.wav");
 	}
-
 	if (self.wait < 0)
 		self.wait = 0; // default frequency to 0
 	
@@ -138,13 +128,11 @@ void() fx_spark =
 	else
 		spark_start();
 };
-
 void () env_spark =
 {
 	precache_model ("progs/spark.spr");
 	fx_spark();
 };
-
 // Special effect for the nailgun
 void(float ox) spawn_ngspark =
 {	
@@ -167,12 +155,9 @@ void(float ox) spawn_ngspark =
 	setsize (spark, VEC_ORIGIN, VEC_ORIGIN);		
 	setorigin (spark, self.origin + v_forward*36 + v_right*ox);
 };
-
 // DRIPS ====================================================================
-
 void() drip_spawn;
 void() drip_pause;
-
 // splash animation (runs at 20fps)
 void()	s_splash1	=	[0,	s_splash2] {self.nextthink = time+0.05;};
 void()	s_splash2	=	[1,	s_splash3] {self.nextthink = time+0.05;};
@@ -180,7 +165,6 @@ void()	s_splash3	=	[2,	s_splash4] {self.nextthink = time+0.05;};
 void()	s_splash4	=	[3,	s_splash5] {self.nextthink = time+0.05;};
 void()	s_splash5	=	[4,	s_splash6] {self.nextthink = time+0.05;};
 void()	s_splash6	=	[5,	SUB_Remove] {self.nextthink = time+0.05;};
-
 void() drip_touch =
 {
 	local float r;
@@ -203,7 +187,6 @@ void() drip_touch =
 	setmodel (self, "progs/splash.spr");
 	s_splash1();
 };
-
 // Splash on liquids
 void() drip_think =
 {
@@ -220,20 +203,17 @@ void() drip_think =
 	
 	self.nextthink = time + 0.1;
 };
-
 void() drip_start =
 {
 	self.use = drip_pause;// next use stops it
 	self.nextthink = time + (random() + self.wait);
 };
-
 void() drip_pause =
 {
 	// Wait around for next use
 	self.nextthink = -1;
 	self.use = drip_start;
 };
-
 void() drip_spawn =
 {	
 	local entity drip;
@@ -253,13 +233,14 @@ void() drip_spawn =
 		drip.think = drip_think;
 		drip.attack_finished = time + 3;
 		drip.nextthink = time + 0.1;
-	} else {// trace didn't hit water, so just go away if no touch
+	}
+	else
+	{// trace didn't hit water, so just go away if no touch
 		drip.think = SUB_Remove;
 		drip.nextthink = time + 3;
 	}
 	self.nextthink = time + (random() + self.wait);
 };
-
 void() fx_drip =
 {	
 	vector spot1, spot2;
@@ -284,20 +265,15 @@ void() fx_drip =
 	else
 		drip_start();
 };
-
 // CUSTOM SOUNDS ===================================================================
-
 void() sound_pause;
-
 void() sound_play;
-
 void() sound_start =
 {
 	self.use = sound_pause;// next use stops it
 	self.think = sound_play;
 	self.nextthink = time + 0.1;
 };
-
 void() sound_pause =
 {
 	// play the shutoff wav if we got one, then hang around until next use
@@ -306,7 +282,6 @@ void() sound_pause =
 	self.nextthink = -1;
 	self.use = sound_start;
 };
-
 void() sound_play = 
 {
 	if (self.state == 0) {// no more repeats - reset & pause
@@ -322,7 +297,6 @@ void() sound_play =
 // Set next play time
 	self.nextthink = time + (random()*self.cnt) + self.pausetime;
 };
-
 void() fx_sound =
 {
 	if (self.noise == string_null)
@@ -354,14 +328,11 @@ void() fx_sound =
 		self.nextthink = time + 1.0;// FIXME! - WTF?
 	}
 };
-
 //============================================================================
-
 void() ambientsound_start =
 {
 	ambientsound (self.origin, self.noise, self.volume, self.distance);
 };
-
 void() fx_ambientsound =
 {
 	if (self.noise == string_null)
@@ -382,5 +353,4 @@ void() fx_ambientsound =
 	else// wait for trigger
 		self.use = ambientsound_start;
 };
-
 //end

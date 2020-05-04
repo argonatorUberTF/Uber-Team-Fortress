@@ -1,21 +1,16 @@
 //Nihilanth replacement (shubbeh!)
 // Basically a flying shub that has 4 "stages"
 void () shubmover_think;
-
 void () shub_moveme;
-
 void () Nihilanth_Thrownewdir;
-
 $frame old1 old2 old3 old4 old5 old6 old7 old8 old9 
 $frame old10 old11 old12 old13 old14 old15 old16 old17 old18 old19 
 $frame old20 old21 old22 old23 old24 old25 old26 old27 old28 old29 
 $frame old30 old31 old32 old33 old34 old35 old36 old37 old38 old39 
 $frame old40 old41 old42 old43 old44 old45 old46 
-
 $frame shake1 shake2 shake3 shake4 shake5 shake6 shake7 shake8
 $frame shake9 shake10 shake11 shakex shake12 shake13 shake14
 $frame shake15 shake16 shake17 shake18 shake19 shake20
-
 void() nihilanth_idle1        =[      $old1,  nihilanth_idle2       ] {};
 void() nihilanth_idle2        =[      $old2,  nihilanth_idle3       ] {};
 void() nihilanth_idle3        =[      $old3,  nihilanth_idle4       ] {};
@@ -64,12 +59,9 @@ void() nihilanth_idle43       =[      $old43, nihilanth_idle44      ] {};
 void() nihilanth_idle44       =[      $old44, nihilanth_idle45      ] {};
 void() nihilanth_idle45       =[      $old45, nihilanth_idle46      ] {};
 void() nihilanth_idle46       =[      $old46, nihilanth_idle1       ] {};
-
 void () Nihilanth_Throwspawns =
 {
 };
-
-
 void () Nihilanth_Thrownewdir =
 {
 	local entity oself, ndir;
@@ -103,7 +95,6 @@ void () Nihilanth_Thrownewdir =
 		}
 	}
 };
-
 // :D
 void(vector tdest, float tspeed, void() func) SHUB_CalcMove =
 {
@@ -131,11 +122,9 @@ local float		len, traveltime;
 	
 // set nextthink to trigger a think when dest is reached
 	//self.nextthink = time + traveltime;
-
 // scale the destdelta vector by the time spent traveling to get velocity
 	self.velocity = vdestdelta * (1/traveltime);	// qcc won't take vec/float	
 };
-
 void () shub_moveme =
 {
 	local entity oself;
@@ -159,7 +148,6 @@ void () shub_moveme =
 	self.owner.building = world;
 	dremove(self);
 };
-
 void () hurtball_touch =
 {
 	T_RadiusDamage (self, self.owner, 100, world);
@@ -171,7 +159,6 @@ void () hurtball_touch =
 	multicast (self.origin,1);
 	dremove(self);
 };
-
 void () voreball_touch =
 {
 	T_RadiusDamage (self, self.owner, 70, world);
@@ -183,7 +170,6 @@ void () voreball_touch =
 	multicast (self.origin,1);
 	dremove(self);
 };
-
 void () voreball_home =
 {
 	local vector dir;
@@ -206,7 +192,6 @@ void () voreball_home =
 	self.nextthink = (time + 0.2);
 	self.think = voreball_home;
 };
-
 void () teleball_touch =
 {
 	local entity tdest;
@@ -238,7 +223,6 @@ void () teleball_touch =
 	}
 	dremove(self);
 };
-
 void (vector org, entity shooter) LaunchMortars = {
    local float xdir;
    local float ydir;
@@ -262,32 +246,24 @@ void (vector org, entity shooter) LaunchMortars = {
    setmodel (newmis,"progs/lavaball.mdl");
    setsize (newmis,'0 0 0','0 0 0');
    setorigin (newmis,org);
-
 };
-
 void () mortarball_touch =
 {
 	local float i;
-
    while (i < 6) 
    {
 		LaunchMortars ((self.origin + '0 0 -1'),self.owner);
 		i++;
    }
 };
-
 void() monster_wizard_spawn =
 {
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-
 	self.velocity = '0 0 0';
-	
 	setmodel (self, "progs/wizard.mdl");
-
 	setsize (self, '-16 -16 -24', '16 16 40');
 	self.health = 80;
-
 	self.th_stand = wiz_stand1;
 	self.th_walk = wiz_walk1;
 	self.th_run = wiz_run1;
@@ -299,7 +275,6 @@ void() monster_wizard_spawn =
 	
 	flymonster_start ();
 };
-
 void () desolidify =
 {
 	self.solid = SOLID_BBOX;
@@ -308,7 +283,6 @@ void () desolidify =
 		self.nextthink = time;
 	}
 };
-
 void ( float fdelay, float fspeed, entity t_plyr ) teleball_throw =
 {
 	local entity teleball;
@@ -331,7 +305,6 @@ void ( float fdelay, float fspeed, entity t_plyr ) teleball_throw =
 	teleball.think = desolidify;
 	teleball.nextthink = time + .3;
 };
-
 void ( float fdelay, float fspeed, entity t_plyr ) mortarball_throw =
 {
 	local entity mortarball;
@@ -353,8 +326,7 @@ void ( float fdelay, float fspeed, entity t_plyr ) mortarball_throw =
 	mortarball.has_tesla = fspeed;
 	mortarball.think = desolidify;
 	mortarball.nextthink = time + .3;
-}
-
+};
 void ( float fdelay, float fspeed, entity t_plyr ) voreball_throw =
 {
 	local entity voreball;
@@ -376,8 +348,7 @@ void ( float fdelay, float fspeed, entity t_plyr ) voreball_throw =
 	voreball.has_tesla = fspeed;
 	voreball.think = desolidify;
 	voreball.nextthink = time + .3;
-}
-
+};
 void ( float fdelay, float fspeed, entity t_plyr ) spawnball_throw =
 {
 	local entity nmon;
@@ -410,7 +381,6 @@ void ( float fdelay, float fspeed, entity t_plyr ) hurtball_throw =
 	hurtball.think = desolidify;
 	hurtball.nextthink = time + .3;
 };
-
 void () shubmover_think =
 {
 	// shub has 4 phases of attack which overlap
@@ -505,12 +475,10 @@ void () shubmover_think =
 	self.think = shubmover_think;
 	self.nextthink = time + random()*5;
 };
-
 void () nihilanth_pain =
 {
 	//_bprint(ftos(self.health), " is health\n");
 };
-
 void () nihilanth_explode =
 {
 // throw tons of meat chunks	
@@ -531,7 +499,6 @@ void () nihilanth_explode =
 				self.origin_x = oldo_x + x;
 				self.origin_y = oldo_y + y;
 				self.origin_z = oldo_z + z;
-
 				r = random();
 				if (r < 0.3)				
 					ThrowGib ("progs/gib1.mdl", -999);
@@ -547,7 +514,6 @@ void () nihilanth_explode =
 	}
 	self.effects = 128;
 };
-
 void () nihilanth_end_touch =
 {
 	local entity tend, tend2;
@@ -565,7 +531,6 @@ void () nihilanth_end_touch =
 	bprint(2,"monster_nihilanth: no n_ending teleporter!\n");
 	dremove(self);
 };
-
 void () nihilanth_finale =
 {
 	self.target = "n_dead";
@@ -577,7 +542,6 @@ void () nihilanth_finale =
 	
 	nihilanth_explode();
 };
-
 void () monster_nihilanth =
 {
 	local entity shubmover;
@@ -627,5 +591,4 @@ void () monster_nihilanth =
 	total_monsters = total_monsters + 1;
 //Nihilanth_Throwspawns();
 };
-
 //end

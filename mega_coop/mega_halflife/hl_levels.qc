@@ -19,13 +19,11 @@ void () trigger_transition_touch =
 		next_transition_use = time + 5;
 	}
 };
-
 void () trigger_transition =
 {
 	InitTrigger();
 	self.touch = trigger_transition_touch;
 };
-
 // are we transitioning from another level?
 float () HalfLife_UseLandmark =
 {
@@ -36,7 +34,6 @@ float () HalfLife_UseLandmark =
 	else
 		return #TRUE;
 };
-
 // Transition_Use:
 // when a level is changed, there's sometimes a door that's supposed to open that the previous level tells the new level
 void () Transition_Use =
@@ -58,7 +55,6 @@ void () Transition_Use =
 	strunzone(self.target);
 	dremove(self);
 };
-
 // Singleplayer transitions (hackish)
 //(also handles doors and such with properties that carry over..)
 void () info_landmark =
@@ -127,7 +123,6 @@ void () info_landmark =
 	bprint(2,"LANDMARK CREATED!\n");
 #endif
 };
-
 void () HalfLife_SetupLandmark =
 {
 #ifdef SVEN_COOP
@@ -213,6 +208,4 @@ void () HalfLife_SetupLandmark =
 	}
 #endif
 };
-
 //END
-

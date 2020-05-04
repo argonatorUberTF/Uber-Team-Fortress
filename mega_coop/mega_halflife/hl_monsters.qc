@@ -1,77 +1,65 @@
 // Convert Half-Life 1 monsters to quake 1
 float chthon_spawned;		// only one monster_tentacle per map pls ;/
-
 void () monster_human_grunt =
 {
 	self.origin_z += 30;
 	monster_enforcer ();
 	self.classname = "monster_enforcer";
 };
-
 void () monster_shocktrooper =
 {
 	monster_human_grunt();
 };
-
 void () monster_robogrunt =
 {
 	self.origin_z += 30;
 	monster_demon1();
 	self.classname = "monster_demon1";
 };
-
 void () monster_pitdrone =
 {
 	self.origin_z += 30;
 	self.classname = "monster_hell_knight";
 	monster_hell_knight();
 };
-
 void () monster_gonome =
 {
 	self.origin_z += 30;
 	self.classname = "monster_ogre";
 	monster_ogre();
 };
-
 void () monster_male_assassin =
 {
 	self.origin_z += 30;
 	self.classname = "monster_tarbaby";
 	monster_tarbaby();
 };
-
 void () monster_zombie_soldier =
 {
 	self.origin_z += 30;
 	self.classname = "monster_shambler";
 	monster_shambler();
 };
-
 void () monster_human_medic_ally =
 {
 	monster_human_grunt();
 };
-
 void () monster_human_grunt_ally =
 {
 	self.origin_z += 30;
 	monster_army();
 };
-
 void () monster_scientist =
 {
 	self.origin_z += 30;
 	monster_army();
 };
-
 void () monster_human_assassin =
 {
 	self.origin_z += 30;
 	monster_tarbaby();
 	self.classname = "monster_tarbaby";
 };
-
 // The flying guys that look like ripoffs from duke nukem
 void () monster_alien_controller =
 {
@@ -79,14 +67,12 @@ void () monster_alien_controller =
 	monster_wizard();
 	self.classname = "monster_wizard";
 };
-
 void () monster_bullchicken =
 {
 	self.origin_z += 30;
 	monster_demon1();
 	self.classname = "monster_demon1";
 };
-
 // the big-ass fish. Really need something better to replace this with :p
 void () monster_ichthyosaur =
 {
@@ -94,14 +80,12 @@ void () monster_ichthyosaur =
 	monster_fish();		// this is going to look funny as hell in c2a3a by the bridge scene.. :)
 	self.classname = "monster_fish";
 };
-
 // snarks: the small annoying little craps that you can collect and use as weapons
 void () monster_snark =
 {
 	self.origin_z += 30;
 	dremove(self); // eh, i got nothing?
 };
-
 //CHTHON!
 void () monster_tentacle =
 {
@@ -116,14 +100,12 @@ void () monster_tentacle =
 	}
 	dremove(self);
 };
-
 void () monster_bigmomma =
 {
 	self.origin_z += 35;
 	monster_shalrath();
 	self.classname = "monster_shalrath";
 };
-
 // not implementing these, really
 void () info_bigmomma_use =
 {
@@ -136,7 +118,6 @@ void () info_bigmomma_use =
 		SUB_UseTargets();
 	}
 };
-
 void () info_bigmomma =
 {
 	self.use = info_bigmomma_use;
@@ -147,19 +128,16 @@ void () info_bigmomma =
 	newmis.target = self.targetname;
 	self.owner = newmis;
 };
-
 void () monster_cockroach =
 {
 	// ADDME
 };
-
 void () monster_miniturret =
 {
 	self.team_no = 2;
 	self.origin_z -= 30;
 	monster_turret();
 };
-
 // no longer the peace maker.. now he's a man of ugliness and chainsaws!
 void () monster_barney =
 {
@@ -167,14 +145,12 @@ void () monster_barney =
 //self.lives = 1;
 	monster_ogre();
 };
-
 void () monster_headcrab =
 {
 	self.origin_z += 30;
 	monster_spider();
 	self.classname = "monster_spider";		// ADDME: sight sound
 };
-
 // ADDME: honestly, quake doesnt have any ceiling-clinging monster I can think of :\
 void () monster_barnacle =
 {
@@ -182,34 +158,29 @@ void () monster_barnacle =
 	monster_dog();
 	self.classname = "monster_dog";
 };
-
 void () monster_alien_grunt =
 {
 	self.origin_z += 30;
 	monster_hell_knight();
 	self.classname = "monster_hell_knight";
 };
-
 void () monster_leech =
 {
 	monster_fish();
 	self.classname = "monster_fish";
 };
-
 void () monster_alien_slave =
 {
 	self.origin_z += 30;
 	monster_knight();
 	self.classname = "monster_knight";
 };
-
 void () monster_houndeye =
 {
 	self.origin_z += 30;
 	monster_dog();
 	self.classname = "monster_dog";
 };
-
 // ok i suck
 void () monster_osprey =
 {
@@ -221,16 +192,13 @@ void () monster_osprey =
 		self.target = "blah";
 	}
 };
-
 void () monster_gargantua =
 {
 	self.origin_z += 30;
 	monster_shambler();
 	self.classname = "monster_shambler";
 };
-
 // func_tank moved to hl_misc
-
 void () monster_tripmine =
 {
 // XAVIOR: FIXME: for mtf coop, just make this a proxy mine lol
@@ -242,7 +210,6 @@ void () monster_tripmine =
 	precache_sound ("weapons/tarbeep.wav");
 //LTB_PreArm();
 };
-
 // monstermaker: INCOMPLETE (but works)
 //(basically it teleports monsters to its' origin)
 void () monstermaker_use =
@@ -260,12 +227,10 @@ void () monstermaker_use =
 		}
 		te = nextent(te); 
 	}
-
 	if (te == world || !foundit) {
 		dremove(self);
 		return;
 	}
-
 	if (self.m_imaxlivechildren > 0) {	// incomplete!
 		if ( self.owner != world )
 			if ( self.owner.health > 0 ) {
@@ -290,7 +255,6 @@ void () monstermaker_use =
 	}
 	
 };
-
 void () monstermaker =
 {
 	local entity newmon, oself;
@@ -309,7 +273,6 @@ void () monstermaker =
 			self = oself;
 			newmon.owner = self;
 			setorigin(newmon,'0 0 5000');	// i know, not really the most sane thing to do.. but then again when have i ever coded sanely? :p
-
 			i++;
 		}
 		self.owner = world;//newmon;
@@ -324,6 +287,5 @@ void () monstermaker =
 		self.nextthink = time + self.has_tesla;
 	}
 };
-
 // final boss is in hl_nihilanth.qc
 //END

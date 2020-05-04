@@ -1,6 +1,5 @@
 // Half-life trigger and global variable ents
 // hackish way of setting globals
-
 void () env_global_use =
 {
 	localcmd("set ");
@@ -10,7 +9,6 @@ void () env_global_use =
 	bprint(2, self.globalstate);
 	bprint(2, "\n");
 };
-
 // sets globals
 void () env_global =
 {
@@ -21,7 +19,6 @@ void () env_global =
 		return;
 	}
 };
-
 void () trigger_auto_go =
 {
 	local entity timer;
@@ -40,7 +37,6 @@ void () trigger_auto_go =
 		dremove(self);
 	}
 };
-
 #ifdef SVEN_COOP
 void () trigger_auto_think =
 {
@@ -50,7 +46,6 @@ void () trigger_auto_think =
 			dremove(self);
 	}
 };
-
 void () trigger_auto =
 {
 	self.think = trigger_auto_think;
@@ -63,7 +58,6 @@ void () trigger_auto_think =
 		trigger_auto_go();
 		return;
 	}
-
 	if (cvar(self.globalstate) == 1) {
 	 hldprint(2,"WHEE AUTO ACTIVATED!\n");
 		trigger_auto_go();
@@ -73,12 +67,10 @@ void () trigger_auto_think =
 										// sven coop method works well, but is not meant for singleplayer consistency.
 	}
 };
-
 void () trigger_auto =
 {
 	self.think = trigger_auto_think;
 	self.nextthink = time + 5;
 };
 #endif
-
 //END

@@ -11,14 +11,11 @@ string (string cstr) speaker_sound;
 #define locked barrel
 void ( string t_Target, float t_Time ) Delayed_Timer;
 void () ambient_use;
-
-
 void () speaker_unlock =
 {
 	self.owner.#locked = 0;
 	dremove(self);
 };
-
 void () speaker_think =
 {
 	local float i;
@@ -48,7 +45,6 @@ void () speaker_think =
 		Delayed_Timer( newmis.targetname, i);
 	}
 };
-
 void () ambient_use =
 {
 	if (self.is_speaker == 1) {
@@ -87,12 +83,10 @@ void () ambient_use =
 		return;
 	}
 };
-
 void () ambient_generic =
 {
 	local string link;
 	local float i;
-
 #ifdef COOP_HAX
 	link = hl_script_str(strtoupper(self.message)/*self.message*/);
 #else
@@ -138,7 +132,6 @@ void () ambient_generic =
 		self.has_tesla = ATTN_NONE;
 	else
 		self.has_tesla = ATTN_STATIC;
-
 		
 	if (self.health == 0)	// final vol
 		self.health = 1;
@@ -150,7 +143,6 @@ void () ambient_generic =
 //sound (self, CHAN_VOICE, "enforcer/enfire.wav", 1, ATTN_NORM);
 //dremove(self);
 };
-
 // scripted sentences - things that scientists trigger to give you dialogue and such
 void () scripted_sentence_use =
 {
@@ -159,7 +151,6 @@ void () scripted_sentence_use =
 	SUB_UseTargets();
 	dremove(self);
 };
-
 void () scripted_sentence =
 {
 	local string link;
@@ -194,7 +185,6 @@ void () scripted_sentence =
 	strunzone(link);
 	self.use = scripted_sentence_use;
 };
-
 // EVIL HAX AWAIT:
 //hl sentences.txt parser
 void () parse_hl_crap =
@@ -233,7 +223,6 @@ void () parse_hl_crap =
 	fclose( file2 );
 	bprint(2,"LET THE PARSING END!\n");
 };
-
 // hl_script_str: the HL text scripts, converted to if/else statements using parse_hl_crap.
 string ( string cstr ) hl_script_str =
 {
@@ -733,7 +722,6 @@ string ( string cstr ) hl_script_str =
 	else if (speaker_sound(cstr) != "NOSPEAK") return speaker_sound(cstr);
 	else return "NOLINK";
 };
-
 string (string cstr) speaker_sound =
 {
 	self.is_speaker = #TRUE;
@@ -978,5 +966,4 @@ string (string cstr) speaker_sound =
 	self.is_speaker = #FALSE;
 	return "NOSPEAK";
 };
-
 //END

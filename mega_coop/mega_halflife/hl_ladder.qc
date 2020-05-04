@@ -11,12 +11,9 @@
 //	func_bspframe
 //	func_model
 //
-
 //============================================================================
-
 float LADDEROFS = 0.36;// touchy...
 #define LADDER_MOVESPEED	400
-
 // This is tricky cause we can't just check key presses...
 void() ladder_touch =
 {
@@ -95,11 +92,9 @@ void() ladder_touch =
 // Set the player's new veloctity
 	other.velocity = vel;
 };
-
 void() func_ladder =
 {
 	InitTrigger();
 	self.touch = ladder_touch;
 };
-
 //end

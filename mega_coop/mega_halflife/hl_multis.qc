@@ -29,7 +29,6 @@ void () multisource_use =
 				}
 				i++;
 			}
-
 		}
 		te = find(te, classname, "multi_manager");
 	}
@@ -46,7 +45,6 @@ void () multisource_use =
 	SUB_UseTargets();
 	dremove(self);	// look in subs.qc for why i do this
 };
-
 void () multisource =
 {
 	self.use = multisource_use;
@@ -54,7 +52,6 @@ void () multisource =
 		if (self.targetname == "button_lock")
 			dremove(self);
 };
-
 // checks to see if the entity has a "master" (IE multisource)
 float ( entity t_ent ) has_master =
 {
@@ -79,7 +76,6 @@ float ( entity t_ent ) has_master =
 	}
 	return 0;
 };
-
 // activate master (used on teleporters)
 float ( entity t_ent ) activate_master =
 {
@@ -102,5 +98,4 @@ float ( entity t_ent ) activate_master =
 	}
 	return 0;
 };
-
 //eND

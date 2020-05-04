@@ -10,7 +10,6 @@ void () func_water_use =
 		self.has_tesla = 1;
 	}
 };
-
 #ifdef NEW_WATER
 void() liquid_touch =
 {
@@ -92,9 +91,7 @@ void() liquid_touch =
 	else
 		other.velocity_z = pvec_z;
 };
-
 void () func_water = {
-
 if (mapname == "openfire" || mapname == "tfc_openfire") 
    dremove(self);
    self.solid = 1.000;
@@ -137,7 +134,6 @@ if (mapname == "openfire" || mapname == "tfc_openfire")
    }
 	HalfLife_DoRender();
 };
-
 #else
 void () liquid_touch =
 {
@@ -155,9 +151,8 @@ void () liquid_touch =
 			other.velocity_z = -200;
 	}
 };
-
-void () func_water = {
-
+void () func_water =
+{
 if (mapname == "openfire" || mapname == "tfc_openfire") 
    dremove(self);
    self.solid = 1.000;
@@ -186,5 +181,4 @@ if (mapname == "openfire" || mapname == "tfc_openfire")
 	HalfLife_DoRender();
 };
 #endif
-
 //END

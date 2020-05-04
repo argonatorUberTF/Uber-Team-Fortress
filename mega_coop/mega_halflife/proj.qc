@@ -12,10 +12,8 @@ enum {
 	PE_LASER,
 	PE_ZOMBIEGIB
 };
-
 .void() proj_touch, proj_think;
 .float damage_direct, damage_exp, expire_time, mod_direct, radius_exp, proj_effect, proj_think_time;
-
 // functions used only by this QC file
 float() _PRJ_Bounce =
 {
@@ -26,13 +24,11 @@ float() _PRJ_Bounce =
 		self.avelocity = '0 0 0';
 	return 1; // keep bouncing
 };
-
 float() _PRJ_Remove =
 {
 	remove(self);
 	return 1; // stop execution within touch function
 };
-
 float() _PRJ_Stop =
 {
 	if (other.takedamage)
@@ -43,14 +39,12 @@ float() _PRJ_Stop =
 	self.proj_touch = _PRJ_Remove;
 	return 1; // keep the entity alive
 };
-
 void() _PRJ_Touch =
 {
 	local entity ignore;
 // check validity of projectile
 	if (other == self.owner)
 		return; // don't explode on owner
-
 	if (self.voided) {
 		return;
 	}
@@ -78,13 +72,11 @@ void() _PRJ_Touch =
 // run projectile effect
 	remove(self);
 };
-
 void() _PRJ_Expire =
 {
 	other = self;
 	_PRJ_Touch();	
 };
-
 void() _PRJ_Think =
 {
 	if (self.expire_time > time)
@@ -92,11 +84,9 @@ void() _PRJ_Think =
 		_PRJ_Expire();
 		return;
 	}
-
 	self.nextthink = time + self.proj_think_time;
 	self.proj_think(); // projectile could remove itself here
 };
-
 // functions used by outside QC files
 // set bouncy projectile function
 void() PRJ_SetBouncyProjectile =
@@ -105,7 +95,6 @@ void() PRJ_SetBouncyProjectile =
 	newmis.movetype = MOVETYPE_BOUNCE;
 	newmis.avelocity = '300 300 300';
 };
-
 // set tossed projectile (zombie gib) function
 void() PRJ_SetTossedProjectile =
 {
@@ -113,14 +102,12 @@ void() PRJ_SetTossedProjectile =
 	newmis.movetype = MOVETYPE_BOUNCE;
 	newmis.avelocity = '3000 1000 2000';
 };
-
 // set radius damage function
 void(float damg, float damgrad, float damgmod) PRJ_SetRadiusDamage =
 {
 	newmis.damage_exp = damg;
 	newmis.radius_exp = damgrad;
 };
-
 // extra think function, should always be called ONCE after the main spawn function
 void(void() thinkfunc, float thinktimeinit, float thinkres) PRJ_SetThink =
 {
@@ -129,13 +116,11 @@ void(void() thinkfunc, float thinktimeinit, float thinkres) PRJ_SetThink =
 	newmis.proj_think = thinkfunc;
 	newmis.proj_think_time = thinkres;
 };
-
 // extra touch function
 void(float() touchfunc) PRJ_SetTouch =
 {
 	newmis.proj_touch = touchfunc;
 };
-
 // main spawning function
 void(entity parent, string modl, vector org, vector vel, float effect, float damg, float damgmod, float expiretime) PRJ_FireProjectile =
 {

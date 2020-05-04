@@ -1,5 +1,4 @@
 void () rot_crush;
-
 float DOOR_REVERSE		= 2;
 float DOOR_X_AXIS		= 64;
 float DOOR_Y_AXIS		= 128;
@@ -75,16 +74,12 @@ void() func_door_rotating =
 	// check for reverse rotation
 	if (self.spawnflags & DOOR_REVERSE)
 		self.movedir = '0 0 0' - self.movedir;
-
-
-
 	self.max_health = self.health;
 	self.solid = SOLID_BSP;
 	self.movetype = 7.000;
 	setorigin (self, self.origin);  
 	setmodel (self, self.model);
 	self.classname = "door_rotating";
-
 	self.blocked = door_blocked;
 	self.use = door_use;
 	if (!self.speed)
@@ -145,7 +140,6 @@ void() func_door_rotating =
 		else if (self.targetname == "kick")
 			self.targetname = "kickcar";
 };
-
 // addme: add proper support :)
 // see: momentary_rot_button
 void () momentary_door =

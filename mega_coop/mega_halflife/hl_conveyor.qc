@@ -20,7 +20,6 @@ void () conveyor_touch =
 	pvec = (pvec * (self.speed/13));
 	other.velocity += pvec;
 };
-
 void () conveyor_use =
 {
 	if (self.has_tesla == 180)
@@ -32,7 +31,6 @@ void () conveyor_use =
 	else
 		self.has_tesla = 180;
 };
-
 void () func_conveyor =
 {
 	self.solid = 4.000;

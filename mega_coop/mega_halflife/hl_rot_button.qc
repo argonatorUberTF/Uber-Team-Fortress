@@ -1,7 +1,6 @@
 // Rotating buttons and other various rotating entities
 #define next_use_time	rv_s_h
 #define SF_MOMENTARY		1024
-
 void () hl_rotating =
 {
 	local float mvspd, realmvspd;
@@ -26,7 +25,6 @@ void () hl_rotating =
 	// fixme: add adjustable speed
 	SUB_CalcAngleMove (self.pos1, realmvspd, hl_rotating);
 };
-
 void () func_rotating_use =
 {
 	if (self.has_tesla == 0) {
@@ -41,11 +39,9 @@ void () func_rotating_use =
 	}
 	//self.use = SUB_Null;
 };
-
 void() rot_crush =
 {
 //dprint ("plat_crush\n");
-
 	T_Damage (other, self, self, 1);
 };
 	
@@ -83,12 +79,10 @@ void () func_rotating =
 //self.think = hl_rotating;
 //self.nextthink = time + .1;
 };
-
 #define SF_BRUSH_ROTATE_INSTANT 	1
 #define	SF_PENDULUM_SWING			2
 #define SF_PENDULUM_AUTO_RETURN		16
 #define	SF_PENDULUM_PASSABLE		32
-
 void() Brush_Think =
 {
 	local entity oself;
@@ -111,7 +105,6 @@ void ( entity br_Owner, void() br_Think, float br_Ntime) Brush_Thinkme =
 	brthinker.nextthink = br_Ntime;
 #endif
 };
-
 void () pendulum_stop =
 {
 	self.angles = self.m_start;
@@ -119,7 +112,6 @@ void () pendulum_stop =
 	self.think = SUB_Null;
 	self.avelocity = self.g_vecZero;
 };
-
 void () pendulum_swing =
 {
 	local vector delta;
@@ -138,7 +130,6 @@ void () pendulum_swing =
 		self.speed -= self.m_accel * dt;	// Integrate velocity
 	else 
 		self.speed += self.m_accel * dt;
-
 	if ( self.speed > self.m_maxSpeed )
 		self.speed = self.m_maxSpeed;
 	else if ( self.speed < -self.m_maxSpeed )
@@ -161,18 +152,15 @@ void () pendulum_swing =
 			self.speed = self.m_dampSpeed;
 		else if ( self.speed < -self.m_dampSpeed )
 			self.speed = -self.m_dampSpeed;
-
 	}
 //_bprint(vtos(self.avelocity) , " is avelocity4\n");
 // Call this again
 	Brush_Thinkme( self, self.think, self.ltime + 0.1 );
 //self.nextthink = self.ltime + 0.1;
 };
-
 void () pendulum_rope_touch =
 {
 };
-
 void () pendulum_use =
 {
 	local vector	delta;
@@ -181,7 +169,6 @@ void () pendulum_use =
 		if ( self.spawnflags & #SF_PENDULUM_AUTO_RETURN ) 
 		{		
 			delta = ( self.angles - self.m_start );
-
 			self.avelocity = self.m_maxSpeed * self.movedir;
 			self.think = pendulum_stop;
 			Brush_Thinkme( self, self.think, (self.ltime + vlen (delta) / self.m_maxSpeed) );
@@ -203,7 +190,6 @@ void () pendulum_use =
 		self.m_dampSpeed = self.m_maxSpeed;
 	}
 };
-
 void () func_pendulum =
 {
 	SetMovedir ();
@@ -227,7 +213,6 @@ void () func_pendulum =
 		return;
 	if (self.speed == 0)
 		self.speed = 100;
-
 	self.m_accel = (self.speed * self.speed) / (2 * fabs(self.m_distance));	// Calculate constant acceleration from speed and distance
 	self.m_maxSpeed = self.speed;
 	self.m_start = self.angles;
@@ -243,20 +228,15 @@ void () func_pendulum =
 		//self.touch = pendulum_rope_touch;
 	}
 };
-
 void () func_rot_button_use;
-
 void () func_rot_button_touch;
-
 void () func_rot_button_reactivate =
 {
 	self.owner.touch = func_rot_button_touch;
 	self.owner.th_die = func_rot_button_use;
 	self.owner.hl_use = func_rot_button_use;
-
 	dremove(self);
 };
-
 void () hl_rotating_button_toggle =
 {
 	if (self.building == world) {
@@ -266,7 +246,6 @@ void () hl_rotating_button_toggle =
 	self = self.building;
 	self.use();
 };
-
 void () hl_rotating_button =
 {
 	local float mvspd, plyr_found, realmvspd, movedoor;
@@ -406,7 +385,6 @@ void () hl_rotating_button =
 	else
 		self.nextthink = time + .02;
 };
-
 void () func_rot_button_use =
 {
 	local entity targ;
@@ -445,7 +423,6 @@ void () func_rot_button_use =
 		targ = find(targ, targetname, self.targetname);
 	}
 };
-
 void () func_rot_button_touch =
 {
 	if (other.classname != "player")
@@ -462,7 +439,6 @@ void () func_rot_button_touch =
 	self.touch = SUB_Null;
 	func_rot_button_use();
 };
-
 void () func_rot_button =
 {
 	self.movetype = 7;
@@ -490,7 +466,6 @@ void () func_rot_button =
 	self.touch = func_rot_button_touch;
 	
 };
-
 void () momentary_rot_button =
 {
 	self.spawnflags += #SF_MOMENTARY;

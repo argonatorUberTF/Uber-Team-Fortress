@@ -254,7 +254,9 @@ void () env_beam_use = {
       //setmodel (self, string_null);
       self.spawnflags = (self.spawnflags - 1.000);
 
-   } else {
+   }
+   else
+   {
 
 		lbeam = spawn();
 		lbeam.owner = self;
@@ -303,7 +305,9 @@ local entity lbeam;
    precache_model("progs/spark.spr");
    if ( self.mdl ) {
       precache_model (self.mdl);
-   } else {
+   }
+   else
+   {
       precache_model ("progs/beam.mdl");
       self.mdl = "progs/beam.mdl";
       //if (self.team_no = 2.000

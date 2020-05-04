@@ -1,12 +1,9 @@
 // MegaTF turret
 //made by Ambush (as far as I know)
 .float rotate_type;
-
 float enemy_yaw1, enemy_vis1, enemy_range1, enemy_infront1;
-
 void() turret_ret2;
 void() turret_active;
-
 float () MTurret_FindTarget =
 {
 	local entity te;
@@ -26,7 +23,6 @@ float () MTurret_FindTarget =
 	}
 	return 0;
 };
-
 void() beam_touch = 
 {
 	local float totaldmg;
@@ -64,7 +60,6 @@ void() beam_touch =
 	sound(self, 3, "enforcer/enfstop.wav", 1, 1);
 	BecomeExplosion();
 };
-
 void() beam_generate = 
 {
 	local entity beamseg;
@@ -114,17 +109,14 @@ void() beam_generate =
 	}
 	self.nextthink = time + 0.05;
 };
-
 float(float pitch) turret_frame = 
 {
 	return floor(pitch / 5.625);
 };
-
 float(float pitch) turret_fireframe = 
 {
 	return turret_frame(pitch) + 23;
 };
-
 float() CheckTurretAttack = 
 {
 	local vector spot1;
@@ -192,7 +184,6 @@ float() CheckTurretAttack =
 	}
 	return 0;
 };
-
 void() turret_face = 
 {
 	local vector tmpvec;
@@ -226,7 +217,6 @@ void() turret_face =
 	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 	ChangeYaw();
 };
-
 void() turret_still = [0, turret_still]
 {
 	self.frame = turret_frame(self.rotate_type);
@@ -239,7 +229,6 @@ void() turret_still = [0, turret_still]
 	FindTarget();
 #endif
 };
-
 void() turret_ret1 = [16, turret_ret1]
 {
 	if (self.frame >= 15)
@@ -250,39 +239,32 @@ void() turret_ret1 = [16, turret_ret1]
 	self.frame = self.frame + 1;
 	self.nextthink = time + 0.05;
 };
-
 void() turret_ret2 = [16, turret_ret3]
 {
 	self.nextthink = time + 0.2;
 	sound(self, 3, "weapons/gunidle1.wav", 1, 1);
 };
-
 void() turret_ret3 = [17, turret_ret4]
 {
 	self.nextthink = time + 0.2;
 };
-
 void() turret_ret4 = [18, turret_ret5]
 {
 	self.nextthink = time + 0.2;
 };
-
 void() turret_ret5 = [19, turret_ret6]
 {
 	self.solid = 0;
 	self.nextthink = time + 0.2;
 };
-
 void() turret_ret6 = [20, turret_ret7]
 {
 	self.nextthink = time + 0.2;
 };
-
 void() turret_ret7 = [21, turret_ret8]
 {
 	self.nextthink = time + 0.2;
 };
-
 void() turret_ret8 = [22, turret_retracted]
 {
 	if (!(self.currentammo))
@@ -291,40 +273,33 @@ void() turret_ret8 = [22, turret_retracted]
 	}
 	self.nextthink = time + 0.05;
 };
-
 void() turret_unret1 = [21, turret_unret2]
 {
 	self.nextthink = time + 0.05;
 	sound(self, 3, "weapons/gunidle1.wav", 1, 1);
 };
-
 void() turret_unret2 = [20, turret_unret3]
 {
 	self.nextthink = time + 0.05;
 };
-
 void() turret_unret3 = [19, turret_unret4]
 {
 	self.nextthink = time + 0.05;
 };
-
 void() turret_unret4 = [18, turret_unret5]
 {
 	self.solid = 3;
 	setmodel(self, "progs/turret.mdl");
 	self.nextthink = time + 0.05;
 };
-
 void() turret_unret5 = [17, turret_unret6]
 {
 	self.nextthink = time + 0.05;
 };
-
 void() turret_unret6 = [16, turret_unret7]
 {
 	self.nextthink = time + 0.05;
 };
-
 void() turret_unret7 = [0, turret_unret7]
 {
 	if (self.frame > turret_frame(self.rotate_type) + 1)
@@ -337,7 +312,6 @@ void() turret_unret7 = [0, turret_unret7]
 		turret_active();
 	}
 };
-
 void() turret_retracted = [22, turret_retracted]
 {
 #ifdef mtf_coop
@@ -349,7 +323,6 @@ void() turret_retracted = [22, turret_retracted]
 		turret_unret1();
 	}
 };
-
 void() turret_active = [0, turret_active]
 {
 	enemy_infront1 = infront(self.enemy);
@@ -396,7 +369,6 @@ void() turret_active = [0, turret_active]
 	}
 	CheckTurretAttack();
 };
-
 void() turret_bullet1 = [0, turret_bullet2]
 {
 	local vector dir;
@@ -408,13 +380,11 @@ void() turret_bullet1 = [0, turret_bullet2]
 	dir = normalize(dir - self.origin);
 	FireBullets(2, dir, '0 0 0', MOD_HLIFE);
 };
-
 void() turret_bullet2 = [0, turret_bullet3]
 {
 	turret_face();
 	self.nextthink = time + 0.05;
 };
-
 void() turret_bullet3 = [0, turret_bullet4]
 {
 	local vector dir;
@@ -426,13 +396,11 @@ void() turret_bullet3 = [0, turret_bullet4]
 	dir = normalize(dir - self.origin);
 	FireBullets(2, dir, '0 0 0', MOD_HLIFE);
 };
-
 void() turret_bullet4 = [0, turret_bullet5]
 {
 	turret_face();
 	self.nextthink = time + 0.05;
 };
-
 void() turret_bullet5 = [0, turret_active]
 {
 	local vector dir;
@@ -444,7 +412,6 @@ void() turret_bullet5 = [0, turret_active]
 	dir = normalize(dir - self.origin);
 	FireBullets(2, dir, '0 0 0', MOD_HLIFE);
 };
-
 void() turret_laser1 = [0, turret_laser2]
 {
 	turret_face();
@@ -455,22 +422,18 @@ void() turret_laser1 = [0, turret_laser2]
 	newmis = launch_missile("progs/laser.mdl", self.origin, '600 0 0');
 	target_missile(newmis, self.enemy.origin, 1);
 };
-
 void() turret_laser2 = [0, turret_laser3]
 {
 	turret_face();
 };
-
 void() turret_laser3 = [0, turret_laser4]
 {
 	turret_face();
 };
-
 void() turret_laser4 = [0, turret_laser5]
 {
 	turret_face();
 };
-
 void() turret_laser5 = [0, turret_active]
 {
 	turret_face();
@@ -481,7 +444,6 @@ void() turret_laser5 = [0, turret_active]
 	newmis = launch_missile("progs/laser.mdl", self.origin, '600 0 0');
 	target_missile(newmis, self.enemy.origin, 1);
 };
-
 void() turret_rocket1 = [0, turret_active]
 {
 	turret_face();
@@ -492,28 +454,24 @@ void() turret_rocket1 = [0, turret_active]
 	target_missile(newmis, self.enemy.origin, 1);
 	setdmg_missile(newmis, 15, 15);
 };
-
 void() turret_beam1 = [0, turret_beam2]
 {
 	turret_face();
 	sound(self, 1, "weapons/railgr1a.wav", 1, 1);
 	self.nextthink = time + 0.2;
 };
-
 void() turret_beam2 = [0, turret_beam3]
 {
 	sound(self, 1, "weapons/railgr1a.wav", 1, 1);
 	turret_face();
 	self.nextthink = time + 0.2;
 };
-
 void() turret_beam3 = [0, turret_beam4]
 {
 	sound(self, 1, "weapons/railgr1a.wav", 1, 1);
 	turret_face();
 	self.nextthink = time + 0.2;
 };
-
 void() turret_beam4 = [0, turret_beam5]
 {
 	turret_face();
@@ -531,22 +489,18 @@ void() turret_beam4 = [0, turret_beam5]
 	newmis.think = beam_generate;
 	newmis.nextthink = time + 0.05;
 };
-
 void() turret_beam5 = [0, turret_beam6]
 {
 	turret_face();
 };
-
 void() turret_beam6 = [0, turret_beam7]
 {
 	turret_face();
 };
-
 void() turret_beam7 = [0, turret_active]
 {
 	turret_face();
 };
-
 void() turret_fire1 = [0, turret_fire2]
 {
 	turret_face();
@@ -556,19 +510,16 @@ void() turret_fire1 = [0, turret_fire2]
 	}
 	self.nextthink = time + 0.05;
 };
-
 void() turret_fire2 = [0, turret_fire3]
 {
 	turret_face();
 	self.nextthink = time + 0.05;
 };
-
 void() turret_fire3 = [0, turret_fire4]
 {
 	turret_face();
 	self.nextthink = time + 0.05;
 };
-
 void() turret_fire4 = [0, turret_fire4]
 {
 	turret_face();
@@ -595,7 +546,6 @@ void() turret_fire4 = [0, turret_fire4]
 		}
 	}
 };
-
 void() turret_die = 
 {
 	local entity dedtur;
@@ -613,7 +563,6 @@ void() turret_die =
 	dedtur.effects = 0;
 	ThrowHead("progs/h_turret.mdl", self.health);
 };
-
 void(entity attacker, float t_damage) turret_pain = 
 {
 	if (self.pain_finished > time)
@@ -622,7 +571,6 @@ void(entity attacker, float t_damage) turret_pain =
 	}
 	self.pain_finished = time + 1;
 };
-
 void() turret_use = 
 {
 	if (self.currentammo)
@@ -650,7 +598,6 @@ void() turret_use =
 		}
 	}
 };
-
 void() turret_setup = 
 {
 	local vector endorg;
@@ -686,7 +633,6 @@ void() turret_setup =
 		self.nextthink = self.nextthink + random() * 0.5;
 	}
 };
-
 void() monster_turret = 
 {
 #ifdef mtf_coop_halflife

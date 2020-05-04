@@ -4,7 +4,6 @@ float be_null;
 // EXTRAS_R4 STUFF:
 //============================================================================
 float VIEWONLY = 1;
-
 void () func_chargerunit_use =
 {
 	if (self.has_tesla == 0) {
@@ -36,7 +35,6 @@ void () func_chargerunit_use =
 		}
 	}
 };
-
 void () func_chargerunit =
 {
 	self.solid = SOLID_BSP;
@@ -47,21 +45,18 @@ void () func_chargerunit =
 	setorigin(self, self.origin);
 	self.hl_use = func_chargerunit_use;
 };
-
 void () func_healthcharger =
 {
 	self.has_tesla = 0;	// health unit
 	self.max_health = 75;
 	func_chargerunit();
 };
-
 void () func_recharge =
 {
 	self.has_tesla = 1;	// armor unit
 	self.armorvalue = 75;
 	func_chargerunit();
 };
-
 // generally used in the training levels..
 void () func_guntarget_die =
 {
@@ -77,15 +72,12 @@ void () func_guntarget =
 	self.takedamage = 1;
 	self.th_die = func_guntarget_die;
 };
-
 //trigger_gravity: changes gravity of the palyer that touches it. Not exactly rocket science.
-
 void () trigger_gravity =
 {
 	InitTrigger();
 	self.touch = trigger_gravity_touch;
 };
-
 // Items that trigger things (like the HEV suit)
 void () world_items_touch =
 {
@@ -94,7 +86,6 @@ void () world_items_touch =
 	SUB_UseTargets();
 	dremove(self);
 };
-
 void () world_items =
 {
 	self.origin_x += 30;
@@ -129,15 +120,12 @@ void () world_items =
 	}
 	
 };
-
 void () env_bubbles =
 {
 	air_bubbles();
 };
-
 // UNFINISHED/UNSTARTED ENTITIES:
 //(and I'm sure there's more than that, I just haven't gotten around to em yet)
-
 // env_sprite: Half-life sprites do not load properly or at all on most quake engines.
 void () env_sprite_use =
 {
@@ -150,7 +138,6 @@ void () env_sprite_use =
 		self.has_tesla = 0;
 	}
 };
-
 void () env_sprite =
 {
 #ifdef ALLOW_HL_SPRITES
@@ -166,7 +153,6 @@ void () env_sprite =
 	HalfLife_DoRender();
 #endif
 };
-
 // env_render: change the rendering properties of target based on own properties.
 // I hope I got this right.
 void () env_render_use =
@@ -186,12 +172,10 @@ void () env_render_use =
 		targ = find( targ, targetname, self.target );
 	}
 };
-
 void () env_render =
 {
 	self.use = env_render_use;
 };
-
 // func_friction: changes player friction when touched
 // Note: .friction value does nothing yet
 void () func_friction_touch =
@@ -203,7 +187,6 @@ void () func_friction_touch =
 	
 	//_bprint("New friction: ", ftos(other.friction_new), "\n");
 };
-
 void () func_friction =
 {
 	self.solid = SOLID_TRIGGER;
@@ -213,45 +196,37 @@ void () func_friction =
 	
 	HalfLife_DoRender();
 };
-
 void () monster_scientist_dead =
 {
 	dremove(self);
-}
-
+};
 void () monster_barney_dead =
 {
 	dremove(self);
-}
-
+};
 void () info_node =
 {
 	self.solid = SOLID_TRIGGER;
 	setsize (self, '-32 -32 -4', '32 32 4');
 //self.targetname = vtos (self.origin);
 };
-
 void () trigger_autosave =
 {
 	dremove(self);
 };
-
 void () light_spot =
 {
 	light ();
 };
-
 void () gibshooter =
 {
 	dremove(self);
 };
-
 // env_sound is a sound-shaper (IE adjusts sounds for hallways and such)
 void () env_sound =
 {
 	dremove(self);
 };
-
 void() shake_think =
 {
 	if (self.attack_finished < time) {// Done
@@ -289,7 +264,6 @@ void() shake_think =
 // keep going
 	self.nextthink = time + 0.1;
 };
-
 void() shake_use =
 {
 	if (self.attack_finished > time) return;// already active
@@ -299,7 +273,6 @@ void() shake_use =
 	self.attack_finished = time + self.wait;
 	self.nextthink = time + 0.01;
 };
-
 void() trigger_shake =
 {	
 	if (!self.targetname) {
@@ -316,12 +289,10 @@ void() trigger_shake =
 	self.think = shake_think;
 	self.use = shake_use;
 };
-
 void () env_shake =
 {
 	trigger_shake();
 };
-
 string (string matname) hl_material_convert =
 {
 	local string st2;
@@ -362,7 +333,6 @@ string (string matname) hl_material_convert =
 	}
 	return matname;
 };
-
 string (string ms_size) ms_cme =
 {
 	local float ms_flsize;
@@ -373,13 +343,10 @@ string (string ms_size) ms_cme =
 	ms_flsize = stof(ms_size);
 	return ftos(ms_flsize);
 };
-
-
 void () func_spin_shot =
 {
 	SUB_CalcAngleMove( (self.angles + '90 90 90'), 90, SUB_Null );
 };
-
 void () func_spin =
 {
 	self.solid = SOLID_BSP;

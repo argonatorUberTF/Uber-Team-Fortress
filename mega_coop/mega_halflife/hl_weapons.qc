@@ -5,17 +5,14 @@ void () item_ammo_pistol =
 {
 	item_shells();
 };
-
 void () weapon_mp5 =
 {
 	weapon_supernailgun();
 };
-
 void () ammo_mp5clip =
 {
 	item_spikes();
 };
-
 void () ammo_mp5grenades =
 {
 	if (random() < .8)
@@ -23,34 +20,28 @@ void () ammo_mp5grenades =
 	else
 		weapon_grenadelauncher();
 };
-
 void () ammo_357 =
 {
 	ammo_mp5grenades();
 };
-
 void () ammo_glockclip =
 {
 	item_shells();
 };
-
 void () item_ammo_pistol_large =
 {
 	self.spawnflags = WEAPON_BIG2;
 	item_shells();
 };
-
 void () item_ammo_smg1 =
 {
 	item_spikes();
 };
-
 void () item_ammo_smg1_large =
 {
 	self.spawnflags = WEAPON_BIG2;
 	item_spikes();
 };
-
 void () item_ammo_ar2 =
 {
 	if (random() < .7)
@@ -58,7 +49,6 @@ void () item_ammo_ar2 =
 	else
 		item_cells();
 };
-
 void () item_ammo_ar2_large =
 {
 	self.spawnflags = WEAPON_BIG2;
@@ -67,23 +57,19 @@ void () item_ammo_ar2_large =
 	else
 		item_cells();
 };
-
 void () item_box_buckshot =
 {
 	self.spawnflags = WEAPON_BIG2;
 	item_shells();
 };
-
 void () item_smg1_grenade =
 {
 	ammo_mp5grenades();
 };
-
 void () item_box_sniper_rounds =
 {
 	item_ammo_ar2_large();
 };
-
 // for breakables
 void () SetSpawnObject =
 {

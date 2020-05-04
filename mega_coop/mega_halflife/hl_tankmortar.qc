@@ -1,5 +1,4 @@
 // Tanks, and related entities (controllable and whatnot)
-
 void () func_mortar_field_use =
 {
 	local vector orgplace, randv;
@@ -45,7 +44,6 @@ void () func_mortar_field_use =
 		i++;
 	}
 };
-
 void () func_mortar_field =
 {
 	//InitTrigger();
@@ -59,7 +57,6 @@ void () func_mortar_field =
 	if (!self.m_iCount)
 		self.m_iCount = 4;
 };
-
 float (entity to_ent, vector from_me) tank_visible =
 {
 	local vector bot_org;
@@ -72,13 +69,11 @@ float (entity to_ent, vector from_me) tank_visible =
 		return ( 0 );
 	return ( 1 );
 };
-
 void () mortar_hl_use =
 {
 	self.enemy = activator;
 	bprint(2,"you're the dog now, man!\n");
 };
-
 void(float shotcount, vector dir, vector spread, float mod) Tank_FireBullets =
 {
 	local   vector direction;
@@ -96,13 +91,11 @@ void(float shotcount, vector dir, vector spread, float mod) Tank_FireBullets =
 		traceline (src, src + direction*2048, FALSE, self);
 		if (trace_fraction != 1.0)
 			TraceAttack (4, direction);
-
 		shotcount = shotcount - 1;
 	}
 	ApplyMultiDamage ();
 	Multi_Finish ();
 };
-
 void() mortar_face =
 {
 	local vector t_Dest, t_Destx, dir;
@@ -137,7 +130,6 @@ void() mortar_face =
 	else {
 		if (random() < .03)
 			fireme = #TRUE;
-
 		t_Dest = vectoangles((self.enemy.origin + self.enemy.view_ofs) - self.origin);
 		t_Destx = vectoangles(self.origin - (self.enemy.origin + self.enemy.view_ofs));
 		t_Dest_x = t_Destx_x;			
@@ -187,12 +179,10 @@ void() mortar_face =
 	}
 	SUB_CalcAngleMove (t_Dest, 40, mortar_face);
 };
-
 void () func_tankmortardie =
 {
 	dremove(self);
 };
-
 void () func_tankmortar =
 {
 	self.solid = SOLID_BSP;
@@ -212,14 +202,12 @@ void () func_tankmortar =
 	self.nextthink = self.ltime + .1;
 //mortar_face();
 };
-
 void () func_tankrocket =
 {
 	func_tankmortar();
 //	InitTrigger();
 //	self.use = func_tank_use;
 };
-
 void () func_tank =
 {
 	self.mtf_items = 1;
