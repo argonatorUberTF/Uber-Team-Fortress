@@ -1,6 +1,6 @@
 $cd /raid/quake/id1/models/tank3
 $origin 0 -24 24
-$base base		
+$base base
 $skin skin
 $frame stand01 stand02 stand03 stand04 stand05 stand06 stand07 stand08
 $frame stand09 stand10 stand11 stand12 stand13 stand14 stand15 
@@ -251,33 +251,32 @@ void()  bigtank_die31     =[      $death131,       bigtank_die32     ] {sound (s
 void()  bigtank_die32     =[      $death132,       bigtank_die32     ] {MonsterCorpse();};
 void(entity attacker, float damage)     bigtank_pain =
 {
-        local float r;
-        if (self.health <= 0)
-                return;         // allready dying, don't go into pain frame
-        if(self.health < 1000) { self.skin = 1; }
-
-        if (random()*400 > damage)
-                return;         // didn't flinch
-        if (self.pain_finished > time)
+	local float r;
+	if (self.health <= 0)
+		return;         // allready dying, don't go into pain frame
+	if(self.health < 1000) { self.skin = 1; }
+		if (random()*400 > damage)
+			return;         // didn't flinch
+	if (self.pain_finished > time)
 		return;
 	r = random();
 	if (r < 0.2)
 	{
-                self.pain_finished = time + 2;
-                bigtank_pain1 ();
-                sound (self, CHAN_VOICE, "bigtank/pain.wav", 1, ATTN_NORM);
+		self.pain_finished = time + 2;
+		bigtank_pain1 ();
+		sound (self, CHAN_VOICE, "bigtank/pain.wav", 1, ATTN_NORM);
 	}
 	else if (r < 0.6)
 	{
-                self.pain_finished = time + 2;
-                bigtank_painb1 ();
-                sound (self, CHAN_VOICE, "bigtank/pain.wav", 1, ATTN_NORM);
-        }
+		self.pain_finished = time + 2;
+		bigtank_painb1 ();
+		sound (self, CHAN_VOICE, "bigtank/pain.wav", 1, ATTN_NORM);
+	}
 	else
 	{
-                self.pain_finished = time + 2;
-                bigtank_painc1 ();
-                sound (self, CHAN_VOICE, "bigtank/tnkpain2.wav", 1, ATTN_NORM);
+		self.pain_finished = time + 2;
+		bigtank_painc1 ();
+		sound (self, CHAN_VOICE, "bigtank/tnkpain2.wav", 1, ATTN_NORM);
 	}
 };
 void(vector org, float damage, float dt, string ctyp) BigTankFireGrenade =
@@ -305,45 +304,45 @@ void(vector org, float damage, float dt, string ctyp) BigTankFireGrenade =
 };
 void() TankFireBombKaboom =
 {
-   local entity e;
-   if(pointcontents(self.origin) == CONTENT_SOLID || /*self.cnt >= self.ccnt ||*/ !walkmove(self.old_movetype, 50))
-   {
-      GrenadeExplode();
-      return;
-   }
-   if(pointcontents(self.origin) == CONTENT_SKY)
-       remove(self);
-   self.cnt = self.cnt + 1;
-   sound(self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
-   self.nextthink = time + 0.2;
-   self.think = TankFireBombKaboom;
-   T_RadiusDamage (self, self.owner, self.dmg, self.owner);
-   WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
-   WriteByte (MSG_BROADCAST, TE_EXPLOSION);
-   WriteCoord (MSG_BROADCAST, self.origin_x);
-   WriteCoord (MSG_BROADCAST, self.origin_y);
-   WriteCoord (MSG_BROADCAST, self.origin_z);
-   e = spawn();
-   setorigin(e, self.origin);
-   e.think = BecomeExplosion;
-   e.nextthink = time + 0.01;
+	local entity e;
+	if(pointcontents(self.origin) == CONTENT_SOLID || /*self.cnt >= self.ccnt ||*/ !walkmove(self.old_movetype, 50))
+	{
+		GrenadeExplode();
+		return;
+	}
+	if(pointcontents(self.origin) == CONTENT_SKY)
+		 remove(self);
+	self.cnt = self.cnt + 1;
+	sound(self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
+	self.nextthink = time + 0.2;
+	self.think = TankFireBombKaboom;
+	T_RadiusDamage (self, self.owner, self.dmg, self.owner);
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
+	WriteCoord (MSG_BROADCAST, self.origin_x);
+	WriteCoord (MSG_BROADCAST, self.origin_y);
+	WriteCoord (MSG_BROADCAST, self.origin_z);
+	e = spawn();
+	setorigin(e, self.origin);
+	e.think = BecomeExplosion;
+	e.nextthink = time + 0.01;
 };
 void(vector org, float dir) bigtank_groundcrash =
 {
-   newmis = spawn();
-   newmis.solid = SOLID_NOT;
-   newmis.takedamage = DAMAGE_NO;
-   newmis.movetype = MOVETYPE_STEP;
-   setorigin(newmis, org);
-   setsize(newmis, VEC_ORIGIN, VEC_ORIGIN);
-   newmis.old_movetype = dir;
-   newmis.owner = self;
-   newmis.enemy = self;
-   newmis.dmg =  99;
-   newmis.classname = "grenade";
-   newmis.touch = SUB_Null;
-   newmis.think = TankFireBombKaboom;
-   newmis.nextthink = time + 0.2;
+	newmis = spawn();
+	newmis.solid = SOLID_NOT;
+	newmis.takedamage = DAMAGE_NO;
+	newmis.movetype = MOVETYPE_STEP;
+	setorigin(newmis, org);
+	setsize(newmis, VEC_ORIGIN, VEC_ORIGIN);
+	newmis.old_movetype = dir;
+	newmis.owner = self;
+	newmis.enemy = self;
+	newmis.dmg =  99;
+	newmis.classname = "grenade";
+	newmis.touch = SUB_Null;
+	newmis.think = TankFireBombKaboom;
+	newmis.nextthink = time + 0.2;
 };
 void(vector org, vector dir) testlaunch_spike =
 {
@@ -370,82 +369,83 @@ void(float offset, vector orgn) bigtank_fireflame =
 	makevectors (offang);
 	vec = normalize (v_forward);
 	vec_z = 0 - vec_z + (random() - 0.5)*0.1;
-    testlaunch_spike (orgn, vec);
+	 testlaunch_spike (orgn, vec);
 	newmis.classname = "flamespike";
 	setmodel (newmis, "progs/medexp.spr");
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);		
 	newmis.velocity = vec*300;
 	sound (self, CHAN_WEAPON, "hknight/attack1.wav", 1, ATTN_NORM);
-    newmis.think = s2_explode1;
-    newmis.nextthink = time + 0.1;
-    newmis.effects = newmis.effects | EF_DIMLIGHT;
+	 newmis.think = s2_explode1;
+	 newmis.nextthink = time + 0.1;
+	 newmis.effects = newmis.effects | EF_DIMLIGHT;
 };
 void(vector org) bigtank_rocket =
 {
-   local vector dir;
-   local entity en;
-   en = self.enemy;
-   dir = en.origin - en.velocity*0.2;
-   dir = normalize (dir - org);
-   sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
-   launch_spike(org, dir);
-   newmis.classname = "missile";
-   newmis.enemy = self.enemy;
-   newmis.velocity = dir * 1400;   
-   setmodel(newmis, "progs/missile.mdl");
-   setsize(newmis, '0 0 0', '0 0 0');
-   newmis.nextthink = time + 6;
-   newmis.think = SUB_Remove;
-   newmis.touch = T_MissileTouch; //GrenadeExplode;
+	local vector dir;
+	local entity en;
+	en = self.enemy;
+	dir = en.origin - en.velocity*0.2;
+	dir = normalize (dir - org);
+	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
+	launch_spike(org, dir);
+	newmis.classname = "missile";
+	newmis.enemy = self.enemy;
+	newmis.velocity = dir * 1400;	
+	setmodel(newmis, "progs/missile.mdl");
+	setsize(newmis, '0 0 0', '0 0 0');
+	newmis.nextthink = time + 6;
+	newmis.think = SUB_Remove;
+	newmis.touch = T_MissileTouch; //GrenadeExplode;
 };
 void(float attype, float off) bigtank_fire =
 {
-       local vector org, dir;
-       local entity en;
-        makevectors(self.angles);
+	local vector org, dir;
+	local entity en;
+	makevectors(self.angles);
 	en = self.enemy;
 	dir = en.origin - en.velocity*0.2;
 	dir = normalize (dir - self.origin);
-        org = self.origin + v_forward * 20 + v_right * -20 + '0 0 16';
-        if (attype == 1)
-        {
-           org = self.origin + v_forward * 16 + v_right * 20 + '0 0 24';
-           bigtank_fireflame(off, org);
-        }
-        else if (attype == 2)
-        {
-           org = self.origin + v_forward * 16 + v_right * 24 + '0 0 48';
-           bigtank_rocket(org);
-        }
-        else if (attype == 3)
-        {
-           org = self.origin + v_forward * 16 + v_right * -24 + '0 0 -22';
-           bigtank_groundcrash(org, self.angles_y);
-        }
+		org = self.origin + v_forward * 20 + v_right * -20 + '0 0 16';
+		if (attype == 1)
+		{
+			  org = self.origin + v_forward * 16 + v_right * 20 + '0 0 24';
+			  bigtank_fireflame(off, org);
+		}
+		else
+		if (attype == 2)
+		{
+			org = self.origin + v_forward * 16 + v_right * 24 + '0 0 48';
+			bigtank_rocket(org);
+		}
+		else if (attype == 3)
+		{
+			org = self.origin + v_forward * 16 + v_right * -24 + '0 0 -22';
+			bigtank_groundcrash(org, self.angles_y);
+		}
 };
 void() bigtank_decfire =
 {
-        local float d;
-        local float r;
-        r = random();
-        d = vlen (self.enemy.origin - self.origin);
-        if ((d > 300 && d < 400 && (self.enemy.origin_z > self.origin_z)) || d < 120)
-        {
-          bigtank_fatk1();
-        }
-        else if((d < 400 && d > 120) || ((d < 600 && d > 90) && self.enemy.origin_z < self.origin_z))
-        {
-          bigtank_gatk1();
-        }
-        else
-        {
-          bigtank_ratk1();
-        }
+		  local float d;
+		local float r;
+		r = random();
+		d = vlen (self.enemy.origin - self.origin);
+		if ((d > 300 && d < 400 && (self.enemy.origin_z > self.origin_z)) || d < 120)
+		{
+			bigtank_fatk1();
+		}
+		else if((d < 400 && d > 120) || ((d < 600 && d > 90) && self.enemy.origin_z < self.origin_z))
+		{
+			bigtank_gatk1();
+		}
+		else
+		{
+			bigtank_ratk1();
+		}
 };
 void() bigtank_die =
 {
-        DropPowerBackPack(2);
-        if (self.health < -40)
+	DropPowerBackPack(2);
+	if (self.health < -40)
 	{
 		sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
 		ThrowGibC("progs/gib3.mdl", -40, TRUE, 0, GIB1_KGS, FALSE);
@@ -463,7 +463,7 @@ void() bigtank_die =
 		remove (self);
 		return;
 	}
-        sound (self, CHAN_VOICE, "bigtank/death.wav", 1, ATTN_NORM);
-        bigtank_die1 ();
+	sound (self, CHAN_VOICE, "bigtank/death.wav", 1, ATTN_NORM);
+	bigtank_die1 ();
 };
 //END

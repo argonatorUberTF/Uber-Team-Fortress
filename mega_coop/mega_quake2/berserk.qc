@@ -97,7 +97,7 @@ void() BerserkerSpike =
 	T_Damage (self.enemy, self, self, 80);
 	if ((self.enemy.classname == "player"))
 	{
-                rvel = 64 + random() * 64;
+		rvel = 64 + random() * 64;
 		self.enemy.velocity_z = self.enemy.velocity_z + 400;
 		self.enemy.velocity = self.enemy.velocity - v_forward * rvel;
 	}
@@ -208,7 +208,7 @@ void() berserk_dieb7 = [119, berserk_dieb8] {};
 void() berserk_dieb8 = [120, berserk_dieb8] {MonsterCorpse();};
 void(entity attacker, float damage) berserk_die =
 {
-        DropPowerBackPack(2);
+	DropPowerBackPack(2);
 	if (self.health < -60)
 	{
 		self.skin = 0;

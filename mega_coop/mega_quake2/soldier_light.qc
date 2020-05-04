@@ -87,7 +87,6 @@ void () soldier2_stand19 = [ 165, soldier2_stand20 ]
 {
 	ai_stand ();
 };
-
 void () soldier2_stand20 = [ 166, soldier2_stand21 ]
 {
 	ai_stand ();
@@ -236,12 +235,10 @@ void () soldier2_atk1 = [ 1, soldier2_atk2 ]
 {
 	ai_face ();
 	eg_fire ();
-
 };
 void () soldier2_atk2 = [ 2, soldier2_atk3 ]
 {
 	ai_face ();
-
 };
 void () soldier2_atk3 = [ 3, soldier2_atk4 ]
 {
@@ -313,7 +310,6 @@ void () soldier2_atkb7 = [ 19, soldier2_atkb8 ]
 {
 	ai_face ();
 };
-
 void () soldier2_atkb8 = [ 20, soldier2_atkb9 ]
 {
 	ai_face ();
@@ -398,13 +394,11 @@ void () soldier2_atkc9 = [ 39, soldier2_run1 ]
 void () soldier2_atkd1 = [ 40, soldier2_atkd2 ]
 {
 	ai_face ();
-
 };
 void () soldier2_atkd2 = [ 41, soldier2_atkd3 ]
 {
 	ai_face ();
 };
-
 void () soldier2_atkd3 = [ 42, soldier2_atkd4 ]
 {
 	ai_face ();
@@ -589,4 +583,3 @@ void () soldier2_die =
 	soldier2_die1 ();
 };
 //END
-
