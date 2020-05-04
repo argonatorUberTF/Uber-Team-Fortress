@@ -10,7 +10,8 @@ void (entity p) uberhardmode_RemoveHealthTimer =
 {
 	local entity t;
 	t = find (world, classname, "healthtimer");
-	while (t != world) {
+	while (t != world)
+	{
 		if (t.owner == p)
 			remove (t);
 		t = find (t, classname, "healthtimer");
