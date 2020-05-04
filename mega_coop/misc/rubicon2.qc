@@ -306,7 +306,6 @@ void () make_sparks =
 {
 	local float i;
 	local entity spark;
-
 	if ((self.spawnflags & START_OFF))
 	{
 		self.nextthink = (time + 0.1);
@@ -426,7 +425,6 @@ void () smoke_think =
 	local entity smoke;
 	local entity e;
 	local float dist;
-
 	if ((self.spawnflags & START_OFF))
 	{
 		self.think = smoke_think;
