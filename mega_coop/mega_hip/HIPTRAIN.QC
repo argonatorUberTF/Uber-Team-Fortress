@@ -24,7 +24,6 @@ void() hip_train_wait =
 		}
 	else
 		self.nextthink = self.ltime + 0.1;
-
 	self.think = hip_train_next;
 };
 void() hip_train_next =
@@ -48,16 +47,16 @@ void() hip_train_next =
 		{
 		self.think = hip_train_next;
 		}
-   if ( self.goalentity.event )
-      {
-      temp = self.target;
-      self.target = self.goalentity.event;
-      self.message = self.goalentity.message;
-      SUB_UseTargets();
-      self.target = temp;
-      self.message = string_null;
-      }
-   self.goalentity = targ;
+	if ( self.goalentity.event )
+	{
+		temp = self.target;
+		self.target = self.goalentity.event;
+		self.message = self.goalentity.message;
+		SUB_UseTargets();
+		self.target = temp;
+		self.message = string_null;
+	}
+	self.goalentity = targ;
 	if ( current == -1 )
 		{
       setorigin (self, targ.origin - self.mins );
@@ -92,30 +91,30 @@ void() func_train2 =
 		objerror ("func_train without a target");
 	if (!self.dmg)
 		self.dmg = 2;
-   if ( !self.noise )
-      {
-      if (self.sounds == 0)
-         {
-         self.noise = ("misc/null.wav");
-         }
-      if (self.sounds == 1)
-         {
-         self.noise = ("plats/train2.wav");
-         }
-      }
-   if ( !self.noise1 )
-      {
-      if (self.sounds == 0)
-         {
-         self.noise1 = ("misc/null.wav");
-         }
-      if (self.sounds == 1)
-         {
-         self.noise1 = ("plats/train1.wav");
-         }
-      }
-   precache_sound( self.noise );
-   precache_sound( self.noise1 );
+	if ( !self.noise )
+	{
+		if (self.sounds == 0)
+		{
+			self.noise = ("misc/null.wav");
+		}
+		if (self.sounds == 1)
+		{
+			self.noise = ("plats/train2.wav");
+		}
+	}
+	if ( !self.noise1 )
+		{
+		if (self.sounds == 0)
+			{
+			self.noise1 = ("misc/null.wav");
+			}
+		if (self.sounds == 1)
+			{
+			self.noise1 = ("plats/train1.wav");
+			}
+		}
+	precache_sound( self.noise );
+	precache_sound( self.noise1 );
 	self.cnt = 1;
 	self.solid = SOLID_BSP;
 	self.movetype = MOVETYPE_PUSH;

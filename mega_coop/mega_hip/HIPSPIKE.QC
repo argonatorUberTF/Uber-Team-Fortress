@@ -15,19 +15,19 @@ $frame attacka1 attacka2 attacka3 attacka4 attacka5 attacka6 attacka7 attacka8
 $frame attacka9 attacka10 attacka11 attacka12 attacka13 attacka14 attacka15
 void() monster_spikemine =
 {
-   if (deathmatch)
+	if (deathmatch)
 	{
 		remove(self);
 		return;
 	}
-   precache_model ("progs/demon.mdl");
-   precache_model ("progs/h_demon.mdl");
-   precache_sound ("demon/ddeath.wav");
-   precache_sound ("demon/dhit2.wav");
-   precache_sound ("demon/djump.wav");
-   precache_sound ("demon/dpain1.wav");
-   precache_sound ("demon/idle1.wav");
-   precache_sound ("demon/sight2.wav");
+	precache_model ("progs/demon.mdl");
+	precache_model ("progs/h_demon.mdl");
+	precache_sound ("demon/ddeath.wav");
+	precache_sound ("demon/dhit2.wav");
+	precache_sound ("demon/djump.wav");
+	precache_sound ("demon/dpain1.wav");
+	precache_sound ("demon/idle1.wav");
+	precache_sound ("demon/sight2.wav");
 	self.netname = "spike mine";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
@@ -38,9 +38,9 @@ void() monster_spikemine =
 	COOP_SetLives ();
 	self.lives = 1;
 	self.health = MTF_Monster_Health(100);	// xav: not sure about this? :|
-   self.solid = SOLID_SLIDEBOX;
+	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-   setmodel (self, "progs/demon.mdl");
-   setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
+	setmodel (self, "progs/demon.mdl");
+	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 };
 //END

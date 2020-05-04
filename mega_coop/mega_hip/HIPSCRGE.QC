@@ -15,113 +15,109 @@ float() ScourgeCheckAttack =
 	local vector	spot1, spot2;
 	local entity	targ;
 	local float		chance;
-   targ = self.enemy;
-   spot1 = self.origin + self.view_ofs;
+	targ = self.enemy;
+	spot1 = self.origin + self.view_ofs;
 	spot2 = targ.origin + targ.view_ofs;
-   if (vlen(spot1 - spot2) <= 100 )
-      {
-         if (CanDamage (self.enemy, self))
-         {
-            self.attack_state = AS_MELEE;
-            return TRUE;
-         }
-      }
-   if (time < self.attack_finished)
+	if (vlen(spot1 - spot2) <= 100 )
+		{
+			if (CanDamage (self.enemy, self))
+			{
+				self.attack_state = AS_MELEE;
+				return TRUE;
+			}
+		}
+	if (time < self.attack_finished)
 		return FALSE;
-
-   if (!enemy_vis)
+	if (!enemy_vis)
 		return FALSE;
-   chance = spot2_z - spot1_z;
-   if (chance > 64)
-      return FALSE;
-   else if (chance < -200)
-      return FALSE;
-   if (vlen(spot1 - spot2) > 1000)
+	chance = spot2_z - spot1_z;
+	if (chance > 64)
 		return FALSE;
-   if (vlen(spot1 - spot2) < 150)
+	else if (chance < -200)
+	return FALSE;
+	if (vlen(spot1 - spot2) > 1000)
+		return FALSE;
+	if (vlen(spot1 - spot2) < 150)
 		return FALSE;
 	traceline (spot1, spot2, FALSE, self);
-
-   if (trace_inopen && trace_inwater)
+	if (trace_inopen && trace_inwater)
 		return FALSE;			// sight line crossed contents
-   if (trace_ent != targ)
-      {
+	if (trace_ent != targ)
+		{
 		return FALSE;	// don't have a clear shot
-      }
-   self.attack_state = AS_MISSILE;
+		}
+	self.attack_state = AS_MISSILE;
 	SUB_AttackFinished (2 + 2*random());
 	return TRUE;
 };
 void(float ox) SCOURGE_FireSpikes =
 {
-   local vector   src, vec;
-   ai_face();
-   makevectors(self.angles);
-   src = self.origin - '0 0 19' + v_right*ox + v_forward*14;
-   vec = (self.enemy.origin + (200*v_forward)) - src;
-   vec = normalize(vec);
-   sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
-   launch_spike (src, vec);
-
-   self.attack_finished = time + 0.2;
+	local vector   src, vec;
+	ai_face();
+	makevectors(self.angles);
+	src = self.origin - '0 0 19' + v_right*ox + v_forward*14;
+	vec = (self.enemy.origin + (200*v_forward)) - src;
+	vec = normalize(vec);
+	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
+	launch_spike (src, vec);
+	self.attack_finished = time + 0.2;
 };
 void() Attack_With_Tail =
 {
-   local float ldmg;
-   local vector   delta;
-   ai_face ();
-   delta = self.enemy.origin - self.origin;
-   if (vlen(delta) > 100)
+	local float ldmg;
+	local vector   delta;
+	ai_face ();
+	delta = self.enemy.origin - self.origin;
+	if (vlen(delta) > 100)
 		return;
 	if (!CanDamage (self.enemy, self))
 		return;
 	ldmg = (random() + random() + random()) * 40;
 	T_Damage (self.enemy, self, self, ldmg);
-   sound (self, CHAN_WEAPON, "shambler/smack.wav", 1, ATTN_NORM);
-
-   SpawnMeatSpray (self.origin + v_forward*16, crandom() * 50 * v_right);
+	sound (self, CHAN_WEAPON, "shambler/smack.wav", 1, ATTN_NORM);
+	SpawnMeatSpray (self.origin + v_forward*16, crandom() * 50 * v_right);
 };
 void() ScourgeTriggerThink;
 void() ScourgeTriggerTouch;
 void() scourge_think =
 {
-   local entity trig;
-   if (!self.state)
-      {
-      trig = spawn();
-      trig.angles = '0 0 0';
-      trig.solid = SOLID_TRIGGER;
-      setsize( trig, '-64 -64 -24', '64 64 64');
-      trig.takedamage = DAMAGE_NO;
-      trig.movetype = MOVETYPE_NONE;
-      trig.modelindex = 0;
-      trig.model = "";
-      trig.lastvictim = self;
-      trig.think = ScourgeTriggerThink;
-      trig.touch = ScourgeTriggerTouch;
-      trig.nextthink = time + 0.1 + random();
-      setorigin(trig,self.origin);
-      self.lastvictim = trig;
-      self.state = 1;
-      }
-   if ((self.spawnsilent == 0) && (self.spawnmulti == 1))
-      {
-      sound (self, CHAN_BODY, "misc/null.wav", 1, ATTN_IDLE);
-      }
-   else if ((self.spawnsilent == 1) && (self.spawnmulti == 0))
-      {
-      sound (self, CHAN_BODY, "scourge/walk.wav", 1, ATTN_IDLE);
-      }
-   self.spawnmulti = self.spawnsilent;
+	local entity trig;
+	if (!self.state)
+	{
+		trig = spawn();
+		trig.angles = '0 0 0';
+		trig.solid = SOLID_TRIGGER;
+		setsize( trig, '-64 -64 -24', '64 64 64');
+		trig.takedamage = DAMAGE_NO;
+		trig.movetype = MOVETYPE_NONE;
+		trig.modelindex = 0;
+		trig.model = "";
+		trig.lastvictim = self;
+		trig.think = ScourgeTriggerThink;
+		trig.touch = ScourgeTriggerTouch;
+		trig.nextthink = time + 0.1 + random();
+		setorigin(trig,self.origin);
+		self.lastvictim = trig;
+		self.state = 1;
+	}
+	if ((self.spawnsilent == 0) && (self.spawnmulti == 1))
+	{
+		sound (self, CHAN_BODY, "misc/null.wav", 1, ATTN_IDLE);
+	}
+	else
+	if ((self.spawnsilent == 1) && (self.spawnmulti == 0))
+	{
+		sound (self, CHAN_BODY, "scourge/walk.wav", 1, ATTN_IDLE);
+	}
+	self.spawnmulti = self.spawnsilent;
 };
 void(float dist) ai_right =
 {
    walkmove ( (self.angles_y+90), dist);
 };
-
 void(float dist) ai_left =
 {
-   walkmove ( (self.angles_y+270), dist);
+walkmove ( (self.angles_y+270), dist);
 };
 void()   scourge_stand1  =[ $stand1.asc, scourge_stand2  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
 void()   scourge_stand2  =[ $stand2.asc, scourge_stand3  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
@@ -137,7 +133,7 @@ void()   scourge_stand11  =[ $stand11.asc, scourge_stand12  ] {self.spawnsilent 
 void()   scourge_stand12  =[ $stand12.asc, scourge_stand1  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
 void()   scourge_walk1   =[ $walk1.asc , scourge_walk2   ] {
 if (random() < 0.1)
-   sound (self, CHAN_VOICE, "scourge/idle.wav", 1, ATTN_IDLE);
+sound (self, CHAN_VOICE, "scourge/idle.wav", 1, ATTN_IDLE);
 self.spawnsilent = 1;
 scourge_think();
 ai_walk(8);};
@@ -148,7 +144,7 @@ void()   scourge_walk5   =[ $walk5.asc , scourge_walk6   ] {ai_walk(8);};
 void()   scourge_walk6   =[ $walk6.asc , scourge_walk1   ] {ai_walk(8);};
 void()   scourge_run1 =[ $walk1.asc  , scourge_run2 ] {
 if (random() < 0.1)
-   sound (self, CHAN_VOICE, "scourge/idle.wav", 1, ATTN_IDLE);
+sound (self, CHAN_VOICE, "scourge/idle.wav", 1, ATTN_IDLE);
 self.spawnsilent = 1;
 scourge_think();
 ai_run(18);};
@@ -177,10 +173,10 @@ void()   scourge_turn5  =[ $walk5.asc, scourge_turn6  ] {ai_turn_in_place();};
 void()   scourge_turn6  =[ $walk6.asc, scourge_turn1  ] {ai_turn_in_place();};
 void()   scourge_atk1 =[ $shoot1.asc,   scourge_atk2 ]
 {
-   self.spawnsilent = 0;
-   scourge_think();
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(40);
+	self.spawnsilent = 0;
+	scourge_think();
+	self.effects = self.effects | EF_MUZZLEFLASH;
+		SCOURGE_FireSpikes(40);
 };
 void()   scourge_atk2 =[ $shoot2.asc,   scourge_atk3 ]
 {
@@ -189,34 +185,34 @@ void()   scourge_atk2 =[ $shoot2.asc,   scourge_atk3 ]
 };
 void()   scourge_atk3 =[ $shoot1.asc,   scourge_atk4 ]
 {
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(-40);
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	SCOURGE_FireSpikes(-40);
 };
 void()   scourge_atk4 =[ $shoot2.asc,   scourge_atk5 ]
 {
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(56);
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	SCOURGE_FireSpikes(56);
 };
 void()   scourge_atk5 =[ $shoot1.asc,   scourge_atk6 ]
 {
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(40);
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	SCOURGE_FireSpikes(40);
 };
 void()   scourge_atk6 =[ $shoot2.asc,   scourge_atk7 ]
 {
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(-56);
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	SCOURGE_FireSpikes(-56);
 };
 void()   scourge_atk7 =[ $shoot1.asc,   scourge_atk8 ]
 {
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(-40);
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	SCOURGE_FireSpikes(-40);
 };
 void()   scourge_atk8 =[ $shoot2.asc,   scourge_run1 ]
 {
-   self.effects = self.effects | EF_MUZZLEFLASH;
-   SCOURGE_FireSpikes(56);
-   SUB_AttackFinished (4*random());
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	SCOURGE_FireSpikes(56);
+	SUB_AttackFinished (4*random());
 };
 void()   scourge_melee1 =[ $sting1.asc,   scourge_melee2 ] {self.spawnsilent = 0;scourge_think();ai_charge(3);};
 void()   scourge_melee2 =[ $sting2.asc,   scourge_melee3 ] {ai_charge(3);};
@@ -224,13 +220,13 @@ void()   scourge_melee3 =[ $sting3.asc,   scourge_melee4 ] {ai_charge(2);};
 void()   scourge_melee4 =[ $sting4.asc,   scourge_melee5 ] {ai_charge(2);};
 void()   scourge_melee5 =[ $sting5.asc,   scourge_melee6 ]
 {
-   sound (self, CHAN_WEAPON, "scourge/tailswng.wav", 1, ATTN_NORM);
-   ai_charge(3);
+	sound (self, CHAN_WEAPON, "scourge/tailswng.wav", 1, ATTN_NORM);
+	ai_charge(3);
 };
 void()   scourge_melee6 =[ $sting6.asc,   scourge_melee7 ] {ai_charge(1);};
 void()   scourge_melee7   =[ $sting7.asc,   scourge_melee8   ]
 {
-   Attack_With_Tail();
+	Attack_With_Tail();
 };
 void()   scourge_melee8   =[ $sting8.asc,   scourge_melee9   ] {ai_face();};
 void()   scourge_melee9   =[ $sting9.asc,   scourge_melee10   ] {ai_face();};
@@ -246,14 +242,14 @@ void()   scourge_pain5  =[ $pain5.asc, scourge_run1 ] {};
 void(entity attacker, float damage) scourge_pain =
 {
 	local float r;
-   if (random()*50 > damage)
+	if (random()*50 > damage)
 		return;		// didn't flinch
-   if (self.pain_finished > time)
+	if (self.pain_finished > time)
 		return;
-   r = random ();
-   sound (self, CHAN_VOICE, "scourge/pain.wav", 1, ATTN_NORM);
-   self.pain_finished = time + 2.0;
-   scourge_pain1 ();
+	r = random ();
+	sound (self, CHAN_VOICE, "scourge/pain.wav", 1, ATTN_NORM);
+	self.pain_finished = time + 2.0;
+	scourge_pain1 ();
 };
 void()   scourge_die1 =[ $death1.asc, scourge_die2 ] {self.spawnsilent = 0;scourge_think();};
 void()   scourge_die2 =[ $death2.asc, scourge_die3 ] {};
@@ -263,90 +259,89 @@ void()   scourge_die5 =[ $death5.asc, scourge_die5 ] {};
 void() scourge_die =
 {
 if (self.lastvictim != world) // < - !!!
-   dremove (self.lastvictim);
-   self.spawnsilent = 0;
-   scourge_think();
-   if (self.health < -35)
-   {
+	dremove (self.lastvictim);
+	self.spawnsilent = 0;
+	scourge_think();
+	if (self.health < -35)
+	{
 		sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
-      ThrowHead (mtf_savemodel("progs/h_scourg.mdl"), self.health);
-      ThrowGib ("progs/gib1.mdl", self.health);
+		ThrowHead (mtf_savemodel("progs/h_scourg.mdl"), self.health);
+		ThrowGib ("progs/gib1.mdl", self.health);
 		ThrowGib ("progs/gib2.mdl", self.health);
 		ThrowGib ("progs/gib3.mdl", self.health);
-      return;
-   }
-   sound (self, CHAN_VOICE, "scourge/pain2.wav", 1, ATTN_NORM);
-   scourge_die1 ();
+		return;
+	}
+	sound (self, CHAN_VOICE, "scourge/pain2.wav", 1, ATTN_NORM);
+	scourge_die1 ();
 };
 void() scourge_melee =
-   {
-      scourge_melee1();
-   SUB_AttackFinished (2*random());
-   };
+	{
+	scourge_melee1();
+	SUB_AttackFinished (2*random());
+	};
 void() ScourgeTriggerThink =
 {
-   local entity targ;
-   if (self.lastvictim.health<=0)
-      {
-      dremove(self);
-      return;
-      }
-   targ = self.lastvictim;
-   makevectors(targ.angles);
-   setorigin(self, targ.origin + (v_forward*300) );
-   self.nextthink = time + 0.1;
+	local entity targ;
+	if (self.lastvictim.health<=0)
+	{
+		dremove(self);
+		return;
+	}
+	targ = self.lastvictim;
+	makevectors(targ.angles);
+	setorigin(self, targ.origin + (v_forward*300) );
+	self.nextthink = time + 0.1;
 };
 void() ScourgeTriggerTouch =
 {
-   local entity targ;
-   local entity tempent;
-   local vector dir;
-   if (other.flags & (FL_MONSTER|FL_CLIENT))
-      return;
-   if (other.movetype != MOVETYPE_FLYMISSILE)
-      return;
-   targ = self.lastvictim;
-   if (targ.health<=0)
-      {
-      dremove(self);
-      return;
-      }
-   dir = targ.origin - other.origin;
-   dir = normalize(dir);
-   if ((dir * normalize(other.velocity))<0.8)
-      return;
-      if (time > self.duration)
-         {
-         tempent = self;
-         self = targ;
-         if (random()<0.5)
-            scourge_strafeleft1();
-         else
-            scourge_straferight1();
-         self.duration = time + 1.5;
-         }
-      self = tempent;
+	local entity targ;
+	local entity tempent;
+	local vector dir;
+	if (other.flags & (FL_MONSTER|FL_CLIENT))
+		return;
+	if (other.movetype != MOVETYPE_FLYMISSILE)
+		return;
+	targ = self.lastvictim;
+	if (targ.health<=0)
+	{
+		dremove(self);
+		return;
+	}
+	dir = targ.origin - other.origin;
+	dir = normalize(dir);
+	if ((dir * normalize(other.velocity))<0.8)
+		return;
+		if (time > self.duration)
+		{
+			tempent = self;
+			self = targ;
+			if (random()<0.5)
+				scourge_strafeleft1();
+			else
+				scourge_straferight1();
+			self.duration = time + 1.5;
+		}
+	self = tempent;
 };
 void() monster_scourge1 =
 {
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-   setmodel (self, "progs/scor.mdl");
-   setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
-   self.health = MTF_Monster_Health(300);
-   self.th_stand = scourge_stand1;
-   self.th_walk = scourge_walk1;
-   self.th_run = scourge_run1;
-   self.th_pain = scourge_pain;
-   self.th_die = scourge_die;
-   self.th_melee = scourge_melee;
-   self.th_missile = scourge_atk1;
-   self.yaw_speed = 60;
-   self.attack_state = AS_DODGING;
-   self.state = 0;
+	setmodel (self, "progs/scor.mdl");
+	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
+	self.health = MTF_Monster_Health(300);
+	self.th_stand = scourge_stand1;
+	self.th_walk = scourge_walk1;
+	self.th_run = scourge_run1;
+	self.th_pain = scourge_pain;
+	self.th_die = scourge_die;
+	self.th_melee = scourge_melee;
+	self.th_missile = scourge_atk1;
+	self.yaw_speed = 60;
+	self.attack_state = AS_DODGING;
+	self.state = 0;
 	coop_walkmonster_start();
 };
-
 void() monster_scourge =
 {
 	if (deathmatch)
@@ -354,20 +349,20 @@ void() monster_scourge =
 		dremove(self);
 		return;
 	}
-   precache_model2 ("progs/scor.mdl");
-   precache_model2 (mtf_savemodel("progs/h_scourg.mdl"));
+	precache_model2 ("progs/scor.mdl");
+	precache_model2 (mtf_savemodel("progs/h_scourg.mdl"));
 	precache_model2 ("progs/laser.mdl");
-   precache_model2 ("progs/s_light.mdl");
-   precache_model2 ("progs/spike.mdl");
-   precache_sound ("misc/null.wav");
-   precache_sound ("scourge/idle.wav");
-   precache_sound ("scourge/pain.wav");
-   precache_sound ("scourge/pain2.wav");
-   precache_sound ("scourge/sight.wav");
-   precache_sound ("scourge/tailswng.wav");
-   precache_sound ("scourge/walk.wav");
-   precache_sound2 ("shambler/smack.wav");
-   precache_sound2 ("weapons/rocket1i.wav");
+	precache_model2 ("progs/s_light.mdl");
+	precache_model2 ("progs/spike.mdl");
+	precache_sound ("misc/null.wav");
+	precache_sound ("scourge/idle.wav");
+	precache_sound ("scourge/pain.wav");
+	precache_sound ("scourge/pain2.wav");
+	precache_sound ("scourge/sight.wav");
+	precache_sound ("scourge/tailswng.wav");
+	precache_sound ("scourge/walk.wav");
+	precache_sound2 ("shambler/smack.wav");
+	precache_sound2 ("weapons/rocket1i.wav");
 	self.netname = "centroid";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;

@@ -27,12 +27,11 @@ void () spawn_use =
 	{
 		spawn_tfog (spawnentity.origin);
 	}
-//	if (horn_active)
-//	{
-//		spawnentity.charmer = horn_charmer;
-//		spawnentity.charmed = 1;
-//	}
-//
+	if (horn_active)
+	{
+		spawnentity.charmer = horn_charmer;
+		spawnentity.charmed = 1;
+	}
 	if ((spawnentity.flags & FL_MONSTER))
 	{
 		if (((self.spawnmulti != 0)/* && (horn_active == 0)*/))
@@ -42,11 +41,10 @@ void () spawn_use =
 			WriteByte (MSG_BROADCAST, STAT_TOTALMONSTERS);
 			WriteLong (MSG_BROADCAST, total_monsters);
 		}
-//		if (horn_active)
-//		{
-//			spawnentity.effects = (spawnentity.effects | EF_DIMLIGHT);
-//		}
-//
+		if (horn_active)
+		{
+			spawnentity.effects = (spawnentity.effects | EF_DIMLIGHT);
+		}
 	}
 	if (((self.spawnmulti == 0) /*&& (horn_active == 0)*/))
 	{

@@ -66,7 +66,6 @@ dremove(self); //xavior:EVIl!
    if (!self.spawnfunction)
       {
       local float spawnchance;
-
       spawnchance = random();
       monster = tempself;
       temptotal_monsters = total_monsters;
@@ -106,7 +105,6 @@ dremove(self); //xavior:EVIl!
       self.spawnthink = self.think;
       self.think = spawn_think;
       self.nextthink = time + 1;
-
       if (spawnchance<0.8 && monster==tempself)
          {
          monster = self;
@@ -167,7 +165,6 @@ dremove(self); //xavior:EVIl!
       self.spawnthink = self.think;
       self.think = spawn_think;
       self.nextthink = time + 1;
-
       if (monster==tempself)
          {
          monster = self;

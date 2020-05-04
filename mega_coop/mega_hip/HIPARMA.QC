@@ -1,3 +1,5 @@
+void() armagon_overleft1;
+void() armagon_overright1;
 $cd hipwork\models\armagon
 $origin 0 0 24
 $base bodybase.asc
@@ -23,34 +25,35 @@ $frame ldie1.asc ldie2.asc ldie3.asc ldie4.asc ldie5.asc ldie6.asc
 $frame ldie7.asc ldie8.asc ldie9.asc ldie10.asc ldie11.asc ldie12.asc
 void(float ofs, float turn) armagon_launch_missile =
 {
-   local vector   src, vec, targ;
-   local vector   ang;
-   local entity   missile;
-   local float    dist;
-   ang = self.angles;
-   ang_y = ang_y + self.fixangle;
-   if (turn==1)
-      {
-      ang_y = ang_y + 165;
-      }
-   else if (turn==2)
-      {
-      ang_y = ang_y - 165;
-      }
-   makevectors(ang);
-   src = self.origin + '0 0 66' + v_right*ofs + v_forward*84;
-   targ = self.enemy.origin + self.enemy.view_ofs;
-   if (skill!=0)
-      {
-      dist = vlen(targ-src);
-      targ = targ + (self.enemy.velocity * (dist/1000));
-      }
-   vec = (targ - src);
-   vec = normalize(vec);
-   dist = vec*v_forward;
-   if (dist<self.worldtype)
-      vec=v_forward;
-   self.effects = self.effects | EF_MUZZLEFLASH;
+	local vector   src, vec, targ;
+	local vector   ang;
+	local entity   missile;
+	local float    dist;
+	ang = self.angles;
+	ang_y = ang_y + self.fixangle;
+	if (turn==1)
+	{
+		ang_y = ang_y + 165;
+	}
+	else
+	if (turn==2)
+	{
+		ang_y = ang_y - 165;
+	}
+	makevectors(ang);
+	src = self.origin + '0 0 66' + v_right*ofs + v_forward*84;
+	targ = self.enemy.origin + self.enemy.view_ofs;
+	if (skill!=0)
+	{
+		dist = vlen(targ-src);
+		targ = targ + (self.enemy.velocity * (dist/1000));
+	}
+	vec = (targ - src);
+	vec = normalize(vec);
+	dist = vec*v_forward;
+	if (dist<self.worldtype)
+	vec=v_forward;
+	self.effects = self.effects | EF_MUZZLEFLASH;
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
 	self.punchangle_x = -2;
 	missile = spawn ();
@@ -58,214 +61,213 @@ void(float ofs, float turn) armagon_launch_missile =
 	missile.movetype = MOVETYPE_FLYMISSILE;
 	missile.solid = SOLID_BBOX;
 	missile.classname = "missile";
-   missile.velocity = vec * 1000;
-   missile.angles = vectoangles(vec);
+	missile.velocity = vec * 1000;
+	missile.angles = vectoangles(vec);
 	missile.touch = T_MissileTouch;
 	missile.nextthink = time + 5;
 	missile.think = SUB_Remove;
 	setmodel (missile, "progs/missile.mdl");
 	setsize (missile, '0 0 0', '0 0 0');
-   setorigin (missile, src);
+	setorigin (missile, src);
 };
-
 void(float ofs) armagon_launch_laser =
 {
-   local vector   src, vec, targ;
-   local float    dist;
-   local vector   ang;
-   ang = self.angles;
-   ang_y = ang_y + self.fixangle;
-   makevectors(ang);
-   src = self.origin + '0 0 66' + v_right*ofs + v_forward*84;
-   targ = self.enemy.origin + self.enemy.view_ofs;
-   if (skill!=0)
-      {
-      dist = vlen(targ-src);
-      targ = targ + (self.enemy.velocity * (dist/1000));
-      }
-   vec = (targ - src);
-   vec = normalize(vec);
-   dist = vec*v_forward;
-   if (dist<self.worldtype)
-      vec=v_forward;
-   self.effects = self.effects | EF_MUZZLEFLASH;
-
-   HIP_LaunchLaser(src, vec, 0);
+	local vector   src, vec, targ;
+	local float    dist;
+	local vector   ang;
+	ang = self.angles;
+	ang_y = ang_y + self.fixangle;
+	makevectors(ang);
+	src = self.origin + '0 0 66' + v_right*ofs + v_forward*84;
+	targ = self.enemy.origin + self.enemy.view_ofs;
+	if (skill!=0)
+	{
+		dist = vlen(targ-src);
+		targ = targ + (self.enemy.velocity * (dist/1000));
+	}
+	vec = (targ - src);
+	vec = normalize(vec);
+	dist = vec*v_forward;
+	if (dist<self.worldtype)
+	vec=v_forward;
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	HIP_LaunchLaser(src, vec, 0);
 };
 void(float angdelta, float delta) armagon_turn =
 {
-   if (fabs(angdelta)<10)
-      self.fixangle = delta;
-   else
-      {
-      if (angdelta > 5)
-         {
-         self.fixangle = self.fixangle + 9;
-         }
-      else if (angdelta < -5)
-         {
-         self.fixangle = self.fixangle - 9;
-         }
-      else
-         {
-         self.fixangle = delta;
-         }
-      }
+	if (fabs(angdelta)<10)
+		self.fixangle = delta;
+	else
+	{
+		if (angdelta > 5)
+	{
+		self.fixangle = self.fixangle + 9;
+	}
+	else
+	if (angdelta < -5)
+	{
+			self.fixangle = self.fixangle - 9;
+	}
+	else
+	{
+		self.fixangle = delta;
+	}
+	}
 };
-void() armagon_overleft1;
-void() armagon_overright1;
 void() armagon_think =
 {
-   local float delta;
-   local float angdelta;
-   setorigin (self.trigger_field, self.origin);
-   self.trigger_field.angles = self.angles;
-   self.trigger_field.frame = self.frame;
-   self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
-   enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
-   self.ideal_yaw = enemy_yaw;
-   delta = self.ideal_yaw - self.angles_y;
-   self.cnt = 0;
-   if (delta > 180) delta = delta - 360;
-   if (delta < -180) delta = delta + 360;
-   if (fabs(delta) > 90)
-      {
-      delta = 0;
-      self.cnt = 1;
-      }
-   angdelta = delta-self.fixangle;
-   armagon_turn(angdelta,delta);
-   if (self.health < 0)
-      return;
-   if (time > self.super_time)
-      {
-      local float r;
-      self.super_time = time + 3;
-      if (random() < 0.5)
-         {
-         r = random();
-         if (r < 0.25)
-            sound (self, CHAN_VOICE, "armagon/idle1.wav", 1, ATTN_ARMAGON);
-         else if (r < 0.5)
-            sound (self, CHAN_VOICE, "armagon/idle2.wav", 1, ATTN_ARMAGON);
-         else if (r < 0.75)
-            sound (self, CHAN_VOICE, "armagon/idle3.wav", 1, ATTN_ARMAGON);
-         else
-            sound (self, CHAN_VOICE, "armagon/idle4.wav", 1, ATTN_ARMAGON);
-         }
-      }
+	local float delta;
+	local float angdelta;
+	setorigin (self.trigger_field, self.origin);
+	self.trigger_field.angles = self.angles;
+	self.trigger_field.frame = self.frame;
+	self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
+	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+	self.ideal_yaw = enemy_yaw;
+	delta = self.ideal_yaw - self.angles_y;
+	self.cnt = 0;
+	if (delta > 180) delta = delta - 360;
+	if (delta < -180) delta = delta + 360;
+	if (fabs(delta) > 90)
+		{
+		delta = 0;
+		self.cnt = 1;
+		}
+	angdelta = delta-self.fixangle;
+	armagon_turn(angdelta,delta);
+	if (self.health < 0)
+		return;
+	if (time > self.super_time)
+		{
+		local float r;
+		self.super_time = time + 3;
+		if (random() < 0.5)
+			{
+			r = random();
+			if (r < 0.25)
+				sound (self, CHAN_VOICE, "armagon/idle1.wav", 1, ATTN_ARMAGON);
+			else
+			if (r < 0.5)
+				sound (self, CHAN_VOICE, "armagon/idle2.wav", 1, ATTN_ARMAGON);
+	else
+	if (r < 0.75)
+				sound (self, CHAN_VOICE, "armagon/idle3.wav", 1, ATTN_ARMAGON);
+			else
+				sound (self, CHAN_VOICE, "armagon/idle4.wav", 1, ATTN_ARMAGON);
+			}
+		}
 };
 void() armagon_walkthink =
 {
-   local float delta;
-   local float angdelta;
-   local entity client_t;
-   setorigin (self.trigger_field, self.origin);
-   self.trigger_field.angles = self.angles;
-   self.trigger_field.frame = self.frame;
-   self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
-   ChangeYaw();
-   delta = 0;
-   self.cnt = 0;
-   if (delta > 180) delta = delta - 360;
-   if (delta < -180) delta = delta + 360;
-   if (fabs(delta) > 90)
-      {
-      delta = 0;
-      self.cnt = 1;
-      }
-   angdelta = delta-self.fixangle;
-   armagon_turn(angdelta,delta);
-   if (self.health < 0)
-      return;
-   if (time > self.super_time)
-      {
-      local float r;
-      self.super_time = time + 3;
-      if (random() < 0.5)
-         {
-         r = random();
-         if (r < 0.25)
-            sound (self, CHAN_VOICE, "armagon/idle1.wav", 1, ATTN_ARMAGON);
-         else if (r < 0.5)
-            sound (self, CHAN_VOICE, "armagon/idle2.wav", 1, ATTN_ARMAGON);
-         else if (r < 0.75)
-            sound (self, CHAN_VOICE, "armagon/idle3.wav", 1, ATTN_ARMAGON);
-         else
-            sound (self, CHAN_VOICE, "armagon/idle4.wav", 1, ATTN_ARMAGON);
-         }
-      }
-   client_t = checkclient ();
-   if (!client_t)
-      return;  // current check entity isn't in PVS
-   if (visible(client_t))
-      {
-      self.enemy = client_t;
-      FoundTarget();
-      }
+	local float delta;
+	local float angdelta;
+	local entity client_t;
+	setorigin (self.trigger_field, self.origin);
+	self.trigger_field.angles = self.angles;
+	self.trigger_field.frame = self.frame;
+	self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
+	ChangeYaw();
+	delta = 0;
+	self.cnt = 0;
+	if (delta > 180) delta = delta - 360;
+	if (delta < -180) delta = delta + 360;
+	if (fabs(delta) > 90)
+		{
+		delta = 0;
+		self.cnt = 1;
+		}
+	angdelta = delta-self.fixangle;
+	armagon_turn(angdelta,delta);
+	if (self.health < 0)
+		return;
+	if (time > self.super_time)
+		{
+		local float r;
+		self.super_time = time + 3;
+		if (random() < 0.5)
+			{
+			r = random();
+			if (r < 0.25)
+				sound (self, CHAN_VOICE, "armagon/idle1.wav", 1, ATTN_ARMAGON);
+			else if (r < 0.5)
+				sound (self, CHAN_VOICE, "armagon/idle2.wav", 1, ATTN_ARMAGON);
+			else if (r < 0.75)
+				sound (self, CHAN_VOICE, "armagon/idle3.wav", 1, ATTN_ARMAGON);
+			else
+				sound (self, CHAN_VOICE, "armagon/idle4.wav", 1, ATTN_ARMAGON);
+			}
+		}
+	client_t = checkclient ();
+	if (!client_t)
+		return;  // current check entity isn't in PVS
+	if (visible(client_t))
+		{
+		self.enemy = client_t;
+		FoundTarget();
+		}
 };
 void() armagon_overleft_think =
 {
-   local float delta;
-   local float angdelta;
-   ChangeYaw();
-   walkmove (self.angles_y, 14);
-   setorigin (self.trigger_field, self.origin);
-   self.trigger_field.angles = self.angles;
-   self.trigger_field.frame = self.frame;
-   self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
-   if (self.count == 0)
-      {
-      enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
-      self.ideal_yaw = enemy_yaw;
-      delta = self.ideal_yaw - self.angles_y - 165;
-      if (delta > 180) delta = delta - 360;
-      if (delta < -180) delta = delta + 360;
-      angdelta = delta-self.fixangle;
-      }
-   else if (self.count == 1)
-      {
-      armagon_launch_missile(40,1);
-      return;
-      }
-   else
-      {
-      delta = 0;
-      angdelta = delta-self.fixangle;
-      }
-   armagon_turn(angdelta,delta);
+	local float delta;
+	local float angdelta;
+	ChangeYaw();
+	walkmove (self.angles_y, 14);
+	setorigin (self.trigger_field, self.origin);
+	self.trigger_field.angles = self.angles;
+	self.trigger_field.frame = self.frame;
+	self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
+	if (self.count == 0)
+	{
+		enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+		self.ideal_yaw = enemy_yaw;
+		delta = self.ideal_yaw - self.angles_y - 165;
+		if (delta > 180) delta = delta - 360;
+	if (delta < -180) delta = delta + 360;
+		angdelta = delta-self.fixangle;
+	}
+	else if (self.count == 1)
+	{
+		armagon_launch_missile(40,1);
+		return;
+	}
+	else
+	{
+		delta = 0;
+		angdelta = delta-self.fixangle;
+	}
+	armagon_turn(angdelta,delta);
 };
-
 void() armagon_overright_think =
 {
-   local float delta;
-   local float angdelta;
-   ChangeYaw();
-   walkmove (self.angles_y, 14);
-   setorigin (self.trigger_field, self.origin);
-   self.trigger_field.angles = self.angles;
-   self.trigger_field.frame = self.frame;
-   self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
-   if (self.count == 0)
-      {
-      enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
-      self.ideal_yaw = enemy_yaw;
-      delta = self.ideal_yaw - self.angles_y + 165;
-      if (delta > 180) delta = delta - 360;
-      if (delta < -180) delta = delta + 360;
-      angdelta = delta-self.fixangle;
-      }
-   else if (self.count == 1)
-      {
-      armagon_launch_missile(-40,2);
-      return;
-      }
-   else
-      {
-      delta = 0;
-      angdelta = delta-self.fixangle;
-      }
-   armagon_turn(angdelta,delta);
+	local float delta;
+	local float angdelta;
+	ChangeYaw();
+	walkmove (self.angles_y, 14);
+	setorigin (self.trigger_field, self.origin);
+	self.trigger_field.angles = self.angles;
+	self.trigger_field.frame = self.frame;
+	self.trigger_field.angles_y = self.trigger_field.angles_y + self.fixangle;
+	if (self.count == 0)
+	{
+		enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+		self.ideal_yaw = enemy_yaw;
+		delta = self.ideal_yaw - self.angles_y + 165;
+		if (delta > 180) delta = delta - 360;
+		if (delta < -180) delta = delta + 360;
+		angdelta = delta-self.fixangle;
+	}
+	else
+	if (self.count == 1)
+	{
+		armagon_launch_missile(-40,2);
+		return;
+	}
+	else
+	{
+		delta = 0;
+		angdelta = delta-self.fixangle;
+	}
+	armagon_turn(angdelta,delta);
 };
 void() armagon_stand_attack;
 void()   armagon_stand1  =[ $lstand1.asc, armagon_stand2  ] {ai_stand();armagon_think();self.nextthink = time + 0.2;};
@@ -290,174 +292,173 @@ void()   armagon_stand19  =[ $lstand19.asc, armagon_stand20  ] {armagon_think();
 void()   armagon_stand20  =[ $lstand20.asc, armagon_stand1  ] {ai_stand();armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_walk1    =[ $lwalk1.asc  , armagon_walk2    ]
 {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk2    =[ $lwalk2.asc  , armagon_walk3    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk3    =[ $lwalk3.asc  , armagon_walk4    ]
-   {
-   sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk4    =[ $lwalk4.asc  , armagon_walk5    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk5    =[ $lwalk5.asc  , armagon_walk6    ]
-   {
-   sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk6    =[ $lwalk6.asc  , armagon_walk7    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk7    =[ $lwalk7.asc  , armagon_walk8    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk8    =[ $lwalk8.asc  , armagon_walk9    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk9    =[ $lwalk9.asc  , armagon_walk10    ]
-   {
-   sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk10    =[ $lwalk10.asc  , armagon_walk11    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk11    =[ $lwalk11.asc  , armagon_walk12    ]
-   {
-   sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
-   movetogoal(14);
-   armagon_walkthink();
-   };
+{
+	sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_walk12    =[ $lwalk12.asc  , armagon_walk1    ]
-   {
-   movetogoal(14);
-   armagon_walkthink();
-   };
-
+{
+	movetogoal(14);
+	armagon_walkthink();
+};
 void()   armagon_run1    =[ $lwalk1.asc  , armagon_run2    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run2    =[ $lwalk2.asc  , armagon_run3    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run3    =[ $lwalk3.asc  , armagon_run4    ]
-   {
-   sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run4    =[ $lwalk4.asc  , armagon_run5    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run5    =[ $lwalk5.asc  , armagon_run6    ]
-   {
-   sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run6    =[ $lwalk6.asc  , armagon_run7    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run7    =[ $lwalk7.asc  , armagon_run8    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run8    =[ $lwalk8.asc  , armagon_run9    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run9    =[ $lwalk9.asc  , armagon_run10    ]
-   {
-   sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run10    =[ $lwalk10.asc  , armagon_run11    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run11    =[ $lwalk11.asc  , armagon_run12    ]
-   {
-   sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   };
+{
+	sound (self, 6, "armagon/footfall.wav", 1, ATTN_ARMAGON);
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+};
 void()   armagon_run12    =[ $lwalk12.asc  , armagon_run1    ]
-   {
-   ChangeYaw();
-   RUN_STRAIGHT = 1;
-   ai_run(14);
-   armagon_think();
-   if ((self.cnt == 1) && (time > self.attack_finished))
-      {
-      local float delta;
-      delta = self.ideal_yaw - self.angles_y;
-      if (delta > 180) delta = delta - 360;
-      if (delta < -180) delta = delta + 360;
-      if (delta>0)
-         self.think = armagon_overleft1;
-      else
-         self.think = armagon_overright1;
-      return;
-      }
-   if (self.lefty == 1)
-      {
-      self.lefty = 0;
-      self.think = self.th_missile;
-      }
-   };
+{
+	ChangeYaw();
+	RUN_STRAIGHT = 1;
+	ai_run(14);
+	armagon_think();
+	if ((self.cnt == 1) && (time > self.attack_finished))
+	{
+	local float delta;
+	delta = self.ideal_yaw - self.angles_y;
+	if (delta > 180) delta = delta - 360;
+	if (delta < -180) delta = delta + 360;
+	if (delta>0)
+		self.think = armagon_overleft1;
+	else
+		self.think = armagon_overright1;
+		return;
+	}
+	if (self.lefty == 1)
+	{
+	self.lefty = 0;
+	self.think = self.th_missile;
+	}
+};
 void()   armagon_watk1    =[ $lw0fir1.asc, armagon_watk2  ] {ChangeYaw();walkmove (self.angles_y, 14);armagon_think();};
 void()   armagon_watk2    =[ $lw0fir2.asc, armagon_watk3  ] {sound (self, 7, "armagon/servo.wav", SERVO_VOLUME, ATTN_ARMAGON);ChangeYaw();walkmove (self.angles_y, 14);armagon_think();};
 void()   armagon_watk3    =[ $lw0fir3.asc, armagon_watk4  ] {ChangeYaw();walkmove (self.angles_y, 14);armagon_think();};
@@ -554,18 +555,18 @@ void()   armagon_die2    =[ $tranl2.asc, armagon_die3    ] {armagon_think();self
 void()   armagon_die3    =[ $ldie1.asc, armagon_die4    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die4    =[ $ldie2.asc, armagon_die5    ]
 {
-   armagon_think();
-   multi_explosion( self.origin + '0 0 48', 48, 10, 6, 0.3, 0.3);
-   sound (self, CHAN_AUTO, "armagon/death.wav", 1, ATTN_NONE);
-   self.nextthink = time + 0.2;
+	armagon_think();
+	multi_explosion( self.origin + '0 0 48', 48, 10, 6, 0.3, 0.3);
+	sound (self, CHAN_AUTO, "armagon/death.wav", 1, ATTN_NONE);
+	self.nextthink = time + 0.2;
 };
-void()   armagon_die5    =[ $ldie3.asc, armagon_die6    ] {armagon_think();self.nextthink = time + 0.2;};
+void() armagon_die5    =[ $ldie3.asc, armagon_die6    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die6    =[ $ldie4.asc, armagon_die7    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die7    =[ $ldie5.asc, armagon_die8    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die8    =[ $ldie6.asc, armagon_die9    ]
 {
-   armagon_think();
-   self.nextthink = time + 2;
+	armagon_think();
+	self.nextthink = time + 2;
 };
 void()   armagon_die9    =[ $ldie7.asc, armagon_die10    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die10    =[ $ldie8.asc, armagon_die11    ] {armagon_think();self.nextthink = time + 0.2;};
@@ -573,237 +574,232 @@ void()   armagon_die11    =[ $ldie9.asc, armagon_die12    ] {armagon_think();sel
 void()   armagon_die12    =[ $ldie10.asc, armagon_die13    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die13    =[ $ldie11.asc, armagon_die14    ] {armagon_think();self.nextthink = time + 0.2;};
 void()   armagon_die14    =[ $ldie12.asc, armagon_die14    ]
-   {
-   local entity body;
-   armagon_think();
-   multi_explosion( self.origin + '0 0 80', 20, 10, 3, 0.1, 0.5);
-   self.nextthink = -1;
-   self.movetype = MOVETYPE_NONE;
+{
+	local entity body;
+	armagon_think();
+	multi_explosion( self.origin + '0 0 80', 20, 10, 3, 0.1, 0.5);
+	self.nextthink = -1;
+	self.movetype = MOVETYPE_NONE;
 	self.takedamage = DAMAGE_NO;
-   self.solid = SOLID_NOT;
-   setsize (self, '-32 -32 -24', '32 32 32' );
-   self.flags = 0;
-   self.gorging = TRUE;
-   self.wait = time + 5;
-   body = self.trigger_field;
-   body.nextthink = -1;
-   self.movetype = MOVETYPE_NONE;
-   body.takedamage = DAMAGE_NO;
-   body.solid = SOLID_NOT;
-   body.think = armagon_body_explode1;
-   body.nextthink = time + 0.1;
-   body.gorging = TRUE;
+	self.solid = SOLID_NOT;
+	setsize (self, '-32 -32 -24', '32 32 32' );
+	self.flags = 0;
+	self.gorging = TRUE;
+	self.wait = time + 5;
+	body = self.trigger_field;
+	body.nextthink = -1;
+	self.movetype = MOVETYPE_NONE;
+	body.takedamage = DAMAGE_NO;
+	body.solid = SOLID_NOT;
+	body.think = armagon_body_explode1;
+	body.nextthink = time + 0.1;
+	body.gorging = TRUE;
 };
 void()   armagon_body_explode2 =
 {
-   sound (self , CHAN_AUTO, "misc/longexpl.wav", 1, ATTN_ARMAGON);
-   self.think = armagon_body_explode2;
-   ThrowGib ("progs/gib1.mdl", -200);
-   ThrowGib ("progs/gib2.mdl", -200);
-   ThrowGib ("progs/gib3.mdl", -200);
-   ThrowGib ("progs/gib1.mdl", -200);
-   ThrowGib ("progs/gib2.mdl", -200);
-   ThrowGib ("progs/gib3.mdl", -200);
-   ThrowGib ("progs/gib1.mdl", -200);
-   ThrowGib ("progs/gib2.mdl", -200);
-   ThrowGib ("progs/gib3.mdl", -200);
-   self.movetype = MOVETYPE_NONE;
-   setmodel (self, "progs/s_explod.spr");
-   self.solid = SOLID_NOT;
-   self.nextthink = time + 0.1;
-   s_explode1 ();
+	sound (self , CHAN_AUTO, "misc/longexpl.wav", 1, ATTN_ARMAGON);
+	self.think = armagon_body_explode2;
+	ThrowGib ("progs/gib1.mdl", -200);
+	ThrowGib ("progs/gib2.mdl", -200);
+	ThrowGib ("progs/gib3.mdl", -200);
+	ThrowGib ("progs/gib1.mdl", -200);
+	ThrowGib ("progs/gib2.mdl", -200);
+	ThrowGib ("progs/gib3.mdl", -200);
+	ThrowGib ("progs/gib1.mdl", -200);
+	ThrowGib ("progs/gib2.mdl", -200);
+	self.movetype = MOVETYPE_NONE;
+	setmodel (self, "progs/s_explod.spr");
+	self.solid = SOLID_NOT;
+	self.nextthink = time + 0.1;
+	s_explode1 ();
 };
-
 void()   armagon_body_explode1 =
 {
-   self.think = armagon_body_explode1;
-   self.nextthink = time + 0.1;
-   if (self.cnt == 0)
-      {
-      self.count = 0;
-      }
-   if (self.cnt < 25)
-      {
-      if (self.cnt > self.count)
-         {
-         ThrowGib ("progs/gib1.mdl", -100);
-         ThrowGib ("progs/gib2.mdl", -100);
-         ThrowGib ("progs/gib3.mdl", -100);
-         self.count = self.cnt + 1;
-         }
-      self.cnt = self.cnt + 1;
-      }
-   else
-      {
-      self.cnt = 0;
-      self.think = armagon_body_explode2;
-      }
+	self.think = armagon_body_explode1;
+	self.nextthink = time + 0.1;
+	if (self.cnt == 0)
+	{
+		self.count = 0;
+	}
+	if (self.cnt < 25)
+	{
+		if (self.cnt > self.count)
+		{
+			ThrowGib ("progs/gib1.mdl", -100);
+			ThrowGib ("progs/gib2.mdl", -100);
+			ThrowGib ("progs/gib3.mdl", -100);
+			self.count = self.cnt + 1;
+		}
+		self.cnt = self.cnt + 1;
+	}
+	else
+	{
+	self.cnt = 0;
+	self.think = armagon_body_explode2;
+	}
 };
 void(entity attacker, float damage) armagon_pain =
 {
-   if (self.health <= 0)
+	if (self.health <= 0)
 		return;		// allready dying, don't go into pain frame
-   if (damage < 25)
-      return;
+	if (damage < 25)
+		return;
 	if (self.pain_finished > time)
 		return;
 	self.pain_finished = time + 2;
-
    sound (self, CHAN_VOICE, "armagon/pain.wav", 1, ATTN_NORM);
 };
 void() armagon_missile_attack =
 {
-   if (random()<0.5)
-      armagon_watk1();
-   else
-      armagon_wlaseratk1();
+	if (random()<0.5)
+		armagon_watk1();
+	else
+		armagon_wlaseratk1();
 };
-
 void() armagon_repulse_attack =
 {
-   armagon_think();
-   if (self.state == 0)
-      {
-      SUB_AttackFinished (0.5);
-      sound (self, CHAN_BODY, "armagon/repel.wav", 1, ATTN_NORM);
-      self.state = 1;
-      return;
-      }
-   else if (self.state == 1)
-      {
-      local entity head;
-      local vector dir;
-      head = findradius(self.origin, 300);
-      while(head)
-         {
-         if(!(head.flags & FL_NOTARGET) && (head.flags & FL_CLIENT))
-            {
-            if (visible(head) && (head.health > 0))
-               {
-               dir = head.origin - (self.origin - '0 0 24');
-               dir = normalize(dir);
-               head.velocity = head.velocity + dir*1500;
-               }
-            }
-         head = head.chain;
-         }
-      T_RadiusDamage (self, self, 60, self);
-      self.state = 0;
-      SUB_AttackFinished (0.1);
-      }
+	armagon_think();
+	if (self.state == 0)
+	{
+		SUB_AttackFinished (0.5);
+		sound (self, CHAN_BODY, "armagon/repel.wav", 1, ATTN_NORM);
+		self.state = 1;
+		return;
+	}
+	else if (self.state == 1)
+	{
+		local entity head;
+		local vector dir;
+		head = findradius(self.origin, 300);
+		while(head)
+	{
+		if(!(head.flags & FL_NOTARGET) && (head.flags & FL_CLIENT))
+		{
+			if (visible(head) && (head.health > 0))
+			{
+				dir = head.origin - (self.origin - '0 0 24');
+				dir = normalize(dir);
+				head.velocity = head.velocity + dir*1500;
+			}
+		}
+			head = head.chain;
+		}
+		T_RadiusDamage (self, self, 60, self);
+		self.state = 0;
+		SUB_AttackFinished (0.1);
+	}
 };
-
 void() armagon_stand_attack =
 {
-   local vector   spot1, spot2;
-   spot1 = self.origin + self.view_ofs;
-   spot2 = self.enemy.origin + self.enemy.view_ofs;
-   traceline (spot1, spot2, FALSE, self);
-   if (trace_ent != self.enemy)
-      {
-      armagon_run1();
-      return;
-      }
+	local vector   spot1, spot2;
+	spot1 = self.origin + self.view_ofs;
+	spot2 = self.enemy.origin + self.enemy.view_ofs;
+	traceline (spot1, spot2, FALSE, self);
+	if (trace_ent != self.enemy)
+	{
+		armagon_run1();
+		return;
+	}
 	if (trace_inopen && trace_inwater)
-      {
-      armagon_run1();
-      return;
-      }
-   if (time < self.attack_finished)
-      {
-      return;
-      }
-   if ((vlen(spot2-spot1) < 200) && (self.enemy.classname == "player"))
-      {
-      armagon_repulse_attack();
-      return;
-      }
-   self.state = 0;
-   if (vlen(spot2-spot1) > 450)
-      {
-      armagon_run1();
-      return;
-      }
-   if (random()<0.5)
-      armagon_satk1();
-   else
-      armagon_slaser1();
-   if (self.cnt == 1)
-      {
-      armagon_run1();
-      return;
-      }
+	{
+		armagon_run1();
+		return;
+	}
+	if (time < self.attack_finished)
+	{
+		return;
+	}
+	if ((vlen(spot2-spot1) < 200) && (self.enemy.classname == "player"))
+	{
+		armagon_repulse_attack();
+		return;
+	}
+	self.state = 0;
+	if (vlen(spot2-spot1) > 450)
+	{
+		armagon_run1();
+		return;
+	}
+	if (random()<0.5)
+		armagon_satk1();
+	else
+		armagon_slaser1();
+	if (self.cnt == 1)
+	{
+		armagon_run1();
+		return;
+	}
 };
 float()  ArmagonCheckAttack =
 {
-	local vector	spot1, spot2;
-	local entity	targ;
-   local float    ang;
-   local float    delta;
-   local float    dist;
-   self.lefty = 0;
+	local vector spot1, spot2;
+	local entity targ;
+	local float ang;
+	local float delta;
+	local float    dist;
+	self.lefty = 0;
 	targ = self.enemy;
-   spot1 = self.origin + self.view_ofs;
+	spot1 = self.origin + self.view_ofs;
 	spot2 = targ.origin + targ.view_ofs;
 	traceline (spot1, spot2, FALSE, self);
-   if ((trace_ent != targ) && (!self.charmed))
-      return FALSE;     // don't have a clear shot
+	if ((trace_ent != targ) && (!self.charmed))
+		return FALSE;     // don't have a clear shot
 	if (trace_inopen && trace_inwater)
 		return FALSE;			// sight line crossed contents
-   if (time < self.attack_finished)
+	if (time < self.attack_finished)
 		return FALSE;
-   ang = self.angles_y + self.fixangle;
-   delta = self.ideal_yaw - ang;
-   dist = vlen(spot2-spot1);
-   if ((fabs(delta) > 10 && (dist > 200))/* || (self.enemy.classname != "player")*/)
-      return FALSE;
-   if (dist < 400)
-      {  // melee attack
-      self.th_melee ();
-      return TRUE;
-		}
-   self.lefty = 1;
-   return FALSE;
+	ang = self.angles_y + self.fixangle;
+	delta = self.ideal_yaw - ang;
+	dist = vlen(spot2-spot1);
+	if ((fabs(delta) > 10 && (dist > 200))/* || (self.enemy.classname != "player")*/)
+		return FALSE;
+	if (dist < 400)
+	{  // melee attack
+		self.th_melee ();
+		return TRUE;
+	}
+	self.lefty = 1;
+	return FALSE;
 };
 void() monster_armagon =
 {
-   local entity body;
-   local float sk;
-   if (deathmatch)
+	local entity body;
+	local float sk;
+	if (deathmatch)
 	{
 		remove(self);
 		return;
 	}
-   self.lefty = 0;
-   sk = cvar("skill");
-   precache_model ("progs/armabody.mdl");
-   precache_model ("progs/armalegs.mdl");
-   precache_model ("progs/lasrspik.mdl");			// xav: added
-   precache_sound ("armagon/footfall.wav");
-   precache_sound ("armagon/servo.wav");
-   precache_sound ("armagon/death.wav");
-   precache_sound ("armagon/pain.wav");
-   precache_sound ("armagon/repel.wav");
-   precache_sound ("armagon/sight.wav");
-   precache_sound ("armagon/idle1.wav");
-   precache_sound ("armagon/idle2.wav");
-   precache_sound ("armagon/idle3.wav");
-   precache_sound ("armagon/idle4.wav");
-   body = spawn();
-   body.origin = self.origin;
-   body.origin = body.origin - '0 0 64';
-   self.solid = SOLID_SLIDEBOX;
-   self.fixangle = 0;
+	self.lefty = 0;
+	sk = cvar("skill");
+	precache_model ("progs/armabody.mdl");
+	precache_model ("progs/armalegs.mdl");
+	precache_model ("progs/lasrspik.mdl");			// xav: added
+	precache_sound ("armagon/footfall.wav");
+	precache_sound ("armagon/servo.wav");
+	precache_sound ("armagon/death.wav");
+	precache_sound ("armagon/pain.wav");
+	precache_sound ("armagon/repel.wav");
+	precache_sound ("armagon/sight.wav");
+	precache_sound ("armagon/idle1.wav");
+	precache_sound ("armagon/idle2.wav");
+	precache_sound ("armagon/idle3.wav");
+	precache_sound ("armagon/idle4.wav");
+	body = spawn();
+	body.origin = self.origin;
+	body.origin = body.origin - '0 0 64';
+	self.solid = SOLID_SLIDEBOX;
+	self.fixangle = 0;
 	self.movetype = MOVETYPE_STEP;
-   body.solid = SOLID_NOT;
-   body.movetype = MOVETYPE_STEP;
-   self.trigger_field = body;
-   body.trigger_field = self;
-   setmodel (body, "progs/armabody.mdl");
-   setmodel (self, "progs/armalegs.mdl");
-   setsize (self, '-48 -48 -24', '48 48 84' );
-   setorigin (self, self.origin);
-   setorigin (body, body.origin);
+	body.solid = SOLID_NOT;
+	body.movetype = MOVETYPE_STEP;
+	self.trigger_field = body;
+	body.trigger_field = self;
+	setmodel (body, "progs/armabody.mdl");
+	setmodel (self, "progs/armalegs.mdl");
+	setsize (self, '-48 -48 -24', '48 48 84' );
+	setorigin (self, self.origin);
+	setorigin (body, body.origin);
 	self.netname = "armagon";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
@@ -812,34 +808,34 @@ void() monster_armagon =
 	self.#npc_spawndelay = 30;
 	self.#npc_spawnfunc = monster_armagon;
 	COOP_SetLives ();
-   if (sk==0)
-      {
-      self.yaw_speed = 5;
-      self.health = MTF_Monster_Health(2000);
-      self.worldtype = 0.9;
-      }
-   else if (sk==1)
-      {
-      self.yaw_speed = 9;
-      self.health = MTF_Monster_Health(2500);
-      self.worldtype = 0.85;
-      }
-   else
-      {
-      self.yaw_speed = 12;
-	self.health = MTF_Monster_Health(3000 + (1000 * cvar("skill")));	// make armagon as powerful as rogue's monster_dragon
-      self.worldtype = 0.75;
-      }
-   self.state = 0;
-   self.super_time = 0;
-   self.endtime = 0;
-   self.th_stand = armagon_stand1;
-   self.th_walk = armagon_walk1;
-   self.th_run = armagon_run1;
-   self.th_die = armagon_die1;
-   self.th_missile = armagon_missile_attack;
-   self.th_melee = armagon_stop1;
-   self.th_pain = armagon_pain;
-   coop_walkmonster_start();
+	if (sk==0)
+	{
+		self.yaw_speed = 5;
+		self.health = MTF_Monster_Health(2000);
+		self.worldtype = 0.9;
+	}
+	else if (sk==1)
+	{
+		self.yaw_speed = 9;
+		self.health = MTF_Monster_Health(2500);
+		self.worldtype = 0.85;
+	}
+	else
+	{
+		self.yaw_speed = 12;
+		self.health = MTF_Monster_Health(3000 + (1000 * cvar("skill")));	// make armagon as powerful as rogue's monster_dragon
+		self.worldtype = 0.75;
+	}
+	self.state = 0;
+	self.super_time = 0;
+	self.endtime = 0;
+	self.th_stand = armagon_stand1;
+	self.th_walk = armagon_walk1;
+	self.th_run = armagon_run1;
+	self.th_die = armagon_die1;
+	self.th_missile = armagon_missile_attack;
+	self.th_melee = armagon_stop1;
+	self.th_pain = armagon_pain;
+	coop_walkmonster_start();
 };
 //END

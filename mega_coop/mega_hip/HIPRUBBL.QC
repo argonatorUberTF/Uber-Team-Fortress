@@ -1,7 +1,7 @@
 void() hipRubbleTouch =
 {
 	if ( self.ltime < self.pausetime )
-	   return;
+		return;
 	if (other.takedamage)
 		{
 		T_Damage (other, self, self.owner, 10 );
@@ -38,25 +38,25 @@ void() rubble_use =
 	local float index;
 	index = 0;
 	do 
-	   {
+	{
 		which = self.cnt;
 		if ( self.cnt == 0 )
-			{
+		{
 			which = 1 + 3*random();
 			which = floor( which );
-			}
+		}
 		if ( which == 1 )
-		   {
-		   hipThrowRubble( "progs/rubble1.mdl" );
-		   }
+		{
+			hipThrowRubble( "progs/rubble1.mdl" );
+		}
 		else if ( which == 2 )
-		   {
-		   hipThrowRubble( "progs/rubble3.mdl" );
-		   }
+		{
+			hipThrowRubble( "progs/rubble3.mdl" );
+		}
 		else
-		   {
-		   hipThrowRubble( "progs/rubble2.mdl" );
-		   }
+		{
+			hipThrowRubble( "progs/rubble2.mdl" );
+		}
 		index = index + 1;
 		}
 	while( index < self.count );
