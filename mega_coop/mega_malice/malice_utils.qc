@@ -197,7 +197,6 @@ void () fire_extinguisher =
 	self.touch = extinguisher_touch;
 	StartItem ();
 };
-
 void () fire_extinguisher2 =
 {
 	precache_model ("progs/extngshr.mdl");

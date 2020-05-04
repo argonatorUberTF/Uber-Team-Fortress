@@ -130,7 +130,6 @@ void () rider_think =
 		return;
 	}
 };
-
 void () rider_walkthink =
 {
 	local float delta;
@@ -200,160 +199,134 @@ void () rider_stand2 = [ 1, rider_stand3 ]
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand3 = [ 2, rider_stand4 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand4 = [ 3, rider_stand5 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand5 = [ 4, rider_stand6 ]
 {
 	ai_stand ();
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand6 = [ 5, rider_stand7 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand7 = [ 6, rider_stand8 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand8 = [ 7, rider_stand9 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand9 = [ 8, rider_stand10 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand10 = [ 9, rider_stand11 ]
 {
 	ai_stand ();
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand11 = [ 10, rider_stand12 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand12 = [ 11, rider_stand13 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand13 = [ 12, rider_stand14 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand14 = [ 13, rider_stand15 ]
 {
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_stand15 = [ 14, rider_stand1 ]
 {
 	ai_stand ();
 	rider_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () rider_walk1 = [ 24, rider_walk2 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk2 = [ 25, rider_walk3 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk3 = [ 26, rider_walk4 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk4 = [ 27, rider_walk5 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk5 = [ 28, rider_walk6 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk6 = [ 29, rider_walk7 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk7 = [ 30, rider_walk8 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk8 = [ 31, rider_walk9 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk9 = [ 32, rider_walk10 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk10 = [ 33, rider_walk11 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk11 = [ 34, rider_walk12 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_walk12 = [ 35, rider_walk1 ]
 {
 	movetogoal (20);
 	rider_walkthink ();
 };
-
 void () rider_run1 = [ 24, rider_run2 ]
 {
 	ChangeYaw ();
@@ -361,7 +334,6 @@ void () rider_run1 = [ 24, rider_run2 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run2 = [ 25, rider_run3 ]
 {
 	ChangeYaw ();
@@ -369,7 +341,6 @@ void () rider_run2 = [ 25, rider_run3 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run3 = [ 26, rider_run4 ]
 {
 	ChangeYaw ();
@@ -377,7 +348,6 @@ void () rider_run3 = [ 26, rider_run4 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run4 = [ 27, rider_run5 ]
 {
 	sound (self, TE_WIZSPIKE, "rider/down2.wav", SERV_VOL, ATTN_NORM);
@@ -386,7 +356,6 @@ void () rider_run4 = [ 27, rider_run5 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run5 = [ 28, rider_run6 ]
 {
 	sound (self, TE_WIZSPIKE, "rider/down2.wav", SERV_VOL, ATTN_NORM);
@@ -395,7 +364,6 @@ void () rider_run5 = [ 28, rider_run6 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run6 = [ 29, rider_run7 ]
 {
 	ChangeYaw ();
@@ -403,7 +371,6 @@ void () rider_run6 = [ 29, rider_run7 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run7 = [ 30, rider_run8 ]
 {
 	ChangeYaw ();
@@ -411,7 +378,6 @@ void () rider_run7 = [ 30, rider_run8 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run8 = [ 31, rider_run9 ]
 {
 	ChangeYaw ();
@@ -419,7 +385,6 @@ void () rider_run8 = [ 31, rider_run9 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run9 = [ 32, rider_run10 ]
 {
 	sound (self, TE_WIZSPIKE, "rider/down2.wav", SERV_VOL, ATTN_NORM);
@@ -428,7 +393,6 @@ void () rider_run9 = [ 32, rider_run10 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run10 = [ 33, rider_run11 ]
 {
 	ChangeYaw ();
@@ -436,7 +400,6 @@ void () rider_run10 = [ 33, rider_run11 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run11 = [ 34, rider_run12 ]
 {
 	ChangeYaw ();
@@ -444,7 +407,6 @@ void () rider_run11 = [ 34, rider_run12 ]
 	ai_run (20);
 	rider_think ();
 };
-
 void () rider_run12 = [ 35, rider_run1 ]
 {
 	ChangeYaw ();
@@ -457,14 +419,12 @@ void () rider_run12 = [ 35, rider_run1 ]
 		self.think = self.th_missile;
 	}
 };
-
 void () rider_watk1 = [ 55, rider_watk2 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk2 = [ 56, rider_watk3 ]
 {
 	ChangeYaw ();
@@ -472,14 +432,12 @@ void () rider_watk2 = [ 56, rider_watk3 ]
 	rider_think ();
 	rider_launch_missile (SVC_SETVIEWANGLES, MSG_BROADCAST);
 };
-
 void () rider_watk3 = [ 57, rider_watk4 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk4 = [ 58, rider_watk5 ]
 {
 	ChangeYaw ();
@@ -487,7 +445,6 @@ void () rider_watk4 = [ 58, rider_watk5 ]
 	rider_think ();
 	sound (self, TE_WIZSPIKE, "rider/down2.wav", SERV_VOL, ATTN_NORM);
 };
-
 void () rider_watk5 = [ 59, rider_watk6 ]
 {
 	ChangeYaw ();
@@ -495,28 +452,24 @@ void () rider_watk5 = [ 59, rider_watk6 ]
 	rider_think ();
 	sound (self, TE_WIZSPIKE, "rider/down2.wav", SERV_VOL, ATTN_NORM);
 };
-
 void () rider_watk6 = [ 60, rider_watk7 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk7 = [ 61, rider_watk8 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk8 = [ 62, rider_watk9 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk9 = [ 63, rider_watk10 ]
 {
 	ChangeYaw ();
@@ -525,21 +478,18 @@ void () rider_watk9 = [ 63, rider_watk10 ]
 	rider_launch_missile (SVC_SETVIEWANGLES, MSG_BROADCAST);
 	sound (self, TE_WIZSPIKE, "rider/down2.wav", SERV_VOL, ATTN_NORM);
 };
-
 void () rider_watk10 = [ 64, rider_watk11 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk11 = [ 65, rider_watk12 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	rider_think ();
 };
-
 void () rider_watk12 = [ 66, rider_run1 ]
 {
 	ChangeYaw ();
@@ -547,136 +497,111 @@ void () rider_watk12 = [ 66, rider_run1 ]
 	rider_think ();
 	SUB_AttackFinished (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () rider_plant1 = [ 41, rider_plant1 ]
 {
 	rider_stand_attack ();
 	rider_think ();
 };
-
 void () rider_stop1 = [ 40, rider_stop2 ]
 {
 	rider_think ();
 };
-
 void () rider_stop2 = [ 41, rider_plant1 ]
 {
 	rider_think ();
 };
-
 void () rider_satk1 = [ 36, rider_satk2 ]
 {
 	rider_think ();
 };
-
 void () rider_satk2 = [ 37, rider_satk3 ]
 {
 	rider_think ();
 };
-
 void () rider_satk3 = [ 38, rider_satk4 ]
 {
 	rider_think ();
 	rider_launch_missile (SVC_SETVIEWANGLES, MSG_BROADCAST);
 };
-
 void () rider_satk4 = [ 37, rider_satk5 ]
 {
 	rider_think ();
 };
-
 void () rider_satk5 = [ 38, rider_satk6 ]
 {
 	rider_think ();
 	rider_launch_missile (SVC_SETVIEWANGLES, MSG_BROADCAST);
 };
-
 void () rider_satk6 = [ 37, rider_satk7 ]
 {
 	rider_think ();
 };
-
 void () rider_satk7 = [ 38, rider_satk8 ]
 {
 	rider_think ();
 	rider_launch_missile (SVC_SETVIEWANGLES, MSG_BROADCAST);
 };
-
 void () rider_satk8 = [ 37, rider_satk9 ]
 {
 	rider_think ();
 };
-
 void () rider_satk9 = [ 38, rider_satk10 ]
 {
 	rider_think ();
 	rider_launch_missile (SVC_SETVIEWANGLES, MSG_BROADCAST);
 };
-
 void () rider_satk10 = [ 39, rider_satk11 ]
 {
 	rider_think ();
 };
-
 void () rider_satk11 = [ 40, rider_satk12 ]
 {
 	rider_think ();
 };
-
 void () rider_satk12 = [ 41, rider_plant1 ]
 {
 	rider_think ();
 	SUB_AttackFinished (0.3);
 };
-
 void () rider_die1 = [ 67, rider_die2 ]
 {
 	rider_think ();
 	FuelTankExplode ();
 };
-
 void () rider_die2 = [ 68, rider_die3 ]
 {
 	rider_think ();
 	self.solid = SOLID_NOT;
 };
-
 void () rider_die3 = [ 69, rider_die4 ]
 {
 	rider_think ();
 };
-
 void () rider_die4 = [ 70, rider_die5 ]
 {
 	rider_think ();
 };
-
 void () rider_die5 = [ 71, rider_die6 ]
 {
 	rider_think ();
 	sound (self, CHAN_WEAPON, "rider/death.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () rider_die6 = [ 72, rider_die7 ]
 {
 	rider_think ();
 };
-
 void () rider_die7 = [ 73, rider_die8 ]
 {
 	rider_think ();
 };
-
 void () rider_die8 = [ 74, rider_die9 ]
 {
 	rider_think ();
 };
-
 void () rider_die9 = [ 75, rider_die10 ]
 {
 	rider_think ();
 };
-
 void () rider_die10 = [ 76, rider_die11 ]
 {
 	rider_think ();
@@ -701,52 +626,42 @@ void () rider_pppain1 = [ 15, rider_pppain2 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain2 = [ 16, rider_pppain3 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain3 = [ 17, rider_pppain4 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain4 = [ 18, rider_pppain5 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain5 = [ 19, rider_pppain6 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain6 = [ 20, rider_pppain7 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain7 = [ 21, rider_pppain8 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain8 = [ 22, rider_pppain9 ]
 {
 	rider_think ();
 };
-
 void () rider_pppain9 = [ 23, rider_run1 ]
 {
 	rider_think ();
 };
-
 void () rider_jump01 = [ 42, rider_jump02 ]
 {
 	rider_think ();
 };
-
 void () rider_jump02 = [ 43, rider_jump03 ]
 {
 	rider_think ();
@@ -785,7 +700,6 @@ void () rider_jump07 = [ 48, rider_jump08 ]
 	ChangeYaw ();
 	ChangeYaw ();
 };
-
 void () rider_jump08 = [ 49, rider_jump09 ]
 {
 	rider_think ();
@@ -794,29 +708,24 @@ void () rider_jump08 = [ 49, rider_jump09 ]
 	ChangeYaw ();
 	sound (self, CHAN_VOICE, "rider/down.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () rider_jump09 = [ 50, rider_jump10 ]
 {
 	rider_think ();
 	ChangeYaw ();
 	ChangeYaw ();
 };
-
 void () rider_jump10 = [ 51, rider_jump11 ]
 {
 	rider_think ();
 };
-
 void () rider_jump11 = [ 52, rider_jump12 ]
 {
 	rider_think ();
 };
-
 void () rider_jump12 = [ 53, rider_jump13 ]
 {
 	rider_think ();
 };
-
 void () rider_jump13 = [ 54, rider_satk1 ]
 {
 	rider_think ();
@@ -826,7 +735,6 @@ void () rider_jump13 = [ 54, rider_satk1 ]
 		self.think = self.th_missile;
 	}
 };
-
 void () rider_missile_attack =
 {
 	if ((random () < 0.8))
@@ -838,7 +746,6 @@ void () rider_missile_attack =
 		rider_satk1 ();
 	}
 };
-
 void () rider_stand_attack =
 {
 	local vector spot1;
@@ -878,7 +785,6 @@ void () rider_stand_attack =
 		return;
 	}
 };
-
 float () RiderCheckAttack =
 {
 	local vector spot1;
@@ -915,7 +821,6 @@ float () RiderCheckAttack =
 	self.lefty = SPAWNFLAG_SUPERSPIKE;
 	return (FALSE);
 };
-
 void () monster_rider1 =
 {
 	local entity body;
@@ -970,7 +875,6 @@ void () monster_rider1 =
 	self.th_pain = rider_pain;
 	coop_walkmonster_start ();
 };
-
 void () monster_rider =
 {
 	self.lefty = MSG_BROADCAST;

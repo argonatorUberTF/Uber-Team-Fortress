@@ -252,4 +252,3 @@ void () trigger_deathsquad =
 	self.classname = "trigger_deathsquad";
 };
 //END
-

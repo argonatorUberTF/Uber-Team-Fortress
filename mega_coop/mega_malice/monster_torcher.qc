@@ -63,7 +63,6 @@ void () Torcher_TurnTurnTurn =
 	self.angles_z = MSG_BROADCAST;
 	self.fixangle = TRUE;
 };
-
 void () Flame_Touch =
 {
 	local vector org;
@@ -165,57 +164,46 @@ void () torcher_stand06 = [ 81, torcher_stand07 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand07 = [ 82, torcher_stand08 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand08 = [ 83, torcher_stand09 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand09 = [ 84, torcher_stand10 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand10 = [ 85, torcher_stand11 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand11 = [ 86, torcher_stand12 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand12 = [ 87, torcher_stand13 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand13 = [ 88, torcher_stand14 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand14 = [ 89, torcher_stand15 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand15 = [ 90, torcher_stand16 ]
 {
 	ai_stand ();
 };
-
 void () torcher_stand16 = [ 91, torcher_stand01 ]
 {
 	ai_stand ();
 };
-
 void () torcher_run01 = [ 0, torcher_run02 ]
 {
 	if ((random () < 0.2))
@@ -224,42 +212,34 @@ void () torcher_run01 = [ 0, torcher_run02 ]
 	}
 	ai_run (SECRET_YES_SHOOT);
 };
-
 void () torcher_run02 = [ 1, torcher_run03 ]
 {
 	ai_run (20);
 };
-
 void () torcher_run03 = [ 2, torcher_run04 ]
 {
 	ai_run (20);
 };
-
 void () torcher_run04 = [ 3, torcher_run05 ]
 {
 	ai_run (20);
 };
-
 void () torcher_run05 = [ 4, torcher_run06 ]
 {
 	ai_run (20);
 };
-
 void () torcher_run06 = [ 5, torcher_run07 ]
 {
 	ai_run (20);
 };
-
 void () torcher_run07 = [ 6, torcher_run08 ]
 {
 	ai_run (20);
 };
-
 void () torcher_run08 = [ 7, torcher_run ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb01 = [ 8, torcher_runb02 ]
 {
 	if ((random () < 0.2))
@@ -268,42 +248,34 @@ void () torcher_runb01 = [ 8, torcher_runb02 ]
 	}
 	ai_run (SECRET_YES_SHOOT);
 };
-
 void () torcher_runb02 = [ 9, torcher_runb03 ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb03 = [ 10, torcher_runb04 ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb04 = [ 11, torcher_runb05 ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb05 = [ 12, torcher_runb06 ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb06 = [ 13, torcher_runb07 ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb07 = [ 14, torcher_runb08 ]
 {
 	ai_run (20);
 };
-
 void () torcher_runb08 = [ 15, torcher_run ]
 {
 	ai_run (20);
 };
-
 void () torcher_run =
 {
 	if ((random () < 0.3))
@@ -315,7 +287,6 @@ void () torcher_run =
 		torcher_runb01 ();
 	}
 };
-
 void () torcher_walk =
 {
 	if ((random () < 0.2))
@@ -339,152 +310,122 @@ void () torcher_swing02 = [ 33, torcher_swing03 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_swing03 = [ 34, torcher_swing04 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () torcher_swing04 = [ 35, torcher_swing05 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () torcher_swing05 = [ 36, torcher_swing06 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () torcher_swing06 = [ 37, torcher_swing07 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_swing07 = [ 38, torcher_swing08 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () torcher_swing08 = [ 39, torcher_swing09 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_swing09 = [ 40, torcher_swing10 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_swing10 = [ 41, torcher_swing11 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_swing11 = [ 42, torcher_swing12 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () torcher_swing12 = [ 43, torcher_swing13 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_swing13 = [ 44, torcher_swing14 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () torcher_swing14 = [ 45, torcher_swing15 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_swing15 = [ 46, torcher_swing16 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_swing16 = [ 47, torcher_walk ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_walk01 = [ 16, torcher_walk02 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_walk02 = [ 17, torcher_walk03 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_walk03 = [ 18, torcher_walk04 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () torcher_walk04 = [ 19, torcher_walk05 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () torcher_walk05 = [ 20, torcher_walk06 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () torcher_walk06 = [ 21, torcher_walk07 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_walk07 = [ 22, torcher_walk08 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () torcher_walk08 = [ 23, torcher_walk09 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_walk09 = [ 24, torcher_walk10 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_walk10 = [ 25, torcher_walk11 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_walk11 = [ 26, torcher_walk12 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () torcher_walk12 = [ 27, torcher_walk13 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_walk13 = [ 28, torcher_walk14 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () torcher_walk14 = [ 29, torcher_walk15 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () torcher_walk15 = [ 30, torcher_walk16 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () torcher_walk16 = [ 31, torcher_walk ]
 {
 	ai_walk (SECRET_1ST_DOWN);
@@ -505,17 +446,14 @@ void () torcher_flame01 = [ 60, torcher_flame02 ]
 	ai_walk (TE_LIGHTNING3);
 	sound (self, CHAN_WEAPON, "boss1/throw.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () torcher_flame02 = [ 61, torcher_flame03 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame03 = [ 62, torcher_flame04 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame04 = [ 63, torcher_flame05 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
@@ -524,112 +462,81 @@ void () torcher_flame05 = [ 64, torcher_flame06 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame06 = [ 65, torcher_flame07 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame07 = [ 66, torcher_flame08 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame08 = [ 67, torcher_flame09 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame09 = [ 68, torcher_flame27 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame27 = [ 69, torcher_flame28 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 	ai_face ();
 };
-
 void () torcher_flame28 = [ 70, torcher_flame29 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 	torcher_fire ();
 };
-
 void () torcher_flame29 = [ 71, torcher_flame10 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame10 = [ 72, torcher_flame11 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame11 = [ 73, torcher_flame12 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame12 = [ 74, torcher_flame13 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flame13 = [ 75, torcher_runb01 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () torcher_flameb01 = [ 48, torcher_flameb02 ]
 {
 	ai_face ();
 	sound (self, CHAN_WEAPON, "boss1/throw.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () torcher_flameb02 = [ 49, torcher_flameb03 ]
-{
-};
-
+{};
 void () torcher_flameb03 = [ 50, torcher_flameb04 ]
-{
-};
-
+{};
 void () torcher_flameb04 = [ 51, torcher_flameb05 ]
-{
-};
-
+{};
 void () torcher_flameb05 = [ 52, torcher_flameb06 ]
-{
-};
-
+{};
 void () torcher_flameb06 = [ 53, torcher_flameb07 ]
-{
-};
-
+{};
 void () torcher_flameb07 = [ 54, torcher_flameb08 ]
 {
 	ai_face ();
 };
-
 void () torcher_flameb08 = [ 55, torcher_flameb09 ]
 {
 	torcher_fire ();
 };
-
 void () torcher_flameb09 = [ 56, torcher_flameb10 ]
-{
-};
-
+{};
 void () torcher_flameb10 = [ 57, torcher_flameb11 ]
-{
-};
-
+{};
 void () torcher_flameb11 = [ 58, torcher_flameb12 ]
-{
-};
-
+{};
 void () torcher_flameb12 = [ 59, torcher_run01 ]
 {
 	ai_face ();
@@ -699,7 +606,6 @@ void () torcher_pain06 = [ 97, torcher_pain07 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_pain07 = [ 98, torcher_pain08 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
@@ -716,108 +622,87 @@ void () torcher_hurt02 = [ 101, torcher_hurt03 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_hurt03 = [ 102, torcher_hurt04 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_hurt04 = [ 103, torcher_hurt05 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_hurt05 = [ 104, torcher_hurt06 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_hurt06 = [ 105, torcher_hurt07 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_hurt07 = [ 106, torcher_hurt08 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_hurt08 = [ 107, torcher_runb01 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch01 = [ 108, torcher_ouch02 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch02 = [ 109, torcher_ouch03 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch03 = [ 110, torcher_ouch04 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch04 = [ 111, torcher_ouch05 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch05 = [ 112, torcher_ouch06 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch06 = [ 113, torcher_ouch07 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch07 = [ 114, torcher_ouch08 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_ouch08 = [ 115, torcher_run01 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_auw = [ 108, torcher_auw21 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_auw21 = [ 109, torcher_auw22 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_auw22 = [ 110, torcher_auw01 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_auw01 = [ 116, torcher_auw02 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_auw02 = [ 117, torcher_auw03 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () torcher_auw03 = [ 118, torcher_auw04 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 	sound (self, CHAN_VOICE, "player/land2.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () torcher_auw04 = [ 119, torcher_auw05 ]
 {};
 void () torcher_auw05 = [ 120, torcher_auw06 ]
@@ -853,8 +738,7 @@ void () torcher_die05 = [ 131, torcher_die06 ]
 void () torcher_die06 = [ 132, torcher_die07 ]
 {};
 void () torcher_die07 = [ 133, torcher_die08 ]
-{
-};
+{};
 void () torcher_die08 = [ 134, torcher_die09 ]
 {};
 void () torcher_die09 = [ 135, torcher_die10 ]
@@ -874,8 +758,7 @@ void () torcher_dood01 = [ 140, torcher_dood02 ]
 void () torcher_dood02 = [ 141, torcher_dood03 ]
 {};
 void () torcher_dood03 = [ 142, torcher_dood04 ]
-{
-};
+{};
 void () torcher_dood04 = [ 143, torcher_dood05 ]
 {
 	self.solid = SOLID_NOT;
@@ -898,20 +781,14 @@ void () torcher_splat01 = [ 154, torcher_splat02 ]
 {
 	self.nextthink = (time + 0.2);
 };
-
 void () torcher_splat02 = [ 155, torcher_splat03 ]
-{
-};
-
+{};
 void () torcher_splat03 = [ 156, torcher_splat04 ]
-{
-};
-
+{};
 void () torcher_splat04 = [ 157, torcher_splat05 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () torcher_splat05 = [ 158, torcher_splat06 ]
 {};
 void () torcher_splat06 = [ 159, torcher_splat07 ]
@@ -1055,7 +932,6 @@ void () monster_torcher1 =
 	self.th_melee = torcher_flameb01;
 	self.th_missile = torcher_flame;
 	coop_walkmonster_start ();
-
 };
 void () monster_torcher =
 {

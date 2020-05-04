@@ -1,5 +1,4 @@
 // #includes for all stuff
-#ifdef mtf_coop_malice
 #include "malice_reliants.qc"
 #include "malice_pain.qc"
 #include "malice_smoke.qc"
@@ -27,5 +26,4 @@
 #include "monster_tank.qc"
 #include "monster_turret.qc"
 #include "malice_dancer.qc"
-#endif
 //END

@@ -22,55 +22,46 @@ void () merc_stand4 = [ 15, merc_stand5 ]
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_stand5 = [ 16, merc_stand6 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_stand6 = [ 17, merc_stand1 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_astand1 = [ 18, merc_astand2 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_astand2 = [ 19, merc_astand3 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_astand3 = [ 20, merc_astand4 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_astand4 = [ 21, merc_astand5 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_astand5 = [ 22, merc_astand6 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_astand6 = [ 23, merc_astand1 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_walk1 = [ 54, merc_walk2 ]
 {
 	if ((random () < 0.2))
@@ -79,72 +70,58 @@ void () merc_walk1 = [ 54, merc_walk2 ]
 	}
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () merc_walk2 = [ 55, merc_walk3 ]
 {
 	ai_walk (TE_LIGHTNING2);
 };
-
 void () merc_walk3 = [ 56, merc_walk4 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () merc_walk4 = [ 57, merc_walk5 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () merc_walk5 = [ 58, merc_walk6 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () merc_walk6 = [ 59, merc_walk7 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () merc_walk7 = [ 60, merc_walk8 ]
 {
 	ai_walk (SPAWNFLAG_LASER);
 };
-
 void () merc_walk8 = [ 61, merc_walk9 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () merc_walk9 = [ 62, merc_walk10 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () merc_walk10 = [ 63, merc_walk11 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () merc_walk11 = [ 64, merc_walk12 ]
 {
 	ai_walk (SVC_SETVIEWPORT);
 };
-
 void () merc_walk12 = [ 65, merc_walk13 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () merc_walk13 = [ 66, merc_walk14 ]
 {
 	ai_walk (AS_MELEE);
 };
-
 void () merc_walk14 = [ 67, merc_walk1 ]
 {
 	ai_walk (SPAWNFLAG_LASER);
 };
-
 void () merc_run1 = [ 6, merc_run2 ]
 {
 	if ((random () < 0.2))
@@ -153,129 +130,103 @@ void () merc_run1 = [ 6, merc_run2 ]
 	}
 	ai_run (20);
 };
-
 void () merc_run2 = [ 7, merc_run3 ]
 {
 	ai_run (20);
 };
-
 void () merc_run3 = [ 8, merc_run4 ]
 {
 	ai_run (20);
 };
-
 void () merc_run4 = [ 9, merc_run5 ]
 {
 	ai_run (20);
 	ai_run_slide ();
 };
-
 void () merc_run5 = [ 10, merc_run6 ]
 {
 	ai_run (20);
 };
-
 void () merc_run6 = [ 11, merc_run1 ]
 {
 	ai_run (20);
 };
-
 void () merc_at1 = [ 42, merc_at2 ]
 {
 	merc_fire ();
 	ai_walk (20);
 };
-
 void () merc_at2 = [ 43, merc_at3 ]
 {
 	ai_walk (20);
 };
-
 void () merc_at3 = [ 44, merc_at4 ]
 {
 	ai_walk (20);
 };
-
 void () merc_at4 = [ 45, merc_at5 ]
 {
 	merc_fire ();
 	ai_walk (20);
 };
-
 void () merc_at5 = [ 46, merc_at6 ]
 {
 	ai_walk (20);
 };
-
 void () merc_at6 = [ 47, merc_run1 ]
 {
 	ai_walk (20);
 };
-
 void () merc_mel1 = [ 48, merc_mel2 ]
 {
 	merc_fire ();
 };
-
 void () merc_mel2 = [ 49, merc_mel3 ]
-{
-};
-
+{};
 void () merc_mel3 = [ 50, merc_mel4 ]
 {
 	ai_face ();
 };
-
 void () merc_mel4 = [ 51, merc_mel5 ]
 {
 	merc_fire ();
 };
-
 void () merc_mel5 = [ 52, merc_mel6 ]
-{
-};
-
+{};
 void () merc_mel6 = [ 53, merc_run1 ]
 {
 	ai_face ();
 };
-
 void () merc_atk1 = [ 36, merc_atk2 ]
 {
 	merc_fire ();
 	ai_walk (20);
 };
-
 void () merc_atk2 = [ 37, merc_atk3 ]
 {
 	ai_walk (20);
 	sound (self, CHAN_VOICE, "weapons/shot1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () merc_atk3 = [ 38, merc_atk4 ]
 {
 	merc_fire ();
 	ai_walk (20);
 };
-
 void () merc_atk4 = [ 39, merc_atk5 ]
 {
 	ai_walk (20);
 	sound (self, CHAN_VOICE, "weapons/shot1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () merc_atk5 = [ 40, merc_atk6 ]
 {
 	merc_fire ();
 	ai_walk (20);
 };
-
 void () merc_atk6 = [ 41, merc_run1 ]
 {
 	ai_walk (20);
 	sound (self, CHAN_VOICE, "weapons/shot1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () merc_pain1 = [ 30, merc_pain2 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
@@ -316,12 +267,10 @@ void () merc_painb2 = [ 80, merc_painb3 ]
 {
 	ai_painforward (13);
 };
-
 void () merc_painb3 = [ 81, merc_painb4 ]
 {
 	ai_painforward (TE_LIGHTNING3);
 };
-
 void () merc_painb4 = [ 82, merc_painb5 ]
 {};
 void () merc_painb5 = [ 83, merc_painb6 ]
@@ -355,7 +304,6 @@ void () merc_ded2 = [ 102, merc_ded3 ]
 	self.ammo_rockets = 10;
 	self.ammo_cells = 10;
 	self.ammo_nails = 20;
-
 	DropBackpack ();
 };
 void () merc_ded3 = [ 103, merc_ded4 ]
@@ -589,62 +537,52 @@ void () merc_heh6 = [ 134, merc_heh7 ]
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh7 = [ 134, merc_heh8 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh8 = [ 134, merc_heh9 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh9 = [ 134, merc_heh10 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh10 = [ 134, merc_heh11 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh11 = [ 134, merc_heh12 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh12 = [ 134, merc_heh13 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh13 = [ 134, merc_heh14 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh14 = [ 134, merc_heh15 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
-
 void () merc_heh15 = [ 134, merc_spn1 ]
 {
 	ai_walk (20);
 	self.nextthink = (time + 0.2);
 };
 void () merc_spn1;
-
 void () merc_tel1 = [ 118, merc_tel2 ]
 {};
 void () merc_tel2 = [ 119, merc_tel3 ]

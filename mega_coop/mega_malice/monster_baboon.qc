@@ -129,7 +129,6 @@ void () baboon_wail10 = [ 67, baboon_wail11 ]
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_wail11 = [ 66, baboon_wail12 ]
 {
 	ai_stand ();
@@ -204,275 +203,222 @@ void () baboon_stand4 = [ 13, baboon_stand5 ]
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand5 = [ 14, baboon_stand6 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand6 = [ 15, baboon_stand7 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand7 = [ 16, baboon_stand8 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand8 = [ 17, baboon_stand9 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand9 = [ 18, baboon_stand10 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand10 = [ 19, baboon_stand11 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand11 = [ 20, baboon_stand12 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand12 = [ 21, baboon_stand13 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand13 = [ 22, baboon_stand14 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand14 = [ 23, baboon_stand15 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand15 = [ 24, baboon_stand16 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand16 = [ 25, baboon_stand17 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand17 = [ 26, baboon_stand18 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand18 = [ 27, baboon_stand19 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_stand19 = [ 28, baboon_stand1 ]
 {
 	ai_stand ();
 	self.nextthink = (time + 0.2);
 };
-
 void () baboon_walk1 = [ 30, baboon_walk2 ]
 {
 	ai_walk (14);
 };
-
 void () baboon_walk2 = [ 31, baboon_walk3 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () baboon_walk3 = [ 32, baboon_walk4 ]
 {
 	ai_walk (22);
 };
-
 void () baboon_walk4 = [ 33, baboon_walk5 ]
 {
 	ai_walk (18);
 };
-
 void () baboon_walk5 = [ 34, baboon_walk6 ]
 {
 	ai_walk (MAX_DROPS);
 };
-
 void () baboon_walk6 = [ 35, baboon_walk1 ]
 {
 	ai_walk (SVC_SETVIEWANGLES);
 };
-
 void () baboon_run1 = [ 0, baboon_run2 ]
 {
 	ai_run (SECRET_YES_SHOOT);
 };
-
 void () baboon_run2 = [ 1, baboon_run3 ]
 {
 	ai_run (32);
 };
-
 void () baboon_run3 = [ 2, baboon_run4 ]
 {
 	ai_run (32);
 };
-
 void () baboon_run4 = [ 3, baboon_run5 ]
 {
 	ai_run (20);
 };
-
 void () baboon_run5 = [ 4, baboon_run6 ]
 {
 	ai_run (14);
 };
-
 void () baboon_run6 = [ 5, baboon_run7 ]
 {
 	ai_run (SECRET_YES_SHOOT);
 };
-
 void () baboon_run7 = [ 6, baboon_run8 ]
 {
 	ai_run (20);
 };
-
 void () baboon_run8 = [ 7, baboon_run9 ]
 {
 	ai_run (32);
 };
-
 void () baboon_run9 = [ 8, baboon_run10 ]
 {
 	ai_run (20);
 };
-
 void () baboon_run10 = [ 9, baboon_run ]
 {
 	ai_run (15);
 };
 void () baboon_run;
-
 void () baboon_slash1 = [ 50, baboon_slash2 ]
 {
 	ai_face ();
 };
-
 void () baboon_slash2 = [ 51, baboon_slash3 ]
 {
 	ai_face ();
 };
-
 void () baboon_slash3 = [ 52, baboon_slash4 ]
 {
 	baboon_bite (-200);
 };
-
 void () baboon_slash4 = [ 53, baboon_slash5 ]
 {
 	baboon_bite (200);
 };
-
 void () baboon_slash5 = [ 54, baboon_slash6 ]
 {
 };
-
 void () baboon_slash6 = [ 55, baboon_slash7 ]
 {
 };
-
 void () baboon_slash7 = [ 56, baboon_run ]
 {
 };
-
 void () baboon_atta1 = [ 43, baboon_atta2 ]
 {
 	ai_face ();
 };
-
 void () baboon_atta2 = [ 44, baboon_atta3 ]
 {
 	ai_face ();
 };
-
 void () baboon_atta3 = [ 45, baboon_atta4 ]
 {
 	ai_face ();
 };
-
 void () baboon_atta4 = [ 46, baboon_atta5 ]
 {
 	baboon_bite (-200);
 };
-
 void () baboon_atta5 = [ 47, baboon_atta6 ]
 {
 };
-
 void () baboon_atta6 = [ 48, baboon_atta7 ]
 {
 };
-
 void () baboon_atta7 = [ 49, baboon_run ]
 {
 };
-
 void () baboon_kill_lights2 = [ 51, baboon_kill_lights3 ]
 {
 	ai_face ();
 };
-
 void () baboon_kill_lights3 = [ 52, baboon_kill_lights4 ]
 {
 	ChuckRock (0);
 };
-
 void () baboon_kill_lights4 = [ 53, baboon_kill_lights5 ]
 {
 	ChuckRock (0);
 };
-
 void () baboon_kill_lights5 = [ 54, baboon_kill_lights6 ]
 {
 };
-
 void () baboon_kill_lights6 = [ 55, baboon_kill_lights7 ]
 {
 };
-
 void () baboon_kill_lights7 = [ 56, baboon_run ]
 {
 };
 void () baboon_leap1;
-
 void () baboon_run =
 {
 	baboon_find_enemy ();
 };
-
 void () baboon_find_enemy =
 {
 	local entity targ;
@@ -538,75 +484,59 @@ void () baboon_leap2 = [ 1, baboon_leap3 ]
 {
 	ai_forward (32);
 };
-
 void () baboon_leap3 = [ 2, baboon_leap4 ]
 {
 	ai_forward (32);
 };
-
 void () baboon_leap4 = [ 3, baboon_leap5 ]
 {
 	ai_forward (20);
 };
-
 void () baboon_leap5 = [ 4, baboon_leap6 ]
 {
 	ai_forward (14);
 };
-
 void () baboon_leap6 = [ 5, baboon_leap7 ]
 {
 	ai_forward (SECRET_YES_SHOOT);
 };
-
 void () baboon_leap7 = [ 6, baboon_leap8 ]
 {
 	ai_forward (20);
 };
-
 void () baboon_leap8 = [ 7, baboon_leap9 ]
 {
 	ai_forward (32);
 };
-
 void () baboon_leap9 = [ 8, baboon_leap10 ]
 {
 	ai_forward (20);
 };
-
 void () baboon_leap10 = [ 9, baboon_run1 ]
 {
 	ai_forward (15);
 };
-
 void () baboon_pain1 = [ 36, baboon_pain2 ]
 {
 };
-
 void () baboon_pain2 = [ 37, baboon_pain3 ]
 {
 };
-
 void () baboon_pain3 = [ 38, baboon_pain4 ]
 {
 };
-
 void () baboon_pain4 = [ 39, baboon_pain5 ]
 {
 };
-
 void () baboon_pain5 = [ 40, baboon_pain6 ]
 {
 };
-
 void () baboon_pain6 = [ 41, baboon_pain7 ]
 {
 };
-
 void () baboon_pain7 = [ 42, baboon_run1 ]
 {
 };
-
 void (entity attacker, float damage) baboon_pain =
 {
 	blooddrops ();
@@ -618,61 +548,42 @@ void (entity attacker, float damage) baboon_pain =
 	sound (self, CHAN_VOICE, "baboon/dpain1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	baboon_pain1 ();
 };
-
 void () baboon_die1 = [ 68, baboon_die2 ]
 {};
-
 void () baboon_die2 = [ 69, baboon_die3 ]
 {};
-
 void () baboon_die3 = [ 70, baboon_die4 ]
 {};
-
 void () baboon_die4 = [ 71, baboon_die5 ]
 {};
-
 void () baboon_die5 = [ 72, baboon_die6 ]
 {};
-
 void () baboon_die6 = [ 73, baboon_die7 ]
 {};
-
 void () baboon_die7 = [ 74, baboon_die8 ]
 {};
-
 void () baboon_die8 = [ 75, baboon_die9 ]
 {};
-
 void () baboon_die9 = [ 76, baboon_die9 ]
 {};
-
 void () baboon_dieb1 = [ 77, baboon_dieb2 ]
 {};
-
 void () baboon_dieb2 = [ 78, baboon_dieb3 ]
 {};
-
 void () baboon_dieb3 = [ 79, baboon_dieb4 ]
 {};
-
 void () baboon_dieb4 = [ 80, baboon_dieb5 ]
 {};
-
 void () baboon_dieb5 = [ 81, baboon_dieb6 ]
 {};
-
 void () baboon_dieb6 = [ 82, baboon_dieb7 ]
 {};
-
 void () baboon_dieb7 = [ 83, baboon_dieb8 ]
 {};
-
 void () baboon_dieb8 = [ 84, baboon_dieb9 ]
 {};
-
 void () baboon_dieb9 = [ 85, baboon_dieb9 ]
 {};
-
 void () baboon_die =
 {
 	if ((self.health < -20))

@@ -22,47 +22,32 @@ void () frogmen_fire6 = [ 14, frogmen_fire7 ]
 	ai_face ();
 	sound (self, CHAN_VOICE, "frogman/shot3.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () frogmen_fire7 = [ 15, frogmen_fire8 ]
 {
 	ai_face ();
 };
-
 void () frogmen_fire8 = [ 16, frogmen_fire9 ]
 {
 	ai_face ();
 };
-
 void () frogmen_fire9 = [ 17, frogmen_fire10 ]
 {
 	ai_face ();
 };
-
 void () frogmen_fire10 = [ 18, frogman_down1 ]
 {
 	ai_face ();
 };
-
 void () frogman_down1 = [ 34, frogman_down2 ]
-{
-};
-
+{};
 void () frogman_down2 = [ 35, frogman_down3 ]
-{
-};
-
+{};
 void () frogman_down3 = [ 36, frogman_down4 ]
-{
-};
-
+{};
 void () frogman_down4 = [ 37, frogman_down5 ]
-{
-};
-
+{};
 void () frogman_down5 = [ 38, frogmen_run1 ]
-{
-};
-
+{};
 void () frogmen_fire =
 {
 	if ((random () < 0.3))
@@ -82,47 +67,38 @@ void () frogmen_stand1 = [ 19, frogmen_stand2 ]
 		sound (self, CHAN_VOICE, "frogman/idle.wav", SPAWNFLAG_SUPERSPIKE, ATTN_IDLE);
 	}
 };
-
 void () frogmen_stand2 = [ 20, frogmen_stand3 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand3 = [ 21, frogmen_stand4 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand4 = [ 22, frogmen_stand5 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand5 = [ 23, frogmen_stand6 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand6 = [ 24, frogmen_stand7 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand7 = [ 25, frogmen_stand8 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand8 = [ 26, frogmen_stand9 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_stand9 = [ 27, frogmen_stand1 ]
 {
 	ai_stand ();
 };
-
 void () frogmen_walk1 = [ 0, frogmen_walk2 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
@@ -135,37 +111,30 @@ void () frogmen_walk2 = [ 1, frogmen_walk3 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_walk3 = [ 2, frogmen_walk4 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_walk4 = [ 3, frogmen_walk5 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_walk5 = [ 4, frogmen_walk6 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_walk6 = [ 5, frogmen_walk7 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_walk7 = [ 6, frogmen_walk8 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_walk8 = [ 7, frogmen_walk1 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
 };
-
 void () frogmen_run1 = [ 0, frogmen_run2 ]
 {
 	ai_forward (20);
@@ -175,43 +144,35 @@ void () frogmen_run1 = [ 0, frogmen_run2 ]
 		sound (self, CHAN_VOICE, "frogman/swim.wav", SPAWNFLAG_SUPERSPIKE, ATTN_IDLE);
 	}
 };
-
 void () frogmen_run2 = [ 1, frogmen_run3 ]
 {
 	ai_forward (20);
 	sound (self, CHAN_VOICE, "frogman/swim.wav", SPAWNFLAG_SUPERSPIKE, ATTN_IDLE);
 };
-
 void () frogmen_run3 = [ 2, frogmen_run4 ]
 {
 	ai_forward (20);
 };
-
 void () frogmen_run4 = [ 3, frogmen_run5 ]
 {
 	ai_forward (18);
 };
-
 void () frogmen_run5 = [ 4, frogmen_run6 ]
 {
 	ai_run (22);
 };
-
 void () frogmen_run6 = [ 5, frogmen_run7 ]
 {
 	ai_run (19);
 };
-
 void () frogmen_run7 = [ 6, frogmen_run8 ]
 {
 	ai_run (20);
 };
-
 void () frogmen_run8 = [ 7, frogmen_run1 ]
 {
 	ai_run (19);
 };
-
 void () frogmen_death1 = [ 39, frogmen_death2 ]
 {
 	sound (self, CHAN_VOICE, "frogman/death.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
@@ -220,7 +181,6 @@ void () frogmen_death2 = [ 40, frogmen_death3 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () frogmen_death3 = [ 41, frogmen_death4 ]
 {};
 void () frogmen_death4 = [ 42, frogmen_death5 ]
@@ -245,12 +205,10 @@ void () frogmen_pain2 = [ 29, frogmen_pain3 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () frogmen_pain3 = [ 30, frogmen_pain4 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () frogmen_pain4 = [ 31, frogmen_pain5 ]
 {};
 void () frogmen_pain5 = [ 32, frogmen_run1 ]
@@ -344,13 +302,11 @@ void () spinover2 = [ 51, spinover3 ]
 	self.velocity = self.old_angles;
 	make_bub (self.origin);
 };
-
 void () spinover3 = [ 52, spinover4 ]
 {
 	self.velocity = self.old_angles;
 	make_bub (self.origin);
 };
-
 void () spinover4 = [ 53, spinover5 ]
 {
 	self.velocity = self.old_angles;
@@ -361,13 +317,11 @@ void () spinover5 = [ 54, spinover6 ]
 	self.velocity = self.old_angles;
 	make_bub (self.origin);
 };
-
 void () spinover6 = [ 55, spinover1 ]
 {
 	self.velocity = self.old_angles;
 	make_bub (self.origin);
 };
-
 void () EndAll =
 {
 	if ((other == world))
@@ -376,7 +330,6 @@ void () EndAll =
 		self.think = SUB_Null;
 	}
 };
-
 void () OutControl =
 {
 	self.solid = SOLID_NOT;
@@ -384,7 +337,6 @@ void () OutControl =
 	self.touch = EndAll;
 	frogmen_death1 ();
 };
-
 void () frogmen_die =
 {
 	local float r;
@@ -436,7 +388,6 @@ void () monster_frogman1 =
 	self.th_melee = frogmen_fire1;
 	coop_swimmonster_start ();
 };
-
 void () monster_frogman =
 {
 	precache_model ("progs/frogman.mdl");

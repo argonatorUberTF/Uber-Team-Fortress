@@ -2,7 +2,6 @@ void () cbt_stand1 = [ 0, cbt_stand1 ]
 {
 	cbot_ai_stand ();
 };
-
 void () cbt_jump1 = [ 58, cbt_jump2 ]
 {};
 void () cbt_jump2 = [ 59, cbt_jump3 ]
@@ -81,7 +80,6 @@ void () cbt_rocketjump4 = [ 61, cbt_rocketjump5 ]
 	Engage ();
 	NarfSprite ();
 };
-
 void () cbt_rocketjump5 = [ 62, cbt_rocketjump6 ]
 {};
 void () cbt_rocketjump6 = [ 63, cbt_rocketjump7 ]
@@ -151,215 +149,164 @@ void () cbt_dodge3 = [ 1, cbt_dodge4 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge4 = [ 104, cbt_dodge5 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge5 = [ 2, cbt_dodge6 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge6 = [ 105, cbt_dodge7 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge7 = [ 3, cbt_dodge8 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge8 = [ 106, cbt_dodge9 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge9 = [ 4, cbt_dodge10 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge10 = [ 107, cbt_dodge11 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge11 = [ 5, cbt_dodge12 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge12 = [ 108, cbt_dodge13 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge13 = [ 6, cbt_dodge14 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge14 = [ 109, cbt_dodge15 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge15 = [ 7, cbt_dodge16 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodge16 = [ 110, cbt_dodge1 ]
 {
 	cbot_attack ();
 };
-
 void () cbt_dodgeb1 = [ 8, cbt_dodgeb2 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb2 = [ 111, cbt_dodgeb3 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb3 = [ 9, cbt_dodgeb4 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb4 = [ 112, cbt_dodgeb5 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb5 = [ 10, cbt_dodgeb6 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb6 = [ 113, cbt_dodgeb7 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb7 = [ 11, cbt_dodgeb8 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb8 = [ 114, cbt_dodgeb9 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb9 = [ 12, cbt_dodgeb10 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb10 = [ 115, cbt_dodgeb11 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb11 = [ 13, cbt_dodgeb12 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb12 = [ 116, cbt_dodgeb13 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb13 = [ 14, cbt_dodgeb14 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb14 = [ 117, cbt_dodgeb15 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb15 = [ 15, cbt_dodgeb16 ]
 {
 	attack_pattern ();
 };
-
 void () cbt_dodgeb16 = [ 118, cbt_dodgeb1 ]
 {
 	cbot_attack ();
 };
-
 void () cbt_run1 = [ 0, cbt_run2 ]
 {
 	cbot_ai_run (40);
 };
-
 void () cbt_run2 = [ 1, cbt_run3 ]
 {
 	cbot_ai_run (SVC_INTERMISSION);
 };
-
 void () cbt_run3 = [ 2, cbt_run4 ]
 {
 	cbot_ai_run (15);
 };
-
 void () cbt_run4 = [ 3, cbt_run5 ]
 {
 	cbot_ai_run (25);
 };
-
 void () cbt_run5 = [ 4, cbt_run6 ]
 {
 	cbot_ai_run (SVC_INTERMISSION);
 };
-
 void () cbt_run6 = [ 5, cbt_run1 ]
 {
 	cbot_ai_run (SVC_INTERMISSION);
 };
-
 void () cbt_shot1 = [ 40, cbt_shot2 ]
 {
 	self.effects = (self.effects | EF_MUZZLEFLASH);
 };
-
 void () cbt_shot2 = [ 41, cbt_shot3 ]
-{
-};
-
+{};
 void () cbt_shot3 = [ 42, cbt_shot4 ]
-{
-};
-
+{};
 void () cbt_shot4 = [ 43, cbt_shot5 ]
-{
-};
-
+{};
 void () cbt_shot5 = [ 44, cbt_shot6 ]
-{
-};
-
+{};
 void () cbt_shot6 = [ 45, cbt_shot7 ]
-{
-};
-
+{};
 void () cbt_shot7 = [ 46, cbt_shot8 ]
-{
-};
-
+{};
 void () cbt_shot8 = [ 47, cbt_shot9 ]
-{
-};
-
+{};
 void () cbt_shot9 = [ 48, cbt_dodge1 ]
 {
 	if ((random () < 0.5))
@@ -367,44 +314,26 @@ void () cbt_shot9 = [ 48, cbt_dodge1 ]
 		cbt_dodgeb1 ();
 	}
 };
-
 void () cbt_pain1 = [ 31, cbt_pain2 ]
-{
-};
-
+{};
 void () cbt_pain2 = [ 32, cbt_pain3 ]
-{
-};
-
+{};
 void () cbt_pain3 = [ 33, cbt_pain4 ]
-{
-};
-
+{};
 void () cbt_pain4 = [ 34, cbt_pain5 ]
-{
-};
-
+{};
 void () cbt_pain5 = [ 35, cbt_pain6 ]
-{
-};
-
+{};
 void () cbt_pain6 = [ 36, cbt_pain7 ]
-{
-};
-
+{};
 void () cbt_pain7 = [ 37, cbt_pain8 ]
-{
-};
-
+{};
 void () cbt_pain8 = [ 38, cbt_pain9 ]
-{
-};
-
+{};
 void () cbt_pain9 = [ 39, cbt_run1 ]
 {
 	cbot_attack ();
 };
-
 void (entity attacker, float damage) cbt_pain =
 {
 	local float r;
@@ -423,13 +352,11 @@ void (entity attacker, float damage) cbt_pain =
 	self.pain_finished = (time + WEAPON_SHOTGUN);
 	cbt_pain1 ();
 };
-
 void () cbot_resurrect =
 {
 	CBot_Create (self);
 	self.frame = MSG_BROADCAST;
 };
-
 void () cbot_mort =
 {
 	self.model = string_null;
@@ -483,7 +410,6 @@ void () cbt_die =
 		}
 	}
 };
-
 void () precache_cbot_models =
 {
 	precache_model ("progs/vasquez.mdl");
@@ -645,10 +571,8 @@ void () cbt_dieb1 = [ 68, cbt_dieb2 ]
 {
 	self.angles_x = MSG_BROADCAST;
 };
-
 void () cbt_dieb2 = [ 69, cbt_dieb3 ]
 {};
-
 void () cbt_dieb3 = [ 71, cbt_dieb4 ]
 {
 	self.solid = SOLID_NOT;

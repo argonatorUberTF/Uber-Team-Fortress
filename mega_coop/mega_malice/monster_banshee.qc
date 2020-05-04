@@ -258,193 +258,162 @@ void () banshee_stand2 = [ 1, banshee_stand3 ]
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand3 = [ 2, banshee_stand4 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.3);
 };
-
 void () banshee_stand4 = [ 3, banshee_stand5 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.3);
 };
-
 void () banshee_stand5 = [ 4, banshee_stand6 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.3);
 };
-
 void () banshee_stand6 = [ 5, banshee_stand7 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand7 = [ 6, banshee_stand8 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand8 = [ 7, banshee_stand9 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand9 = [ 8, banshee_stand10 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand10 = [ 9, banshee_stand11 ]
 {
 	ai_stand ();
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand11 = [ 10, banshee_stand12 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand12 = [ 11, banshee_stand13 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand13 = [ 12, banshee_stand14 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand14 = [ 13, banshee_stand15 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand15 = [ 14, banshee_stand16 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand16 = [ 15, banshee_stand17 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand17 = [ 16, banshee_stand18 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand18 = [ 17, banshee_stand19 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand19 = [ 18, banshee_stand20 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_stand20 = [ 19, banshee_stand1 ]
 {
 	ai_stand ();
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_walk1 = [ 20, banshee_walk2 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk2 = [ 21, banshee_walk3 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk3 = [ 22, banshee_walk4 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk4 = [ 23, banshee_walk5 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk5 = [ 24, banshee_walk6 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk6 = [ 25, banshee_walk7 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk7 = [ 26, banshee_walk8 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk8 = [ 27, banshee_walk9 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk9 = [ 28, banshee_walk10 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk10 = [ 29, banshee_walk11 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk11 = [ 30, banshee_walk12 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_walk12 = [ 31, banshee_walk1 ]
 {
 	movetogoal (14);
 	ban_thinkwalk ();
 };
-
 void () banshee_run1 = [ 20, banshee_run2 ]
 {
 	ChangeYaw ();
@@ -452,7 +421,6 @@ void () banshee_run1 = [ 20, banshee_run2 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run2 = [ 21, banshee_run3 ]
 {
 	ChangeYaw ();
@@ -460,7 +428,6 @@ void () banshee_run2 = [ 21, banshee_run3 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run3 = [ 22, banshee_run4 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
@@ -469,7 +436,6 @@ void () banshee_run3 = [ 22, banshee_run4 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run4 = [ 23, banshee_run5 ]
 {
 	ChangeYaw ();
@@ -477,7 +443,6 @@ void () banshee_run4 = [ 23, banshee_run5 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run5 = [ 24, banshee_run6 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
@@ -486,7 +451,6 @@ void () banshee_run5 = [ 24, banshee_run6 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run6 = [ 25, banshee_run7 ]
 {
 	ChangeYaw ();
@@ -494,7 +458,6 @@ void () banshee_run6 = [ 25, banshee_run7 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run7 = [ 26, banshee_run8 ]
 {
 	ChangeYaw ();
@@ -502,7 +465,6 @@ void () banshee_run7 = [ 26, banshee_run8 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run8 = [ 27, banshee_run9 ]
 {
 	ChangeYaw ();
@@ -510,7 +472,6 @@ void () banshee_run8 = [ 27, banshee_run9 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run9 = [ 28, banshee_run10 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
@@ -519,7 +480,6 @@ void () banshee_run9 = [ 28, banshee_run10 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run10 = [ 29, banshee_run11 ]
 {
 	ChangeYaw ();
@@ -527,7 +487,6 @@ void () banshee_run10 = [ 29, banshee_run11 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run11 = [ 30, banshee_run12 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
@@ -536,7 +495,6 @@ void () banshee_run11 = [ 30, banshee_run12 ]
 	ai_run (14);
 	banshee_think ();
 };
-
 void () banshee_run12 = [ 31, banshee_run1 ]
 {
 	ChangeYaw ();
@@ -549,14 +507,12 @@ void () banshee_run12 = [ 31, banshee_run1 ]
 		self.think = self.th_missile;
 	}
 };
-
 void () ban_fire_walk1 = [ 44, ban_fire_walk2 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk2 = [ 45, ban_fire_walk3 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
@@ -564,14 +520,12 @@ void () ban_fire_walk2 = [ 45, ban_fire_walk3 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk3 = [ 46, ban_fire_walk4 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk4 = [ 47, ban_fire_walk5 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
@@ -579,14 +533,12 @@ void () ban_fire_walk4 = [ 47, ban_fire_walk5 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk5 = [ 48, ban_fire_walk6 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk6 = [ 49, ban_fire_walk7 ]
 {
 	ChangeYaw ();
@@ -594,14 +546,12 @@ void () ban_fire_walk6 = [ 49, ban_fire_walk7 ]
 	banshee_think ();
 	b_fire_rocket (40, MSG_BROADCAST);
 };
-
 void () ban_fire_walk7 = [ 50, ban_fire_walk8 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk8 = [ 51, ban_fire_walk9 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
@@ -609,14 +559,12 @@ void () ban_fire_walk8 = [ 51, ban_fire_walk9 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk9 = [ 52, ban_fire_walk10 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk10 = [ 53, ban_fire_walk11 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
@@ -624,7 +572,6 @@ void () ban_fire_walk10 = [ 53, ban_fire_walk11 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_fire_walk11 = [ 54, ban_fire_walk13 ]
 {
 	ChangeYaw ();
@@ -632,7 +579,6 @@ void () ban_fire_walk11 = [ 54, ban_fire_walk13 ]
 	banshee_think ();
 	b_fire_rocket (-40, MSG_BROADCAST);
 };
-
 void () ban_fire_walk13 = [ 55, banshee_run1 ]
 {
 	ChangeYaw ();
@@ -640,14 +586,12 @@ void () ban_fire_walk13 = [ 55, banshee_run1 ]
 	banshee_think ();
 	SUB_AttackFinished (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () ban_stomp1 = [ 75, ban_stomp2 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp2 = [ 76, ban_stomp3 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
@@ -655,25 +599,21 @@ void () ban_stomp2 = [ 76, ban_stomp3 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp3 = [ 77, ban_stomp4 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, SVC_SETVIEWANGLES);
 	banshee_think ();
 };
-
 void () ban_stomp4 = [ 78, ban_stomp5 ]
 {
 	banshee_think ();
 	ChangeYaw ();
 };
-
 void () ban_stomp5 = [ 79, ban_stomp6 ]
 {
 	banshee_think ();
 };
-
 void () ban_stomp6 = [ 80, ban_stomp7 ]
 {
 	ChangeYaw ();
@@ -683,22 +623,18 @@ void () ban_stomp6 = [ 80, ban_stomp7 ]
 	FuelTankExplode ();
 	T_RadiusDamage (self, self, 100, self);
 };
-
 void () ban_stomp7 = [ 81, ban_stomp8 ]
 {
 	banshee_think ();
 };
-
 void () ban_stomp8 = [ 82, ban_stomp9 ]
 {
 	banshee_think ();
 };
-
 void () ban_stomp9 = [ 83, ban_stomp10 ]
 {
 	banshee_think ();
 };
-
 void () ban_stomp10 = [ 84, ban_stomp11 ]
 {
 	sound (self, TE_WIZSPIKE, "banshee/servo.wav", SERVO_VOLUMETWO, ATTN_BANSHEE);
@@ -706,14 +642,12 @@ void () ban_stomp10 = [ 84, ban_stomp11 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp11 = [ 85, ban_stomp12 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp12 = [ 86, ban_stomp13 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
@@ -721,194 +655,161 @@ void () ban_stomp12 = [ 86, ban_stomp13 ]
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp13 = [ 87, ban_stomp14 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp14 = [ 88, ban_stomp15 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () ban_stomp15 = [ 89, banshee_run1 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	banshee_think ();
 };
-
 void () banshee_plant1 = [ 0, banshee_plant1 ]
 {
 	ban_fire_still ();
 	banshee_think ();
 };
-
 void () banshee_stop1 = [ 57, banshee_stop2 ]
 {
 	banshee_think ();
 };
-
 void () banshee_stop2 = [ 58, banshee_plant1 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
 	banshee_think ();
 };
-
 void () ban_launch_field1 = [ 32, ban_launch_field2 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field2 = [ 33, ban_launch_field3 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field3 = [ 34, ban_launch_field4 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field4 = [ 35, ban_launch_field5 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field5 = [ 36, ban_launch_field6 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field6 = [ 37, ban_launch_field7 ]
 {
 	sound (self, TE_LIGHTNING2, "banshee/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_BANSHEE);
 	banshee_think ();
 };
-
 void () ban_launch_field7 = [ 38, ban_launch_field8 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field8 = [ 39, ban_launch_field9 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field9 = [ 40, ban_launch_field10 ]
 {
 	banshee_think ();
 	b_fire_rocket (40, MSG_BROADCAST);
 	b_fire_rocket (-40, MSG_BROADCAST);
 };
-
 void () ban_launch_field10 = [ 41, ban_launch_field11 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field11 = [ 42, ban_launch_field12 ]
 {
 	banshee_think ();
 };
-
 void () ban_launch_field12 = [ 43, banshee_plant1 ]
 {
 	banshee_think ();
 	SUB_AttackFinished (0.3);
 };
-
 void () banshee_die1 = [ 57, banshee_die2 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 	sound (self, CHAN_AUTO, "banshee/death.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () banshee_die2 = [ 58, banshee_die3 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die3 = [ 59, banshee_die4 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die4 = [ 60, banshee_die5 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die5 = [ 61, banshee_die6 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die6 = [ 62, banshee_die7 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die7 = [ 63, banshee_die8 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die8 = [ 64, banshee_die9 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die9 = [ 65, banshee_die10 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die10 = [ 66, banshee_die11 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die11 = [ 67, banshee_die12 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die12 = [ 68, banshee_die13 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die13 = [ 69, banshee_die14 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die14 = [ 70, banshee_die15 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.2);
 };
-
 void () banshee_die15 = [ 71, banshee_die16 ]
 {
 	banshee_think ();
@@ -916,30 +817,25 @@ void () banshee_die15 = [ 71, banshee_die16 ]
 	sound (self, CHAN_WEAPON, "doors/airdoor2.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 	sound (self, CHAN_VOICE, "doors/drclos4.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NONE);
 };
-
 void () banshee_die16 = [ 72, banshee_die17 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () banshee_die17 = [ 73, banshee_die18 ]
 {
 	banshee_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () banshee_die18 = [ 74, banshee_die19 ]
 {
 	sound (self, CHAN_VOICE, "doors/drclos4.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NONE);
 	banshee_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () banshee_die19 = [ 74, banshee_die19 ]
 {
 };
-
 void (entity attacker, float damage) banshee_pain =
 {
 	if ((self.health <= MSG_BROADCAST))
@@ -1147,7 +1043,6 @@ void () monster_banshee1 =
 };
 void () monster_banshee =
 {
-
 	if (!deathmatch)
 	{
 		self.lefty = MSG_BROADCAST;

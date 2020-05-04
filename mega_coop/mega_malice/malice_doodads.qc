@@ -12,7 +12,6 @@ void () f_turbine5 = [ 0, f_turbine6 ]
 {
 	sound (self, CHAN_VOICE, "turbine/fanblow.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () f_turbine6 = [ 1, f_turbine7 ]
 {};
 void () f_turbine7 = [ 2, f_turbine8 ]

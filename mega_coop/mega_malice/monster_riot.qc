@@ -20,58 +20,47 @@ void () riot_stand1 = [ 45, riot_stand2 ]
 	ai_stand ();
 	IdleComment ();
 };
-
 void () riot_stand2 = [ 46, riot_stand3 ]
 {
 	ai_stand ();
 };
-
 void () riot_stand3 = [ 47, riot_stand4 ]
 {
 	ai_stand ();
 };
-
 void () riot_stand4 = [ 48, riot_stand5 ]
 {
 	ai_stand ();
 };
-
 void () riot_stand5 = [ 49, riot_stand6 ]
 {
 	ai_stand ();
 };
-
 void () riot_stand6 = [ 50, riot_stand7 ]
 {
 	ai_stand ();
 };
-
 void () riot_stand7 = [ 51, riot_stand8 ]
 {
 	ai_stand ();
 };
-
 void () riot_stand8 = [ 52, riot_stand1 ]
 {
 	ai_stand ();
 };
-
 void () riot_jump1 = [ 24, riot_jump2 ]
 {
 	ai_forward (20);
 };
-
 void () riot_jump2 = [ 25, riot_jump3 ]
 {
 	ai_forward (20);
 };
-
 void () riot_jump3 = [ 26, riot_jump4 ]
 {
 	ai_forward (20);
 	ai_face ();
 };
-
 void () riot_jump4 = [ 27, riot_jump5 ]
 {
 	ai_forward (20);
@@ -90,7 +79,6 @@ void () riot_jump5 = [ 28, riot_jump6 ]
 	}
 	sound (self, CHAN_VOICE, "riot/attack.wav", SPAWNFLAG_SUPERSPIKE, ATTN_IDLE);
 };
-
 void () riot_jump6 = [ 29, riot_jump7 ]
 {};
 void () riot_jump7 = [ 30, riot_jump6 ]
@@ -168,7 +156,6 @@ void () Kung_Fu =
 		}
 	}
 };
-
 void () riot_walk1 = [ 101, riot_walk2 ]
 {
 	if ((random () < 0.05))
@@ -189,67 +176,54 @@ void () riot_walk4 = [ 104, riot_walk5 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk5 = [ 105, riot_walk6 ]
 {
 	ai_walk (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () riot_walk6 = [ 106, riot_walk8 ]
 {
 	ai_walk (SPAWNFLAG_LASER);
 };
-
 void () riot_walk8 = [ 108, riot_walk9 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk9 = [ 109, riot_walk10 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk10 = [ 110, riot_walk11 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk11 = [ 111, riot_walk12 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk12 = [ 112, riot_walk13 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk13 = [ 113, riot_walk14 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk14 = [ 114, riot_walk15 ]
 {
 	ai_walk (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () riot_walk15 = [ 115, riot_walk17 ]
 {
 	ai_walk (SPAWNFLAG_LASER);
 };
-
 void () riot_walk17 = [ 117, riot_walk18 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_walk18 = [ 118, riot_walk1 ]
 {
 	ai_walk (SECRET_1ST_DOWN);
 };
-
 void () riot_run1 = [ 0, riot_run2 ]
 {
 	if ((random () < 0.05))
@@ -258,176 +232,143 @@ void () riot_run1 = [ 0, riot_run2 ]
 	}
 	ai_run (15);
 };
-
 void () riot_run2 = [ 1, riot_run3 ]
 {
 	ai_run (20);
 };
-
 void () riot_run3 = [ 2, riot_run4 ]
 {
 	ai_run (20);
 };
-
 void () riot_run4 = [ 3, riot_run5 ]
 {
 	ai_run (20);
 };
-
 void () riot_run5 = [ 4, riot_run6 ]
 {
 	ai_run (20);
 };
-
 void () riot_run6 = [ 5, riot_run7 ]
 {
 	ai_run (20);
 };
-
 void () riot_run7 = [ 6, riot_run8 ]
 {
 	ai_run (20);
 };
-
 void () riot_run8 = [ 7, riot_run1 ]
 {
 	ai_run (20);
 };
-
 void () riot_runatk1 = [ 16, riot_runatk2 ]
 {
 	ai_charge (20);
 };
-
 void () riot_runatk2 = [ 17, riot_runatk3 ]
 {
 	ai_charge (20);
 };
-
 void () riot_runatk3 = [ 18, riot_runatk4 ]
 {
 	ai_charge (20);
 	sound (self, CHAN_WEAPON, "knight/sword2.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () riot_runatk4 = [ 19, riot_runatk5 ]
 {
 	ai_charge (20);
 	ai_melee ();
 };
-
 void () riot_runatk5 = [ 20, riot_runatk6 ]
 {
 	ai_charge (20);
 	ai_melee ();
 };
-
 void () riot_runatk6 = [ 21, riot_runatk7 ]
 {
 	ai_charge (20);
 };
-
 void () riot_runatk7 = [ 22, riot_runatk8 ]
 {
 	ai_charge (20);
 };
-
 void () riot_runatk8 = [ 23, riot_run1 ]
 {
 	ai_charge (20);
 };
-
 void () riot_atk1 = [ 8, riot_atk2 ]
 {
 	ai_charge (20);
 };
-
 void () riot_atk2 = [ 9, riot_atk3 ]
 {
 	ai_charge (20);
 };
-
 void () riot_atk3 = [ 10, riot_atk4 ]
 {
 	ai_charge (20);
 };
-
 void () riot_atk4 = [ 11, riot_atk5 ]
 {
 	ai_charge (20);
 };
-
 void () riot_atk5 = [ 12, riot_atk6 ]
 {
 	ai_charge (20);
 };
-
 void () riot_atk6 = [ 13, riot_atk7 ]
 {
 	ai_charge (20);
 	ai_melee ();
 	sound (self, CHAN_WEAPON, "knight/sword1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () riot_atk7 = [ 14, riot_atk8 ]
 {
 	ai_charge (20);
 	ai_melee ();
 };
-
 void () riot_atk8 = [ 15, riot_run1 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado1 = [ 36, riot_tornado2 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado2 = [ 37, riot_tornado3 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado3 = [ 38, riot_tornado4 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado4 = [ 39, riot_tornado5 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado5 = [ 40, riot_tornado6 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado6 = [ 41, riot_tornado7 ]
 {
 	ai_charge (20);
 	ai_melee ();
 	sound (self, CHAN_WEAPON, "knight/sword1.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () riot_tornado7 = [ 42, riot_tornado8 ]
 {
 	ai_charge (20);
 	ai_melee ();
 };
-
 void () riot_tornado8 = [ 43, riot_tornado9 ]
 {
 	ai_charge (20);
 };
-
 void () riot_tornado9 = [ 44, riot_run1 ]
 {
 	ai_charge (20);
 };
-
 void () riot_bash =
 {
 	local float r;
@@ -448,7 +389,6 @@ void () riot_bash =
 		}
 	}
 };
-
 void () riot_decap1 = [ 92, riot_decap2 ]
 {
 	ThrowGib ("progs/h_riot.mdl", -100);
@@ -484,8 +424,7 @@ void () riot_painb1 = [ 53, riot_painb2 ]
 	ai_pain (SPAWNFLAG_LASER);
 };
 void () riot_painb2 = [ 54, riot_painb3 ]
-{
-};
+{};
 void () riot_painb3 = [ 55, riot_painb4 ]
 {};
 void () riot_painb4 = [ 56, riot_painb5 ]
@@ -508,7 +447,6 @@ void () riot_painb10 = [ 62, riot_run1 ]
 {
 	ai_run (15);
 };
-
 void (entity attacker, float damage) riot_pain =
 {
 	local float x;
@@ -565,7 +503,6 @@ void () riot_ded4 = [ 84, riot_ded5 ]
 {};
 void () riot_ded5 = [ 85, riot_ded6 ]
 {};
-
 void () riot_ded6 = [ 86, riot_ded7 ]
 {};
 void () riot_ded7 = [ 87, riot_ded7 ]
@@ -585,8 +522,7 @@ void () riot_dieb5 = [ 75, riot_dieb6 ]
 void () riot_dieb6 = [ 76, riot_dieb7 ]
 {};
 void () riot_dieb7 = [ 77, riot_dieb8 ]
-{
-};
+{};
 void () riot_dieb8 = [ 78, riot_dieb9 ]
 {};
 void () riot_dieb9 = [ 79, riot_dieb10 ]
@@ -606,135 +542,108 @@ void () riot_diec3 = [ 121, riot_diec4 ]
 	self.solid = SOLID_NOT;
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec4 = [ 122, riot_diec5 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec5 = [ 123, riot_diec6 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec6 = [ 124, riot_diec7 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec7 = [ 125, riot_diec8 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec8 = [ 126, riot_diec9 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec9 = [ 127, riot_diec10 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec10 = [ 128, riot_diec11 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec11 = [ 129, riot_diec12 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec12 = [ 130, riot_diec13 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec13 = [ 131, riot_diec14 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec14 = [ 132, riot_diec15 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec15 = [ 133, riot_diec16 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec16 = [ 134, riot_diec17 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec17 = [ 135, riot_diec18 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec18 = [ 136, riot_diec19 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec19 = [ 137, riot_diec20 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec20 = [ 138, riot_diec21 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec21 = [ 139, riot_diec22 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec22 = [ 140, riot_diec23 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec23 = [ 141, riot_diec24 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec24 = [ 142, riot_diec25 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec25 = [ 143, riot_diec26 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec26 = [ 144, riot_diec27 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec27 = [ 145, riot_diec28 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec28 = [ 146, riot_diec29 ]
 {
 	self.nextthink = (time + 0.05);
 };
-
 void () riot_diec29 = [ 147, riot_diec29 ]
-{
-};
+{};
 void () riot_die =
 {
 	local float r;
@@ -802,7 +711,6 @@ void () monster_riot1 =
 	self.th_missile = Kung_Fu;
 	coop_walkmonster_start ();
 };
-
 void () monster_riot =
 {
 	precache_model ("progs/riot.mdl");

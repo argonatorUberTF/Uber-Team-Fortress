@@ -502,7 +502,6 @@ entity () cbot_find_nearest_enemy =
 	}
 	return (best_article);
 };
-
 entity (float findp, float ignore, float endp) cbot_get_waypoint =
 {
 	local float o_range;

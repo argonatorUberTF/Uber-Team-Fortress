@@ -20,23 +20,19 @@ void () hang_stand4 = [ 4, hang_stand5 ]
 {
 	ai_stand ();
 };
-
 void () hang_stand5 = [ 5, hang_stand6 ]
 {
 	ai_stand ();
 };
-
 void () hang_stand6 = [ 6, hang_stand ]
 {
 	ai_stand ();
 };
-
 void () hang_run = [ 0, hang_run1 ]
 {
 	ai_run (MSG_BROADCAST);
 	ai_face ();
 };
-
 void () hang_run1 = [ 1, hang_run2 ]
 {
 	ai_run (MSG_BROADCAST);
@@ -199,7 +195,6 @@ void () hang_fire04 = [ 21, hang_fire05 ]
 	ai_face ();
 	sound (self, CHAN_WEAPON, "swat/uzim.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () hang_fire05 = [ 20, hang_fire06 ]
 {
 	ai_face ();
@@ -220,13 +215,11 @@ void () hang_fire08 = [ 21, hang_fire09 ]
 	ai_face ();
 	sound (self, CHAN_WEAPON, "swat/uzim.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () hang_fire09 = [ 20, hang_fire10 ]
 {
 	ai_face ();
 	SwatMissile (MSG_BROADCAST);
 };
-
 void () hang_fire10 = [ 21, hang_run ]
 {
 	ai_face ();
@@ -249,7 +242,6 @@ void () WeaveNewHemp =
 	flax.nextthink = (time + 0.1);
 	flax.think = stretch_mama;
 };
-
 void () WeaveNewNewHemp =
 {
 	local entity flax;
@@ -263,7 +255,6 @@ void () WeaveNewNewHemp =
 	flax.nextthink = (time + 0.1);
 	flax.think = stretch_papa;
 };
-
 void () stretch_papa =
 {
 	local float dist;
@@ -440,7 +431,6 @@ void () monster_hanger1 =
 	self.th_melee = hang_fire;
 	coop_flymonster_start ();
 	WeaveHemp ();
-
 };
 void () monster_hanger =
 {

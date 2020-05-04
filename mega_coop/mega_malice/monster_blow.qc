@@ -110,37 +110,30 @@ void () blowfish_stand3 = [ 81, blowfish_stand4 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand4 = [ 82, blowfish_stand5 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand5 = [ 83, blowfish_stand6 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand6 = [ 84, blowfish_stand7 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand7 = [ 85, blowfish_stand8 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand8 = [ 86, blowfish_stand9 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_stand9 = [ 87, blowfish_stand1 ]
 {
 	ai_stand ();
 };
-
 void () blowfish_walk1 = [ 0, blowfish_walk2 ]
 {
 	ai_walk (SECRET_NO_SHOOT);
@@ -156,52 +149,42 @@ void () blowfish_walk1 = [ 0, blowfish_walk2 ]
 		}
 	}
 };
-
 void () blowfish_walk2 = [ 1, blowfish_walk3 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk3 = [ 2, blowfish_walk4 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk4 = [ 3, blowfish_walk5 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk5 = [ 4, blowfish_walk6 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk6 = [ 5, blowfish_walk7 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk7 = [ 6, blowfish_walk8 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk8 = [ 7, blowfish_walk9 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk9 = [ 8, blowfish_walk10 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_walk10 = [ 9, blowfish_walk1 ]
 {
 	ai_walk (20);
 };
-
 void () blowfish_run1 = [ 0, blowfish_run2 ]
 {
 	ai_run (SVC_SETVIEWANGLES);
@@ -218,47 +201,38 @@ void () blowfish_run1 = [ 0, blowfish_run2 ]
 		}
 	}
 };
-
 void () blowfish_run2 = [ 1, blowfish_run3 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run3 = [ 2, blowfish_run4 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run4 = [ 3, blowfish_run5 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run5 = [ 4, blowfish_run6 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run6 = [ 5, blowfish_run7 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run7 = [ 6, blowfish_run8 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run8 = [ 7, blowfish_run9 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run9 = [ 8, blowfish_run10 ]
 {
 	ai_run (20);
 };
-
 void () blowfish_run10 = [ 9, blowfish_run1 ]
 {
 	ai_run (20);
@@ -284,135 +258,109 @@ void () blowfish_attack1 = [ 18, blowfish_attack2 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack2 = [ 19, blowfish_attack3 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack3 = [ 20, blowfish_attack4 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack4 = [ 21, blowfish_attack5 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack5 = [ 22, blowfish_attack6 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack6 = [ 23, blowfish_attack7 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 	blowfish_melee ();
 };
-
 void () blowfish_attack7 = [ 24, blowfish_attack8 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack8 = [ 25, blowfish_attack9 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack9 = [ 26, blowfish_attack10 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack10 = [ 27, blowfish_attack11 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack11 = [ 28, blowfish_attack12 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack12 = [ 29, blowfish_attack13 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack13 = [ 30, blowfish_attack14 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack14 = [ 31, blowfish_attack15 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 	blowfish_melee ();
 };
-
 void () blowfish_attack15 = [ 32, blowfish_attack16 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack16 = [ 33, blowfish_attack17 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_attack17 = [ 34, blowfish_run1 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite1 = [ 10, blowfish_bite2 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite2 = [ 11, blowfish_bite3 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite3 = [ 12, blowfish_bite4 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite4 = [ 13, blowfish_bite5 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite5 = [ 14, blowfish_bite6 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite6 = [ 15, blowfish_bite7 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 	blowfish_melee ();
 };
-
 void () blowfish_bite7 = [ 16, blowfish_bite8 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_bite8 = [ 17, blowfish_run1 ]
 {
 	ai_charge (SECRET_NO_SHOOT);
 };
-
 void () blowfish_death1 = [ 56, blowfish_death2 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () blowfish_death2 = [ 57, blowfish_death3 ]
 {};
 void () blowfish_death3 = [ 58, blowfish_death4 ]
@@ -435,13 +383,10 @@ void () blowfish_death11 = [ 66, blowfish_death12 ]
 {
 	sound (self, CHAN_VOICE, "blowfish/death.wav", SPAWNFLAG_SUPERSPIKE, ATTN_NORM);
 };
-
 void () blowfish_death12 = [ 67, blowfish_death13 ]
 {};
-
 void () blowfish_death13 = [ 68, blowfish_death14 ]
 {};
-
 void () blowfish_death14 = [ 69, blowfish_death15 ]
 {};
 void () blowfish_death15 = [ 70, blowfish_death15 ]
@@ -455,58 +400,42 @@ void () blowfish_pain2 = [ 36, blowfish_pain3 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () blowfish_pain3 = [ 37, blowfish_pain4 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () blowfish_pain4 = [ 38, blowfish_pain5 ]
 {};
-
 void () blowfish_pain5 = [ 39, blowfish_pain6 ]
 {};
-
 void () blowfish_pain6 = [ 40, blowfish_pain7 ]
 {};
-
 void () blowfish_pain7 = [ 41, blowfish_pain8 ]
 {};
-
 void () blowfish_pain8 = [ 42, blowfish_pain9 ]
 {};
-
 void () blowfish_pain9 = [ 43, blowfish_run1 ]
 {};
-
 void () blowfish_hurt1 = [ 71, blowfish_hurt2 ]
 {};
-
 void () blowfish_hurt2 = [ 72, blowfish_hurt3 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () blowfish_hurt3 = [ 73, blowfish_hurt4 ]
 {
 	ai_pain (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () blowfish_hurt4 = [ 74, blowfish_hurt5 ]
 {};
-
 void () blowfish_hurt5 = [ 75, blowfish_hurt6 ]
 {};
-
 void () blowfish_hurt6 = [ 76, blowfish_hurt7 ]
 {};
-
 void () blowfish_hurt7 = [ 77, blowfish_hurt8 ]
 {};
-
 void () blowfish_hurt8 = [ 78, blowfish_run1 ]
 {};
-
 void (entity attacker, float damage) blowfish_pain =
 {
 	if ((self.pain_finished > time))

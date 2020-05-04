@@ -37,7 +37,6 @@ void(entity ent) MuzzleEnt =
 	WriteByte (MSG_MULTICAST, SVC_MUZZLEFLASH);
 	WriteEntity (MSG_MULTICAST, self);
 	multicast (self.origin, MULTICAST_PVS);
-
 };
 void(float punch) punchself =
 {};
@@ -240,7 +239,6 @@ void () blow_baby =
 	}
 	self.nextthink = time;
 };
-
 void (entity victim) BreakDown =
 {
 	local float intensity;
@@ -292,7 +290,6 @@ void () AtomSmash =
 		self.nextthink = time;
 	}
 };
-
 void () OverLoad =
 {
 	local entity victim;

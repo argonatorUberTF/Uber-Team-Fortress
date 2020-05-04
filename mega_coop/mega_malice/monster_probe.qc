@@ -277,135 +277,114 @@ void () probe_stand6 = [ 5, probe_stand7 ]
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand7 = [ 6, probe_stand8 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand8 = [ 7, probe_stand9 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand9 = [ 8, probe_stand10 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand10 = [ 9, probe_stand11 ]
 {
 	ai_stand ();
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand11 = [ 10, probe_stand12 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand12 = [ 11, probe_stand13 ]
 {
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_stand13 = [ 12, probe_stand1 ]
 {
 	ai_stand ();
 	probe_think ();
 	self.nextthink = (time + 0.1);
 };
-
 void () probe_walk1 = [ 0, probe_walk2 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", PROBE_VOLUME, ATTN_PROBE);
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk2 = [ 1, probe_walk3 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk3 = [ 2, probe_walk4 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk4 = [ 3, probe_walk5 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk5 = [ 4, probe_walk6 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk6 = [ 5, probe_walk7 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk7 = [ 6, probe_walk8 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk8 = [ 7, probe_walk9 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk9 = [ 8, probe_walk10 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", PROBE_VOLUME, ATTN_PROBE);
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk10 = [ 9, probe_walk11 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk11 = [ 10, probe_walk12 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk12 = [ 11, probe_walk1 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_walk13 = [ 12, probe_walk1 ]
 {
 	movetogoal (SVC_SETVIEWANGLES);
 	probe_walkthink ();
 };
-
 void () probe_run1 = [ 0, probe_run2 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
@@ -414,7 +393,6 @@ void () probe_run1 = [ 0, probe_run2 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run2 = [ 1, probe_run3 ]
 {
 	ChangeYaw ();
@@ -422,7 +400,6 @@ void () probe_run2 = [ 1, probe_run3 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run3 = [ 2, probe_run4 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", PROBE_VOLUME, ATTN_PROBE);
@@ -431,7 +408,6 @@ void () probe_run3 = [ 2, probe_run4 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run4 = [ 3, probe_run5 ]
 {
 	ChangeYaw ();
@@ -439,7 +415,6 @@ void () probe_run4 = [ 3, probe_run5 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run5 = [ 4, probe_run6 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
@@ -448,7 +423,6 @@ void () probe_run5 = [ 4, probe_run6 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run6 = [ 5, probe_run7 ]
 {
 	ChangeYaw ();
@@ -456,7 +430,6 @@ void () probe_run6 = [ 5, probe_run7 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run7 = [ 6, probe_run8 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
@@ -465,7 +438,6 @@ void () probe_run7 = [ 6, probe_run8 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run8 = [ 7, probe_run9 ]
 {
 	ChangeYaw ();
@@ -473,7 +445,6 @@ void () probe_run8 = [ 7, probe_run9 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run9 = [ 8, probe_run10 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", PROBE_VOLUME, ATTN_PROBE);
@@ -482,7 +453,6 @@ void () probe_run9 = [ 8, probe_run10 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run10 = [ 9, probe_run11 ]
 {
 	ChangeYaw ();
@@ -490,7 +460,6 @@ void () probe_run10 = [ 9, probe_run11 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run11 = [ 10, probe_run12 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
@@ -499,7 +468,6 @@ void () probe_run11 = [ 10, probe_run12 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run12 = [ 11, probe_run13 ]
 {
 	ChangeYaw ();
@@ -507,7 +475,6 @@ void () probe_run12 = [ 11, probe_run13 ]
 	ai_run (SVC_SETVIEWANGLES);
 	probe_think ();
 };
-
 void () probe_run13 = [ 12, probe_run1 ]
 {
 	local float delta;
@@ -534,14 +501,12 @@ void () probe_run13 = [ 12, probe_run1 ]
 		self.think = self.th_missile;
 	}
 };
-
 void () probe_watk1 = [ 13, probe_watk2 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk2 = [ 14, probe_watk3 ]
 {
 	sound (self, TE_WIZSPIKE, "probe/servo.wav", PROBE_VOLUME, ATTN_PROBE);
@@ -550,14 +515,12 @@ void () probe_watk2 = [ 14, probe_watk3 ]
 	probe_think ();
 	Probe_laser_fire (-30, MSG_BROADCAST);
 };
-
 void () probe_watk3 = [ 15, probe_watk4 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk4 = [ 16, probe_watk5 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
@@ -565,7 +528,6 @@ void () probe_watk4 = [ 16, probe_watk5 ]
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk5 = [ 17, probe_watk6 ]
 {
 	ChangeYaw ();
@@ -573,35 +535,30 @@ void () probe_watk5 = [ 17, probe_watk6 ]
 	probe_think ();
 	Probe_laser_fire (SVC_INTERMISSION, MSG_BROADCAST);
 };
-
 void () probe_watk6 = [ 18, probe_watk7 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk7 = [ 19, probe_watk8 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk8 = [ 20, probe_watk9 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk9 = [ 21, probe_watk10 ]
 {
 	ChangeYaw ();
 	walkmove (self.angles_y, 14);
 	probe_think ();
 };
-
 void () probe_watk10 = [ 22, probe_run1 ]
 {
 	ChangeYaw ();
@@ -609,62 +566,51 @@ void () probe_watk10 = [ 22, probe_run1 ]
 	probe_think ();
 	SUB_AttackFinished (SPAWNFLAG_SUPERSPIKE);
 };
-
 void () probe_plant1 = [ 0, probe_plant1 ]
 {
 	probe_stand_attack ();
 	probe_think ();
 };
-
 void () probe_stop1 = [ 20, probe_stop2 ]
 {
 	probe_think ();
 };
-
 void () probe_stop2 = [ 21, probe_stop3 ]
 {
 	probe_think ();
 };
-
 void () probe_stop3 = [ 22, probe_plant1 ]
 {
 	sound (self, TE_LIGHTNING2, "probe/footfall.wav", SPAWNFLAG_SUPERSPIKE, ATTN_PROBE);
 	probe_think ();
 };
-
 void () probe_satk1 = [ 23, probe_satk2 ]
 {
 	probe_think ();
 };
-
 void () probe_satk2 = [ 24, probe_satk3 ]
 {
 	probe_think ();
 	Probe_laser_fire (-30, MSG_BROADCAST);
 	Probe_laser_fire (SVC_INTERMISSION, MSG_BROADCAST);
 };
-
 void () probe_satk3 = [ 25, probe_satk4 ]
 {
 	probe_think ();
 };
-
 void () probe_satk4 = [ 26, probe_satk5 ]
 {
 	probe_think ();
 };
-
 void () probe_satk5 = [ 27, probe_satk6 ]
 {
 	probe_think ();
 };
-
 void () probe_satk6 = [ 28, probe_plant1 ]
 {
 	probe_think ();
 	SUB_AttackFinished (0.3);
 };
-
 void () probe_die1 = [ 13, probe_die2 ]
 {
 	probe_think ();
@@ -672,7 +618,6 @@ void () probe_die1 = [ 13, probe_die2 ]
 	ai_run_slide ();
 	FuelTankExplode ();
 };
-
 void () probe_die2 = [ 14, probe_die3 ]
 {
 	probe_think ();
@@ -705,7 +650,6 @@ void (entity attacker, float damage) probe_pain =
 void () probe_missile_attack =
 {
 	local float n;
-
 	n = random ();
 	if ((n < PROBE_VOLUME))
 	{
@@ -716,7 +660,6 @@ void () probe_missile_attack =
 		probe_satk1 ();
 	}
 };
-
 void () probe_stand_attack =
 {
 	local vector spot1;
@@ -751,7 +694,6 @@ void () probe_stand_attack =
 		return;
 	}
 };
-
 float () ProbeCheckAttack =
 {
 	local vector spot1;
@@ -823,9 +765,7 @@ void () monster_probe1 =
 	self.th_melee = probe_missile_attack;
 	self.th_pain = probe_pain;
 	coop_flymonster_start ();
-
 };
-
 void () monster_probe =
 {
 	self.lefty = MSG_BROADCAST;
