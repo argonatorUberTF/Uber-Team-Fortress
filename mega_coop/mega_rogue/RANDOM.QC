@@ -13,7 +13,8 @@ void() random_pick_type =
 		self.items = 0;
 		self.items2 = IT2_SHIELD;
 	}
-	else if (randItem < 0.4)
+	else
+	if (randItem < 0.4)
 	{
 		self.touch = newitems_touch;
 		self.noise = "belt/pickup.wav";
@@ -22,7 +23,8 @@ void() random_pick_type =
 		self.items = 0;
 		self.items2 = IT2_ANTIGRAV;
 	}
-	else if (randItem < 0.6)
+	else
+	if (randItem < 0.6)
 	{
 		self.noise = "items/protect.wav";
 		setmodel (self, "progs/invulner.mdl");
@@ -30,7 +32,8 @@ void() random_pick_type =
 		self.items = IT_INVULNERABILITY;
 		self.items2 = 0;
 	}
-	else if (randItem < 0.8)
+	else
+	if (randItem < 0.8)
 	{
 		self.noise = "items/inv1.wav";
 		setmodel (self, "progs/invisibl.mdl");

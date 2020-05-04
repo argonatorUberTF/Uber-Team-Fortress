@@ -280,8 +280,7 @@ void() plat2_center_touch =
 		otherState = STATE_BOTTOM;
 		if ( (other.origin_z - platPosition_z) > self.height)
 			otherState = STATE_TOP;
-	}	
-
+	}
 	if (self.state == otherState)
 	{
 		self.plat2Called = 0;
@@ -360,7 +359,6 @@ void() func_new_plat =
 	{
 		self.use = dn_and_wait_use;
 		self.blocked = dn_and_wait_crush;
-
 		if (negativeHeight == 1)
 		{
 			self.state = STATE_BOTTOM;

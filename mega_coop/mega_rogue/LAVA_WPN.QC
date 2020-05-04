@@ -104,7 +104,6 @@ local float old_armormask;
 		WriteCoord (MSG_BROADCAST, self.origin_z);
 	}
 	remove(self);
-
 };
 void() superlavaspike_touch =
 {

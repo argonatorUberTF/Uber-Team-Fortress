@@ -1,7 +1,6 @@
 void() ltrail_chain = 
 {
 	SUB_UseTargets();
-
 	self.think = SUB_Null;
 };
 void() ltrail_fire =
@@ -109,7 +108,6 @@ void() ltrail_end =
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_BBOX;
 	self.use = ltrail_start_fire;
-
 	if (self.currentammo == 0)
 		self.currentammo = 25;
 	if (self.weapon == 0)

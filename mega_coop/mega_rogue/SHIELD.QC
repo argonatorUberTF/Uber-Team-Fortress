@@ -1,4 +1,3 @@
-
 void() shield_think =
 {
 	if ( self.owner.shield_death_time < time)
@@ -56,7 +55,8 @@ float(entity targ, entity inflictor, entity attacker, float damage) shield_hit=
 	{
 		return damage;
 	}
-	else if(hitAngle < -90 && hitAngle > -270 )
+	else
+	if(hitAngle < -90 && hitAngle > -270 )
 	{
 		return damage;
 	}

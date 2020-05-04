@@ -5,7 +5,8 @@ void() pend_swing1   =[ $frame1,  pend_swing2  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -176 48', '8 -120 128' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-176 -8 48', '-120 8 128' );
 	self.nextthink = time + 0.17;
 	impactVelocity = 1;
@@ -14,7 +15,8 @@ void() pend_swing2   =[ $frame2,  pend_swing3  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -172 12', '8 -112 88' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-172 -8 12', '-112 8 88' );
 	self.nextthink = time + 0.15;
 };
@@ -22,16 +24,18 @@ void() pend_swing3   =[ $frame3,  pend_swing4  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -160 -22', '8 -96 50' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-160 -8 -22', '-96 8 50' );
 	self.nextthink = time + 0.13;
 };
 void() pend_swing4   =[ $frame4,  pend_swing5  ] 
 { 
-    sound ( self, CHAN_AUTO, "pendulum/swing.wav", 0.5, ATTN_NORM);
+	sound ( self, CHAN_AUTO, "pendulum/swing.wav", 0.5, ATTN_NORM);
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -138 -51', '8 -70 17' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-138 -8 -51', '-70 8 17' );
 	self.nextthink = time + 0.11;
 };
@@ -47,7 +51,8 @@ void() pend_swing6   =[ $frame6,  pend_swing7  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -76 -83', '8 0 -23' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-76 -8 -83', '0 8 -23' );
 	self.nextthink = time + 0.07;
 };
@@ -55,7 +60,8 @@ void() pend_swing7   =[ $frame7,  pend_swing8  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -40 -88', '8 40 -32' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-40 -8 -88', '40 8 -32' );
 	self.nextthink = time + 0.05;
 };
@@ -63,7 +69,8 @@ void() pend_swing8   =[ $frame8,  pend_swing9  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 0 -83', '8 76 -23' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '0 -8 -83', '76 8 -23' );
 	self.nextthink = time + 0.07;
 };
@@ -130,7 +137,7 @@ void() pend_swing16  =[ $frame11, pend_swing17 ]
 };
 void() pend_swing17  =[ $frame10, pend_swing18 ] 
 { 
-    sound ( self, CHAN_AUTO, "pendulum/swing.wav", 0.5, ATTN_NORM);
+	sound ( self, CHAN_AUTO, "pendulum/swing.wav", 0.5, ATTN_NORM);
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 70 -51', '8 138 17' );
 	else if ( self.spawnflags & PEND_X )
@@ -165,7 +172,8 @@ void() pend_swing21  =[ $frame6,  pend_swing22 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -76 -83', '8 0 -23' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-76 -8 -83', '0 8 -23' );
 	self.nextthink = time + 0.07;
 };
@@ -173,7 +181,8 @@ void() pend_swing22  =[ $frame5,  pend_swing23 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -110 -72', '8 -28 -8' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-110 -8 -72', '-28 8 -8' );
 	self.nextthink = time + 0.09;
 };
@@ -189,7 +198,8 @@ void() pend_swing24  =[ $frame3,  pend_swing25 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -160 -22', '8 -96 50' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-160 -8 -22', '-96 8 50' );
 	self.nextthink = time + 0.13;
 };
@@ -197,7 +207,8 @@ void() pend_swing25  =[ $frame2,  pend_swing26 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -172 12', '8 -112 88' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-172 -8 12', '-112 8 88' );
 	self.nextthink = time + 0.15;
 };
@@ -205,11 +216,11 @@ void() pend_swing26  =[ $frame1,  pend_swing1  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -176 48', '8 -120 128' );
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 		setsize ( self, '-176 -8 48', '-120 8 128' );
 	self.nextthink = time + 0.17;
 };
-
 void() pend_touch = 
 {
 	if (other.health < 1 || other.takedamage == DAMAGE_NO)
@@ -250,13 +261,14 @@ void() pendulum =
 		self.angles = '0 0 0';
 		self.v_angle = '0 0 0';
 	}
-	else if ( self.spawnflags & PEND_X )
+	else
+	if ( self.spawnflags & PEND_X )
 	{
 		setsize (self, '-24 -8 -100', '24 8 100');
 		self.angles = '0 270 0';
 		self.v_angle = '0 270 0';
 	}
-	else	
+	else
 		error ( "ERROR: Unimplemented Pendulum Type (pendulum.qc)" );	
 	if (!self.currentammo)
 		self.currentammo = 5;

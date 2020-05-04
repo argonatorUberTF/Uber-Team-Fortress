@@ -2,9 +2,9 @@ void() sphere_impact =
 {
 	if (other.health)
 	{
-        T_Damage (other, self, self, 1000 );
+		T_Damage (other, self, self, 1000 );
 	}
-    T_RadiusDamage (self, self, 300, other);
+	T_RadiusDamage (self, self, 300, other);
 	self.origin = self.origin - 8*normalize(self.velocity);
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
@@ -80,39 +80,39 @@ void() sphere_think =
 	}
 	ai_orbit(self.owner, 16, '0 0 48');
 	self.think = sphere_think;
-    self.nextthink = time + 0.1;
+	self.nextthink = time + 0.1;
 };
 void() sphere_spawn =
 {
-    local   entity missile;
-    missile = spawn();
+	local   entity missile;
+	missile = spawn();
 	missile.movetype = MOVETYPE_FLYMISSILE;
 	missile.solid = SOLID_NOT;
-    missile.classname = "Vengeance";
-    missile.owner = other;
-    missile.weapon = 0;
-    missile.delay = time + 30;
-    setmodel (missile, "progs/sphere.mdl");
-    setsize (missile, '0 0 0', '0 0 0');     
-    setorigin (missile, self.origin );
+	missile.classname = "Vengeance";
+	missile.owner = other;
+	missile.weapon = 0;
+	missile.delay = time + 30;
+	setmodel (missile, "progs/sphere.mdl");
+	setsize (missile, '0 0 0', '0 0 0');     
+	setorigin (missile, self.origin );
 	missile.avelocity = '40 40 40';
-    missile.think = sphere_think;
-    missile.nextthink = time + 0.1;
+	missile.think = sphere_think;
+	missile.nextthink = time + 0.1;
 };
 void() item_sphere =
 {
-    if (!deathmatch)
-    {
-        remove(self);
-        return;
-    }
-    precache_model ("progs/sphere.mdl");
+	if (!deathmatch)
+	{
+		remove(self);
+		return;
+	}
+	precache_model ("progs/sphere.mdl");
 	precache_sound ("sphere/sphere.wav");
 	self.noise = "sphere/sphere.wav";
 	self.netname = "Vengeance Sphere";
-    self.touch = newitems_touch;
-    setmodel (self, "progs/sphere.mdl");
-    setsize (self, '-8 -8 -8', '8 8 8');
+	self.touch = newitems_touch;
+	setmodel (self, "progs/sphere.mdl");
+	setsize (self, '-8 -8 -8', '8 8 8');
 	self.avelocity = '40 40 40';
 	StartItem ();
 };//END

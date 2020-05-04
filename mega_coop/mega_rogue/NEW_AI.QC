@@ -1,7 +1,7 @@
 void(entity destEnt, float radius, vector offset) ai_orbit =
 {
-    local vector dir;
-    local float dist;
+	local vector dir;
+	local float dist;
 	if (self.orbitPosition > 3)
 		self.orbitPosition = 0;
 	else if (self.orbitPosition < 0)
@@ -10,51 +10,54 @@ void(entity destEnt, float radius, vector offset) ai_orbit =
 	if ( trace_fraction < 1 )
 	{
 		setorigin (self, destEnt.origin + offset);
-        self.orbitPosition = self.orbitPosition + 1;
+		self.orbitPosition = self.orbitPosition + 1;
 		return;
 	}
-    if ( self.orbitPosition == 0)
+	if ( self.orbitPosition == 0)
 	{
-        dir = (destEnt.origin + offset) - self.origin;
-    	dir_x = dir_x + radius;
+		dir = (destEnt.origin + offset) - self.origin;
+		dir_x = dir_x + radius;
 	}
-	else if ( self.orbitPosition == 1)
-    {
-	    dir = (destEnt.origin + offset) - self.origin;
-     	dir_y = dir_y + radius;
-	}
-	else if ( self.orbitPosition == 2)
-    {
-	    dir = (destEnt.origin + offset) - self.origin;
-    	dir_x = dir_x - radius;
-    }
 	else
-    {
-	    dir = (destEnt.origin + offset) - self.origin;
-     	dir_y = dir_y - radius;
+	if ( self.orbitPosition == 1)
+	{
+			dir = (destEnt.origin + offset) - self.origin;
+			dir_y = dir_y + radius;
 	}
-    dist = vlen(dir);
-    if( dist < 8 )
-    {
-        self.orbitPosition = self.orbitPosition + 1;
-    }
-    else if( dist < 50 )
-    {
-        self.velocity = normalize(dir);
-        self.velocity = self.velocity * 150;
-    }
-    else
-    {
-        self.velocity = normalize(dir);
-        self.velocity = self.velocity * 500;
-    }
+	else
+	if ( self.orbitPosition == 2)
+	{
+		dir = (destEnt.origin + offset) - self.origin;
+		dir_x = dir_x - radius;
+	}
+	else
+	{
+			dir = (destEnt.origin + offset) - self.origin;
+			dir_y = dir_y - radius;
+	}
+	dist = vlen(dir);
+	if( dist < 8 )
+	{
+		self.orbitPosition = self.orbitPosition + 1;
+	}
+	else
+	if( dist < 50 )
+	{
+			self.velocity = normalize(dir);
+			self.velocity = self.velocity * 150;
+	}
+	else
+	{
+			self.velocity = normalize(dir);
+			self.velocity = self.velocity * 500;
+	}
 };
 void(entity destEnt, float trackSpeed) ai_track =
 {
 	local vector	dir;
 	dir = destEnt.origin + destEnt.view_ofs;
 	dir = normalize(dir - self.origin);
-    self.velocity = dir * trackSpeed;
+	self.velocity = dir * trackSpeed;
 };
 void(string gibname, float dm) AccelerateGib =
 {

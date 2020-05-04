@@ -56,29 +56,28 @@ float(entity thePoint) isSpawnPointEmpty =
 };
 entity() overlord_find_dest3 =
 {
-    local entity    furthestDest;
-    local entity    bestDest;
+	local entity    furthestDest;
+	local entity    bestDest;
 	local entity    curDest;
 	local entity    thePlayer;
 	local float     theDist;
 	local float     curDist;
-    local float     dot;
-    local vector    curVector;
-    furthestDest = world;
-    bestDest = world;
+	local float     dot;
+	local vector    curVector;
+	furthestDest = world;
+	bestDest = world;
 	theDist=0;
 	thePlayer=find(world, classname, "player");
 	curDest=world;
-    makevectors (thePlayer.angles);
+	makevectors (thePlayer.angles);
 	while (1)
 	{
 		curDest = find ( curDest, classname, "info_overlord_destination");
 		if ( curDest == world )
 		{
-            if (bestDest != world)
-                return bestDest;
-
-            return furthestDest;
+			if (bestDest != world)
+					return bestDest;
+			return furthestDest;
 		}
 		if (isSpawnPointEmpty(curDest))
 		{
@@ -104,56 +103,56 @@ entity() overlord_find_dest3 =
 };
 entity() overlord_find_dest =
 {
-    local entity    curDest, lastDest;
-    local float     loopCount;
-    curDest = find ( world, classname, "info_overlord_destination");
-    if (curDest != world)
-    {
-	    lastDest = curDest;
-        loopCount = random()*5;
-        while (loopCount > 1)
-        {
-            curDest = nextent ( curDest );
-            curDest = find ( curDest, classname, "info_overlord_destination");
-            if (curDest != world)
-            {
-            	if (isSpawnPointEmpty(curDest))
+	local entity    curDest, lastDest;
+	local float     loopCount;
+	curDest = find ( world, classname, "info_overlord_destination");
+	if (curDest != world)
+	{
+		lastDest = curDest;
+		loopCount = random()*5;
+		while (loopCount > 1)
+		{
+			curDest = nextent ( curDest );
+			curDest = find ( curDest, classname, "info_overlord_destination");
+			if (curDest != world)
+			{
+				if (isSpawnPointEmpty(curDest))
 				{
-				    loopCount = loopCount - 1;
+					loopCount = loopCount - 1;
 					lastDest = curDest;
 				}
 				else
 					curDest = world;
-            }
-            else
-            {
-                return lastDest;
-            }
-        }
-        return curDest;
-    }
+				}
+				else
+				{
+					return lastDest;
+				}
+			}
+		return curDest;
+		}
 	return curDest;
 };
 void() overlord_teleport =
 {
-    local float     chance;
-    local entity    theDest;
-    local vector    org;
+	local float     chance;
+	local entity    theDest;
+	local vector    org;
 	if (!(self.spawnflags & 2))
 		return;
-    chance = random();
-    if (chance > 0.75)
-        return;
-    theDest = overlord_find_dest3();
-    if (theDest == world)
-        return;
-    spawn_tfog (self.origin);
-    makevectors (self.angles);
-    org = theDest.origin + 32 * v_forward;
+	chance = random();
+	if (chance > 0.75)
+			return;
+	theDest = overlord_find_dest3();
+	if (theDest == world)
+		return;
+	spawn_tfog (self.origin);
+	makevectors (self.angles);
+	org = theDest.origin + 32 * v_forward;
 	spawn_tfog (org);
-    spawn_tdeath(theDest.origin, self);
-    setorigin (self, theDest.origin);
-    self.flags = self.flags - self.flags & FL_ONGROUND;
+	spawn_tdeath(theDest.origin, self);
+	setorigin (self, theDest.origin);
+	self.flags = self.flags - self.flags & FL_ONGROUND;
 };
 void()  overlord_stand1 =[	$s_wtwk01,	overlord_stand1 ] { ai_stand();};
 void()	overlord_walk01 =[	$s_wtwk01,	overlord_walk02 ] { ai_walk(8); };
@@ -392,7 +391,7 @@ void() overlord_die19 = [ $s_wtdt17, overlord_die19 ]
 void() monster_super_wrath1 =
 {
 	self.solid = SOLID_SLIDEBOX;
-    self.movetype = MOVETYPE_STEP;
+	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/s_wrath.mdl");
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.health = MTF_Monster_Health(1000);
@@ -406,7 +405,6 @@ void() monster_super_wrath1 =
 	self.th_die = overlord_die02;
 	coop_flymonster_start ();
 };
-
 void() monster_super_wrath =
 {
 	if (deathmatch)

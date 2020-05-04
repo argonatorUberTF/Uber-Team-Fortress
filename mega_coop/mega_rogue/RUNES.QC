@@ -37,7 +37,6 @@ entity() RuneSpawnPoint =
 	while (1) {
 		rune_spawn_spot = find(rune_spawn_spot, classname, 
 			"info_player_deathmatch");
-
 		if (rune_spawn_spot != world)
 			return rune_spawn_spot;
 	}
@@ -55,7 +54,6 @@ void() RuneRespawn =
 void(float r, entity spot) SpawnRune =
 {
 	local entity item;
-
 	if (spot == world)
 		spot = RuneSpawnPoint();
 	item = spawn();
@@ -67,7 +65,6 @@ void(float r, entity spot) SpawnRune =
 	item.flags = FL_ITEM;
 	item.solid = SOLID_TRIGGER;
 	item.movetype = MOVETYPE_TOSS;
-
 	if (r & ITEM_RUNE1) 
 			setmodel (item, "progs/end1.mdl");
 	else if (r & ITEM_RUNE2) 
@@ -76,7 +73,6 @@ void(float r, entity spot) SpawnRune =
 			setmodel (item, "progs/end3.mdl");
 	else if (r & ITEM_RUNE4) 
 			setmodel (item, "progs/end4.mdl");
-
 	setsize (item, '-16 -16 0', '16 16 56');
 	item.touch = RuneTouch;
 	
@@ -177,7 +173,6 @@ void() RunePrecache =
 			precache_model("progs/end2.mdl");
 			precache_model("progs/end3.mdl");
 			precache_model("progs/end4.mdl");
-
 			precache_sound("runes/end1.wav");
 			precache_sound("runes/end2.wav");
 			precache_sound("runes/end3.wav");

@@ -130,23 +130,18 @@ void() morph_bigattack16 = [ $mfatc16, morph_bigattack17 ] { ai_face(); };
 void() morph_bigattack17 = [ $mfatc01, morph_run1        ] { ai_face(); };
 void() morph_smack = 
 {
-    local vector    delta;
-    local float     ldmg;
+	local vector    delta;
+	local float     ldmg;
 	if (!self.enemy)
 		return;
 	if (!CanDamage (self.enemy, self))
 		return;
-
 	ai_face();
-
 	delta = self.enemy.origin - self.origin;
-
 	if (vlen(delta) > 100)
 		return;
-		
-    ldmg = (random() * 10) + 10;
+	ldmg = (random() * 10) + 10;
 	T_Damage (self.enemy, self, self, ldmg);
-	
 	makevectors (self.angles);
 	self.enemy.velocity = v_forward * 100 + '0 0 100';
 };
@@ -192,7 +187,6 @@ void() morph_fire =
 		LaunchLaser(org, (dir + v_right * 0.10));
 		LaunchLaser(org, (dir - v_right * 0.10));	
 	}
-
 };
 void() morph_fire1 = [ $mfata01, morph_fire2 ] {ai_face();};
 void() morph_fire2 = [ $mfata02, morph_fire3 ] {ai_face();};
@@ -268,10 +262,10 @@ void() morph_die21 = [ $mfdth21, morph_die21 ]
 };
 void() morph_die =
 {
- 	sound ( self, CHAN_VOICE, "guard/death.wav", 1, ATTN_NORM);
-    self.solid = SOLID_NOT;
-    self.think = morph_die1;
-    self.nextthink = time + 0.1;
+	sound ( self, CHAN_VOICE, "guard/death.wav", 1, ATTN_NORM);
+	self.solid = SOLID_NOT;
+	self.think = morph_die1;
+	self.nextthink = time + 0.1;
 };
 void() morph_wake1 = [ $start01, morph_wake2 ] 
 {
@@ -357,10 +351,10 @@ void(entity theMorph) morph_setup =
 	}
 	else
 	{
-		theMorph.effects = theMorph.effects | EF_DIMLIGHT;
-	    self = theMorph;
-	    self.health = MTF_Monster_Health(2000);
-	    self = oself;
+	theMorph.effects = theMorph.effects | EF_DIMLIGHT;
+	self = theMorph;
+	self.health = MTF_Monster_Health(2000);
+	self = oself;
 	}
 	theMorph.skin = 2;
 	theMorph.netname = "morpher";
@@ -385,21 +379,20 @@ void() morph_wake =
 	{
 		self.think = morph_wake;
 	}
-	
 	self.nextthink = time + 0.1;
 };
 void() morph_use =
 {
-    if ( self.delay )
-    {
-        self.think = morph_wake;
-        self.nextthink = time + self.delay;
-    }
-    else
-    {
-        self.think = morph_wake;
-        self.nextthink = time + 0.1;
-    }
+	if ( self.delay )
+	{
+		self.think = morph_wake;
+		self.nextthink = time + self.delay;
+	}
+	else
+	{
+		self.think = morph_wake;
+		self.nextthink = time + 0.1;
+	}
 };
 void() morph_teleport =
 {
@@ -410,8 +403,8 @@ void() morph_teleport =
 	if (self.childrenSpawned > (1+skill))
 		return;
 		theDest = overlord_find_dest3();
-    if (theDest == world)
-        return;
+	if (theDest == world)
+		return;
 	theChild = spawn();
 	theChild.model = self.model;
 	theChild.angles = theDest.mangle;
@@ -424,7 +417,6 @@ void() morph_teleport =
 	morph_setup (theChild);
 	setorigin (theChild, theDest.origin);
 	droptofloor();
-
 	theChild.think = morph_wake1;
 	theChild.nextthink = time + 0.3;
 };
@@ -442,11 +434,10 @@ void() monster_morph1 =
 	{
 		self.model = "progs/morph_gr.mdl";
 	}
-
 	if(self.targetname)
-    {
+	{
 		self.use = morph_use;
-    }
+	}
 	else
 	{
 		morph_wake ();
@@ -459,7 +450,6 @@ void() monster_morph =
 		remove(self);
 		return;
 	}
-
 	if (self.spawnflags & MORPH_AZTEC)		// Aztec
 	{
 		precache_model ("progs/morph_az.mdl");
@@ -477,7 +467,6 @@ void() monster_morph =
 	}
 	else
 		objerror ( "monster_morph: no skin selection!");
-	
 	precache_model2 ("progs/laser.mdl");
 	precache_sound2 ("enforcer/enfire.wav");
 	precache_sound2 ("guard/death.wav");

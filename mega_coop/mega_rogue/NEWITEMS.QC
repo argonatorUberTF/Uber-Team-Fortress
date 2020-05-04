@@ -36,7 +36,8 @@ void() newitems_touch =
 			self.nextthink = time + 60;
 			self.think = random_regen;
 		}
-		else if (self.classname == "item_sphere")
+		else
+		if (self.classname == "item_sphere")
 		{
 			self.mdl = self.model;
 			self.nextthink = time + 60*3;
@@ -60,13 +61,15 @@ void() newitems_touch =
 		other.shield_time = 1;
 		other.shield_finished = time + 30;
 	}
-	else if (self.netname == "Anti-Grav Belt")
+	else
+	if (self.netname == "Anti-Grav Belt")
 	{
 		other.antigrav_time = 1;
 		other.antigrav_finished = time + 45;
 		other.gravity = 0.25;
 	}
-	else if (self.classname == "item_sphere")
+	else
+	if (self.classname == "item_sphere")
 	{
 		other.items2 = other.items2 | IT2_V_SPHERE;
 		sphere_spawn();
@@ -104,8 +107,3 @@ void() item_powerup_belt =
 	StartItem ();
 };
 //END
-
-
-
-
-

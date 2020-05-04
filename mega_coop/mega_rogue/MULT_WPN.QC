@@ -8,7 +8,6 @@ void() MiniGrenadeExplode =
 		T_RadiusDamage (self, self.owner, 90, world);
 	else
 		T_RadiusDamage (self, self.owner, 60, world);
-
 	WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
 	WriteByte (MSG_MULTICAST, TE_EXPLOSION);
 	WriteCoord (MSG_MULTICAST, self.origin_x);
@@ -207,7 +206,6 @@ void(float offset, float frameNum) MultiRocketLaunch =
 		missile.velocity = aim(self, 1000);
 		missile.velocity = missile.velocity * 1000;
 		missile.angles = vectoangles(missile.velocity);
-
 		missile.think = MultiRocketExplode;
 		missile.nextthink = time + 4;
 	}
@@ -217,7 +215,6 @@ void(float offset, float frameNum) MultiRocketLaunch =
 		missile.velocity = v_forward * 1000 - v_right*offset*8;
 		missile.angles = vectoangles(missile.velocity);
 		missile.v_angle = self.v_angle;	
-
 		aimangle = missile.origin + missile.velocity;
 		traceline ( missile.origin, aimangle, FALSE, self );
 		if (trace_fraction < 1)
@@ -295,7 +292,7 @@ void(entity current, float doDamage) PlasmaDischarge =
 	multicast (self.origin, MUL_PVS);
 	sound (self, CHAN_VOICE, "weapons/lhit.wav", 1, ATTN_NORM);
 	if (doDamage == 1)
-        PlasmaDamage (self.origin, current.origin, self, 50);
+		PlasmaDamage (self.origin, current.origin, self, 50);
 };
 void() PlasmaGroundOut = 
 {
@@ -358,7 +355,6 @@ void() PlasmaLaunch =
 	self.nextthink = time + 5;
 	self.think = SUB_Remove;
 };
-
 void(vector org, vector dir) launch_plasma =
 {
 	local entity	missile;

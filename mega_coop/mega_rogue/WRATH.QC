@@ -138,7 +138,6 @@ void() wrath_pain =
 		wrath_pn_a01 ();
 	else 
 		wrath_pn_b01 ();
-
 	self.pain_finished = time + 3;
 	sound (self, CHAN_VOICE, "wrath/wpain.wav", 1, ATTN_NORM);
 };
@@ -263,11 +262,9 @@ void() WrathHome =
 		ai_track (self.enemy, 550);
 	else
 		ai_track (self.enemy, 400);
-
 	self.nextthink = time + 0.1;
 	self.think = WrathHome;	
 };
-
 void() WrathMissileTouch =
 {
 	if (other == self.owner ||

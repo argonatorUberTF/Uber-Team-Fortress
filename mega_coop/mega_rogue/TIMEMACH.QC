@@ -38,7 +38,8 @@ void() time_boom =
 			self.owner.skin = 2;
 		}
 	}
-	else if(self.owner.health < 1500)
+	else
+	if(self.owner.health < 1500)
 	{
 		if ( self.owner.frame == 0 )
 		{
@@ -86,7 +87,8 @@ void() time_fall =
 			multicast (self.origin, MUL_PHS);
 			self.pain_finished = 1;
 		}
-		else if (random() < 0.3)
+		else
+		if (random() < 0.3)
 		{
 			WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
 			WriteByte (MSG_MULTICAST, TE_EXPLOSION);

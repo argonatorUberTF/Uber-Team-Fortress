@@ -103,7 +103,6 @@ void() kill_earthquake =
 void() trigger_earthquake_kill =
 {
 	self.touch = kill_earthquake;
-
 	InitTrigger();
 };
 //END
