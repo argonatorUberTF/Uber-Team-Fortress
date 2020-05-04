@@ -38,9 +38,7 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 	local float r;
 	local float gotone;
 	local float loopc;
-#ifdef mtf_coop
 	local entity head;
-#endif
 	if ((self.tf_items & 2))
 	{
 		self.origin_z = (self.origin_z - 40);
@@ -157,7 +155,6 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 	}
 	if (!gotone)
 	{
-#ifdef mtf_coop
 		head = findradius(self.origin, 3000);
 		while (head)
 		{
@@ -174,7 +171,6 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 			head = head.chain;
 		}
 		if (!gotone)
-#endif
 		return (0);
 	}
 	if ((self.enemy == t_client))
@@ -182,11 +178,7 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 		return (Tesla_Fire ());
 	}
 	self.enemy = t_client;
-#ifdef mtf_coop
 	if (((self.enemy.is_monster != 1) && (self.enemy.classname != "player") && (self.enemy.classname != "bot")))
-#else
-	if (((self.enemy.classname != "player") && (self.enemy.classname != "bot")))
-#endif
 	{
 		self.enemy = self.enemy.enemy;
 #ifdef mtf_bot
@@ -208,13 +200,11 @@ void () Tesla_FoundTarget =
 	{
 		sound (self, 2, "weapons/guerilla_set.wav", 1, 1);
 	}
-#ifdef mtf_coop
 	if (self.tf_items & 1)
 		if (self.ammo_cells > (self.waitmin*2))
 		{
 			sound (self, 2, "weapons/guerilla_set.wav", 1, 1);
 		}
-#endif
 	self.effects = (self.effects | 8);
 	self.goalentity = self.enemy;
 	local float tesladelay;
@@ -279,7 +269,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	{
 		return (0);
 	}
-#ifdef mtf_coop
 	if (!(self.flags & FL_ONGROUND))
 	{
 		if (!self.autoid) {
@@ -289,7 +278,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	}
 	if (self.enemy.classname == "player" || self.enemy.classname == "bot")
 	{
-#endif
 	if ((self.enemy == world))
 	{
 		return (0);
@@ -306,7 +294,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 			return (0);
 		}
 	}
-#ifdef mtf_coop
 	}
 	if (self.enemy.monster_items & MITEM_INVISIBLE) {
 		if (!(self.tf_items & 1024))
@@ -314,7 +301,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 			return (0);
 		}
 	}
-#endif
 	if ((self.tf_items & 2))
 	{
 		self.origin_z = (self.origin_z - 40);
@@ -336,14 +322,12 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 		return (0);
 	}
 	self.ammo_cells = (self.ammo_cells - self.waitmin);
-#ifdef mtf_coop
 	if (self.tf_items & 1)
 		self.ammo_cells = (self.ammo_cells - self.waitmin);	// do this a second time
 		
 	if (!(self.flags & FL_ONGROUND)) {
 		self.ammo_cells = (self.ammo_cells - self.waitmin);	// do this another time
 	}
-#endif
 	if ((self.ammo_cells < 0))
 	{
 		self.ammo_cells = 0;
@@ -370,11 +354,7 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	WriteCoord (4, self.enemy.origin_y);
 	WriteCoord (4, self.enemy.origin_z);
 	multicast (self.origin, 1);
-#ifdef mtf_coop
 	sound (self, 1, "enforcer/enfire.wav", 1, 1);
-#else
-	sound (self, 1, "weapons/tesla.wav", 1, 1);
-#endif
 	if ((self.ammo_nails == 0))
 	{
 		damage = 40;
@@ -391,7 +371,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	{
 		damage = 250;
 	}
-#ifdef mtf_coop
 	if ((self.ammo_nails == 1))
 	{
 		damage = 75;
@@ -412,7 +391,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	
 	if (!(self.flags & FL_ONGROUND)) 
 		damage *= .55;
-#endif
 	TF_T_Damage (self.enemy, self, self.real_owner, damage, 2, 8);
 	if ((self.ammo_nails <= 1))
 	{
@@ -435,13 +413,11 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 	}
 	else
 	{
-#ifdef mtf_coop
 		if (self.tf_items & 1 && self.ammo_cells <= (self.waitmin*2))
 		{
 			sprint (self.real_owner, 2, "Tesla is low on cells.\n");
 		}
 		else
-#endif
 		if ((self.ammo_cells <= self.waitmin))
 		{
 			sprint (self.real_owner, 2, "Tesla is low on cells.\n");
@@ -465,7 +441,6 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 void () Tesla_Touch =
 {
 	local float damage;
-#ifdef mtf_coop
 	if ((self.ammo_nails == 0))
 	{
 		damage = 40;
@@ -484,9 +459,6 @@ void () Tesla_Touch =
 	}
 	if (self.real_owner.super_damage_finished > time)
 		damage *= .25;
-#else
-	damage = 400;
-#endif
 	if ((pointcontents (self.origin) == -6))
 	{
 		sprint (self.real_owner, 2, "Your sentry gun flew away.\n");

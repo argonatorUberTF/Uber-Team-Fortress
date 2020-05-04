@@ -470,7 +470,6 @@ string(entity pl) GetStatusSize =
 		return "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	}
 };
-
 void(float res) StatusRes = 
 {
 	self.StatusBarRes = res;
@@ -12428,7 +12427,6 @@ string (entity _p_5356) DetpackTimeToString =
 					}
 				}
 			}
-
 		}
 	}
 	return "0";

@@ -7,28 +7,19 @@ void() Flamer_stream_touch =
 	{
 		return;
 	}
-
-//anti thingie
-
 	if (other.team_no == self.owner.team_no)
 	{
 		return;
 	}
-
 	if (other != world)
 	{
 		if (other.takedamage == 2 && other.health > TF_FLARE_LIT)
 		{
 			deathmsg = 15;
-#ifdef mtf_coop
-// 12/20: Xav: scout used to do 100 damage.. too nuts :x
 			if (self.owner.playerclass == 1)
 				TF_T_Damage(other, self, self.owner, 125, 2, 16); // put it back to 100 to beat monsters tougher players -arg
 			else
 				TF_T_Damage(other, self, self.owner, 18, 2, 16);
-#else
-				TF_T_Damage(other, self, self.owner, 10, 2, 16);
-#endif
 			if (other.numflames >= 3)
 			{
 				return;
@@ -104,8 +95,6 @@ void() Flamer_stream_touch =
 		remove(self);
 	}
 };
-
-
 void(float num_bubbles, vector bub_origin) NewBubbles = 
 {
 	local entity bubble_spawner;
@@ -126,7 +115,6 @@ void(float num_bubbles, vector bub_origin) NewBubbles =
 	bubble_spawner.bubble_count = num_bubbles;
 	return;
 };
-
 void() W_FireFlame = 
 {
 	local entity flame;
@@ -172,9 +160,7 @@ void() W_FireFlame =
 	{
 		flame.velocity = '0 0 200';
 	}
-#ifdef mtf_coop_expsys
 	flame.velocity = flame.velocity + (flame.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-#endif
 	flame.touch = Flamer_stream_touch;
 	flame.think = s2_explode1;
 	flame.nextthink = time + 0.15;
@@ -182,11 +168,9 @@ void() W_FireFlame =
 	setsize(flame, '0 0 0', '0 0 0');
 	setorigin(flame, self.origin + v_forward * 16 + '0 0 16');
 };
-
 void () W_FireIncendiaryCannon =
 {
 	local string inccheck;
-
 	if ((self.ammo_rockets < 2.000000))
 	{
 		return;
@@ -211,9 +195,7 @@ void () W_FireIncendiaryCannon =
 		newmis.velocity = (newmis.velocity * 750.000000);
 	}
 	newmis.angles = vectoangles (newmis.velocity);
-#ifdef mtf_coop_expsys
 	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-#endif
 	newmis.playerclass = 0.000000;
 	newmis.touch = T_IncendiaryTouch;
 	newmis.nextthink = (time + 5.000000);
@@ -223,7 +205,6 @@ void () W_FireIncendiaryCannon =
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	setorigin (newmis, ((self.origin + (v_forward * 8.000000)) + '0.000000 0.000000 16.000000'));
 };
-
 void () TeamFortress_IncendiaryCannon =
 {
 	if (!(self.weapons_carried & 16384.000000))
@@ -238,7 +219,6 @@ void () TeamFortress_IncendiaryCannon =
 	self.current_weapon = 16384.000000;
 	W_SetCurrentAmmo ();
 };
-
 void() TeamFortress_FlameThrower = 
 {
 	if (!(self.weapons_carried & 4096))
@@ -253,6 +233,4 @@ void() TeamFortress_FlameThrower =
 	self.current_weapon = 4096;
 	W_SetCurrentAmmo();
 };
-
 //END
-

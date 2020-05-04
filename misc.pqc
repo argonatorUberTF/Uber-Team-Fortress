@@ -10,12 +10,10 @@ void() make_burst;
 void() effect3_spawn;
 void() drop_rock;
 void() rock_splash;
-#ifndef mtf_coop
 void() make_flashes1;
 void() make_flashes2;
 void() skeet_sound;
 void() skeet_fly;
-#endif
 void() info_null = 
 {
 	dremove(self);
@@ -82,7 +80,6 @@ void() light_fluoro =
 	precache_sound("ambience/fl_hum1.wav");
 	ambientsound(self.origin, "ambience/fl_hum1.wav", 0.8, 3);
 };
-
 void() light_fluorospark = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -138,7 +135,6 @@ void() light_flame_large_yellow =
 	FireAmbient();
 	makestatic(self);
 };
-
 void() light_flame_small_yellow = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -345,7 +341,6 @@ void(vector org, vector vec) LaunchLaser =
 	newmis.nextthink = time + 5;
 	newmis.think = SUB_Remove;
 };
-#ifdef mtf_coop_rogue
 float SPAWNFLAG_LAVASPIKE = 4;
 float SPAWNFLAG_SUPERLAVA = 8;
 float SPAWNFLAG_LAVASKILL = 16;
@@ -388,35 +383,6 @@ void() spikeshooter_use =
 			newmis.touch = superlavaspike_touch;
 	}
 };
-#else
-void() spikeshooter_use = 
-{
-	if (self.spawnflags & 2)
-	{
-		sound(self, 2, "enforcer/enfire.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-		LaunchLaser(self.origin, self.movedir);
-	}
-	else
-	{
-		if (self.spawnflags & 4)
-		{
-			make_explosion();
-			sound(self, 2, "weapons/sgun1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-			LaunchLaser(self.origin, self.movedir);
-		}
-		else
-		{
-			sound(self, 2, "weapons/spike2.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-			launch_spike(self.origin, self.movedir);
-			newmis.velocity = self.movedir * 500;
-			if (self.spawnflags & TF_FLARE_OFF)
-			{
-				newmis.touch = superspike_touch;
-			}
-		}
-	}
-};
-#endif
 void() shooter_think = 
 {
 	spikeshooter_use();
@@ -431,13 +397,11 @@ void() trap_spikeshooter =
 		dremove(self);
 		return;
 	}
-#ifdef mtf_coop_rogue
 	SetMovedir ();
 	self.use = spikeshooter_use;
 	if (self.spawnflags & SPAWNFLAG_LASER)
 	{
 		precache_model2 ("progs/laser.mdl");
-		
 		precache_sound2 ("enforcer/enfire.wav");
 		precache_sound2 ("enforcer/enfstop.wav");
 	}
@@ -472,27 +436,6 @@ void() trap_spikeshooter =
 		precache_sound2 ("lavagun/snail.wav");		// lava nail gun cooldown
 		precache_sound2 ("weapons/rocket1i.wav");
 	}
-#else
-	SetMovedir();
-	self.use = spikeshooter_use;
-	if (self.spawnflags & 2)
-	{
-		precache_model2("progs/laser.mdl");
-		precache_sound2("enforcer/enfire.wav");
-		precache_sound2("enforcer/enfstop.wav");
-	}
-	else
-	{
-		if (self.spawnflags & 4)
-		{
-			precache_sound2("weapons/sgun1.wav");
-		}
-		else
-		{
-			precache_sound("weapons/spike2.wav");
-		}
-	}
-#endif
 };
 void() trap_shooter = 
 {
@@ -522,7 +465,6 @@ void() func_wall =
 	self.has_tesla = SOLID_BSP;
 	self.use = func_wall_use;
 	setmodel (self, self.model);
-#ifdef mtf_coop
 	if ((world.wad == "q2q1tex.wad") && self.classname == "func_wall") {
 		if (!(self.spawnflags & 4)) {
 			self.has_tesla = SOLID_NOT;
@@ -531,7 +473,6 @@ void() func_wall =
 		}
 		return;
 	}
-#endif
 #ifdef mtf_coop_halflife
 	HalfLife_DoRender();
 #endif
@@ -1485,9 +1426,7 @@ void() bobbingwater_think =
 };
 void() func_bobbingwater = 
 {
-#ifdef mtf_coop_hipnotic
 		dremove(self);
-#endif
 	self.angles = '0 0 0';
 	self.movetype = 4;
 	self.solid = TF_FLARE_LIT;
@@ -1503,7 +1442,6 @@ void() func_bobbingwater =
 	self.nextthink = time + 0.020000;
 	self.ltime = time;
 };
-#ifndef mtf_coop
 void() effect_strobe = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -1514,12 +1452,8 @@ void() effect_strobe =
 	self.movetype = 6;
 	self.solid = 2;
 	setsize(self, '-2 -2 -2', '4 4 4');
-#ifdef NEW_DOT
 	setmodel(self, "progs/newdot.spr");
 	self.frame = 0;
-#else
-	setmodel(self, "progs/dot1.spr");
-#endif
 	self.effects = TF_FLARE_LIT;
 	self.nextthink = time + 2;
 	self.think = make_flashes1;
@@ -1530,27 +1464,18 @@ void() make_flashes1 =
 	self.nextthink = time + 0.9 + self.height;
 	self.think = make_flashes2;
 };
-
 void() make_flashes = 
 {
-#ifdef NEW_DOT
 	setmodel(self, "progs/newdot.spr");
 	self.frame = 0;
-#else
-	setmodel(self, "progs/dot1.spr");
-#endif
 	self.effects = TF_FLARE_LIT;
 	self.nextthink = time + 0.9;
 	self.think = make_flashes2;
 };
 void() make_flashes2 = 
 {
-#ifdef NEW_DOT
 	setmodel(self, "progs/newdot.spr");
 	self.frame = 2;
-#else
-	setmodel(self, "progs/dot3.spr");
-#endif
 	self.effects = 8;
 	self.nextthink = time + 0.1;
 	self.think = make_flashes;
@@ -1764,7 +1689,6 @@ void() skeet_fly =
 	self.nextthink = time + random() * 5 + 3;
 	self.think = skeet_fly;
 };
-#endif
 void() Random_Play = 
 {
 	if (self.spawnflags == 4)

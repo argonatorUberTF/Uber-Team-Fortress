@@ -159,11 +159,9 @@ void() plat_trigger_use =
 };
 void() plat_crush = 
 {
-#ifdef mtf_coop
 	if (other.is_monster == 1)
 		T_Damage(other, self, self, 100);
 	else
-#endif
 	T_Damage(other, self, self, 1);
 	if (self.state == 2)
 	{
@@ -278,13 +276,11 @@ void() train_blocked =
 };
 void() train_use = 
 {
-#ifdef mtf_coop
 //johnfitz -- retriggerable trains
 	if (self.spawnflags & TRAIN_RETRIGGER) {
 		train_next();
 		return;
 	}
-#endif
 	if (self.think != func_train_find)
 	{
 		return;
@@ -299,16 +295,13 @@ void() train_use =
 #endif
 	train_next();
 };
-#ifdef mtf_coop
 void() train_moving_use =
 {
 	//still moving, so save it for later
 	self.cnt = self.cnt + 1;
 }
-#endif
 void() train_wait = 
 {
-#ifdef mtf_coop
 	if (self.spawnflags & TRAIN_RETRIGGER) {
 		if (self.cnt > 0) { //triggered early, so continue now
 			self.cnt = self.cnt - 1;
@@ -320,7 +313,6 @@ void() train_wait =
 		sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM); //play stopping sound
 		return;
 	}
-#endif
 #ifdef mtf_coop_halflife
 	if (self.has_tesla == 1) {
 		self.use = train_use;
@@ -333,7 +325,6 @@ void() train_wait =
 		self.message = "";
 	}
 #endif
-#ifdef mtf_coop
 	local string oldtarg;
 	if (self.real_owner.pathtarget)
 	{
@@ -342,19 +333,16 @@ void() train_wait =
 		SUB_UseTargets();
 		self.target = oldtarg;
 	}
-#endif
 	if (self.wait)
 	{
 		self.nextthink = self.ltime + self.wait;
 		if (self.wait == -1)
 		{
 			self.think = func_train_find;
-#ifdef mtf_coop
 			if (self.spawnflags & 2) {
 				self.use = train_use;
 				return;
 			}
-#endif
 		}
 		self.sounds = 4;
 			sound(self, 2, self.noise, 1, 0);
@@ -373,12 +361,9 @@ void() train_wait =
 void() train_next = 
 {
 	local entity targ;
-#ifdef mtf_coop
 	if (self.spawnflags & TRAIN_RETRIGGER) {
 		self.use = train_moving_use; //store up any premature triggerings until current movement is finished
 	}
-#endif
-	
 	targ = find(world, targetname, self.target);
 	self.target = targ.target;
 	if (!(self.target))
@@ -391,11 +376,7 @@ void() train_next =
 		}
 		else
 #endif
-#ifdef mtf_coop
 		return;		// this may break hl support.. dunno lol (quake 2 thing)
-#else
-		objerror("train_next: no next target");
-#endif
 	}
 	if (targ.wait)
 	{
@@ -430,7 +411,6 @@ void() train_next =
 	}
 	else
 #endif
-#ifdef mtf_coop
 	// quake 2 stuff
 	if (targ.spawnflags & 1) {
 		// yeah in q2 it's spawnflags & 1 and in HL it's spawnflags & 2.. why can nobody make my life easy? :\
@@ -438,13 +418,10 @@ void() train_next =
 			SUB_CalcMove(targ.origin - ((self.mins+self.maxs)*.5), 9999, train_wait);
 	}
 	else
-#endif
 	SUB_CalcMove(targ.origin - self.mins, self.speed, train_wait);
-#ifdef mtf_coop
 	if (targ != world) {
 		self.real_owner = targ;
 	}
-#endif
 };
 void() func_train_find = 
 {
@@ -518,7 +495,6 @@ void() func_train =
 		self.noise = "plats/track_e.wav";
 		self.noise1 = "plats/track_st.wav";
 	}
-#ifdef mtf_coop
 	if (self.sounds == 2)
 	{
 		self.noise = "doors/hydro2.wav";
@@ -529,7 +505,6 @@ void() func_train =
 	if (self.spawnflags & TRAIN_RETRIGGER)
 		self.cnt = 0; //johnfitz -- used to store premature trigger events when TRAIN_RETRIGGER is set
 	else
-#endif
 	self.cnt = 1;
 	self.solid = 4;
 	self.movetype = 7;
@@ -539,7 +514,6 @@ void() func_train =
 	setmodel(self, self.model);
 	setsize(self, self.mins, self.maxs);
 	setorigin(self, self.origin);
-
 #ifdef mtf_coop_halflife
 	if (mapname == "c1a1b" || mapname == "c1a1c") {
 		if (self.globalname == "c1a1b_zombie_vent1")
@@ -573,7 +547,6 @@ void() func_train =
 	
 	self.nextthink = self.ltime + 0.1;
 	self.think = func_train_find;
-
 #ifdef SVEN_COOP
 	if (#HL_MAP)
 		if (self.target && !self.targetname)

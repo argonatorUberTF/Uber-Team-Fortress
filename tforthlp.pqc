@@ -170,4 +170,3 @@ void() TeamFortress_HelpMap =
 	sprint(self, 2, " 'dropflag' to drop the enemy flag.\n");
 };
 //END
-

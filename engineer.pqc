@@ -23,11 +23,7 @@ void () LaserBolt_Think =
 		self.movetype = 9;
 		self.velocity = self.oldorigin;
 		self.touch = LaserBolt_Touch;
-#ifdef mtf_coop
 		setmodel (self, "progs/beam.mdl");
-#else
-		setmodel (self, "progs/xrail.mdl");
-#endif
 		self.nextthink = (time + 1); //was 2 -arg
 		self.think = SUB_Remove;
 	}
@@ -45,7 +41,6 @@ void () LaserBolt_Think =
 		self.think = SUB_Remove;
 	}
 };
-
 void(float radius, float xValue, float stretch, float dir, float fltTime) joeTrail =
 {
 	local vector side1, dir1, org;
@@ -175,11 +170,7 @@ void () LaserBolt_Touch =
 		{
 			SpawnBlood(org, 15);
 			deathmsg = 26;
-#ifdef mtf_coop
 			TF_T_Damage(other, self, self.enemy, 32, TF_FLARE_LIT, 8);		// adjusted for reload
-#else
-			TF_T_Damage(other, self, self.enemy, 30, TF_FLARE_LIT, 8);
-#endif
 			self.velocity = self.oldorigin;
 			self.owner = other;
 			setmodel(self, string_null);
@@ -223,18 +214,12 @@ void (float chargeDmg) W_FireLaser =
 			newmis.movetype = 9;
 			newmis.solid = TF_FLARE_OFF;
 			newmis.heat = chargeDmg;
-#ifdef mtf_coop
 setmodel(newmis, "progs/beam.mdl");
-#else
-			setmodel (newmis, "progs/xrail.mdl");
-#endif
 			setsize (newmis, '0 0 0', '0 0 0');
 			setorigin (newmis, (org + '0 0 16'));
 			newmis.velocity = (vec * 2000);
 			newmis.angles = vectoangles (newmis.velocity);
-#ifdef mtf_coop_expsys
 			newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-#endif
 			newmis.oldorigin = newmis.velocity;
 			if ((self.team_no == 1.000000))
 			{
@@ -296,9 +281,7 @@ setmodel(newmis, "progs/beam.mdl");
 		newmis.velocity = vec * 1500;
 		newmis.angles = vectoangles(newmis.velocity);
 		newmis.angles_y = newmis.angles_y + 0.1;
-#ifdef mtf_coop_expsys
 		newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-#endif
 		newmis.oldorigin = newmis.velocity;
 		newmis.nextthink = time + 5;
 		newmis.think = SUB_Remove;
@@ -337,10 +320,8 @@ void () TeamFortress_EngineerBuild =
 			self.is_building = 0.000000;
 			self.current_weapon = self.weapon;
 			W_SetCurrentAmmo ();
-#ifdef mtf_coop
 			zg_togglepickup (self, FALSE);
 			Attack_Finished (0.4);
-#endif
 		}
 	}
 };
@@ -541,9 +522,7 @@ void(float objtobuild) TeamFortress_Build =
 	self.current_weapon = TF_FLARE_LIT;
 	self.weaponmodel = "";
 	self.weaponframe = TF_FLARE_LIT;
-#ifdef VWEPS
 	VWEPS_SetModel ();
-#endif
 	TeamFortress_SetSpeed(self);
 	newmis.owner = self;
 	newmis.classname = "timer";
@@ -563,10 +542,8 @@ void(float objtobuild) TeamFortress_Build =
 };
 void(entity bld) CheckBelowBuilding = 
 {
-#ifdef mtf_coop
 	if (IsBuilding(bld))
 		return;
-#endif
 	local vector below;
 	below = bld.origin;
 	if (bld.classname == "detpack")
@@ -731,9 +708,7 @@ void() TeamFortress_FinishedBuilding =
 				self.building = newmis;
 			}
 #endif
-#ifdef mtf_coop
 			newmis.netname = "sentry";
-#endif
 		}
 		else
 		{
@@ -783,18 +758,12 @@ void() TeamFortress_FinishedBuilding =
 				oldself.waitmax = TF_FLARE_LIT;
 				if (infokey(world, "balancedtesla") == "1") {
 				oldself.currentammo = 2; }
-#ifdef mtf_coop
-#ifdef mtf_coop_expsys
 				oldself.currentammo = 5 - self.ammo_attr;
 				if (oldself.currentammo < 0)
 					oldself.currentammo = 0;
 				if (lms_entity != world)
 					oldself.currentammo = 2;
-#else
-				oldself.currentammo = 2;
-#endif
 				oldself.netname = "sentry";
-#endif
 			}
 	if (oldself.weapon == 5)
 	{
@@ -1071,20 +1040,7 @@ void (entity gun) Engineer_UseTesla =
 };
 void (entity gunhead) CheckSentry =
 {
-#ifdef mtf_coop
 	return;
-#else
-	local vector dist;
-	local entity gunbase;
-	gunbase = gunhead.trigger_field;
-	dist = gunbase.origin - gunhead.origin;
-	if ((vlen (dist) > 15.000000))
-	{
-		bprint (1.000000, self.real_owner.netname);
-		bprint (1.000000, "'s sentry gun malfunctioned\n");
-		Sentry_Die ();
-	}
-#endif
 };
 void () CheckDistance =
 {

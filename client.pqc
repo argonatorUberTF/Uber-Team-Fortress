@@ -59,12 +59,10 @@ void() SetChangeParms =
 		return;
 	}
 	self.items = self.items - (self.items & (131072 | 262144 | 524288 | 1048576 | 2097152 | 4194304));
-#ifndef mtf_coop
 	if (self.health > 100)
 	{
 		self.health = 100;
 	}
-#endif
 	if (self.health < 50)
 	{
 		self.health = 50;
@@ -153,9 +151,7 @@ void() DecodeLevelParms =
 
 	if (toggleflags == 0)
 	{
-#ifdef mtf_coop
 		ParseTFDetect(self);
-#endif
 		toggleflags = parm10;
 		allow_hook = 0;
 		invis_only = 0;
@@ -183,9 +179,7 @@ void() DecodeLevelParms =
 			ent = find(world, classname, "info_player_team1");
 			if (ent != world || CTF_Map == TF_FLARE_OFF)
 			{
-#ifdef mtf_coop
 if (!coop) {
-#endif
 				CTF_Map = TF_FLARE_OFF;
 				if (teamplay == 0)
 				{
@@ -195,9 +189,7 @@ if (!coop) {
 				ent.nextthink = time + 30;
 				ent.think = CTF_FlagCheck;
 				number_of_teams = 2; // because this is for ctf only maps. -arg
-#ifdef mtf_coop
 }
-#endif
 			}
 			else
 			{
@@ -780,7 +772,6 @@ void() ExitIntermission =
 	intermission_running = intermission_running + TF_FLARE_OFF;
 	if (intermission_running == 2)
 	{
-#ifdef mtf_coop
 		if ((world.model == "maps/e1m7.bsp"))
 		{
 			WriteByte (MSG_ALL, SVC_CDTRACK);
@@ -799,7 +790,6 @@ void() ExitIntermission =
 		}
 		else
 		{
-#endif
 			if (world.model == "maps/e2m6.bsp")
 			{
 				WriteByte(2, 31);
@@ -824,7 +814,6 @@ void() ExitIntermission =
 					}
 					else 
 					{
-#ifdef mtf_coop_nehahra
 						if ((world.model == "maps/nehend.bsp"))
 						{
 							WriteByte (MSG_ALL, SVC_CDTRACK);
@@ -875,7 +864,6 @@ void() ExitIntermission =
 										}
 						else
 						{
-#endif
 						if ((world.model == "maps/qtfin3.bsp"))
 						{
 							WriteByte (MSG_ALL, SVC_CDTRACK);
@@ -909,13 +897,8 @@ void() ExitIntermission =
 					}
 				}
 			}
-#ifdef mtf_coop
-#ifdef mtf_coop_nehahra
 		} } } } }
-#endif
 		}
-#endif
-#ifdef mtf_coop_hipnotic
 		if ((world.model == "maps/hip1m3.bsp"))	// xav: really hip1m4, but that dont work :(
 		{
 			WriteByte (MSG_ALL, SVC_CDTRACK);
@@ -946,15 +929,12 @@ void() ExitIntermission =
 				}
 			}
 		}
-#endif
-#ifdef mtf_coop_rogue
 		if ((world.model == "maps/r1m7.bsp"))
 		{
 			WriteByte (MSG_ALL, SVC_FINALE);
 			WriteString (MSG_ALL, "Victory! The Overlord's mangled\nremains are the evidence.  His evil\nWrath army?  Cast out to wander\naimlessly throughout time.\n\nAs the Slipgate fog surrounds you,\nthoughts rage into your consciousness:\nHas Quake's oppressive reign ended?\nIs it S...");
 			return;
 		}
-#endif
 #ifdef mtf_coop_bbelief
 		if ( world.model == "maps/bbelief7.bsp" || mapname == "bbelief7" )
 		{
@@ -1001,10 +981,8 @@ void() IntermissionThink =
 	GotoNextMap();
 #endif
 };
-#ifdef mtf_coop_expsys
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience;
 void () MTF_Coop_UpdateMapRanks;
-#endif
 #ifdef HALFLIFE
 void () relandmark_touch =
 {
@@ -1027,7 +1005,6 @@ void () relandmark_touch =
 #endif
 void() changelevel_use =
 {
-#ifdef mtf_coop
 	if (num_players > 1 && can_exit == #FALSE) {
 		if (votestarted == #VOTE_EXIT)
 			return;
@@ -1042,8 +1019,6 @@ void() changelevel_use =
 			}
 		}
 	}
-
-#endif
 	other = activator; 
 #ifndef COOP_HAX
 	if (other.classname != "player")
@@ -1059,10 +1034,7 @@ void() changelevel_use =
 		bprint( #PRINT_HIGH, "\n" );
 	} else
 		bprint (#PRINT_HIGH, " exited the level.\n");
-
-#ifdef mtf_coop_expsys
 	MTF_DoEndBonus ( other );
-#endif
 	nextmap = self.map;
 	SUB_UseTargets ();
 	if ( (self.spawnflags & 1) && (deathmatch == 0) )
@@ -1098,10 +1070,8 @@ void() trigger_changelevel =
 		dremove(self);
 		return;
 	}
-#ifdef mtf_coop_rogue
 	if (mapname == "r2m1")
 		self.map = "r2m2";
-#endif
 	if (!(self.map))
 	{
 #ifdef SVEN_COOP
@@ -1109,17 +1079,12 @@ void() trigger_changelevel =
 #endif
 		objerror("changelevel trigger doesn't have map");
 	}
-#ifdef mtf_coop_hipnotic
-
 	if (self.map == "hip1m4")
 		self.map = "hip2m1";
-#endif
-#ifdef mtf_coop
 	if (mapname == "qte1m5")
 		self.map = "qtstart";
 	if (mapname == "qte2m4")
 		self.map = "qtstart";
-#endif
 	InitTrigger();
 #ifdef SVEN_COOP
 	if (#HL_MAP) {
@@ -1261,12 +1226,10 @@ void() ClientKill =
 	self.suicide_time = time + 25 + random() * 5;
 	bprint(TF_FLARE_OFF, self.netname);
 	bprint(TF_FLARE_OFF, " suicides  :)\n");
-#ifdef mtf_coop_lms
 	if (lms_entity != world) {
 		if (self.classname == "player")
 			self.#lms_lives = self.#lms_lives - 1;
 	}
-#endif
 	teamchangetimer(self);
 	set_suicide_frame();
 #ifdef PL_FEM
@@ -1312,11 +1275,9 @@ void() ClientKill =
 	self.th_die();
 	self.deadflag = 3;
 	self.tfstate = self.tfstate | 8192;
-#ifdef mtf_coop
 	if (survival_mode)
 		if (Survival_Fail() == #TRUE)
 			return;
-#endif
 };
 void(entity e) ValidateUser = 
 {};
@@ -1347,17 +1308,11 @@ void() PutClientInServer =
 	self.movetype = 3;
 	self.show_hostile = 0;
 	self.FlashTime = 0;
-#ifdef mtf_coop_expsys
 	self.max_health = floor( self.max_health * MTF_Coop_AttribGain(self, #ATTRIB_HEALTH) );
-#else
-	self.max_health = 100;
-#endif
 	self.flags = 8;
-#ifdef mtf_coop
 self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 #ifdef HALFLIFE
 	self.oldgravity = 1;
-#endif
 #endif
 	self.air_finished = time + 12;
 	self.dmg = 2;
@@ -1365,17 +1320,13 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	self.radsuit_finished = 0;
 	self.invisible_finished = 0;
 	self.invincible_finished = 0;
-#ifdef mtf_coop_expsys
 	self.speed_finished = 0;
 	self.speed_time = 0;
 	self.effects = self.effects - (self.effects & EF_RED);
-#endif
-#ifdef mtf_coop
 	MTF_Coop_ResetItems();
 	self.#rune_finished = 0;
 	self.#rune_time = 0;
 	self.reload_rail_gun = 0;
-#endif
 	self.effects = 0;
 	self.invincible_time = 0;
 	self.reload_shotgun = 0;
@@ -1491,11 +1442,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 			TeamFortress_ChangeClass();
 		}
 	}
-#ifdef mtf_coop
 	if (self.nextpc != 0)
-#else
-	if (deathmatch == 3 && self.nextpc != 0)
-#endif
 	{
 		tc = IsRestrictedClass(self.nextpc);
 		if ( tc == 0)
@@ -1651,8 +1598,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	TeamFortress_SetHealth ();
 	TeamFortress_SetSpeed (self);
 	TeamFortress_SetSkin (self);
-#ifndef mtf_coop
-#endif
 	SetTeamName (self);
 	W_SetCurrentAmmo ();
 	self.attack_finished = (time + 0.300000);
@@ -1677,11 +1622,9 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	}
 	self.observer_list = spot;
 	self.origin = (spot.origin + '0.000000 0.000000 1.000000');
-#ifdef mtf_coop
 	if (self.monster_type > 0)
 		if (spot.is_monster == 1)
 			Killed(spot, world);
-#endif
 	self.angles = spot.angles;
 	self.fixangle = 1.000000;
 	if ((spot.classname == "info_player_teamspawn"))
@@ -1741,9 +1684,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	setmodel (self, "progs/player.mdl");
 #endif
 #endif
-#ifdef mtf_coop
 	if (self.monster_type == 0)
-#endif
 #ifdef PL_FEM
 	SetPlayerModelindex(self);
 #else
@@ -1809,7 +1750,6 @@ void() info_player_start =
 		return;
 	}
 #endif
-#ifdef mtf_coop_nehahra
 	if ((world.model == "maps/nehend.bsp") || mapname == "nehend")
 	{
 		if (deathmatch)
@@ -1819,7 +1759,6 @@ void() info_player_start =
 		precache_mr ();
 		spawn_mister ();
 	}
-#endif
 #ifdef SVEN_COOP
 	if (#HL_MAP)
 		self.classname = "info_intermission";
@@ -1827,13 +1766,11 @@ void() info_player_start =
 };
 void() info_player_start2 = 
 {
-#ifndef mtf_coop
 	if (CheckExistence() == 0)
 	{
 		dremove(self);
 		return;
 	}
-#endif
 };
 #ifdef SVEN_COOP
 void () info_player_deathmatch_use =
@@ -1881,12 +1818,10 @@ void() info_player_deathmatch =
 };
 void() info_player_coop = 
 {
-#ifdef mtf_coop
 	if (self.targetname) {
 		dremove(self);
 		return;
 	}
-#endif
 	if (CheckExistence() == 0)
 	{
 		dremove(self);
@@ -2007,7 +1942,6 @@ void() CheckRules =
 	}
 #endif
 };
-#ifdef mtf_coop
 void () pdummy_wait_on_reconnect =
 {
 	local entity te;
@@ -2554,9 +2488,7 @@ void () PlayerPreThink =
 	{
 		self.maxspeed = 0.000000;
 		self.gravity = 0.000000;
-#ifdef mtf_coop
 		if (!survival_mode)
-#endif
 		if (((self.button2 && (self.current_menu == 2.000000)) && (self.team_no == 0.000000)))
 		{
 			if (TeamFortress_TeamPutPlayerInTeam ())
@@ -2696,17 +2628,13 @@ void() CheckPowerups =
 				}
 				self.frame = 0;
 				self.modelindex = modelindex_eyes;
-#ifdef VWEPS
 				VWEPS_SetModel ();
-#endif
 			}
 			else
 			{
-#ifdef mtf_coop
 				if (self.monster_type > 0)
 					Monsterteam_setmodel(self, self.monster_type);
 				else
-#endif
 #ifdef PL_FEM
 				self.modelindex = GetPlayerModelindex(self);
 #else
@@ -2722,9 +2650,7 @@ void() CheckPowerups =
 	}
 	if ((self.Aircraft_Owner == 1))
 	{
-#ifdef VWEPS
 		self.vw_index = 31;
-#endif
 		setmodel (self, "progs/helo2.mdl");
 		modelindex_aircraft = self.modelindex;
 	}
@@ -2732,14 +2658,11 @@ void() CheckPowerups =
 	{
 		self.modelindex = modelindex_null;
 	}
-#ifdef VWEPS
 #ifdef PL_FEM
 	if (self.gender == GENDER_FEMALE) {
 		self.vw_index = 0;
 	}
 #endif
-#endif
-#ifdef mtf_coop
 	if (self.#rune_finished)
 	{
 		sprint(self,2,"Your rune power is gone.\n");
@@ -2778,7 +2701,6 @@ void() CheckPowerups =
 	}
 	if (mapname == "e1m8")
 		self.gravity = .15;
-#endif
 	if (self.invincible_finished)
 	{
 		if (self.tfstate & 32)
@@ -2866,11 +2788,7 @@ void() CheckPowerups =
 		}
 		if (self.super_damage_finished > time)
 		{
-#ifdef mtf_coop
 			self.effects = self.effects | 64;
-#else
-			self.effects = self.effects | 8;
-#endif
 		}
 		else
 		{
@@ -2889,11 +2807,7 @@ void() CheckPowerups =
 			}
 			if (!lighton)
 			{
-#ifdef mtf_coop
 				self.effects = self.effects - (self.effects & 64);
-#else
-				self.effects = self.effects - (self.effects & 8);
-#endif
 			}
 		}
 	}
@@ -2940,9 +2854,7 @@ void () hat_checkowner =
 	self.nextthink = time + .5;
 };
 #endif
-#ifdef mtf_coop_rogue
 void() xpackEnding;
-#endif
 void() PlayerPostThink = 
 {
 	setup_strcat ();
@@ -2950,13 +2862,11 @@ void() PlayerPostThink =
 #ifdef mega_hats
 	local vector tvec;
 #endif
-#ifdef VWEPS
-        if (self.health <= 0)
-        {
+	if (self.health <= 0)
+	{
 			if (self.vw_index != 9 && self.vw_index != 11 && self.vw_index != 12 && self.vw_index != 13 && self.vw_index != 16 && self.vw_index != 19)	// bat & chainsaw
 				self.vw_index = 31;
-        }
-#endif
+	}
 #ifdef botprogs
 	if (BotPostFrame ())		// Pablo Bot
 	{
@@ -2973,12 +2883,10 @@ void() PlayerPostThink =
 		self.impulse = 0;
 		return;
 	}
-#ifdef mtf_coop_rogue
 	if (cutscene_running)
 	{
 		xpackEnding();
 	}
-#endif
 	if (self.being_juggled > 0)
 	{
 		if (self.flags & FL_ONGROUND)
@@ -3126,9 +3034,7 @@ void() ClientConnect =
 #ifdef botprogs
 	ClientInRankings ();
 #else
-#ifdef mtf_coop
 	ClientInRankings2 ();
-#endif
 #endif
 #ifdef mtf_coop
 #ifdef HALFLIFE
@@ -3172,10 +3078,8 @@ void() ClientConnect =
 		self.mtf_items |= MTFITEM_LIGHTGUN;
 	if (self.coop_exp >= Coop_ExpReq(80))
 		self.mtf_items |= MTFITEM_NEEDLER;
-#ifdef mtf_coop_achievements
 	if (Achievements_Setup(self) == 1) {
 	}
-#endif
 #ifdef mtf_coop_quests
 	Quest_SetupPlayer( self );
 #endif

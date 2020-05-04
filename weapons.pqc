@@ -1,3 +1,4 @@
+void (vector a, vector b) SpawnMeatSpray;
 void(entity targ, entity inflictor, entity attacker, float damage, float T_flags, float T_AttackType) TF_T_Damage;
 float crandom();
 void(float att_delay) Attack_Finished;
@@ -135,7 +136,6 @@ void() TF_MovePlayer;
 void() W_Precache = 
 {
 missing_precaches(); //precache the stuff missing or overlooked or called all the time -arg
-#ifdef mtf_coop_hipnotic
 	if (mapname == "hip1m4") {
 precache_model("progs/b_s_key.mdl");
 precache_model("progs/b_g_key.mdl");
@@ -156,13 +156,10 @@ precache_model("progs/spikmine.mdl");
 	if (mapname == "hipend") {
 		precache_model("progs/lasrspik.mdl");
 	}
-#endif
 #ifdef BATTLE_ROYALE
 	precache_model("progs/s_light.spr");
 #endif
 precache_sound("misc/rampage.wav");
-#ifndef mtf_coop
-#endif
 	precache_model("progs/medexp.spr");
 	precache_sound("speech/needlite.wav");
 	precache_sound("effects/bodyhit1.wav");
@@ -202,9 +199,6 @@ precache_sound("misc/rampage.wav");
 	precache_sound("items/flare1.wav");
 	precache_model("progs/s_expl.spr");
 	precache_model("progs/beam.mdl");		// LTB
-#ifndef mtf_coop
-	precache_model("progs/beam2.mdl");
-#endif
 	precache_model("progs/spikebal.mdl");
 	precache_model("progs/flare.spr");
 	precache_model("progs/lsrdrone.mdl");
@@ -316,7 +310,7 @@ precache_sound("misc/rampage.wav");
 		precache_sound ("sub/lockon.wav");
 	}
 	precache_sound ("player/mdeath6.wav");
-#endif
+
 	precache_model ("progs/h_demon.mdl");
 	precache_sound ("demon/ddeath.wav");
 	precache_sound ("demon/dhit2.wav");
@@ -324,25 +318,18 @@ precache_sound("misc/rampage.wav");
 	precache_sound ("demon/dpain1.wav");
 	precache_sound ("demon/idle1.wav");
 	precache_sound ("demon/sight2.wav");
-#ifdef LTB1
 	precache_model ("progs/tripbeam.mdl");		// New beam model
 	precache_model ("progs/charge.mdl");
 	precache_sound ("weapons/deploy.wav");
 	precache_sound ("weapons/tlaser.wav");
 	precache_sound ("weapons/tarbeep.wav");
-#endif
-#ifdef weapon_bat
 	precache_model ("progs/v_bat.mdl");		// bat weapon ala qfusion mod
-#endif
-#ifdef newsounds2
 	precache_sound ("player/mdeath7.wav");
 	precache_sound ("player/mdeath6.wav"); // this was the one nagging in console a lot. -arg
 	precache_sound ("sets/set2_4.wav");
 	precache_sound ("weapons/asscan4.wav");
 	precache_sound ("items/protect3.wav");
-#endif
 	precache_model(#MODEL_HEALTH_TEN);	// medpack model
-#ifdef mtf_coop
 	precache_model(#MODEL_QUAD);
 	precache_model("progs/invisibl.mdl");
 	precache_model(#MODEL_HEALTH_HUNDRED);
@@ -354,10 +341,7 @@ precache_sound("misc/rampage.wav");
 #ifdef mtf_coop_birthday
 	precache_model (#MODEL_CAKE);
 #endif
-#ifdef mtf_coop_bonus
 	precache_model ("progs/grenade3.mdl");
-#endif
-#endif
 #ifdef mtf_coop_bloodmod
 	precache_model ("progs/bdrop.mdl");
 #endif
@@ -368,14 +352,12 @@ precache_sound("misc/rampage.wav");
 };
 void(float att_delay) Attack_Finished = 
 {
-#ifdef mtf_coop
 	if (self.current_weapon != 64 && self.current_weapon != 512 && self.current_weapon != 1024)	// no automatic
 		if (self.current_weapon != 16 && self.current_weapon != 8 && self.current_weapon != 4 && self.current_weapon != 2) 				// no melee
 			if (self.current_weapon != #WEAP_ZEROGRAVITY)
 				if ( !(self.mtf_items & #MTFITEM_LIGHTGUN && self.current_weapon == 128) )
 					att_delay = att_delay / MTF_Coop_AttribGain(self, #ATTRIB_QUICKSHOT);
 	self.attack_finished = time + att_delay / 4;
-
 	if ( self.#rune_time > time )
 	{
 		if (self.#rune_type == #RUNE_BERSERKER) {
@@ -384,7 +366,6 @@ void(float att_delay) Attack_Finished =
 			}
 		}
 	}
-#endif
 	if (self.tfstate & 32768)
 	{
 		self.attack_finished = time + att_delay * 3;
@@ -397,7 +378,6 @@ void(float att_delay) Attack_Finished =
 float ( float t_wep ) GetClipSize =
 {
 	local float rt_amt;
-	
 	if (t_wep == 128) {
 		rt_amt = 8;
 	}
@@ -410,16 +390,11 @@ float ( float t_wep ) GetClipSize =
 	else if (t_wep == 8192) {
 		rt_amt = 4;
 	}
-#ifdef mtf_coop
 	else if (t_wep == 524288) {
 		rt_amt = 10;
 	}
-#endif
-#ifdef mtf_coop_expsys
 	if (self.clipex_attr)
 		rt_amt = rt_amt + ceil(rt_amt*MTF_Coop_AttribGain(self, #ATTRIB_CLIPEX));
-#endif
-	
 	return rt_amt;
 };
 void() ShellHit = 
@@ -441,7 +416,6 @@ void() ShellHit =
 	}
 	return;
 };
-
 void() EjectShell = 
 {
 	newmis = spawn();
@@ -511,7 +485,6 @@ void() EjectShell =
 		newmis.skin = TF_FLARE_OFF;
 	}
 };
-
 void() StingerTouch = 
 {
 	if (other.takedamage)
@@ -521,7 +494,6 @@ void() StingerTouch =
 	}
 	sound(self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
-
 void() StingerElec = 
 {
 	local entity te;
@@ -561,7 +533,6 @@ void() StingerElec =
 		return;
 	}
 };
-
 void() W_LaunchStinger = 
 {
 	local entity missile;
@@ -603,16 +574,13 @@ void() W_LaunchStinger =
 	setsize(missile, '0 0 0', '0 0 0');
 	setorigin(missile, self.origin);
 };
-
 void() SpyPackRemove = 
 {
 	sprint(self.owner, 2, "Your Ammo Trap failed...\n");
 	dremove(self);
 };
-
 void () SpyPackTouch =
 {
-
 	if ((self.pausetime > time))
 	{
 		return;
@@ -651,7 +619,6 @@ void () SpyPackTouch =
 		dremove (self);
 	}
 };
-
 void() SpyPack = 
 {
 	local entity te;
@@ -696,7 +663,6 @@ void() SpyPack =
 	newmis.classname = "drop1";
 	setmodel(newmis, "progs/backpack.mdl");
 };
-
 void() RemoveLavaPool = 
 {
 	sprint(self.owner, 2, "Your Lava has cooled...\n");
@@ -704,14 +670,9 @@ void() RemoveLavaPool =
 	self.owner.has_syringe = TF_FLARE_OFF;
 	dremove(self);
 };
-
 void() LavaTouch = 
 {
-#ifdef mtf_coop
 	if (other.classname != "player" && other.classname != "bot" && !Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
-#else
-	if (other.classname != "player" && other.classname != "bot")
-#endif
 	{
 		return;
 	}
@@ -719,22 +680,16 @@ void() LavaTouch =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (other.team_no < TF_FLARE_OFF && !Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
-#else
-	if (other.team_no < TF_FLARE_OFF)
-#endif
 	{
 		return;
 	}
 	if (other.takedamage)
 	{
 		deathmsg = 15;
-#ifdef mtf_coop
 		if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
 			TF_T_Damage(other, self.owner, self.owner, 75, TF_FLARE_LIT, 16); //was 50 dmg -arg
 		else
-#endif
 		TF_T_Damage(other, self.owner, self.owner, 6, TF_FLARE_LIT, 16); // was 2 dmg -arg
 		if (random() < 0.1)
 		{
@@ -747,10 +702,8 @@ void() LavaTouch =
 				sound(other, TF_FLARE_LIT, "player/inh2o.wav", 0.8, TF_FLARE_OFF);
 			}
 		}
-#ifdef mtf_coop
 		if (other.is_monster != 1)
 		{
-#endif
 		if (other.classname != "bot")
 		{
 			stuffcmd(other, "bf\n");
@@ -761,12 +714,9 @@ void() LavaTouch =
 		}
 		other.origin_x = self.origin_x;
 		other.origin_y = self.origin_y;
-#ifdef mtf_coop
 		}
-#endif
 	}
 };
-
 void() LavaBallTouch = 
 {
 	if (other == self.owner)
@@ -776,10 +726,8 @@ void() LavaBallTouch =
 	sound(self, TF_FLARE_OFF, "zombie/z_miss.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	if (other.takedamage)
 	{
-#ifdef mtf_coop
 		if (!Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
 		{
-#endif
 		if (other.classname != "player")
 		{
 			return;
@@ -796,14 +744,11 @@ void() LavaBallTouch =
 		{
 			return;
 		}
-#ifdef mtf_coop
 		}
-#endif
 		deathmsg = 15;
 		TF_T_Damage(other, self, self.owner, 20, TF_FLARE_LIT, 32); // was 16 damage -arg
 	}
 };
-
 void() LavaBecome = 
 {
 	if (self.waterlevel > TF_FLARE_OFF)
@@ -824,7 +769,6 @@ void() LavaBecome =
 	self.think = RemoveLavaPool;
 	self.touch = LavaTouch;
 };
-
 void() LavaPool = 
 {
 	if (self.has_syringe != TF_FLARE_OFF)
@@ -833,7 +777,6 @@ void() LavaPool =
 		return;
 	}
 	self.has_syringe = TF_FLARE_LIT;
-
 	sound(self, 3, "weapons/throw.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	newmis = spawn();
 	newmis.classname = "timer";
@@ -863,9 +806,6 @@ void() LavaPool =
 	newmis.touch = LavaBallTouch;
 	setmodel(newmis, "progs/lavaball.mdl");
 };
-
-
-
 float(float tno) num_team_pipebombs = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -895,7 +835,6 @@ float(float tno) num_team_pipebombs =
 	}
 	return TF_FLARE_LIT;
 };
-
 void(float tno) ExplodeOldPipebomb = 
 {
 	local entity old;
@@ -931,7 +870,6 @@ void(float tno) ExplodeOldPipebomb =
 		old = find(old, classname, "pipebomb");
 	}
 };
-
 void(float tno) increment_team_pipebombs = 
 {
 	if (tno == TF_FLARE_OFF)
@@ -960,7 +898,6 @@ void(float tno) increment_team_pipebombs =
 		}
 	}
 };
-
 void() W_FireGrenade = 
 {
 	if (self.option == TF_FLARE_OFF)
@@ -1022,9 +959,7 @@ void() W_FireGrenade =
 		if (self.option == TF_FLARE_OFF)
 		{
 			newmis.velocity = v_forward * 1200 + v_up * 200 + crandom() * v_right * 10 + crandom() * v_up * 10;
-#ifdef mtf_coop
 			newmis.option = 1;
-#endif
 		}
 		else
 		{
@@ -1051,7 +986,6 @@ void() W_FireGrenade =
 	setsize(newmis, '0 0 0', '0 0 0');
 	setorigin(newmis, self.origin);
 };
-
 void() HoloHumm = 
 {
 	self.playerclass = self.playerclass + TF_FLARE_OFF;
@@ -1072,7 +1006,6 @@ void() HoloHumm =
 		}
 	}
 };
-
 void() HoloDood = 
 {
 	local entity holo;
@@ -1107,7 +1040,6 @@ void() HoloDood =
 	WriteCoord(4, holo.origin_z);
 	multicast(self.origin, TF_FLARE_OFF);
 };
-
 void() SuperLeap = 
 {
 	if (!airscout)
@@ -1115,11 +1047,7 @@ void() SuperLeap =
 		sprint(self, 2, "JetPack disabled by Admin!\n");
 		return;
 	}
-#ifdef mtf_coop
 	if (self.ammo_cells < 11)
-#else
-	if (self.ammo_cells < 24)
-#endif
 	{
 		sprint(self, 2, "Insufficient power... get more cells.\n");
 		return;
@@ -1131,17 +1059,10 @@ void() SuperLeap =
 	sound(self, 3, "weapons/jetjump.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	W_FireFlame();
 	muzzleflash();
-#ifdef mtf_coop
 	self.velocity = v_forward * 900 + '0 0 250' + v_up * 100;
 	self.ammo_cells = self.ammo_cells - 11;
-#else
-	self.velocity = v_forward * 900 + '0 0 250' + v_up * 100;
-	stuffcmd(self, "bf\n");
-	self.ammo_cells = self.ammo_cells - 23;
-#endif
 	self.impulse = TF_FLARE_LIT;
 };
-
 void () MagTimer =
 {
 	local entity _l_2374;
@@ -1162,10 +1083,8 @@ void () MagTimer =
 	}
 	self.nextthink = (time + 0.500000);
 };
-
 void () MagMineActivate =
 {
-
 	if ((other.option == 0.000000))
 	{
 		self.owner.has_syringe = 1.000000;
@@ -1186,7 +1105,6 @@ void () MagMineActivate =
 		other.option5 = 15.000000;
 	}
 };
-
 void () FlashTimer2 =
 {
 	local entity _l_2398;
@@ -1227,7 +1145,6 @@ void () FlashTimer2 =
 	}
 	self.nextthink = (time + 0.100000);
 };
-
 void () FlashGrenadeExplode2 =
 {
 	self.owner.has_syringe = 1.000000;
@@ -1251,9 +1168,6 @@ void () FlashGrenadeExplode2 =
 	other.FlashTime = 2.500000;
 	stuffcmd (other, "v_cshift 255 255 255 255\n");
 };
-
-#ifdef mtf_coop
-void (vector a, vector b) SpawnMeatSpray;
 void () W_FireSaw =
 {
 	local vector source;
@@ -1303,17 +1217,13 @@ void () W_FireSaw =
 		self.ammo_nails = 0;
 	self.currentammo = (self.ammo_nails);
 };
-#endif
-
 void () W_FireAxe =
 {
 	local vector source;
 	local vector org;
 	local vector def;
-#ifdef mtf_coop
 	if (self.weaponmodel == #MODEL_CHAINSAW)
 		return;
-#endif
 	makevectors (self.v_angle);
 	source = (self.origin + '0 0 16');
 	traceline (source, (source + (v_forward * 64)), 0.000000, self);
@@ -1332,10 +1242,8 @@ if (allow_bat == 1) {
 			makevectors (trace_ent.v_angle);
 			def = v_right;
 			makevectors (self.v_angle);
-#ifdef mtf_coop
 	local float dist, strength;
 	local vector delta;
-#endif
 			if ((crossproduct (def, v_forward) > 0.000000))
 			{
 				if (trace_ent.team_no != self.team_no && trace_ent.classname == "player")
@@ -1351,62 +1259,53 @@ if (allow_bat == 1) {
 						trace_ent.FlashTime = 2.25;
 				}
 				deathmsg = 447;
-#ifdef mtf_coop
-				if (trace_ent.is_monster == 1) {
-      delta = trace_ent.origin - self.origin + self.view_ofs;
-        if (delta_z < 0)
-          delta_z = delta_z / -2;
-        delta = delta * 0.7;
-
-        if (delta_z < 100)
-          delta_z = 100;
+				if (trace_ent.is_monster == 1)
+				{
+					delta = trace_ent.origin - self.origin + self.view_ofs;
+					if (delta_z < 0)
+						delta_z = delta_z / -2;
+						delta = delta * 0.7;
+	if (delta_z < 100)
+	delta_z = 100;
 	trace_ent.flags = trace_ent.flags - FL_ONGROUND;
-      dist = vlen(delta);
-strength = 800;
-      delta = normalize(delta);
-      delta = delta * strength;
-delta_z *= .3;
+	dist = vlen(delta);
+	strength = 800;
+	delta = normalize(delta);
+	delta = delta * strength;
+	delta_z *= .3;
 	trace_ent.velocity = trace_ent.velocity + delta;
-TF_T_Damage (trace_ent, self, self, 185, 2, 0.000000);
+	TF_T_Damage (trace_ent, self, self, 185, 2, 0.000000);
 	}
 	else
-#endif
 				TF_T_Damage (trace_ent, self, self, 65, 2, 0.000000);
 			}
 			else
 			{
 				deathmsg = 446;
-#ifdef mtf_coop
 				if (trace_ent.is_monster == 1) {
-      delta = trace_ent.origin - self.origin + self.view_ofs;
-        if (delta_z < 0)
-          delta_z = delta_z / -2;
-        delta = delta * 0.7;
-
-        if (delta_z < 100)
-          delta_z = 100;
+	delta = trace_ent.origin - self.origin + self.view_ofs;
+	if (delta_z < 0)
+	delta_z = delta_z / -2;
+	delta = delta * 0.7;
+	if (delta_z < 100)
+	delta_z = 100;
 	trace_ent.flags = trace_ent.flags - FL_ONGROUND;
-      dist = vlen(delta);
-strength = 800;
-      delta = normalize(delta);
-      delta = delta * strength;
-delta_z *= .3;
+	dist = vlen(delta);
+	strength = 800;
+	delta = normalize(delta);
+	delta = delta * strength;
+	delta_z *= .3;
 	trace_ent.velocity = trace_ent.velocity + delta;
-TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
+	TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
 	}
 	else
-#endif
-				TF_T_Damage (trace_ent, self, self, 30, 2, 0.000000);
+		TF_T_Damage (trace_ent, self, self, 30, 2, 0.000000);
 			}
 			sound(trace_ent, 3, "zombie/z_miss.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 			return;
 		}
 }
-#ifdef mtf_coop
 		if (((self.playerclass != 8) || (trace_ent.classname != "player" && trace_ent.is_monster != 1)))
-#else
-		if (((self.playerclass != 8) || (trace_ent.classname != "player")))
-#endif
 		{
 			deathmsg = 17;
 			TF_T_Damage (trace_ent, self, self, 20, 2, 0.000000);
@@ -1415,14 +1314,10 @@ TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
 		{
 			self.weaponmode = 1;
 			self.weaponmodel = "progs/v_knife2.mdl";
-#ifdef VWEPS
 			self.vw_index = 13;
-#endif
-#ifdef mtf_coop
 			if (trace_ent.is_monster == 1)
 				makevectors (trace_ent.angles);
 			else
-#endif
 			makevectors (trace_ent.v_angle);
 
 			def = v_right;
@@ -1430,7 +1325,6 @@ TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
 			if ((crossproduct (def, v_forward) > 0.000000))
 			{
 				deathmsg = 22;
-#ifdef mtf_coop
 				if (trace_ent.is_monster == 1) {
 					if (other.tfstate & #MONSTER_TRANQUILIZED)
 						TF_T_Damage (trace_ent, self, self, 230, 2, 0.000000);
@@ -1440,9 +1334,6 @@ TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
 				else {
 					TF_T_Damage (trace_ent, self, self, 120, 2, 0.000000);
 				}
-#else
-				TF_T_Damage (trace_ent, self, self, 120, 2, 0.000000);
-#endif
 			}
 			else
 			{
@@ -1463,7 +1354,6 @@ TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
 		multicast (org, 2);
 	}
 };
-
 void () W_FireSpanner =
 {
 	local vector source;
@@ -1640,7 +1530,6 @@ void () W_FireSpanner =
 		multicast (org, 2);
 	}
 };
-
 void () W_FireMedikit =
 {
 	local vector source;
@@ -1824,7 +1713,6 @@ void () W_FireMedikit =
 				}
 				if (((healam > 0.000000) && (trace_ent.health < trace_ent.max_health)))
 				{
-#ifdef mtf_coop_expsys
 					if (pointcontents(trace_ent.origin) != CONTENT_LAVA && pointcontents(trace_ent.origin) != CONTENT_SLIME) {
 					if ( trace_ent.health < (trace_ent.max_health*.9) ) {
 						if ( trace_ent.health < (trace_ent.max_health*.3) ) 
@@ -1835,12 +1723,9 @@ void () W_FireMedikit =
 							MTF_Coop_AddServiceExp( self, trace_ent, 10, #SRV_HEAL );
 						else 
 							MTF_Coop_AddServiceExp( self, trace_ent, 5, #SRV_HEAL );
-#ifdef mtf_coop_achievements
 						Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEAL, 1 );
-#endif
 					}
 					}
-#endif
 					sound (trace_ent, 1, "items/r_item1.wav", 1, 1);
 					trace_ent.axhitme = 1;
 					SpawnBlood (org, 20);
@@ -1886,7 +1771,6 @@ void () W_FireMedikit =
 		multicast (org, 2);
 	}
 };
-
 void () W_FireBioweapon =
 {
 	local vector source;
@@ -1949,10 +1833,8 @@ void () W_FireBioweapon =
 				{
 					T_Damage (trace_ent, self, self, 200);
 				}
-#ifdef mtf_coop
 				if (trace_ent == world)
 					return;
-#endif
 				trace_ent.axhitme = 1;
 				SpawnBlood (org, 20);
 				T_Damage (trace_ent, self, self, 10);
@@ -1965,10 +1847,8 @@ void () W_FireBioweapon =
 			}
 			else
 			{
-#ifdef mtf_coop
 				if (trace_ent == world)
 					return;
-#endif
 				trace_ent.axhitme = 1;
 				SpawnBlood (org, 30);
 				T_Damage (trace_ent, self, self, 40);
@@ -1987,8 +1867,6 @@ void () W_FireBioweapon =
 		multicast (org, 2);
 	}
 };
-
-
 void (vector org,vector vel) SpawnMeatSpray =
 {
 	local entity missile;
@@ -2006,17 +1884,14 @@ void (vector org,vector vel) SpawnMeatSpray =
 	setsize (missile, '0 0 0', '0 0 0');
 	setorigin (missile, org);
 };
-
 #ifdef mtf_coop_bloodmod
 float MAX_t_dropS;
 void () SpawnMeatSprayBloody_Touch;
-
 void (vector org, vector vel, float damage) SpawnMeatSprayBloody =
 {
 	local entity missile;
 	if (self.next_bloodtime > time)
 		return;
-	
 	if ((num_blooddrops >= MAX_t_dropS))
 	{
 		return;
@@ -2085,9 +1960,7 @@ void () W_FireShotgun =
 	deathmsg = 1;
 	FireBullets (6, dir, '0.04 0.04 0');
 };
-#ifdef xavioraddedneedler
 void () W_FireNeedler;
-#endif
 void () W_FireSuperShotgun =
 {
 	local vector dir;
@@ -2096,12 +1969,10 @@ void () W_FireSuperShotgun =
 		W_FireShotgun ();
 		return;
 	}
-#ifdef xavioraddedneedler
 	if (self.mtf_items & MTFITEM_NEEDLER) {
 		W_FireNeedler ();
 		return;
 	}
-#endif
 	EjectShell ();
 	EjectShell ();
 	sound (self, 1, "weapons/shotgn2.wav", 1, 1);
@@ -2111,9 +1982,7 @@ void () W_FireSuperShotgun =
 	dir = aim (self, 100000);
 	deathmsg = 2;
 	FireBullets (14, dir, '0.14 0.08 0');
-
 };
-
 void (vector direction, float damage) FireSniperBullet =
 {
 	local vector org;
@@ -2279,7 +2148,6 @@ void () W_FireSniperRifle =
 				}
 			}
 		}
-#ifdef mtf_coop
 		else if ( Coop_IsMonster( trace_ent, #MONSTERTYPE_NORMAL ) ) {
 			f = trace_endpos - src;
 			g_x = trace_endpos_x;
@@ -2305,15 +2173,12 @@ void () W_FireSniperRifle =
 				sprint( self, PRINT_MEDIUM, "Head shot - that's gotta hurt!\n" );
 				deathmsg = 29;
 				T_Damage (trace_ent, self, self, (self.heat * dam_mult));
-#ifdef mtf_coop_achievements
 				if (trace_ent.health <= 0)
 					Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEADSHOT, 1 );
-#endif
 				return;
 				}
 			}
 		}
-#endif
 		ClearMultiDamage ();
 		if ((trace_fraction != 1))
 		{
@@ -2349,11 +2214,7 @@ void () W_FireAssaultCannon =
 {
 	local vector dir;
 	KickPlayer (-4.000000, self);
-#ifdef mtf_coop_expsys
-	self.ammo_shells = (self.ammo_shells - 1);
-#else
-	self.ammo_shells = (self.ammo_shells - 1);
-#endif
+	self.ammo_shells = (self.ammo_shells - 1);  //Reduced to 1 for each shot -arg
 	self.currentammo = (self.ammo_shells);
 	dir = aim (self, 100000);
 	deathmsg = 20;
@@ -2380,7 +2241,6 @@ void () RemoveFlashMine =
 	dremove (self);
 	return;
 };
-
 void () RemoveSpikeTrap =
 {
 	sprint (self.owner, 2, "Your Spike Trap is gone...\n");
@@ -2388,7 +2248,6 @@ void () RemoveSpikeTrap =
 	dremove (self);
 	return;
 };
-
 void () RemoveMagnetMine =
 {
 	sprint (self.owner, 2, "Your Mag Mine is gone...\n");
@@ -2396,7 +2255,6 @@ void () RemoveMagnetMine =
 	dremove (self);
 	return;
 };
-
 void () AlarmMineTouch =
 {
 	if ((self.pausetime > time))
@@ -2442,7 +2300,6 @@ void () AlarmMineTouch =
 		other.effects = (other.effects - (other.effects & 8.000000));
 	}
 };
-
 void () AIDSMineTouch =
 {
 	local entity BioInfection;
@@ -2450,7 +2307,6 @@ void () AIDSMineTouch =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
 	{
 		deathmsg = 14;
@@ -2465,7 +2321,6 @@ void () AIDSMineTouch =
 	}
 	else
 	{
-#endif
 	if ((other.classname != "player"))
 	{
 		return;
@@ -2503,9 +2358,7 @@ void () AIDSMineTouch =
 	}
 	sound (self, 3, "player/mpain6.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	sprint (other, 2, "You're infected by a syringe! :(\n");
-#ifdef mtf_coop
 	}
-#endif
 	sprint (self.owner, 2, "Your syringe has Infected an enemy!\n");
 	bprint (1, other.netname);
 	bprint (1, " was infected by ");
@@ -2515,7 +2368,6 @@ void () AIDSMineTouch =
 	self.nextthink = (time + 10);
 	RemoveAIDSMine ();
 };
-
 void () FlashMineTouch =
 {
 	if ((self.pausetime > time))
@@ -2543,7 +2395,6 @@ void () FlashMineTouch =
 	self.nextthink = time;
 	dremove (self);
 };
-
 void () SpikeTrapTouch =
 {
 
@@ -2551,11 +2402,7 @@ void () SpikeTrapTouch =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (other.classname != "player" && Coop_IsMonster(other, #MONSTERTYPE_NORMAL) != 1)
-#else
-	if ((other.classname != "player"))
-#endif
 	{
 		return;
 	}
@@ -2580,7 +2427,6 @@ void () SpikeTrapTouch =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL)) {
 		sound (self, 3, "shambler/smack.wav", 1, 1);
 		sprint (self.owner, 2, "Your Trap worked!\n");
@@ -2595,7 +2441,6 @@ void () SpikeTrapTouch =
 		other.tfstate = other.tfstate | #MONSTER_TRANQUILIZED;
 		return;
 	}
-#endif
 	if ((other.playerclass == 6))
 	{
 		RemoveSpikeTrap ();
@@ -2624,11 +2469,7 @@ void () MagnetMineTouch =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (other.classname != "player" && Coop_IsMonster(other, #MONSTERTYPE_NORMAL) != 1)
-#else
-	if ((other.classname != "player"))
-#endif
 	{
 		return;
 	}
@@ -2648,14 +2489,12 @@ void () MagnetMineTouch =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL)) {
 		MagMineActivate ();
 		sprint (self.owner, 2.000000, "Your Magnet Mine worked!\n");
 		self.pausetime = (time + 5.000000);
 	}
 	else 
-#endif
 	if ((other.classname == "player"))
 	{
 		MagMineActivate ();
@@ -2666,13 +2505,10 @@ void () MagnetMineTouch =
 	self.nextthink = (time + 5.000000);
 	dremove (self);
 };
-
 void () Tranq_spike_touch;
 void () spike_touch;
-
 void (vector org,vector dir) Tranq_launch_spike =
 {
-
 	newmis = spawn ();
 	newmis.owner = self;
 	newmis.movetype = 9;
@@ -2744,9 +2580,7 @@ void (float type) ThrowMine =
 	if ((type == 2.000000))
 	{
 		item99.touch = AIDSMineTouch;
-#ifdef mtf_coop
 		item99.solid = 1;
-#endif
 	}
 	if ((type == 3.000000))
 	{
@@ -2758,17 +2592,13 @@ void (float type) ThrowMine =
 	if ((type == 4.000000))
 	{
 		item99.touch = SpikeTrapTouch;
-#ifdef mtf_coop
 		item99.solid = 1;
-#endif
 	}
 	if ((type == 5.000000))
 	{
 		item99.touch = MagnetMineTouch;
 		setmodel (item99, "progs/tgib1.mdl");
-#ifdef mtf_coop
 		item99.solid = 1;
-#endif
 	}
 	item99.nextthink = (time + 180.000000);
 	if ((type == 1.000000))
@@ -2792,7 +2622,6 @@ void (float type) ThrowMine =
 		item99.think = RemoveMagnetMine;
 	}
 };
-
 void () A_Mine =
 {
 	if (((self.ammo_cells < 50) && (self.playerclass == 2)))
@@ -2828,7 +2657,6 @@ void () B_Mine =
 	sprint (self, 2, "You dropped a syringe!\n");
 	sound (self, 2, "weapons/tink1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
-
 void () C_Mine =
 {
 	local entity te;
@@ -2857,7 +2685,6 @@ void () C_Mine =
 	ScatterCaltrops();	//requires 1 type 1 grenade, self terminating. -arg death msg 48 for it.
 	sound (self, 2, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
-
 void () S_Mine =
 {
 	local entity te;
@@ -2880,7 +2707,6 @@ void () S_Mine =
 	sprint (self, 2, "You set a Spike Trap!\n");
 	sound (self, 2, "doors/meduse.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
-
 void () M_Mine =
 {
 	local entity te;
@@ -2903,7 +2729,6 @@ void () M_Mine =
 	sprint (self, 2.000000, "You set a Mag Mine!\n");
 	sound (self, 2.000000, "weapons/bounce.wav", 1.000000, 1.000000);
 };
-
 void () MakeHolo =
 {
 	local string he;
@@ -2931,7 +2756,6 @@ void () MakeHolo =
 		sprint (self, 2, "Holographic replica active!\n");
 	}
 };
-
 void () W_FireRocket =
 {
 	self.ammo_rockets = (self.ammo_rockets - 1);
@@ -2948,17 +2772,11 @@ void () W_FireRocket =
 	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
 	newmis.angles = vectoangles (newmis.velocity);
 	newmis.touch = T_MissileTouch;
-#ifdef mtf_coop_expsys
 	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-#endif
-#ifdef mtf_coop
 	if (self.mtf_items & #BOUNCY_ROCKETS)
-		newmis.attack_finished = 5;
-
-#endif
+	newmis.attack_finished = 5;
 	newmis.nextthink = (time + 5);
 	newmis.think = SUB_Remove;
-
 	newmis.weapon = 6;
 #ifdef mtf_coop_tgiving
 	setmodel (newmis, "progs/duck1.mdl");
@@ -2968,7 +2786,6 @@ void () W_FireRocket =
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
-
 void () BalloonMIRVtouch =
 {
 	if ((pointcontents (self.origin) == -6.000000))
@@ -2980,7 +2797,6 @@ void () BalloonMIRVtouch =
 		self.velocity = '0 0 0';
 	}
 };
-
 void (vector org,entity shooter) BalloonMirvGrenadeLaunch =
 {
 	local float xdir;
@@ -3006,7 +2822,6 @@ void (vector org,entity shooter) BalloonMirvGrenadeLaunch =
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, org);
 };
-
 void () BalloonMIRVpop =
 {
 	local float i;
@@ -3020,7 +2835,6 @@ void () BalloonMIRVpop =
 	}
 	BecomeExplosion ();
 };
-
 void () BalloonMIRVnoise =
 {
 	self.playerclass = (self.playerclass + TF_FLARE_OFF);
@@ -3038,7 +2852,6 @@ void () BalloonMIRVnoise =
 		self.think = BalloonMIRVpop;
 	}
 };
-
 void () BalloonMIRV =
 {
 	if ((self.no_grenades_2 < TF_FLARE_OFF))
@@ -3086,7 +2899,6 @@ void () BalloonMIRV =
 	setmodel (newmis, "progs/air-mirv.mdl");
 	deathmsg = 40;
 };
-
 void (entity from,float damage) LightningHit =
 {
 	WriteByte (4, 23);
@@ -3097,7 +2909,6 @@ void (entity from,float damage) LightningHit =
 	multicast (trace_endpos, 2);
 	TF_T_Damage (trace_ent, from, from, damage, 2, 8);
 };
-
 void (vector p1,vector p2,entity from,float damage) LightningDamage =
 {
 	local entity e1;
@@ -3237,11 +3048,9 @@ void () spike_touch =
 		{
 			TF_T_Damage (other, self, self.owner.owner, 9, 2, 2);
 		}
-#ifdef mtf_coop
 		else if (self.owner.classname == "monster_wizard") {
 			TF_T_Damage (other, self, self.owner, 5, 2, 2);
 		}
-#endif
 		else
 		{
 			TF_T_Damage (other, self, self.owner, 9, 2, 2);
@@ -3270,14 +3079,11 @@ void () spike_touch =
 		WriteCoord (4, self.origin_z);
 		multicast (self.origin, 1);
 	}
-#ifdef mtf_coop
 	if (self.owner.classname == "monster_wizard")
 		Wizard_Bounce_Off_Walls();
 	else
-#endif
 	dremove (self);
 };
-
 void () Tranq_spike_touch =
 {
 	if ((other.solid == 1))
@@ -3350,30 +3156,23 @@ void (entity reloaded_player, float type_rl) W_ReloadSetCurrentAmmo =
 		reloaded_player.currentammo = reloaded_player.ammo_rockets;
 		reloaded_player.items = (reloaded_player.items | 1024);
 	}
-#ifdef VWEPS
 	local entity oself;
 	oself = self;
 	self = reloaded_player;
 	VWEPS_SetModel ();
 	self = oself;
-#endif
-}
-
-#ifdef VWEPS
+};
 void () VWEPS_SetModel =
 {
 	local float vw_model;
-	
 	if (self.current_weapon != 16 && self.current_weapon != 8 && self.current_weapon != 4 && self.current_weapon != 2)
 		vw_model = 7;
 	else
 		vw_model = 1;
-#ifdef mtf_coop
 	if (self.monster_type > 0) {
 		self.vw_index = 0;
 		return;
 	}
-#endif
 	if (self.items & 524288 || self.model == "progs/mini-sub.mdl" || self.model == "progs/helo2.mdl") {
 		self.vw_index = 31;
 		return;
@@ -3398,10 +3197,8 @@ void () VWEPS_SetModel =
 		vw_model = 15;
 	else if (self.weaponmodel == "progs/proxgren.mdl")
 		vw_model = 17;
-#ifdef mtf_coop
 	else if (self.weaponmodel == #MODEL_CHAINSAW)
 		vw_model = 11;
-#endif
 	else if (self.current_weapon == 32768)		// 20mm cannon
 		vw_model = 5;
 	else if (self.current_weapon == 524288)		// railgun
@@ -3420,44 +3217,12 @@ void () VWEPS_SetModel =
 		vw_model = 16;
 	else if (self.weaponmodel == "progs/proxgren.mdl" && self.current_weapon == 16)
 		vw_model = 12;
-#ifdef mtf_coop
 	if ( self.mtf_items & #MTFITEM_LIGHTGUN && self.current_weapon == 128 || self.current_weapon == #WEAP_ZEROGRAVITY )
 		vw_model = 8;		// LG
-#endif
 	if (self.tfstate & 65536 && self.is_detpacking == #TRUE)		// laying det..
 		vw_model = 1;
 	else if (self.tfstate & 65536 && self.playerclass != 8)	// building
 		vw_model = 16;
-#ifndef mtf_coop
-	if (self.is_undercover == 1 && self.current_weapon > 128) {
-		switch (self.undercover_skin) {
-			case 1:
-				vw_model = 4;
-				break;
-			case 2:
-				vw_model = 18;
-				break;
-			case 3:
-				vw_model = 7;
-				break;
-			case 4:
-				vw_model = 6;
-				break;
-			case 5:
-				vw_model = 5;				
-				break;
-			case 6:
-				vw_model = 15;
-				break;
-			case 7:
-				vw_model = 6;
-				break;
-			case 9:
-				vw_model = 14;
-				break;
-		}
-	}
-#endif
 	if (self.maxs_z == 8 || self.is_feigning == #TRUE)		// player is laying
 		vw_model = 31;
 	if (self.hook_out && (self.frame == 137 || self.frame == 138 || self.frame == 139))
@@ -3473,13 +3238,10 @@ void () VWEPS_SetModel =
 #endif
 	self.vw_index = vw_model;
 };
-#endif
 float () W_CheckNoAmmo =
 {
-#ifdef mtf_coop
 	if (self.current_weapon == #WEAP_ZEROGRAVITY)
 		return TRUE;
-#endif
 	if ((self.current_weapon == 4))
 	{
 		return (1);
@@ -3527,8 +3289,6 @@ float () W_CheckNoAmmo =
 	W_PrintWeaponMessage ();
 	return (0.000000);
 };
-
-#ifdef mtf_coop
 void ( entity slave, entity master ) Hax_Fixowner =
 {
 	if (master == world)
@@ -3538,12 +3298,9 @@ void ( entity slave, entity master ) Hax_Fixowner =
 		bprint(2,"Hax_Fixowner: NO OWNER - TELL DEV this.\n");
 	}
 };
-#endif
 void () W_Reload_shotgun =
 {
-#ifdef mtf_coop
 	Hax_Fixowner ( self, self.real_owner );
-#endif
 	self.owner.tfstate = (self.owner.tfstate - (self.owner.tfstate & 2));
 	self.owner.weaponmodel = #MODEL_V_SHOTGUN;
 	sound (self.owner, 1, "weapons/pkup.wav", 1, 1);
@@ -3552,12 +3309,9 @@ void () W_Reload_shotgun =
 	dremove (self);
 	self.owner.StatusRefreshTime = (time + 0.1);
 };
-
 void () W_Reload_super_shotgun =
 {
-#ifdef mtf_coop
 	Hax_Fixowner ( self, self.real_owner );
-#endif
 	self.owner.tfstate = (self.owner.tfstate - (self.owner.tfstate & 2));
 	self.owner.weaponmodel = "progs/v_shot2.mdl";
 	sound (self.owner, 1, "weapons/pkup.wav", 1, 1);
@@ -3565,16 +3319,11 @@ void () W_Reload_super_shotgun =
 	W_ReloadSetCurrentAmmo (self.owner, 1);
 	dremove (self);
 	self.owner.StatusRefreshTime = (time + 0.1);
-#ifdef mtf_coop_expsys
 	self.owner.needler_heat = 0;
-#endif
 };
-
 void () W_Reload_grenade_launcher =
 {
-#ifdef mtf_coop
 	Hax_Fixowner ( self, self.real_owner );
-#endif
 	self.owner.tfstate = (self.owner.tfstate - (self.owner.tfstate & 2));
 	self.owner.weaponmodel = "progs/v_rock.mdl";
 	sound (self.owner, 1, "weapons/rocklr1a.wav", 1, 1);
@@ -3584,13 +3333,10 @@ void () W_Reload_grenade_launcher =
 };
 void () W_Reload_rocket_launcher =
 {
-#ifdef mtf_coop
 	Hax_Fixowner ( self, self.real_owner );
-	
 	if (self.owner == world) {
 		bprint(2,"W_Reload_rocket_launcher: WORLD OWNER - TELL DEV this.\n");
 	}
-#endif
 	self.owner.tfstate = (self.owner.tfstate - (self.owner.tfstate & 2));
 	self.owner.weaponmodel = "progs/v_rock2.mdl";
 	sound (self.owner, 1, "weapons/rocklr1a.wav", 1, 1);
@@ -3599,8 +3345,6 @@ void () W_Reload_rocket_launcher =
 	dremove (self);
 	self.owner.StatusRefreshTime = (time + 0.1);
 };
-
-#ifdef mtf_coop
 void () W_Reload_rail_gun =
 {
 	Hax_Fixowner ( self, self.real_owner );
@@ -3612,7 +3356,6 @@ void () W_Reload_rail_gun =
 	dremove (self);
 	self.owner.StatusRefreshTime = (time + 0.1);
 };
-#endif
 float () CheckForReload =
 {
 	if ((self.current_weapon == 128))
@@ -3651,7 +3394,6 @@ float () CheckForReload =
 			return (1);
 		}
 	}
-#ifdef mtf_coop
 	if (lms_entity != world) {}							// no rg reload in LMS mode
 	else if (self.current_weapon == 524288)
 	{
@@ -3661,7 +3403,6 @@ float () CheckForReload =
 			return (1);
 		}
 	}
-#endif
 	return (0.000000);
 };
 void() player_axe1;
@@ -3732,7 +3473,6 @@ void() W_Attack =
 	}
 	if ((self.tfstate & 2.000000))
 	{
-#ifdef mtf_coop
 		if (self.reload_ent != world)
 			if (self.reload_ent.nextthink <= time)
 			{
@@ -3742,7 +3482,6 @@ void() W_Attack =
 				newmis.think = self.reload_finished_func;
 				newmis.nextthink = time;
 			}
-#endif
 		sound (self, 1.000000, "weapons/no_ammo.wav", 0.800000, 1.000000);
 		Attack_Finished (0.200000);
 		return;
@@ -3751,12 +3490,10 @@ void() W_Attack =
 	{
 		return;
 	}
-#ifdef mtf_coop
 	if (self.monster_type > 0) {
 		monster_attack();
 		return;
 	}
-#endif
 	if (self.is_undercover)
 	{
 		Spy_RemoveDisguise (self);
@@ -3764,9 +3501,7 @@ void() W_Attack =
 	if ((self.is_squating == 1.000000))
 	{
 		unlay ();
-#ifdef VWEPS
 		VWEPS_SetModel ();
-#endif
 	}
 	Stats_Fired (self.current_weapon);
 	makevectors (self.v_angle);
@@ -3811,11 +3546,7 @@ void() W_Attack =
 		{
 			if ((self.current_weapon == 1.000000))
 			{
-#ifdef mtf_coop
 				if (((!self.hook_out && (self.ammo_cells > 19.000000)) && (self.is_feigning == 0.000000)))
-#else
-				if (((!self.hook_out && (self.ammo_cells > 24.000000)) && (self.is_feigning == 0.000000)))
-#endif
 				{
 					self.immune_to_check = (time + 4.000000);
 					player_chain1 ();
@@ -3833,15 +3564,15 @@ void() W_Attack =
 			{
 				if ((self.current_weapon == 128.000000))
 				{
-#ifdef mtf_coop
-					if ( self.mtf_items & #MTFITEM_LIGHTGUN ) {
+					if ( self.mtf_items & #MTFITEM_LIGHTGUN )
+					{
 						player_light1 ();
 						Attack_Finished (0.1);
 						sound (self, 0, "weapons/lstart.wav", 1, 1);
 					}
-					else {
-#endif
-					if ((CheckForReload () == 1.000000))
+					else
+					{
+					if ((CheckForReload () == 1.000000))  // I think this is what is causing the elec gun not selected since the reg shotgun(128) is out of ammo. -arg
 					{
 						return;
 					}
@@ -3851,9 +3582,7 @@ void() W_Attack =
 					self.StatusRefreshTime = (time + 0.100000);
 					CheckForReload ();
 					Attack_Finished (0.500000);
-#ifdef mtf_coop_expsys
 					}
-#endif
 				}
 				else
 				{
@@ -3865,7 +3594,6 @@ void() W_Attack =
 						}
 						player_shot1 ();
 						W_FireSuperShotgun ();
-#ifdef mtf_coop_expsys
 						if (self.mtf_items & MTFITEM_NEEDLER)
 						{
 							self.reload_super_shotgun = (self.reload_super_shotgun + 0.5);
@@ -3880,14 +3608,11 @@ void() W_Attack =
 						}
 						else
 						{
-#endif
 						self.reload_super_shotgun = (self.reload_super_shotgun + 2.000000);
 						self.StatusRefreshTime = (time + 0.100000);
 						CheckForReload ();				
 						Attack_Finished (0.700000);
-#ifdef mtf_coop_expsys							
 						}
-#endif						
 					}
 					else
 					{
@@ -3981,11 +3706,7 @@ void() W_Attack =
 														if (((self.playerclass == 6.000000) && (self.option4 == 1.000000)))
 														{
 															W_FireBigAss ();
-#ifdef mtf_coop
-															Attack_Finished (0.250000);
-#else
 															Attack_Finished (0.200000);
-#endif
 															self.impulse = 0.000000;
 															return;
 														}
@@ -4109,7 +3830,6 @@ void() W_Attack =
 																		{
 																			if ((self.current_weapon == 524288.000000))
 																			{
-#ifdef mtf_coop
 																				if (self.mtf_items & #MTFITEM_RAILGUN)
 																				{
 																					self.option6 = 1;
@@ -4119,21 +3839,16 @@ void() W_Attack =
 																					Attack_Finished (2.7);
 																				}
 																				else {
-#endif
 																				if ((self.option6 != 1))
 																				{
-#ifdef mtf_coop
 																					if ((CheckForReload () == 1.000000))
 																					{
 																						return;
 																					}
-#endif																					
 																					sound (self, 1, "enforcer/enfire.wav", 1, 1);
 																					player_shot1 ();
 																					W_FireLaser (0);
-#ifdef mtf_coop																					
 																					self.reload_rail_gun = (self.reload_rail_gun + 1);
-#endif																						
 																					Attack_Finished (0.4);
 																				}
 																				else
@@ -4144,14 +3859,12 @@ void() W_Attack =
 																					Attack_Finished (1.5);
 																				}
 																			}
-#ifdef mtf_coop
 																			}
 																			else {
 																				if (self.current_weapon == #WEAP_ZEROGRAVITY) {
 																					zg_togglepickup (self, FALSE);
 																					Attack_Finished (0.4);
 																				}
-#endif
 #ifdef NEW_CLASS1
 																			else {
 																				if (self.current_weapon == #WEAPON_THUMPER) {
@@ -4169,9 +3882,7 @@ void() W_Attack =
 																				}
 																			}
 #endif
-#ifdef mtf_coop
-																			}
-#endif
+																		}
 																		}
 																	}
 																}
@@ -4191,7 +3902,6 @@ void() W_Attack =
 		}
 	}
 };
-
 void () W_PrintWeaponMessage =
 {
 	if (((self.current_weapon == 16) && allow_hook))
@@ -4287,7 +3997,6 @@ void () W_PrintWeaponMessage =
 		}
 	}
 };
-
 void () W_ChangeWeapon =
 {
 	local float it;
@@ -4327,37 +4036,44 @@ void () W_ChangeWeapon =
 		if (self.last_weapon != 0)
 		{
 			fl = self.last_weapon;
-             if (it & self.last_weapon) 
-              usable = 1;
-
-             if (fl & (32 | 64 | 128 | 256 | 32768 | 262144) && self.ammo_shells < 1) {
-              am = 1;
-             }else{
-             if (fl & (32 ) && self.ammo_shells < 1/*snip_ammo*/) 
-              am = 1;
-             else {
-              if (fl & (512 | 1024 | 524288) && self.ammo_nails < 1) 
-               am = 1;
-              else {
-               if (fl & (2048 | 8192) && self.ammo_rockets < 1) 
-                am = 1;
-               else {
-                if (fl & (4096 | 65536) && self.ammo_cells < 1) 
-                 am = 1;
-                else {
-                 if (fl == 16384 && self.ammo_rockets < 3) 
-                  am = 1;
-                 else {
-                  if (fl == 32768/*#WEAP_ASSAULT_CANNON*/ && self.ammo_cells < 4) 
-                   am = 2;
-                 }
-                }
-               }
-              }
-             }
-            }
-           }
-          }
+			if (it & self.last_weapon) 
+				usable = 1;
+			if (fl & (32 | 64 | 128 | 256 | 32768 | 262144) && self.ammo_shells < 1)
+			{
+				am = 1;
+			}
+			else
+			{
+			if (fl & (32 ) && self.ammo_shells < 1/*snip_ammo*/) 
+				am = 1;
+			else
+			{
+			if (fl & (512 | 1024 | 524288) && self.ammo_nails < 1) 
+				am = 1;
+			else
+			{
+			if (fl & (2048 | 8192) && self.ammo_rockets < 1) 
+			am = 1;
+			else
+			{
+			if (fl & (4096 | 65536) && self.ammo_cells < 1) 
+				am = 1;
+			else
+			{
+			if (fl == 16384 && self.ammo_rockets < 3) 
+				am = 1;
+			else
+			{
+			if (fl == 32768/*#WEAP_ASSAULT_CANNON*/ && self.ammo_cells < 4) 
+				am = 2;
+				}
+				}
+			}
+		}
+	}
+}
+}
+}
 	else if ((self.impulse == 1.000000))
 	{
 		if ((fl == 8.000000))
@@ -4756,7 +4472,6 @@ void () W_ChangeWeapon =
 								{
 									if ((self.impulse == 7.000000))
 									{
-#ifdef mtf_coop
 										if (it & #WEAP_ZEROGRAVITY)
 										{
 											fl = #WEAP_ZEROGRAVITY;
@@ -4764,7 +4479,6 @@ void () W_ChangeWeapon =
 										}
 										else
 										{
-#endif
 										if ((it & 16384.000000))
 										{
 											fl = 16384.000000;
@@ -4843,9 +4557,7 @@ void () W_ChangeWeapon =
 												}
 											}
 										}
-#ifdef mtf_coop
 }
-#endif
 									}
 									else
 									{
@@ -4895,18 +4607,14 @@ void () W_ChangeWeapon =
 		sprint (self, 2.000000, "Not enough cells to power assault cannon.\n");
 		return;
 	}
-#ifdef mtf_coop
 	if (self.current_weapon == #WEAP_ZEROGRAVITY && self.pickedupobject_hands != world)
 		zg_drop (self, #FALSE);
-#endif
-
  if (fl != self.current_weapon) { self.last_weapon = self.current_weapon; }
 	self.current_weapon = fl;
 	W_SetCurrentAmmo ();
 	W_PrintWeaponMessage ();
 	self.StatusRefreshTime = (time + 0.100000);
 };
-
 void () CycleWeaponCommand =
 {
 	local float it;
@@ -5209,7 +4917,6 @@ void() ImpulseCommands =
 		{
 			W_ChangeWeapon ();
 		}
-#ifdef mtf_coop_expsys
 		else if (self.impulse == 9)
 			if (self.mtf_items & MTFITEM_NEEDLER || self.mtf_items & MTFITEM_LIGHTGUN) {
 				if (self.mtf_items & MTFITEM_NEEDLER)
@@ -5225,7 +4932,6 @@ void() ImpulseCommands =
 					self.mtf_items |= MTFITEM_LIGHTGUN;
 				sprint(self,2, "Special Weapons Enabled.\n");
 			}
-#endif
 	}
 	if (self.Aircraft_Owner)
 	{
@@ -5460,9 +5166,7 @@ void() ImpulseCommands =
 																	self.frame = 0.000000;
 																	unlay ();
 																	sprint (self, 2.000000, "Standing mode, (normal).\n");
-#ifdef VWEPS														
 																	VWEPS_SetModel ();
-#endif																	
 																}
 																else
 																{
@@ -5487,9 +5191,7 @@ void() ImpulseCommands =
 																	if (infokey (world, "fteserver") != "1")
 																	{
 																	}
-#ifdef mtf_coop
 																	self.movetype = 3.000000;
-#endif
 																}
 																else
 																{
@@ -5992,12 +5694,10 @@ void() Show_Uptime;
 void () Rank_ShowStats;
 void () DeadImpulses =
 {
-#ifdef mtf_coop
 	if ((self.impulse == 181))
 	{
 		TeamFortress_SaveMe ();
 	}
-#endif
 	if ((self.impulse == 202))
 	{
 		self.current_menu = 3;
@@ -6231,7 +5931,6 @@ void () DeadImpulses =
 		}
 	}
 };
-
 void () W_WeaponFrame =
 {
 	local vector tv;
@@ -6414,10 +6113,7 @@ void () W_WeaponFrame =
 			}
 		}
 	}
-#ifdef mtf_coop_expsys
-#endif
 };
-
 void () SuperDamageSound =
 {
 	if ((self.super_damage_finished > time))
@@ -6463,7 +6159,6 @@ void () SUB_Gib =
 		}
 	}
 };
-#ifdef LTB1
 void () LTB_Arm;
 void () LTB_PreArm;
 void () W_FireLTB =
@@ -6610,7 +6305,6 @@ void () LTB_Arm =
 		return;
 	}
 };
-
 void () LTB_Detonate =
 {
 	self.th_pain = SUB_Null;
@@ -6639,7 +6333,6 @@ void () LTB_Pain =
 	self.health = 10;
 	deathmsg = 50;
 };
-#endif
 void () ParaGlide =
 {
 	if ((!(self.owner.flags & 512) && (self.owner.chute_active == 1)))
@@ -6670,7 +6363,6 @@ void () ParaGlide =
 		remove (self);
 	}
 };
-
 void () PullCord =
 {
 	if ((self.chute_active == 1))
@@ -6682,13 +6374,11 @@ void () PullCord =
 		sprint(self, 2, "Parachute Disabled.\n");
 		return;
 	}
-#ifdef mtf_coop_hipnotic
 	if (mapname == "hip2m2" && mapname != "hip1m4")
 	{
 		sprint(self, 2, "Parachute Disabled for this map.\n");
 		return;
 	}
-#endif
 	if ((self.flags & 512))
 	{
 		if (self.nextuse_para > time)
@@ -6721,7 +6411,6 @@ void () PullCord =
 	setsize (newmis, '0 0 0', '0 0 0');
 	makevectors (self.v_angle);
 };
-
 void () FireUtil =
 {
 	if ((self.chute_active == 1))
@@ -6754,7 +6443,6 @@ void () FireUtil =
 		}
 	}
 };
-
 void () TeamFortress_Discard =
 {
 	if (self.discard_next > time)
@@ -6967,8 +6655,6 @@ void () TeamFortress_SaveMe =
 		return;
 	if (self.team_no == 0)
 		return;
-
-#ifdef mtf_coop
 	if (survival_mode)
 		if (self.deadflag >= 2) {
 			te = find(world, classname, "resdummy");
@@ -7010,7 +6696,6 @@ void () TeamFortress_SaveMe =
 		multicast(self.origin, TF_FLARE_OFF);
 		return;
 	}
-#endif
 	if ((self.last_saveme_sound < time))
 	{
 		sound (self, TF_FLARE_OFF, "speech/saveme1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -7046,7 +6731,6 @@ void () TeamFortress_SaveMe =
 		te = find (te, classname, "player");
 	}
 };
-
 void () TeamFortress_ID =
 {
 	local vector src;
@@ -7167,10 +6851,8 @@ void () TeamFortress_ReloadCurrentWeapon =
 			tWeapon = spawn ();
 			tWeapon.owner = self;
 			tWeapon.classname = "timer";
-#ifdef mtf_coop_expsys
 			rt = ( rt / MTF_Coop_AttribGain(self, #ATTRIB_RELOAD) );
 			tWeapon.real_owner = self;
-#endif
 			tWeapon.nextthink = (time + rt);
 			tWeapon.think = W_Reload_shotgun;
 			self.weaponmodel = "";
@@ -7205,10 +6887,8 @@ void () TeamFortress_ReloadCurrentWeapon =
 				tWeapon = spawn ();
 				tWeapon.owner = self;
 				tWeapon.classname = "timer";
-#ifdef mtf_coop_expsys
 				rt = ( rt / MTF_Coop_AttribGain(self, #ATTRIB_RELOAD) );
 				tWeapon.real_owner = self;
-#endif
 				tWeapon.nextthink = (time + rt);
 				tWeapon.think = W_Reload_super_shotgun;
 				self.weaponmodel = "";
@@ -7243,10 +6923,8 @@ void () TeamFortress_ReloadCurrentWeapon =
 					tWeapon = spawn ();
 					tWeapon.owner = self;
 					tWeapon.classname = "timer";
-#ifdef mtf_coop_expsys
 					rt = ( rt / MTF_Coop_AttribGain(self, #ATTRIB_RELOAD) );
 					tWeapon.real_owner = self;
-#endif
 					tWeapon.nextthink = (time + rt);
 					tWeapon.think = W_Reload_grenade_launcher;
 					self.weaponmodel = "";
@@ -7281,10 +6959,8 @@ void () TeamFortress_ReloadCurrentWeapon =
 						tWeapon = spawn ();
 						tWeapon.owner = self;
 						tWeapon.classname = "timer";
-#ifdef mtf_coop_expsys
 						rt = ( rt / MTF_Coop_AttribGain(self, #ATTRIB_RELOAD) );
 						tWeapon.real_owner = self;
-#endif
 						tWeapon.nextthink = (time + rt);
 						tWeapon.think = W_Reload_rocket_launcher;
 						self.weaponmodel = "";
@@ -7294,7 +6970,6 @@ void () TeamFortress_ReloadCurrentWeapon =
 			}
 		}
 	}
-#ifdef mtf_coop
 	if ((self.current_weapon == 524288))
 	{
 		if ((self.reload_rail_gun == TF_FLARE_LIT))
@@ -7317,9 +6992,7 @@ void () TeamFortress_ReloadCurrentWeapon =
 			tWeapon = spawn ();
 			tWeapon.owner = self;
 			tWeapon.classname = "timer";
-#ifdef mtf_coop_expsys
 			rt = ( rt / MTF_Coop_AttribGain(self, #ATTRIB_RELOAD) );
-#endif
 			tWeapon.nextthink = (time + rt);
 			tWeapon.think = W_Reload_rail_gun;
 			self.weaponmodel = "";
@@ -7330,11 +7003,9 @@ void () TeamFortress_ReloadCurrentWeapon =
 			sprint (self, 2, "Not enough ammo to reload.\n");
 		}
 	}
-#endif
 #ifdef CSQC	
 	CSQC_SendReloadBar(self, time+rt);
 #endif
-#ifdef mtf_coop
 	if (tWeapon != world && tWeapon.nextthink <= time) {
 		bprint(2,"tWeapon.nextthink is less than or equal to time..  - TELL DEV this.\n");
 		tWeapon.nextthink = time + 0.01;
@@ -7343,7 +7014,6 @@ void () TeamFortress_ReloadCurrentWeapon =
 		self.reload_ent = tWeapon;
 		self.reload_finished_func = tWeapon.think;
 	}
-#endif
 };
 void () Drone =
 {
@@ -7395,7 +7065,6 @@ void () Drone =
 	newmis.skin = TF_FLARE_LIT;
 	setmodel (newmis, "progs/lsrdrone.mdl");
 };
-
 void () Drone_Laser_Touch =
 {
 	local vector org;
@@ -7455,7 +7124,6 @@ void () DroneDoneTouch =
 		sound (self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	}
 };
-
 void () DroneDie =
 {
 	ThrowGib ("progs/tgib2.mdl", -70.000000);
@@ -7472,7 +7140,6 @@ void () DroneDie =
 	MushroomFlame(); // Make a pretty fireball with explosion. -arg
 	TeamFortress_DetpackExplode(); //make a crowd pleaser of a boom. -arg
 };
-
 void () DroneFall =
 {
 	sound (self, TF_FLARE_LIT, "weapons/chngnu1a.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -7577,7 +7244,6 @@ void () DroneJet =
 		}
 		te = find (te, classname, "turret");
 	}
-#ifdef mtf_coop
 // monster string defines monsters and not minions. No point having the drone shoot your own minions. -arg
 // was defined as is_monster in parameter 2 of find, which needs to be a .string -arg
 te = find (world, monster_string, "on");
@@ -7600,7 +7266,6 @@ te = find (world, monster_string, "on");
 		}
 		te = find (te, monster_string, "on");
 	}
-#endif
 	if ((self.playerclass > 10))
 	{
 		self.think = DroneFall;
@@ -7654,15 +7319,10 @@ void () ProxiDie =
 	make_explosion ();
 	self.takedamage = TF_FLARE_LIT;
 	deathmsg = 45;
-#ifdef mtf_coop
 	T_RadiusDamage (self, self.owner, 350, world);
-#else
-	T_RadiusDamage (self, self.owner, 200, world);
-#endif
 	sprint (self.owner, 2, "Your Proxi Mine is gone...\n");
 	dremove (self);
 };
-
 void () FoundBastard =
 {
 	local float _l_11382;
@@ -7738,7 +7398,6 @@ void () ProxArmed =
 		}
 		_l_11392 = find (_l_11392, classname, "player");
 	}
-#ifdef mtf_coop
 		_l_11392 = findradius(self.origin, 200);
 		while (_l_11392)
 		{
@@ -7761,7 +7420,6 @@ void () ProxArmed =
 			}
 			_l_11392 = _l_11392.chain;
 		}
-#endif
 	if (((self.playerclass > 300.000000) || (self.owner.playerclass != 3.000000)))
 	{
 		dremove (self);
@@ -7792,14 +7450,12 @@ void () Prox =
 	local vector _l_11458;
 	local vector _l_11461;
 	local entity _l_11464;
-
 	_l_11464 = find (world, classname, "bot");
 	while (_l_11464)
 	{
 		if ((_l_11464.owner == self))
 		{
 			local vector source;
-
 			makevectors (self.v_angle);
 			source = (self.origin + '0 0 16');
 			traceline (source, (source + (v_forward * 64)), 0, world);
@@ -7845,9 +7501,7 @@ void () Prox =
 		self.currentammo = 1.000000;
 		self.weaponmodel = "progs/proxgren.mdl";
 		self.weaponframe = 0.000000;
-#ifdef VWEPS
 		VWEPS_SetModel ();
-#endif
 		return;
 	}
 	makevectors (self.v_angle);
@@ -7890,9 +7544,7 @@ void () Prox =
 		self.impulse = 0.000000;
 		self.StatusRefreshTime = (time + 0.100000);
 	}
-#ifdef VWEPS
 		VWEPS_SetModel ();
-#endif
 };
 void (vector _p_11412, float _p_11415) BigAssBullet;
 void () W_FireBigAss =
@@ -7923,11 +7575,7 @@ void () W_FireBigAss =
 	makevectors (self.v_angle);
 	dir = v_forward *3; //now 3x range. Shotgun high psi rounds are a thing now. -arg
 	deathmsg = 46;
-#ifdef mtf_coop
 	BigAssBullet (dir, 90);  //was 70 tungsten slugs -arg
-#else
-	BigAssBullet (dir, 60); // was 50 -arg
-#endif
 	EjectShell ();
 	if (old20mm)
 		self.velocity = (self.velocity - (v_forward * 400));
@@ -8325,7 +7973,7 @@ void () Service_Grapple =
 	}
 };
 #ifdef NEW_CLASS1
-float CLASS_PROJECTILE =		6;
+float CLASS_PROJECTILE = 6;
 float WEAPON_SHOTGUN    = 1;
 float WEAPON_ROCKET    = 2;
 float WEAPON_SPIKES    = 4;
@@ -8382,7 +8030,6 @@ void () W_FireThumper =
 	dir = aim (self, 100000);
 	FireDiamonds (CLASS_PROJECTILE, dir, '0.05 0.05 0');
 };
-
 float (entity poorguy) HitLocation =
 {
 	local vector f;
@@ -8460,7 +8107,6 @@ void () FSnipe_Touch =
 	}
 	remove (self);
 };
-
 void (vector org, vector dir) launch_arrow =
 {
 	newmis = spawn ();
@@ -8647,18 +8293,18 @@ void () TeamFortress_Timeleft =
 	te = find (world,classname,"countdown");
 	if ((st == "off") && (te == world))
 	{
-		sprint(self,2,"Timeleft has been disabled.\n");
+		sprint(self,2,"Timeleft has been disabled.\n");
 		return;
 	}
 	else if ((st != "off") && (te == world))
 	{
-		sprint(self,2,"Unknown.\n");
+		sprint(self,2,"Unknown.\n");
 		return;
 	}
 	st = infokey (world,"timelimit");
 	if (st == "0")
 	{
-		sprint(self,2,"There is no timelimit.\n");
+		sprint(self,2,"There is no timelimit.\n");
 		return;
 	}
 	seconds = stof(st);
@@ -8667,7 +8313,7 @@ void () TeamFortress_Timeleft =
 	remaining = seconds - te.no_grenades_1;
 	if (remaining <= 0) 
 	{
-		sprint(self,2,"Time is up.\n");
+		sprint(self,2,"Time is up.\n");
 		return;
 	}
 	sprint(self,2,"");
@@ -8789,4 +8435,4 @@ void() copb_checkFart =
 			}
 	}	
 };
-//end 
+//END

@@ -100,7 +100,6 @@ void() button_killed =
 	self.takedamage = TF_FLARE_LIT;
 	button_fire();
 };
-#ifdef mtf_coop
 void () movewith_think =
 {
 	local vector moveme;
@@ -132,7 +131,6 @@ void (entity t_owner) SpawnMovewith =
 	newtent.think = movewith_firstthink;
 	newtent.nextthink = time + 0.1;
 };
-#endif
 #ifdef mtf_coop_halflife
 void() multi_use;
 void() trigger_multiple;
@@ -250,11 +248,9 @@ void() func_button =
 	{
 		button_fire();
 	}
-#ifdef mtf_coop
 	if (self.movewith != string_null)
 	{
 		SpawnMovewith(self);
 	}
-#endif
 };
 //END

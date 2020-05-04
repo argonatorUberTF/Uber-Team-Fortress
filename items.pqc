@@ -24,12 +24,6 @@ float(entity e, float healamount2, float ignore) T_Heal =
 	{
 		e.health = e.max_health;
 	}
-#ifndef mtf_coop
-	if (e.health > 250)
-	{
-		e.health = 250;
-	}
-#endif
 	if (e.leg_damage)
 	{
 		if (e.health > 95)
@@ -48,7 +42,6 @@ float(entity e, float healamount2, float ignore) T_Heal =
 	}
 	return TF_FLARE_OFF;
 };
-
 void() item_health = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -100,7 +93,6 @@ void() item_health =
 	setsize(self, '0 0 0', '32 32 56');
 	StartItem();
 };
-
 void() health_touch = 
 {
 	local float medi;
@@ -206,11 +198,9 @@ void() health_touch =
 	}
 	activator = other;
 	SUB_UseTargets();
-#ifdef mtf_coop
 	if (self.orig_origin != '0 0 0') {
 		self.origin = self.orig_origin;
 	}
-#endif
 };
 void() armor_touch = 
 {
@@ -261,11 +251,9 @@ void() armor_touch =
 			}
 		}
 	}
-#ifdef mtf_coop_expsys
 	if (value == 200)
 		if (other.maxarmor > value)
 			value = other.maxarmor;
-#endif
 	if (other.armortype * other.armorvalue >= type * value)
 	{
 		if (other.playerclass == 9)
@@ -364,7 +352,6 @@ void() armor_touch =
 	activator = other;
 	SUB_UseTargets();
 };
-
 void() item_armor1 = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -427,8 +414,6 @@ void() item_armorInv =
 	setsize(self, '-16 -16 0', '16 16 56');
 	StartItem();
 };
-
-
 float(float w) RankForWeapon = 
 {
 	if (w == 65536)
@@ -457,7 +442,6 @@ float(float w) RankForWeapon =
 	}
 	return 7;
 };
-
 void() trigger_once;
 void() weapon_supershotgun = 
 {
@@ -592,7 +576,6 @@ void() item_spikes =
 		return;
 	}
 #endif
-
 	self.touch = ammo_touch;
 	if (self.spawnflags & TF_FLARE_OFF)
 	{
@@ -623,12 +606,10 @@ void() item_spikes =
 };
 void() item_rockets = 
 {
-#ifdef mtf_coop_hipnotic
 	if (Hipnotic_SaveModels2() == 1) {
 		dremove(self);
 		return;
 	}
-#endif
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
 		dremove(self);
@@ -652,15 +633,12 @@ void() item_rockets =
 	setsize(self, '0 0 0', '32 32 56');
 	StartItem();
 };
-
 void() item_cells = 
 {
-#ifdef mtf_coop_hipnotic
 	if (Hipnotic_SaveModels2() == 1) {
 		dremove(self);
 		return;
 	}
-#endif
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
 		dremove(self);
@@ -684,15 +662,12 @@ void() item_cells =
 	setsize(self, '0 0 0', '32 32 56');
 	StartItem();
 };
-
 void() item_weapon = 
 {
-#ifdef mtf_coop_hipnotic
 	if (Hipnotic_SaveModels2() == 1) {
 		dremove(self);
 		return;
 	}
-#endif
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
 		dremove(self);
@@ -846,10 +821,8 @@ void() item_key1 =
 };
 void() item_key2 = 
 {
-#ifdef mtf_coop
 	if ( mapname == "harde1m1" )
 		self.origin_y += 45;
-#endif
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
 		dremove(self);
@@ -879,7 +852,6 @@ void() item_key2 =
 	setsize(self, '-16 -16 -24', '16 16 32');
 	StartItem();
 };
-
 void() sigil_touch = 
 {
 	if (other.classname != "player")
@@ -1075,10 +1047,8 @@ void() item_artifact_super_damage =
 		dremove(self);
 		return;
 	}
-#ifdef mtf_coop
 	if (mapname == "insane")
 		dremove(self);
-#endif
 	self.touch = powerup_touch;
 	precache_model(#MODEL_QUAD);
 	precache_sound("items/damage.wav");
@@ -1177,11 +1147,9 @@ void () Aircraft_Touch;
 void () AC_Destroyed;
 void () item_helo =
 {
-#ifdef mtf_coop
 	precache_model ("progs/acgib1.mdl");
 	precache_model ("progs/ffar.mdl");
 	precache_model ("progs/bomb.mdl");
-#endif
 	if (infokey (world, "btf_stuff") == "1" || infokey (world, "btf_stuff") == "on")
 	{
 	BTF_Precache ();

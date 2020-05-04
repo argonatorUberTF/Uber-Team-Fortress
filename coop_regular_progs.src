@@ -9,7 +9,6 @@ mega_coop/mega_halflife/hl_defs.qc	////Only loaded and compiled if the #define i
 ss_csqc.qc							//functions to animated reload bar. The rest of file read/write specific to mvdsv tweaks was merged into additional.pqc -arg
 mega_coop/uberhard.qc		//functions to uberhard mode at compilation. turned on/off in usecoop.pqc -arg
 mega_coop/mega_nehahra/neh_defsfuncs.qc  //nehara monsters
-
 menu.pqc
 //subs.pqc //moved to additional.pqc
 combat.pqc //There might be two unused functions in here. -arg
@@ -200,7 +199,6 @@ mega_coop/mega_nehahra/effects.qc
 mega_coop/mega_nehahra/enf2.qc
 mega_coop/mega_nehahra/enf3.qc
 mega_coop/mega_nehahra/explode.qc
-mega_coop/mega_nehahra/explode.qc
 mega_coop/mega_nehahra/gaunt.qc		// DIFFERENT than quoth's
 mega_coop/mega_nehahra/horse.qc
 mega_coop/mega_nehahra/hunter.qc
@@ -250,7 +248,6 @@ mega_coop/mega_doom/revenant.qc
 // Hexen 2
 mega_coop/mega_hexen2/hexen2_defs.qc
 mega_coop/mega_hexen2/hexen2_save.qc
-
 
 // Decemberween stuff
 //mega_coop/mega_xmas/elf.qc

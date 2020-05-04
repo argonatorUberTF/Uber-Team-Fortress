@@ -66,4 +66,3 @@ void (float up, float right) Make_Flash =
 	setsize (dude, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 };
 //END
-

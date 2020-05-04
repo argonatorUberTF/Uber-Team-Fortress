@@ -7,7 +7,6 @@ float (entity targ,entity attacker,float damage) TeamEqualiseDamage;
 void() Napalm_touch;
 void() T_IncendiaryTouch;
 void () NormalGrenadeTouch;
-#ifdef mtf_coop_rogue
 void(entity inflictor, entity attacker, float damage) T_EELZap =
 {
 	local	float 	points;
@@ -38,6 +37,4 @@ void(entity inflictor, entity attacker, float damage) T_EELZap =
 		head = head.chain;
 	}
 };
-#endif
-
 //END

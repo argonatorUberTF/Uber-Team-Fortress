@@ -11,7 +11,6 @@ void () firework_think_c0 =
 	self.nextthink = (time + 0.1);
 	self.think = firework_think_c0;
 };
-
 void () firework_think_cw =
 {
 	if ((self.wait < time))
@@ -23,7 +22,6 @@ void () firework_think_cw =
 	self.nextthink = (time + 0.1);
 	self.think = firework_think_cw;
 };
-
 void () firework_think_cr =
 {
 	if ((self.wait < time))
@@ -35,7 +33,6 @@ void () firework_think_cr =
 	self.nextthink = (time + 0.1);
 	self.think = firework_think_cr;
 };
-
 void () firework_think_cy =
 {
 	if ((self.wait < time))
@@ -47,7 +44,6 @@ void () firework_think_cy =
 	self.nextthink = (time + 0.1);
 	self.think = firework_think_cy;
 };
-
 void () firework_think_cb =
 {
 	if ((self.wait < time))
@@ -59,7 +55,6 @@ void () firework_think_cb =
 	self.nextthink = (time + 0.1);
 	self.think = firework_think_cb;
 };
-
 void () FireworkNormalBoom =
 {
 	local vector vel;
@@ -156,13 +151,10 @@ void () FireworkNormalBoom =
 	remove (self);
 	return;
 };
-
 void (vector here) FireworkBall;
-
 void () threestepthree =
 {
 	local vector org;
-
 	sound (self, CHAN_AUTO, "weapons/r_exp3.wav", 0.3, ATTN_NORM);
 	org_x = (20 + (crandom () * 80));
 	org_y = (20 + (crandom () * 80));
@@ -186,11 +178,9 @@ void () threestepthree =
 	remove (self);
 	return;
 };
-
 void () threesteptwo =
 {
 	local vector org;
-
 	sound (self, CHAN_AUTO, "weapons/r_exp3.wav", 0.3, ATTN_NORM);
 	org_x = (20 + (crandom () * 80));
 	org_y = (20 + (crandom () * 80));
@@ -214,11 +204,9 @@ void () threesteptwo =
 	self.nextthink = (time + 0.4);
 	self.think = threestepthree;
 };
-
 void (vector here) FireworkRing =
 {
 	local float ring;
-
 	ring = 20;
 	self.angles_x = (crandom () * 360);
 	self.angles_y = (crandom () * 360);
@@ -303,14 +291,12 @@ void (vector here) FireworkRing =
 		}
 	}
 };
-
 void (vector here) FireworkBall =
 {
 	local vector dir;
 	local float num;
 	local float many;
 	local float loop;
-
 	num = MSG_BROADCAST;
 	many = 15;
 	loop = (SVC_INTERMISSION + (random () * 20));
@@ -407,7 +393,6 @@ void (vector here) FireworkBall =
 		}
 	}
 };
-
 void () FireworkExplode =
 {
 	self.effects = (self.effects | EF_MUZZLEFLASH);
@@ -430,7 +415,6 @@ void () FireworkExplode =
 	self.nextthink = (time + 0.4);
 	self.think = threesteptwo;
 };
-
 void () FireworkFly =
 {
 	traceline (self.origin, (self.origin + '0 0 400'), TRUE, self);
@@ -445,11 +429,9 @@ void () FireworkFly =
 		self.nextthink = (time + 0.1);
 	}
 };
-
 void () FireworkThink =
 {
 	local entity missile;
-
 	if ((intermission_running && (self.owner.classname == "info_intermission")))
 	{
 		return;
@@ -476,7 +458,6 @@ void () FireworkThink =
 void (vector here) CreateFireworks =
 {
 	local entity Ent;
-
 	if ((pointcontents (here) == CONTENT_SOLID))
 	{
 		return;
@@ -494,11 +475,9 @@ void (vector here) CreateFireworks =
 	setmodel (Ent, "progs/missile.mdl");
 	setorigin (Ent, here);
 };
-
 void () SpawnFireworks =
 {
 	local vector pos;
-
 	traceline (self.origin, (self.origin - '0 0 100000'), TRUE, self);
 	pos = trace_endpos;
 	traceline (pos, (self.origin + '0 0 300'), TRUE, self);
@@ -519,7 +498,6 @@ void () SpawnFireworks =
 		}
 	}
 };
-
 void () misc_fireworks =
 {
 	if ((pointcontents (self.origin) == CONTENT_SOLID))
@@ -543,7 +521,6 @@ void () misc_fireworks =
 	setsize (self, VEC_ORIGIN, VEC_ORIGIN);
 	setmodel (self, "progs/missile.mdl");
 };
-
 // for breakables
 void () SetSpawnObject =
 {
@@ -569,6 +546,5 @@ void () SetSpawnObject =
 //	else if (self.spawnobject == 20)   	item_ammo_ar2_large();
 //	else if (self.spawnobject == 21)   	weapon_lightning();
 };
-
 */
 //END

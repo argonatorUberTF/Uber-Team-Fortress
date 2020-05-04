@@ -8,17 +8,16 @@ void () TeamFortress_DetpackDisarm;
 void () TeamFortress_DetpackCountDown;
 void () TeamFortress_DetonatePipebombs =
 {
-   local entity e;
-   e = find (world,classname,"pipebomb");
-   while (e != world)
-   {
-      if (e.owner == self)
-	  {
-         e.nextthink = time;
-      }
-      e = find (e,classname,"pipebomb");
-   }
-
+	local entity e;
+	e = find (world,classname,"pipebomb");
+	while (e != world)
+	{
+		if (e.owner == self)
+		{
+			e.nextthink = time;
+		}
+	e = find (e,classname,"pipebomb");
+	}
 };
 void () PipebombTouch =
 {
@@ -116,27 +115,27 @@ float(entity obj) DetpackCheckArea =
 };
 void (float timer) TeamFortress_SetDetpack =
 {
-   local string stimer;
-   local entity te;
-   self.impulse = TF_FLARE_LIT;
-   self.last_impulse = TF_FLARE_LIT;
-   if (!(self.weapons_carried & 131072)) 
-   {
-      return ;
-   }
+	local string stimer;
+	local entity te;
+	self.impulse = TF_FLARE_LIT;
+	self.last_impulse = TF_FLARE_LIT;
+	if (!(self.weapons_carried & 131072)) 
+	{
+		return ;
+	}
 #ifdef mtf_coop
 #else
-   if (self.ammo_detpack <= TF_FLARE_LIT)
-   {
-     return ;
-   }
+	if (self.ammo_detpack <= TF_FLARE_LIT)
+	{
+		return ;
+	}
 #endif
-   if (!(self.flags & 512))
-   {
-      sprint (self,2,"You can't set detpacks in the air!\n");
-      return ;
-   }
-   if (DetpackCheckArea(self) == TF_FLARE_LIT)
+	if (!(self.flags & 512))
+	{
+		sprint (self,2,"You can't set detpacks in the air!\n");
+		return ;
+	}
+	if (DetpackCheckArea(self) == TF_FLARE_LIT)
 	{
 		sprint(self,2,"You need more room to set a detpack.\n");
 		return;
@@ -151,65 +150,62 @@ void (float timer) TeamFortress_SetDetpack =
 #endif
 	te = find (world,classname,"detpack");
 	while (te) 
-   {
-      if (te.owner == self)
-	  {
-         sprint (self,2,"1 DetPack at a time!\n");
-         return ;
-      }
-      te = find (te,classname,"detpack");
-   }
-   self.is_detpacking = TF_FLARE_OFF;
-   self.ammo_detpack = (self.ammo_detpack - TF_FLARE_OFF);
-   self.immune_to_check = (time + 5);
-   self.tfstate = (self.tfstate | 65536);
-   self.weapon = self.current_weapon;
-   self.current_weapon = TF_FLARE_LIT;
-   self.weaponmodel = "";
-   self.weaponframe = TF_FLARE_LIT;
-#ifdef VWEPS
+	{
+		if (te.owner == self)
+		{
+			sprint (self,2,"1 DetPack at a time!\n");
+			return ;
+		}
+		te = find (te,classname,"detpack");
+	}
+	self.is_detpacking = TF_FLARE_OFF;
+	self.ammo_detpack = (self.ammo_detpack - TF_FLARE_OFF);
+	self.immune_to_check = (time + 5);
+	self.tfstate = (self.tfstate | 65536);
+	self.weapon = self.current_weapon;
+	self.current_weapon = TF_FLARE_LIT;
+	self.weaponmodel = "";
+	self.weaponframe = TF_FLARE_LIT;
 	VWEPS_SetModel() ;
-#endif
-   TeamFortress_SetSpeed (self);
-   self.pausetime = (time + 4);
-   stimer = ftos (timer);
-   sprint (self,2,"Setting detpack for ");
-   sprint (self,2,stimer);
-   sprint (self,2," seconds...\n");
-   sound (self,2,"items/flare1.wav",TF_FLARE_OFF,TF_FLARE_OFF);
-   newmis = spawn ();
-   newmis.owner = self;
-   newmis.classname = "timer";
-   newmis.netname = "detpack_timer";
-   newmis.nextthink = (time + 4);
+	TeamFortress_SetSpeed (self);
+	self.pausetime = (time + 4);
+	stimer = ftos (timer);
+	sprint (self,2,"Setting detpack for ");
+	sprint (self,2,stimer);
+	sprint (self,2," seconds...\n");
+	sound (self,2,"items/flare1.wav",TF_FLARE_OFF,TF_FLARE_OFF);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.classname = "timer";
+	newmis.netname = "detpack_timer";
+	newmis.nextthink = (time + 4);
 #ifdef COOP_HAX
 	newmis.real_owner = self;
 #endif
-   newmis.think = TeamFortress_DetpackSet;
-   newmis.health = timer;
+	newmis.think = TeamFortress_DetpackSet;
+	newmis.health = timer;
 };
 void () TeamFortress_DetpackStop =
 {
-   local entity detpack_timer;
-   detpack_timer = find (world,netname,"detpack_timer");
-   while ((detpack_timer.owner != self) && (detpack_timer != world))
-   {
-      detpack_timer = find (detpack_timer,netname,"detpack_timer");
-   }
-   if (detpack_timer == world) 
-   {
-      return ;
-   }
-   sprint (self,2,"Detpack retrieved.\n");
-   self.ammo_detpack = (self.ammo_detpack + TF_FLARE_OFF);
-   dremove (detpack_timer);
-   self.tfstate = (self.tfstate - (self.tfstate & 65536));
-   self.is_detpacking = TF_FLARE_LIT;
-   self.current_weapon = self.weapon;
-   W_SetCurrentAmmo ();
-   TeamFortress_SetSpeed (self);
-   self.pausetime = time;
-
+	local entity detpack_timer;
+	detpack_timer = find (world,netname,"detpack_timer");
+	while ((detpack_timer.owner != self) && (detpack_timer != world))
+	{
+		detpack_timer = find (detpack_timer,netname,"detpack_timer");
+	}
+	if (detpack_timer == world) 
+	{
+		return ;
+	}
+	sprint (self,2,"Detpack retrieved.\n");
+	self.ammo_detpack = (self.ammo_detpack + TF_FLARE_OFF);
+	dremove (detpack_timer);
+	self.tfstate = (self.tfstate - (self.tfstate & 65536));
+	self.is_detpacking = TF_FLARE_LIT;
+	self.current_weapon = self.weapon;
+	W_SetCurrentAmmo ();
+	TeamFortress_SetSpeed (self);
+	self.pausetime = time;
 };
 void () TeamFortress_DetpackSet =
 {
@@ -265,40 +261,40 @@ void () TeamFortress_DetpackTouch =
 	}
 	}
 	else {
-   local entity disarm;
-   if (other.classname != "player")
-   {
-      sound (self,3,"zombie/z_hit.wav",TF_FLARE_OFF,TF_FLARE_OFF);
-   }
-   if (other.classname != "player")
-   {
-      return ;
-   }
-   if (other.playerclass != TF_FLARE_OFF)
-   {
-      return ;
-   }
-   if (self.weaponmode == TF_FLARE_OFF)
-   {
-      return ;
-   }
-   if ((other.team_no == self.owner.team_no) && (self.owner.team_no != TF_FLARE_LIT))
-   {
-      return ;
-   }
-   other.immune_to_check = (time + 2);
-   other.tfstate = (other.tfstate | 65536);
-   sprint (other,2,"Disarming detpack...\n");
-   TeamFortress_SetSpeed (other);
-   disarm = spawn ();
-   disarm.owner = other;
-   disarm.enemy = self;
-   disarm.classname = "timer";
-   disarm.nextthink = (time + 3);
-   disarm.think = TeamFortress_DetpackDisarm;
-   self.weaponmode = TF_FLARE_OFF;
-   self.enemy = other;
-   self.observer_list = disarm;
+	local entity disarm;
+	if (other.classname != "player")
+	{
+		sound (self,3,"zombie/z_hit.wav",TF_FLARE_OFF,TF_FLARE_OFF);
+	}
+	if (other.classname != "player")
+	{
+		return ;
+	}
+	if (other.playerclass != TF_FLARE_OFF)
+	{
+		return ;
+	}
+	if (self.weaponmode == TF_FLARE_OFF)
+	{
+		return ;
+	}
+	if ((other.team_no == self.owner.team_no) && (self.owner.team_no != TF_FLARE_LIT))
+	{
+		return ;
+	}
+	other.immune_to_check = (time + 2);
+	other.tfstate = (other.tfstate | 65536);
+	sprint (other,2,"Disarming detpack...\n");
+	TeamFortress_SetSpeed (other);
+	disarm = spawn ();
+	disarm.owner = other;
+	disarm.enemy = self;
+	disarm.classname = "timer";
+	disarm.nextthink = (time + 3);
+	disarm.think = TeamFortress_DetpackDisarm;
+	self.weaponmode = TF_FLARE_OFF;
+	self.enemy = other;
+	self.observer_list = disarm;
 	}
 };
 void () TeamFortress_DetpackDisarmTrigger =

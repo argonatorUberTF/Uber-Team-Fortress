@@ -197,11 +197,7 @@ void(float scanrange) TeamFortress_Scan =
 		{
 			if (vlen(list.velocity) > 50)
 			{
-#ifdef mtf_coop
 				if (list.team_no > TF_FLARE_LIT && self.team_no > TF_FLARE_LIT && list.team_no == self.team_no || list.monster_string != "on")
-#else
-				if (list.team_no > TF_FLARE_LIT && self.team_no > TF_FLARE_LIT && list.team_no == self.team_no)
-#endif
 				{
 					scfr = scfr + TF_FLARE_OFF;
 					enemy_detected = TF_FLARE_LIT;
@@ -230,11 +226,7 @@ void(float scanrange) TeamFortress_Scan =
 				enemy_detected = TF_FLARE_OFF;
 			}
 		}
-#ifdef mtf_coop
 		if (any_detected && list.is_monster == 1 && list.monster_string == "on" && list.health > 0)
-#else
-		if (any_detected)
-#endif
 		{
 			lightningvec = normalize(list.origin - self.origin);
 			lightningvec = lightningvec * (vlen(list.origin - self.origin) / 5);
@@ -249,9 +241,7 @@ void(float scanrange) TeamFortress_Scan =
 			WriteCoord(TF_FLARE_OFF, lightningvec_x);
 			WriteCoord(TF_FLARE_OFF, lightningvec_y);
 			WriteCoord(TF_FLARE_OFF, lightningvec_z + 8);
-#ifdef mtf_coop
 			return;
-#endif
 		}
 		list = list.linked_list;
 	}
@@ -275,20 +265,14 @@ void(entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBou
 	{
 		if (head != ignore)
 		{
-#ifdef mtf_coop
 			if (head.takedamage && head.classname != "func_monstergoal")
-#else
-			if (head.takedamage)
-#endif
 			{
-#ifdef mtf_coop
 				if (Coop_IsMonster(head, #MONSTERTYPE_NORMAL)) {
 					head.enemy = world;
 					if (head.#mflash_time < (time - 12))  {
 						head.#mflash_time = time + 5;
 					}
 				}
-#endif
 				org = head.origin + (head.mins + head.maxs) * 0.5;
 				points = 0.5 * vlen(org - inflictor.origin);
 				if (points < TF_FLARE_LIT)
@@ -401,19 +385,11 @@ entity(entity scanner, float scanrange, float enemies, float friends) T_RadiusSc
 	while (head)
 	{
 		gotatarget = TF_FLARE_LIT;
-#ifdef mtf_coop
 		if (head != scanner && head != world)
-#else
-		if (head != scanner)
-#endif
 		{
 			if (head.takedamage)
 			{
-#ifdef mtf_coop
 				if (head.classname == "player" && (friends || enemies) || (head.monster_string == "on" && head.health > 0))
-#else
-				if (head.classname == "player" && (friends || enemies))
-#endif
 				{
 					if (teamplay)
 					{
@@ -425,11 +401,9 @@ entity(entity scanner, float scanrange, float enemies, float friends) T_RadiusSc
 						{
 							gotatarget = TF_FLARE_OFF;
 						}
-#ifdef mtf_coop
 if (head.monster_string == "on" && head.lives > -1 && head.health > 0 && head.is_monster == #TRUE) {
 	gotatarget = 1;
 }
-#endif
 					}
 					else
 					{

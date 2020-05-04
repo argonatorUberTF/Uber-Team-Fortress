@@ -1,47 +1,4 @@
 void() FoundTarget;
-#ifndef mtf_coop
-void() monster_ogre = 
-{
-	self.light_lev = 1;		//useless, just helps with the decompiler warnings >.<
-	dremove(self);
-};
-void() monster_knight = 
-{
-	dremove(self);
-};
-void() monster_demon1 = 
-{
-	dremove(self);
-};
-void() monster_wizard = 
-{
-	dremove(self);
-};
-void() monster_hell_knight = 
-{
-	dremove(self);
-};
-void() monster_tarbaby = 
-{
-	dremove(self);
-};
-void() monster_vomit = 
-{
-	dremove(self);
-};
-void() monster_enforcer = 
-{
-	dremove(self);
-};
-void() monster_shalrath = 
-{
-	dremove(self);
-};
-void() monster_dragon = 
-{
-	dremove(self);
-};
-#endif
 void() flymonster_start_go = 
 {
 	self.takedamage = 2;
@@ -89,17 +46,12 @@ void() flymonster_start =
 {
 	self.nextthink = self.nextthink + random() * 0.5;
 	self.think = flymonster_start_go;
-#ifndef mtf_coop
-	total_monsters = total_monsters + TF_FLARE_OFF;
-#endif
 	set_monster_health();
 };
 void() swimmonster_start_go = 
 {
 	self.takedamage = 2;
-#ifndef mtf_coop
 	total_monsters = total_monsters + TF_FLARE_OFF;
-#endif
 	self.ideal_yaw = self.angles * '0 1 0';
 	if (!(self.yaw_speed))
 	{
@@ -134,10 +86,6 @@ void() swimmonster_start =
 {
 	self.nextthink = self.nextthink + random() * 0.5;
 	self.think = swimmonster_start_go;
-#ifndef mtf_coop
-	total_monsters = total_monsters + TF_FLARE_OFF;
-#endif
 	set_monster_health();
 };
 //END
-

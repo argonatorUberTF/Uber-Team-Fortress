@@ -8,17 +8,11 @@ void() player_diee1;
 void() player_die_ax1;
 void() Throw_Grapple;
 void() DeathSound;
-// TeamFortress Prototypes
 void() BioInfection_Decay;
 void() TeamFortress_RemoveTimers;
 void() T_Dispenser;
-//void() Headless_Think;
-#ifdef mtf_coop
 void() W_FireSaw;
 #define W_FIRESAW	if (self.weaponmodel == #MODEL_CHAINSAW) W_FireSaw();
-#else
-#define W_FIRESAW	
-#endif
 void() player_touch = 
 {
 	if (invis_only == TF_FLARE_LIT && (self.playerclass == 8 || other.playerclass == 8 || other.playerclass == 5))
@@ -62,11 +56,9 @@ void() player_touch =
 void () player_stand1 = [ 17, player_stand1 ]
 {
 	check_shot_idle ();		// BTF Sub
-#ifdef mtf_coop
 	if ( (self.mtf_items & #MTFITEM_LIGHTGUN && self.current_weapon == 128) || self.current_weapon == #WEAP_ZEROGRAVITY )
 		self.weaponframe = 7;
 	else
-#endif
 	self.weaponframe = 0.000000;
 	if ((self.velocity_x || self.velocity_y))
 	{
@@ -74,18 +66,14 @@ void () player_stand1 = [ 17, player_stand1 ]
 		player_run ();
 		return;
 	}
-#ifdef mtf_coop
 	if (self.monster_type > 0) {
 		monster_stand1();
 		return;
 	}
-#endif
 	if ((self.is_squating == 1.000000))
 	{
 		lay ();
-#ifdef VWEPS
 		VWEPS_SetModel();
-#endif
 	}
 	if ((self.current_weapon <= 16.000000))
 	{
@@ -130,11 +118,9 @@ void () player_stand1 = [ 17, player_stand1 ]
 		else
 		{
 			self.frame = (12.000000 + self.walkframe);
-#ifdef mtf_coop
 			if (self.heat > 1 && self.current_weapon == 32) {
 				self.frame = 105;	//light1
 			}
-#endif
 		}
 	}
 	if (((self.walkframe == 1.000000) && (self.vision == 1.000000)))
@@ -425,10 +411,8 @@ void() player_bioweapon2 = [120, player_bioweapon3]
 };
 void() player_bioweapon3 = [121, player_bioweapon4]
 {
-#ifdef mtf_coop
 	if (self == world)
 		return;
-#endif
 	self.weaponframe = 3;
 	W_FireBioweapon();
 	W_FireMedikit();
@@ -634,7 +618,6 @@ void () player_assaultcannon1 = [ 103, player_assaultcannon2 ]
 };
 void () player_assaultcannon2 = [ 104, player_assaultcannon1 ]
 {
-
 	if (((!self.button0 || (self.ammo_shells < 1.000000)) || intermission_running))
 	{
 		if ((self.tfstate & 131072.000000))
@@ -698,11 +681,6 @@ void () player_assaultcannondown1 = [ 103, player_assaultcannondown1 ]
 	self.count = (self.count + 1.000000);
 	Attack_Finished (0.100000);
 };
-#ifdef mtf_coop
-#define LIGHTNING_ADD	7
-#else
-#define LIGHTNING_ADD	0
-#endif
 void() player_light1 = [105, player_light2]
 {
 	muzzleflash();
@@ -711,10 +689,8 @@ void() player_light1 = [105, player_light2]
 		player_run();
 		return;
 	}
-#ifdef mtf_coop
 	if (self.weaponframe <= #LIGHTNING_ADD)
 		self.weaponframe = #LIGHTNING_ADD + 1;
-#endif
 	self.weaponframe = self.weaponframe + 1;
 	if (self.weaponframe == (5 + #LIGHTNING_ADD))
 	{
@@ -1014,13 +990,11 @@ void() KickHead =
 	self.velocity = v_forward * 300 + '0 0 300';
 	return;
 };
-#ifdef mtf_coop
 void() sethead_think =
 {
 	setmodel(self.owner, self.netname);		// set it again.. something is wacky..
 	dremove(self);
 };
-#endif
 void(string gibname, float dm) ThrowHead = 
 {
 	local string hk;
@@ -1045,18 +1019,13 @@ void(string gibname, float dm) ThrowHead =
 		}
 	}
 	self.view_ofs = '0 0 8';
-#ifdef mtf_coop
 	if (!(self.classname == "player" && survival_mode))  // players falling out of map possibly due to size change?		
-#endif
 	setsize(self, '-16 -16 0', '16 16 56');
 	self.velocity = VelocityForDamage(dm);
-#ifdef mtf_coop
 	if (!(self.classname == "player" && survival_mode))  // players falling out of map possibly due to size change?		
-#endif
 	self.origin_z = self.origin_z - 24;
 	self.flags = self.flags - (self.flags & 512);
 	self.avelocity = crandom() * '100 600 50';
-#ifdef mtf_coop
 	local entity hent;
 	hent = spawn();
 	hent.owner = self;
@@ -1064,7 +1033,6 @@ void(string gibname, float dm) ThrowHead =
 	hent.netname = gibname;
 	hent.think = sethead_think;
 	hent.nextthink = time;
-#endif
 };
 void(string gibname) HeadShotThrowHead = 
 {
@@ -1126,7 +1094,6 @@ void() GibPlayer =
 		sound(self, 2, "player/gib2.wav", 1, 1);
 	}
 };
-#ifdef mtf_coop
 void ( float bodytype ) Survival_MakeDummy =
 {
 	local entity pdummy, oself;
@@ -1193,7 +1160,6 @@ void ( float bodytype ) Survival_MakeDummy =
 		}
 	}
 };
-#endif
 void() PlayerDie = 
 {
 	local float i;
@@ -1231,9 +1197,7 @@ void() PlayerDie =
 	self.invincible_finished = TF_FLARE_LIT;
 	self.super_damage_finished = TF_FLARE_LIT;
 	self.radsuit_finished = TF_FLARE_LIT;
-#ifdef mtf_coop
 	if (!self.monster_type)
-#endif
 #ifdef PL_FEM
 	self.modelindex = GetPlayerModelindex(self);
 #else
@@ -1266,37 +1230,29 @@ void() PlayerDie =
 	self.deadflag = 1;
 	self.solid = TF_FLARE_LIT;
 	self.flags = self.flags - (self.flags & 512);
-#ifdef mtf_coop
 	if (survival_mode)
 		self.finaldest = self.origin;			// backup to make sure body does not fall off of map
 	self.flags = self.flags & #FL_FINDABLE_NONSOLID;
 	self.flags = #FL_FINDABLE_NONSOLID;
-#endif
 	self.movetype = 6;
 	if (self.velocity_z < 10)
 	{
 		self.velocity_z = self.velocity_z + random() * 300;
 	}
-#ifdef mtf_coop
 	if (!survival_mode)
-#endif
 	if (self.health < -40 && !(deathmsg == 18))
 	{
 		GibPlayer();
-#ifdef mtf_coop
 		Survival_MakeDummy( 0 );
-#endif
 		return;
 	}
 	DeathSound();
 	self.angles_x = TF_FLARE_LIT;
 	self.angles_z = TF_FLARE_LIT;
-	#ifdef mtf_coop
 	if (self.monster_type > 0) {
 		monster_die();
 		return;
 	}
-#endif
 	if (self.current_weapon <= 16)
 	{
 		player_die_ax1();

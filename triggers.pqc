@@ -153,10 +153,8 @@ void() trigger_multiple =
 			self.touch = multi_touch;
 		}
 	}
-#ifdef mtf_coop_hipnotic
-   if (self.cnt == 0)
-      self.cnt = -1;
-#endif
+	if (self.cnt == 0)
+	self.cnt = -1;
 #ifdef HALFLIFE
 		if (#HL_MAP)
 			self.touch = multi_touch;		// no SPAWNFLAG_NOTOUCH for half-life multi triggers
@@ -487,13 +485,11 @@ void() teleport_touch =
 	else
 #endif
 	setorigin(other, t.origin);
-#ifdef mtf_coop
 	if (other.is_monster == 1)
 	{
 		other.npc_originalloc = t.origin;
 		other.#npc_originalloc = t.origin;
 	}
-#endif
 	other.angles = t.mangle;
 	if (other.classname == "player")
 	{
@@ -526,9 +522,7 @@ void() info_teleport_destination =
 	self.mangle = self.angles;
 	self.angles = '0 0 0';
 	self.model = "";
-#ifdef mtf_coop
 	if (!#DOOM_MAP)
-#endif
 	self.origin = self.origin + '0 0 27';
 	if (!(self.targetname))
 	{
@@ -544,7 +538,6 @@ void() teleport_use =
 void () trigger_teleport =
 {
 	local vector _l_6970;
-
 	if ((CheckExistence () == 0.000000))
 	{
 		dremove (self);
@@ -645,21 +638,19 @@ void() trigger_onlyregistered =
 	InitTrigger();
 	self.touch = trigger_onlyregistered_touch;
 };
-#ifdef mtf_coop_hipnotic
 void( entity ent, float amount ) hurt_setdamage =
-   {
-   ent.dmg = amount;
-   if ( !amount )
-      {
-      ent.solid = SOLID_NOT;
-      }
-   else
-      {
-      ent.solid = SOLID_TRIGGER;
-      }
-   ent.nextthink = -1;
-   };
-#endif
+{
+	ent.dmg = amount;
+	if ( !amount )
+	{
+		ent.solid = SOLID_NOT;
+	}
+	else
+	{
+		ent.solid = SOLID_TRIGGER;
+	}
+	ent.nextthink = -1;
+};
 void() hurt_on = 
 {
 	self.solid = TF_FLARE_OFF;
@@ -722,7 +713,6 @@ void() trigger_hurt_use =
 		self.use = SUB_Null;
 };
 #endif
-#ifdef mtf_coop
 void () hurt_use =
 {
 	if (self.solid == SOLID_NOT)
@@ -732,7 +722,6 @@ void () hurt_use =
 	if (!(self.spawnflags & 2))
 		self.use = SUB_Null;
 };
-#endif
 void() trigger_hurt = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -759,7 +748,6 @@ void() trigger_hurt =
 		}
 	}
 #endif
-#ifdef mtf_coop
 	else {
 		if (self.spawnflags & 1)
 			self.solid = SOLID_NOT;
@@ -769,7 +757,6 @@ void() trigger_hurt =
 		if (self.spawnflags & 2)
 			self.use = hurt_use;
 	}
-#endif
 };
 void() trigger_push_touch = 
 {
@@ -826,7 +813,6 @@ void() trigger_push_touch =
 		dremove(self);
 	}
 };
-#ifdef mtf_coop
 void () trigger_push_mtf_use =
 {
 	if (self.touch == SUB_Null)
@@ -835,7 +821,6 @@ void () trigger_push_mtf_use =
 		self.touch = SUB_Null;
 	dremove(self);
 };
-#endif
 #ifdef HALFLIFE
 void () func_ladder;
 void () trigger_push_use =
@@ -867,12 +852,10 @@ void() trigger_push =
 	}
 	else {
 #endif
-#ifdef mtf_coop
 	if (self.spawnflags & 2) {
 		self.touch = SUB_Null;
 	}
 	self.use = trigger_push_mtf_use;
-#endif
 #ifdef mtf_coop_halflife
 	}
 	if (mapname == "c1a1b")

@@ -244,7 +244,6 @@ void() spy_upaxe9 = [41, spy_upaxe9]
 {
 	player_stand1();
 };
-// begin new spy code
 void (float _p_9330) TeamFortress_SpyFeignDeath =
 {
 	local float _l_9331;
@@ -336,10 +335,8 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 		self.tfstate = (self.tfstate | 65536.000000);
 		self.velocity = (self.velocity * 0.650000);
 		self.is_feigning = 1.000000;
-#ifdef VWEPS
 		self.invisible_time = 0;
 		self.vw_index = 31;
-#endif
 		Attack_Finished (0.800000);
 		if (self.hook_out)
 		{
@@ -373,21 +370,22 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 			spy_die_ax1 ();
 			return;
 		}
-// TF 2.9
 	te = find (world, classname, "item_tfgoal");
 	while (te) {
-	    if (te.owner == self) {
-		if (!(te.goal_activation & 256) || (self.has_disconnected == 1)) {
-		    tfgoalitem_RemoveFromPlayer (te, self, 0);
+		if (te.owner == self) {
+		if (!(te.goal_activation & 256) || (self.has_disconnected == 1))
+		{
+			tfgoalitem_RemoveFromPlayer (te, self, 0);
 		}
-		if (CTF_Map == 1) {
-		    if (te.goal_no == 1)
+		if (CTF_Map == 1)
+		{
+			if (te.goal_no == 1)
 			bprint (PRINT_HIGH, self.netname, " has the BLUE flag!\n");
-		    else if (te.goal_no == 2)
+			else if (te.goal_no == 2)
 			bprint (PRINT_HIGH, self.netname, " has the RED flag!\n");
 		}
-	    }
-	    te = find (te, classname, "item_tfgoal");
+		}
+		te = find (te, classname, "item_tfgoal");
 	}
 		_l_9331 = 1.000000 + floor ((random () * 6.000000));
 		if ((_l_9331 == 1.000000))
@@ -526,10 +524,7 @@ void() TeamFortress_SpyUndercoverThink =
 			self.owner.is_undercover = 1;
 		}
 	}
-#ifdef VWEPS
 	VWEPS_Update(self.owner);
-#endif
-	
 	self.owner.StatusRefreshTime = time + 0.1;
 	dremove(self);
 };
@@ -668,7 +663,6 @@ void() T_TranqDartTouch =
 				TeamFortress_SetSpeed(other);
 			}
 		}
-#ifdef mtf_coop
 		if (other.is_monster == 1 && other.is_minion == #FALSE)
 		{
 			if (other.tfstate & #MONSTER_TRANQUILIZED)
@@ -696,7 +690,6 @@ void() T_TranqDartTouch =
 				timer.team_no = self.owner.team_no;
 			}
 		}
-#endif
 	}
 	else
 	{
@@ -728,11 +721,9 @@ void() TranquiliserTimer =
 	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & 32768);
 	TeamFortress_SetSpeed(self.owner);
 	stuffcmd(self.owner, "v_cshift 0 0 0 0\n");
-#ifdef mtf_coop
 	if (self.is_monster == 1)
 		sprint(self.owner, 2, "You've thawed out.\n");
 	else
-#endif
 		sprint(self.owner, 2, "You feel more alert now.\n");
 	dremove(self);
 };

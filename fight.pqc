@@ -11,11 +11,9 @@ float() CheckAttack =
 	spot1 = self.origin + self.view_ofs;
 	spot2 = targ.origin + targ.view_ofs;
 	traceline(spot1, spot2, TF_FLARE_LIT, self);
-#ifdef mtf_coop_expsys
 	if (self.enemy == self.owner && self.enemy.team_no == self.team_no) {
 		return 0;
 	}
-#endif
 	if (trace_ent != targ)
 	{
 		return TF_FLARE_LIT;
@@ -24,11 +22,7 @@ float() CheckAttack =
 	{
 		return TF_FLARE_LIT;
 	}
-#ifdef mtf_coop
 	if (enemy_range == TF_FLARE_LIT || self.enemy.classname == "func_monstergoal")
-#else
-	if (enemy_range == TF_FLARE_LIT)
-#endif
 	{
 		if (self.th_melee)
 		{
@@ -98,7 +92,6 @@ void(float d) ai_charge =
 	ai_face();
 	movetogoal(d);
 };
-
 void() ai_charge_side = 
 {
 	local vector dtemp;
@@ -124,7 +117,6 @@ void() ai_melee =
 		return;
 	}
 	ldmg = (random() + random() + random()) * 3;
-#ifdef mtf_coop_nehahra
 	local float num;
 	if ((self.classname == "monster_cook"))
 	{
@@ -153,7 +145,6 @@ void() ai_melee =
 			}
 		}
 	}
-#endif
 	T_Damage(self.enemy, self, self, ldmg);
 };
 void() ai_melee_side = 

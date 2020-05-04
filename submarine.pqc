@@ -168,9 +168,7 @@ void () SubTouch =
 	other.rad_time = 1;
 	other.radsuit_finished = (time + 9999);
 	other.Sub_Weapon = 1;		// so torpedo is def. weapon
-#ifdef VWEPS
 	other.vw_index = 31;
-#endif
 };
 void () Vehicle_DieTime =
 {
@@ -217,7 +215,7 @@ void () exit_vehicle =
 	setmodel (self, "progs/a1player.mdl");
 #else
 	setmodel (self, "progs/player.mdl");
-#endif	
+#endif
 	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
 	self.angles_x = 0;
 	self.angles_z = 0;
@@ -270,7 +268,6 @@ void () exit_vehicle =
 void () Sub_ChangeWeapon =
 {
 	local vector dir;
-
 	if ((self.impulse == 1))
 	{
 		makevectors (self.v_angle);
@@ -529,11 +526,7 @@ void () Sub_FireTorpedo =
 	newmis.touch = Subkilldatarget;
 	newmis.nextthink = (time + 0.150000);
 	newmis.think = SubTrackTarget;
-#ifdef mtf_coop
 	setmodel/*u*/ (newmis, "progs/torpedo.mdl");
-#else
-	setmodel (newmis, "progs/torpedo.mdl");
-#endif
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	if ((self.tube_load == 1))
 	{

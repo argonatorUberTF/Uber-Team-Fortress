@@ -1,16 +1,4 @@
-void() NailGrenadeTouch;
-void() NailGrenadeTouch = 
-{
-	if (other == self.owner)
-	{
-		return;
-	}
-	sound(self, TF_FLARE_OFF, "weapons/bounce.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-	if (self.velocity == '0 0 0')
-	{
-		self.avelocity = '0 0 0';
-	}
-};
+//nailgreandetouch merged into additional.pqc
 //end
 
 

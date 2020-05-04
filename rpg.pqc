@@ -1,10 +1,6 @@
 #ifdef BATTLE_ROYALE
 void () br_subthink;
 #endif
-#ifndef mtf_coop_expsys
-string(string blah) strzone;
-void(string blah) strunzone;
-#endif
 void () RemoveVote;
 void () MapNotFound;
 void () RemoveVote2;
@@ -36,10 +32,8 @@ void SV_ParseClientCommand (string st) =
 	g = strzone(g);
 	i = strzone(i);
 	j = strzone(j);
-#ifdef mtf_coop_packet
 	if (c == "say")
 		Packet_SendSAY();
-#endif
 	ClientCommand( args, c, d, f, g, i, j, "" );
 	strunzone(c);
 	strunzone(d);
@@ -196,31 +190,6 @@ void SV_ParseClientCommand (string st) =
 			teamct	= 4;
 			teamp = teamcount4;
 		}
-//		if (self.team_no == 1) { if ((teamcount1 - 1) < teamp) {
-//				sprint (self, 2.000000, "You cannot switch to that team.\n");
-//				return;
-//			}
-//		}
-//		if (self.team_no == 2) { if ((teamcount2 - 1) < teamp) {
-//				sprint (self, 2.000000, "You cannot switch to that team.\n");
-//				return;
-//			}
-//		}
-//		if (self.team_no == 3) { if ((teamcount3 - 1) < teamp) {
-//				sprint (self, 2.000000, "You cannot switch to that team.\n");
-//				return;
-//			}
-//		}
-//		if (self.team_no == 4) { if ((teamcount4 - 1) < teamp) {
-//				sprint (self, 2.000000, "You cannot switch to that team.\n");
-//				return;
-//			}
-//		}
-//		if (teamp == 0)
-//		{
-//			sprint (self, 2.000000, "You cannot switch to that team.\n");
-//			return;
-//		}
 		if (self.team_no == teamct)
 		{
 			sprint (self, 2.000000, "You can't switch to the team you're already on or you chose an invalid team!\n");
@@ -418,9 +387,7 @@ void() voteyes =
 			}
 			bprint (1.000000, themap);
 			bprint (1.000000, " it is!(func voteyes 2)\n");
-#ifdef mtf_coop_expsys
 			MTF_Coop_RanksMapVote( themap, 1 ); //Update the rank stats of which map was voted for -arg
-#endif			
 			if (FTE_Server)
 				Rank_UpdateStatsGlobal (); //Update the rank stats of which map was voted for -arg
 			if (prozacmethod == 1)
@@ -496,10 +463,8 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 	local float okvote;
 	local entity head;
 	local string vote_msg;
-#ifdef mtf_coop
 	local float k_id;
 	local entity te;
-#endif
 	if (self.classname != "player")
 		return;
 	if (vote_type == #VOTE_MAP) {
@@ -535,23 +500,6 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		vote_msg = " has called a vote to exit the level.";
 		okvote = 1;
 	}
-#ifndef mtf_coop
-	else if (vote_type == #VOTE_PROGS) {
-		if (vote_string != "default") {
-			if (!vote_string || !validatefile(strcat(vote_string,".dat"))) {
-				sprint(self, 2, "Specified progs is unavailable or invalid. Please choose one from the following:\n");
-				sprint(self, 2, "* 5-10-98\n* 7-27-98\n* 10-30-98\n* 6-1-99\n* mega2k\n* elrapido\n* beyondtf\n* xtf\n* 1-05-02\n* 11-11-04\n* tf29 (Team Fortress 2.9)\n* default\n");
-				return;
-			}
-		}
-		vote_msg = frik_strcat(" has called a vote to change the megatf version to ", vote_string);
-			localcmd("localinfo votestring ");
-			localcmd(vote_string);
-			localcmd("\n");
-		okvote = 1;
-	}
-#endif
-#ifdef mtf_coop
 	else if (vote_type == #VOTE_USE) {
 		if (lms_entity != world) {
 			sprint(self, 2, "Can't vote use in LMS.\n");
@@ -602,7 +550,6 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		localcmd( vote_string );
 		localcmd( "\n" );
 	}
-#endif
 	else if (vote_type == #VOTE_NEXTMAP) {
 		if (!vote_string)
 		{
@@ -619,14 +566,7 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 			sprint(self,2,"You can't vote on a bmodel!\n");
 			return;
 		}
-#ifdef mtf_coop_expsys
 		vote_msg = frik_strcat( " has called a vote for the next map to be ", vote_string, "‘");
-#else
-		bprint( 2, "Vote candidate for next map: " );
-		bprint( 2, vote_string );
-		bprint( 2, "\n" );
-		vote_msg = " has called a vote for the next map.";
-#endif
 		localcmd( "localinfo tempstring " );
 		localcmd( vote_string );
 		localcmd( "\n" );
@@ -638,9 +578,7 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		{
 			if (head.classname == "player") { 
 				stuffcmd(head, "play misc/runekey.wav \n");
-#ifdef mtf_coop
 				if (vote_type != #VOTE_EXIT) 
-#endif
 					if (head.current_menu == 0 && head != self)
 						head.current_menu = 42;	// vote menu
 			}
@@ -683,12 +621,7 @@ void () Vote_VoteYes =
 		bprint(2, "to use a trigger.\n");
 	else if (votestarted == #VOTE_NEXTMAP)
 		bprint(2, "to play the next map.\n");
-#ifndef mtf_coop
-	else if (votestarted == #VOTE_PROGS)
-		bprint(2, "to change the megatf version.\n");
-#endif
 	num_votes = num_votes + 1;
-
 	Vote_CheckWin();
 };
 void () Vote_CheckWin =
@@ -710,7 +643,6 @@ void () Vote_CheckWin =
 			can_exit = #TRUE;
 			bprint(2, "Players can now exit the map!\n");
 		}
-#ifdef mtf_coop
 		else if (votestarted == #VOTE_USE) {
 			if (vote_starter != world) {
 				FindUseEntity (vote_starter);
@@ -738,7 +670,6 @@ void () Vote_CheckWin =
 			}
 			localcmd("localinfo tempstring \"\"\n");
 		}
-#endif
 		else if (votestarted == #VOTE_NEXTMAP) {
 			nextmapchosen = #TRUE;
 			if (num_players > 1) {
@@ -754,26 +685,6 @@ void () Vote_CheckWin =
 					}
 			}
 		}
-#ifndef mtf_coop
-		else if (votestarted == #VOTE_PROGS) {
-			votedmap = infokey (world, "votestring");
-			if (votedmap == "default")
-				bprint(2, "The server default");
-			else
-				bprint(2, votedmap);
-			bprint(2, " will be the version of megatf played on the next map.\n");
-			localcmd("sv_progsname ");
-			if (votedmap == "default")
-				localcmd("qwprogs");
-			else
-				localcmd(votedmap);
-			localcmd("\n");
-			if ((self.has_voted == 1))
-					{
-					self.has_voted = 0;
-					}
-		}
-#endif
 		votestarted = 0;
 		vote_starter = world;
 		if (votestring != "") {
@@ -881,9 +792,7 @@ void(string put) votemap_start =
 		if (num_votes > (num_players * 0.6))
 		{
 			self.has_voted = 0;
-#ifdef mtf_coop_expsys
 			MTF_Coop_RanksMapVote( put, 1 );
-#endif
 			localcmd ("exec qwmcycle/");
 			localcmd (put);
 			localcmd (".cfg\n");
@@ -1038,7 +947,6 @@ float(string s1, string s2, string s3, string s4, string s5) ExtendedCMDs =
 float (entity the_player, float amount, string give_what) Extra_Stuff =
 {
 	local entity oself;
-#ifdef mtf_coop
 	local entity ipl;
 	local string minfo;
 	if (give_what == "srvreset")
@@ -1054,7 +962,6 @@ float (entity the_player, float amount, string give_what) Extra_Stuff =
 		the_player.ammo_cells = amount;
 		return 1;
 	}
-#endif
 	if (give_what == "building")
 	{
 		self = oself;
@@ -1201,13 +1108,11 @@ float (string votemap_name) Check_For_Bmodel =
 		sprint(self,2,"You can't start voting for a bmodel!\n");
 		return TRUE;
 	}
-#ifdef mtf_coop_expsys
 	if (votemap_name == "insane" || votemap_name == "beach" || votemap_name == "hipstart")
 	{
 		sprint(self,2,"I'm sorry Dave, I'm afraid I can't do that.\n");
 		return TRUE;
 	}
-#endif
 	return FALSE;
 };
 string (string packet_cmd) Packet_Slashpass =
@@ -1239,23 +1144,19 @@ void () Packet_SendSAY =
 {
 	local string send_to, sendername, send_what;
 	local float i;
-	
 	send_to = infokey (world, "packet_master");
 	if (send_to == "")
 		return;
-		
 	if (argv(1) == string_null) {
 		// No message?
 		return;
 	}
 	send_to = strzone(send_to);
-	
 	sendername = infokey (world, "hostname");	
 	if (sendername == string_null) {
 		sendername = "Unknown Server";
 	}
 	sendername = strzone(sendername);
-	
 	send_what = frik_strcat(sendername, Packet_Slashpass("broadcast_msg"));
 	if (self.connect_name == string_null)
 		send_what = frik_strcat(send_what, self.netname, ":");
@@ -1270,15 +1171,10 @@ void () Packet_SendSAY =
 			send_what = frik_strcat(send_what, " ", argv(i));
 		i++;
 	}
-	
 	send_what = frik_strcat(send_what, " \\n");
 	send_what = strzone(send_what);
-	
-	
 	QC_SendPacket(send_to, send_what);
-	
 	//bprint(2,send_what);
-	
 	strunzone(send_to);
 	strunzone(sendername);
 	strunzone(send_what);

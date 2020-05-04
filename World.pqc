@@ -115,16 +115,11 @@ void () main =
 };
 void () uptime_think; // btf'd
 float server_time; // btf'd
-#ifdef mtf_coop
 void() Monster_Stats_Create;
-#endif
 void () worldspawn =
 {
 	local entity uptime; // btf'd
-#ifdef VWEPS
 	local float vw_available;
-#endif
-	
 #ifdef botprogs
 	BotInit ();
 #endif
@@ -212,15 +207,11 @@ void () worldspawn =
 	precache_model ("progs/gib2.mdl");
 	precache_model ("progs/gib3.mdl");
 	precache_model ("progs/gib4.mdl");
-#ifdef mtf_coop_hipnotic
 	if (mapname != "hip2m2" && mapname != "hip1m4")
 	{
-#endif
 	precache_model ("progs/s_null.spr");
 	precache_model ("progs/chute.mdl");
-#ifdef mtf_coop_hipnotic
 	}
-#endif
 	precache_model ("progs/s_bubble.spr");
 	precache_model ("progs/s_explod.spr");
 	precache_model ("progs/v_axe.mdl");
@@ -234,21 +225,12 @@ void () worldspawn =
 	precache_model ("progs/missile.mdl");
 	precache_model ("progs/spike.mdl");
 	precache_model ("progs/backpack.mdl");
-#ifdef mtf_coop_hipnotic
 	MTF_Priority_Precache();
 	if (mapname != "hip2m2" && mapname != "hip1m4")
 	{
-#endif
 	precache_model ("progs/zom_gib.mdl");
-#ifdef mtf_coop_hipnotic
 	}
-#endif
 	precache_model2 ("progs/laser.mdl");
-#ifndef mtf_coop
-	precache_sound2 ("enforcer/enfire.wav");
-	precache_sound2 ("enforcer/enfstop.wav");
-	precache_sound2 ("hknight/attack1.wav");
-#endif
 	precache_model2 ("progs/v_medi.mdl");
 	precache_model2 ("progs/v_bio.mdl");
 	precache_model2 (#MODEL_HGREN2);
@@ -274,9 +256,6 @@ void () worldspawn =
 	precache_model2 ("progs/v_grap.mdl");
 	precache_model2 ("progs/hook.mdl");
 	precache_sound2 ("speech/saveme1.wav");
-#ifndef mtf_coop
-	precache_sound2 ("knight/sword2.wav");
-#endif
 	precache_sound2 ("speech/saveme2.wav");
 	precache_sound ("weapons/rifle.wav");
 	precache_sound ("buttons/switch21.wav");
@@ -295,9 +274,7 @@ void () worldspawn =
 	precache_sound ("player/step2r.wav");
 	precache_sound ("items/repair.wav");
 	precache_sound ("misc/medkey.wav");
-#ifndef mtf_coop
 	precache_sound ("speech/pekaboo.wav");
-#endif
 	precache_sound ("speech/radio/taken.wav");
 	precache_sound ("speech/radio/capped.wav");
 	precache_sound ("player/gas_mask.wav");
@@ -307,9 +284,6 @@ void () worldspawn =
 	precache_sound ("misc/update.wav");
 	precache_sound ("misc/startup.wav");
 	precache_sound ("misc/enemy.wav");
-#ifndef mtf_coop
-	precache_sound ("zombie/z_hit.wav");
-#endif
 	precache_sound ("items/itembk2.wav");
 	precache_sound ("items/health1.wav");
 	precache_sound ("player/udeath.wav");
@@ -332,29 +306,16 @@ void () worldspawn =
 	precache_model ("progs/proxgren.mdl");
 	precache_model ("progs/v_asscan.mdl");
 	precache_model ("progs/v_mac10.mdl");
-#ifdef NEW_DOT
 	precache_model ("progs/newdot.spr");
-#else
-	precache_model ("progs/dot1.spr");
 	precache_model ("progs/dot3.spr");	// also used for airstrike.. right..
-#endif
-#ifndef mtf_coop
-	precache_model ("progs/dot2.spr");
 	precache_model ("progs/dot3.spr"); //yes you need this dot to spot summons in coop -arg
-	precache_model ("progs/dot4.spr");
-#endif
 	precache_model ("progs/rope.mdl");
 	precache_model ("progs/dispencr.mdl");
-#ifdef mtf_coop_hipnotic
 	if (mapname == "r2m6") { precache_model ("progs/tf_flag.mdl"); }
 	if (Hipnotic_SaveModels2() != 1)
-#endif
 	precache_model ("progs/tf_flag.mdl");
-#ifdef mtf_coop
 	if (mapname == "r2m4")
 		precache_model ("progs/tf_flag.mdl");
-//	MTF_Priority_Precache();
-#endif
 #ifdef mega_hats
 	precache_model( #HAT_MODEL );
 #endif
@@ -377,38 +338,27 @@ void () worldspawn =
 	lightstyle (10, "mmamammmmammamamaaamammma");
 	lightstyle (11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
 	lightstyle (63, "a");
-#ifdef mtf_coop
 	skill = 2;
-#else
-	skill = cvar ("skill");
-#endif
 	coop = cvar ("coop");
 #ifdef botprogs
 	bot_debug_lvl = #BOT_DEFAULT_DEBUGLVL;
-#endif
-#ifdef mtf_coop
-//	coop = 1;
-//	deathmatch = 0;
 #endif
 #ifdef mtfcoop_uberhardmode
 	uberhardmode = stof(infokey(world, "uberhardmode"));
 	if (uberhardmode)
 		bprint (PRINT_HIGH, "uberhardmode skill on.\n");
 #endif
-
-#ifdef VWEPS
 	vw_available = checkextension("ZQ_VWEP");
-
 	if (vw_available) {
-        precache_vwep_model ("progs/vwplayer.mdl");  // vwep-enabled player model to use
-        precache_vwep_model ( "progs/w_axe.mdl");
-        precache_vwep_model ( "progs/w_shot.mdl");
-        precache_vwep_model ( "progs/w_shot2.mdl");
-        precache_vwep_model ( "progs/w_mac10.mdl");
-        precache_vwep_model ( "progs/w_nail2.mdl");
-        precache_vwep_model ( "progs/w_rockfl.mdl");
-        precache_vwep_model ( "progs/w_rock2.mdl");
-        precache_vwep_model ( "progs/w_light.mdl");
+		precache_vwep_model ("progs/vwplayer.mdl");  // vwep-enabled player model to use
+		precache_vwep_model ( "progs/w_axe.mdl");
+		precache_vwep_model ( "progs/w_shot.mdl");
+		precache_vwep_model ( "progs/w_shot2.mdl");
+		precache_vwep_model ( "progs/w_mac10.mdl");
+		precache_vwep_model ( "progs/w_nail2.mdl");
+		precache_vwep_model ( "progs/w_rockfl.mdl");
+		precache_vwep_model ( "progs/w_rock2.mdl");
+		precache_vwep_model ( "progs/w_light.mdl");
 		precache_vwep_model ( "progs/w_bat.mdl");
 		precache_vwep_model ( "progs/w_bio.mdl");	// #10
 		precache_vwep_model ( "progs/w_chain.mdl");
@@ -421,8 +371,6 @@ void () worldspawn =
 		precache_vwep_model ( "progs/w_srifle.mdl");	// #18
 		precache_vwep_model ( "progs/w_grap.mdl");	// #19
 	}
-#endif
-#ifdef mtf_coop
 	if (infokey(world,"survival") == "1")
 		if (lms_entity == world)
 			survival_mode = 2;
@@ -442,7 +390,6 @@ void () worldspawn =
 		}
 	if (survival_mode)
 		localcmd("localinfo srv_ips \"\"\n");
-#endif
 #ifdef SVEN_COOP
 	if (#HL_MAP) {
 		//cvar_set( "nextmap", "" );
@@ -466,16 +413,9 @@ void () StartFrame =
 	fraglimit = cvar ("fraglimit");
 	deathmatch = cvar ("deathmatch");
 	framecount = (framecount + 1);
-#ifdef mtf_coop
-//	coop = 1;
-//	deathmatch = 0;
-#endif
 };
-entity bodyque_head;
-
 void () bodyque =
-{
-};
+{};
 void () InitBodyQue =
 {
 	bodyque_head = spawn ();
@@ -488,7 +428,6 @@ void () InitBodyQue =
 	bodyque_head.owner.owner.owner.classname = "bodyque";
 	bodyque_head.owner.owner.owner.owner = bodyque_head;
 };
-
 void () GibHead =
 {
 	ThrowGib ("progs/gib4.mdl", self.health);
@@ -589,7 +528,6 @@ float (float t) f_uptime_d =
 	d = floor (d);
 	return (d);
 };
-
 float (float t) f_uptime_h =
 {
 	local float d;
@@ -623,7 +561,6 @@ float (float t) f_uptime_s =
 	s = floor ((((t - (d * 86400)) - (h * 3600)) - (m * 60)));
 	return (s);
 };
-
 void () uptime_think =
 {
 	local float t;

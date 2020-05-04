@@ -53,11 +53,7 @@ void() AirStrike_Explode =
 	WriteCoord(4, self.origin_z);
 	multicast(self.origin, TF_FLARE_OFF);
 	deathmsg = 43;
-#ifdef mtf_coop
 	T_RadiusDamage(self, self.owner, 365, world);
-#else
-	T_RadiusDamage(self, self.owner, 300, world);
-#endif
 	dremove(self);
 };
 void(vector org) AirStrike_Target = 
@@ -68,12 +64,8 @@ void(vector org) AirStrike_Target =
 	newmis.team_no = self.owner.team_no;
 	newmis.owner = self.owner;
 	setsize(newmis, '0 0 0', '0 0 1');
-#ifdef NEW_DOT
 	setmodel(newmis, "progs/newdot.spr");
 	newmis.frame = 2;	//yellow
-#else
-	setmodel(newmis, "progs/dot3.spr");
-#endif
 	newmis.effects = 8;
 	setorigin(newmis, org + '0 0 5');
 	newmis.nextthink = time + 10 + random() * 10;
@@ -120,11 +112,7 @@ void(float zoom_level) TF_zoom =
 void () SniperSight_Update =
 {
 	local vector org;
-#ifdef NEW_DOT
 	self.frame = self.owner.team_no - 1;
-#else
-	self.frame = 0.000000;
-#endif
 	if ((!(self.owner.tfstate & 2048.000000) || (self.owner.current_weapon != 32.000000)))
 	{
 		self.owner.tfstate = (self.owner.tfstate - (self.owner.tfstate & 2048.000000));
@@ -197,38 +185,8 @@ void () SniperSight_Create =
 	}
 	if ((self.option4 != 1.000000))
 	{
-#ifdef NEW_DOT
 		setmodel(sight, "progs/newdot.spr");
 		sight.frame = self.team_no - 1;
-#else
-		if ((self.team_no == 1.000000))
-		{
-			setmodel (sight, "progs/dot1.spr");
-		}
-#ifdef mtf_coop
-		else
-			setmodel (sight, "progs/dot1.spr");
-#else
-		else
-		{
-			if ((self.team_no == 3.000000))
-			{
-				setmodel (sight, "progs/dot3.spr");
-			}
-			else
-			{
-				if ((self.team_no == 4.000000))
-				{
-					setmodel (sight, "progs/dot4.spr");
-				}
-				else
-				{
-					setmodel (sight, "progs/dot2.spr");
-				}
-			}
-		}
-#endif
-#endif
 	}
 	sight.classname = "timer";
 	setorigin (sight, self.origin);

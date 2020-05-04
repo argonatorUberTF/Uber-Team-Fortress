@@ -156,9 +156,7 @@ void () item_rlgun =
 };
 void () item_aagun =
 {
-#ifdef mtf_coop
 	BTF_Precache ();
-#endif
 	precache_sound ("weapons/aagun.wav");
 	precache_model ("progs/minit.mdl");
 	self.solid = 2;

@@ -460,11 +460,9 @@ void () Aircraft_Touch =
 			}
 		}
 	}
-#ifdef VWEPS
 	if (other.classname == "player") {
 		other.vw_index = 31;
 	}
-#endif
 };
 void () AC_Destroyed =
 {
@@ -819,7 +817,6 @@ void (float delay_time2, float side) AC_FireRocket =
 };
 void () AC_RocketAway =
 {
-
 	makevectors (self.owner.v_angle);
 	self.velocity = aim (self.owner, 1000);
 	self.velocity = (self.velocity * 1100);
@@ -1157,7 +1154,6 @@ void () TT_MissileTouch =
 	dremove (self);
 };
 void () T_TorpTouch;
-
 void () Stinger_Track =
 {
 	local vector ErrorMargin;
@@ -1195,7 +1191,6 @@ void () Stinger_Track =
 	}
 	self.nextthink = (time + 0.200000);
 };
-
 void () Stinger_Bounce =
 {
 	if ((other == self.owner))
@@ -1208,7 +1203,6 @@ void () Stinger_Bounce =
 	self.nextthink = (time + 4);
 	self.avelocity = '0.000000 300.000000 0.000000';
 };
-
 void () Stinger_Stage2 =
 {
 	sound (self, 1, "weapons/stinger.wav", 1, 1);
@@ -1245,11 +1239,7 @@ void () HW_LaunchStinger =
 	missile.nextthink = (time + 0.500000);
 	missile.think = Stinger_Stage2;
 	missile.avelocity = '0.000000 0.000000 200.000000';
-#ifdef mtf_coop
 	setmodelu (missile, "progs/rocket2.mdl");
-#else
-	setmodel (missile, "progs/rocket2.mdl");
-#endif
 	setsize (missile, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	setorigin (missile, (((self.origin + (v_forward * 8)) + (v_right * 2)) - '0.000000 0.000000 16.000000'));
 	missile.classname = "sidewinder";
@@ -1368,11 +1358,7 @@ void () makesight =
 	newmis.solid = 0;
 	newmis.classname = "grid";
 	newmis.movetype = 8;
-#ifdef mtf_coop
 	setmodelu (newmis, "progs/sight.mdl");
-#else
-	setmodel (newmis, "progs/sight.mdl");
-#endif
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	newmis.think = sightthink;
 	newmis.nextthink = time;

@@ -58,7 +58,6 @@ void () Menu_DropStuff;
 void () Menu_Taunt;
 void () Menu_Yell;
 void (float inp) Menu_Yell_Input;
-#define MENU_ENGINEER_FIX_TELEPORTER	33 // in customTF this value is different.
 void() Menu_EngineerFix_Teleporter;
 void(float inp) Menu_EngineerFix_Teleporter_Input;
 void() Menu_EngineerFix_Camera;
@@ -70,13 +69,10 @@ void (float inp) Menu_EngineerFix_FieldGen_Input;
 void () DoTinker;
 void () Menu_NewTaunts;
 void (float inp) Menu_NewTaunts_Input;
-#ifdef mtf_coop
 void () Menu_Res;
 void (float inp) Menu_Res_Input;
-#endif
 void () Menu_VoteChoice;
 void (float inp) Menu_VoteChoice_Input;
-#ifdef mtf_coop_expsys
 void () Menu_Merchant;
 void (float inp) Menu_Merchant_Input;
 void () Menu_Blackjack;
@@ -84,7 +80,6 @@ void (float inp) Menu_Blackjack_Input;
 #ifdef mtf_coop_quests
 void () Menu_Quest;
 void (float inp) Menu_Quest_Input;
-#endif
 #endif
 #ifdef CSQC
 float (float tmno) TeamFortress_TeamGetIllegalClasses;
@@ -101,7 +96,6 @@ void () Player_Menu =
 		self.menu_count = (self.menu_count + 1.000000);
 		return;
 	}
-
 	if (self.current_menu == 3) {
 		if (TeamFortress_TeamIsCivilian(self.team_no))
 			CSQC_SendMenu(self, self.current_menu, 666, 0);
@@ -111,7 +105,6 @@ void () Player_Menu =
 	else
 	{
 		CSQC_SendMenu(self, self.current_menu, 0, 0);
-	
 	}
 	if ((self.current_menu == 5.000000))
 	{
@@ -356,7 +349,6 @@ void () Player_Menu =
 	}
 	} } }
 };
-
 void(float menu_no) DisplayMenu = 
 {
 	self.current_menu = menu_no;
@@ -372,15 +364,8 @@ void(float menu_no) DisplayMenu =
 		}
 	}
 };
-
 void () Menu_Team =
 {
-#ifndef mtf_coop
-	local string one;
-	local string two;
-	local string getversion;
-#endif
-#ifdef mtf_coop
 	if (survival_mode)
 	{
 		if (MONSTER_TEAM_ENABLED)
@@ -393,7 +378,8 @@ void () Menu_Team =
 		return;
 		}
 	}
-	else {
+	else
+	{
 		TeamFortress_TeamSet(1);
 		ResetMenu();
 		self.impulse = TF_FLARE_LIT;
@@ -401,57 +387,9 @@ void () Menu_Team =
 		stuffcmd(self, mapname);
 		stuffcmd(self, ".cfg\n");
 	}
-#else
-	one = "ÕÂÁ·‘∆†ê";
-	two = "ë\n\n";
-	getversion = infokey(world, "MegaTF");
-	if (((toggleflags & 64) && teamplay))
-	{
-		if (TeamFortress_TeamPutPlayerInTeam ())
-		{
-			return;
-		}
-	}
-	if ((team_menu_string != string_null))
-	{
-		CenterPrint4 (self, one, getversion, two, team_menu_string);
-		return;
-	}
-	if ((CTF_Map == 1))
-	{
-		CenterPrint4 (self, one, getversion, two, "=== Choose your team ===\n\nì.. Blue Team           \nî.. Red Team            \n\n\n\nô.. Bind my keys for me!\n\nFor full details on this patch:\nhttp://www.telefragged.com/teamfortress/\n");
-	}
-	else
-	{
-		if ((number_of_teams == 1))
-		{
-			CenterPrint4 (self, one, getversion, two, "=== Choose your team ===\n\nì.. Team One  \n");
-		}
-		else
-		{
-			if ((number_of_teams == 2))
-			{
-				CenterPrint4 (self, one, getversion, two, "=== Choose your team ===\n\nì.. Team One  \nî.. Team Two  \n              \n              \nó.. Auto team \n");
-			}
-			else
-			{
-				if ((number_of_teams == 3))
-				{
-					CenterPrint4 (self, one, getversion, two, "=== Choose your team ===\n\nì.. Team One  \nî.. Team Two  \nï.. Team Three\n              \nó.. Auto team \n");
-				}
-				else
-				{
-					CenterPrint4 (self, one, getversion, two, "=== Choose your team ===\n\nì.. Team One  \nî.. Team Two  \nï.. Team Three\nñ.. Team Four \nó.. Auto team \n");
-				}
-			}
-		}
-	}
-#endif
 };
-
 void(float inp) Menu_Team_Input = 
 {
-#ifdef mtf_coop
 	local float args, i;
 	local entity ipl;
 	if (survival_mode)
@@ -505,7 +443,6 @@ void(float inp) Menu_Team_Input =
 	}
 	else
 	return;
-#endif
 	if (inp == 5)
 	{
 		TeamFortress_TeamPutPlayerInTeam();
@@ -546,7 +483,6 @@ void(float inp) Menu_Team_Input =
 };
 void() Menu_Class = 
 {
-#ifdef mtf_coop
 	if (lms_entity == world) {
 		// kick idlers (send them to spec)
 		if (!self.#kick_idle_time)
@@ -560,7 +496,6 @@ void() Menu_Class =
 			stuffcmd( self, "reconnect\n" );
 		}
 	}
-#endif
 	local entity AD;
 	AD = find(world, classname, "info_tfdetect");
 	if (AD)
@@ -607,14 +542,12 @@ void() Menu_Class =
 			}
 		}
 	}
-#ifdef mtf_coop
 	else if (MONSTER_TEAM_ENABLED) {
 		if (self.team_no == 2) {
 			CenterPrint(self, "=== Choose your class ===\n\nì.. Grunt   \nî.. Enforcer\nï.. Vore    \nñ.. Ogre    \nó.. Zombie  \nò.. Shambler\nô.. Fiend   \nõ..         \ní..         \n");
 			return;
 		}
 	}
-#endif
 #ifdef CSQC
 	if (TeamFortress_TeamIsCivilian(self.team_no))
 		CSQC_SendMenu(self, self.current_menu, 666, 0);
@@ -637,14 +570,12 @@ void() Menu_Class =
 		}
 	}
 };
-
 void(float inp) Menu_Class_Input = 
 {
 	if (inp > 10 || inp < TF_FLARE_OFF)
 	{
 		return;
 	}
-#ifdef mtf_coop
 	local entity ipl;
 	local string minfo;
 	if (survival_mode && MONSTER_TEAM_ENABLED) {
@@ -669,11 +600,8 @@ void(float inp) Menu_Class_Input =
 		else 
 			bprint(2,"ERROR! Player IP List Not Found!!! TELL DEV\n");
 	}
-#endif
-#ifdef mtf_coop_expsys
 	if (!self.playerclass)
 		stuffcmd(self, "cmd showmaptop\n");
-#endif
 	self.impulse = inp + 100;
 	TeamFortress_ChangeClass();
 	ResetMenu();
@@ -682,12 +610,9 @@ void(float inp) Menu_Class_Input =
 		self.current_menu = 6;
 	}
 	self.menu_displaytime = TF_FLARE_LIT;
-#ifdef mtf_coop_expsys
 	self.menu_displaytime -= 10;
-#endif
 	self.impulse = TF_FLARE_LIT;
 };
-
 void() Menu_Drop = 
 {
 	if (self.playerclass == 9)
@@ -699,7 +624,6 @@ void() Menu_Drop =
 		CenterPrint(self, "Drop:                           \nì.. Shells                      \nî.. Nails                       \nï.. Rockets                     \nñ.. Cells                       \nó.. Nothing                     \n\n");
 	}
 };
-
 void() Menu_RepeatHelp = 
 {
 	local string he;
@@ -709,7 +633,6 @@ void() Menu_RepeatHelp =
 		CenterPrint2(self, "Press ö to see this help again.\n", "New Command: 'mega' for Uber-TF Menu.\n");
 	}
 };
-
 void (float inp) Menu_Drop_Input =
 {
 	if (sr_dropgrens)
@@ -736,7 +659,6 @@ void (float inp) Menu_Drop_Input =
 	}
 	self.impulse = 0;
 };
-
 void(float inp) Menu_DoBindings_Input = 
 {
 	if (inp < 4)
@@ -780,7 +702,6 @@ void(float inp) Menu_DoBindings_Input =
 		ResetMenu();
 	}
 };
-
 void(float inp) Menu_Input = 
 {
 #ifdef botprogs
@@ -893,15 +814,12 @@ void(float inp) Menu_Input =
 										}
 										else
 										{
-#ifdef mtf_coop
 										if ( self.current_menu == 41 )
 										{
 											Menu_Res_Input (inp);
 										}
 										else
 										{
-#endif
-#ifdef mtf_coop_expsys
 										if ( self.current_menu == 43 )
 										{
 											Menu_Merchant_Input (inp);
@@ -921,7 +839,6 @@ void(float inp) Menu_Input =
 										}
 										else
 										{										
-#endif
 #endif
 										if ( self.current_menu == 42 )
 										{
@@ -982,23 +899,17 @@ void(float inp) Menu_Input =
 #ifdef botprogs
 	} } } } // pablo bot
 #endif
-#ifdef mtf_coop
 	}	// res
-#endif
-#ifdef mtf_coop_expsys
 	}	// merchant
 	}	// blackjack
 #ifdef mtf_coop_quests
 	}	// quests
 #endif
-#endif
 };
-
 void() Menu_DropStuff = 
 {
 	CenterPrint(self, "ÄÅÅÅ Mega-TF Menu ÅÅÅÇ\n\nÄìÇ Drop #1    \nÄîÇ Toaster    \nÄïÇ Drop #3    \nÄñÇ Holograph  \nÄóÇ NightVision\nÄòÇ Lay Mode   \nÄôÇ Taunt Menu \nÄöÇ Yell Menu  \nÄõÇ Vote Menu  \nÄ0Ç Nothing    \n");
 };
-
 void(float inp) Menu_DropStuff_Input = 
 {
 	if (inp == TF_FLARE_OFF)
@@ -1077,17 +988,14 @@ void(float inp) Menu_DropStuff_Input =
 	ResetMenu();
 	self.impulse = TF_FLARE_LIT;
 };
-
 void() Menu_Taunt = 
 {
 	CenterPrint(self, "ÄÅÅÅ Taunt Menu ÅÅÅÇ\n\nÄìÇ R U Threat'n Me?     \nÄîÇ Come out w/ pants dwn\nÄïÇ Hey!  hehheh...      \n  ÄñÇ Do U want 2 C my bHole?\nÄóÇ Call 911!            \nÄòÇ Kick'm in the Nads!  \nÄôÇ I do the a$$ kik'n...\nÄöÇ Pathetic Looser!     \nÄõÇ Nothing              \n");
 };
-
 void() Menu_Yell = 
 {
 	CenterPrint(self, "ÄÅÅÅ Yell Menu  ÅÅÅÇ\n\nÄìÇ Cover Me!            \nÄîÇ Over Here!           \nÄïÇ This Way!            \n  ÄñÇ Follow Me!             \nÄóÇ Incoming!            \nÄòÇ Holdup!              \nÄôÇ Go Go Go!            \nÄöÇ Lookout!             \nÄõÇ Fire in the hole!    \n");
 };
-
 void(float inp) Menu_Taunt_Input = 
 {
 	if (inp == TF_FLARE_OFF)
@@ -1163,7 +1071,6 @@ void(float inp) Menu_Taunt_Input =
 	ResetMenu();
 	self.impulse = TF_FLARE_LIT;
 };
-
 void(float inp) Menu_Yell_Input = 
 {
 	WriteByte(4, 23);
@@ -1172,7 +1079,6 @@ void(float inp) Menu_Yell_Input =
 	WriteCoord(4, self.origin_y);
 	WriteCoord(4, self.origin_z);
 	multicast(self.origin, TF_FLARE_OFF);
-
 	if (inp == TF_FLARE_OFF)
 	{
 		sound(self, TF_FLARE_OFF, "speech/yell/coverme.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -1253,13 +1159,10 @@ void(float inp) Menu_Yell_Input =
 	ResetMenu();
 	self.impulse = TF_FLARE_LIT;
 };
-
 void() Menu_Intro = 
 {
-	CenterPrint(self, ".");
+	CenterPrint(self, "Welcome to UBER Team Fortress.");
 };
-
-
 void () Menu_ClassHelp =
 {
 	local string _l_881;
@@ -1289,7 +1192,6 @@ void () Menu_ClassHelp =
 			CenterPrint6 (self, "Welcome to\nêÕÂÁ·‘∆ √Ô≠íë\nˆÆ", mtfver, "\n\nêÕ·∫ ", mapname, "ë\n\nÄû ŸÔıÚ ”Ù·ÙÛ∫ ûÇ\nÃÂˆÂÏ∫ ", stats, "\n\n~Note:~\n–Ã≈¡”≈†À…ÃÃ ¡ÃÃ ÕœŒ”‘≈“”\n¬≈∆œ“≈ ≈ÿ…‘…Œ«°\n\nFor rules & info use console command:\n √Õƒ†ËÂÏ\n\nPress ö to see these stats again.\n");
 #endif
 #endif
-
 		}
 		strunzone(stats);
 #else
@@ -1433,7 +1335,6 @@ void () Menu_ClassHelp =
 void () Menu_StuffClassHelp =
 {
 	local string _l_902;
-
 	_l_902 = infokey (self, "tf_help");
 	if ((_l_902 != "off"))
 	{
@@ -1520,13 +1421,10 @@ void () Menu_StuffClassHelp =
 	sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost.\n");
 	sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
 };
-
-
 void () Menu_ClassHelp2 =
 {
 	CenterPrint (self, "√œÕÕ¡Œƒ”†ç                    \n inv      ú Show inventory    \n +gren1   ú Throw grenade 1   \n +gren2   ú Throw Grenade 2   \n reload   ú Force a reload    \n sbar_on  ú Turn on status bar\n autoid_onú Turn on auto ID   \n dropammo ú drop some ammo    \n discard  ú drop unneeded ammo\n lay      ú start lay mode    \n drop1    ú drop item 1       \n drop2    ú throw a toaster   \n drop3    ú drop item 2       \n mega     ú Mega-TF Menu!     \n dropflag ú drop the flag     \n");
 };
-
 void(float inp) Menu_ClassHelp_Input = 
 {
 	if (inp == 8)
@@ -1537,30 +1435,24 @@ void(float inp) Menu_ClassHelp_Input =
 		self.menu_displaytime = TF_FLARE_LIT;
 		self.impulse = TF_FLARE_LIT;
 	}
-#ifdef mtf_coop_expsys
 	if (inp != 8)
 	{
 		ResetMenu ();
 		W_SetCurrentAmmo ();
 	}
-#endif
 };
-
 void() Menu_DoBindings = 
 {
 	CenterPrint(self, "ì.. Use keys: E R F V C Q X G Z\nî.. Use keys: S X D C F V B G N\nï.. Don't make bindings        \n");
 };
-
 void() Menu_ShowBindings1 = 
 {
 	CenterPrint(self, "—.. Flaginfo      \n≈.. Hook          \n“.. Throw Gren 1  \n∆.. Throw Gren 2  \n÷.. Det. Pipebombs\n√.. Drop ammo     \nÿ.. Use Scanner   \n«.. Showclasses   \n⁄.. inventory     \n");
 };
-
 void() Menu_ShowBindings2 = 
 {
 	CenterPrint(self, "”.. Flaginfo      \nÿ.. Hook          \nƒ.. Throw Gren 1  \n√.. Throw Gren 2  \n∆.. Det. Pipebombs\n÷.. Drop ammo     \n¬.. Use Scanner   \n«.. Showclasses   \nŒ.. inventory     \n");
 };
-
 void () Menu_Spy =
 {
 	if (spyjumpoption)
@@ -1670,8 +1562,6 @@ void () Menu_Spy =
 		}
 	}
 };
-
-
 void (float inp) Menu_Spy_Input =
 {
 	if (((self.undercover_team != 0.000000) && (self.undercover_skin != 0.000000)))
@@ -1774,12 +1664,10 @@ void (float inp) Menu_Spy_Input =
 		}
 	}
 };
-
 void() Menu_Spy_Skin = 
 {
 	CenterPrint(self, "Change Skin to:\nì.. Scout   \nî.. Sniper  \nï.. Soldier \nñ.. Demoman \nó.. Medic   \nò.. Hwguy   \nô.. Pyro    \nö.. Spy     \nõ.. Engineer\n\n");
 };
-
 void(float inp) Menu_Spy_Skin_Input = 
 {
 	if (inp < 10 && inp > TF_FLARE_LIT)
@@ -1789,12 +1677,10 @@ void(float inp) Menu_Spy_Skin_Input =
 		self.impulse = TF_FLARE_LIT;
 	}
 };
-
 void() Menu_Spy_Color = 
 {
 				CenterPrint(self, "=== Change Color to the Same Color as  ===\n\nì.. Team One  \nî.. Team Two  \nï.. Team Three\nñ.. Team Four \n\n");
 };
-
 void(float inp) Menu_Spy_Color_Input = 
 {
 	if (inp >= TF_FLARE_OFF && inp <= number_of_teams)
@@ -1804,7 +1690,6 @@ void(float inp) Menu_Spy_Color_Input =
 		self.impulse = TF_FLARE_LIT;
 	}
 };
-
 void () Menu_Engineer =
 {
 	local string line1;
@@ -1844,11 +1729,7 @@ void () Menu_Engineer =
 			line2 = "                                  \n";
 		}
 	}
-#ifdef mtf_coop
 	if (self.classname == "player") {
-#else
-	if (infokey(world, "teslas") == "1") {
-#endif
 	if ((self.has_tesla == TF_FLARE_OFF))
 	{
 		line3 = "ï.. Destroy Tesla Sentry Gun      \n";
@@ -1913,7 +1794,6 @@ void () Menu_Engineer =
 		centerprint (self, "Action:                           \n", line1, line2, line3, "ñ.. Nothing                       \n\n");
 	}
 };
-
 void(float inp) Menu_Engineer_Input = 
 {
 	local entity te;
@@ -1961,24 +1841,20 @@ void(float inp) Menu_Engineer_Input =
 	}
 	if (inp == 5 && (self.has_teleporter == 0 || self.has_teleporter == 1 || self.has_teleporter == 2) && self.ammo_cells >= 90 && infokey(world, "telepads") == "1") //ch if have one out, can build
 	{
-        if (self.has_teleporter == 1)
+		if (self.has_teleporter == 1)
 		{
-                local float r;
+				local float r;
 				te = find(world, classname, "building_teleporter");
 				while (te)
 				{
 					if (te.real_owner == self)
 					{
 						r = vlen(te.origin - self.origin);
-#ifdef mtf_coop
 						if (r > 8072)
-#else
-						if (r > 3072)
-#endif
-                        {						    
-                            sprint(self, 2, "Other Teleporter is too far away.\n");
+						{
+							sprint(self, 2, "Other Teleporter is too far away.\n");
 				return;
-                        }
+						}
 						else
 						{
 							TeamFortress_Build(5);	
@@ -2056,33 +1932,11 @@ void(float inp) Menu_Engineer_Input =
 				if (te.real_owner == self)
 				{
 					local float damg;
-#ifdef mtf_coop
 					damg = te.ammo_cells * 0.25;
 					damg = damg + te.ammo_nails * 0.1;
 					damg = damg + te.ammo_shells * 0.2;
 					damg = damg + te.ammo_rockets * 1.75;
-
 					damg = damg * 4;
-#else
-					local string engcheck;
-					engcheck = infokey (world, "dispdamage");
-					if (engcheck != "0")
-					{
-						local float damg;
-						damg = te.ammo_cells * 0.25;
-						damg = damg + te.ammo_nails * 0.1;
-						damg = damg + te.ammo_shells * 0.2;
-						damg = damg + te.ammo_rockets * 1.75;
-						if (damg > 150)
-						{
-							damg = 150;
-						}
-					}
-					else
-					{
-						damg = 140;
-					}
-#endif
 					deathmsg = 201;
 					T_RadiusDamage(te, te.real_owner, damg, world);
 					TF_T_Damage(te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
@@ -2113,21 +1967,11 @@ void(float inp) Menu_Engineer_Input =
 					}
 					te = find(te, classname, "building_sentrygun");
 				}
-#ifdef mtf_coop
 				self.has_sentry = 0;
-#endif					
 			}		
-#ifdef mtf_coop
-#ifdef mtf_coop_expsys
 			else if (self.has_tesla == 1 && self.ammo_attr < 7) {
 				sprint(self,2,"Upgrade your ammo attributes to 7 to allow dual sentry buildings.\n");
 			}
-#else
-			else if (self.has_tesla == 1) {
-				sprint(self,2,"You can only have either one sentry gun or one tesla at a time.\n");
-			}
-#endif
-#endif
 			else
 			{
 				sound(self, 3, "items/repair.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -2138,11 +1982,7 @@ void(float inp) Menu_Engineer_Input =
 		}
 		else
 		{
-#ifdef mtf_coop
 			if (self.classname == "player") {
-#else
-			if (infokey(world, "teslas") == "1") {
-#endif
 			if (((inp == 3) && ((self.ammo_cells >= 150) || (self.has_tesla == 1))))
 			{
 				if (self.has_tesla)
@@ -2152,27 +1992,15 @@ void(float inp) Menu_Engineer_Input =
 					{
 						if ((te.real_owner == self))
 						{
-#ifdef mtf_coop
 							TF_T_Damage (te, world, world, 5000, TF_FLARE_LIT, TF_FLARE_LIT);			// Seems like teslas can have more health than that?
-#else							
-							TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
-#endif							
 						}
 						te = find (te, classname, "building_tesla");
 					}
-#ifdef mtf_coop
 					self.has_tesla = 0;			// HACK so players can rebuild tesla when it falls outta the map
-#endif					
 				}
-#ifdef mtf_coop_expsys
 				else if (self.has_sentry == 1 && self.ammo_attr < 7) {
 					sprint(self,2,"Upgrade your ammo attributes to 7 to allow dual sentry buildings.\n");
 				}
-#else
-				else if (self.has_sentry == 1) {
-					sprint(self,2,"You can only have either one sentry gun or one tesla at a time.\n");
-				}
-#endif
 				else
 				{
 					sound (self, 3, "items/repair.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -2199,12 +2027,10 @@ void(float inp) Menu_Engineer_Input =
 		}
 	}
 };
-
 void () Menu_EngineerFix_FieldGen =
 {
 	CenterPrint (self, "Action:                               \nì.. Repair FieldGen                \n\n\n\n\nò.. Nothing                        \n\n\n\ní.. Dismantle FieldGen             \n");
 };
-
 void (float inp) Menu_EngineerFix_FieldGen_Input =
 {
 	local float metalcost;
@@ -2280,7 +2106,6 @@ void (float inp) Menu_EngineerFix_FieldGen_Input =
 		W_SetCurrentAmmo ();
 	}
 };
-
 void() Menu_EngineerFix_Dispenser = 
 {
 	if (self.has_turretized_tesla == 1)
@@ -2291,7 +2116,6 @@ void() Menu_EngineerFix_Dispenser =
 	CenterPrint(self, "Action:                            \nêìë.. Put Ammo into Dispenser     \nêîë.. Put Armor into Dispenser    \nêïë.. Repair Dispenser            \nêñë.. Dismantle Dispenser         \nêóë.. Nothing                     \n\n");
 	}
 };
-
 void(float inp) Menu_EngineerFix_Dispenser_Input = 
 {
 	local float metalcost;
@@ -2346,7 +2170,6 @@ void(float inp) Menu_EngineerFix_Dispenser_Input =
 			}
 		}
 		te.maxammo_cells = te.maxammo_cells + te.cells_bonus;
-
 	sprint(self, #PRINT_HIGH, "»Â·ÏÙË:");
 	st = ftos(te.health);
 	sprint(self, #PRINT_HIGH, st);
@@ -2506,7 +2329,6 @@ void(float inp) Menu_EngineerFix_Dispenser_Input =
 		W_SetCurrentAmmo();
 	}
 };
-
 void () Menu_EngineerFix_SentryGun =
 {
 	if (((self.building.weapon < 3.000000) && (self.ammo_cells >= 130.000000)))
@@ -2517,11 +2339,9 @@ void () Menu_EngineerFix_SentryGun =
 	{
 		if ((self.building.weapon == 3.000000))
 		{
-#ifdef mtf_coop
 			if (self.building.#sentry_power == 0)
 				CenterPrint (self, "Action:                            \nêìë.. Put Ammo into Sentry Gun    \n\nêïë.. Repair Sentry Gun           \nêñë.. Dismantle Sentry Gun        \nêóë.. Nothing                     \n                                  \nê6ë.. Rotate Clockwise            \nê7ë.. Unload Rockets              \n\nê8ë.. Upgrade To Fire Sentry      \nê9ë.. Upgrade to Seeker Sentry    \nê0ë.. Upgrade to Quad Sentry      \n\n");
 			else
-#endif
 				CenterPrint (self, "Action:                            \nêìë.. Put Ammo into Sentry Gun    \n\nêïë.. Repair Sentry Gun           \nêñë.. Dismantle Sentry Gun        \nêóë.. Nothing                     \n                                  \nê6ë.. Rotate Clockwise            \nê7ë.. Unload Rockets              \n\n");
 		}
 		else
@@ -2530,7 +2350,6 @@ void () Menu_EngineerFix_SentryGun =
 		}
 	}
 };
-
 void (float inp) Menu_EngineerFix_SentryGun_Input =
 {
 	local float am;
@@ -2609,10 +2428,8 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
 				{
 					metalcost = self.ammo_cells;
 				}
-#ifdef mtf_coop_achievements
 				if (metalcost)
 					Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_REPAIR, 1 );
-#endif
 				sound (self, 3.000000, "items/repair.wav", 1.000000, 1.000000);
 				self.ammo_cells = (self.ammo_cells - metalcost);
 				self.building.health = (self.building.health + (metalcost * 5.000000));
@@ -2675,7 +2492,6 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
 			}
 		}
 	}
-#ifdef mtf_coop
 	if (self.building.weapon == 3 && self.building.#sentry_power == 0) {
 		if (inp == 8 || inp == 9 || inp == 10) {
 			if (self.ammo_cells < 120) {
@@ -2717,23 +2533,7 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
 		}
 		W_SetCurrentAmmo ();
 	}
-#else
-	if (((inp >= 1.000000) && (inp <= 7.000000)))
-	{
-		ResetMenu ();
-		self.impulse = 0.000000;
-		bound_other_ammo (self);
-		if ((self.armorvalue == 0.000000))
-		{
-			self.armortype = 0.000000;
-			self.armorclass = 0.000000;
-			self.items = (self.items - (self.items & 57344.000000));
-		}
-		W_SetCurrentAmmo ();
-	}
-#endif
 };
-
 void () Menu_EngineerFix_Tesla =
 {
 	if (infokey(world, "balancedtesla") == "1") {
@@ -2744,7 +2544,6 @@ void () Menu_EngineerFix_Tesla =
 	CenterPrint (self, "Tesla Modification Lab: ò Upgrades Max\n.. Upgrade Voltage           - 1u\n.. Upgrade Amperage          - 1u\nï.. Upgrade Power Supply      - 1u\nñ.. Make TeslaTurret(tm)      - 2u\nó.. Improved Targeting System - 2u\nò.. Add Spy Detector          - 4u\n.. Repair and Recharge           \n.. Dismantle                     \nõ.. Tinker Tesla                  \ní.. ŒÔÙËÈÓÁ                       ");
 	}
 };
-
 void (float inp) Menu_EngineerFix_Tesla_Input =
 {
 	local float cost;
@@ -3066,12 +2865,10 @@ void (float inp) Menu_EngineerFix_Tesla_Input =
 		W_SetCurrentAmmo ();
 	}
 };
-
 void() Menu_Dispenser = 
 {
 	CenterPrint(self, "Use Dispenser:                     \nêìë.. Withdraw some ammo     \nêîë.. Withdraw some Armor    \nêïë.. Health & Vaccine       \nêñë.. BioSuit (AntiToaster)  \nêóë.. Nothing                \n\n");
 };
-
 void (float _p_1052) Menu_Dispenser_Input =
 {
 	local float _l_1053;
@@ -3299,8 +3096,6 @@ void (float _p_1052) Menu_Dispenser_Input =
 		W_SetCurrentAmmo ();
 	}
 };
-
-
 void() Menu_EngineerFix_Teleporter =
 {
 	if (self.building.classname == "building_teleporter" && (self.building.tf_items & 2))
@@ -3312,7 +3107,6 @@ void() Menu_EngineerFix_Teleporter =
           CenterPrint(self, "¡„ÙÈÔÓ:                \n\n.. Repair Teleporter.     \n.. Recharge Teleporter   \n\n.. ŒÔÙËÈÓÁ               \n\n.. Dismantle.             \n");
     }
 };
-
 void(float inp) Menu_EngineerFix_Teleporter_Input =
 {
 	local float metalcost; //am,
@@ -3340,26 +3134,19 @@ void(float inp) Menu_EngineerFix_Teleporter_Input =
 	}
 	else if (inp == 8)
 	{
-        sprint(self, #PRINT_HIGH, "You dismantle the Teleporter Pad.\n");
+		sprint(self, #PRINT_HIGH, "You dismantle the Teleporter Pad.\n");
 		self.ammo_cells = self.ammo_cells + (90 * 0.5) + floor(self.building.health / 15);
 		self.building.real_owner.has_teleporter = (self.building.real_owner.has_teleporter - 1);
-
-#ifdef QUAKE_WORLD
-		if (Teammate(self.building.real_owner.team_no,self.team_no) && teamplay != 0 && self.building.real_owner != self) { //Boot em if they dismantle too many
-			Add_Building_Teamkill (self, "teleporter");
-		}
-#endif
-
-        self.building.health=0; // - OfN aborts hacks on it
-        dremove(self.building);
+		self.building.health=0; // - OfN aborts hacks on it
+		dremove(self.building);
 	}
-    else if (inp == 10)
-    {
-    	ResetMenu();		
+	else if (inp == 10)
+	{
+		ResetMenu();		
 		self.impulse = 0;
-        return;
-    }
-    if ((inp >= 1 && inp <= 3) || inp == 8)
+		return;
+	}
+	if ((inp >= 1 && inp <= 3) || inp == 8)
 	{
 		ResetMenu();		
 		self.impulse = 0;
@@ -3370,16 +3157,13 @@ void(float inp) Menu_EngineerFix_Teleporter_Input =
 			self.armorclass = 0; // lost special armor
 			self.items = self.items - (self.items & (8192 | 16384 | 32768));
 		}
-
 		W_SetCurrentAmmo();
 	}
 };
-
 void() Menu_EngineerFix_Camera =
 {
 	CenterPrint(self, "¡„ÙÈÔÓ:                \n\n.. Repair Camera      \n\n.. ŒÔÙËÈÓÁ            \n\n.. Dismantle          \n");
 };
-
 void(float inp) Menu_EngineerFix_Camera_Input =
 {
 	local float metalcost; //am,
@@ -3395,16 +3179,11 @@ void(float inp) Menu_EngineerFix_Camera_Input =
 	}
 	else if (inp == 3)
 	{
-        sprint(self, #PRINT_HIGH, "You dismantle the Security Camera.\n");
+		sprint(self, #PRINT_HIGH, "You dismantle the Security Camera.\n");
 		self.ammo_cells = self.ammo_cells + (#BUILD_COST_CAMERA * 0.5) + floor(self.building.health / 40);
 		self.building.real_owner.has_camera = 0;
-#ifdef QUAKE_WORLD
-		if (Teammate(self.building.real_owner.team_no,self.team_no) && teamplay != 0 && self.building.real_owner != self) { //Boot em if they dismantle too many
-			Add_Building_Teamkill (self, "security camera");
-		}
-#endif
-        self.building.health=0; // - OfN aborts hacks on it
-        dremove(self.building);
+		self.building.health=0; // - OfN aborts hacks on it
+		dremove(self.building);
 	}
 	if (inp >= 1 && inp <= 3)
 	{
@@ -3421,7 +3200,6 @@ void(float inp) Menu_EngineerFix_Camera_Input =
 		W_SetCurrentAmmo();
 	}
 };
-
 void() Menu_NewTaunts = 
 {
 #ifdef mtf_coop_halloween
@@ -3430,7 +3208,6 @@ void() Menu_NewTaunts =
 	CenterPrint(self, "ÄÅÅ Taunt Menu 2 ÅÅÇ\n\nÄìÇ How many assholes    \nÄîÇ Keep firing, assholes\nÄïÇ Surrounded by a-holes\n  ÄñÇ You bearded bitch!     \nÄóÇ                      \nÄòÇ NI!                  \nÄôÇ I do believe..       \nÄöÇ                      \nÄõÇ Nothing              \n");
 #endif
 };
-
 void(float inp) Menu_NewTaunts_Input = 
 {
 #ifdef mtf_coop_halloween
@@ -3570,7 +3347,6 @@ void(float inp) Menu_NewTaunts_Input =
 	ResetMenu();
 	self.impulse = TF_FLARE_LIT;
 };
-
 #ifdef botprogs
 float fSayHealth;
 void () Menu_Bot =
@@ -3598,7 +3374,6 @@ void () Menu_Bot =
 		}
 	}
 };
-
 void (float _p_1323) Menu_Bot_Input =
 {
 	local entity _l_1324;
@@ -3662,7 +3437,6 @@ void (float _p_1323) Menu_Bot_Input =
 		}
 	}
 };
-
 void () Menu_Bot_Team =
 {
 	if (number_of_teams < 3)
@@ -3674,7 +3448,6 @@ void () Menu_Bot_Team =
 	else 
 		CenterPrint (self, "=== Choose his team ===\n\nì.. Blue\nî.. Red \n\n");
 };
-
 void (float _p_1327) Menu_Bot_Team_Input =
 {
 	if (number_of_teams < 3)
@@ -3700,12 +3473,10 @@ void (float _p_1327) Menu_Bot_Team_Input =
 	}
 	self.impulse = 0.000000;
 };
-
 void () Menu_Bot_Class =
 {
 	CenterPrint (self, "=== Choose his class ===\n\nì.. Scout   \nî.. Sniper  \nï.. Soldier \nñ.. Demoman \nó.. Medic   \nò.. Hvwep   \nô.. Pyro    \nö.. Spy     \nõ.. Engineer\n");
 };
-
 void (float _p_1330) Menu_Bot_Class_Input =
 {
 	if (((_p_1330 < 1.000000) || (_p_1330 > 9.000000)))
@@ -3717,12 +3488,10 @@ void (float _p_1330) Menu_Bot_Class_Input =
 	CenterPrint (self, "\n");
 	botConnect (self.obs_time, _p_1330);
 };
-
 void () Menu_Bot_Buddy =
 {
 	CenterPrint(self, "Buddy Bot Action Menu\n\n1. Stay where you are\n2. Follow me\n3. Jump dumbass!\n4. Suicide\n5. Follow Waypoints: Off\n6. Set waypoint 1 here\n 7. Set waypoint 2 here\n8. Go where my crosshair is pointing\n9. Nothing\n");
 };
-
 void (float inp) Menu_Bot_Buddy_Input =
 {
 	if ( (inp < 1) || (inp > 9) )
@@ -3796,13 +3565,11 @@ void (float inp) Menu_Bot_Buddy_Input =
 	}
 };
 #endif
-#ifdef mtf_coop
 void () MTF_Resurrect_Player_Find;
 void () Menu_Res =
 {
 	centerprint(self, "Nearby player is requesting a resurrect\n\nResurrect?\nê1ë Yes\nê2ë No \n");
 };
-
 void (float inp) Menu_Res_Input =
 {
 	if (inp == 1)
@@ -3812,8 +3579,6 @@ void (float inp) Menu_Res_Input =
 	self.current_menu = 0.000000;
 	CenterPrint (self, "\n");
 };
-#endif
-
 void () Menu_VoteChoice =
 {
 	local string nm_name;
@@ -3828,7 +3593,6 @@ void () Menu_VoteChoice =
 	if (votestarted == #VOTE_SURVIVAL_NEXT)
 		centerprint(self, "A player has called a vote to\nchange the \sGAME MODE\s to \sSURVIVAL\s\nfor the next map.\n\nê1ë Agree   \nê2ë Disagree\n");
 };
-
 void (float inp) Menu_VoteChoice_Input =
 {
 	if (inp == 1)
@@ -3837,8 +3601,6 @@ void (float inp) Menu_VoteChoice_Input =
 	self.current_menu = 0.000000;
 	CenterPrint (self, "\n");
 };
-
-#ifdef mtf_coop_expsys
 void () Menu_Merchant =
 {
 	local string itemlist;
@@ -3878,7 +3640,6 @@ void () Menu_Merchant =
 	strunzone(itemlist);
 	self.current_menu = 0;
 };
-
 #define playerhand		has_mini
 #define dealerhand		has_voted
 #define resultmenu		has_teleporter
@@ -3936,7 +3697,6 @@ void () Blackjack_Think =
 			self.#dealerhand = 0;
 			self.#playerhand = 0;
 		}
-
 		self.has_tesla = 0;
 	}
 	else
@@ -3970,12 +3730,10 @@ void () Blackjack_Think =
 			CenterPrint (self.owner, "\n");
 			dremove(self);
 		}
-
 		self.has_tesla = 0;
 	}
 	self.nextthink = time + .1;
 };
-
 void ( float inp ) Menu_Merchant_Input =
 {
 	local entity minigame;
@@ -4042,10 +3800,8 @@ void ( float inp ) Menu_Merchant_Input =
 	self.current_menu = 0.000000;
 	CenterPrint (self, "\n");
 };
-
 void () Menu_Blackjack =
 {};
-
 void ( float inp ) Menu_Blackjack_Input =
 {
 	local entity te;
@@ -4069,11 +3825,9 @@ void ( float inp ) Menu_Blackjack_Input =
 	self.current_menu = 0.000000;
 	CenterPrint (self, "\n");
 };
-
 #ifdef mtf_coop_quests
 void () Menu_Quest =
 {};
-
 void ( float inp ) Menu_Quest_Input =
 {
 	local entity te;
@@ -4098,7 +3852,6 @@ void ( float inp ) Menu_Quest_Input =
 	self.current_menu = 0.000000;
 	CenterPrint (self, "\n");
 };
-
 #define quest_menu		has_mini
 void () Quest_Think =
 {
@@ -4119,7 +3872,6 @@ void () Quest_Think =
 		CenterPrint (self.owner, "\n");
 		dremove(self);
 	}
-
 	if (self.#quest_menu == 0)
 		CenterPrint6 (self.owner, "[Quests]\n\nAvailable Quest:\n", "[1] ", Quest_GetValueFor( #QUESTINFO_DESCRIPTION, merchant.#questid, self.owner ), "\n[4] Return\n" );
 	else
@@ -4156,5 +3908,4 @@ void () Quest_Think =
 	self.nextthink = time + .1;
 };
 #endif
-#endif
-//end
+//END

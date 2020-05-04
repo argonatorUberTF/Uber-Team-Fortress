@@ -266,11 +266,7 @@ void (vector org, vector dir, entity targ, float dm) AC_seekingmissile =
 	newmis.movetype = 9;
 	newmis.solid = 2;
 	newmis.effects = 8;
-#ifdef mtf_coop
 	setmodelu (newmis, "progs/rocket2.mdl");
-#else
-	setmodel (newmis, "progs/rocket2.mdl");
-#endif
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	newmis.angles = vectoangles (dir);
 	newmis.touch = ACprojectile_touchboom;
@@ -296,11 +292,7 @@ void (vector org, vector dir, entity targ) AC_heatseeker =
 {
 	sound (self.enemy, 1, "helo/rocklnch.wav", 1, 1);
 	AC_seekingmissile (org, dir, targ, 120);
-#ifdef mtf_coop
 	setmodelu (newmis, "progs/rocket2.mdl");
-#else
-	setmodel (newmis, "progs/rocket2.mdl");
-#endif
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	newmis.speed = 950;
 	newmis.weapon = 150;
@@ -354,4 +346,3 @@ void () AC_Flare =
 	}
 };
 //END
-

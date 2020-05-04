@@ -69,8 +69,6 @@ float (entity source, entity targ) zg_infront =
 	}
 	return FALSE;
 };
-
-
 float (entity tester_e, entity test) zg_invalidtarget =
 {
 	if (test.classname == "detpack")
@@ -85,7 +83,6 @@ float (entity tester_e, entity test) zg_invalidtarget =
 	if (test.flags & FL_ITEM) {
 		if (ZG_ItemType(test) > 0)
 			return FALSE;
-
 		return 3;
 	}
 #endif
@@ -105,7 +102,6 @@ float (entity tester_e, entity test) zg_invalidtarget =
 		return TRUE;
 	return FALSE;
 };
-
 entity (entity source) zg_findtarget =
 {
 	local entity radiusent;
@@ -120,10 +116,8 @@ entity (entity source) zg_findtarget =
 	while (radiusent) {
 		if (!(ret = zg_invalidtarget(source, radiusent)))
 			return radiusent;
-
 		if (ret > 1)
 			badpickup = ret;
-
 		radiusent = radiusent.chain;
 	}
 	if (source.flags & FL_CLIENT) {
@@ -139,10 +133,8 @@ entity (entity source) zg_findtarget =
 		else
 			sprint (source, PRINT_HIGH, "There's nothing there to pickup\n");
 	}
-
 	return world;
 };
-
 void () zg_think =
 {
 	local entity pickuper, pickupee;
@@ -165,8 +157,6 @@ void () zg_think =
 
 	self.nextthink = time + 0.05;
 };
-
-
 void (entity pickuper, float toss) zg_drop =
 {
 	local entity pickupee, oldself;
@@ -175,7 +165,6 @@ void (entity pickuper, float toss) zg_drop =
 	if (pickuper.pickedupobject_hands == world)
 		return;
 	remove (pickuper.pickupthink_hands);
-
 #ifdef GW_ALLOW_PICKUP_ITEM
 	if (pickupee.flags & FL_ITEM) {
 		if (pickuper.health <= 0 || toss == 2) {
@@ -198,7 +187,6 @@ void (entity pickuper, float toss) zg_drop =
 			pickupee.movetype = 10;
 			pickupee.velocity = v_forward * 700;
 		}
-
 		pickuper.owner = pickuper._oldowner;
 		pickuper.pickedupobject_hands = world;
 		if (pickuper.health > 0) {
@@ -210,7 +198,6 @@ void (entity pickuper, float toss) zg_drop =
 		return;
 	}
 #endif
-
 	if (toss == 1) {
 		pickupee.velocity = v_forward * 500;
 
@@ -272,7 +259,6 @@ void (entity pickuper, float toss) zg_togglepickup =
 	else
 		zg_drop (pickuper, toss);
 };
-
 #ifdef GW_ALLOW_PICKUP_ITEM
 void () ZG_ExplosiveTouch;
 float (entity test) ZG_ItemType =
@@ -301,7 +287,6 @@ void(entity pickupee) ZG_FireItem =
 	newmis.movetype = 10;
 	newmis.solid = 2;
 	newmis.classname = "pipebomb";
-
 	newmis.weapon = 5;
 	newmis.classname = "grenade";
 	newmis.skin = TF_FLARE_OFF;
@@ -315,9 +300,7 @@ void(entity pickupee) ZG_FireItem =
 	else
 	{
 		newmis.velocity = aim(self, 10000);
-
 		newmis.velocity = newmis.velocity * 1200;
-
 		newmis.velocity_z = 200;
 	}
 	newmis.angles = vectoangles(newmis.velocity);

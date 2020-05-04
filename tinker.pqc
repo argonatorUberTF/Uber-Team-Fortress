@@ -2,14 +2,14 @@ void () BadTinker =
 {
 	local float prob;
 	prob = random();
-      	if (prob <= 0.6){ // Zilch
+	if (prob <= 0.6){ // Zilch
 		sprint(self,2,"Nothing happened.\n");
 	}
-       	else if (prob <= 0.8){ // Zowie!
+	else if (prob <= 0.8){ // Zowie!
 		TF_T_Damage(self.building, world, world, self.building.health+1, 0, 0);
 		sprint(self,2,"The tesla blew up.\n");
 	}
-        	else { // ZAP!
+	else { // ZAP!
 		self.building.health = 100; //WK Make it easy to kill
 		if (self.building.max_health == 100)
 			self.building.max_health = 65;
@@ -40,11 +40,11 @@ void () DoTinker =
 		self.ammo_cells = self.ammo_cells - 100;
 	self.building.lip = self.building.lip + 1; // Increment Tinker Count
 	if (self.building.lip == 1)
-                        thresh = 0.25;
+		thresh = 0.25;
 	else if (self.building.lip <= 3)
-                        thresh = 0.5;
+		thresh = 0.5;
 	else
-                        thresh = 0.75;
+		thresh = 0.75;
 	self.building.ammo_medikit = self.building.ammo_medikit - 1;	// take away a tinker upgrade
 	if (random() <= thresh)	// HEHE, BOOM
 	{

@@ -1,9 +1,6 @@
 void() turret_ret2;
 void() turret_active;
-#ifdef mtf_coop_malice
 void () monster_turret_malice;
-#endif
-#ifdef mtf_coop
 float () MTurret_FindTarget =
 {
 	local entity te;
@@ -23,7 +20,6 @@ float () MTurret_FindTarget =
 	}
 	return 0;
 };
-#endif
 void() beam_touch = 
 {
 	local float totaldmg;
@@ -221,14 +217,10 @@ void() turret_face =
 void() turret_still = [0, turret_still]
 {
 	self.frame = turret_frame(self.rotate_type);
-#ifdef mtf_coop
 	if (self.netname == "monster_miniturret")
 		FindTarget();
 	else
 		MTurret_FindTarget ();
-#else
-	FindTarget();
-#endif
 };
 void() turret_ret1 = [16, turret_ret1]
 {
@@ -315,11 +307,7 @@ void() turret_unret7 = [0, turret_unret7]
 };
 void() turret_retracted = [22, turret_retracted]
 {
-#ifdef mtf_coop
 	if (MTurret_FindTarget())
-#else
-	if (FindTarget())
-#endif
 	{
 		turret_unret1();
 	}
@@ -354,11 +342,7 @@ void() turret_active = [0, turret_active]
 	}
 	if (self.search_time < time)
 	{
-#ifdef mtf_coop
 		if (MTurret_FindTarget())
-#else
-		if (FindTarget())
-#endif
 		{
 			return;
 		}
@@ -643,12 +627,10 @@ void() turret_setup =
 };
 void() monster_turret = 
 {
-#ifdef mtf_coop_malice
 	if (mapname == "d15") {
 		monster_turret_malice ();
 		return;
 	}
-#endif
 #ifdef mtf_coop_halflife
 	if (#HL_MAP)
 		if (!self.team_no) {

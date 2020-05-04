@@ -222,7 +222,6 @@ void () Security_Camera_Die =
 void () Security_Camera_PrintTarget =
 {
 	local string st;
-
 	sprint (self.real_owner, 2, "сецуриты цамера  ");
 	st = GetTrueTeamName (self.enemy.team_no);
 	sprint (self.real_owner, 2, st);
