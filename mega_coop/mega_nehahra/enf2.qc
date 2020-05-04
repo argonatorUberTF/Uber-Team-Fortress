@@ -57,7 +57,6 @@ void () mark3_stand1 = [ 23, mark3_stand2 ]
 	ai_stand ();
 	ai_emnity ("monster_qguy", 1500, 0);
 };
-
 void () mark3_stand2 = [ 24, mark3_stand3 ]
 {
 	ai_stand ();
@@ -382,7 +381,6 @@ void () mark3_die3 = [ 2, mark3_die4 ]
 	self.ammo_nails = 20;
 	DropBackpack ();
 };
-
 void () mark3_die4 = [ 3, mark3_die5 ]
 {
 	ai_forward (14);
@@ -392,14 +390,11 @@ void () mark3_die5 = [ 4, mark3_die6 ]
 	ai_forward (FL_SWIM);
 };
 void () mark3_die6 = [ 5, mark3_die7 ]
-{
-};
+{};
 void () mark3_die7 = [ 6, mark3_die8 ]
-{
-};
+{};
 void () mark3_die8 = [ 7, mark3_die9 ]
-{
-};
+{};
 void () mark3_die9 = [ 8, mark3_die10 ]
 {
 	ai_forward (MOVETYPE_WALK);

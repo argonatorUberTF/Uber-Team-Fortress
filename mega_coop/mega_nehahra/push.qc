@@ -36,11 +36,9 @@ void () pushable_die =
 	multicast (self.origin, 1);
 	BecomeExplosion();
 };
-#ifndef mtf_coop_halflife
-#ifdef mtf_coop_nehahra
 void () func_pushable =
 {
-	precache_sound ("wall/push.wav");
+//	precache_sound ("wall/push.wav");  // moved to missingprecaches in additional.pqc -arg You shouldn't have to request this func to get the sound effect that's common -arg
 	self.mangle = self.angles;
 	self.angles = '0 0 0';
 	self.classname = "pushwall";
@@ -74,8 +72,6 @@ void () func_pushable =
 		self.th_die = pushable_die;
 	}
 };
-#endif
-#endif
 void () info_weight_switch =
 {
 	precache_sound ("misc/trigger1.wav");

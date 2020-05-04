@@ -601,7 +601,6 @@ void () death_aura =
 		T_Damage (other, self, self, other.health);
 	}
 };
-
 void () wraith_wait =
 {
 	self.use = wraith_begin;

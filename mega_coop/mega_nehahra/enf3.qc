@@ -52,7 +52,6 @@ void () enf3_run3 = [ 2, enf3_run4 ]
 	}
 	ai_walk (MOVETYPE_PUSH);
 };
-
 void () enf3_run4 = [ 3, enf3_run5 ]
 {
 	if ((self.enemy != world))
@@ -301,7 +300,6 @@ void () enf3_close2 = [ 29, enf3_close3 ]
 {
 	sound (self, CHAN_VOICE, "enf3/jump1.wav", 1, ATTN_NORM);
 };
-
 void () enf3_close3 = [ 28, enf3_close4 ]
 {};
 void () enf3_close4 = [ 27, enf3_close5 ]
@@ -354,7 +352,6 @@ void () enf3_dice2 = [ 95, enf3_dice3 ]
 {
 	enf3_bladepull ();
 };
-
 void () enf3_dice3 = [ 96, enf3_dice4 ]
 {
 	enf3_bladepull ();
@@ -463,7 +460,6 @@ void () enf3_dice18 = [ 111, enf3_dice19 ]
 	chainsaw (0);
 	self.angles_y = (self.angles_y + (random () * 5));
 };
-
 void () enf3_dice19 = [ 112, enf3_dice20 ]
 {
 	enf3_bladepull ();
@@ -671,7 +667,6 @@ void () enf3_plop3 = [ 92, enf3_plop4 ]
 };
 void () enf3_plop4 = [ 93, corpse_think ]
 {};
-
 void () monster_enf3 =
 {
 	if (deathmatch)
@@ -754,7 +749,6 @@ void () enf3_awake4 =
 void () enf3_painsound =
 {
 	local float num;
-
 	num = random ();
 	if ((num < 0.2))
 	{

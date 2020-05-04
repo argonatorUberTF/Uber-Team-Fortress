@@ -832,4 +832,3 @@ void () hunter_runfire6 =
 	ai_run_slide ();//(6);
 };
 //END
-

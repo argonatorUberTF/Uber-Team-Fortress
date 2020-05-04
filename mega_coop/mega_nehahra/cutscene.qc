@@ -140,7 +140,6 @@ void () come_to_me =
 	self.think = come_to_me;
 	self.nextthink = (time + 0.01);
 };
-
 void () camera_cyclez =
 {
 	local entity head;
@@ -156,7 +155,6 @@ void () camera_cyclez =
 	head.origin = self.origin;
 	setorigin (head, self.origin);
 };
-
 void (entity o) spawn_dummy =
 {
 	local entity sa;
@@ -488,7 +486,6 @@ void () fade_out_go =
 float () findcamera =
 {
 	local entity head;
-
 	head = find (world, classname, "camera");
 	if ((head == world))
 	{

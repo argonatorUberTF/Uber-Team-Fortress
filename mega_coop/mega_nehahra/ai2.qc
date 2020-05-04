@@ -311,8 +311,9 @@ float () ai_jagmourn =
 	{
 		selected.relations = (selected.relations + 1);
 		self.enemy = selected.enemy;
-		// xav hax:
-		if (self.th_mourn == SUB_Null) {
+// xav hax:
+		if (self.th_mourn == SUB_Null)
+		{
 			bprint(2,"MOURN FIX - TELL DEV\n");
 			jagger_mourn();
 		}
@@ -484,7 +485,6 @@ void () ai_face_objekt =
 };
 void (float dist) ai2_walk =
 {
-	
 	movedist = dist;
 	if (self.objekt)
 	{
@@ -498,9 +498,6 @@ void (float dist) ai2_walk =
 };
 void () ai2_stand =
 {
-	if (self.objekt)
-	{
-	}
 	if ((time < self.pausetime))
 	{
 		return;
@@ -699,7 +696,6 @@ void (float dist) ai2_run =
 void () ai2_run_slide =
 {
 	local float ofs;
-
 	if (self.lefty)
 	{
 		ofs = 90;
@@ -752,7 +748,6 @@ void (float dist) ai3_run =
 {
 	local vector megadeth;
 	local entity putz;
-
 	if (((self.relations == 4) && (self.enemy.classname == "player")))
 	{
 		self.enemy = world;

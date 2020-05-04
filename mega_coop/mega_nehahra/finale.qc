@@ -286,7 +286,6 @@ void () spawn_finalefx =
 void () setupfinalefx =
 {
 	local entity head;
-
 	head = find (world, classname, "camera");
 	if ((head != world))
 	{

@@ -1,3 +1,4 @@
+//This switch is not on, so this code is archival at best -arg
 #ifdef mtf_nehmode
 void () BecomeExplosion2 =
 {

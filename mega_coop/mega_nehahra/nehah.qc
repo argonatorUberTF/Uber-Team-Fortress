@@ -624,7 +624,6 @@ float (entity targ) visible_bsp =
 void (entity targ) face_bsp =
 {
 	local vector spot1;
-
 	spot1 = targ.absmin + ((targ.absmax - targ.absmin) * 0.5);
 	self.ideal_yaw = vectoyaw ((spot1 - self.origin));
 	ChangeYaw ();

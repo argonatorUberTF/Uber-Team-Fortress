@@ -1,3 +1,4 @@
+void () doom_barrel_think, doom_barrel_die;
 void () Anglechecking =
 {
 	if ((self.angles_x > 360))
@@ -389,7 +390,6 @@ void () func_sobject =
 	}
 	exploding_wall ();
 };
-void () doom_barrel_think, doom_barrel_die;
 void () exploding_wall =
 {
 	local vector tempvec;
@@ -416,9 +416,11 @@ void () exploding_wall =
 		self.takedamage = DAMAGE_NO;		// can only be killed by a trigger
 	}
 	
-	if (#DOOM_MAP) {
+	if (#DOOM_MAP)
+	{
 		tempvec = self.maxs-self.mins;
-		if (tempvec == '38 38 46' || tempvec == '36 36 42') {
+		if (tempvec == '38 38 46' || tempvec == '36 36 42')
+		{
 			oself = self;
 			precache_model("progs/barrel.spr");
 			te = spawn();
@@ -697,8 +699,6 @@ void () player_push2 =
 	{
 		return;
 	}
-
-
 	if ((walkmove (other.angles_y, 2) == FALSE))
 	{
 		self.velocity_x = (other.velocity_x + (400 * random ()));
@@ -722,7 +722,6 @@ void () squish_touch =
 void () squish_touch2 =
 {
 	local vector spot;
-
 	if ((other.flags & FL_CLIENT))
 	{
 		spot = self.absmin + ((self.absmax - self.absmin) * 0.5);

@@ -33,7 +33,6 @@ void () GauntLightning =
 void (entity missile) TossBackGrenade =
 {
 	local vector megadeth;
-
 	if ((random () < 0.1))
 	{
 		sound (self.enemy, CHAN_AUTO, "archg/lift.wav", 1, ATTN_NORM);
@@ -105,7 +104,6 @@ void () Handle_Threats =
 void () ThrashEnemy =
 {
 	local entity thrashed;
-
 	thrashed = self.enemy;
 	if ((thrashed.flags & FL_ONGROUND))
 	{
@@ -136,7 +134,6 @@ void () ThrashEnemy =
 		thrashed.velocity_y = (-500 * random ());
 	}
 };
-
 void () archgaunt_funeral =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -218,7 +215,6 @@ void () archgaunt_start =
 	trigger_spawnmonster ();
 	carnify_archgaunt ();
 };
-
 void () carnify_archgaunt =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -718,7 +714,6 @@ float () scan_for_goodies =
 	local entity head;
 	local entity selected;
 	local float dist;
-
 	dist = 500;
 	selected = world;
 	head = findradius (self.origin, 500);

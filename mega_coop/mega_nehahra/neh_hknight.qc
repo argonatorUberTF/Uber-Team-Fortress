@@ -362,12 +362,10 @@ void () hknight_die1 = [ 42, hknight_die2 ]
 {
 	ai_forward (MOVETYPE_BOUNCE);
 };
-
 void () hknight_die2 = [ 43, hknight_die3 ]
 {
 	ai_forward (FL_CLIENT);
 };
-
 void () hknight_die3 = [ 44, hknight_die4 ]
 {
 	self.solid = SOLID_NOT;
@@ -858,7 +856,6 @@ void () hknight_slice7 = [ 118, hknight_slice8 ]
 	ai_charge (FL_CLIENT);
 	ai_melee ();
 };
-
 void () hknight_slice8 = [ 119, hknight_slice9 ]
 {
 	ai_charge (FL_SWIM);

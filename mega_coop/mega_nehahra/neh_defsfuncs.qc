@@ -6,7 +6,6 @@ void (float fframe, void() vvoid) parse_anim =
 		return;
 	}
 	self.frame = fframe;
-
 	self.think = vvoid;
 	self.nextthink = time + 0.1;
 };
@@ -18,38 +17,7 @@ void ( entity ent_a, entity ent_b ) tracetoss =
 {};
 void () corpse_think =
 {};
-#ifndef mtf_coop_nehahra
-void () monster_army2 =
-{
-	self.classname = "monster_army";
-	monster_army ();
-};
-void () monster_army3 =
-{
-	self.classname = "monster_army";
-	monster_army ();
-	self.skin = 0;
-};
-void () monster_army4 =
-{
-	self.classname = "monster_army";
-	monster_army ();
-};
-void () monster_army5 =
-{
-	self.classname = "monster_army";
-	monster_army ();
-};
-#endif
 float (vector vec, vector vec2) at_ledge;
-.void() th_wins;
-.void() th_greet;
-.void() th_special;
-.void() th_mourn;
-.void() th_back;
-.void() th_runfire;
-void () ai_turn;
-void (vector dest3) ChooseTurn;
 float () FacingIdeal;
 float () CheckAnyAttack;
 void () ai_run_melee;
@@ -2080,7 +2048,6 @@ void () valve_turn;
 void () misc_car;
 void () monster_use;
 void () monster_death_use;
-
 void () walkmonster_start;
 void () flymonster_start_go;
 void () flymonster_start;
@@ -2772,7 +2739,6 @@ void () sham_death10;
 void () sham_death11;
 void () sham_die;
 void () monster_shambler;
-
 void () army_stand1;
 void () army_stand2;
 void () army_stand3;
@@ -3726,7 +3692,6 @@ void () sbarrel_explode =
 	multicast(self.origin, TF_FLARE_OFF);
 	BecomeExplosion ();
 };
-#ifndef HALFLIFE
 float (entity Top, entity bottom) IsOnTopOf =
 {
 	if ((Top.absmin_z < (bottom.absmax_z - 3)))
@@ -3755,7 +3720,6 @@ float (entity Top, entity bottom) IsOnTopOf =
 	}
 	return (1);
 };
-#endif
 void () misc_car =
 {
 	local float oldz;
@@ -4639,4 +4603,4 @@ void () monster_swim =
 		}
 	}
 };
-//END 
+//END

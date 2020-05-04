@@ -43,7 +43,6 @@ void () monster_vomitus =
 	precache_sound ("zombie/z_miss.wav");
 	precache_sound ("zombie/z_hit.wav");
 	precache_sound ("zombie/z_shot1.wav");
-
 	MTF_Setup_Monster_Presets ( 0, "vomitus", monster_vomitus1 );
 };
 void () vomit_ouchie =

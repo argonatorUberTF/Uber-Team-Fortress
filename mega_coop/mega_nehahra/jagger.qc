@@ -193,7 +193,6 @@ void () jagger_call1 = [ 106, jagger_call2 ]
 {
 	ai_face ();
 };
-
 void () jagger_call2 = [ 107, jagger_call3 ]
 {
 	ai_face ();
@@ -353,7 +352,6 @@ void () jagger_nod3 = [ 48, jagger_nod4 ]
 {
 	ai_face ();
 };
-
 void () jagger_nod4 = [ 49, jagger_nod5 ]
 {
 	ai_face ();
@@ -518,9 +516,6 @@ void () jagger_scareem =
 {
 	local entity mustaine;
 	mustaine = self.enemy;
-	if ((mustaine.enemy == self))
-	{
-	}
 	if ((mustaine.classname == "monster_ogre"))
 	{
 		mustaine.flags = (mustaine.flags + FL_FLEE);
@@ -1266,7 +1261,6 @@ void () jagger_nedec =
 	}
 	jagger_walk ();
 };
-
 void () jagger_irdec =
 {
 	local entity mustaine;

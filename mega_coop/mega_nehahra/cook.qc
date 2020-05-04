@@ -25,7 +25,6 @@ void () monster_cook1 =
 	self.th_wins = cook_wins;
 	MTF_Setup_Monster_Postsets( self.health, coop_walkmonster_start);
 };
-
 void () monster_cook =
 {
 	if (deathmatch)
@@ -33,7 +32,6 @@ void () monster_cook =
 		remove (self);
 		return;
 	}
-//	total_monsters = total_monsters + 1;
 	precache_model ("progs/cook.mdl");
 	precache_model ("progs/h_ogre.mdl");
 	precache_sound ("ogre/ogdrag.wav");
@@ -70,13 +68,11 @@ void () monster_cook =
 	precache_sound ("knight/sword1.wav");
 	MTF_Setup_Monster_Presets ( 0, "ogre cook", monster_cook1 );
 };
-
 void () cook_nowalk =
 {
 	self.goalentity = world;
 	self.th_stand ();
 };
-
 void () cook_think =
 {
 	local entity clienta;
@@ -98,7 +94,6 @@ void () cook_think =
 		self.th_special ();
 	}
 };
-
 void () cook_control1 =
 {
 	local float num;
@@ -117,7 +112,6 @@ void () cook_control1 =
 	}
 	cook_flip1 ();
 };
-
 void () cook_cook =
 {
 	if ((self.walkframe >= 8))
@@ -131,7 +125,6 @@ void () cook_cook =
 	self.walkframe = (self.walkframe + 1);
 	cook_think ();
 };
-
 void () cook_flip1 =
 {
 	if ((self.walkframe >= 11))
@@ -144,7 +137,6 @@ void () cook_flip1 =
 	self.frame = (18 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () cook_control2 =
 {
 	local float num;
@@ -213,7 +205,6 @@ void () cook_control2 =
 	}
 	self.skin = 0;
 };
-
 void () cook_checkcooks =
 {
 	local entity cook;
@@ -231,7 +222,6 @@ void () cook_checkcooks =
 		cook = find (cook, classname, "monster_cook");
 	}
 };
-
 void () cook_wins =
 {
 	if ((self.impulse == 0))
@@ -261,7 +251,6 @@ void () cook_wins =
 	}
 	cook_stand ();
 };
-
 void () cook_stand =
 {
 	if ((self.walkframe >= 7))
@@ -273,7 +262,6 @@ void () cook_stand =
 	self.walkframe = (self.walkframe + 1);
 	ai_stand ();
 };
-
 void () cook_shake =
 {
 	if ((self.walkframe >= 6))
@@ -286,11 +274,8 @@ void () cook_shake =
 	self.frame = (8 + self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () cook_oshake = [ 14, cook_oshake2 ]
-{
-};
-
+{};
 void () cook_oshake2 =
 {
 	if ((random () < 0.5))
@@ -301,10 +286,8 @@ void () cook_oshake2 =
 	}
 	parse_anim ( 15, cook_oshake3 );
 };
-
 void () cook_oshake3 = [ 16, cook_oshake4 ]
-{
-};
+{};
 
 void () cook_oshake4 =
 {
@@ -323,7 +306,6 @@ void () cook_oshake4 =
 	}
 	parse_anim ( 17, cook_control1 );
 };
-
 void () cook_run1 =
 {
 	if (borkfactor1 ())
@@ -337,22 +319,18 @@ void () cook_run1 =
 		sound (self, CHAN_VOICE, "ogre/ogidle2.wav", 1, ATTN_IDLE);
 	}
 };
-
 void () cook_run2 = [ 42, cook_run3 ]
 {
 	ai_run (12);
 };
-
 void () cook_run3 = [ 43, cook_run4 ]
 {
 	ai_run (FL_CLIENT);
 };
-
 void () cook_run4 = [ 44, cook_run5 ]
 {
 	ai_run (22);
 };
-
 void () cook_run5 = [ 45, cook_run6 ]
 {
 	ai_run (FL_INWATER);
@@ -364,22 +342,18 @@ void () cook_run5 = [ 45, cook_run6 ]
 		}
 	}
 };
-
 void () cook_run6 = [ 46, cook_run7 ]
 {
 	ai_run (MOVETYPE_STEP);
 };
-
 void () cook_run7 = [ 47, cook_run8 ]
 {
 	ai_run (13);
 };
-
 void () cook_run8 = [ 48, cook_run1 ]
 {
 	ai_run (24);
 };
-
 void () cook_scoot1 = [ 41, cook_scoot2 ]
 {
 	movetogoal (MOVETYPE_FLYMISSILE);
@@ -388,71 +362,58 @@ void () cook_scoot1 = [ 41, cook_scoot2 ]
 		sound (self, CHAN_VOICE, "ogre/ogidle2.wav", 1, ATTN_IDLE);
 	}
 };
-
 void () cook_scoot2 = [ 42, cook_scoot3 ]
 {
 	movetogoal (12);
 };
-
 void () cook_scoot3 = [ 43, cook_scoot4 ]
 {
 	movetogoal (FL_CLIENT);
 };
-
 void () cook_scoot4 = [ 44, cook_scoot5 ]
 {
 	movetogoal (22);
 };
-
 void () cook_scoot5 = [ 45, cook_scoot6 ]
 {
 	movetogoal (FL_INWATER);
 };
-
 void () cook_scoot6 = [ 46, cook_scoot7 ]
 {
 	movetogoal (MOVETYPE_STEP);
 };
-
 void () cook_scoot7 = [ 47, cook_scoot8 ]
 {
 	movetogoal (13);
 };
-
 void () cook_scoot8 = [ 48, cook_control2 ]
 {
 	movetogoal (24);
 };
-
 void () cook_notice = [ 29, cook_notice2 ]
 {
 	ai_face ();
 	self.th_stand = cook_stand;
 };
-
 void () cook_notice2 = [ 30, cook_notice3 ]
 {
 	ai_face ();
 	sound (self, CHAN_VOICE, "cook/panup.wav", 1, ATTN_IDLE);
 };
-
 void () cook_notice3 = [ 31, cook_notice4 ]
 {
 	ai_face ();
 };
-
 void () cook_notice4 = [ 32, cook_notice5 ]
 {
 	ai_face ();
 };
-
 void () cook_notice5 =
 {
 	self.cnt = 0;
 	self.aflag = 0;
 	parse_anim ( 33, cook_control2 );
 };
-
 void () cook_pain =
 {
 	if ((self.pain_finished > time))
@@ -474,35 +435,20 @@ void () cook_pain =
 		parse_anim ( 65, cook_painb1 );
 	}
 };
-
 void () cook_paina1 = [ 63, cook_paina2 ]
-{
-};
-
+{};
 void () cook_paina2 = [ 64, cook_run1 ]
-{
-};
-
+{};
 void () cook_painb1 = [ 66, cook_painb2 ]
-{
-};
-
+{};
 void () cook_painb2 = [ 67, cook_painb3 ]
-{
-};
-
+{};
 void () cook_painb3 = [ 68, cook_painb4 ]
-{
-};
-
+{};
 void () cook_painb4 = [ 69, cook_painb5 ]
-{
-};
-
+{};
 void () cook_painb5 = [ 70, cook_run1 ]
-{
-};
-
+{};
 void () cook_die =
 {
 	if ((self.health < -80))
@@ -517,32 +463,20 @@ void () cook_die =
 	sound (self, CHAN_VOICE, "ogre/ogdth.wav", 1, ATTN_NORM);
 	parse_anim ( 71, cook_die2 );
 };
-
 void () cook_die2 = [ 72, cook_die3 ]
-{
-};
-
+{};
 void () cook_die3 = [ 73, cook_die4 ]
 {
 	self.solid = SOLID_NOT;
 };
-
 void () cook_die4 = [ 74, cook_die5 ]
-{
-};
-
+{};
 void () cook_die5 = [ 75, cook_die6 ]
-{
-};
-
+{};
 void () cook_die6 = [ 76, cook_die7 ]
-{
-};
-
+{};
 void () cook_die7 = [ 77, corpse_think ]
-{
-};
-
+{};
 void () cook_melee =
 {
 	self.walkframe = 0;
@@ -559,33 +493,26 @@ void () cook_melee =
 		parse_anim ( 54, cook_pong );
 	}
 };
-
 void () cook_ping = [ 50, cook_ping2 ]
 {
 	ai_charge (8);
 	sound (self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_IDLE);
 };
-
 void () cook_ping2 = [ 51, cook_ping3 ]
 {
 	ai_charge (8);
 };
-
 void () cook_ping3 = [ 52, cook_ping4 ]
 {
 	ai_charge (8);
 };
-
 void () cook_ping4 = [ 53, cook_ping5 ]
 {
 	ai_charge (8);
 	ai_melee ();
 };
-
 void () cook_ping5 = [ 52, cook_run1 ]
-{
-};
-
+{};
 void () cook_pong =
 {
 	if ((self.walkframe >= 7))
@@ -607,7 +534,6 @@ void () cook_pong =
 		ai_melee ();
 	}
 };
-
 float () cook_WAVS =
 {
 	if ((self.impulse != 0))
@@ -686,7 +612,6 @@ float () cook_WAVS =
 	}
 	return (0);
 };
-
 float () cook_WAVS2 =
 {
 	if ((self.impulse != 0))
@@ -732,7 +657,6 @@ float () cook_WAVS2 =
 	}
 	return (0);
 };
-
 float () cook_WAVS3 =
 {
 	if ((self.impulse != 0))
@@ -778,7 +702,6 @@ float () cook_WAVS3 =
 	}
 	return (0);
 };
-
 float () cook_WAVS4 =
 {
 	if ((self.impulse != 0))
@@ -824,4 +747,4 @@ float () cook_WAVS4 =
 	}
 	return (0);
 };
- 
+//END

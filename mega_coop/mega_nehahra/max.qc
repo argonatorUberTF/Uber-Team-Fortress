@@ -126,7 +126,6 @@ void () max_teleport =
 	self.think = max_teleport;
 	self.nextthink = (time + 0.3);
 };
-
 void (vector megadeth, vector vec, string ing) spawn_newteleport =
 {
 	local entity mark;
@@ -451,7 +450,6 @@ void (entity head) switchmethod =
 		head.method = 0;
 	}
 };
-
 void () maxnewteles =
 {
 	local float t;
@@ -822,7 +820,6 @@ void () max_look2 =
 	self.frame = (19 - self.walkframe);
 	self.walkframe = (self.walkframe + 1);
 };
-
 void () max_look3 =
 {
 	if ((self.walkframe >= 10))
@@ -898,13 +895,11 @@ void () max_gauntrang1 = [ 73, max_gauntrang2 ]
 	ai_threats ();
 	self.pain_finished = (time + 0.5);
 };
-
 void () max_gauntrang2 = [ 74, max_gauntrang3 ]
 {
 	ai_threats ();
 	ai_face ();
 };
-
 void () max_gauntrang3 = [ 75, max_gauntrang4 ]
 {
 	ai_threats ();
@@ -1032,7 +1027,6 @@ void () max_light8 = [ 61, max_light9 ]
 	ai_face ();
 	ai_back (10);
 };
-
 void () max_light9 = [ 60, max_run ]
 {
 	movetogoal (25);
@@ -1238,7 +1232,6 @@ void () max_getup3 = [ 98, max_getup4 ]
 	self.pain_finished = (time + 1);
 	Max_teleportsys ();
 };
-
 void () max_getup4 = [ 99, max_run ]
 {};
 void () max_diec1 =
@@ -1301,7 +1294,6 @@ void () max_recover2 = [ 108, max_recover3 ]
 	self.pain_finished = (time + 1);
 	Max_teleportsys ();
 };
-
 void () max_recover3 = [ 109, max_run ]
 {
 };
@@ -1567,7 +1559,6 @@ void () max_s_light2 = [ 61, max_s_light3 ]
 	ai_threats ();
 	ai_face ();
 };
-
 void () max_s_light3 = [ 62, max_s_light4 ]
 {
 	ai_face ();
@@ -1975,20 +1966,20 @@ void () setup_finalerubble =
 	spawn_rubblefall ('270 -215 714');
 	if ((self.owner.relations > 3))
 	{
-	spawn_rubblefall ('565 273 1157');
-	spawn_rubblefall ('552 447 1157');
-	spawn_rubblefall ('287 418 1157');
-	spawn_rubblefall ('283 254 1165');
-	spawn_rubblefall ('191 -244 1111');
-	spawn_rubblefall ('537 -244 1111');
-	spawn_rubblefall ('410 340 1675');
-	spawn_rubblefall ('565 273 1157');
-	spawn_rubblefall ('552 447 1157');
-	spawn_rubblefall ('287 418 1157');
-	spawn_rubblefall ('283 254 1165');
-	spawn_rubblefall ('191 -244 1111');
-	spawn_rubblefall ('537 -244 1111');
-	spawn_rubblefall ('410 340 1675');
+		spawn_rubblefall ('565 273 1157');
+		spawn_rubblefall ('552 447 1157');
+		spawn_rubblefall ('287 418 1157');
+		spawn_rubblefall ('283 254 1165');
+		spawn_rubblefall ('191 -244 1111');
+		spawn_rubblefall ('537 -244 1111');
+		spawn_rubblefall ('410 340 1675');
+		spawn_rubblefall ('565 273 1157');
+		spawn_rubblefall ('552 447 1157');
+		spawn_rubblefall ('287 418 1157');
+		spawn_rubblefall ('283 254 1165');
+		spawn_rubblefall ('191 -244 1111');
+		spawn_rubblefall ('537 -244 1111');
+		spawn_rubblefall ('410 340 1675');
 	}
 	spawn_rubblefall ('597 -716 192');
 	spawn_rubblefall ('597 -693 192');
@@ -2437,7 +2428,6 @@ void () comment_case1 =
 		make_comment ();
 	}
 };
-
 void () comment_case2 =
 {
 	if (!(self.regen & FL_WATERJUMP))

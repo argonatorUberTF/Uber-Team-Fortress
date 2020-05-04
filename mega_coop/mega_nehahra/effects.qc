@@ -299,7 +299,6 @@ void () trigger_particles =
 	self.think = emit_particles;
 	self.nextthink = (time + self.wait);
 };
-
 void () particles_reset =
 {
 	self.use = trigger_particles;

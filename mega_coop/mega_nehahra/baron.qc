@@ -167,11 +167,11 @@ void () baron_melee =
 	}
 	else
 	{
-		if ((hknight_type == FL_SWIM))
-		{
-			baron_smash ();
-			hknight_type = 0;
-		}
+	if ((hknight_type == FL_SWIM))
+	{
+		baron_smash ();
+		hknight_type = 0;
+	}
 		else
 		{
 			if ((hknight_type == MOVETYPE_WALK))

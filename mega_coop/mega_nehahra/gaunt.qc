@@ -636,8 +636,7 @@ void () gaunt_swing5 = [ 122, gaunt_swing6 ]
 	ai_face ();
 };
 void () gaunt_swing6 = [ 121, gaunt_swing7 ]
-{
-};
+{};
 void () gaunt_swing7 =
 {
 	self.walkframe = 0;
@@ -653,7 +652,6 @@ void () gaunt_rock2 = [ 128, gaunt_rock3 ]
 		self.flags = (self.flags - FL_ONGROUND);
 	}
 };
-
 void () gaunt_rock3 = [ 129, gaunt_rock4 ]
 {};
 void () gaunt_rock4 = [ 130, gaunt_rock5 ]
@@ -1240,7 +1238,6 @@ float () Gaunt_Teleport =
 {
 	local entity head;
 	local entity selected;
-
 	head = find (world, event, "spawn_point");
 	while (head)
 	{
@@ -1270,7 +1267,6 @@ float () Gaunt_Teleport =
 void (entity mark) spawn_gmonitor =
 {
 	local entity head;
-
 	head = spawn ();
 	head.origin = self.origin;
 	head.owner = self;
