@@ -213,10 +213,10 @@ void() item_treasure =
 {
 	precache_model("sprites/items/!treasure.spr");
 	setmodel(self, "sprites/items/!treasure.spr");
-	precache_sound ("lsfx/035.wav");
-	precache_sound ("lsfx/036.wav");
-	precache_sound ("lsfx/037.wav");
-	precache_sound ("lsfx/045.wav");
+//	precache_sound ("lsfx/035.wav");	//temporarily not caching to provide space to main weapons and sounds -arg
+//	precache_sound ("lsfx/036.wav");	//temporarily not caching to provide space to main weapons and sounds -arg
+//	precache_sound ("lsfx/037.wav");	//temporarily not caching to provide space to main weapons and sounds -arg
+//	precache_sound ("lsfx/045.wav");	//temporarily not caching to provide space to main weapons and sounds -arg
 	if (!self.frame)
 		self.frame = 0;
 	if (!deathmatch)
@@ -381,7 +381,7 @@ void() pushwall_spawn_trigger =
 };
 void() func_pushwall =
 {
-	precache_sound ("034.wav");
+//	precache_sound ("034.wav");		//temporarily not caching to provide space to main weapons and sounds -arg
 	SetMovedir ();
 	total_secrets = total_secrets + 1;
 	self.max_health = self.health;
@@ -413,7 +413,7 @@ void() item_key =
 	if (deathmatch)
 		dremove(self);
 	precache_model ("sprites/items/!keys.spr");
-	precache_sound ("lsfx/012.wav");
+//	precache_sound ("lsfx/012.wav");		//temporarily not caching to provide space to main weapons and sounds -arg
 	setmodel (self, "sprites/items/!keys.spr");
 	if (self.frame == 0)
 	{
@@ -672,9 +672,9 @@ void() wolfdoor_touch =
 void() WolfLinkDoors;
 void() func_wolfdoor =
 {
-	precache_sound ("010.wav");	
-	precache_sound ("007.wav");
-	precache_sound ("lsfx/006.wav");
+//	precache_sound ("010.wav");		//temporarily not caching to provide space to main weapons and sounds -arg
+//	precache_sound ("007.wav");		//temporarily not caching to provide space to main weapons and sounds -arg
+//	precache_sound ("lsfx/006.wav");//temporarily not caching to provide space to main weapons and sounds -arg
 	SetMovedir ();
 	self.max_health = self.health;
 	self.solid = SOLID_BSP;
