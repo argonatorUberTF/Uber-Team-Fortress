@@ -159,7 +159,7 @@ precache_model2("progs/spikmine.mdl");
 #ifdef BATTLE_ROYALE
 	precache_model2("progs/s_light.spr");
 #endif
-
+	precache_model2 ("progs/medexp.spr");
 	precache_sound2 ("speech/needlite.wav");
 	precache_sound("effects/bodyhit1.wav");
 	precache_sound("effects/bodyhit2.wav");
