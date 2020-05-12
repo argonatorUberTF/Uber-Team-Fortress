@@ -73,7 +73,7 @@ void() item_hornofconjuring =
 {
 	self.touch = horn_touch;
 	precache_model("progs/horn.mdl");
-	precache_sound("hipitems/horn.wav");
+	precache_sound2("hipitems/horn.wav");
 	setmodel(self, "progs/horn.mdl");
 	self.noise = "hipitems/horn.wav";
 	setsize (self, '-16 -16 0', '16 16 32');
@@ -83,8 +83,8 @@ void() item_artifact_empathy_shields =
 {
 	self.touch = hip_powerup_touch;
 	precache_model("progs/empathy.mdl");
-	precache_sound("hipitems/empathy.wav");
-	precache_sound("hipitems/empathy2.wav");
+	precache_sound2("hipitems/empathy.wav");
+	precache_sound2 ("hipitems/empathy2.wav");
 	precache_sound ("items/suit2.wav");
 	setmodel(self, "progs/empathy.mdl");
 	self.noise = "hipitems/empathy.wav";

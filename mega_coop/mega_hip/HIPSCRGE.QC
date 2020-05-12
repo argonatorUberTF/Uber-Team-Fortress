@@ -362,7 +362,7 @@ void() monster_scourge =
 	precache_sound ("scourge/tailswng.wav");
 	precache_sound ("scourge/walk.wav");
 	precache_sound2 ("shambler/smack.wav");
-	precache_sound2 ("weapons/rocket1i.wav");
+	precache_sound ("weapons/rocket1i.wav");
 	self.netname = "centroid";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;
