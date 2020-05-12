@@ -64,7 +64,7 @@ void() func_elvtr_button =
 	}
 	if (self.sounds == 1)
 	{
-		precache_sound ("buttons/switch21.wav");
+		precache_sound2 ("buttons/switch21.wav");
 		self.noise = "buttons/switch21.wav";
 	}
 	if (self.sounds == 2)

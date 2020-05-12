@@ -63,10 +63,10 @@ void() item_random_powerup =
 	precache_model ("progs/invulner.mdl");
 	precache_model ("progs/invisibl.mdl");
 	precache_model (#MODEL_QUAD);
-	precache_sound ("items/inv1.wav");
-	precache_sound ("items/inv2.wav");
-	precache_sound ("items/inv3.wav");
-	precache_sound ("items/protect.wav");
+	precache_sound2  ("items/inv1.wav");
+	precache_sound2 ("items/inv2.wav");
+	precache_sound2 ("items/inv3.wav");
+	precache_sound2 ("items/protect.wav");
 	precache_sound ("items/protect2.wav");
 	precache_sound ("items/protect3.wav");
 	precache_sound ("items/damage.wav");

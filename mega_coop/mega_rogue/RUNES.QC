@@ -173,10 +173,10 @@ void() RunePrecache =
 			precache_model("progs/end2.mdl");
 			precache_model("progs/end3.mdl");
 			precache_model("progs/end4.mdl");
-			precache_sound("runes/end1.wav");
-			precache_sound("runes/end2.wav");
-			precache_sound("runes/end3.wav");
-			precache_sound("runes/end4.wav");
+			precache_sound2("runes/end1.wav");
+			precache_sound2("runes/end2.wav");
+			precache_sound2("runes/end3.wav");
+			precache_sound2("runes/end4.wav");
 		}
 };
 //END
