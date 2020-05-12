@@ -345,7 +345,8 @@ void() fx_ambientsound =
 	if(self.distance < ATTN_NONE || self.distance > ATTN_STATIC)
 		self.distance = ATTN_STATIC;
 // start right away if not triggered
-	if(!self.targetname) {
+	if(!self.targetname)
+	{
 // Need to start on the second frame since that's when entities not called in world_spawn are created
 		self.nextthink = time + 0.1;
 		self.think = ambientsound_start;

@@ -17,21 +17,21 @@ void () pSoundsWood  =
 	precache_model ("progs/debris/wood2.mdl");
 	//precache_model ("progs/debris/wood3.mdl");	// crashes clients
 	precache_model ("progs/debris/wood4.mdl");
-	precache_sound( "debris/wood1.wav" );
-	precache_sound( "debris/wood2.wav" );
-	precache_sound( "debris/wood3.wav" );
+	precache_sound2( "debris/wood1.wav" );
+	precache_sound2( "debris/wood2.wav" );
+	precache_sound2( "debris/wood3.wav" );
 };
 void () pSoundsFlesh  = 
 {
 	precache_model ("progs/debris/flesh1.mdl");
 	precache_model ("progs/debris/flesh2.mdl");
 	precache_model ("progs/debris/flesh4.mdl");
-	precache_sound( "debris/flesh1.wav" );
-	precache_sound( "debris/flesh2.wav" );
-	precache_sound( "debris/flesh3.wav" );
-	precache_sound( "debris/flesh5.wav" );
-	precache_sound( "debris/flesh6.wav" );
-	precache_sound( "debris/flesh7.wav" );
+	precache_sound2( "debris/flesh1.wav" );
+	precache_sound2( "debris/flesh2.wav" );
+	precache_sound2( "debris/flesh3.wav" );
+	precache_sound2( "debris/flesh5.wav" );
+	precache_sound2( "debris/flesh6.wav" );
+	precache_sound2( "debris/flesh7.wav" );
 };
 void () pSoundsMetal  = 
 {
@@ -42,18 +42,18 @@ void () pSoundsMetal  =
 	precache_model ("progs/debris/vent5.mdl");
 	precache_model ("progs/debris/vent6.mdl");
 	precache_model ("progs/debris/vent7.mdl");
-	precache_sound( "debris/metal1.wav" );
-	precache_sound( "debris/metal2.wav" );
-	precache_sound( "debris/metal3.wav" );
+	precache_sound2( "debris/metal1.wav" );
+	precache_sound2( "debris/metal2.wav" );
+	precache_sound2( "debris/metal3.wav" );
 };
 void () pSoundsConcrete  = 
 {
 	precache_model ("progs/debris/rockgib_big.mdl");
 	precache_model ("progs/debris/rockgib_med.mdl");
 	precache_model ("progs/debris/rockgib_small.mdl");
-	precache_sound( "debris/concrete1.wav" );
-	precache_sound( "debris/concrete2.wav" );
-	precache_sound( "debris/concrete3.wav" );
+	precache_sound2( "debris/concrete1.wav" );
+	precache_sound2( "debris/concrete2.wav" );
+	precache_sound2( "debris/concrete3.wav" );
 };
 void () pSoundsGlass  = 
 {
@@ -63,9 +63,9 @@ void () pSoundsGlass  =
 	precache_model ("progs/debris/glass5.mdl");
 	precache_model ("progs/debris/glass6.mdl");
 	precache_model ("progs/debris/glass7.mdl");
-	precache_sound( "debris/glass1.wav" );
-	precache_sound( "debris/glass2.wav" );
-	precache_sound( "debris/glass3.wav" );
+	precache_sound2( "debris/glass1.wav" );
+	precache_sound2( "debris/glass2.wav" );
+	precache_sound2( "debris/glass3.wav" );
 };	
 void () vyrovnani =
 {
@@ -94,7 +94,7 @@ void (string gibname, float dm) ThrowGlass =
 
 void ( string bksnd ) set_break_sound =
 {
-	precache_sound(bksnd);
+	precache_sound2(bksnd);
 	if (!self.noise1)
 		self.noise1 = bksnd;
 	else

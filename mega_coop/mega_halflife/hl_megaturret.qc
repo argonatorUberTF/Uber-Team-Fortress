@@ -648,9 +648,9 @@ void() monster_turret =
 	precache_model("progs/dedturet.mdl");
 	if (self.spawnflags & 8)
 	{
-		precache_model("progs/laser.mdl");
-		precache_sound("enforcer/enfire.wav");
-		precache_sound("enforcer/enfstop.wav");
+		precache_model2 ("progs/laser.mdl");
+		precache_sound2 ("enforcer/enfire.wav");
+		precache_sound2 ("enforcer/enfstop.wav");
 	}
 	else
 	{
@@ -664,12 +664,12 @@ void() monster_turret =
 			if (self.spawnflags & 32)
 			{
 				precache_model("progs/beam.mdl");
-				precache_sound("enforcer/enfire.wav");
-				precache_sound("enforcer/enfstop.wav");
+				precache_sound2 ("enforcer/enfire.wav");
+				precache_sound2 ("enforcer/enfstop.wav");
 			}
 			else
 			{
-				precache_sound("turret/plasbult.wav");
+				precache_sound2 ("turret/plasbult.wav");
 			}
 		}
 	}
