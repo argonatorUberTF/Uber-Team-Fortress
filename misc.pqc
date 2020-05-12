@@ -77,7 +77,7 @@ void() light_fluoro =
 			lightstyle(self.style, "m");
 		}
 	}
-	precache_sound("ambience/fl_hum1.wav");
+	precache_sound2 ("ambience/fl_hum1.wav");
 	ambientsound(self.origin, "ambience/fl_hum1.wav", 0.8, 3);
 };
 void() light_fluorospark = 
@@ -91,7 +91,7 @@ void() light_fluorospark =
 	{
 		self.style = 10;
 	}
-	precache_sound("ambience/buzz1.wav");
+	precache_sound2 ("ambience/buzz1.wav");
 	ambientsound(self.origin, "ambience/buzz1.wav", 0.8, 3);
 };
 void() light_globe = 
@@ -107,7 +107,7 @@ void() light_globe =
 };
 void() FireAmbient = 
 {
-	precache_sound("ambience/fire1.wav");
+	precache_sound2 ("ambience/fire1.wav");
 	ambientsound(self.origin, "ambience/fire1.wav", 0.3, 3);
 };
 void() light_torch_small_walltorch = 
@@ -409,7 +409,7 @@ void() trap_spikeshooter =
 	{
 		precache_model2 ("progs/lspike.mdl");
 		precache_sound2 ("lavagun/snail.wav");		// lava nail gun cooldown
-		precache_sound2 ("weapons/rocket1i.wav");
+		precache_sound ("weapons/rocket1i.wav");
 	}
 	else if (self.spawnflags & SPAWNFLAG_SUPERLAVA)
 	{
@@ -421,7 +421,7 @@ void() trap_spikeshooter =
 	{
 		precache_model2 ("progs/lspike.mdl");
 		precache_sound2 ("lavagun/snail.wav");		// lava nail gun cooldown
-		precache_sound2 ("weapons/rocket1i.wav");
+		precache_sound ("weapons/rocket1i.wav");
 		precache_sound2 ("weapons/spike2.wav");
 	}
 	else if (self.spawnflags & SPAWNFLAG_FIREBALL)
@@ -429,12 +429,12 @@ void() trap_spikeshooter =
 		precache_model ("progs/fireball.mdl");
 	}
 	else
-		precache_sound ("weapons/spike2.wav");
+		precache_sound2 ("weapons/spike2.wav");
 	if (self.spawnflags & SPAWNFLAG_LAVASPIKE)
 	{
 		precache_model2 ("progs/lspike.mdl");
 		precache_sound2 ("lavagun/snail.wav");		// lava nail gun cooldown
-		precache_sound2 ("weapons/rocket1i.wav");
+		precache_sound ("weapons/rocket1i.wav");
 	}
 };
 void() trap_shooter = 
@@ -538,7 +538,7 @@ void() ambient_brook =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/brook.wav");
+	precache_sound2 ("ambience/brook.wav");
 	ambientsound(self.origin, "ambience/brook.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_jungle = 
@@ -552,7 +552,7 @@ void() ambient_jungle =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/jungle.wav");
+	precache_sound2 ("ambience/jungle.wav");
 	ambientsound(self.origin, "ambience/jungle.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_nightpond = 
@@ -566,7 +566,7 @@ void() ambient_nightpond =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/nitepond.wav");
+	precache_sound2 ("ambience/nitepond.wav");
 	ambientsound(self.origin, "ambience/nitepond.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_alert = 
@@ -580,7 +580,7 @@ void() ambient_alert =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/redalert.wav");
+	precache_sound2 ("ambience/redalert.wav");
 	ambientsound(self.origin, "ambience/redalert.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_onboard = 
@@ -594,7 +594,7 @@ void() ambient_onboard =
 	{
 		self.volume = 0.6;
 	}
-	precache_sound("ambience/onboard.wav");
+	precache_sound2("ambience/onboard.wav");
 	if (!(self.height))
 	{
 		ambientsound(self.origin, "ambience/onboard.wav", self.volume, TF_FLARE_LIT);
@@ -615,7 +615,7 @@ void() ambient_unholy =
 	{
 		self.volume = 0.8;
 	}
-	precache_sound("ambience/unholy.wav");
+	precache_sound2 ("ambience/unholy.wav");
 	ambientsound(self.origin, "ambience/unholy.wav", self.volume, TF_FLARE_LIT);
 };
 void() ambient_rocket_engine = 
@@ -629,7 +629,7 @@ void() ambient_rocket_engine =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/onboard.wav");
+	precache_sound2 ("ambience/onboard.wav");
 	ambientsound(self.origin, "ambience/onboard.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_high_wind = 
@@ -643,7 +643,7 @@ void() ambient_high_wind =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/2windy.wav");
+	precache_sound2 ("ambience/2windy.wav");
 	ambientsound(self.origin, "ambience/2windy.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_peakwind = 
@@ -657,7 +657,7 @@ void() ambient_peakwind =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/peakwind.wav");
+	precache_sound2 ("ambience/peakwind.wav");
 	ambientsound(self.origin, "ambience/peakwind.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_chant = 
@@ -671,7 +671,7 @@ void() ambient_chant =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/chant.wav");
+	precache_sound2 ("ambience/chant.wav");
 	ambientsound(self.origin, "ambience/chant.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_meadow = 
@@ -685,7 +685,7 @@ void() ambient_meadow =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/meadow.wav");
+	precache_sound2 ("ambience/meadow.wav");
 	ambientsound(self.origin, "ambience/meadow.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_ocean = 
@@ -699,7 +699,7 @@ void() ambient_ocean =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/ocean.wav");
+	precache_sound2 ("ambience/ocean.wav");
 	ambientsound(self.origin, "ambience/ocean.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_ice_moving = 
@@ -713,7 +713,7 @@ void() ambient_ice_moving =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/icemove.wav");
+	precache_sound2 ("ambience/icemove.wav");
 	ambientsound(self.origin, "ambience/icemove.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_eerie = 
@@ -727,7 +727,7 @@ void() ambient_eerie =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/eerie.wav");
+	precache_sound2 ("ambience/eerie.wav");
 	ambientsound(self.origin, "ambience/eerie.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_flagflap = 
@@ -741,7 +741,7 @@ void() ambient_flagflap =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/flagflap.wav");
+	precache_sound2 ("ambience/flagflap.wav");
 	ambientsound(self.origin, "ambience/flagflap.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_diesel = 
@@ -755,7 +755,7 @@ void() ambient_diesel =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/diesel.wav");
+	precache_sound2 ("ambience/diesel.wav");
 	ambientsound(self.origin, "ambience/diesel.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_chopper = 
@@ -769,7 +769,7 @@ void() ambient_chopper =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/chopper.wav");
+	precache_sound2 ("ambience/chopper.wav");
 	ambientsound(self.origin, "ambience/chopper.wav", self.volume, TF_FLARE_OFF);
 };
 void() ambient_drone = 
@@ -783,7 +783,7 @@ void() ambient_drone =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/drone6.wav");
+	precache_sound2 ("ambience/drone6.wav");
 	ambientsound(self.origin, "ambience/drone6.wav", self.volume, 2);
 };
 void() ambient_flouro_buzz = 
@@ -793,7 +793,7 @@ void() ambient_flouro_buzz =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/buzz1.wav");
+	precache_sound2 ("ambience/buzz1.wav");
 	ambientsound(self.origin, "ambience/buzz1.wav", TF_FLARE_OFF, 3);
 };
 void() ambient_comp_hum = 
@@ -803,7 +803,7 @@ void() ambient_comp_hum =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/comp1.wav");
+	precache_sound2 ("ambience/comp1.wav");
 	ambientsound(self.origin, "ambience/comp1.wav", TF_FLARE_OFF, 3);
 };
 void() ambient_thunder = 
@@ -813,7 +813,7 @@ void() ambient_thunder =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/thunder1.wav");
+	precache_sound2 ("ambience/thunder1.wav");
 	ambientsound(self.origin, "ambience/thunder1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 };
 void() ambient_light_buzz = 
@@ -823,7 +823,7 @@ void() ambient_light_buzz =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/fl_hum1.wav");
+	precache_sound2 ("ambience/fl_hum1.wav");
 	ambientsound(self.origin, "ambience/fl_hum1.wav", 0.8, 3);
 };
 void() ambient_swamp1 = 
@@ -833,7 +833,7 @@ void() ambient_swamp1 =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/swamp1.wav");
+	precache_sound2 ("ambience/swamp1.wav");
 	ambientsound(self.origin, "ambience/swamp1.wav", 0.8, 3);
 };
 void() ambient_swamp2 = 
@@ -843,7 +843,7 @@ void() ambient_swamp2 =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/swamp2.wav");
+	precache_sound2 ("ambience/swamp2.wav");
 	ambientsound(self.origin, "ambience/swamp2.wav", 0.6, 3);
 };
 void() ambient_weaponfire = 
@@ -853,11 +853,11 @@ void() ambient_weaponfire =
 		dremove(self);
 		return;
 	}
-	precache_sound("effects/explode1.wav");
-	precache_sound("effects/explode2.wav");
-	precache_sound("effects/m60.wav");
-	precache_sound("effects/minigun.wav");
-	precache_sound("effects/rocket.wav");
+	precache_sound2 ("effects/explode1.wav");
+	precache_sound2 ("effects/explode2.wav");
+	precache_sound2 ("effects/m60.wav");
+	precache_sound2 ("effects/minigun.wav");
+	precache_sound2 ("effects/rocket.wav");
 	if (!(self.volume))
 	{
 		self.volume = TF_FLARE_OFF;
@@ -928,8 +928,8 @@ void() effect_airburst =
 		dremove(self);
 		return;
 	}
-	precache_sound("effects/explode1.wav");
-	precache_sound("effects/explode2.wav");
+	precache_sound2 ("effects/explode1.wav");
+	precache_sound2("effects/explode2.wav");
 	self.classname = "timer";
 	self.nextthink = time + random() * 20;
 	self.think = make_burst;
@@ -1026,7 +1026,7 @@ void(vector FlakeOrg) MakeFlake =
 };
 void() effect_lightning = 
 {
-	precache_sound("ambience/thunder1.wav");
+	precache_sound2 ("ambience/thunder1.wav");
 	precache_model("progs/s_null.spr");
 	self.classname = "effect_lightning";
 	self.nextthink = time + RandomRange(5, 20);
@@ -1176,10 +1176,10 @@ void() effect_rockfall =
 		dremove(self);
 		return;
 	}
-	precache_sound("effects/rockfall.wav");
+	precache_sound2 ("effects/rockfall.wav");
 	if (self.height)
 	{
-		precache_sound("effects/rcksplsh.wav");
+		precache_sound2 ("effects/rcksplsh.wav");
 	}
 	self.solid = TF_FLARE_OFF;
 	self.movetype = TF_FLARE_LIT;
@@ -1591,8 +1591,8 @@ void() sandball_goal =
 		return;
 	}
 	precache_model("progs/null.mdl");
-	precache_sound("sandball/goal.wav");
-	precache_sound("sandball/whistle.wav");
+	precache_sound2 ("sandball/goal.wav");
+	precache_sound2 ("sandball/whistle.wav");
 	precache_sound("zombie/z_fall.wav");
 	setmodel(self, "progs/null.mdl");
 	self.movetype = TF_FLARE_LIT;
@@ -1639,8 +1639,8 @@ void() skeet_shooter =
 	precache_model("progs/glass1.mdl");
 	precache_model("progs/glass2.mdl");
 	precache_sound("plats/plat2.wav");
-	precache_sound("effects/shatter.wav");
-	precache_sound("effects/rcksplsh.wav");
+	precache_sound2 ("effects/shatter.wav");
+	precache_sound2 ("effects/rcksplsh.wav");
 	self.nextthink = time + random() * 5;
 	self.think = skeet_sound;
 	if (!(self.speed))
@@ -1724,9 +1724,9 @@ void () duck_fly;
 void () duck_scare;
 void () effect_duckpond =
 {
-	precache_model ("progs/duck1.mdl");
-	precache_sound ("effects/duck1.wav");
-	precache_sound ("effects/duckscar.wav");
+	precache_model2 ("progs/duck1.mdl");
+	precache_sound2  ("effects/duck1.wav");
+	precache_sound2 ("effects/duckscar.wav");
 	self.solid = 1.000000;
 	self.movetype = 9.000000;
 	setsize (self, '-64.000000 -64.000000 0.000000', '64.000000 64.000000 64.000000');

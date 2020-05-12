@@ -660,4 +660,4 @@ void() func_nobuild =
 	self.classname = "func_nobuild";
 	self.touch = SUB_Null;
 };
-//end 
+//end

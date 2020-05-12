@@ -3586,9 +3586,12 @@ void () Menu_VoteChoice =
 		centerprint(self, "A player has called a vote to\n≈ÿ…‘ the map\n\nê1ë Agree   \nê2ë Disagree\n");
 	if (votestarted == #VOTE_USE)
 		centerprint(self, "A player has called a vote to\n’”≈ an entity\n\nê1ë Agree   \nê2ë Disagree\n");
-	if (votestarted == #VOTE_NEXTMAP) {
+	if (votestarted == #VOTE_NEXTMAP)
+	{
 		nm_name = infokey (world, "nextmap");
-		CenterPrint4(self, "A player has called a vote for the\nŒ≈ÿ‘ Õ¡– to be ê", nm_name, "ë\n\nê1ë Agree   \nê2ë Disagree\n");
+//		sprint (self, 2, nm_name);
+		CenterPrint4(self, "A player has called a vote for the\nŒ≈ÿ‘ Õ¡– to be [see console] \n\nê1ë Agree   \nê2ë Disagree\n");
+sprint5(self, 2, "The map name is supposed to be this:", nm_name, ".\n ");
 	}
 	if (votestarted == #VOTE_SURVIVAL_NEXT)
 		centerprint(self, "A player has called a vote to\nchange the \sGAME MODE\s to \sSURVIVAL\s\nfor the next map.\n\nê1ë Agree   \nê2ë Disagree\n");

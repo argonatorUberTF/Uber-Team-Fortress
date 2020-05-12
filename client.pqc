@@ -3583,29 +3583,27 @@ void(entity targ, entity attacker) ClientObituary =
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " is on a rampage!\n");
-				sound (world, 4.000000, "misc/rampage.wav", 1.000000, 0.000000);
+//				sound (world, 4.000000, "misc/rampage.wav", 1.000000, 0.000000);
 			}
 			if (attacker.killstack == 12)
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " is owning all you noobs up!\n");
-				sound (world, 4.000000, "misc/godlike.wav", 1.000000, 0.000000);
+//				sound (world, 4.000000, "misc/godlike.wav", 1.000000, 0.000000);
 			}
 			if (attacker.killstack == 19)
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " knows how to freakin' play!\n");
-				sound (world, 4.000000, "misc/holyshit.wav", 1.000000, 0.000000);
+//				sound (world, 4.000000, "misc/holyshit.wav", 1.000000, 0.000000);
 			}
 			}
 		}
 	}
-#ifdef mtf_coop_lms
 	if (lms_entity != world) {
 		if (targ.classname == "player")
 			targ.#lms_lives = targ.#lms_lives - 1;
 	}
-#endif
 	if (b_ent != world)
 		attacker = b_ent;
 	if (targ.ischangingteams > 0)
@@ -3655,7 +3653,7 @@ void(entity targ, entity attacker) ClientObituary =
 		bprint(2," got JUGGLED by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
-		sound (world, 4, "misc/juggled2.wav", 1, 0);
+//		sound (world, 4, "misc/juggled2.wav", 1, 0);
 	}
 #ifdef mtf_coop
 	if (targ.being_juggled > 1 && targ.is_monster == 1 && attacker.classname == "player" && targ != attacker)
@@ -3664,7 +3662,7 @@ void(entity targ, entity attacker) ClientObituary =
 		bprint(2," got йугглед by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
-		sound (world, 4, "misc/juggled2.wav", 1, 0);
+//		sound (world, 4, "misc/juggled2.wav", 1, 0);
 		targ.being_juggled = 0;
 #ifdef mtf_coop_expsys
 		Achievements_Change( attacker, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_JUGGLER, 1 );

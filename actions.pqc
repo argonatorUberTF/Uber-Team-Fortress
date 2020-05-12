@@ -150,11 +150,7 @@ void () CheckIdlers =
 		if (battle_royale_e != world)
 			loopent.join_time = time;
 #endif
-#ifdef mtf_coop_lms
 		if (loopent.has_disconnected == 0 && loopent.join_time < (time - 180) && loopent.playerclass < 1 && loopent.#lms_lives != -1 && loopent.lives != -1 && lms_entity != world)
-#else
-		if (loopent.has_disconnected == 0 && loopent.join_time < (time - 180) && loopent.playerclass < 1)
-#endif
 		{		
 			KickIdler(loopent);
 			bprint(1, "",loopent.netname," has been kicked for idling too long.\n");

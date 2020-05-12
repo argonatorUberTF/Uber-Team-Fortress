@@ -813,7 +813,7 @@ float EF_ADDITIVE =		32;
 //#define LTB2		// enables the laser-trip bomb for demoman class (STALKER mod)
 #define LTB1		// enables LTB for demo (BTF style)
 #define weapon_bat	// enables bat weapon for scout (from tf2!)
-#define newsounds2	// " headshot/death6/bye2
+//#define newsounds2	// " headshot/death6/bye2
 float record_fer;
 float record_frags;
 string record_fragholder;
@@ -1465,5 +1465,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v5.04.20United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v5.09.20United\n");
 //END

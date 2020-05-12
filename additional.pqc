@@ -51,14 +51,14 @@
 //  Ogre cook, Vermis(lame), eel,and gremlin which didn't work.
 //
 //			
-//BUGS:		The obituary messages need an overhaul and sometimes cause the server to spew word salad.
-//			The problem starts when a large amount of frags against monsters beyond 16-24 and causes a message flood.
+//BUGS:		
 //			New bugs can be submitted to Github for tracking and resolution unbiased.
 //			Volunteer devs of code/fixes/features gladly accepted.
 //
 //								TODO:
-//	Clean up source code for easy compiliation in fteccgui and 64bit versions.
-// 	- Down to 4 warnings on ftegccui compiler in Windows. 
+//	Clean up source code for easy compiliation in fteccgui and possibly 64bit versions.
+// 	- Down to 4 warnings on ftegccui compiler in Windows.
+//  Obtain source of mvdsv that will compile with newer versions with same xav tweaks.
 //	Make the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
 //	Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 //	If possible upgrade the lightning gun to the painkeep chain lightning gun.
@@ -69,14 +69,14 @@
 //	It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing a scout.
 //	(Possibly add this as an anti-cheat system)
 //	Add another weapon to the Pyro for even destructive backup. multi pyro rockets?
-// partial - sped up flame rockets and flamethrower. -arg 3/2020
+//  partial - sped up flame rockets and flamethrower. -arg 3/2020
 //	Add Ratbert's nuke grenades to drop4 for demoman or pyro.  ?
 //	Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players are affected more
 //	by plasma or fire damage than blast/nail damage.
 //	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
 //	Then again, the map makers should be aware of this and not use so many spawns.
-//	Finish HALF-LIFE support. (long march if asked for)
-//	Replace the lightning gun with the chain lightning gun ala pain keep. 
+//	Finish HALF-LIFE support. (A long march if asked for)
+//	Add the Air fist weapon ala pain keep. 
 //
 //					Changes to existing classes:
 //GOAL - Make it tougher to last to capture the flag with faster action, heinous
@@ -107,8 +107,8 @@
 // Spies can change either pants color or skins or have custom skins.
 // Spies do not show up on auto_id which was a dead giveaway spy checker.
 // Some admin surely had a boner for spy reduction, just catch them and whack them.
-// Spies however, do not get a spot player fob marker. Gun check them.
-// Scout can still detect spies.
+// Spies however, do not get a spot player fob marker when undercover. Gun check them.
+// The Scout can still detect spies.
 //
 //						CODING TIPS
 // Don't leave blank lines, or use /* /* comments, adds to code size by 12%, slows things down a lot.
@@ -836,7 +836,7 @@ string team_menu_string /* = "" */;
 //.vector origin3;					// from gaunt.qc not used? -arg
 //.vector orig_angles;				// angles that an entity spawns with, generally. unused -arg
 //.vector spawnorigin;				// used for half-life, unused -arg
-.vector rendercolor;				// for half-life unused -arg marioworld maps from agent.
+//.vector rendercolor;				// for half-life unused -arg marioworld maps from agent.
 //.vector m_center;					// for half-life unused -arg
 //.vector m_start;					// for half-life unused -arg
 //.vector g_vecZero;				// for half-life unused -arg
@@ -1818,17 +1818,23 @@ float() customize_frame =
 	totang = mathlib_anglemod(self.angles_y - tmpang);
 	if (totang < 157.5 && totang >= 112.5)
 		self.walkframe = 1;
-	else if (totang < 112.5 && totang >= 67.5)
+	else
+	if (totang < 112.5 && totang >= 67.5)
 		self.walkframe = 2;
-	else if (totang < 67.5 && totang >= 22.5)
+	else
+	if (totang < 67.5 && totang >= 22.5)
 		self.walkframe = 3;
-	else if (totang < 22.5 || totang >= 337.5)
+	else
+	if (totang < 22.5 || totang >= 337.5)
 		self.walkframe = 4;
-	else if (totang < 337.5 && totang >= 292.5)
+	else
+	if (totang < 337.5 && totang >= 292.5)
 		self.walkframe = 5;
-	else if (totang < 292.5 && totang >= 247.5)
+	else
+	if (totang < 292.5 && totang >= 247.5)
 		self.walkframe = 6;
-	else if (totang < 247.5 && totang >= 202.5)
+	else
+	if (totang < 247.5 && totang >= 202.5)
 		self.walkframe = 7;
 	else
 		self.walkframe = 0;
@@ -1908,45 +1914,45 @@ void() DeathSound =
 		sound(self, 2, "player/h2odeath.wav", 1, TF_FLARE_LIT);
 		return;
 	}
-	rs = rint(random() * 6 + 1);
-	if (rs == 1)
-	{
+//	rs = rint(random() * 6 + 1);
+//	if (rs == 1)
+//	{
 		self.noise = "player/death1.wav";
-	}
-	if (rs == 2)
-	{
-		self.noise = "player/death2.wav";
-	}
-	if (rs == 3)
-	{
-		self.noise = "player/death3.wav";
-	}
-	if (rs == 4)
-	{
-		self.noise = "player/death4.wav";
-	}
-	if (rs == 5)
-	{
-		self.noise = "player/mdeath5.wav";
-	}
-	if ((rs == 6))
-	{
-#ifdef newsounds2
-		if (random() > .6)
-			self.noise = "player/mdeath7.wav";
-		else
-#endif
-		self.noise = "player/mdeath4.wav";
-	}
-	if (rs == 7)				// STRONGBAD DEATH
-	{
-#ifdef newsounds2
-		if (random() > .6)
-			self.noise = "player/mdeath7.wav";
-		else
-#endif
-		self.noise = "player/mdeath6.wav";
-	}
+//	}
+//	if (rs == 2)
+//	{
+//		self.noise = "player/death2.wav";
+//	}
+//	if (rs == 3)
+//	{
+//		self.noise = "player/death3.wav";
+//	}
+//	if (rs == 4)
+//	{
+//		self.noise = "player/death4.wav";
+//	}
+//	if (rs == 5)
+//	{
+//		self.noise = "player/mdeath5.wav";
+//	}
+//	if ((rs == 6))
+//	{
+//#ifdef newsounds2
+//		if (random() > .6)
+//			self.noise = "player/mdeath7.wav";
+//		else
+//#endif
+//		self.noise = "player/mdeath4.wav";
+//	}
+//	if (rs == 7)				// STRONGBAD DEATH
+//	{
+//#ifdef newsounds2
+//		if (random() > .6)
+//			self.noise = "player/mdeath7.wav";
+//		else
+//#endif
+//		self.noise = "player/mdeath6.wav";
+//	}
 	sound(self, 2, self.noise, 1, 1);
 	return;
 };
@@ -1957,7 +1963,7 @@ void() air_bubbles =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/bubbles.wav");
+	precache_sound2 ("ambience/bubbles.wav");
 	ambientsound(self.origin, "ambience/bubbles.wav", TF_FLARE_OFF, 2);
 	precache_model("progs/s_bubble.spr");
 	self.nextthink = time + TF_FLARE_OFF;
@@ -2060,7 +2066,8 @@ void() bubble_bob =
 };
 void() func_wall_use = 
 {
-	if (world.wad == "q2q1tex.wad" || #DOOM_MAP) {
+	if (world.wad == "q2q1tex.wad" || #DOOM_MAP)
+	{
 		if (self.has_tesla == SOLID_NOT)
 		{
 			setorigin(self, (self.origin+'3000 0 0'));
@@ -2077,7 +2084,8 @@ void() func_wall_use =
 		return;
 	}
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		self.frame = 1;
 		return;
 	}
@@ -2296,7 +2304,8 @@ void (entity pl) RefreshStatusBar =
 			}
 		}
 	}
-	if (canusenew == 1) {
+	if (canusenew == 1)
+	{
 	if (self.infstaytime > time) 
 	{
 		s2 = strcat(ftos(self.inflicted), " damage\n");
@@ -2549,7 +2558,6 @@ float(float tno) TeamFortress_TeamSet =
 //	}  // Complete bs there is always 1 team, blue and we want any team on any map. -arg
 //Whether there are maps that can deal with 1,2, or 4 teams, they should make it better.
 // or users should know that a 2 team only map might have a problem with 4. -arg
-#ifdef mtf_coop_lms
 	local entity te;
 	te = find ( world, classname, "info_lmsdetect" );
 	while (te)
@@ -2570,7 +2578,6 @@ float(float tno) TeamFortress_TeamSet =
 		}
 		te = find (te, classname, "info_lmsdetect");
 	}
-#endif
 //Nice check, but there are maps that can have 1,2,3,4 teams and not codified by the map creator.
 //This is what changes team fortress maps into mega/uber regardless of creator.
 //Let the players decide if the bugs and quirks are there. Just play the map. -arg
@@ -2697,6 +2704,8 @@ void() TeamFortress_CheckTeamCheats =
 	{
 		st = infokey(self, "bottomcolor");
 		tc = stof(st);
+// This whole kick for color change on spy is irrelevant now. -arg
+//players can have custom colored skins, or pants, or shirt since they have  a color fob.
 //		if (self.playerclass == 8 && self.undercover_team != 0)
 //		{
 //			if (TeamFortress_TeamGetColor(self.undercover_team) - TF_FLARE_OFF != tc)
@@ -3770,7 +3779,6 @@ void() TeamFortress_ChangeClass =
 	local float oldhealth, oldarmor, oldcells, oldrockets, oldshells, oldnails;
 	local vector oldpos;
 	local entity merchanty;
-#ifdef mtf_coop_lms
 	if (self.#lms_lives < 0)
 	{
 		sprint( self, 2, "No more lives! Wait till the next round or map change.\n");
@@ -3779,7 +3787,6 @@ void() TeamFortress_ChangeClass =
 	if (survival_mode)
 		if (self.team_no == 0)		// survival mode hack allows players to join any team :\
 			return;
-#endif
 #ifdef BATTLE_ROYALE
 	if (battle_royale_e != world) {
 		spot = SelectSpawnPoint ();
@@ -3981,7 +3988,7 @@ void() TeamFortress_ChangeClass =
 	self.air_finished = time + 12;
 	self.solid = 3;
 	self.pausetime = 0;
-	spot = SelectSpawnPoint();  // boy this is messed up in all sorts of places, I think it's sorted now -arg
+	spot = SelectSpawnPoint();
 	self.origin = spot.origin + '0 0 1';
 	self.angles = spot.angles;
 	self.fixangle = 1;
@@ -5944,8 +5951,8 @@ float(entity targ, entity inflictor) CanDamage =
 };
 void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 {
-	local entity te;
-	local float tm;
+//	local entity te;
+//	local float tm;
 	local entity newmon;
 	local float rtime;
 	local entity hax;	
@@ -6003,11 +6010,7 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 				}
 			}
 		}		
-#ifdef mtf_coop_lms		
 		if ( (total_monsters - hax_tm) > killed_monsters && ( lms_entity == world ) )		// fixme: LMS farfs up monster count (says more are killed than really are.) :\
-#else
-		if ( (total_monsters - hax_tm) > killed_monsters )
-#endif		
 		{
 		dprint(ftos(hax_tm));
 		dprint(" is hax and the rest is ");
@@ -6020,14 +6023,12 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 			WriteByte (MSG_ALL, 14);
 			WriteLong (MSG_ALL, killed_monsters);
 		}
-#ifdef mtf_coop_lms		
 		if (hax_tm == 0 && lms_entity != world) {
 			killed_monsters = total_monsters;
 			WriteByte (MSG_ALL, 38);
 			WriteByte (MSG_ALL, 14);
 			WriteLong (MSG_ALL, killed_monsters);
 		}
-#endif
 		return;
 	}
 	newmon = spawn ();
@@ -8899,7 +8900,6 @@ void(float Suicided) TeamFortress_SetupRespawn =
 		}
 	}
 #endif	
-#ifdef mtf_coop_lms
 	if (self.#lms_lives == -1)
 	{
 			sprint(self, 2, "NO lives left, returning to Observer mode.\n");
@@ -8917,7 +8917,6 @@ void(float Suicided) TeamFortress_SetupRespawn =
 			setmodel(self, "");
 			return;
 	}
-#endif
 	if (self.lives != -1)
 	{
 		if (self.lives == 0)
@@ -9416,10 +9415,8 @@ void() PlayerObserverMode =
 	self.impulse = 0;
 	self.playerclass = 0;
 	self.lives = 0;
-#ifdef mtf_coop_lms
 	if (self.#lms_lives < 0)
 		self.lives = -1;
-#endif
 	self.team_no = -1; // Just in case, forces you to pick a team on join. grav well should not suck observers in. -arg
 	self.flags = 8 | 128 | 512;
 	self.waterlevel = 3;
@@ -12101,17 +12098,14 @@ void() info_tfgoal =
 		if (self.mdl == "progs/backpack.mdl")
 		{
 			precache_sound("items/backpack.wav");
-			precache_sound2("items/backpack.wav");
 			self.noise = "items/backpack.wav";
 		}
 	}
-	precache_sound("items/protect.wav");
+	precache_sound2 ("items/protect.wav");
 	precache_sound("items/protect2.wav");
 	precache_sound("items/protect3.wav");
 	precache_sound("items/suit.wav");
 	precache_sound("items/suit2.wav");
-	precache_sound("items/inv1.wav");
-	precache_sound("items/inv2.wav");
 	precache_sound("items/inv3.wav");
 	precache_sound("items/damage.wav");
 	precache_sound("items/damage2.wav");
@@ -12190,7 +12184,7 @@ void() item_tfgoal =
 		self.mdl = "";
 		setmodel(self, "");
 	}
-	precache_sound2("items/itembk2.wav");
+	precache_sound("items/itembk2.wav");
 	if (self.noise)
 	{
 		precache_sound(self.noise);
@@ -14167,7 +14161,7 @@ void() item_flag_team2 =
 	CTF_Map = TF_FLARE_OFF;
 	precache_model("progs/w_s_key.mdl");
 	precache_sound("ogre/ogwake.wav");
-	precache_sound("boss2/pop2.wav");
+	precache_sound2 ("boss2/pop2.wav");
 	self.classname = "item_tfgoal";
 	self.netname = "Team 1 Flag";
 	self.broadcast = " ÇÏÔ the enemy team's flag!\n";
@@ -19527,7 +19521,7 @@ void() ambient_suck_wind =
 		dremove(self);
 		return;
 	}
-	precache_sound("ambience/suck1.wav");
+	precache_sound2 ("ambience/suck1.wav");
 	ambientsound(self.origin, "ambience/suck1.wav", TF_FLARE_OFF, 3);
 };
 void() ambient_drip = 
@@ -19544,7 +19538,7 @@ void() ambient_drip =
 	{
 		self.volume = TF_FLARE_OFF;
 	}
-	precache_sound("ambience/drip1.wav");
+	precache_sound2 ("ambience/drip1.wav");
 	ambientsound(self.origin, "ambience/drip1.wav", self.volume, 3);
 };
 void() SUB_Null =
@@ -19991,19 +19985,15 @@ void (entity plyr, float addfrags) Rank_FragIncrease =
 };
 void () missing_precaches =
 {
-	precache_sound("wall/push.wav");
-	precache_model("progs/ammobox2.mdl");
-	precache_model("progs/null.mdl");
-	precache_sound ("items/inv3.wav");
-	precache_model("progs/proxbomb.mdl");
-	precache_model("progs/s_splava.spr");
-	precache_sound("sets/dml1_4.wav");
-	precache_sound("items/protect.wav");
-	precache_sound("items/protect2.wav");
-	precache_model("progs/jagger.mdl");	
-	precache_sound("fish/bite.wav");
-	precache_sound("fish/idle.wav");
-	precache_sound("fish/death.wav");
+	precache_sound2 ("items/inv1.wav");
+	precache_sound2 ("items/inv2.wav");
+	precache_sound2("wall/push.wav");
+	precache_model2("progs/ammobox2.mdl");
+	precache_sound2 ("items/inv3.wav");
+	precache_model2("progs/proxbomb.mdl");
+	precache_model2("progs/s_splava.spr");
+	precache_sound2 ("items/protect.wav");
+	
 };
 void() beartrapDie =
 {
@@ -20170,24 +20160,24 @@ void() BTF_Precache =
 		precache_sound ("helo/eject2.wav");
 		precache_sound ("engines/chopper.wav");
 		precache_sound ("weapons/ffar2.wav");
-		precache_sound ("weapons/gat2.wav");
-		precache_sound ("weapons/bombdrop.wav");
+		precache_sound2 ("weapons/gat2.wav");
+		precache_sound2 ("weapons/bombdrop.wav");
 		precache_sound ("misc/metal2.wav");
 		precache_model("progs/cockpit.mdl");
 		precache_model("progs/ffar.mdl");
-		precache_model ("progs/acgib1.mdl");
-		precache_model ("progs/acgib2.mdl");
-		precache_model ("progs/acgib3.mdl");
-		precache_model ("progs/acgib4.mdl");
-		precache_model ("progs/acgib5.mdl");
-		precache_model ("progs/acgib6.mdl");
-		precache_model ("progs/acgib7.mdl");
-		precache_model ("progs/acgib8.mdl");
-		precache_model ("progs/bomb.mdl");
-		precache_model ("progs/rocket2.mdl");
-		precache_model ("progs/torpedo.mdl");
-		precache_model ("progs/subpit.mdl");
-		precache_model ("progs/sight.mdl");
+		precache_model2 ("progs/acgib1.mdl");  // These were already being precached with model2 in weapons.pqc -arg
+		precache_model2 ("progs/acgib2.mdl");
+		precache_model2 ("progs/acgib3.mdl");
+		precache_model2 ("progs/acgib4.mdl");
+		precache_model2 ("progs/acgib5.mdl");
+		precache_model2 ("progs/acgib6.mdl");
+		precache_model2 ("progs/acgib7.mdl");
+		precache_model2 ("progs/acgib8.mdl");
+		precache_model2 ("progs/bomb.mdl");
+		precache_model2 ("progs/rocket2.mdl");
+		precache_model2 ("progs/torpedo.mdl");
+		precache_model2 ("progs/subpit.mdl");
+		precache_model2 ("progs/sight.mdl");
 		precache_sound ("sub/throttle.wav");
 		precache_sound ("sub/ping.wav");
 		precache_sound ("damage/subpain.wav");
@@ -23812,13 +23802,13 @@ void () removeplayerfob =
 	dremove(self);
 };
 float (entity Top, entity bottom) IsOnTopOf; // from neh_defsfuncs.qc -arg for marioworld maps agent.
-.void() hl_use;				// half-life 1 Use properties for marioworld maps. -arg
-.vector rendercolor;		// from half life 1, for marioworld maps. -arg 
-.float rendermode;			// from half life 1, for marioworld maps. -arg 
-.float renderamt;			// from half life 1, for marioworld maps. -arg 
-.float buoyancy;			// for func_pushable hl for marioworld agent maps.
-.float material;			// from half life 1, for marioworld maps. -arg 
-.float spawnobject;			// spawn object on destruction
+//.void() hl_use;				// half-life 1 Use properties for marioworld maps. -arg
+//.vector rendercolor;		// from half life 1, for marioworld maps. -arg 
+//.float rendermode;			// from half life 1, for marioworld maps. -arg 
+//.float renderamt;			// from half life 1, for marioworld maps. -arg 
+//.float buoyancy;			// for func_pushable hl for marioworld agent maps.
+//.float material;			// from half life 1, for marioworld maps. -arg 
+//.float spawnobject;			// spawn object on destruction
 //#include "mega_coop/mega_halflife/hl_breakable.qc" //includes for marioworld maps for agent.
 //#include "mega_coop/mega_halflife/hl_pushable.qc" // from half life 1, for marioworld maps. -arg 
 void() NailGrenadeTouch = 
@@ -23833,4 +23823,4 @@ void() NailGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-//END
+//END 

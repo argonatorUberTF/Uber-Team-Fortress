@@ -14,7 +14,7 @@ menu.pqc
 combat.pqc //There might be two unused functions in here. -arg
 items.pqc
 gravity.qc	//painkeep gravity well bomb from pk modified for Mega-TF/UbertTF -arg
-//beartrap.qc //painkeep beartrap merged into additional.pqc
+//beartrap.qc //painkeep beartrap merged into additional.pqc modified for team usage. -arg
 weapons.pqc
 mega_coop/mega_hip/HIPMTF.qc		// Q1 MP1 weapon/item/blah functions
 world.pqc

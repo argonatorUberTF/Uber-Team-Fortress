@@ -993,7 +993,7 @@ void() item_artifact_invulnerability =
 	}
 	self.touch = powerup_touch;
 	precache_model("progs/invulner.mdl");
-	precache_sound("items/protect.wav");
+	precache_sound2 ("items/protect.wav");
 	precache_sound("items/protect2.wav");
 	precache_sound("items/protect3.wav");
 	self.noise = "items/protect.wav";
@@ -1030,9 +1030,9 @@ void() item_artifact_invisibility =
 	}
 	self.touch = powerup_touch;
 	precache_model("progs/invisibl.mdl");
-	precache_sound("items/inv1.wav");
-	precache_sound("items/inv2.wav");
-	precache_sound("items/inv3.wav");
+	precache_sound2 ("items/inv1.wav");
+	precache_sound2 ("items/inv2.wav");
+	precache_sound2 ("items/inv3.wav");
 	self.noise = "items/inv1.wav";
 	setmodel(self, "progs/invisibl.mdl");
 	self.netname = "Ring of Shadows";
@@ -1147,16 +1147,16 @@ void () Aircraft_Touch;
 void () AC_Destroyed;
 void () item_helo =
 {
-	precache_model ("progs/acgib1.mdl");
+	precache_model2 ("progs/acgib1.mdl");
 	precache_model ("progs/ffar.mdl");
-	precache_model ("progs/bomb.mdl");
+	precache_model2 ("progs/bomb.mdl");
 	if (infokey (world, "btf_stuff") == "1" || infokey (world, "btf_stuff") == "on")
 	{
 	BTF_Precache ();
 	self.touch = Aircraft_Touch;
 	precache_model2 ("progs/helo2.mdl");
 	setmodel (self, "progs/helo2.mdl");
-	precache_sound ("engines/ap_rotor3.wav");
+	precache_sound2 ("engines/ap_rotor3.wav");
 	if ((self.volume == 0))
 	{
 		self.volume = 0.500000;

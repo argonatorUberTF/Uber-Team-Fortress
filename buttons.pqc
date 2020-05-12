@@ -149,7 +149,7 @@ void() func_button =
 	}
 	if (self.sounds == TF_FLARE_OFF)
 	{
-		precache_sound("buttons/switch21.wav");
+		precache_sound2 ("buttons/switch21.wav");
 		self.noise = "buttons/switch21.wav";
 	}
 	if (self.sounds == 2)
@@ -164,7 +164,7 @@ void() func_button =
 	}
 	if (self.sounds == 4)
 	{
-		precache_sound("effects/rockfall.wav");
+		precache_sound2 ("effects/rockfall.wav");
 		self.noise = "effects/rockfall.wav";
 	}
 	SetMovedir();

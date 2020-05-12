@@ -137,39 +137,38 @@ void() W_Precache =
 {
 missing_precaches(); //precache the stuff missing or overlooked or called all the time -arg
 	if (mapname == "hip1m4") {
-precache_model("progs/b_s_key.mdl");
-precache_model("progs/b_g_key.mdl");
+precache_model2("progs/b_s_key.mdl");
+precache_model2("progs/b_g_key.mdl");
 	}
 	if (mapname == "hip2m2") {
-		precache_model("progs/knight.mdl");
-		precache_model("progs/shambler.mdl");
-precache_model("progs/shalrath.mdl");
-precache_model("progs/demon.mdl");
-precache_model("progs/ogre.mdl");
-precache_model("progs/wizard.mdl");
+		precache_model2("progs/knight.mdl");
+		precache_model2("progs/shambler.mdl");
+precache_model2("progs/shalrath.mdl");
+precache_model2("progs/demon.mdl");
+precache_model2("progs/ogre.mdl");
+precache_model2("progs/wizard.mdl");
 	}
 	if (mapname == "hip2m4") {
-precache_model("progs/zombie.mdl");
-precache_model("progs/shambler.mdl");
-precache_model("progs/spikmine.mdl");
+precache_model2("progs/zombie.mdl");
+precache_model2("progs/shambler.mdl");
+precache_model2("progs/spikmine.mdl");
 	}
 	if (mapname == "hipend") {
-		precache_model("progs/lasrspik.mdl");
+		precache_model2("progs/lasrspik.mdl");
 	}
 #ifdef BATTLE_ROYALE
-	precache_model("progs/s_light.spr");
+	precache_model2("progs/s_light.spr");
 #endif
-precache_sound("misc/rampage.wav");
-	precache_model("progs/medexp.spr");
-	precache_sound("speech/needlite.wav");
+
+	precache_sound2 ("speech/needlite.wav");
 	precache_sound("effects/bodyhit1.wav");
 	precache_sound("effects/bodyhit2.wav");
 	precache_sound("zombie/z_miss.wav");
 	precache_sound("weapons/drone.wav");
 	precache_sound("weapons/knifedrw.wav");
-	precache_sound("ambient/100hzhum.wav");
+	precache_sound2("ambient/100hzhum.wav");
 	precache_sound("weapons/jetjump.wav");
-	precache_sound("enforcer/enfire.wav");
+	precache_sound2 ("enforcer/enfire.wav");
 	precache_sound("shambler/smack.wav");
 	precache_sound("weapons/r_exp3.wav");
 	precache_sound("shambler/sboom.wav");
@@ -186,7 +185,7 @@ precache_sound("misc/rampage.wav");
 	precache_sound("weapons/ric1.wav");
 	precache_sound("weapons/ric2.wav");
 	precache_sound("weapons/ric3.wav");
-	precache_sound("weapons/spike2.wav");
+	precache_sound2 ("weapons/spike2.wav");
 	precache_sound("weapons/tink1.wav");
 	precache_sound("weapons/tink2.wav");
 	precache_sound("weapons/shell2.wav");
@@ -197,17 +196,17 @@ precache_sound("misc/rampage.wav");
 	precache_sound("items/r_item1.wav");
 	precache_sound("items/r_item2.wav");
 	precache_sound("items/flare1.wav");
-	precache_model("progs/s_expl.spr");
-	precache_model("progs/beam.mdl");		// LTB
-	precache_model("progs/spikebal.mdl");
-	precache_model("progs/flare.spr");
-	precache_model("progs/lsrdrone.mdl");
-	precache_model("progs/shell2.mdl");
-	precache_model("progs/20mmcase.mdl");
-	precache_model("progs/air-mirv.mdl");
+	precache_model2("progs/s_expl.spr");
+	precache_model2("progs/beam.mdl");		// LTB
+	precache_model2("progs/spikebal.mdl");
+	precache_model2("progs/flare.spr");
+	precache_model2("progs/lsrdrone.mdl");
+	precache_model2("progs/shell2.mdl");
+	precache_model2("progs/20mmcase.mdl");
+	precache_model2("progs/air-mirv.mdl");
 	precache_model("progs/flame2.mdl");
-	precache_model ("progs/syringe.mdl");
-	precache_sound("ambience/fire1.wav");
+	precache_model2("progs/syringe.mdl");
+	precache_sound2 ("ambience/fire1.wav");
 	precache_model2("progs/v_spike.mdl");
 	precache_sound("hknight/hit.wav");
 	precache_sound("hknight/slash1.wav");
@@ -228,10 +227,10 @@ precache_sound("misc/rampage.wav");
 	precache_sound ("misc/secret.wav");
 	precache_sound ("weapons/grenade.wav");
 	precache_sound ("weapons/mini_set.wav");
-	precache_model ("progs/turret.mdl");
-	precache_model ("progs/turtop.mdl");
-	precache_model ("progs/turstand.mdl");
-	precache_model ("progs/nail.mdl");
+	precache_model2 ("progs/turret.mdl");
+	precache_model2 ("progs/turtop.mdl");
+	precache_model2 ("progs/turstand.mdl");
+	precache_model2 ("progs/nail.mdl");
 	precache_sound ("weapons/sentry/turrt_3.wav");
 	precache_sound ("weapons/sentry/turcl_2b.wav");
 	precache_sound ("weapons/rocket1i.wav");
@@ -240,19 +239,19 @@ precache_sound("misc/rampage.wav");
 	precache_model ("progs/beartrap.mdl");
 	precache_sound ("weapons/btrap/btrap_1.wav");
 	precache_sound ("weapons/btrap/btrap_3.wav");
-	precache_model ("progs/bearbld.mdl");
-	precache_model ("progs/beargib1.mdl");
-	precache_model ("progs/beargib2.mdl");	
-	precache_model ("progs/beargib3.mdl");
-	precache_model ("progs/beargib4.mdl");
-	precache_model ("progs/cubel.mdl");
-	precache_model ("progs/cube.mdl");
+	precache_model2 ("progs/bearbld.mdl");
+	precache_model2 ("progs/beargib1.mdl");
+	precache_model2 ("progs/beargib2.mdl");	
+	precache_model2 ("progs/beargib3.mdl");
+	precache_model2 ("progs/beargib4.mdl");
+	precache_model2 ("progs/cubel.mdl");
+	precache_model2 ("progs/cube.mdl");
 	precache_sound ("misc/grav/grav_ergo.wav");
 	precache_sound ("weapons/railgun.wav");
-	precache_model("progs/newtesla.mdl");
+	precache_model2("progs/newtesla.mdl");
 	precache_sound ("weapons/guerilla_blip.wav");
 	precache_sound ("weapons/guerilla_set.wav");
-	precache_model("progs/telepad.mdl");
+	precache_model2("progs/telepad.mdl");
 	precache_sound ("weapons/guerset.wav");
 	precache_sound ("misc/runekey.wav");
 	precache_sound ("weapons/cambeep.wav");
@@ -262,10 +261,10 @@ precache_sound("misc/rampage.wav");
 		precache_model2 ("progs/spycamb.mdl");
 		precache_model2 ("progs/spycamc.mdl");
 	}
-	precache_model(#MODEL_CHAINSAW);
+	precache_model2(#MODEL_CHAINSAW);
 	precache_sound(#SOUND_CHAINSAW);
 	precache_sound("items/backpack.wav");
-	precache_sound ("speech/needlite.wav");
+	precache_sound2 ("speech/needlite.wav");
 	precache_sound ("utils/paraland.wav");
 	precache_sound ("utils/pullcord.wav");
 	if (infokey (world, "btf_stuff") == "1" || infokey (world, "btf_stuff") == "on")
@@ -283,24 +282,24 @@ precache_sound("misc/rampage.wav");
 		precache_sound ("helo/eject2.wav");
 		precache_sound ("engines/chopper.wav");
 		precache_sound ("weapons/ffar2.wav");
-		precache_sound ("weapons/gat2.wav");
-		precache_sound ("weapons/bombdrop.wav");
+		precache_sound2 ("weapons/gat2.wav");
+		precache_sound2 ("weapons/bombdrop.wav");
 		precache_sound ("misc/metal2.wav");
 		precache_model("progs/cockpit.mdl");
 		precache_model("progs/ffar.mdl");
-		precache_model ("progs/acgib1.mdl");
-		precache_model ("progs/acgib2.mdl");
-		precache_model ("progs/acgib3.mdl");
-		precache_model ("progs/acgib4.mdl");
-		precache_model ("progs/acgib5.mdl");
-		precache_model ("progs/acgib6.mdl");
-		precache_model ("progs/acgib7.mdl");
-		precache_model ("progs/acgib8.mdl");
-		precache_model ("progs/bomb.mdl");
-		precache_model ("progs/rocket2.mdl");
-		precache_model ("progs/torpedo.mdl");
-		precache_model ("progs/subpit.mdl");
-		precache_model ("progs/sight.mdl");
+		precache_model2 ("progs/acgib1.mdl");
+		precache_model2 ("progs/acgib2.mdl");
+		precache_model2 ("progs/acgib3.mdl");
+		precache_model2 ("progs/acgib4.mdl");
+		precache_model2 ("progs/acgib5.mdl");
+		precache_model2 ("progs/acgib6.mdl");
+		precache_model2 ("progs/acgib7.mdl");
+		precache_model2 ("progs/acgib8.mdl");
+		precache_model2 ("progs/bomb.mdl");
+		precache_model2 ("progs/rocket2.mdl");
+		precache_model2 ("progs/torpedo.mdl");
+		precache_model2 ("progs/subpit.mdl");
+		precache_model2 ("progs/sight.mdl");
 		precache_sound ("sub/throttle.wav");
 		precache_sound ("sub/ping.wav");
 		precache_sound ("damage/subpain.wav");
@@ -309,8 +308,7 @@ precache_sound("misc/rampage.wav");
 		precache_sound ("sub/locked.wav");
 		precache_sound ("sub/lockon.wav");
 	}
-	precache_sound ("player/mdeath6.wav");
-
+//	precache_sound ("player/mdeath6.wav");
 	precache_model ("progs/h_demon.mdl");
 	precache_sound ("demon/ddeath.wav");
 	precache_sound ("demon/dhit2.wav");
@@ -324,9 +322,8 @@ precache_sound("misc/rampage.wav");
 	precache_sound ("weapons/tlaser.wav");
 	precache_sound ("weapons/tarbeep.wav");
 	precache_model ("progs/v_bat.mdl");		// bat weapon ala qfusion mod
-	precache_sound ("player/mdeath7.wav");
-	precache_sound ("player/mdeath6.wav"); // this was the one nagging in console a lot. -arg
-	precache_sound ("sets/set2_4.wav");
+//	precache_sound ("player/mdeath7.wav");
+	precache_sound2  ("sets/set2_4.wav");
 	precache_sound ("weapons/asscan4.wav");
 	precache_sound ("items/protect3.wav");
 	precache_model(#MODEL_HEALTH_TEN);	// medpack model
@@ -341,13 +338,13 @@ precache_sound("misc/rampage.wav");
 #ifdef mtf_coop_birthday
 	precache_model (#MODEL_CAKE);
 #endif
-	precache_model ("progs/grenade3.mdl");
+	precache_model2 ("progs/grenade3.mdl");
 #ifdef mtf_coop_bloodmod
 	precache_model ("progs/bdrop.mdl");
 #endif
 #ifdef mtf_coop_tgiving
-	precache_model ("progs/duck1.mdl");
-	precache_model ("progs/cnade3.mdl");
+	precache_model2 ("progs/duck1.mdl");
+	precache_model2 ("progs/cnade3.mdl");
 #endif
 };
 void(float att_delay) Attack_Finished = 

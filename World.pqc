@@ -68,9 +68,9 @@ void () main =
 	precache_file ("gfx/p_load.lmp");
 	precache_file ("gfx/p_save.lmp");
 	precache_file ("gfx/p_multi.lmp");
-	precache_sound ("misc/menu1.wav");
-	precache_sound ("misc/menu2.wav");
-	precache_sound ("misc/menu3.wav");
+//	precache_sound ("misc/menu1.wav");  //Removed to free up sound precache -arg
+//	precache_sound ("misc/menu2.wav");
+//	precache_sound ("misc/menu3.wav");
 	precache_sound ("ambience/water1.wav");
 	precache_sound ("ambience/wind2.wav");
 	precache_file ("maps/start.bsp");
@@ -175,10 +175,10 @@ void () worldspawn =
 	precache_sound ("player/pain5.wav");
 	precache_sound ("player/pain6.wav");
 	precache_sound ("player/death1.wav");
-	precache_sound ("player/death2.wav");
-	precache_sound ("player/death3.wav");
-	precache_sound ("player/death4.wav");
-	precache_sound ("player/death5.wav");
+//	precache_sound ("player/death2.wav");
+//	precache_sound ("player/death3.wav");
+//	precache_sound ("player/death4.wav");
+//	precache_sound ("player/death5.wav");
 	precache_sound ("player/malive5.wav");
 	precache_sound ("weapons/ax1.wav");
 	precache_sound ("player/axhit1.wav");
@@ -256,9 +256,9 @@ void () worldspawn =
 	precache_model2 ("progs/v_grap.mdl");
 	precache_model2 ("progs/hook.mdl");
 	precache_sound2 ("speech/saveme1.wav");
-	precache_sound2 ("speech/saveme2.wav");
+//	precache_sound2 ("speech/saveme2.wav");
 	precache_sound ("weapons/rifle.wav");
-	precache_sound ("buttons/switch21.wav");
+	precache_sound2  ("buttons/switch21.wav");
 	precache_sound ("buttons/airbut1.wav");
 	precache_sound ("weapons/detpack.wav");
 	precache_sound ("weapons/radioair.wav");
@@ -284,15 +284,14 @@ void () worldspawn =
 	precache_sound ("misc/update.wav");
 	precache_sound ("misc/startup.wav");
 	precache_sound ("misc/enemy.wav");
-	precache_sound ("items/itembk2.wav");
 	precache_sound ("items/health1.wav");
 	precache_sound ("player/udeath.wav");
 	precache_sound ("player/mpain6.wav");
-	precache_sound ("player/death1.wav");
-	precache_sound ("player/death2.wav");
-	precache_sound ("player/death3.wav");
-	precache_sound ("player/mdeath4.wav"); // BTF 
-	precache_sound ("player/mdeath5.wav");
+//	precache_sound ("player/death1.wav");
+//	precache_sound ("player/death2.wav");
+//	precache_sound ("player/death3.wav");
+//	precache_sound ("player/mdeath4.wav"); // BTF 
+//	precache_sound ("player/mdeath5.wav");
 	precache_sound2 ("enforcer/enfstop.wav");
 	precache_sound2 ("enforcer/enfire.wav");
 	precache_sound2 ("hknight/attack1.wav");
@@ -307,8 +306,7 @@ void () worldspawn =
 	precache_model ("progs/v_asscan.mdl");
 	precache_model ("progs/v_mac10.mdl");
 	precache_model ("progs/newdot.spr");
-	precache_model ("progs/dot3.spr");	// also used for airstrike.. right..
-	precache_model ("progs/dot3.spr"); //yes you need this dot to spot summons in coop -arg
+//	precache_model ("progs/dot3.spr");	// also used for airstrike. newdot.spr instead.
 	precache_model ("progs/rope.mdl");
 	precache_model ("progs/dispencr.mdl");
 	if (mapname == "r2m6") { precache_model ("progs/tf_flag.mdl"); }

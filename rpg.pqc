@@ -218,13 +218,13 @@ void SV_ParseClientCommand (string st) =
 		return;
 	}
 	if (c == "pm")
-        {
-		if (!d)
 		{
+			if (!d)
+			{
 			sprint (self, 2.000000, "Please use [cmd pm userid \"message\"] in the console:\n");
 			pm_list ();
 			return;
-		}
+			}
 		if (d)
 		{
 			if (!f)
@@ -367,7 +367,9 @@ void() voteyes =
 		}
 		self.has_voted = 1;
 		bprint (1.000000, self.netname);
-		bprint (1.000000, " has agreed on the map vote.(voteyes func 1)\n");
+		bprint (1.000000, " has agreed on the map vote.\n");
+		bprint (1.000000, self.netname);
+		bprint (1.000000, " has agreed on the map vote.\n");
 		num_votes = num_votes + 1;
 		if (num_votes > (num_players * 0.5))
 		{
@@ -377,7 +379,10 @@ void() voteyes =
 			if (votetimeleft < 1200)
 			{
 				bprint (1.000000, themap);
-				bprint (1.000000, " will be played as the next map!(voteyes func 2)\n");
+				bprint (1.000000, " will be played as the next map!\n");
+				bprint (1.000000, themap);
+				bprint (1.000000, " will be played as the next map!\n");
+
 				nextmapchosen = 1;
 				localcmd ("localinfo nextmap ");
 				localcmd (themap);
@@ -386,15 +391,17 @@ void() voteyes =
 			}
 			}
 			bprint (1.000000, themap);
-			bprint (1.000000, " it is!(func voteyes 2)\n");
+			bprint (1.000000, " it is!\n");
+			bprint (1.000000, themap);
+			bprint (1.000000, " it is!\n");
 			MTF_Coop_RanksMapVote( themap, 1 ); //Update the rank stats of which map was voted for -arg
 			if (FTE_Server)
 				Rank_UpdateStatsGlobal (); //Update the rank stats of which map was voted for -arg
 			if (prozacmethod == 1)
 			{
-				localcmd ("exec qwmcycle/");   //not all new servers have a qwmcycle defined yet. Is this is what's causing the missing file error? -arg
-				localcmd (themap);
-				localcmd (".cfg\n");
+//				localcmd ("exec qwmcycle/");   //not all new servers have a qwmcycle defined yet. Is this is what's causing the missing file error? -arg
+//				localcmd (themap);
+//				localcmd (".cfg\n");
 				changelevel (themap);
 // This was causing some funky stuff!  //why? There's a bug in the loop here -arg 3/2020
 //				localcmd ("map ");
@@ -467,7 +474,8 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 	local entity te;
 	if (self.classname != "player")
 		return;
-	if (vote_type == #VOTE_MAP) {
+	if (vote_type == #VOTE_MAP)
+	{
 		votemap_start( vote_string );
 		return;
 	}
@@ -500,8 +508,11 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		vote_msg = " has called a vote to exit the level.";
 		okvote = 1;
 	}
-	else if (vote_type == #VOTE_USE) {
-		if (lms_entity != world) {
+	else
+	if (vote_type == #VOTE_USE)
+	{
+		if (lms_entity != world)
+		{
 			sprint(self, 2, "Can't vote use in LMS.\n");
 			return;
 		}
@@ -512,28 +523,36 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		vote_msg = " has called a vote to use an entity";
 		okvote = 1;
 	}
-	else if (vote_type == #VOTE_SURVIVAL_NEXT) {
+	else
+	if (vote_type == #VOTE_SURVIVAL_NEXT) {
 		vote_msg = " has called a vote for the next map to be in \sSURVIVAL\s mode.";
 		okvote = 1;
 	}
-	else if (vote_type == #VOTE_KICK) {
-		if (num_players < 4) {
+	else
+	if (vote_type == #VOTE_KICK)
+	{
+		if (num_players < 4)
+		{
 			sprint(self,2,"Not enough players to call a kick vote.\n");
 			return;
 		}
-		if (!vote_string) {
+		if (!vote_string)
+		{
 			sprint(self,2,"You need to specify a user id. Use \"cmd pm\" to get user ids.\n");
 			return;
 		}
 		k_id = stof(vote_string);
 		te = find(world, classname, "player");
 		while (te) {
-			if (te.userid == k_id) {
-				if (te.userid == self.userid) {
+			if (te.userid == k_id)
+			{
+				if (te.userid == self.userid)
+				{
 					sprint(self,2,"wtf why are you trying to kick yourself?\n");
 					return;
 				}
-				else {
+				else
+				{
 					vote_msg = frik_strcat(" has called a vote to kick player ", te.connect_name);
 					okvote = 1;
 					break;
@@ -541,7 +560,8 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 			}
 			te = find(te, classname, "player");
 		}
-		if (!okvote) {
+		if (!okvote)
+		{
 			sprint(self, 2, "UserID not found. Please use cmd votekick userid#. Use \"cmd pm\" to find user id's.\n");
 			return;
 		}
@@ -550,33 +570,43 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		localcmd( vote_string );
 		localcmd( "\n" );
 	}
-	else if (vote_type == #VOTE_NEXTMAP) {
+	else
+	if (vote_type == #VOTE_NEXTMAP)
+	{
 		if (!vote_string)
 		{
 			sprint(self,2,"You have to specify a mapname after CMD votenext.\n");
 			return;
 		}
-		if (!validatemap(vote_string)) {
+		if (!validatemap(vote_string))
+		{
 			sprint(self,2,"The server doesn't have map [");
 			sprint(self,2,vote_string);
 			sprint(self,2,"].\n");
 			return;
 		}
-		if (Check_For_Bmodel(vote_string)) {
+		if (Check_For_Bmodel(vote_string))
+		{
 			sprint(self,2,"You can't vote on a bmodel!\n");
 			return;
 		}
 		vote_msg = frik_strcat( " has called a vote for the next map to be ", vote_string, "‘");
+		vote_msg = frik_strcat( " has called a vote for the next map to be ", vote_string, "‘");
+		localcmd( "localinfo tempstring " );
+		localcmd( vote_string );
+		localcmd( "\n" );
 		localcmd( "localinfo tempstring " );
 		localcmd( vote_string );
 		localcmd( "\n" );
 		okvote = 1;
 	}
-	if (okvote == 1) {
+	if (okvote == 1)
+	{
 		head = nextent(world);
 		while (head != world)
 		{
-			if (head.classname == "player") { 
+			if (head.classname == "player")
+			{ 
 				stuffcmd(head, "play misc/runekey.wav \n");
 				if (vote_type != #VOTE_EXIT) 
 					if (head.current_menu == 0 && head != self)
@@ -594,18 +624,26 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		bprint(2, "\n");
 		vote_starter = self;
 		vote_string = strzone(vote_string);
-		if (vote_type == #VOTE_NEXTMAP && num_players == 1) {
+		if (vote_type == #VOTE_NEXTMAP && num_players == 1)
+		{
+			bprint(2, vote_string);
+			bprint(2, " will be played as the next map.\n");
 			bprint(2, vote_string);
 			bprint(2, " will be played as the next map.\n");
 			localcmd("localinfo nextmap ");
 			localcmd(vote_string);
 			localcmd("\n");
 		}
-		if (vote_string != "") {
+		if (vote_string != "")
+		{
+			localcmd("localinfo votestring ");
+			localcmd(vote_string);
+			localcmd("\n");
 			localcmd("localinfo votestring ");
 			localcmd(vote_string);
 			localcmd("\n");
 		}
+		strunzone(vote_string);
 		strunzone(vote_string);
 		Vote_CheckWin ();
 	}
@@ -636,15 +674,21 @@ void () Vote_CheckWin =
 		head = nextent(world);
 		while (head != world)
 		{
-			if (head.classname == "player") { head.has_voted = 0; head.startedvote = 0; }
+			if (head.classname == "player")
+			{
+			head.has_voted = 0; head.startedvote = 0;
+			}
 			head = nextent(head); 
 		}
-		if (votestarted == #VOTE_EXIT) {
+		if (votestarted == #VOTE_EXIT)
+		{
 			can_exit = #TRUE;
 			bprint(2, "Players can now exit the map!\n");
 		}
-		else if (votestarted == #VOTE_USE) {
-			if (vote_starter != world) {
+		else if (votestarted == #VOTE_USE)
+		{
+			if (vote_starter != world)
+			{
 				FindUseEntity (vote_starter);
 					if ((self.has_voted == 1))
 					{
@@ -655,25 +699,35 @@ void () Vote_CheckWin =
 				bprint(2, " is in front of will now be triggered.\n");
 			}
 		}
-		else if (votestarted == #VOTE_SURVIVAL_NEXT) {
+		else
+		if (votestarted == #VOTE_SURVIVAL_NEXT)
+		{
 			bprint(2, "\n\sVOTE PASSED!\s The next map played will be in \sSurvival Mode\s\n");
 			localcmd("localinfo survivalnext 1\n");
 		}
-		else if (votestarted == #VOTE_KICK) {
+		else
+		if (votestarted == #VOTE_KICK)
+		{
 			bprint(2, "\n\sVOTE PASSED!\s Say Goodbye..\n");
 			head = find(world, classname, "player");
 			while (head) {
-				if (head.userid == stof(infokey (world, "tempstring"))) {
+				if (head.userid == stof(infokey (world, "tempstring")))
+				{
 					stuffcmd(head, "disconnect;wait;kill;wait;spectate\n");
 				}
 				head = find(head, classname, "player");
 			}
 			localcmd("localinfo tempstring \"\"\n");
 		}
-		else if (votestarted == #VOTE_NEXTMAP) {
+		else
+		if (votestarted == #VOTE_NEXTMAP)
+		{
 			nextmapchosen = #TRUE;
-			if (num_players > 1) {
+			if (num_players > 1)
+			{
 				votedmap = infokey (world, "tempstring");
+				bprint(2, votedmap);
+				bprint(2, " will be played as the next map.\n");
 				bprint(2, votedmap);
 				bprint(2, " will be played as the next map.\n");
 				localcmd ("localinfo nextmap ");
@@ -687,7 +741,8 @@ void () Vote_CheckWin =
 		}
 		votestarted = 0;
 		vote_starter = world;
-		if (votestring != "") {
+		if (votestring != "")
+		{
 		}
 		finder_ent = find (world,classname,"VoteFailed");
 		while (finder_ent)
@@ -884,7 +939,7 @@ string() votesneededtostring =
 void() MapNotFound =
 {
 	local entity finder_ent;
-	localcmd("say --  Map Not Found(the func MapNotFound)  --\n");
+	localcmd("say --  Map Not Found --\n");
 	nomap = 1;
 	if (FTE_Server && Ranks_Updated == 1)
 		Ranks_Updated = 0;
@@ -910,7 +965,8 @@ void() RemoveVote =
 };
 void() RemoveVote2 =
 {
-	if (votestarted == 0) {
+	if (votestarted == 0)
+	{
 		dremove(self);
 		return;
 	}
@@ -927,7 +983,10 @@ void() RemoveVote2 =
 	head = nextent(world);
 	while (head != world)
 	{
-	if (head.classname == "player") { head.has_voted = 0; }
+		if (head.classname == "player")
+		{
+			head.has_voted = 0;
+		}
 	head = nextent(head); 
 	}
 	return;
@@ -936,9 +995,9 @@ void() RemoveVote2 =
 #include "vmap_menus.qc"
 float(string mapstr) validatemap =
 {
-    mapstr = strcat("maps/",mapstr);
-    mapstr = strcat(mapstr,".bsp");
-    return validatefile(mapstr);
+	mapstr = strcat("maps/",mapstr);
+	mapstr = strcat(mapstr,".bsp");
+	return validatefile(mapstr);
 };
 float(string s1, string s2, string s3, string s4, string s5) ExtendedCMDs =
 {
@@ -1108,11 +1167,12 @@ float (string votemap_name) Check_For_Bmodel =
 		sprint(self,2,"You can't start voting for a bmodel!\n");
 		return TRUE;
 	}
-	if (votemap_name == "insane" || votemap_name == "beach" || votemap_name == "hipstart")
-	{
-		sprint(self,2,"I'm sorry Dave, I'm afraid I can't do that.\n");
-		return TRUE;
-	}
+//Why are these maps banned?  hipstart ? -arg
+//	if (votemap_name == "insane" || votemap_name == "beach" || votemap_name == "hipstart")
+//	{
+//		sprint(self,2,"I'm sorry Dave, I'm afraid I can't do that.\n");
+//		return TRUE;
+//	}
 	return FALSE;
 };
 string (string packet_cmd) Packet_Slashpass =
@@ -1133,7 +1193,7 @@ void (entity plyr) Badpacket_attribute_over_limit =
 	bprint(2, "Packet Bug: Player " );
 	bprint(2, plyr.connect_name);
 	bprint(2, " received attributes over the allowed limit. Please inform DEV. Attributes will be reset now..\n");
-	Coop_ResetAttributes ( plyr );
+//	Coop_ResetAttributes ( plyr );
 	sprint(plyr, 2,"Sorry, seems you got caught in one of my endless bugs. Your attributes have been reset.\n");
 };
 void (string msg) Packet_SendGlobalMessage =
@@ -1247,7 +1307,8 @@ float(string sender, string contents) SV_ParseConnectionlessPacket =
 		bprint(2, "\n");
 #endif
 	}
-	else {
+	else
+	{
 		Master_UpdateConnections(sender);
 		if (sentname == string_null || sentname == "")
 			bprint(2,"NULL SENTNAME - THERE IS ALWAYS SUPPOSED TO BE A SENTNAME!!!!\n");
@@ -1272,15 +1333,18 @@ float(string sender, string contents) SV_ParseConnectionlessPacket =
 				else if (ips[i] == sender)
 				{}
 				else
-					QC_SendPacket(ips[i], send_what);	
+					QC_SendPacket(ips[i], send_what);
 				i++;
 			}
 			strunzone(send_what);
 		}
-		else if (argv(1) == "broadcast_globalmsg") {			// Server => Hub: Send this message out to all connected servers
+		else
+		if (argv(1) == "broadcast_globalmsg")
+		{			// Server => Hub: Send this message out to all connected servers
 			send_what = frik_strcat(sentname, Packet_Slashpass("display_globalmsg"));
 			i=1;
-			while (i < 30) {
+			while (i < 30)
+			{
 				if (argv(i) == string_null || argv(i) == "\\n")
 					break;
 				else
@@ -1290,24 +1354,27 @@ float(string sender, string contents) SV_ParseConnectionlessPacket =
 			send_what = frik_strcat(send_what, "\n");
 			send_what = strzone(send_what);
 			i=0;
-			while (i<STORED_ADDRESSES) {
+			while (i<STORED_ADDRESSES)
+			{
 				//bprint(2,ips[i]);
 				//bprint(2," is ips\n");
 				if (ips[i] == string_null)
 					break;
-				else if (ips[i] == sender)
+				else
+				if (ips[i] == sender)
 				{}
 				else
 					QC_SendPacket(ips[i], send_what);	
 				i++;
 			}
-			
 			strunzone(send_what);
 		}
-		else if (argv(1) == "display_msg") {				// Hub => Server: Display this CHAT message to all clients
+		else if (argv(1) == "display_msg")
+		{				// Hub => Server: Display this CHAT message to all clients
 			//send_what = frik_strcat(sentname, " - ");
 			i=3;
-			while (i < 30) {
+			while (i < 30)
+			{
 				if (argv(i) == string_null)
 					break;
 				else
@@ -1321,9 +1388,12 @@ float(string sender, string contents) SV_ParseConnectionlessPacket =
 			bprint(PRINT_CHAT,"\n");
 			strunzone(send_what);
 		}
-		else if (argv(1) == "display_globalmsg") {				// Hub => Server: Display ANY message to all clients
+		else
+		if (argv(1) == "display_globalmsg")
+		{				// Hub => Server: Display ANY message to all clients
 			i=3;
-			while (i < 30) {
+			while (i < 30)
+			{
 				if (argv(i) == string_null)
 					break;
 				else
