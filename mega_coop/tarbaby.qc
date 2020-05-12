@@ -325,10 +325,10 @@ void () monster_tarbaby =
 		return;
 	}
 	precache_model2 ("progs/tarbaby.mdl");
-	precache_sound2 ("blob/death1.wav");
-	precache_sound2 ("blob/hit1.wav");
-	precache_sound2 ("blob/land1.wav");
-	precache_sound2 ("blob/sight1.wav");
+	precache_sound ("blob/death1.wav");
+	precache_sound ("blob/hit1.wav");
+	precache_sound ("blob/land1.wav");
+	precache_sound ("blob/sight1.wav");
 	self.netname = "spawn";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;

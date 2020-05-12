@@ -482,13 +482,13 @@ void () monster_wizard =
 #endif
 	precache_model (mtf_savemodel("progs/h_wizard.mdl"));
 	precache_model ("progs/w_spike.mdl");
-	precache_sound ("wizard/hit.wav");
-	precache_sound ("wizard/wattack.wav");
-	precache_sound ("wizard/wdeath.wav");
-	precache_sound ("wizard/widle1.wav");
-	precache_sound ("wizard/widle2.wav");
-	precache_sound ("wizard/wpain.wav");
-	precache_sound ("wizard/wsight.wav");
+	precache_sound2 ("wizard/hit.wav");
+	precache_sound2 ("wizard/wattack.wav");
+	precache_sound2 ("wizard/wdeath.wav");
+	precache_sound2 ("wizard/widle1.wav");
+	precache_sound2 ("wizard/widle2.wav");
+	precache_sound2 ("wizard/wpain.wav");
+	precache_sound2 ("wizard/wsight.wav");
 	self.netname = "scrag";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;

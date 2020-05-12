@@ -467,11 +467,11 @@ void () monster_dog =
 #endif
 	precache_model (mtf_savemodel("progs/h_dog.mdl"));
 	precache_model ("progs/dog.mdl");
-	precache_sound ("dog/dattack1.wav");
-	precache_sound ("dog/ddeath.wav");
-	precache_sound ("dog/dpain1.wav");
-	precache_sound ("dog/dsight.wav");
-	precache_sound ("dog/idle.wav");
+	precache_sound2 ("dog/dattack1.wav");
+	precache_sound2 ("dog/ddeath.wav");
+	precache_sound2 ("dog/dpain1.wav");
+	precache_sound2 ("dog/dsight.wav");
+	precache_sound2 ("dog/idle.wav");
 #ifdef decemberween
 	if (random() < .7) {
 		monster_elf();

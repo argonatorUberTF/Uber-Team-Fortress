@@ -818,12 +818,12 @@ void () monster_hell_knight =
 	precache_model2 ("progs/k_spike.mdl");
 	precache_model2 (mtf_savemodel("progs/h_hellkn.mdl"));
 	precache_sound2 ("hknight/attack1.wav");
-	precache_sound2 ("hknight/death1.wav");
+	precache_sound ("hknight/death1.wav");
 	precache_sound2 ("hknight/pain1.wav");
 	precache_sound2 ("hknight/sight1.wav");
 	precache_sound ("hknight/hit.wav");
 	precache_sound2 ("hknight/slash1.wav");
-	precache_sound2 ("hknight/idle.wav");
+	precache_sound ("hknight/idle.wav");
 	precache_sound2 ("hknight/grunt.wav");
 	precache_sound ("knight/sword1.wav");
 	precache_sound ("knight/sword2.wav");
