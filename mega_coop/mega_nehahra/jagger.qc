@@ -1050,6 +1050,7 @@ void () jagger_startt =
 };
 void () carnify_jagger =
 {
+	precache_model("progs/jagger.mdl");
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/jagger.mdl");

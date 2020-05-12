@@ -32,7 +32,7 @@ void () precache_mr =
 	precache_sound2 ("max/lava1.wav");
 	precache_sound2 ("max/lava2.wav");
 	precache_sound ("shambler/sattck1.wav");
-	precache_sound2 ("hknight/idle.wav");
+	precache_sound ("hknight/idle.wav");
 	precache_sound2 ("ambience/fire1.wav");
 	precache_sound2 ("weapons/sprfall1.wav");
 	precache_sound2 ("weapons/sprfall2.wav");

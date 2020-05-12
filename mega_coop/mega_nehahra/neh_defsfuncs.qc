@@ -3518,7 +3518,7 @@ void () play_secj =
 };
 void () ambient_secj =
 {
-	precache_sound ("ambience/secj.wav");
+	precache_sound2 ("ambience/secj.wav");
 	self.think = play_secj;
 	self.nextthink = (time + 0.5);
 };
@@ -4020,7 +4020,7 @@ void () stop_loopsnd =
 };
 void () misc_valve =
 {
-	precache_sound ("forge/turnme.wav");
+	precache_sound2 ("forge/turnme.wav");
 	if (!self.target)
 	{
 		bprint ("MISC_VALVE NEEDS A TARGET\n");
@@ -4037,8 +4037,8 @@ void () misc_valve =
 };
 void () misc_fscreen =
 {
-	precache_sound ("forge/alarm.wav");
-	precache_sound ("sets/set2_4.wav");
+	precache_sound2 ("forge/alarm.wav");
+	precache_sound2 ("sets/set2_4.wav");
 	precache_model ("progs/fscreen.mdl");
 	setmodel (self, "progs/fscreen.mdl");
 	setsize (self, VEC_HULL_MIN, '10 10 45');

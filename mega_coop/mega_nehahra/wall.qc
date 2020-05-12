@@ -72,28 +72,28 @@ void () setup_explodable =
 	}
 	if ((self.sounds == 0))
 	{
-		precache_sound ("wall/wall01.wav");
+//		precache_sound ("wall/wall01.wav");		//Freeing up precache of seldom used sounds. -arg
 		self.noise1 = "wall/wall01.wav";
 	}
 	else
 	{
 		if ((self.sounds == 1))
 		{
-			precache_sound ("wall/rubble.wav");
+//			precache_sound ("wall/rubble.wav");	//Freeing up precache of seldom used sounds. -arg
 			self.noise1 = "wall/rubble.wav";
 		}
 		else
 		{
 			if ((self.sounds == 2))
 			{
-				precache_sound ("wall/wallbrk.wav");
+//				precache_sound ("wall/wallbrk.wav"); //Freeing up precache of seldom used sounds. -arg
 				self.noise1 = "wall/wallbrk.wav";
 			}
 			else
 			{
 				if ((self.sounds == 3))
 				{
-					precache_sound ("wall/woodbrk.wav");
+//					precache_sound ("wall/woodbrk.wav");	//Freeing up precache of seldom used sounds. -arg
 					self.noise1 = "wall/woodbrk.wav";
 				}
 				else
@@ -107,7 +107,7 @@ void () setup_explodable =
 					{
 						if ((self.sounds == 5))
 						{
-							precache_sound ("wall/thngland.wav");
+//							precache_sound ("wall/thngland.wav");	//Freeing up precache of seldom used sounds. -arg
 							self.noise1 = "wall/thngland.wav";
 						}
 						else
@@ -126,7 +126,7 @@ void () setup_explodable =
 								}
 								else
 								{
-									precache_sound ("misc/null.wav");
+//									precache_sound ("misc/null.wav");	//Freeing up precache of seldom used sounds. -arg
 									self.noise1 = "misc/null.wav";
 								}
 							}
@@ -466,21 +466,21 @@ dremove(self);
 	}
 	if ((self.sounds == 1))
 	{
-		precache_sound ("machine/m1_st.wav");
-		precache_sound ("machine/m1_go.wav");
-		precache_sound ("machine/m1_xx.wav");
+//		precache_sound ("machine/m1_st.wav");	//Freeing up precache of seldom used sounds. -arg
+//		precache_sound ("machine/m1_go.wav");	//Freeing up precache of seldom used sounds. -arg
+//		precache_sound ("machine/m1_xx.wav");	//Freeing up precache of seldom used sounds. -arg
 	}
 	if ((self.sounds == 2))
 	{
-		precache_sound ("machine/m2_st.wav");
-		precache_sound ("machine/m2_go.wav");
-		precache_sound ("machine/m2_xx.wav");
+//		precache_sound ("machine/m2_st.wav");	//Freeing up precache of seldom used sounds. -arg
+//		precache_sound ("machine/m2_go.wav");	//Freeing up precache of seldom used sounds. -arg
+//		precache_sound ("machine/m2_xx.wav");	//Freeing up precache of seldom used sounds. -arg
 	}
 	if ((self.sounds == 3))
 	{
-		precache_sound ("machine/m3_st.wav");
-		precache_sound ("machine/m3_go.wav");
-		precache_sound ("machine/m3_xx.wav");
+//		precache_sound ("machine/m3_st.wav");	//Freeing up precache of seldom used sounds. -arg
+//		precache_sound ("machine/m3_go.wav");	//Freeing up precache of seldom used sounds. -arg
+//		precache_sound ("machine/m3_xx.wav");	//Freeing up precache of seldom used sounds. -arg
 	}
 	self.angles = '0 0 0';
 	self.movetype = MOVETYPE_PUSH;

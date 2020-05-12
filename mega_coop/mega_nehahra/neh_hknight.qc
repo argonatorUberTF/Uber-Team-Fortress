@@ -1087,26 +1087,26 @@ void () monster_hell_knight =
 	if ((self.classname == "monster_beard"))
 	{
 		precache_model2 ("progs/beard.mdl");
-		precache_sound ("ghoro/balls.wav");
-		precache_sound ("ghoro/spawnb.wav");
+		precache_sound2 ("ghoro/balls.wav");
+		precache_sound2 ("ghoro/spawnb.wav");
 		setmodel (self, "progs/beard.mdl");
-		precache_sound ("ghoro/talk1.wav");
-		precache_sound ("ghoro/talk2.wav");
-		precache_sound ("ghoro/talk3.wav");
-		precache_sound ("ghoro/laugh.wav");
+		precache_sound2 ("ghoro/talk1.wav");
+		precache_sound2 ("ghoro/talk2.wav");
+		precache_sound2 ("ghoro/talk3.wav");
+		precache_sound2 ("ghoro/laugh.wav");
 		precache_model2 ("progs/k_spike.mdl");
 		precache_model2 (mtf_savemodel("progs/h_hellkn.mdl"));
 		precache_sound2 ("hknight/attack1.wav");
-		precache_sound2 ("hknight/death1.wav");
+		precache_sound ("hknight/death1.wav");
 		precache_sound2 ("hknight/pain1.wav");
 		precache_sound2 ("hknight/sight1.wav");
 		precache_sound ("hknight/hit.wav");
 		precache_sound2 ("hknight/slash1.wav");
-		precache_sound2 ("hknight/idle.wav");
+		precache_sound ("hknight/idle.wav");
 		precache_sound2 ("hknight/grunt.wav");
 		precache_sound ("knight/sword1.wav");
 		precache_sound ("knight/sword2.wav");
-		precache_sound ("sets/set2_4.wav");
+		precache_sound2 ("sets/set2_4.wav");
 		precache_sound ("sets/dml1_4.wav");
 		MTF_Setup_Monster_Presets( 0, "super knight", monster_hell_knight1 );
 	}
@@ -1116,12 +1116,12 @@ void () monster_hell_knight =
 		precache_model2 ("progs/k_spike.mdl");
 		precache_model2 (mtf_savemodel("progs/h_hellkn.mdl"));
 		precache_sound2 ("hknight/attack1.wav");
-		precache_sound2 ("hknight/death1.wav");
+		precache_sound ("hknight/death1.wav");
 		precache_sound2 ("hknight/pain1.wav");
 		precache_sound2 ("hknight/sight1.wav");
 		precache_sound ("hknight/hit.wav");
 		precache_sound2 ("hknight/slash1.wav");
-		precache_sound2 ("hknight/idle.wav");
+		precache_sound ("hknight/idle.wav");
 		precache_sound2 ("hknight/grunt.wav");
 		precache_sound ("knight/sword1.wav");
 		precache_sound ("knight/sword2.wav");

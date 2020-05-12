@@ -91,9 +91,9 @@ void (float num) precache_thrown =
 	if ((num & IT_FLIGHT))
 	{
 		precache_model ("progs/flying.mdl");
-		precache_sound ("items/inv1.wav");
-		precache_sound ("items/inv2.wav");
-		precache_sound ("items/inv3.wav");
+		precache_sound2  ("items/inv1.wav");
+		precache_sound2  ("items/inv2.wav");
+		precache_sound2 ("items/inv3.wav");
 	}
 	if ((num & IT_SUIT))
 	{

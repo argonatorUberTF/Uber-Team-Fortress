@@ -257,7 +257,7 @@ void () kguard_die =
 	}
 	if ((random () < 0.5))
 	{
-		sound (self, CHAN_VOICE, "player/death3.wav", 1, ATTN_NORM);
+		sound (self, CHAN_VOICE, "player/death1.wav", 1, ATTN_NORM); // changed sound from 3 to 1 to save space -arg
 	}
 	else
 	{

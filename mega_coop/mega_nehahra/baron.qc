@@ -474,7 +474,7 @@ void () monster_baron =
 	precache_model2 ("progs/k_spike.mdl");
 	precache_sound2 ("baron/sight.wav");
 	precache_sound2 ("hknight/attack1.wav");
-	precache_sound2 ("hknight/idle.wav");
+	precache_sound ("hknight/idle.wav");
 	precache_sound2 ("baron/throb.wav");
 	precache_sound2 ("baron/smash.wav");
 	precache_sound2 ("baron/death.wav");
