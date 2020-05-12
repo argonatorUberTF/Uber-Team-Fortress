@@ -1202,8 +1202,8 @@ void () monster_juggernaut =
 	precache_model ("progs/a_jugg2.mdl");
 	precache_model ("progs/h_jugg2.mdl");
 	precache_model ("progs/jugg2.mdl");
-	precache_model ("progs/laser.mdl");
-	precache_sound ("enforcer/enfstop.wav");
+	precache_model2 ("progs/laser.mdl");
+	precache_sound2  ("enforcer/enfstop.wav");
 	precache_sound ("monsters/juggers/jbent.wav");
 	precache_sound ("monsters/juggers/jlocked.wav");
 	precache_sound ("monsters/juggers/jshot.wav");
