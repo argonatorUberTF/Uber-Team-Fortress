@@ -196,7 +196,7 @@ void () monster_caco =
 	}
 	precache_model ("sprites/doom/caco.spr");
 	precache_model ("sprites/doom/impball.spr");
-	precache_sound ( "doom_imp/idle.wav" );
+	precache_sound2 ( "doom_imp/idle.wav" );
 	precache_sound ("doom_caco/die.wav");
 	precache_sound ("doom_caco/site.wav");
 	precache_sound ("doom_caco/pain.wav");
