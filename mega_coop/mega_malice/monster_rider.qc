@@ -882,14 +882,14 @@ void () monster_rider =
 	precache_model ("progs/ridlegs.mdl");
 	precache_sound ("rider/down2.wav");
 	precache_sound ("weapons/fuelexp.wav");
-	precache_model ("progs/laser.mdl");
+	precache_model2 ("progs/laser.mdl");
 	precache_sound ("rider/shoot.wav");
 	precache_sound ("rider/pain1.wav");
 	precache_sound ("rider/down.wav");
 	precache_sound ("rider/death.wav");
 	precache_sound ("rider/idle.wav");
 	precache_sound ("rider/idle2.wav");
-	precache_sound ("enforcer/enfstop.wav");
+	precache_sound2  ("enforcer/enfstop.wav");
 	self.netname = "rider";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;

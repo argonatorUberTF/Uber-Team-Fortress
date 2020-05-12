@@ -413,12 +413,12 @@ void () cbt_die =
 void () precache_cbot_models =
 {
 	precache_model ("progs/vasquez.mdl");
-	precache_sound ("vasquez/sight1.wav");
-	precache_sound ("vasquez/pain1.wav");
-	precache_sound ("vasquez/pain2.wav");
-	precache_sound ("vasquez/death1.wav");
-	precache_sound ("vasquez/death2.wav");
-	precache_sound ("vasquez/death3.wav");
+//	precache_sound ("vasquez/sight1.wav");	//Freeing up precache load for less console log warnings for seldom used sounds -arg
+//	precache_sound ("vasquez/pain1.wav");
+//	precache_sound ("vasquez/pain2.wav");
+//	precache_sound ("vasquez/death1.wav");
+//	precache_sound ("vasquez/death2.wav");
+//	precache_sound ("vasquez/death3.wav");
 };
 entity () spawn_cbot =
 {

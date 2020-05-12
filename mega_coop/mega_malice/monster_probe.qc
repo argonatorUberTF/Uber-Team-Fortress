@@ -771,13 +771,13 @@ void () monster_probe =
 	self.lefty = MSG_BROADCAST;
 	precache_model ("progs/probebod.mdl");
 	precache_model ("progs/probedom.mdl");
-	precache_model ("progs/laser.mdl");
+	precache_model2 ("progs/laser.mdl");
 	precache_sound ("probe/shoot.wav");
 	precache_sound ("probe/footfall.wav");
 	precache_sound ("probe/servo.wav");
 	precache_sound ("probe/death.wav");
 	precache_sound ("probe/pain.wav");
-	precache_sound ("enforcer/enfstop.wav");
+	precache_sound2 ("enforcer/enfstop.wav");
 	precache_sound ("probe/sight.wav");
 	precache_sound ("probe/idle1.wav");
 	precache_sound ("probe/idle2.wav");
