@@ -220,14 +220,10 @@ void() turret_face =
 void() turret_still = [0, turret_still]
 {
 	self.frame = turret_frame(self.rotate_type);
-#ifdef mtf_coop
 	if (self.netname == "monster_miniturret")
 		FindTarget();
 	else
 		MTurret_FindTarget ();
-#else
-	FindTarget();
-#endif
 };
 void() turret_ret1 = [16, turret_ret1]
 {
@@ -314,11 +310,7 @@ void() turret_unret7 = [0, turret_unret7]
 };
 void() turret_retracted = [22, turret_retracted]
 {
-#ifdef mtf_coop
 	if (MTurret_FindTarget())
-#else
-	if (FindTarget())
-#endif
 	{
 		turret_unret1();
 	}
@@ -353,11 +345,7 @@ void() turret_active = [0, turret_active]
 	}
 	if (self.search_time < time)
 	{
-#ifdef mtf_coop
 		if (MTurret_FindTarget())
-#else
-		if (FindTarget())
-#endif
 		{
 			return;
 		}
