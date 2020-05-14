@@ -371,6 +371,7 @@ void(float offset, vector orgn) bigtank_fireflame =
 	vec_z = 0 - vec_z + (random() - 0.5)*0.1;
 	 testlaunch_spike (orgn, vec);
 	newmis.classname = "flamespike";
+	precache_model2("progs/medexp.spr");
 	setmodel (newmis, "progs/medexp.spr");
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);		
 	newmis.velocity = vec*300;
