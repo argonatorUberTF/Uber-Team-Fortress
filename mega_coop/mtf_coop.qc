@@ -558,10 +558,8 @@ float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
 		}
 		origdmg = 0;
 	}	
-#ifdef CSQC
 	if (atckr.classname == "player")
 		CSQC_SendMonsterbar( atckr, targ.health - origdmg, targ.max_health );
-#endif
 	return ( origdmg * s_mult );
 };
 string ( string pc_name/*, float m_type*/ ) mtf_savemodel =
@@ -1099,9 +1097,7 @@ void() coop_walkmonster_start =
 		remove(self);
 		return;
 	}
-#ifdef CSQC
 	self.max_health = self.health;
-#endif
 	self.#npc_originalloc = self.origin;
 	self.nextthink = self.nextthink + random()*0.5;
 	self.think = walkmonster_start;
