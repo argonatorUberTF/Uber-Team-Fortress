@@ -54,9 +54,7 @@ void() Teleporter_touch =
 					spawn_tdeath(te.origin + vec, other);
 					makeImmune(other,time + 2);
 					setorigin(other, te.origin + vec);
-#ifdef mtf_coop_expsys				
 					MTF_Coop_AddServiceExp( self.real_owner, other, 1, #SRV_TELEPORT );
-#endif					
 					if (IsOutWorld(other))
 					{
 						deathmsg = 68;
@@ -88,7 +86,8 @@ void() Teleporter_touch =
 					if ((te.ammo_cells >= #TELEPORTER_CELLS && te.ammo_cells <= #TELEPORTER_CELLS * 2) || (self.ammo_cells >= #TELEPORTER_CELLS && self.ammo_cells <= #TELEPORTER_CELLS * 2))
 						sprint (self.real_owner, #PRINT_HIGH, "A teleporter is getting low on power.\n");
 				}
-				else if (te.ammo_cells < #TELEPORTER_CELLS)
+				else
+				if (te.ammo_cells < #TELEPORTER_CELLS)
 					CenterPrint(other, "The other teleporter is out of power.\n");
 			}
 		}
@@ -105,12 +104,14 @@ void() Teleporter_touch =
 };
 float(entity targ) Teleporter_check_person =
 {
-	if (self.ammo_cells < #TELEPORTER_CELLS) {
+	if (self.ammo_cells < #TELEPORTER_CELLS)
+	{
 		if (Teammate(targ.team_no, self.team_no)) //only to team member
 			CenterPrint(other, "This teleporter is out of power.\n");
 		return #FALSE;
 	}
-	if (self.real_owner.has_teleporter == 1) {
+	if (self.real_owner.has_teleporter == 1)
+	{
 		if (Teammate(targ.team_no, self.team_no)) //only to team member
 			if (other.classname == "player")
 				CenterPrint(other, "There is no other teleporter!\n");
@@ -213,9 +214,12 @@ float(float targteam, float attackteam) Teammate =
 	if ( targteam == attackteam ) return #TRUE;
 	if ( number_of_teams < 3 ) return #FALSE;
 	if      ( targteam == 1 ) teammask = 1;
-	else if ( targteam == 2 ) teammask = 2;
-	else if ( targteam == 3 ) teammask = 4;
-	else if ( targteam == 4 ) teammask = 8;
+	else
+	if ( targteam == 2 ) teammask = 2;
+	else
+	if ( targteam == 3 ) teammask = 4;
+	else
+	if ( targteam == 4 ) teammask = 8;
 	return #TRUE; //guess fix?
 };
 //END

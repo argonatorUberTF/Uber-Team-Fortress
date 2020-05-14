@@ -430,14 +430,8 @@ void () Submakesight =
 	newmis.solid = 0;
 	newmis.classname = "grid";
 	newmis.movetype = 8;
-#ifdef mtf_coop
 	setmodel/*u*/ (newmis, "progs/sight.mdl");
-#else
-	setmodel (newmis, "progs/sight.mdl");
-#endif
-#ifdef VWEPS
 	self.vw_index = 31;
-#endif
 	setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
 	newmis.think = Subsightthink;
 	newmis.nextthink = time;

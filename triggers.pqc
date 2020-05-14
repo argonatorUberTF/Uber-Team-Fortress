@@ -170,7 +170,8 @@ void() trigger_once =
 	self.wait = -1;
 #ifdef mtf_coop_halflife
 	if (#HL_MAP)
-		if (self.target == "init_rocket_fire") {
+		if (self.target == "init_rocket_fire")
+		{
 			self.master = "testfire_ms";
 			self.master = strzone(self.master);
 		}
@@ -186,7 +187,8 @@ void () trigger_relay_checktargs =
 	if (targ == world) {
 		targ = find(world, TriggerTarget, self.targetname);
 		if (targ != world) {
-			if (targ.classname == "env_global") {
+			if (targ.classname == "env_global")
+			{
 				hldprint(2,"No setting of globals!\n");
 			}
 			hldprint(2, "set proper trigger target!\n");
@@ -611,12 +613,8 @@ void() trigger_onlyregistered_touch =
 	{
 		self.message = "";
 		SUB_UseTargets();
-#ifdef mtf_coop
 		if (self.killtarget != self.targetname)
 			remove (self);
-#else
-		remove(self);
-#endif
 	}
 	else
 	{
@@ -678,7 +676,8 @@ void() hurt_touch =
 #ifdef mtf_coop_halflife
 		if (#HL_MAP) {
 			if (self.spawnflags & 8) {
-				if (other.classname == "player") {
+				if (other.classname == "player")
+				{
 					// dont hurt clients
 					self.think = hurt_on;
 					self.nextthink = time + 1;
@@ -702,10 +701,12 @@ void() hurt_touch =
 #ifdef mtf_coop_halflife
 void() trigger_hurt_use = 
 {
-	if (self.touch == hurt_touch) {
+	if (self.touch == hurt_touch)
+	{
 		self.touch = SUB_Null;
 	}
-	else {
+	else
+	{
 		self.touch = hurt_touch;
 	}
 		
@@ -736,19 +737,22 @@ void() trigger_hurt =
 		self.dmg = 5;
 	}
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		self.use = trigger_hurt_use;
 		if (self.spawnflags & 2)
 			self.touch = SUB_Null;
 		if (mapname == "c1a3")
 			dremove(self);	// doesnt really work right in quakeworld
-		if (substr(mapname, 0, 4) == "c2a2" || mapname == "c2a3") {
+		if (substr(mapname, 0, 4) == "c2a2" || mapname == "c2a3")
+		{
 			if (self.dmg == 10 || self.dmg == 20 || self.dmg == 5 || self.dmg == 150)
 				self.touch = SUB_Null;
 		}
 	}
 #endif
-	else {
+	else
+	{
 		if (self.spawnflags & 1)
 			self.solid = SOLID_NOT;
 		else
@@ -789,7 +793,8 @@ void() trigger_push_touch =
 		if (other.health > TF_FLARE_LIT && !(self.armorclass))
 		{
 #ifdef mtf_coop_halflife
-			if (#HL_MAP) {	// halflife's trigger_push handles these things differently.. more subtle
+			if (#HL_MAP)
+			{	// halflife's trigger_push handles these things differently.. more subtle
 				other.velocity = other.velocity + (self.speed*.01 * self.movedir);
 			}
 			else
@@ -845,21 +850,24 @@ void() trigger_push =
 	}
 #ifdef mtf_coop_halflife
 	if (#HL_MAP) {
-		if (self.spawnflags & 2) {
+		if (self.spawnflags & 2)
+		{
 			self.use = trigger_push_use;
 			self.touch = SUB_Null;
 		}
 	}
 	else {
 #endif
-	if (self.spawnflags & 2) {
+	if (self.spawnflags & 2)
+	{
 		self.touch = SUB_Null;
 	}
 	self.use = trigger_push_mtf_use;
 #ifdef mtf_coop_halflife
 	}
 	if (mapname == "c1a1b")
-		if (self.targetname == "water_door_current") {
+		if (self.targetname == "water_door_current")
+		{
 			self.targetname = "blahhh";
 			self.use = SUB_Null;
 			return;

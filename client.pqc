@@ -123,7 +123,6 @@ void() DecodeLevelParms =
 			SetNewParms();
 		}
 	}
-#ifdef mtf_coop_bbelief
 	if (!deathmatch)
 	{
 		if ((world.model == "maps/bbelief1.bsp"))
@@ -138,7 +137,6 @@ void() DecodeLevelParms =
 			}
 		}
 	}
-#endif
 	self.items = parm1;
 	self.health = parm2;
 	self.armorvalue = parm3;
@@ -935,7 +933,6 @@ void() ExitIntermission =
 			WriteString (MSG_ALL, "Victory! The Overlord's mangled\nremains are the evidence.  His evil\nWrath army?  Cast out to wander\naimlessly throughout time.\n\nAs the Slipgate fog surrounds you,\nthoughts rage into your consciousness:\nHas Quake's oppressive reign ended?\nIs it S...");
 			return;
 		}
-#ifdef mtf_coop_bbelief
 		if ( world.model == "maps/bbelief7.bsp" || mapname == "bbelief7" )
 		{
 			WriteByte (MSG_ALL, SVC_CDTRACK);
@@ -944,7 +941,6 @@ void() ExitIntermission =
 			WriteString (MSG_ALL, "Once again you watch Chthon crumbling\nbefore your eyes. Why does it always\nhave to turn out that the bad guys\nweren't destroyed at the first attempt?\nBut now you're sure that Chthon will\nnever rise from his pool of lava again -\nthis time it wasn...");
 			return;
 		}
-#endif
 		GotoNextMap();
 	}
 	if (intermission_running == 3)
@@ -975,11 +971,7 @@ void() IntermissionThink =
 		return;
 	}
 	dprint("Intermission think.\n");
-#ifdef mtf_coop
 	ExitIntermission ();
-#else
-	GotoNextMap();
-#endif
 };
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience;
 void () MTF_Coop_UpdateMapRanks;
@@ -1795,10 +1787,10 @@ void() testplayerstart =
 };
 void() info_player_deathmatch = 
 {
-#ifdef mtf_coop
 #ifdef SVEN_COOP
 	if (#HL_MAP) {
-		if (self.spawnflags & 2) {	// start disabled
+		if (self.spawnflags & 2)
+		{	// start disabled
 			self.has_tesla = 1;
 			self.classname = "info_poop";
 		}
@@ -1809,7 +1801,6 @@ void() info_player_deathmatch =
 	else
 #endif
 	dremove(self);
-#endif
 	if (CheckExistence() == 0)
 	{
 		dremove(self);
@@ -2048,7 +2039,6 @@ void () pdummy_spawn_think =
 void () PlayerDeathThink =
 {
 	local float _l_5972;
-#ifdef mtf_coop
 	local entity te;
 	local float foundme;
 	if (survival_mode)
@@ -2113,7 +2103,6 @@ void () PlayerDeathThink =
 					}
 					}
 	}
-#endif
 	if ((self.flags & 512.000000))
 	{
 		_l_5972 = vlen (self.velocity);
@@ -3036,7 +3025,6 @@ void() ClientConnect =
 #else
 	ClientInRankings2 ();
 #endif
-#ifdef mtf_coop
 #ifdef HALFLIFE
 	local entity relandmark, oself;
 	if (#HL_MAP) {
@@ -3063,16 +3051,13 @@ void() ClientConnect =
 	}
 	else
 		Monster_Stats_Create ();
-#ifdef mtf_coop_expsys
 	if (!self.connect_name || self.connect_name == "")
 	{
 		self.connect_name = strzone(self.netname);
 		self.#custom_skin = strzone(self.#custom_skin);
 	}
 	self.coop_exp = MTF_Coop_GetExperience( self.connect_name );
-#ifdef CSQC
 	CSQC_SendExperience(self, self.coop_exp);
-#endif
 	MTF_Coop_SetupInventory( self.connect_name );
 	if (Coop_HasMasterSkill( self, #ATTRIB_QUICKSHOT ))
 		self.mtf_items |= MTFITEM_LIGHTGUN;
@@ -3083,13 +3068,9 @@ void() ClientConnect =
 #ifdef mtf_coop_quests
 	Quest_SetupPlayer( self );
 #endif
-#endif
-#endif
-#ifndef mtf_coop
-#ifdef CSQC
-	CSQC_SendExperience(self, -666);
-#endif
-#endif
+//#ifndef mtf_coop
+//	CSQC_SendExperience(self, -666);
+//#endif
 	num_players = num_players + 1;
 	globaluserid = globaluserid + 1;
 	self.userid = globaluserid;
@@ -3106,10 +3087,8 @@ void() ClientConnect =
 	bprint(2, self.netname);
 	if (FTE_Server)
 		bprint(2, strcat(" joined! (rank: ",ftos(self.global_rank),").\n"));
-#ifdef mtf_coop_expsys
 	else if (self.netname != "")
 		bprint(2, strcat(" joined! (exp: ",ftos(self.coop_exp),").\n"));
-#endif
 	else
 		bprint(2, " joined!\n");
 	self.join_time = time;
@@ -3272,13 +3251,9 @@ void() ClientDisconnect =
 		clientSetFree (self.fClientNo);
 	}
 #else
-#ifdef mtf_coop
 	clientSetFree2 (self.fClientNo);
 #endif
-#endif
-#ifdef mtf_coop
 	Survival_MakeDummy( 1 );
-#endif
 	num_players = num_players - 1;
 	if ((self.has_voted == 1))
 	{
@@ -3292,18 +3267,16 @@ void() ClientDisconnect =
 	if (self.team_no == 3) { teamcount3 = teamcount3 - 1; }
 	if (self.team_no == 4) { teamcount4 = teamcount4 - 1; }
 	local entity te;
-#ifdef newsounds2
-	if (random() > 0.5)
-		sound(self, 4, "misc/eject.wav", TF_FLARE_OFF, 0);
-	else
-#endif
+//#ifdef newsounds2
+//	if (random() > 0.5)
+//		sound(self, 4, "misc/eject.wav", TF_FLARE_OFF, 0);
+//	else
+//#endif
 	sound(self, 4, "misc/eject.wav", TF_FLARE_OFF, 0);
 	self.has_disconnected = TF_FLARE_OFF;
-#ifdef mtf_coop
 	self.health = 0;
 	if (survival_mode)
 		Survival_Fail();
-#endif
 	TeamFortress_RemoveTimers();
 	if ((self.tools == (self.tools | 32)))
 	{
@@ -3493,13 +3466,9 @@ void() ClientDisconnect =
 		te = find(te, classname, "turret_base"); //remove turret base when disconnected or kicked. -arg
 	}
 	set_suicide_frame();
-#ifdef mtf_coop
-#ifdef mtf_coop_expsys
 	strunzone(self.connect_name);
 	if (self.#custom_skin != "")
 		strunzone(self.#custom_skin);
-#endif
-#endif
 	self.netname = string_null;
 	self.team_no = 0;
 	self.solid = 0;
@@ -3509,9 +3478,7 @@ void() ClientDisconnect =
 };
 void() Grapple_Track;
 void() Reset_My_Grapple;
-#ifdef mtf_coop_expsys
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience;
-#endif
 #ifdef PL_FEM
 #include "fem_obits.qc"
 void FemaleClientObituary(entity targ, entity attacker );
@@ -3527,10 +3494,8 @@ void(entity targ, entity attacker) ClientObituary =
 	{
 		return;
 	}
-#ifdef mtf_coop_hipnotic
 	if (targ.classname == "trap_spike_mine" && attacker.classname == "trap_spike_mine")
 		return;
-#endif
 	if (targ.classname == "player_prop")
 		return;
 	if (targ.netname == "teleporter")
@@ -3571,31 +3536,31 @@ void(entity targ, entity attacker) ClientObituary =
 				attacker.num_kills = attacker.num_kills - 1; }
 				else if (targ.th_die == Reset_My_Grapple) {
 				attacker.num_kills = attacker.num_kills - 1; }
-#ifndef mtf_coop
-			if (targ.classname == "monster_shambler")
-			{
-				attacker.num_kills = attacker.num_kills + 1336;
-			}
-#endif
+//#ifndef mtf_coop
+//			if (targ.classname == "monster_shambler")
+//			{
+//				attacker.num_kills = attacker.num_kills + 1336;
+//			}
+//#endif
 			attacker.killstack = attacker.killstack + 1;
 			if (attacker.netname) { 	// we don't want world entities getting these hehe
 			if (attacker.killstack == 7)
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " is on a rampage!\n");
-//				sound (world, 4.000000, "misc/rampage.wav", 1.000000, 0.000000);
+//				sound (world, 4.000000, "misc/rampage.wav", 1.000000, 0.000000); //removed until more sound precache available, next version of mvdsv -arg
 			}
 			if (attacker.killstack == 12)
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " is owning all you noobs up!\n");
-//				sound (world, 4.000000, "misc/godlike.wav", 1.000000, 0.000000);
+				sound (world, 4.000000, "misc/godlike.wav", 1.000000, 0.000000); //removed until more sound precache available, next version of mvdsv -arg
 			}
 			if (attacker.killstack == 19)
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " knows how to freakin' play!\n");
-//				sound (world, 4.000000, "misc/holyshit.wav", 1.000000, 0.000000);
+				sound (world, 4.000000, "misc/holyshit.wav", 1.000000, 0.000000); //removed until more sound precache available, next version of mvdsv -arg
 			}
 			}
 		}
@@ -3624,7 +3589,6 @@ void(entity targ, entity attacker) ClientObituary =
 			attacker.real_owner.real_frags = attacker.real_owner.real_frags + 1;
 		}
 	}
-#ifdef mtf_coop_expsys
 	if (attacker.#is_minion == #TRUE) {
 		if (attacker.owner == world)
 			return;
@@ -3645,30 +3609,24 @@ void(entity targ, entity attacker) ClientObituary =
 		targ.owner.#minions -= 1;
 		return;
 	}
-#endif
-
 	if (targ.being_juggled > 1 && targ.classname == "player" && attacker.classname == "player" && targ != attacker)
 	{
 		bprint(2,targ.netname);
 		bprint(2," got JUGGLED by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
-//		sound (world, 4, "misc/juggled2.wav", 1, 0);
+//		sound (world, 4, "misc/juggled2.wav", 1, 0);	//removed until more sound precache available, next version of mvdsv -arg
 	}
-#ifdef mtf_coop
 	if (targ.being_juggled > 1 && targ.is_monster == 1 && attacker.classname == "player" && targ != attacker)
 	{
 		bprint(2,targ.netname);
 		bprint(2," got  ’««Ã≈ƒ by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
-//		sound (world, 4, "misc/juggled2.wav", 1, 0);
+//		sound (world, 4, "misc/juggled2.wav", 1, 0);  //removed until more sound precache available, next version of mvdsv -arg
 		targ.being_juggled = 0;
-#ifdef mtf_coop_expsys
 		Achievements_Change( attacker, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_JUGGLER, 1 );
-#endif
 	}
-#endif
 #ifdef PL_FEM
 	if (targ.gender == GENDER_FEMALE) {
 		FemaleClientObituary( targ, attacker );
@@ -3676,25 +3634,17 @@ void(entity targ, entity attacker) ClientObituary =
 	}
 #endif
 	rnum = random();
-#ifdef mtf_coop
 	if (targ.classname == "player" || targ.is_monster == 1)
-#else
-	if (targ.classname == "player")
-#endif
 	{
-#ifdef mtf_coop_expsys
 	if (attacker.coop_exp != -1 && attacker.classname == "player" && targ.is_monster == 1) {
 		attacker.coop_exp += 5;
 		MTF_Coop_AddExperience ( attacker, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker, attacker.connect_name, attacker.coop_exp );
 	}
-#endif
 		if (attacker.classname == "teledeath")
 		{
-#ifdef mtf_coop
 			if (targ.is_monster)
 				bprint(TF_FLARE_OFF, GetMonsterPowers(targ, 0));
-#endif
 			bprint(TF_FLARE_OFF, targ.netname);
 			bprint(TF_FLARE_OFF, " got in the way of ");
 			bprint(TF_FLARE_OFF, attacker.owner.netname);
@@ -3732,11 +3682,7 @@ void(entity targ, entity attacker) ClientObituary =
 			logfrag(targ, targ);
 			return;
 		}
-#ifdef minipets
-		if (attacker.classname == "player" || attacker.classname == "bot" || attacker.classname == "minifiend" || attacker.classname == "trip_bomb")
-#else
 		if (attacker.classname == "player" || attacker.classname == "bot")
-#endif
 		{
 			if (targ == attacker)
 			{
@@ -3800,7 +3746,6 @@ void(entity targ, entity attacker) ClientObituary =
 				}
 				else
 				{
-
 					if (deathmsg == 52)
 					{
 						deathstring = " tries to fly with his turretizing tesla.\n";
@@ -4014,13 +3959,11 @@ void(entity targ, entity attacker) ClientObituary =
 					{
 						attacker.frags = attacker.real_frags;
 					}
-#ifdef mtf_coop
 					if (deathmsg == 449)
 					{
 						deathstring = " was shredded by ";
 						deathstring2 = "'s chainsaw.\n";
 					}
-#endif
 					if (deathmsg == 43)
 					{
 						deathstring = " was bombed by ";
@@ -4071,8 +4014,6 @@ void(entity targ, entity attacker) ClientObituary =
 						deathstring = " is smeared all over the walls by ";
 						deathstring2 = "'s laser trip wire!\n";
 					}
-
-
 					if (deathmsg == 45)
 					{
 						deathstring = " gets too friendly with ";
@@ -4438,7 +4379,6 @@ void(entity targ, entity attacker) ClientObituary =
 																																												deathstring2 = "'s sentry gun.\n";
 																																											}
 																																										}
-#ifdef mtf_coop																																									
 	else if (deathmsg == 1124) {
 		deathstring = " is pinned by ";
 		deathstring2 = "'s needler.\n";
@@ -4448,9 +4388,6 @@ void(entity targ, entity attacker) ClientObituary =
 		deathstring2 = "'s flare gun.\n";
 	}
 	else {
-#elseif
-																																										else {
-#endif																																										
 																																		if (deathmsg == 28)
 																																		{
 																																			if (rnum <= 0.5)
@@ -4560,32 +4497,24 @@ void(entity targ, entity attacker) ClientObituary =
 							}
 						} } }
 					}
-#ifdef mtf_coop
 					if (targ.is_monster)
 						bprint(TF_FLARE_OFF, GetMonsterPowers(targ, 0));
-#endif
 					bprint(TF_FLARE_OFF, targ.netname);
-#ifdef mtf_coop
 					if (targ.is_monster)
 						if (targ.lives > 0) {
 							bprint(2, "(");
 							bprint(2, ftos(targ.lives));
 							bprint(2, ")");
 						}
-#endif
 					bprint(TF_FLARE_OFF, deathstring);
-#ifdef mtf_coop
 					if (attacker.is_monster)
 						bprint(TF_FLARE_OFF, GetMonsterPowers(attacker, 0));
-#endif
-#ifdef mtf_coop
 					if (targ.is_monster == 1 && targ.#other_attacker != world && targ.#other_attacker != attacker && targ.#other_attacker.classname == "player")
 					{
 						bprint(TF_FLARE_OFF, targ.#other_attacker.connect_name);
 						bprint(TF_FLARE_OFF, " and ");
 						targ.#other_attacker = world;
 					}
-#endif
 					bprint(TF_FLARE_OFF, attacker.netname);
 					bprint(TF_FLARE_OFF, deathstring2);
 				}
@@ -4641,7 +4570,6 @@ void(entity targ, entity attacker) ClientObituary =
 							deathstring2 = "'s sentry gun.\n";
 						}
 					}
-#ifdef mtf_coop
 local entity te;
 				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss") {
 	te = find ( world, classname, "monster_score" );
@@ -4650,16 +4578,13 @@ local entity te;
 		svcUpdateFrags (te.fClientNo, te.frags);
 	}
 				}
-#ifdef mtf_coop_expsys
 	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1) {
 		//attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 5;
 		MTF_Coop_AddExperience ( attacker.real_owner, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker.real_owner, attacker.real_owner.connect_name, attacker.real_owner.coop_exp );
 	}
-#endif
 					if (targ.is_monster)
 						bprint(TF_FLARE_OFF, GetMonsterPowers(targ, 0));
-#endif
 					bprint(TF_FLARE_OFF, targ.netname);
 					bprint(TF_FLARE_OFF, deathstring);
 					bprint(TF_FLARE_OFF, attacker.real_owner.netname);
@@ -4669,22 +4594,16 @@ local entity te;
 			else
 			{
 				logfrag(targ, targ);
-#ifdef mtf_coop
 				if (attacker.is_monster != 1)
 					targ.real_frags = targ.real_frags - TF_FLARE_OFF;
-#else
-				targ.real_frags = targ.real_frags - TF_FLARE_OFF;
-#endif
 				if (!(toggleflags & 128))
 				{
 					targ.frags = targ.real_frags;
 				}
 				rnum = targ.watertype;
-#ifdef mtf_coop
 				if (targ.is_monster == 1)
 					bprint(2, GetMonsterPowers(targ, 1));
 				else
-#endif
 				bprint(2, targ.netname);
 				if (rnum == -3)
 				{
@@ -4785,18 +4704,8 @@ local entity te;
 													{
 														deathstring = " tried to leave.\n";
 													}
-#ifndef mtf_coop
-													if (attacker.classname == "monster_shambler")
-													{
-														deathstring = " was shambled baby!\n";	
-													}
-#endif
-
-
 													else
 													{
-#ifdef mtf_coop
-
 														if (attacker.classname == "func_monsterkill") {
 															if (attacker.netname_broadcast != "none")
 																deathstring = attacker.netname_broadcast;
@@ -4821,9 +4730,6 @@ local entity te;
 														}
 														else
 															deathstring = " died.\n";
-#else
-														deathstring = " died.\n";
-#endif
 													}
 												} } }
 											}
@@ -4834,7 +4740,6 @@ local entity te;
 						}
 					}
 				}
-#ifdef mtf_coop
 				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss") {
 	te = find ( world, classname, "monster_score" );
 	if (te.netname == "Monsters") {
@@ -4844,65 +4749,88 @@ local entity te;
 		}
 	}
 				}
-				if (targ.deathtype == "monster_respawn") {
+				if (targ.deathtype == "monster_respawn"
+				) {
 					deathstring = strcat(" was telefragged by a ", GetMonsterPowers(attacker, 2));
 					targ.deathtype = string_null;
 				}
-				else if (targ.deathtype == "monster_respawn") {
+				else
+				if (targ.deathtype == "monster_respawn")
+				{
 					deathstring = attacker.netname_broadcast;
 					targ.deathtype = string_null;
 				}
-				else if (attacker.classname == "monster_army")
+				else
+				if (attacker.classname == "monster_army")
 					deathstring = strcat(" was shot by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_demon1")
+				else
+				if (attacker.classname == "monster_demon1")
 					deathstring = strcat(" was eviscerated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_dog")
+				else
+				if (attacker.classname == "monster_dog")
 					deathstring = strcat(" was mauled by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_dragon")
+				else
+				if (attacker.classname == "monster_dragon")
 					deathstring = strcat(" was fried by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_enforcer")
+				else
+				if (attacker.classname == "monster_enforcer")
 					if (attacker.weapon & 16)//#MWEAPON_SNIPER)
 						deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
 					else
 						deathstring = strcat(" was blasted by an ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_fish")
+				else
+				if (attacker.classname == "monster_fish")
 					deathstring = strcat(" was fed to the ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_hell_knight")
+				else 
+				if (attacker.classname == "monster_hell_knight")
 					deathstring = strcat(" was slain by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_knight")
+				else
+				if (attacker.classname == "monster_knight")
 					deathstring = strcat(" was slashed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_ogre" || attacker.classname == "monster_ogre_marksman")
+				else
+				if (attacker.classname == "monster_ogre" || attacker.classname == "monster_ogre_marksman")
 					deathstring = strcat(" was destroyed by an ", GetMonsterPowers(attacker, 2));
-
-				else if (attacker.classname == "monster_boss")
+				else
+				if (attacker.classname == "monster_boss")
 					deathstring = " burns in the flames of chthon\n";
-				else if (attacker.classname == "monster_killable_boss")
+				else
+				if (attacker.classname == "monster_killable_boss")
 					deathstring = " burns in the flames of uber chthon\n";
-
-				else if (attacker.classname == "monster_oldone")
+				else
+				if (attacker.classname == "monster_oldone")
 					deathstring = " became one with Shub-Niggurath\n";
-
-				else if (attacker.classname == "monster_shalrath")
+				else
+				if (attacker.classname == "monster_shalrath")
 					deathstring = strcat(" was exploded by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_shambler")
+				else
+				if (attacker.classname == "monster_shambler")
 					deathstring = strcat(" was smashed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_tarbaby")
+				else
+				if (attacker.classname == "monster_tarbaby")
 					deathstring = strcat(" was slimed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_vomit")
+				else
+				if (attacker.classname == "monster_vomit")
 					deathstring = strcat(" was vomited on by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_wizard")
+				else
+				if (attacker.classname == "monster_wizard")
 					deathstring = strcat(" was scragged by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_zombie")
+				else
+				if (attacker.classname == "monster_zombie")
 					deathstring = strcat(" joins the ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_azoth")
+				else
+				if (attacker.classname == "monster_azoth")
 deathstring = strcat(" was vanquished by ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_vermis")
+				else
+				if (attacker.classname == "monster_vermis")
 deathstring = strcat(" was eradicated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_spider")
+				else
+				if (attacker.classname == "monster_spider")
 deathstring = strcat(" was desiccated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_juggernaut")
+				else
+				if (attacker.classname == "monster_juggernaut")
 deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_ubs")
+				else
+				if (attacker.classname == "monster_ubs")
 deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 				if ((attacker.classname == "monster_gaunt"))
 				{
@@ -4915,79 +4843,88 @@ deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 						deathstring = strcat(" was charred by a ", GetMonsterPowers(attacker, 2));
 					}
 				}
-				else if (attacker.classname == "monster_voreling")
+				else
+				if (attacker.classname == "monster_voreling")
 					deathstring = strcat(" was violated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_deathguard")
+				else
+				if (attacker.classname == "monster_deathguard")
 					deathstring = strcat(" was slaughtered by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_death_lord")
+				else
+				if (attacker.classname == "monster_death_lord")
 					deathstring = strcat(" was executed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_polyp")
+				else
+				if (attacker.classname == "monster_polyp")
 					deathstring = strcat(" was popped by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_drole")
+				else
+				if (attacker.classname == "monster_drole")
 					deathstring = strcat(" was decimated by a ", GetMonsterPowers(attacker, 2));
-
-				else if (attacker.classname == "monster_gug")
+				else
+				if (attacker.classname == "monster_gug")
 					deathstring = strcat(" was obliterated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_bob")
+				else
+				if (attacker.classname == "monster_bob")
 					deathstring = strcat(" was zapped by a ", GetMonsterPowers(attacker, 2));
-#endif
-
-#ifdef mtf_coop_hipnotic
-
-            else if (attacker.classname == "monster_gremlin")
+				else
+				if (attacker.classname == "monster_gremlin")
 deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
-            else if (attacker.classname == "monster_scourge")
+				else
+				if (attacker.classname == "monster_scourge")
 deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
-
-            else if (attacker.classname == "monster_armagon")
+				else
+				if (attacker.classname == "monster_armagon")
 deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
             else if (attacker.classname == "trap_spike_mine")
 deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
-#endif
-#ifdef mtf_coop_rogue
-				else if ((attacker.classname == "monster_eel"))
+				else
+				if ((attacker.classname == "monster_eel"))
 				{
 deathstring = strcat(" was electrified by an ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_wrath"))
+				else
+				if ((attacker.classname == "monster_wrath"))
 				{
 deathstring = strcat(" was disintegrated by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_super_wrath"))
+				else
+				if ((attacker.classname == "monster_super_wrath"))
 				{
 deathstring = strcat(" was obliterated by an ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_sword"))
+				else
+				if ((attacker.classname == "monster_sword"))
 				{
 deathstring = strcat(" was slit open by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_lava_man"))
+				else 
+				if ((attacker.classname == "monster_lava_man"))
 				{
 deathstring = strcat(" fries in the fury of ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_morph"))
+				else
+				if ((attacker.classname == "monster_morph"))
 				{
 deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_mummy"))
+				else
+				if ((attacker.classname == "monster_mummy"))
 				{
 deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 				}
-
-#endif
-#ifdef mtf_coop
-				else if (attacker.classname == "monster_cyberdemon")
+				else
+				if (attacker.classname == "monster_cyberdemon")
 					deathstring = strcat(" was shot into Doom II by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.netname != "" && attacker != world && deathstring == " died.\n")
+				else
+				if (attacker.netname != "" && attacker != world && deathstring == " died.\n")
 				{
 					deathstring = GetMonsterDeathstring(attacker.classname);
 					deathstring = strcat(deathstring, GetMonsterPowers(attacker, 2));
 				}
-				else if (deathstring == " died\n") {
+				else
+				if (deathstring == " died\n")
+				{
 					deathstring = frik_strcat(" met an uncertain fate (", attacker.classname, ")\n");
 					targ.ammo_cells = 666;	// hackish, but so we know the player died by a trigger_hurt for survival mode dummy
 				}
-#endif
 				bprint(TF_FLARE_OFF, deathstring);
 			}
 		}
@@ -5055,15 +4992,9 @@ void(entity te) ferdisplay =
 	playernamefer.fertracker = 0;
 	if (playernamefer.classname == "monster_shambler")
 	{
-#ifndef mtf_coop
 		playernamefer.netname = "The Shambler";
-#endif
 	}
-#ifdef mtf_coop
 	if (playernamefer.is_monster != 1 && playernamefer.classname != "player" && playernamefer.netname != "The Shambler")
-#else
-	if (playernamefer.classname != "player" && playernamefer.netname != "The Shambler")
-#endif
 	{
 		dremove (self);
 		return;
@@ -5077,10 +5008,8 @@ void(entity te) ferdisplay =
 		bprint (1.000000, fercount);
 		bprint (1.000000, "-fer!");
 		bprint (1.000000, "\n");
-#ifdef mtf_coop_achievements
 		if (playernamefer.classname == "player")
 			Achievements_Change( playernamefer, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_MULTI, 1 );
-#endif
 		if (playernamefer.num_kills < 1336)
 			Record_Check(playernamefer, playernamefer.num_kills, #RECORD_FER);
 		playernamefer.num_kills = 0;
@@ -5154,5 +5083,4 @@ void () FixSoundCrap =
 	stuffcmd (playername, "_snd_mixahead .1\n");
 	dremove (self);
 };
-
-//End 
+//End

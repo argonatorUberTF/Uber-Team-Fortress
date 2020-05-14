@@ -1,10 +1,12 @@
 //Not in compilation yet.
+//needs precaches for models and sound. -arg
+
 void () FieldGen_Think;
 void () FieldGen_Die;
 void () ForceField_Think;
 void () ForceField_Touch;
 void (entity field, float downtime) ForceField_Remove;
-// The actual field-gen code (no, this is not Prozac CTF's)
+// The actual field-gen code (no, this is not Prozac CTF's) ?who said this ?
 void () FieldGen_Think =
 {
 	local entity te;

@@ -1170,7 +1170,6 @@ void () Menu_ClassHelp =
 	_l_881 = infokey (self, "tf_help");
 	if ((_l_881 != "off"))
 	{
-#ifdef mtf_coop_expsys
 		local string mtfver, stats;
 		mtfver = infokey(world, "UBERTF");
 		mtfver = substr(mtfver, 1, 8);		// cut out the "v" and the "United"
@@ -1190,7 +1189,6 @@ void () Menu_ClassHelp =
 			CenterPrint6 (self, "Welcome to\nn€ Ùïõò Óôáôóº ‚\nÌåöåìº", mtfver, "\nHAPPY HALLOWEEN\nCollect potions n stuff!\n\nÍáğº ", mapname, "‘\n\n€ Ùïõò Óôáôóº ‚\nÌåöåìº ", stats, "\n\n~Note:~\nĞÌÅÁÓÅ ËÉÌÌ ÁÌÌ ÍÏÎÓÔÅÒÓ\nÂÅÆÏÒÅ ÅØÉÔÉÎÇ¡\n\nFor rules & info use console command:\n ÃÍÄ èåìğ\n\nPress š to see these stats again.\n");
 #else
 			CenterPrint6 (self, "Welcome to\nÍåçáÔÆ Ãï­’ğ‘\nö®", mtfver, "\n\nÍáğº ", mapname, "‘\n\n€ Ùïõò Óôáôóº ‚\nÌåöåìº ", stats, "\n\n~Note:~\nĞÌÅÁÓÅ ËÉÌÌ ÁÌÌ ÍÏÎÓÔÅÒÓ\nÂÅÆÏÒÅ ÅØÉÔÉÎÇ¡\n\nFor rules & info use console command:\n ÃÍÄ èåìğ\n\nPress š to see these stats again.\n");
-#endif
 #endif
 		}
 		strunzone(stats);

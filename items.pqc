@@ -445,123 +445,33 @@ float(float w) RankForWeapon =
 void() trigger_once;
 void() weapon_supershotgun = 
 {
-#ifdef mtf_coop
 	trigger_once();
 	return;
-#else
-	if (CheckExistence() == TF_FLARE_LIT)
-	{
-		dremove(self);
-		return;
-	}
-	precache_model("progs/g_shot.mdl");
-	setmodel(self, "progs/g_shot.mdl");
-	self.weapon = 256;
-	self.netname = "Double-barrelled Shotgun";
-	self.touch = weapon_touch;
-	setsize(self, '-16 -16 0', '16 16 56');
-	StartItem();
-#endif
 };
 void() weapon_nailgun = 
 {
-#ifdef mtf_coop
 	trigger_once();
 	return;
-#else
-	if (CheckExistence() == TF_FLARE_LIT)
-	{
-		dremove(self);
-		return;
-	}
-	precache_model("progs/g_nail.mdl");
-	setmodel(self, "progs/g_nail.mdl");
-	self.weapon = 512;
-	self.netname = "nailgun";
-	self.touch = weapon_touch;
-	setsize(self, '-16 -16 0', '16 16 56');
-	StartItem();
-#endif
 };
 void() weapon_supernailgun = 
 {
-#ifdef mtf_coop
 	trigger_once();
 	return;
-#else
-	if (CheckExistence() == TF_FLARE_LIT)
-	{
-		dremove(self);
-		return;
-	}
-	precache_model("progs/g_nail2.mdl");
-	setmodel(self, "progs/g_nail2.mdl");
-	self.weapon = 1024;
-	self.netname = "Super Nailgun";
-	self.touch = weapon_touch;
-	setsize(self, '-16 -16 0', '16 16 56');
-	StartItem();
-#endif
 };
 void() weapon_grenadelauncher = 
 {
-#ifdef mtf_coop
 	trigger_once();
 	return;
-#else
-	if (CheckExistence() == TF_FLARE_LIT)
-	{
-		dremove(self);
-		return;
-	}
-	precache_model("progs/g_rock.mdl");
-	setmodel(self, "progs/g_rock.mdl");
-	self.weapon = 3;
-	self.netname = "Grenade Launcher";
-	self.touch = weapon_touch;
-	setsize(self, '-16 -16 0', '16 16 56');
-	StartItem();
-#endif
 };
 void() weapon_rocketlauncher = 
 {
-#ifdef mtf_coop
 	trigger_once();
 	return;
-#else
-	if (CheckExistence() == TF_FLARE_LIT)
-	{
-		dremove(self);
-		return;
-	}
-	precache_model("progs/g_rock2.mdl");
-	setmodel(self, "progs/g_rock2.mdl");
-	self.weapon = 3;
-	self.netname = "Rocket Launcher";
-	self.touch = weapon_touch;
-	setsize(self, '-16 -16 0', '16 16 56');
-	StartItem();
-#endif
 };
 void() weapon_lightning = 
 {
-#ifdef mtf_coop
 	trigger_once();
 	return;
-#else
-	if (CheckExistence() == TF_FLARE_LIT)
-	{
-		dremove(self);
-		return;
-	}
-	precache_model("progs/g_light.mdl");
-	setmodel(self, "progs/g_light.mdl");
-	self.weapon = 3;
-	self.netname = "Thunderbolt";
-	self.touch = weapon_touch;
-	setsize(self, '-16 -16 0', '16 16 56');
-	StartItem();
-#endif
 };
 void() item_spikes = 
 {
@@ -570,12 +480,11 @@ void() item_spikes =
 		dremove(self);
 		return;
 	}
-#ifdef mtf_coop_hipnotic
-	if (Hipnotic_SaveModels2() == 1) {
+	if (Hipnotic_SaveModels2() == 1)
+	{
 		dremove(self);
 		return;
 	}
-#endif
 	self.touch = ammo_touch;
 	if (self.spawnflags & TF_FLARE_OFF)
 	{
@@ -606,7 +515,8 @@ void() item_spikes =
 };
 void() item_rockets = 
 {
-	if (Hipnotic_SaveModels2() == 1) {
+	if (Hipnotic_SaveModels2() == 1)
+	{
 		dremove(self);
 		return;
 	}
@@ -635,7 +545,8 @@ void() item_rockets =
 };
 void() item_cells = 
 {
-	if (Hipnotic_SaveModels2() == 1) {
+	if (Hipnotic_SaveModels2() == 1)
+	{
 		dremove(self);
 		return;
 	}
@@ -664,7 +575,8 @@ void() item_cells =
 };
 void() item_weapon = 
 {
-	if (Hipnotic_SaveModels2() == 1) {
+	if (Hipnotic_SaveModels2() == 1)
+	{
 		dremove(self);
 		return;
 	}
@@ -964,12 +876,10 @@ void() powerup_touch =
 	if (self.classname == "item_artifact_invulnerability")
 	{
 		other.invincible_time = TF_FLARE_OFF;
-#ifdef mtf_coop
 		if (other.invincible_finished > time)
 			other.invincible_finished = other.invincible_finished + 15;
 		else
-#endif		
-		other.invincible_finished = time + 30;
+			other.invincible_finished = time + 30;
 	}
 	if (self.classname == "item_artifact_invisibility")
 	{

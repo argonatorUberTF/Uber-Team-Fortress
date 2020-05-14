@@ -371,8 +371,10 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 			return;
 		}
 	te = find (world, classname, "item_tfgoal");
-	while (te) {
-		if (te.owner == self) {
+	while (te)
+	{
+		if (te.owner == self)
+		{
 		if (!(te.goal_activation & 256) || (self.has_disconnected == 1))
 		{
 			tfgoalitem_RemoveFromPlayer (te, self, 0);
@@ -605,11 +607,8 @@ void() W_FireTranq =
 	setsize(newmis, '0 0 0', '0 0 0');
 	setorigin(newmis, self.origin + '0 0 16');
 	newmis.velocity = dir * 2000;
-#ifdef mtf_coop_expsys
 	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-#endif
 };
-#ifdef mtf_coop
 void() Monster_TranquiliserTimer = 
 {
 	if (self.owner == world)	// monster bodies may remove themselves..
@@ -617,7 +616,6 @@ void() Monster_TranquiliserTimer =
 	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & #MONSTER_TRANQUILIZED);
 	dremove(self);
 };
-#endif
 void() T_TranqDartTouch = 
 {
 	local entity timer;

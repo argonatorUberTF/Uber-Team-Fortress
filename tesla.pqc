@@ -1,7 +1,6 @@
 void () Tesla_FoundTarget;
 void () Tesla_Idle =
 {
-#ifdef mtf_coop
 	if (self.movetype != 5 && self.movetype != MOVETYPE_STEP)
 		self.movetype = MOVETYPE_STEP;
 		
@@ -12,7 +11,6 @@ void () Tesla_Idle =
 		Tesla_Die ();
 		return;
 	}
-#endif
 	if (self.waitmax)
 	{
 		self.waitmax = Tesla_Fire ();
@@ -160,7 +158,8 @@ float /*WARNING: could not determine return type*/ () Tesla_FindTarget =
 		{
 			if (head.health > 0 && head.is_monster == 1)
 			{
-				if (head.team_no != self.team_no && head.team_no > 0) {
+				if (head.team_no != self.team_no && head.team_no > 0)
+				{
 					if (visible (head))
 					{
 						t_client = head;
@@ -210,9 +209,11 @@ void () Tesla_FoundTarget =
 	local float tesladelay;
 	if (self.ammo_nails == 0) //Initial delay based on AMPS
 		tesladelay = 0.5;
-	else if (self.ammo_nails == 1) //So its not as fast,  but still fast
+	else
+	if (self.ammo_nails == 1) //So its not as fast,  but still fast
 		tesladelay = 0.75;
-	else if (self.ammo_nails == 2)
+	else
+	if (self.ammo_nails == 2)
 		tesladelay = 1;
 	else
 		tesladelay = 1.5;
@@ -295,7 +296,8 @@ float /*WARNING: could not determine return type*/ () Tesla_Fire =
 		}
 	}
 	}
-	if (self.enemy.monster_items & MITEM_INVISIBLE) {
+	if (self.enemy.monster_items & MITEM_INVISIBLE)
+	{
 		if (!(self.tf_items & 1024))
 		{
 			return (0);

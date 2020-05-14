@@ -904,13 +904,11 @@ void() player_axpain6 = [34, player_run]
 {};
 void() player_pain = 
 {
-#ifdef mtf_coop
 	if (self.monster_type > 0)
 	{
 		monster_pain();
 		return;
 	}
-#endif
 	if (self.weaponframe)
 	{
 		return;
@@ -1120,8 +1118,10 @@ void ( float bodytype ) Survival_MakeDummy =
 			return;
 	}
 	
-	if (survival_mode) {
-		if (bodytype == 0) {
+	if (survival_mode)
+	{
+		if (bodytype == 0)
+		{
 			self.view_ofs = '0 0 1';
 			pdummy = spawn();
 			pdummy.owner = self;
@@ -1135,7 +1135,9 @@ void ( float bodytype ) Survival_MakeDummy =
 			pdummy.team_no = self.team_no;  // Hey, I am a corpse with a team number. -arg
 //This is set so when ressurrecting, other teams cannnot revive this dead player.
 		}
-		else if (bodytype == 1) {			// player disconnects from the server while *alive*
+		else
+		if (bodytype == 1)
+		{			// player disconnects from the server while *alive*
 			pdummy = spawn();
 			pdummy.monster_type = 1;		// we're searching for our player to reconnect..
 			pdummy.netname = self.connect_name;

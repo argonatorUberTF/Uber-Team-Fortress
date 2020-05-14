@@ -123,13 +123,6 @@ void (float timer) TeamFortress_SetDetpack =
 	{
 		return ;
 	}
-#ifdef mtf_coop
-#else
-	if (self.ammo_detpack <= TF_FLARE_LIT)
-	{
-		return ;
-	}
-#endif
 	if (!(self.flags & 512))
 	{
 		sprint (self,2,"You can't set detpacks in the air!\n");
@@ -140,14 +133,12 @@ void (float timer) TeamFortress_SetDetpack =
 		sprint(self,2,"You need more room to set a detpack.\n");
 		return;
 	}
-#ifdef mtf_coop
 	if (self.last_used > time)
 	{
 		sprint(self, 2, "It takes 15 seconds to set another detpack.\n");
 		return;
 	}
 	self.last_used = time + 15;  // was 30 -arg
-#endif
 	te = find (world,classname,"detpack");
 	while (te) 
 	{

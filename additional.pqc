@@ -229,10 +229,6 @@ string(string s) strzone = #118;
 void(string s) strunzone = #119;
 float () strcount = #138;
 //
-#ifndef mtf_coop_expsys
-string(string blah) strzone;
-void(string blah) strunzone;
-#endif
 //
 //							ENTITIES
 .entity lastplayer;		//for half-life, also required for misc.pqc functions -arg
@@ -827,9 +823,7 @@ string team_menu_string /* = "" */;
 .vector spawnmaxs;					// Hipnotic
 .vector neworigin;					//from hiprot.pqc
 .vector rotate;						//from hiprot.pqc
-#ifdef mtf_coop
 .vector orig_origin;
-#endif
 //.vector oldenemyorigin;			// was used in vermis. quoth and other routines, unused -arg
 //.vector oldangles;				// from dog.pqc, rat.pqc, and shambler.qc unused vars -arg
 //.vector origin2;					// from gaunt.qc not used? -arg
@@ -1171,10 +1165,8 @@ float puff_count;
 float current_yaw;
 float enemy_vis, enemy_infront, enemy_range;
 float enemy_yaw;
-#ifdef mtf_coop_hipnotic
 float dripsnd;
 float suckwind;
-#endif
 float teamfrags;
 float airscout, drop3;
 float prematch; 
@@ -1900,7 +1892,7 @@ void(float num_bubbles) DeathBubbles =
 };
 void() DeathSound = 
 {
-	local float rs;
+//	local float rs;
 	if (self.waterlevel == 3)
 	{
 		if (self.is_feigning)
@@ -4959,7 +4951,8 @@ void (entity pl, float fr) TF_AddFrags =
 	team4frags = team4frags + fr;
 	if (toggleflags & 2048) {
 	e = find (world, classname, "player");
-	while (e) {
+	while (e)
+	{
 		if (e.team_no == pl.team_no)
 		e.frags = TeamFortress_TeamGetScore (e.team_no);
 		e = find (e, classname, "player");
@@ -5026,7 +5019,8 @@ void (entity _p_1249, entity _p_1250) Killed =
 	local entity _l_1251;
 	_l_1251 = self;
 	self = _p_1249;
-	if (!self.th_die) {
+	if (!self.th_die)
+	{
 		bprint(2, "ERROR IN DEATH FUNCTION!\n");
 		bprint(2, "netname: ");
 		bprint(2, self.netname);
@@ -5110,7 +5104,8 @@ bprint(2, "\n");
 		if (survival_mode)
 			if (Survival_Fail() == #TRUE)
 				{}
-	if (self.is_monster == 1 || self.monster_string == "on") {
+	if (self.is_monster == 1 || self.monster_string == "on")
+	{
 		self.effects = 0;	// move up?
 		if (_p_1250.classname != "player")
 			if (_p_1250.owner != world)
@@ -5873,26 +5868,27 @@ void() monster_death_use =
 			self.flags = self.flags - 2;
 			}
 #ifdef HALFLIFE
-	if (!#HL_MAP) {
-    	if (!(self.target))
-    	{
-    		return;
-    	}
-#ifdef mtf_coop
-#endif
-    	activator = self.enemy;
-    	SUB_UseTargets();
+	if (!#HL_MAP)
+	{
+			if (!(self.target))
+			{
+				return;
+			}
+		activator = self.enemy;
+		SUB_UseTargets();
 	}
-	else {
+	else
+	{
 	if (!self.target && !self.TriggerTarget)
 		return;
-		
-	if (self.target) {
+	if (self.target)
+	{
 		activator = self.enemy;
 		SUB_UseTargets ();
 	}
 	if (self.TriggerTarget)
-		if (self.TriggerTarget != self.target) {
+		if (self.TriggerTarget != self.target)
+		{
 			self.target = self.TriggerTarget;
 			activator = self.enemy;
 			SUB_UseTargets ();
@@ -7634,12 +7630,10 @@ void () TeamFortress_PrimeGrenade =
 	local string _l_10232;
 	local string _l_10233;
 	local entity _l_10234;
-#ifdef mtf_coop
 	local float adj_gren2;
 	adj_gren2 = sr_gren2;
 	if (self.playerclass == 8)
 		adj_gren2 = 1;
-#endif
 	if ((self.bugger == 8.000000))
 	{
 		return;
@@ -7847,9 +7841,7 @@ void () TeamFortress_PrimeGrenade =
 	_l_10234.heat = (time + 3.800000);
 	_l_10234.classname = "GrenadeTimer";
 	_l_10234.think = TeamFortress_GrenadePrimed;
-#ifdef CSQC
 	CSQC_SendGrenTimer(self);
-#endif
 };
 void () TeamFortress_GrenadePrimed =
 {
@@ -9307,7 +9299,6 @@ void() BioInfection_Decay =
 void() BioInfection_MonsterDecay = 
 {
 	self.nextthink = time + 2;
-#ifdef mtf_coop
 	if (self.enemy.classname == "player" || self.enemy.health < 1)
 	{
 		dremove(self);
@@ -9315,9 +9306,6 @@ void() BioInfection_MonsterDecay =
 	}
 	deathmsg = 13;
 	T_Damage(self.enemy, self, self.owner, 42);
-#else
-	T_Damage(self.enemy, self, self.owner, 5);
-#endif
 	SpawnBlood(self.enemy.origin, 20);
 	if (self.owner.health < 1)
 	{
@@ -10642,7 +10630,6 @@ void(float tno) decrement_team_pipebombs =
 		}
 	}
 };
-#ifdef mtf_coop
 float (entity us, entity test) COOP_IsValidTarget =
 {
 	local float r;
@@ -10925,7 +10912,6 @@ void() T_IncendiaryTouch =
 			Napalm_touch();
 			if (other.classname == "player")
 			{
-
 				if (((self.owner.stats_on == 1.000000) && (self.owner != head)))
 				{
 					_l_9052 = self;
@@ -11318,8 +11304,6 @@ float(entity targ) visible =
 	local vector spot2;
 	spot1 = self.origin + self.view_ofs;
 	spot2 = targ.origin + targ.view_ofs;
-//	if ((self.#is_minion == #TRUE && targ == self.owner) && (self.team_no != #is_minion.team_no))		// follow owner, if not on the same team no, shoot him! -arg 
-//		return 1;
 	if (self.#is_minion == #TRUE && targ == self.owner)		// follow owner, don't shoot him
 		return 0;
 	traceline(spot1, spot2, TF_FLARE_OFF, self);
@@ -11394,7 +11378,6 @@ void () Bounce_Off_Walls =
 	self.attack_finished -= 1;
 	self.nextthink = time;
 	self.think = bounce_a;
-
 	if (self.velocity == '0 0 0')
 		dremove(self);
 };
@@ -11552,22 +11535,22 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 	MTF_Coop_CheckNewLevel( plyr.coop_exp, plyr.coop_exp + addexp );	// check if player levels up
 	self = oself;
 	plyr.coop_exp = plyr.coop_exp + addexp;
-#ifdef CSQC
 	CSQC_SendExperience(plyr, plyr.coop_exp);
 	if (targ.#other_attacker)
 		CSQC_SendExperience(targ.#other_attacker, targ.#other_attacker.coop_exp);
-#endif
 	if (targ.classname == "monster_juggernaut")
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEAVYMETAL, 1 );
-	else if (targ.classname == "monster_shambler")
+	else
+	if (targ.classname == "monster_shambler")
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_SHAMBLER, 1 );
 	if (deathmsg == 22)
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_BLADERUNNER, 1 );
-	else if (deathmsg == 12)
+	else
+	if (deathmsg == 12)
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_ATOMICPUNK, 1 );
-	else if (deathmsg == 446 || deathmsg == 447)
+	else
+	if (deathmsg == 446 || deathmsg == 447)
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_BAT, 1 );		
-	
 	if (lms_entity == world)	
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_KILLINGMACHINE, 1 );
 };
@@ -11603,7 +11586,8 @@ void () MTF_Coop_UpdateMapRanks =
 	plyr = find ( world, classname, "player" );
 	while (plyr)
 	{
-		if (plyr.real_frags > new_best_record) {
+		if (plyr.real_frags > new_best_record)
+		{
 			new_best_record = plyr.real_frags;
 			new_best_player = plyr.connect_name;
 			new_best_player = strzone(new_best_player);
@@ -11637,7 +11621,8 @@ void () MTF_Coop_UpdateMapRanks =
 		close (file);
 		file = open (filename, 2);
 		write (file, "// Best time, best player, best player frags\n");
-		if (new_best_time < old_best_time) {
+		if (new_best_time < old_best_time)
+		{
 			MTF_Coop_AddExpToAll ( (total_monsters * 2), frik_strcat("ÂÏÎÕÓ ÅØÐ¡ New best time record set for ", mapname, frik_strcat(": ", ftos(new_best_time), " seconds!\nExp Bonus for all!") ), #FALSE);
 			Achievements_Change( world, world, ACHIEVEMENTS_GLOBALADD, ACHIEVEMENT_SPEEDY, 1 );
 			write (file, ftos(new_best_time));
@@ -11672,7 +11657,8 @@ void (string vname, float addness) MTF_Coop_RanksMapVote =
 	local float file, i, foundit;
 	addness = 0;			// dummy var.. maybe for later use
 	file = open ("topmaps.tfi", 0);
-	if (file == -1) {
+	if (file == -1)
+	{
 		bprint(2,"topmaps.tfi does not exist! Add it to /fortress or experience unholy amounts of crashes!\n");
 		return;
 	}
@@ -11739,7 +11725,8 @@ if (other.classname == "player")
 		te = findradius(self.origin, 50);
 		while (te)
 		{
-			if (Coop_IsMonster(te, #MONSTERTYPE_NORMAL)) {
+			if (Coop_IsMonster(te, #MONSTERTYPE_NORMAL))
+			{
 				deathmsg = 1125;
 				TF_T_Damage(te, self, self.owner, 100, 2, 16);
 				
@@ -11748,7 +11735,8 @@ if (other.classname == "player")
 					else
 						flame = FlameSpawn("3", te);
 						
-					if (flame != world) {			// this caused a crashie before
+					if (flame != world)
+					{			// this caused a crashie before
 						flame.classname = "fire";
 						flame.health = 30;
 						te.numflames = te.numflames + 1;
@@ -12214,6 +12202,7 @@ void() item_tfgoal =
 };
 void(entity AD) ParseTFDetect = 
 {
+// not sure to remove this stub of code or not -arg
 #ifndef mtf_coop
 	if (AD.team_broadcast != string_null)
 	{
@@ -12795,9 +12784,7 @@ void(entity Goal, entity Player) RemoveResults =
 	}
 	if (Goal.super_damage_finished > TF_FLARE_LIT && !puquad)
 	{
-#ifdef mtf_coop
 		Player.mtf_items |= MTFITEM_DIVIDE_EXP;
-#endif
 		Player.tfstate = Player.tfstate - (Player.tfstate & 128);
 		Player.items = Player.items | 4194304;
 		Player.super_time = TF_FLARE_OFF;
@@ -13792,8 +13779,8 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	local entity DelayReturn;
 	if (Item == world)
 	{
-	objerror ("error: tfgoalitem_RemoveFromPlayer(): Item == world");
-	return;
+		objerror ("error: tfgoalitem_RemoveFromPlayer(): Item == world");
+		return;
 	}
 	lighton = 0;
 	slowon = 0;
@@ -13816,17 +13803,23 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	}
 	te = find (te, classname, "item_tfgoal");
 	}
-	if (!lighton) {
-	if (AP.invincible_finished > (time + 3)) {
+	if (!lighton)
+	{
+		if (AP.invincible_finished > (time + 3))
+	{
 		lighton = 1;
-	} else if (AP.super_damage_finished > (time + 3)) {
+	}
+	else
+	if (AP.super_damage_finished > (time + 3))
+	{
 		lighton = 1;
 	}
 	}
-	if (!lighton) {
-	AP.effects = AP.effects - (AP.effects & 8);
-	AP.effects = AP.effects - (AP.effects & 64);
-	AP.effects = AP.effects - (AP.effects & 128);
+	if (!lighton)
+	{
+		AP.effects = AP.effects - (AP.effects & 8);
+		AP.effects = AP.effects - (AP.effects & 64);
+		AP.effects = AP.effects - (AP.effects & 128);
 	}
 	if (Item.goal_activation & 512)
 	Item.effects = Item.effects | 8;
@@ -13842,49 +13835,58 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	    RemoveResults (Item, te);
 	te = find (te, classname, "player");
 	}
-	if ((method3 == 0) || (method3 == 2)) {
+	if ((method3 == 0) || (method3 == 2))
+	{
 	te = find (world, classname, "player");
-	while (te != world) {
-		if (te.team_no == Item.owned_by) {
-		if (Item.team_drop != string_null)
-		    CenterPrint2 (te, "\n\n\n", Item.team_drop);
-		if (Item.netname_team_drop != string_null) {
-		    sprint (te, 2, AP.netname, Item.netname_team_drop);
+	while (te != world)
+	{
+		if (te.team_no == Item.owned_by)
+		{
+			if (Item.team_drop != string_null)
+				CenterPrint2 (te, "\n\n\n", Item.team_drop);
+		if (Item.netname_team_drop != string_null)
+			{
+				sprint (te, 2, AP.netname, Item.netname_team_drop);
+			}
 		}
-	    }
 		else
 		{
 		if (Item.non_team_drop != string_null)
-		    CenterPrint2 (te, "\n\n\n", Item.non_team_drop);
-		if (Item.netname_non_team_drop != string_null) {
-		    sprint (te, 2, AP.netname, Item.netname_non_team_drop);
+			CenterPrint2 (te, "\n\n\n", Item.non_team_drop);
+		if (Item.netname_non_team_drop != string_null)
+		{
+			sprint (te, 2, AP.netname, Item.netname_non_team_drop);
 		}
-	    }
-	    te = find (te, classname, "player");
+		}
+		te = find (te, classname, "player");
 	}
-	if (Item.goal_activation & 8) {
-	    DelayReturn = spawn ();
-	    DelayReturn.enemy = Item;
-	    if (method3 == 0) {
+	if (Item.goal_activation & 8)
+	{
+		DelayReturn = spawn ();
+		DelayReturn.enemy = Item;
+		if (method3 == 0) {
 		DelayReturn.weapon = 0;
-	    }
-		else
-		{
+	}
+	else
+	{
 		DelayReturn.weapon = 1;
-	    }
-	    DelayReturn.think = ReturnItem;
-	    DelayReturn.nextthink = time + 0.5;
-	} else {
-	    if (Item.goal_activation & 4) {
-		if ((method3 == 2))
+	}
+	DelayReturn.think = ReturnItem;
+	DelayReturn.nextthink = time + 0.5;
+	}
+	else
+	{
+	if (Item.goal_activation & 4)
 		{
-		    tfgoalitem_drop (Item, 1, AP);
-		}
-		else
+			if ((method3 == 2))
+			{
+				tfgoalitem_drop (Item, 1, AP);
+			}
+	else
 		{
-		    tfgoalitem_drop (Item, 0, AP);
+			tfgoalitem_drop (Item, 0, AP);
 		}
-	    }
+		}
 		else
 		{
 		Item.owner = world;
@@ -13900,21 +13902,23 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	}
 	else
 	{
-	if (method3 == 1) {
-	    if (Item.goal_activation & 16) {
-		DelayReturn = spawn ();
-		DelayReturn.enemy = Item;
-		DelayReturn.weapon = 2;
-		DelayReturn.think = ReturnItem;
-		DelayReturn.nextthink = time + 0.5;
-		Item.owner = world;
-		TeamFortress_SetSpeed (AP);
-		return;
-	    }
-	    Item.solid = 0;
-	    Item.owner = world;
-	    TeamFortress_SetSpeed (AP);
-	    return;
+	if (method3 == 1)
+	{
+		if (Item.goal_activation & 16)
+		{
+			DelayReturn = spawn ();
+			DelayReturn.enemy = Item;
+			DelayReturn.weapon = 2;
+			DelayReturn.think = ReturnItem;
+			DelayReturn.nextthink = time + 0.5;
+			Item.owner = world;
+			TeamFortress_SetSpeed (AP);
+			return;
+		}
+	Item.solid = 0;
+	Item.owner = world;
+	TeamFortress_SetSpeed (AP);
+	return;
 	}
 	}
 	objerror ("Invalid method passed into tfgoalitem_RemoveFromPlayer.\n");
@@ -14154,9 +14158,7 @@ void() info_player_team2 =
 };
 void() item_flag_team2 = 
 {
-#ifdef mtf_coop
-		dremove(self);
-#endif
+	dremove(self);
 	local entity dp;
 	CTF_Map = TF_FLARE_OFF;
 	precache_model("progs/w_s_key.mdl");
@@ -14217,9 +14219,7 @@ void() item_flag_team2 =
 };
 void() item_flag_team1 = 
 {
-#ifdef mtf_coop
 		dremove(self);
-#endif
 	local entity dp;
 	CTF_Map = TF_FLARE_OFF;
 	precache_model("progs/tf_flag.mdl");
@@ -14445,7 +14445,6 @@ void() EMPGrenadeExplode =
 	WriteCoord(4, self.origin_y);
 	WriteCoord(4, self.origin_z);
 	multicast(self.origin, TF_FLARE_OFF);
-#ifdef mtf_coop
 	local entity head;
 		head = findradius (self.origin, 175);
 		while (head) {
@@ -14456,7 +14455,6 @@ TF_T_Damage(head, self, self.owner, 200, TF_FLARE_LIT, 4);
 			}
 			head = head.chain;
 		}
-#endif
 	te = findradius(self.origin, 240);
 	while (te)
 	{
@@ -15204,9 +15202,7 @@ void() GrenadeTouch =
 };
 void() GrenadeExplode = 
 {
-#ifdef mtf_coop
 	local float damg;
-#endif
 	if (self.classname == "pipebomb")
 	{
 		num_world_pipebombs = num_world_pipebombs - TF_FLARE_OFF;
@@ -15255,38 +15251,44 @@ void () review_timeleft =
 	minutes = stof(st);
 	seconds = minutes * 60;
 	if (st == "0") 
-	   	return;
+	return;
 	votetimeleft = seconds - self.no_grenades_1;
-   	remaining = seconds - self.no_grenades_1;
-   	if ((remaining == 5) & (seconds >= 5))
-   	{
+	remaining = seconds - self.no_grenades_1;
+	if ((remaining == 5) & (seconds >= 5))
+	{
 		bprint(2,"µ óåãïîäó remaining!\n");
-   	}
-   	else if ((remaining == 30) & (seconds >= 30))
-   	{
+	}
+	else
+	if ((remaining == 30) & (seconds >= 30))
+	{
 		 bprint(2,"³° óåãïîäó remaining.\n");
 	}
-	else if ((remaining == 60) & (seconds >= 60))
+	else
+	if ((remaining == 60) & (seconds >= 60))
 	{
 		 bprint(2,"± íéîõôå remaining.\n");
 	}
-	else if ((remaining == 300) & (seconds >= 300))
+	else
+	if ((remaining == 300) & (seconds >= 300))
 	{
 		 bprint(2,"µ íéîõôåó remaining.\n");
 	}
-	else if ((remaining == 900) & (seconds >= 900))
+	else
+	if ((remaining == 900) & (seconds >= 900))
 	{
 		bprint(2, "±µ íéîõôåó remaining.\n");
 	}
-	else if ((remaining == 1800) & (seconds >= 1800))
+	else
+	if ((remaining == 1800) & (seconds >= 1800))
 	{
 		bprint(2, "³° íéîõôåó remaining.\n");
 	}
-   	else if (remaining <= 0) 
-   	{
+	else
+	if (remaining <= 0) 
+	{
 		self.nextthink = (time + 9999);
-   	}
-   	self.think = review_timeleft;
+	}
+	self.think = review_timeleft;
 };
 void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 {
@@ -15301,7 +15303,8 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 		return;
 	}
 	dummyfile = open ("dummy_topmaps.tfi", 2);
-	while ( i < (#MAX_MAPRANKS * 2) ) {
+	while ( i < (#MAX_MAPRANKS * 2) )
+	{
 		write( dummyfile, read(file) );
 		write( dummyfile, "\n" );
 		i++;
@@ -15311,9 +15314,11 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 	close (file);
 	file = open ("topmaps.tfi", 2);
 	i=0;	
-	while (i < #MAX_MAPRANKS) {
+	while (i < #MAX_MAPRANKS)
+	{
 		i++;
-		if (i == rank_pos) {
+		if (i == rank_pos)
+		{
 			write( file, nname );
 			write( file, "\n" );
 			write( file, ftos(exp) );
@@ -15369,14 +15374,20 @@ void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop
 	if ( exp_srv == #SRV_HEAL ) {
 		sprint( t_player, 2, "(player heal)\n" );
 	}
-	else if ( exp_srv == #SRV_TELEPORT ) {
+	else
+	if ( exp_srv == #SRV_TELEPORT )
+	{
 		sprint( t_player, 2, "(player teleport)\n" );
 		self.#next_srv_time = time + 3;
 	}
-	else if ( exp_srv == #SRV_ACHIEVEMENT ) {
+	else
+	if ( exp_srv == #SRV_ACHIEVEMENT )
+	{
 		sprint( t_player, 2, "(new achievement)\n" );
 	}
-	else if ( exp_srv == #SRV_RESURRECT ) {
+	else
+	if ( exp_srv == #SRV_RESURRECT )
+	{
 		sprint( t_player, 2, "(resurrect player)\n" );
 	}
 	MTF_Coop_AddExpAndWrite ( t_player, world, exptotal, #FALSE );
@@ -15480,41 +15491,53 @@ float (entity plyr, float type_a) Coop_GetAttributeTotal =
 	local float r_total;
 	if (type_a == 0)
 		r_total = plyr.attribute_points + plyr.health_attr + plyr.armor_attr + plyr.damage_attr + plyr.misc_attr + plyr.ammo_attr + plyr.crit_attr + plyr.reload_attr + plyr.minion_attr + plyr.quickshot_attr + plyr.clipex_attr + plyr.proj_attr;
-	else if (type_a == #ATTRIB_HEALTH)
+	else
+	if (type_a == #ATTRIB_HEALTH)
 		r_total = plyr.health_attr;
-	else if (type_a == #ATTRIB_ARMOR)
+	else
+	if (type_a == #ATTRIB_ARMOR)
 		r_total = plyr.armor_attr;
-	else if (type_a == #ATTRIB_DAMAGE)
+	else
+	if (type_a == #ATTRIB_DAMAGE)
 		r_total = plyr.damage_attr;
-	else if (type_a == #ATTRIB_MISC)
+	else
+	if (type_a == #ATTRIB_MISC)
 		r_total = plyr.misc_attr;
-	else if (type_a == #ATTRIB_AMMO)
+	else
+	if (type_a == #ATTRIB_AMMO)
 		r_total = plyr.ammo_attr;
-	else if (type_a == #ATTRIB_CRIT)
+	else
+	if (type_a == #ATTRIB_CRIT)
 		r_total = plyr.crit_attr;
-	else if (type_a == #ATTRIB_RELOAD)
+	else
+	if (type_a == #ATTRIB_RELOAD)
 		r_total = plyr.reload_attr;
-	else if (type_a == #ATTRIB_MINION)
+	else
+	if (type_a == #ATTRIB_MINION)
 		r_total = plyr.minion_attr;
-	else if (type_a == #ATTRIB_QUICKSHOT)
+	else
+	if (type_a == #ATTRIB_QUICKSHOT)
 		r_total = plyr.quickshot_attr;
-	else if (type_a == #ATTRIB_CLIPEX)
+	else
+	if (type_a == #ATTRIB_CLIPEX)
 		r_total = plyr.clipex_attr;
-	else if (type_a == #ATTRIB_PROJECTILE)
+	else
+	if (type_a == #ATTRIB_PROJECTILE)
 		r_total = plyr.proj_attr;
 	return (r_total);
 };
-
 void (entity to_update) Packet_SendEXP =
 {
 	local string send_to, send_what;
 	send_to = infokey (world, "packet_master");
 	if (send_to == "")
 		return;
-	if (to_update.coop_exp < 0) {
+	if (to_update.coop_exp < 0)
+	{
 		return;
 	}
-	if (to_update.connect_name == "" || to_update.connect_name == string_null) {
+	if (to_update.connect_name == "" || to_update.connect_name == string_null)
+	{
 		bprint(2,"Packet_SendEXP: Tried to tell the hub that player ");
 		bprint(2, to_update.connect_name);
 		bprint(2, " BAD CONNECT NAME TELL DEV\n");
@@ -15542,24 +15565,29 @@ void () Packet_Auth_Think =
 {
 	local string send_to, send_what;
 	send_to = infokey (world, "packet_master");
-	if (send_to == "") {
+	if (send_to == "")
+	{
 		bprint(2,"\"packet_master\" not set in localinfo - set this to the master server IP\n");
 		dremove(self);
 		return;
 	}
 	if (self.owner == world || self.owner.has_disconnected == 1 || self.owner.classname == "observer" 
-	|| self.owner.netname == string_null || self.owner.connect_name == string_null) {
+	|| self.owner.netname == string_null || self.owner.connect_name == string_null)
+	{
 		dremove(self);
 		return;
 	}
-	if (self.#awaiting_packet == TRUE) {
-		if (self.#packet_tries == 3) {
+	if (self.#awaiting_packet == TRUE)
+	{
+		if (self.#packet_tries == 3)
+		{
 			bprint(2,"No response from hub server for player ");
 			bprint(2, self.owner.connect_name);
 			bprint(2, " - server may be down\n");
 			self.#awaiting_packet = #FALSE;
 		}
-		else {
+		else
+		{
 			send_what = frik_strcat(self.owner.connect_name, Packet_Slashpass("getexp"));
 			send_what = strzone(send_what);
 			QC_SendPacket(send_to, send_what);
@@ -15567,7 +15595,8 @@ void () Packet_Auth_Think =
 			self.#packet_tries++;
 		}
 	}
-	else {
+	else
+	{
 	}
 	self.nextthink = time + 3;
 };
@@ -15652,7 +15681,8 @@ bprint(2,"\n");
 		resetme = FALSE; //changed to false to stop it from resetting on every reconnect. wtf -arg
 	MTF_Coop_GetAttributes (file);	// set attribute points (note: change call location)
 	close (file);
-	if (resetme) {
+	if (resetme)
+	{
 		MTF_Coop_ShowAttrib();
 		sprint(self, 2, "********\n");
 		sprint(self, 2, "********\n");
@@ -15662,7 +15692,8 @@ bprint(2,"\n");
 		sprint(self, 2, "********\n");
 	}
 	slip = Coop_GetAttributeTotal(self, #FALSE);
-	if ( (slip == 0) && (exp >= #COOP_LEVEL_ONE) ) {
+	if ( (slip == 0) && (exp >= #COOP_LEVEL_ONE) )
+	{
 		MTF_Coop_CheckNewLevel( 0, exp );
 		MTF_Coop_WriteExperience( nname, exp );
 	}
@@ -15683,7 +15714,8 @@ float (string nname) MTF_Coop_GetUserExperience =
 	}
 	filename = /*strzone(*/frik_strcat( "ranks/", nname, ".tfi" )/*)*/;
 	filename = strzone(filename);
-	if ( invalid_exp_name(filename) == 1 ) {
+	if ( invalid_exp_name(filename) == 1 )
+	{
 		strunzone(nname);
 		strunzone(filename);
 		return ( -1 );
@@ -15710,12 +15742,14 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank =
 	local float i;
 	i=0;
 	file = open ("topranks.tfi", 0);
-	if (file == -1) {
+	if (file == -1)
+	{
 		bprint(2,"topranks.tfi does not exist! Add it to /fortress or experience unholy amounts of crashes!\n");
 		return;
 	}
 	dummyfile = open ("dummy_topranks.tfi", 2);
-	while ( i < (#MAX_RANKS * 2) ) {
+	while ( i < (#MAX_RANKS * 2) )
+	{
 		write( dummyfile, read(file) );
 		write( dummyfile, "\n" );
 		i++;
@@ -15725,9 +15759,11 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank =
 	close (file);
 	file = open ("topranks.tfi", 2);
 	i=0;	
-	while (i < #MAX_RANKS) {
+	while (i < #MAX_RANKS)
+	{
 		i++;
-		if (i == rank_pos) {
+		if (i == rank_pos)
+		{
 			write( file, nname );
 			write( file, "\n" );
 			write( file, ftos(exp) );
@@ -15792,12 +15828,14 @@ void (string nname, float exp) MTF_Coop_RanksExperience =
 	local entity rank_ent, te, trank;
 	trank = world;
 	te = find(world, connect_name, nname);
-	while (te) {
+	while (te)
+	{
 		if (te.classname == "player")
 			trank = te;
 		te = find(te, connect_name, nname);
 	}
-	if (trank == world) {
+	if (trank == world)
+	{
 		bprint(2, "MTF_Coop_RanksExperience: trank not found for netname ");
 		bprint(2, nname);
 		bprint(2, "\n");
@@ -16115,12 +16153,14 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 	}
 //fixme: goes from 200k to 300k and then to 500k - should be 400k then 500k
 	lvlg = #COOP_LEVEL_AFTERTEN;
-	if (newexp >= lvlg) {
+	if (newexp >= lvlg)
+	{
 		chklvl = 1;
 		while (chklvl)
 		{
 			lvlg += ((chklvl - 1) * 100000);
-			if (origexp < lvlg && newexp >= lvlg) {
+			if (origexp < lvlg && newexp >= lvlg)
+			{
 				newlvl = 10 + chklvl;
 				chklvl = 0;
 			}
@@ -16241,12 +16281,14 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 	sprint( self, 2, ftos( howmany ) );
 	sprint( self, 2, " RANKING PLAYERS (sorted by exp) --\n" );
 	sprint( self, 2, "Rank *       Name      *       Exp        *  Level\n" );
-	if (file == -1) {
+	if (file == -1)
+	{
 		bprint(2,"topranks.tfi does not exist! Add it to /fortress directory, or experience unholy amounts of crashes!\n");
 		return;
 	}
 	i = 0;
-	while (i < howmany) {
+	while (i < howmany)
+	{
 		i++;
 		rname = read(file);
 		rname = frik_strcat(rname, "                        ");
@@ -16266,7 +16308,7 @@ void ( float howmany ) MTF_Coop_ViewTopRanks =
 		sprint( self, 2, ftos(level) );
 		sprint( self, 2, " \n" );
 		strunzone(rname);
-	}	
+	}
 	close (file);
 };
 void () MTF_Coop_ViewTopMapRanks =
@@ -16391,7 +16433,8 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 	attrib_cost = attrib_count + 1;
 	if (attrib_cost > 7)
 		attrib_cost = 7;
-	if (self.attribute_points < attrib_cost) {
+	if (self.attribute_points < attrib_cost)
+	{
 		sprint(self, 2, "You need ");
 		sprint(self, 2, ftos(attrib_cost - self.attribute_points));
 		sprint(self, 2, " more free points to upgrade this attribute to level ");
@@ -16414,15 +16457,18 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 		if (self.health > 0)
 			self.health = self.max_health;
 	}
-	else if (attrib_type == #ATTRIB_ARMOR)
+	else
+	if (attrib_type == #ATTRIB_ARMOR)
 	{
 		attr_name = "Armor Increase";
 		self.armor_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_DAMAGE)
+	else
+	if (attrib_type == #ATTRIB_DAMAGE)
 	{
 		for_dmg = Coop_GetLevel( Coop_GetNextLevelNeeded( self.coop_exp, attrib_type ) );
-		if ( Coop_GetLevel( self.coop_exp ) < for_dmg ) {
+		if ( Coop_GetLevel( self.coop_exp ) < for_dmg )
+		{
 			sprint( self, 2, "You cannot spend another point on rage until you are level " );
 			sprint( self, 2, ftos( for_dmg ) );
 			sprint( self, 2, " .\n" );
@@ -16431,42 +16477,50 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 		attr_name = "Rage Increase";
 		self.damage_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_MISC)
+	else
+	if (attrib_type == #ATTRIB_MISC)
 	{
 		attr_name = "Loot Increase";
 		self.misc_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_AMMO)
+	else
+	if (attrib_type == #ATTRIB_AMMO)
 	{
 		attr_name = "Ammo Increase";
 		self.ammo_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_CRIT)
+	else
+	if (attrib_type == #ATTRIB_CRIT)
 	{
 		attr_name = "Critical Strike Increase";
 		self.crit_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_RELOAD)
+	else
+	if (attrib_type == #ATTRIB_RELOAD)
 	{
 		attr_name = "Quick Reload Increase";
 		self.reload_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_MINION)
+	else
+	if (attrib_type == #ATTRIB_MINION)
 	{
 		attr_name = "Minion Summon Increase";
 		self.minion_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_QUICKSHOT)
+	else
+	if (attrib_type == #ATTRIB_QUICKSHOT)
 	{
 		attr_name = "Quick Shot Increase";
 		self.quickshot_attr += 1;
 	}
-	else if (attrib_type == #ATTRIB_CLIPEX)
+	else
+	if (attrib_type == #ATTRIB_CLIPEX)
 	{
 		attr_name = "Clip Extender";
 		self.clipex_attr += 1;
 	}	
-	else if (attrib_type == #ATTRIB_PROJECTILE)
+	else
+	if (attrib_type == #ATTRIB_PROJECTILE)
 	{
 		attr_name = "Projectile Speed Increase";
 		self.proj_attr += 1;
@@ -16482,49 +16536,71 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 	sprint(self, 2, ".\n");
 	if (attr_name == "Rage Increase")
 		sprint(self, 2, "NOTE: The more rage attributes you have, the more vulnerable you become to monster attacks.\n");
-	else if (attr_name == "Critical Strike Increase")
+	else
+	if (attr_name == "Critical Strike Increase")
 		sprint(self, 2, "NOTE: The more crit strike attributes you have, the more damage monsters do to you when they inflict critical strike.\n");
-	else if (attr_name == "Minion Summon Increase")
+	else
+	if (attr_name == "Minion Summon Increase")
 		sprint(self, 2, "Note: Use \"cmd summon\" to summon a minion.\n");
 	self.attribute_points = self.attribute_points - attrib_cost;
 	MTF_Coop_WriteExperience ( self.connect_name, self.coop_exp );
-	if ( Coop_HasMasterSkill( self, attrib_type ) == #TRUE ) {
+	if ( Coop_HasMasterSkill( self, attrib_type ) == #TRUE )
+	{
 		sprint( self, 2, " You have unlocked a new Masters Skill!\n Check \"CMD help masters\" to see what it is!\n" );
 	}
 };
 float (entity plyr, float attrib_type) MTF_Coop_AttribGain =
 {
-	if (attrib_type == #ATTRIB_HEALTH) {
+	if (attrib_type == #ATTRIB_HEALTH)
+	{
 		return ( 1 + (.55 * plyr.health_attr) );
 	}
-	else if (attrib_type == #ATTRIB_ARMOR) {
+	else
+	if (attrib_type == #ATTRIB_ARMOR)
+	{
 		return ( 1 + (.35 * plyr.armor_attr) );
 	}
-	else if (attrib_type == #ATTRIB_DAMAGE) {
+	else
+	if (attrib_type == #ATTRIB_DAMAGE)
+	{
 		return ( 1 + (.17 * plyr.damage_attr) );
 	}
-	else if (attrib_type == #ATTRIB_MISC) {
+	else
+	if (attrib_type == #ATTRIB_MISC)
+	{
 		return ( (.15 * plyr.misc_attr) );
 	}
-	else if (attrib_type == #ATTRIB_AMMO) {
+	else
+	if (attrib_type == #ATTRIB_AMMO) {
 		return ( 1 + (.36 * plyr.ammo_attr) );		// 2/23/11: used to be .2
 	}
-	else if (attrib_type == #ATTRIB_CRIT) {
+	else
+	if (attrib_type == #ATTRIB_CRIT) {
 		return ( 1 + (1.75 * plyr.crit_attr) );
 	}
-	else if (attrib_type == #ATTRIB_RELOAD) {
+	else
+	if (attrib_type == #ATTRIB_RELOAD)
+	{
 		return ( 1 + ( plyr.reload_attr * .65) );	// higher the return value, shorter the reload time
 	}
-	else if (attrib_type == #ATTRIB_MINION) {
+	else
+	if (attrib_type == #ATTRIB_MINION)
+	{
 		return ( 1 * plyr.minion_attr );
 	}
-	else if (attrib_type == #ATTRIB_QUICKSHOT) {
+	else
+	if (attrib_type == #ATTRIB_QUICKSHOT)
+	{
 		return ( 1 + (self.quickshot_attr * .4) );	// delay is divided by this ammount
 	}
-	else if (attrib_type == #ATTRIB_CLIPEX) {
+	else
+	if (attrib_type == #ATTRIB_CLIPEX)
+	{
 		return ( self.clipex_attr*(.20) );
 	}		
-	else if (attrib_type == #ATTRIB_PROJECTILE) {
+	else
+	if (attrib_type == #ATTRIB_PROJECTILE)
+	{
 		return ( self.proj_attr*(.30) );
 	}		
 	else
@@ -16603,10 +16679,12 @@ void () summon_think =
 	}
 	if (self.owner.owner != self.real_owner)
 		self.owner.owner = self.real_owner;
-	if (self.#health_check == #FALSE && self.owner.health > 0) {
+	if (self.#health_check == #FALSE && self.owner.health > 0)
+	{
 		self.classname = self.owner.classname;		// hackish in order to get MTF_Monster_Health2 workin' right
 		mhp = MTF_Monster_Health2(self.max_health);
-		if (self.owner.health > mhp) {
+		if (self.owner.health > mhp)
+		{
 			sprint(self.real_owner, 2, "You need more minion attributes to sustain the type of monster you summoned.\n");
 			self.armorvalue = 1;
 		}
@@ -16822,35 +16900,45 @@ void ( entity t_plyr, float attrib_type, float skill_no ) Coop_UseMasterSkill =
 			}
 			te = te.chain;
 		}
-		if ( i == 0 ) {
+		if ( i == 0 )
+		{
 			sprint( self, 2, "Nobody to heal nearby.\n" );
 			t_plyr.#next_masters_time = time + 1;
 		}
 		else
 			t_plyr.#next_masters_time = time + 5; // was 10 -arg
 	}
-	else if ( attrib_type == #ATTRIB_ARMOR ) {
+	else
+	if ( attrib_type == #ATTRIB_ARMOR )
+	{
 	}
-	else if ( attrib_type == #ATTRIB_MINION ) {
+	else
+	if ( attrib_type == #ATTRIB_MINION )
+	{
 		m_to_w = world;
 		te = find(world, classname, "monster_goalie");
 		while (te)
 		{
-			if (te.owner.is_minion == 1 && te.owner.owner == t_plyr) {
-				if (m_to_w != world) {
-					if ( vlen(te.origin - t_plyr.origin) > dist || dist == 0 ) {
+			if (te.owner.is_minion == 1 && te.owner.owner == t_plyr)
+			{
+				if (m_to_w != world)
+				{
+					if ( vlen(te.origin - t_plyr.origin) > dist || dist == 0 )
+					{
 						m_to_w = te;
 						dist = vlen(te.origin - t_plyr.origin);
 					}
 				}
-				else {
+				else
+				{
 					m_to_w = te;
 					dist = vlen(te.origin - t_plyr.origin);
 				}
 			}
 			te = find(te, classname, "monster_goalie");
 		}
-		if (m_to_w != world) {
+		if (m_to_w != world)
+		{
 			te = m_to_w.owner;
 			monsterwarp = spawn();
 			monsterwarp.size = te.size;
@@ -16885,12 +16973,14 @@ void ( float howmany ) MTF_Coop_ViewVoteTopRanks =
 	sprint( self, 2, ftos( howmany ) );
 	sprint( self, 2, " RANKING MAPS (sorted by vote count) --\n" );
 	sprint( self, 2, "Rank *    Map Name     *       # Votes    \n" );
-	if (file == -1) {
+	if (file == -1)
+	{
 		bprint(2,"topmaps.tfi does not exist! Add it to /fortress or experience unholy amounts of crashes!\n");
 		return;
 	}
 	i = 0;
-	while (i < howmany) {
+	while (i < howmany)
+	{
 		i++;
 		rname = read(file);
 		rname = frik_strcat(rname, "                        ");
@@ -16954,17 +17044,13 @@ void(entity spy) Spy_RemoveDisguise =
 			self.StatusRefreshTime = time + 0.1;
 		}
 	}
-#ifdef VWEPS
 	VWEPS_Update(spy);
-#endif
 };
 void (vector org,vector dir) launch_spike =
 {
 	newmis = spawn ();
-#ifdef mtf_coop
 	if (self.weapon & 256/*#MWEAPON_BOUNCEMISSILE*/)
 		newmis.attack_finished = 3;
-#endif
 	newmis.owner = self;
 	newmis.movetype = 9;
 	newmis.solid = 2;
@@ -17124,9 +17210,7 @@ void() ammo_touch =
 	self = other;
 	best = W_BestWeapon();
 	self = stemp;
-#ifdef mtf_coop
 	self.aflag *= ceil(4);
-#endif
 	if (self.weapon == TF_FLARE_OFF)
 	{
 		if (other.ammo_shells >= TeamFortress_GetMaxAmmo(other, 256))
@@ -17190,22 +17274,19 @@ void() ammo_touch =
 		W_SetCurrentAmmo();
 		self = stemp;
 	}
-#ifdef mtf_coop
 	if (self.orig_origin != '0 0 0') {
 		self.origin = self.orig_origin;
 		//self.orig_origin = '0 0 0';
 	}
-#endif
 	Respawn_Item(self, other);
 };
 void() item_shells = 
 {
-#ifdef mtf_coop_hipnotic
-	if (Hipnotic_SaveModels2() == 1) {
+	if (Hipnotic_SaveModels2() == 1)
+	{
 		dremove(self);
 		return;
 	}
-#endif
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
 		dremove(self);
@@ -17431,8 +17512,8 @@ void() weapon_touch =
 							new = 65536;
 							other.ammo_cells = other.ammo_cells + 15;
 						}
-#ifdef mtf_coop_hipnotic
-	else if (self.classname == "weapon_laser_gun")
+	else
+	if (self.classname == "weapon_laser_gun")
 	{
 	if (leave && (other.items & IT_LASER_CANNON) )
 			return;
@@ -17440,7 +17521,8 @@ void() weapon_touch =
 		new = IT_LASER_CANNON;
 		other.ammo_cells = other.ammo_cells + 30;
 	}
-	else if (self.classname == "weapon_mjolnir")
+	else
+	if (self.classname == "weapon_mjolnir")
 	{
 		if (leave && (other.items & IT_MJOLNIR) )
 			return;
@@ -17448,7 +17530,8 @@ void() weapon_touch =
 		new = IT_MJOLNIR;
 		other.ammo_cells = other.ammo_cells + 30;
 	}
-	else if (self.classname == "weapon_proximity_gun")
+	else
+	if (self.classname == "weapon_proximity_gun")
 	{
 		if (leave && (other.items & IT_PROXIMITY_GUN) )
 			return;
@@ -17456,7 +17539,6 @@ void() weapon_touch =
 		new = IT_PROXIMITY_GUN;
 		other.ammo_rockets = other.ammo_rockets + 6;
 	}
-#endif
 						else
 						{
 							objerror("weapon_touch: unknown classname");
@@ -17556,12 +17638,9 @@ float (float orighp) MTF_Monster_Health2 =
 	if (self.monster_items & MITEM_MEGAHEALTH)
 		orighp *= 2.5;
 	if (self.classname == "monster_army")
-#ifdef mtf_coop_nehahra
 		return (orighp * (18 * random()));		// in nehahra they have better AI, so lets lessen their hp a bit..
-#else
-		return (orighp * (20 * random()));
-#endif
-	else if (self.classname == "monster_dog")
+	else
+	if (self.classname == "monster_dog")
 		return (orighp * (17 * random()));
 	else
 		return (orighp * 3);
@@ -17571,7 +17650,8 @@ float (entity ent) InSolid =
 	local entity tente, oself;
 	local vector oldownerorg, oldorg, neworg;
 	local float ret;
-	if ( ent.owner != world ) {
+	if ( ent.owner != world )
+	{
 		oldownerorg = ent.owner.origin;
 		ent.owner.origin_z = ent.owner.origin_z + ent.owner.maxs_z * 2;
 		setorigin( ent.owner, ent.owner.origin + '0 0 200' );
@@ -17675,7 +17755,6 @@ float () W_BestWeapon =
 {
 	local float it;
 	it = self.weapons_carried;
-//this is where I think you can't switch to elec gun with 0 shotgun shells. -arg
 	if ((((self.ammo_cells >= 1) && (it & 65536)) && (self.waterlevel <= 1)))
 	{
 		return (65536);
@@ -17753,7 +17832,8 @@ float () W_BestWeapon =
 											{
 												return (#WEAPON_CROSSBOW);
 											}
-											else if ((it & #WEAPON_CROSSBOW))
+											else
+											if ((it & #WEAPON_CROSSBOW))
 											{
 												return (#WEAPON_THUMPER);
 											}
@@ -18131,7 +18211,8 @@ float() Sentry_FindTarget =
 			}
 			head = head.chain;
 		}
-		if (!gotone) {
+		if (!gotone)
+		{
 	the_client = findradius(self.origin, 1000);
 	while (the_client != world && gotone != 1)
 	{
@@ -18235,12 +18316,13 @@ float turret_clearGround (entity head) =
 	}
 	}
 	parent.flags = parent.flags - FL_ONGROUND;	
-	if(childrenOfHeadOnGround){
-	  return TRUE;	  
+	if(childrenOfHeadOnGround)
+	{
+		return TRUE;  
 	}
 	else
 	{
-		return FALSE;	  
+		return FALSE;
 	}
 };
 void() Reset_My_Grapple = 
@@ -18303,11 +18385,7 @@ void() lvl1_sentry_stand = [0, lvl1_sentry_stand]
 void() lvl1_sentry_atk1 = [1, lvl1_sentry_atk3]
 {
 	ai_face();
-#ifdef mtf_coop
 	if (self.enemy == world || self.enemy.health <= 0 || !visible(self.enemy)/* || self.enemy.has_disconnected == 1 || (self.enemy.team_no == 0 && !self.is_monster)*/)
-#else
-	if (self.enemy == world || self.enemy.health <= 0 || !visible(self.enemy) || self.enemy.has_disconnected == 1 || self.enemy.team_no == 0)
-#endif
 	{
 		lvl1_sentry_stand();
 	}
@@ -18342,11 +18420,7 @@ void() lvl2_sentry_stand = [3, lvl2_sentry_stand]
 void() lvl2_sentry_atk1 = [4, lvl2_sentry_atk2]
 {
 	ai_face();
-#ifdef mtf_coop
 	if (self.enemy == world || self.enemy.health <= 0 || !visible(self.enemy)/* || self.enemy.has_disconnected == 1 || (self.enemy.team_no == 0 && !self.is_monster)*/)
-#else
-	if (self.enemy == world || self.enemy.health <= 0 || !visible(self.enemy) || self.enemy.has_disconnected == 1 || self.enemy.team_no == 0)
-#endif
 	{
 		lvl2_sentry_stand();
 	}
@@ -18382,11 +18456,7 @@ void() lvl3_sentry_stand = [6, lvl3_sentry_stand]
 void() lvl3_sentry_atk1 = [7, lvl3_sentry_atk2]
 {
 	ai_face();
-#ifdef mtf_coop
 	if (self.enemy == world || self.enemy.health <= 0 || !visible(self.enemy)/* || self.enemy.has_disconnected == 1 || (self.enemy.team_no == 0 && !self.is_monster)*/)
-#else
-	if (self.enemy == world || self.enemy.health <= 0 || !visible(self.enemy) || self.enemy.has_disconnected == 1 || self.enemy.team_no == 0)
-#endif
 	{
 		lvl3_sentry_stand();
 	}
@@ -18578,10 +18648,14 @@ float() Sentry_Fire =
 	{
 		return FALSE;
 	}
-	if (self.#sentry_power == #SENTRY_FLAME) {
+	if (self.#sentry_power == #SENTRY_FLAME)
+	{
 	}
-	else if (self.#sentry_power == #SENTRY_SEEKER) {
-		if (self.ammo_rockets > 0 && self.super_damage_finished < time) {
+	else
+	if (self.#sentry_power == #SENTRY_SEEKER)
+	{
+		if (self.ammo_rockets > 0 && self.super_damage_finished < time)
+		{
 			dir = normalize (((self.enemy.origin + '0 0 10') - self.origin));
 			dist = vlen ((self.enemy.origin - self.origin));
 			flytime = (dist * 0.002);
@@ -18609,30 +18683,31 @@ float() Sentry_Fire =
 			self.ammo_rockets = (self.ammo_rockets - 1.000000);
 		}
 	}
-	else {
-	if ((((self.weapon == 3.000000) && (self.ammo_rockets > 0.000000)) && (self.super_damage_finished < time)))
+	else
 	{
-		sound (self, 1.000000, "weapons/rocklr1a.wav", 1.000000, 1.000000);
-		newmis = spawn ();
-		newmis.owner = self;
-		newmis.movetype = 9.000000;
-		newmis.solid = 2.000000;
-		newmis.velocity = (normalize (dir) * 800.000000);
-		newmis.angles = vectoangles (newmis.velocity);
-		newmis.weapon = 34.000000;
-		newmis.touch = T_MissileTouch;
-		newmis.nextthink = (time + 5.000000);
-		newmis.think = SUB_Remove;
-		setmodel (newmis, "progs/missile.mdl");
-		setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
-		setorigin (newmis, ((self.origin + (v_forward * 8.000000)) + '0.000000 0.000000 16.000000'));
-		self.super_damage_finished = (time + 3.000000);
-		self.ammo_rockets = (self.ammo_rockets - 1.000000);
-		if ((self.ammo_rockets == 10.000000))
+		if ((((self.weapon == 3.000000) && (self.ammo_rockets > 0.000000)) && (self.super_damage_finished < time)))
 		{
-			sprint (self.real_owner, 2.000000, "Sentry Gun is low on rockets.\n");
+			sound (self, 1.000000, "weapons/rocklr1a.wav", 1.000000, 1.000000);
+			newmis = spawn ();
+			newmis.owner = self;
+			newmis.movetype = 9.000000;
+			newmis.solid = 2.000000;
+			newmis.velocity = (normalize (dir) * 800.000000);
+			newmis.angles = vectoangles (newmis.velocity);
+			newmis.weapon = 34.000000;
+			newmis.touch = T_MissileTouch;
+			newmis.nextthink = (time + 5.000000);
+			newmis.think = SUB_Remove;
+			setmodel (newmis, "progs/missile.mdl");
+			setsize (newmis, '0.000000 0.000000 0.000000', '0.000000 0.000000 0.000000');
+			setorigin (newmis, ((self.origin + (v_forward * 8.000000)) + '0.000000 0.000000 16.000000'));
+			self.super_damage_finished = (time + 3.000000);
+			self.ammo_rockets = (self.ammo_rockets - 1.000000);
+			if ((self.ammo_rockets == 10.000000))
+			{
+				sprint (self.real_owner, 2.000000, "Sentry Gun is low on rockets.\n");
+			}
 		}
-	}
 	}
 	if (((self.ammo_shells == 0.000000) && (random () < 0.100000)))
 	{
@@ -18670,7 +18745,8 @@ void (float shotcount,vector dir,vector spread) FireBullets =
 		traceline (src, (src + (direction * 2048)), 0.000000, self);
 		if ((trace_fraction != 1))
 		{
-			if (self.classname == "building_sentrygun") {
+			if (self.classname == "building_sentrygun")
+			{
 				TraceAttack (6, direction);
 			}
 			else 
@@ -18778,10 +18854,10 @@ float() turret_dropTurret =
 	turret.turret_base.v_angle = self.v_angle;
 	turret.turret_timeout = time + 120;			//SH* Turret life in secs
 	turret.nextthink = time + 0.1;
-		if (self.super_damage_finished > time)
-		{
-			turret.effects = EF_BLUE;   // Make turret blue when player is on quad. :} -arg
-		}
+	if (self.super_damage_finished > time)
+	{
+		turret.effects = EF_BLUE;   // Make turret blue when player is on quad. :} -arg
+	}
 	turret.think = turret_searchForEnemy;
 	setmodel (turret.turret_base, "progs/turstand.mdl");
 	setsize (turret, '-5 -5 -18', '5 5 1');
@@ -18829,8 +18905,8 @@ void() turret_findTarget =
 	head = findradius (search_area_center, dist / 2);
 	while (head)
 	{
-	  attack_intermission = (intermission_running && (head.classname == "info_intermission"));
-	  attack_intermission |= (head.classname == "spectator");
+		attack_intermission = (intermission_running && (head.classname == "info_intermission"));
+		attack_intermission |= (head.classname == "spectator");
 		if (head.team_no != self.team_no) // if it's not on the team that launched it, it's fair game.
 		if (((head.health > 1) && (head.takedamage)) || attack_intermission)
 			if (head.classname != "beartrap")
@@ -18841,20 +18917,20 @@ void() turret_findTarget =
 								if (head != self)
 									if (head.classname != "misc_explobox") // +pk112 don't attack boxes
 										if (head.classname != "misc_explobox2") // +pk112
-										  if (head.classname != "info_intermission" || attack_intermission) // efc, don't attack cam unless at intermission									  
-  										  if(head.movetype != MOVETYPE_PUSH)
-  										  {  										    
-    											tempDist = vlen(head.origin - self.origin);
-    											traceline (self.origin, head.origin, 1, self);
-    											if (trace_fraction >= 1)
-    												if (tempDist < dist)
-    													if (turret_inFront(head))
-    														if (visible(head))
-    														{
-    															selected = head;
-    															dist = tempDist;
-    														}
-    										 }
+										if (head.classname != "info_intermission" || attack_intermission) // efc, don't attack cam unless at intermission									  
+											if(head.movetype != MOVETYPE_PUSH)
+											{
+													tempDist = vlen(head.origin - self.origin);
+													traceline (self.origin, head.origin, 1, self);
+													if (trace_fraction >= 1)
+														if (tempDist < dist)
+															if (turret_inFront(head))
+																if (visible(head))
+																{
+																	selected = head;
+																	dist = tempDist;
+																}
+											}
 		head = head.chain;
 	}
 	if (self.turret_soundtimeout < time)
@@ -19311,7 +19387,8 @@ void() player_run = [6, player_run]
 		player_stand1();
 		return;
 	}
-	if (self.monster_type > 0) {
+	if (self.monster_type > 0)
+	{
 		monster_run();
 		return;
 	}
@@ -19651,7 +19728,6 @@ void() SUB_UseTargets =
 			t = find (t, targetname, self.killtarget);
 			if (!t)
 				return;
-
 			remove (t);
 		}
 		while (1);
@@ -19669,7 +19745,6 @@ void() SUB_UseTargets =
 			otemp = other;
 			self = t;
 			other = stemp;
-
 			if (self.use != SUB_Null)
 			{
 				if (self.use)
@@ -19985,6 +20060,7 @@ void (entity plyr, float addfrags) Rank_FragIncrease =
 };
 void () missing_precaches =
 {
+	precache_model ("progs/medexp.spr");
 	precache_sound2 ("items/inv1.wav");
 	precache_sound2 ("items/inv2.wav");
 	precache_sound2("wall/push.wav");
@@ -20485,17 +20561,20 @@ float (entity t_plyr) Achievements_Setup =
 	local float filee;
 	local float i;
 	local string tstr;
-	if ( t_plyr.connect_name == "" || !t_plyr.connect_name ) {
+	if ( t_plyr.connect_name == "" || !t_plyr.connect_name )
+	{
 		return ( -1 );
 	}
 	filenamee = frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" );
 	filenamee = strzone(filenamee);
-	if ( invalid_exp_name(filenamee) == 1 ) {
+	if ( invalid_exp_name(filenamee) == 1 )
+	{
 		strunzone(filenamee);
 		return ( -1 );
 	}
 	achievements_enabled = #TRUE;
-	if ( checkfilename(filenamee) != 1 ) {	// done in C - makes sure the file name is writable
+	if ( checkfilename(filenamee) != 1 )
+	{	// done in C - makes sure the file name is writable
 		strunzone(filenamee);
 		if (checkfilename( "ranks/inv/test" ) == #FALSE)
 			achievements_enabled = #FALSE;
@@ -20529,13 +20608,16 @@ float (entity t_plyr) Achievements_Setup =
 		write (filee, "// The three fields explained:\n");
 		write (filee, "// First line is achievement name\n// Second line is player's progress in earning the achievement\n// Third line is how many of that achievement the player has\n");
 		write (filee, "// ADDME: use this line for something?\n");
-		while (i < MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE) {
+		while (i < MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE)
+		{
 			tstr = Achievements_GetName(i);
 			if (tstr == "noname")
 				write (filee, "0\n");
-			else if (tstr == "endname")
+			else
+			if (tstr == "endname")
 				break;
-			else {
+			else
+			{
 				write (filee, tstr);
 				write (filee, "\n");
 			}
@@ -20565,27 +20647,33 @@ void ( float p_type, entity t_plyr ) Achievements_Print =
 		sprint(self, 2, "Your achievements (detailed):\n");
 	i = 1;
 	file = open (frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" ), 0);
-	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) ) {
+	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) )
+	{
 		if (i >= #FIRST_AWD_LINE) {
-			if (Achievements_GetName(i - #FIRST_AWD_LINE) != "noname") {
+			if (Achievements_GetName(i - #FIRST_AWD_LINE) != "noname")
+			{
 				read(file);
 				infa = stof( read(file) );
 				infb = stof( read(file) );
 				if (infb > 0) {
-					if (p_type == 0) {
+					if (p_type == 0)
+					{
 						sprint(self, 2, Achievements_GetName(i - #FIRST_AWD_LINE));
 						sprint(self, 2, "(" );
 						sprint(self, 2, ftos(infb));
 						sprint(self, 2, ")\n");
 					}
-					else if (p_type == 1) {
+					else
+					if (p_type == 1)
+					{
 						bprint(2, Achievements_GetName(i - #FIRST_AWD_LINE));
 						bprint(2, "(" );
 						bprint(2, ftos(infb));
 						bprint(2, ") ");
 					}
 				}
-				if (p_type == 2) {
+				if (p_type == 2)
+				{
 					sprint(self, 2, Achievements_GetName(i - #FIRST_AWD_LINE));
 					sprint(self, 2, "(" );
 					sprint(self, 2, ftos(infb));
@@ -20626,41 +20714,51 @@ void () Achievements_Set =
 	s_type = self.health;
 	a_type = self.ammo_shells;
 	a_var = self.armorvalue;
-	if (t_plyr.coop_exp != -1 && t_plyr != other && t_plyr.has_disconnected != 1) {
+	if (t_plyr.coop_exp != -1 && t_plyr != other && t_plyr.has_disconnected != 1)
+	{
 	}
-	else {
+	else
+	{
 		bprint(2, "Achievements_Set: Tried to set on world or disconnected player or something\n");
 		dremove(self);
 		return;
 	}
 	file = open (frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" ), 0);
 	dummyfile = open ("dummy_awd.tfi", 2);
-	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) ) {
-		if (i == (#FIRST_AWD_LINE + a_type)) {
+	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) )
+	{
+		if (i == (#FIRST_AWD_LINE + a_type))
+		{
 			write( dummyfile, Achievements_GetName(a_type) );
 			write( dummyfile, "\n" );
 			read(file);
 		}
-		else if (i == (#FIRST_AWD_LINE + a_type + 1)) {
+		else
+		if (i == (#FIRST_AWD_LINE + a_type + 1))
+		{
 			a = read(file);
-			if (s_type == ACHIEVEMENTS_ADD) {
+			if (s_type == ACHIEVEMENTS_ADD)
+			{
 				ach_total = stof(a) + a_var;
 				if (ach_total < 0)		// since you can add negatives
 					ach_total = 0;
 			}
-			else if (s_type == ACHIEVEMENTS_ADDBIT) {
+			else if (s_type == ACHIEVEMENTS_ADDBIT)
+			{
 				ach_total = stof(a);
 				if ((!ach_total) & (a_var))
 					ach_total += a_var;
 				if (ach_total < 0)		// since you can add negatives
 					ach_total = 0;
 			}
-			else if (s_type == ACHIEVEMENTS_SET) {
+			else if (s_type == ACHIEVEMENTS_SET)
+			{
 					ach_total = a_var;
 			}
 			else
 				ach_total = 0;
-			if (Achievements_CheckComplete(a_type) <= ach_total) {
+			if (Achievements_CheckComplete(a_type) <= ach_total)
+			{
 				bprint(2, "Achievement earned! ");
 				bprint(2, t_plyr.connect_name);
 				bprint(2, " has earned the achievement: ");
@@ -20676,12 +20774,14 @@ void () Achievements_Set =
 				write( dummyfile, "\n" );
 				i++;
 			}
-			else {
+			else
+			{
 				write( dummyfile, ftos( ach_total ) );
 				write( dummyfile, "\n" );
 			}
 		}
-		else {
+		else
+		{
 			write( dummyfile, read(file) );
 			write( dummyfile, "\n" );
 		}
@@ -20703,7 +20803,8 @@ void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) 
 		te = find ( world, classname, "player" );
 		while (te)
 		{
-			if (te.coop_exp != -1 && te.has_disconnected != 1) {
+			if (te.coop_exp != -1 && te.has_disconnected != 1)
+			{
 				Achievements_Change( te, world, ACHIEVEMENTS_ADD, a_type, a_var );
 			}
 			te = find (te, classname, "player");
@@ -20840,7 +20941,8 @@ void (entity plyr, float amnt, float rcrd) Record_Check =
 			Record_Add(#RECORD_FER, amnt, plyr);
 		}
 	}
-	else if (rcrd == #RECORD_FRAGS)
+	else
+	if (rcrd == #RECORD_FRAGS)
 	{
 		if (!record_frags)
 			return;
@@ -20879,7 +20981,7 @@ void (float rcrd, float amnt, entity plyr) Record_Add =
 	localcmd("localinfo r_deaths ");
 	}
 	else
- if (rcrd == #RECORD_CAPS)
+	if (rcrd == #RECORD_CAPS)
 	{
 	localcmd("localinfo r_caps ");
 	localcmd(ftos(amnt));
@@ -21293,7 +21395,8 @@ void (float accept) Inventory_TradeItemDecision =
 	tchk = find(world,classname,"trade_ref");
 	while (tchk)
 	{
-		if (tchk.enemy == self) {
+		if (tchk.enemy == self)
+		{
 			if (accept == 0) {
 				sprint(self,2, "You have cancelled the offer.\n");
 				sprint(tchk.owner,2, self.netname);
@@ -21301,22 +21404,26 @@ void (float accept) Inventory_TradeItemDecision =
 				dremove(tchk);
 				return;			
 			}
-			if (tchk.owner == world) {
+			if (tchk.owner == world)
+			{
 				sprint(self,2, "The trader has either left the game or canceled their offer.\n");
 				dremove(tchk);
 				return;
 			}
-			if (self.gold < tchk.health) {
+			if (self.gold < tchk.health)
+			{
 				sprint(self,2, "You do not have enough gold.\n");
 				return;			
 			}
 			item_type = Inventory_GetItem ( tchk.owner.connect_name, tchk.playerclass, #RETURN_ITEM_NO );
-			if (item_type != tchk.armorvalue) {
+			if (item_type != tchk.armorvalue)
+			{
 				sprint(self, 2, "Trader no longer has item.\n");
 				dremove(tchk);
 				return;
 			}
-			if (Inventory_AddItem( self, item_type, 0 ) == #FALSE) {
+			if (Inventory_AddItem( self, item_type, 0 ) == #FALSE)
+			{
 				sprint(self, 2, "You have no free item slots. Free one up to complete this trade.\n");
 				dremove(tchk);
 				return;
@@ -21378,7 +21485,8 @@ float ( float slot_no ) Inventory_UseItem =
 						"0",				// this is the data that's getting added in there
 							6 + self.#max_inv);	// and this is how many lines should be copied
 	CopyFile( "dummy_inv.tfi", frik_strcat( "ranks/inv/", self.connect_name, "_inv.tfi" ), 0, string_null,  6 + self.#max_inv);
-	if (Inventory_SelfUse( item_type ) == #TRUE) {
+	if (Inventory_SelfUse( item_type ) == #TRUE)
+	{
 		oldself = self;
 		other = self;
 		self = t_item;
@@ -21438,19 +21546,24 @@ void ( float sell_type, float slot_no, entity seller, entity buyer ) Inventory_S
 	local entity head;
 	buybackrate = 1;
 	item_type = Inventory_GetItem ( seller.connect_name, slot_no, #RETURN_ITEM_NO );
-	if (!item_type) {
+	if (!item_type)
+	{
 		sprint( seller, 2, "Invalid item to sell.\n" );
 		return;
 	}
-	if ( sell_type == #SELL_TO_MERCHANT ) {
+	if ( sell_type == #SELL_TO_MERCHANT )
+	{
 		head = findradius (merchant.origin, 56);
-		while (head) {
-			if (head == seller) {
+		while (head)
+		{
+			if (head == seller)
+			{
 				sell_ok = #TRUE;
 			}
 			head = head.chain;
 		}
-		if (sell_ok == #FALSE) {
+		if (sell_ok == #FALSE)
+		{
 			sprint( seller, 2, "You are not close enough to the merchant to sell any items.\n" );
 			return;
 		}
@@ -21458,7 +21571,8 @@ void ( float sell_type, float slot_no, entity seller, entity buyer ) Inventory_S
 		buybackrate = .75;
 	}
 	Inventory_AddGold( seller, ceil( buybackrate * Inventory_GetItemPrice( item_type ) ) );
-	if ( sell_type == #SELL_TO_MERCHANT ) {
+	if ( sell_type == #SELL_TO_MERCHANT )
+	{
 		if ( !merchant.#item1 )
 			merchant.#item1 = item_type;
 		else if ( !merchant.#item2 )
@@ -21560,10 +21674,12 @@ float () Changelevel_GetMapData =
 	}
 	a = read (file);
 	a = read (file);
-	if (a == "1") { 				// We are good to be reloaded!
+	if (a == "1")
+	{ 				// We are good to be reloaded!
 		bprint(2, "We be reading\n");
 		i=0;
-		while (i<1024) {			// Assuming there are 1024 entities.. could be dangerous lol
+		while (i<1024)
+		{			// Assuming there are 1024 entities.. could be dangerous lol
 			a = read (file);
 			if (a == "END") {
 				bprint(2, "END'd!\n");
@@ -21580,7 +21696,8 @@ float () Changelevel_GetMapData =
 			te = find(world, classname, clsn);
 			while (te)
 			{
-				if (te.solid == SOLID_BSP) {
+				if (te.solid == SOLID_BSP)
+				{
 					if (te.model == mdln)
 						loadme = TRUE;
 					else
@@ -21589,7 +21706,8 @@ float () Changelevel_GetMapData =
 				if (te.classname == clsn && loadme == TRUE) {			// CHANGEME: Gibs? Helloooo?
 					if (te.solid == SOLID_BSP || te.solid == SOLID_TRIGGER)
 						loaded_obj = te;
-					else {
+					else
+					{
 						loaded_obj = spawn();
 						loaded_obj.think = te.think;
 						loaded_obj.solid = te.solid;
@@ -21634,14 +21752,16 @@ float () Changelevel_GetMapData =
 					a = read (file);
 					loaded_obj.health = stof(a);
 					a = read (file);
-					if (loaded_obj.solid != SOLID_BSP) {
+					if (loaded_obj.solid != SOLID_BSP)
+					{
 						loaded_obj.target = a;
 						if (a == string_null)
 							loaded_obj.target = "none";
 						loaded_obj.target = strzone(loaded_obj.target);
 					}
 					a = read (file);
-					if (loaded_obj.solid != SOLID_BSP) {
+					if (loaded_obj.solid != SOLID_BSP)
+					{
 						loaded_obj.targetname = a;
 						if (a == string_null)
 							loaded_obj.targetname = "none";
@@ -21649,7 +21769,8 @@ float () Changelevel_GetMapData =
 					}
 					a = read (file);
 					a = read (file);
-					if (loaded_obj.is_monster == 1) {
+					if (loaded_obj.is_monster == 1)
+					{
 						oself = self;
 						self = loaded_obj;
 						walkmonster_start();
@@ -21662,11 +21783,10 @@ float () Changelevel_GetMapData =
 			te2 = find(world, classname, clsn);
 			while (te2)
 			{
-				if (te2.saved_ent != TRUE && 
-					te2.solid != SOLID_BSP
-					){
-						dremove(te2);
-					}
+				if (te2.saved_ent != TRUE && te2.solid != SOLID_BSP)
+				{
+					dremove(te2);
+				}
 				te2 = find(te2, classname, clsn);
 			}
 			strunzone(clsn);
@@ -21675,7 +21795,8 @@ float () Changelevel_GetMapData =
 			i++;
 		}
 	}
-	else {
+	else
+	{
 		bprint(2, "We no be readin 2\n");
 		close (file);
 		strunzone(filename);
@@ -21706,7 +21827,8 @@ void (string cname) FindEntsWithClassname =
 {
 	local entity finder_ent;
 	local float i;
-	if (cname == "") {
+	if (cname == "") 
+	{
 		bprint(2, "No classname specified.\n");
 		return;
 	}
@@ -21739,12 +21861,14 @@ string ( string fromme, string str_value, float str_valueno, string str_section 
 		return ( frik_strcat( "Invalid String Value", str_value ) );
 	i=1;
 	file = open (fromme, 0);
-	while ( i < #TFI_MAXLINES ) {
+	while ( i < #TFI_MAXLINES )
+	{
 		a = read(file);
 		a = strzone(a);
 		
 		if (sectioned)
-			if (a == str_value) {
+			if (a == str_value)
+			{
 				strunzone(a);
 				if (str_valueno == -1)	// find all values until the next "//" (hackish and bad method)
 				{
@@ -21771,7 +21895,8 @@ string ( string fromme, string str_value, float str_valueno, string str_section 
 					{
 						i2++;
 						a = read(file);
-						if (i2 >= str_valueno) {
+						if (i2 >= str_valueno)
+						{
 							close (file);
 							return(a);
 						}
@@ -21781,7 +21906,6 @@ string ( string fromme, string str_value, float str_valueno, string str_section 
 		
 		if (a == str_section)
 			sectioned = 1;
-
 		strunzone(a);
 		i++;
 	}
@@ -21862,7 +21986,6 @@ void (entity loadent, string strflgs) ParseLoadFlags =
 		bprint(2,"MAKE ME STAND\n");
 	}
 };
-
 float (entity checkme) Set_SaveFlags =
 {
 	if (checkme.pausetime > time && checkme.th_stand != SUB_Null)
@@ -21914,7 +22037,8 @@ void (float can_be_dead) MonsterItemTouch =
 	}
 	if (other.mtf_items & #CAPTURE_BASKET)
 		if (Inventory_ItemIsValidPickup( self.weapon ))
-			if (Inventory_AddItem( other, self.weapon, 0 ) == #TRUE) {
+			if (Inventory_AddItem( other, self.weapon, 0 ) == #TRUE)
+			{
 				other.mtf_items -= #CAPTURE_BASKET;
 				Achievements_Change( other, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_LOOTBAGGER, 1 );
 				dremove( self );
@@ -21922,43 +22046,47 @@ void (float can_be_dead) MonsterItemTouch =
 			}
 	if (self.weapon == 20 && self.model != "")
 		if (Inventory_ItemIsValidPickup( self.weapon ))
-			if (Inventory_AddItem( other, self.weapon, 0 ) == #TRUE) {
+			if (Inventory_AddItem( other, self.weapon, 0 ) == #TRUE)
+			{
 				dremove( self );
 				return;
 			}
 	if (self.weapon == 1) {		// QUAD
 		other.super_time = 1;
-
 		if (other.super_damage_finished > time)
 			other.super_damage_finished = other.super_damage_finished + 20;
 		else
 			other.super_damage_finished = time + 20;
-
 		if (lasting_time > 0)
 			other.super_damage_finished = other.super_damage_finished + lasting_time;
-
 		sound(other, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
 		other.items = other.items | 4194304;
 	}
-	else if (self.weapon == 2) {		// INVISIBILITY
+	else 
+	if (self.weapon == 2)
+	{		// INVISIBILITY
 		other.invisible_time = 1;
 		if (other.invisible_finished > time)
 			other.invisible_finished = other.invisible_finished + 20;
 		else
 			other.invisible_finished = time + 20;
-
 		if (lasting_time > 0)
 			other.invisible_finished = other.invisible_finished + lasting_time;
 		sound(other, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
 		other.items = other.items | 524288;
 	}
-	else if (self.weapon == 3 || self.weapon == 5) {		// YELLOW & RED ARMOR (& SPEED)
-		if (self.weapon == 3) {
+	else
+	if (self.weapon == 3 || self.weapon == 5)
+	{		// YELLOW & RED ARMOR (& SPEED)
+		if (self.weapon == 3)
+		{
 			type = 0.6;
 			value = 150;
 			bit = 16384;
 		}
-		else if (self.weapon == 5) {
+		else
+		if (self.weapon == 5)
+		{
 			type = 0.8;
 			value = 200;
 			bit = 32768;
@@ -22022,7 +22150,8 @@ void (float can_be_dead) MonsterItemTouch =
 				}
 			}
 		}
-		if (self.speed_time > 0) {
+		if (self.speed_time > 0)
+		{
 			sprint(other, 2, "You got SPEED armor.\n");
 			stuffcmd(other, "cl_forwardspeed 999\n");
 			if (other.speed_time > time)
@@ -22125,9 +22254,9 @@ void (float can_be_dead) MonsterItemTouch =
 			newmis.owner = other;
 		}
 	}
-	else if (self.weapon == 7) {		// INVULNERABILITY (PENT)
+	else if (self.weapon == 7)
+	{		// INVULNERABILITY (PENT)
 		other.invincible_time = 1;
-		
 		if (other.invincible_finished > time)
 			other.invincible_finished = other.invincible_finished + 5 + (3 * other.misc_attr);
 		else
@@ -22136,7 +22265,9 @@ void (float can_be_dead) MonsterItemTouch =
 		other.items = other.items | self.items;
 		sprint(other, 2, "You pick up INVINCIBILITY power!\n");
 	}
-	else if (self.weapon == 8) {		// Gold! I love goooold :0
+	else
+	if (self.weapon == 8)
+	{		// Gold! I love goooold :0
 		Inventory_AddGold( other, self.#gold );
 		sprint( other, 2, "You loot " );
 		sprint( other, 2, ftos( self.#gold ) );
@@ -22144,27 +22275,37 @@ void (float can_be_dead) MonsterItemTouch =
 		if (self.owner != world)
 			self.owner.effects = self.owner.effects - EF_RED;
 	}
-	else if (self.weapon == 9) {		// inventory extender
+	else
+	if (self.weapon == 9)
+	{		// inventory extender
 		sprint( other, 2, "You now have a small inventory sack!\n" );
 		other.#max_inv = 4;
 		Inventory_SaveMaxInv ( other );
 	}
-	else if (self.weapon == 10) {		// inventory extender 2
+	else
+	if (self.weapon == 10)
+	{		// inventory extender 2
 		sprint( other, 2, "You now have a medium inventory sack!\n" );
 		other.#max_inv = 5;
 		Inventory_SaveMaxInv ( other );
 	}
-	else if (self.weapon == 11) {		// inventory extender 3
+	else
+	if (self.weapon == 11)
+	{		// inventory extender 3
 		sprint( other, 2, "You now have a large inventory sack!\n" );
 		other.#max_inv = 6;
 		Inventory_SaveMaxInv ( other );
 	}
-	else if (self.weapon == 12) {		// inventory extender 4
+	else
+	if (self.weapon == 12)
+	{		// inventory extender 4
 		sprint( other, 2, "You now have a JUMBO inventory sack!\n" );
 		other.#max_inv = 7;
 		Inventory_SaveMaxInv ( other );
 	}
-	else if (self.weapon == 13) {		// small ammo pack
+	else 
+	if (self.weapon == 13)
+	{		// small ammo pack
 		other.ammo_rockets += 25;
 		other.ammo_cells += 100;
 		other.ammo_shells += 150;
@@ -22178,7 +22319,9 @@ void (float can_be_dead) MonsterItemTouch =
 		W_SetCurrentAmmo();
 		self = oldself;
 	}
-	else if (self.weapon == 14) {		// large ammo pack
+	else
+	if (self.weapon == 14)
+	{		// large ammo pack
 		other.ammo_rockets += 50;
 		other.ammo_cells += 200;
 		other.ammo_shells += 350;
@@ -22192,23 +22335,35 @@ void (float can_be_dead) MonsterItemTouch =
 		W_SetCurrentAmmo();
 		self = oldself;
 	}
-	else if (self.weapon == 15) {		// grenade pack
+	else 
+	if (self.weapon == 15)
+	{		// grenade pack
 		other.no_grenades_1 += 12; //-was 2 now 12 -arg
 		other.no_grenades_2 += 12;
 	}
-	else if (self.weapon == 16) {		// ricochet upgrade
+	else
+	if (self.weapon == 16)
+	{		// ricochet upgrade
 		other.mtf_items |= #BOUNCY_ROCKETS;
 	}
-	else if (self.weapon == 17) {		// allows the player to store an item in his inventory
+	else
+	if (self.weapon == 17)
+	{		// allows the player to store an item in his inventory
 		other.mtf_items |= #CAPTURE_BASKET;
 	}
-	else if (self.weapon == 18) {		// uber railgun
+	else 
+	if (self.weapon == 18)
+	{		// uber railgun
 		other.mtf_items |= #MTFITEM_RAILGUN;
 	}
-	else if (self.weapon == 19) {		// lightning gun
+	else
+	if (self.weapon == 19)
+	{		// lightning gun
 		other.mtf_items |= #MTFITEM_LIGHTGUN;
 	}
-	else if (self.weapon == 20) {		// resurrection cube
+	else
+	if (self.weapon == 20)
+	{		// resurrection cube
 		bprint(2, other.netname);
 		bprint(2, " has used the resurrection cube for their team! Players on that team can now resurrect or reconnect.\n");
 		oldself = self;
@@ -22216,7 +22371,8 @@ void (float can_be_dead) MonsterItemTouch =
 		hax = find(world, classname, "resdummy");
 		while (hax)
 		{
-			if (hax.monster_type != 1) {	// don't res disconnected players, they can use cmd beg
+			if (hax.monster_type != 1)
+			{	// don't res disconnected players, they can use cmd beg
 				hax.enemy.origin = hax.origin + '0 0 24';
 //put in logic to only resurrect team members, not everyone. -arg
 				if (hax.team_no == self.team_no)
@@ -22237,28 +22393,32 @@ void (float can_be_dead) MonsterItemTouch =
 				strunzone(minfo);
 		}
 	}
-	else if (self.weapon == 666)
+	else
+	if (self.weapon == 666)
 	{
 		sprint(other, 2, "You pick up a 50 exp bonus!\n");
 		MTF_Coop_AddExperience(other, world, 50);
 		MTF_Coop_PreWriteExperience( other, other.connect_name, other.coop_exp );
 		Achievements_Change( other, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_MRGRINCH, 1 );
 	}
-	else if (self.weapon == 667)
+	else
+	if (self.weapon == 667)
 	{
 		sprint(other, 2, "You pick up a 250 exp bonus!\n");
 		MTF_Coop_AddExperience(other, world, 250);
 		MTF_Coop_PreWriteExperience( other, other.connect_name, other.coop_exp );
 		Achievements_Change( other, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_MRGRINCH, 1 );
 	}
-	else if (self.weapon == 668)
+	else
+	if (self.weapon == 668)
 	{
 		sprint(other, 2, "You pick up a 1000 exp bonus!\n");
 		MTF_Coop_AddExperience(other, world, 1000);
 		MTF_Coop_PreWriteExperience( other, other.connect_name, other.coop_exp );
 		Achievements_Change( other, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_MRGRINCH, 1 );
 	}
-	else if (self.weapon == 669)
+	else
+	if (self.weapon == 669)
 	{
 		if (random() < .6)
 		{
@@ -22282,55 +22442,64 @@ void (float can_be_dead) MonsterItemTouch =
 			}
 		}
 	}
-	else if (self.weapon == (670 + #RUNE_EXPBONUS) )
+	else
+	if (self.weapon == (670 + #RUNE_EXPBONUS) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Double Experience.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_UBEREXP) )
+	else
+	if (self.weapon == (670 + #RUNE_UBEREXP) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Quad Experience (inflict half damage).\n");
 	}
-	else if (self.weapon == (670 + #RUNE_VAMPRIC) )
+	else
+	if (self.weapon == (670 + #RUNE_VAMPRIC) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Vampric Aura.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_RESISTANCE) )
+	else
+	if (self.weapon == (670 + #RUNE_RESISTANCE) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Greater Resistance.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_BERSERKER) )
+	else
+	if (self.weapon == (670 + #RUNE_BERSERKER) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Berserker.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_EXPLOSIVE) )
+	else
+	if (self.weapon == (670 + #RUNE_EXPLOSIVE) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Triple Explosive Damage. Do not be a showoff.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_AMMO) )
+	else
+	if (self.weapon == (670 + #RUNE_AMMO) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Unlimited Ammunition.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_ARMOR) )
+	else
+	if (self.weapon == (670 + #RUNE_ARMOR) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
 		sprint(other, 2, "You pick up a Rune of Armor Steal.\n");
 	}
-	else if (self.weapon == (670 + #RUNE_ELERESIST) )
+	else
+	if (self.weapon == (670 + #RUNE_ELERESIST) )
 	{
 		other.#rune_type = self.weapon - 670;
 		other.#rune_time = time + self.#rune_time;
@@ -22354,37 +22523,43 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		self.current_menu = 40;
 		return 1;
 	}
-	else if (s1 == "maplist")
+	else
+	if (s1 == "maplist")
 	{
 		stuffcmd( self, "say maplist\n");	// server-safe client-side maplist
 		return 1;
 	}
-#ifdef CSQC
-	else if (s1 == "csqc_client") {
+	else
+	if (s1 == "csqc_client")
+	{
 		self.csqc_client = #TRUE;
 		return 1;
 	}
-#endif
-	else if (s1 == "trade")
+	else
+	if (s1 == "trade")
 	{
 		Inventory_TradeItem( stof(s2), stof(s3), stof(s4));	// player id #, item id #, item price
 	}
-	else if (s1 == "accept")
+	else
+	if (s1 == "accept")
 	{
 		Inventory_TradeItemDecision (1);
 	}
-	else if (s1 == "decline")
+	else
+	if (s1 == "decline")
 	{
 		Inventory_TradeItemDecision (0);
 	}
 	
-	else if (s1 == "extrahelp")
+	else
+	if (s1 == "extrahelp")
 	{
 		bprint(2, ftos(strcount()) );
 		bprint(2, " is the str count.\n");
 		Menu_StuffClassHelp();
 	}
-	else if (s1 == "help")
+	else
+	if (s1 == "help")
 	{
 		if (!s2 || s2 == "")
 		{
@@ -22409,7 +22584,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "Press 8 in game for more menus, or use [cmd extrahelp] .\n");
 			return 1;
 		}
-		else if (s2 == "exp")
+		else
+		if (s2 == "exp")
 		{
 			sprint( self, 2, "-- Experience points CMDs (use CMD prefix): --\n" );
 			sprint( self, 2, "Experience points are used to level up and gain attributes and unlock abilities.\n" );
@@ -22419,7 +22595,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "nextlvl - shows how many experience points you need until your next level.\n" );
 			return 1;
 		}
-		else if (s2 == "attributes" || s2 == "attrib")
+		else
+		if (s2 == "attributes" || s2 == "attrib")
 		{
 			sprint( self, 2, "-- Attribute points CMDs (use CMD prefix): --\n" );
 			sprint( self, 2, "sayattrib - prints your current attributes to everyone.\n");
@@ -22427,7 +22604,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "spend - used to spend free attrib points (see above cmd).\n");
 			sprint( self, 2, "reset - resets all your attributes and sets them free (lvl 5 or less).\n");
 		}
-		else if (s2 == "ach" || s2 == "achievements")
+		else
+		if (s2 == "ach" || s2 == "achievements")
 		{
 			sprint( self, 2, "-- Achievements: CMD prefix + command --\n" );
 			sprint( self, 2, "Players gain achievements for doing certain\n" );
@@ -22438,7 +22616,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "ach 1 - prints to everyone your current achievements.\n");
 			sprint( self, 2, "ach 2 - prints to you all achievements (detailed).\n");
 		}
-		else if (s2 == "ranks")
+		else
+		if (s2 == "ranks")
 		{
 			sprint( self, 2, "-- Persistent player and map ranks --\n");
 			sprint( self, 2, "Example usage: ??d s???t?p ²° - shows top 20 players.\n");
@@ -22446,7 +22625,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "showvoted # - shows top voted maps on the server (sorted by vote count).\n");
 			sprint( self, 2, "showmaptop - shows the top player time and score for the current map.\n");
 		}
-		else if (s2 == "misc")
+		else
+		if (s2 == "misc")
 		{
 			sprint( self, 2, "-- Miscellaneous UBERTF Features --\n");
 			sprint( self, 2, "customskin (skinname)> - Allows players to use a custom skin. Contact admin of server to upload yours.\n");
@@ -22464,7 +22644,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "ts - Total map secrets found so far.\n");
 			sprint (self, 2.000000, "nextlvl - How much experience points it takes for the next level gained.\n");
 		}
-		else if (s2 == "vote")
+		else
+		if (s2 == "vote")
 		{
 			sprint( self, 2, "-- Vote CMDs --\n");
 			sprint( self, 2, "votemap <mapname> - Votes to switch to another map immediately.\n");
@@ -22473,10 +22654,11 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "votenext - Vote for the next map to be played after someone exits.\n");
 			sprint( self, 2, "votemode - Change game mode to Survival for the next played map.\n");
 			sprint( self, 2, "votekick <userid> - Kick a user in the game based on userid (cmd pm).\n");
-sprint( self, 2, "There is a minimum ten second interval per user vote.\n However, multiple plyers can start a vote after the first vote succeeds.\n");
+			sprint( self, 2, "There is a minimum ten second interval per user vote.\n However, multiple plyers can start a vote after the first vote succeeds.\n");
 			sprint( self, 2, "voteprogs <progsname> - Vote on playing a different version of megatf on the next map.\n");
 		}
-		else if (s2 == "masters")
+		else
+		if (s2 == "masters")
 		{
 			sprint( self, 2, "-- Master Skills CMDs --\n");
 			sprint( self, 2, "Certain skills are acquired when you have ");
@@ -22489,10 +22671,13 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		}
 		return 1;
 	}
-	else if (s1 == "ach") {
+	else
+	if (s1 == "ach")
+	{
 		Achievements_Print( stof(s2), self );
 	}
-	else if (s1 == "inv")
+	else
+	if (s1 == "inv")
 	{
 		if (self.playerclass == 0)
 			return 1;
@@ -22505,7 +22690,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 				return 1;
 			}
 		}
-		else if (s2 == "sell")
+		else
+		if (s2 == "sell")
 		{
 			Inventory_SellItem( #SELL_TO_MERCHANT, stof(s3), self, merchant );
 		}
@@ -22526,16 +22712,20 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 			return 1;
 		}
 	}
-	else if (s1 == "aura")
+	else
+	if (s1 == "aura")
 		Coop_UseMasterSkill( self, #ATTRIB_HEALTH, 0 );
-	else if (s1 == "call")
+	else
+	if (s1 == "call")
 		Coop_UseMasterSkill( self, #ATTRIB_MINION, 0 );
-	else if (s1 == "org")
+	else
+	if (s1 == "org")
 	{
 		sprint(self, 2, vtos(self.origin) );
 		sprint(self, 2, "\n");
 	}
-	else if (s1 == "org2")
+	else
+	if (s1 == "org2")
 	{
 		bprint(2, "\"origin\" \"");
 		bprint(2, ftos(self.origin_x));
@@ -22545,12 +22735,14 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		bprint(2, ftos(self.origin_z));
 		bprint(2, "\"\n");
 	}
-	else if (s1 == "ang")
+	else
+	if (s1 == "ang")
 	{
 		sprint(self, 2, vtos(self.angles) );
 		sprint(self, 2, "\n");
 	}
-	else if (s1 == "ang2")
+	else 
+	if (s1 == "ang2")
 	{
 		bprint(2, "\"angles\" \"");
 		bprint(2, ftos(self.angles_x));
@@ -22560,14 +22752,16 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		bprint(2, ftos(self.angles_z));
 		bprint(2, "\"\n");
 	}
-	else if (s1 == "tm")
+	else
+	if (s1 == "tm")
 	{
 	local entity te;
 	local float tm;
 	te = find(world, monster_string, "on");
 	while (te)
 	{
-		if (te.health > 0) {
+		if (te.health > 0)
+		{
 			tm = tm + 1;
 		}
 		te = find(te, monster_string, "on");
@@ -22576,31 +22770,38 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 	sprint(self, 2, ftos(tm));
 	sprint(self, 2,".\n");
 	}
-	else if (s1 == "tm2")
+	else
+	if (s1 == "tm2")
 	{
 	te = find(world, monster_string, "on");
 	while (te)
 	{
-			tm = tm + 1;
+		tm = tm + 1;
 		te = find(te, monster_string, "on");
 	}
 	sprint(self, 2,"total monsters: ");
 	sprint(self, 2, ftos(tm));
 	sprint(self, 2,".\n");
 	}
-	else if (s1 == "savemaptest") {
+	else
+	if (s1 == "savemaptest")
+	{
 		Changelevel_SaveMapData ();
 	}
-	else if (s1 == "savemaptest2") {
+	else
+	if (s1 == "savemaptest2")
+	{
 		Changelevel_GetMapData ();
 	}
-	else if (s1 == "ts")
+	else
+	if (s1 == "ts")
 	{
 		sprint(self, 2,"remaining secrets: ");
 		sprint(self, 2, ftos(total_secrets - found_secrets));
 		sprint(self, 2,".\n");
 	}
-	else if (s1 == "killpete")
+	else
+	if (s1 == "killpete")
 	{
 	sprint(self, 2, "Killing Pete the undead head...searching...\n");
 	local entity head;
@@ -22611,12 +22812,14 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		sprint(self, 2, "poof!..done.\n");
 	}
 	}
-	else if (s1 == "ttime")
+	else
+	if (s1 == "ttime")
 	{
 		te = find(world, monster_string, "on");
 		while (te)
 		{
-			if (te.health <= 0) {
+			if (te.health <= 0)
+			{
 				sprint(self, 2, "A dead monster will respawn in ");
 				sprint(self, 2, ftos(te.nextthink - time));
 				sprint(self, 2, " seconds.\n");
@@ -22626,7 +22829,9 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 			te = find(te, monster_string, "on");
 		}
 	}
-	else if (s1 == "tent") {
+	else
+	if (s1 == "tent")
+	{
 		te = nextent(world);
 		while (te != world)
 		{
@@ -22641,22 +22846,30 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		sprint(self, 2, "Entities are over 512, bad karma, things will go wrong.");
 		}
 	}
-	else if (s1 == "pentleft") {
+	else
+	if (s1 == "pentleft")
+	{
 		sprint(self, 2, "Invincibility time left: ");
 		sprint(self, 2, ftos(self.invincible_finished-time));
 		sprint(self, 2, " seconds.\n");
 	}	
-	else if (s1 == "ringleft" || s1 == "invisleft" ) {
+	else
+	if (s1 == "ringleft" || s1 == "invisleft" )
+	{
 		sprint(self, 2, "Ring invisibility time left: ");
 		sprint(self, 2, ftos(self.invisible_finished-time));
 		sprint(self, 2, " seconds.\n");
 	}		
-	else if (s1 == "quadleft") {
+	else
+	if (s1 == "quadleft")
+	{
 		sprint(self, 2, "Quad time left: ");
 		sprint(self, 2, ftos(self.super_damage_finished-time));
 		sprint(self, 2, " seconds.\n");
 	}		
-	else if (s1 == "powerleft") {
+	else
+	if (s1 == "powerleft")
+	{
 		sprint(self, 2, "Invincibility time left: ");
 		sprint(self, 2, ftos(self.invincible_finished-time));
 		sprint(self, 2, " seconds.\n");	
@@ -22668,54 +22881,64 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		sprint(self, 2, " seconds.\n");		
 	}		
 #ifdef mega_hats
-	else if (s1 == "hatsoff")
+	else
+	if (s1 == "hatsoff")
 	{
 		setmodel(self.hat, string_null);
 		sprint(self,2, "Hat display disabled.\n		Use CMD hatson to re-enable.\n");
 		return 1;
 	}
-	else if (s1 == "hatson")
+	else
+	if (s1 == "hatson")
 	{
 		setmodel(self.hat, #HAT_MODEL);
 		sprint(self,2, "Hat display enabled.\n		Use CMD hatsoff to disable hat display.\n");
 		return 1;
 	}
 #endif
-	else if (s1 == "sendpacket")
+	else
+	if (s1 == "sendpacket")
 	{
 //		QC_SendPacket(s2, "fewwww \n\n\n asf\n");  // disabled until there are more servers- arg
 		return 1;
 	}
-	else if (s1 == "fixmon")
+	else
+	if (s1 == "fixmon")
 	{
 		return 1;
 	}
-	else if (s1 == "entinf")
+	else
+	if (s1 == "entinf")
 	{
 		DisplayUseEntity (self);
 	}
-	else if (s1 == "findclassname")
+	else
+	if (s1 == "findclassname")
 	{
 		FindEntsWithClassname ( s2 );
 	}
 #ifdef mtf_coop_halflife
-	else if (s1 == "crouch")
+	else
+	if (s1 == "crouch")
 	{
 		stuffcmd(self, "say hl_crouch1_on\n");
 		self.mtf_items |= MTFITEM_CROUCH;
 		self.rs_s_h = time + 1;
 	}
-	else if (s1 == "mesize")
+	else
+	if (s1 == "mesize")
 	{
 		bprint(2,vtos(self.size));
 		bprint(2," it size\n");
 	}
-	else if (s1 == "wtf")
+	else
+	if (s1 == "wtf")
 	{
 		bprint(2,cvar_string("nextmap"));
 		bprint(2," ISSITn\n");
 	}
-	else if (s1 == "usetargs")
+	else
+	if (s1 == "usetargs")
 	{
 	bprint(2,"NEWWWWWEEEHH\n");
 		newmis = spawn();
@@ -22724,7 +22947,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		newmis.think = Delayed_Use;
 		newmis.nextthink = time + 1;
 	}
-	else if (s1 == "tinf")
+	else
+	if (s1 == "tinf")
 	{
 		if (!s2)
 			return 1;
@@ -22736,32 +22960,38 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		}
 	}
 #endif
-	else if (s1 == "uncrouch")
+	else
+	if (s1 == "uncrouch")
 	{
 		stuffcmd(self, "say hl_crouch1_off\n");
 	}
-	else if (s1 == "setorg")
+	else
+	if (s1 == "setorg")
 	{
 		self.origin_x = stof(s2);
 		self.origin_y = stof(s3);
 		self.origin_z = stof(s4);
 	}
 #ifdef mtf_coop_halflife
-	else if (s1 == "maketele")
+	else
+	if (s1 == "maketele")
 	{
 	}
 #endif
-	else if (s1 == "meh")
+	else
+	if (s1 == "meh")
 	{
 		bprint(2, frik_strcat(vtos(self.view_ofs), " yeah.\n" ));
 		bprint(2, frik_strcat(vtos(self.mins), vtos(self.maxs), " yeah.\n" ));
 	}
-	else if (s1 == "telem")
+	else
+	if (s1 == "telem")
 	{
 	te = find(world, monster_string, "on");
 	while (te)
 	{
-		if (te.health > 0) {
+		if (te.health > 0)
+		{
 			self.origin = te.origin;
 			return 1;
 		}
@@ -22770,28 +23000,32 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 	bprint(2, ftos(tm));
 	bprint(2,"\n");
 	}
-	else if (s1 == "nextlvl")
+	else
+	if (s1 == "nextlvl")
 	{
 		sprint( self, 2, "You need " );
 		sprint( self, 2, ftos( Coop_ExpForNextLevel(self.coop_exp) ) );
 		sprint( self, 2, " more exp for your next level.\n" );
 		return 1;
 	}
-	else if (s1 == "showexp" || s1 == "exp")
+	else
+	if (s1 == "showexp" || s1 == "exp")
 	{
 		sprint( self, 2, "You have " );
 		sprint( self, 2, ftos(self.coop_exp));
 		sprint( self, 2, " experience points.\n");
 		return 1;
 	}
-	else if (s1 == "sayexp")
+	else
+	if (s1 == "sayexp")
 	{
 		stuffcmd( self, "say I have " );
 		stuffcmd( self, ftos(self.coop_exp));
 		stuffcmd( self, " experience points!\n");
 		return 1;
 	}
-	else if (s1 == "sayattrib")
+	else
+	if (s1 == "sayattrib")
 	{
 		stuffcmd( self, "say My attributes are:\n");
 		stuffcmd( self, "say Health: ");
@@ -22832,22 +23066,26 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		stuffcmd( self, "\n");
 		return 1;
 	}
-	else if (s1 == "reset")
+	else
+	if (s1 == "reset")
 	{
 		Coop_ResetAttributes ( self );
 		sprint ( self, 2, "Your attributes have been reset.\n" );
 		ClientKill();
 		TF_T_Damage (self, self, self, 999, 2, 8);
 	}
-	else if (s1 == "summon")
+	else
+	if (s1 == "summon")
 	{
 		MTF_Coop_SummonMinion ();
 	}
-	else if (s1 == "customskin")
+	else
+	if (s1 == "customskin")
 	{
 		MTF_Coop_SetCustomSkin(self, s2);
 	}
-	else if (s1 == "getexp")
+	else
+	if (s1 == "getexp")
 	{
 		if (!s2 || s2 == "")
 		{
@@ -22869,24 +23107,28 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 			return 1;
 		}
 	}
-	else if (s1 == "saymhp")
+	else
+	if (s1 == "saymhp")
 	{
 		stuffcmd( self, "say I have " );
 		stuffcmd( self, ftos(self.max_health));
 		stuffcmd( self, " max hp!\n");
 		return 1;
 	}
-	else if (s1 == "showtop")
+	else
+	if (s1 == "showtop")
 	{
 		MTF_Coop_ViewTopRanks ( stof(s2) );
 		return 1;
 	}
-	else if (s1 == "showvoted")
+	else
+	if (s1 == "showvoted")
 	{
 		MTF_Coop_ViewVoteTopRanks ( stof(s2) );
 		return 1;
 	}
-	else if (s1 == "beg")
+	else
+	if (s1 == "beg")
 	{
 	if ((self.deadflag) && survival_mode)
 	{
@@ -22915,7 +23157,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		return 1;
 	}
 	}
-	else if (s1 == "saymdl")
+	else
+	if (s1 == "saymdl")
 	{
 		bprint(2,self.model);
 		bprint(2," is my model and ");
@@ -22923,20 +23166,24 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		bprint(2," is my modelindex.\n");
 		return 1;
 	}
-	else if (s1 == "showmaptop")
+	else
+	if (s1 == "showmaptop")
 	{
 		MTF_Coop_ViewTopMapRanks ();
 		return 1;
 	}
-	else if (s1 == "attrib")
+	else
+	if (s1 == "attrib")
 	{
 		MTF_Coop_ShowAttrib ();
 	}
-	else if (s1 == "spend")
+	else
+	if (s1 == "spend")
 	{
 		MTF_Coop_SpendAttrib ( stof(s2) );
 	}
-	else if (s1 == "expedit")
+	else
+	if (s1 == "expedit")
 	{
 		rconpw = infokey (world, "rcon_password");
 		if (s2 != rconpw || !rconpw)
@@ -22962,7 +23209,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 					MTF_Coop_WriteNewRank( stof(s6), s4, stof(s5));
 				return 1;
 			}
-			else if (s3 == "prune_top10")
+			else
+			if (s3 == "prune_top10")
 			{
 				file = open ("topranks.tfi", 2);
 				fl = 0;
@@ -22983,7 +23231,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 			{
 				if (te.userid == getid)
 				{
-					if (s4 == "" || !s4) {
+					if (s4 == "" || !s4)
+					{
 						sprint(self, 2, "Usage: cmd expedit password userid# ra/sa/se/pse amount# .\n");
 						sprint(self, 2, "ra = reset all attributes to 0.\n");
 						sprint(self, 2, "sa = set free attributes.\n");
@@ -23000,7 +23249,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 							sprint(self, 2, "'s attribute points have been reset - tell this user to reconnect.\n");
 							MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
 						}
-						else if (s4 == "sa")
+						else
+						if (s4 == "sa")
 						{
 							sprint(self, 2, te.netname);
 							sprint(self, 2, "'s free attribute points are set to ");
@@ -23011,7 +23261,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 							te.attribute_points = stof(s5);
 							MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
 						}
-						else if (s4 == "se")
+						else
+						if (s4 == "se")
 						{
 							sprint(self, 2, te.netname);
 							sprint(self, 2, "'s experience points are set to ");
@@ -23022,7 +23273,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 							te.coop_exp = stof(s5);
 							MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
 						}
-						else if (s4 == "pse")
+						else
+						if (s4 == "pse")
 						{
 							sprint(self, 2, te.netname);
 							sprint(self, 2, "'s experience points are set to ");
@@ -23034,7 +23286,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 							MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
 							MTF_Coop_WriteNewRank( #MAX_RANKS + 1, s4, stof(s5));
 						}
-						else if (s4 == "sg")
+						else
+						if (s4 == "sg")
 						{
 							sprint(self, 2, te.netname);
 							sprint(self, 2, "'s gold is set to ");
@@ -23055,7 +23308,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 			return 1;
 		}
 	}
-	else if (s1 == "vwi")
+	else
+	if (s1 == "vwi")
 	{
 			sprint(self, 2, "List of current VW indeces:\n");
 			te = find(world,classname,"player");
@@ -23068,7 +23322,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 				te = find(te,classname,"player");
 			}
 	}
-	else if (s1 == "gvf")
+	else
+	if (s1 == "gvf")
 	{
 			sprint( self, 2, "Resulting value:\n" );
 			sprint( self, 2, TFI_GetValueFor(s2, s3, stof(s4), s5) );
@@ -23084,7 +23339,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 	}
 #endif
 #ifdef BATTLE_ROYALE
-	else if (s1 == "bro")
+	else
+	if (s1 == "bro")
 	{
 		sprint(self, 2, vtos(self.origin) );
 		sprint(self, 2, "\n");
@@ -23105,13 +23361,16 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		return 1;
 	}
 #endif
-	else if (s1 == "voteyes")
+	else
+	if (s1 == "voteyes")
 	{
 		voteyes ();
 	}
-	else if (s1 == "votenext" || s1 == "votenextmap") {
+	else
+	if (s1 == "votenext" || s1 == "votenextmap") {
 		if (s2 == "hippos") {
-			if (num_players < 300) {
+			if (num_players < 300)
+			{
 				sprint(self, 2, "More players are required to initiate this vote.\n");
 				return 1;
 			}
@@ -23120,19 +23379,25 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 	}
 //	else if (s1 == "voteprogs")   // This is for non-coop mode, not sure how to rework -arg
 //		Vote_StartVote( #VOTE_PROGS, s2, world );
-	else if (s1 == "voteexit")
+	else
+	if (s1 == "voteexit")
 		Vote_StartVote( #VOTE_EXIT, "", world );
-	else if (s1 == "voteuse")
+	else
+	if (s1 == "voteuse")
 		Vote_StartVote( #VOTE_USE, "", world );
-	else if (s1 == "votekick")
+	else
+	if (s1 == "votekick")
 		Vote_StartVote( #VOTE_KICK, s2, world );
-	else if (s1 == "votemode")
+	else
+	if (s1 == "votemode")
 		Vote_StartVote( #VOTE_SURVIVAL_NEXT, "", world );
-	else if (s1 == "res")
+	else
+	if (s1 == "res")
 	{
 		MTF_Resurrect_Player_Find();
 	}
-	else if (s1 == "eh")
+	else
+	if (s1 == "eh")
 	{
 		bprint(2, "well lets see.. \n");
 		if (self.flags & #FL_FINDABLE_NONSOLID)
@@ -23142,7 +23407,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		}
 	}
 #ifdef botprogs
-	else if (s1 == "teammate")
+	else
+	if (s1 == "teammate")
 	{
 		if ( (stof(s2) > 0) && (stof(s2) < 5) )
 		{
@@ -23164,21 +23430,24 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 			return 1;
 		}
 	}
-	else if (s1 == "buddymenu")
+	else
+	if (s1 == "buddymenu")
 	{
 		if ( (self.playerclass > 0) && (self.team_no > 0) )
 		{
 			self.current_menu = 203;
 		}
 	}
-	else if (s1 == "botskill")
+	else
+	if (s1 == "botskill")
 	{
 		if ( (stof(s2) > 0) )
 		{
 			g_bskill = stof(s2);
 		}
 	}
-	else if (s1 == "botlist")
+	else
+	if (s1 == "botlist")
 	{
 		sprint(self,2, "Bots in server:\n");
 		if ( (stof(s2) > 0) )
@@ -23188,28 +23457,33 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		else
 			bot_list(#BOTLIST_NORM);
 	}
-	else if (s1 == "kickbot")
+	else
+	if (s1 == "kickbot")
 	{
 		if ( (stof(s2) > 0) )
 		{
 			bot_kick( stof(s2) );
 		}
-		else {
+		else
+		{
 			sprint(self,2, "Invalid bot. Bots in server:\n");
 			bot_list(#BOTLIST_NORM);
 		}
 	}
-	else if (s1 == "botprint")
+	else
+	if (s1 == "botprint")
 	{
 		if ( (stof(s2) > 0) )
 		{
 			bot_debug_lvl = stof(s2);
 		}
-		else {
+		else
+		{
 			sprint(self,2, "Invalid botprint. Please choose between 1 and 3.\n");
 		}
 	}
-	else if (s1 == "grab_bot_info")
+	else
+	if (s1 == "grab_bot_info")
 	{
 	local vector source;
 	local vector org;
@@ -23229,9 +23503,9 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 	bprint(2, ftos(trace_ent.curr_wp));
 	bprint(2, ".\n");
 	}
-	else if (s1 == "t_trace")
+	else
+	if (s1 == "t_trace")
 	{
-
 		local entity ttrace, ent;
 		ent = find(world, classname, "ttrace");
 		if (ent != world)
@@ -23245,7 +23519,8 @@ sprint( self, 2, "There is a minimum ten second interval per user vote.\n Howeve
 		setmodel (ttrace, "progs/player.mdl");
 		ttrace.movetype = 0;
 	}
-	else if (s1 == "t_results")
+	else
+	if (s1 == "t_results")
 	{
 		local entity entt;
 		entt = find(world, classname, "ttrace");
@@ -23271,7 +23546,8 @@ void (float playerid, float item_slot, float item_price) Inventory_TradeItem =
 {
 	local entity te, tchk;
 	local float userfound, item_type;
-	if (self.classname != "player") {
+	if (self.classname != "player")
+	{
 		bprint(self, "You need to join to trade\n");
 		return;
 	}
@@ -23285,11 +23561,13 @@ void (float playerid, float item_slot, float item_price) Inventory_TradeItem =
 		}
 		te = find(te,classname,"player");
 	}
-	if (te == self) {
+	if (te == self)
+	{
 		sprint(self,2, "You cannot trade with yourself, Doc.\n");
 		return;
 	}
-	if (!userfound) {
+	if (!userfound)
+	{
 		sprint(self,2, "User not found. Use CMD trade userid# slot# price#.\n");
 		pm_list ();
 		return;
@@ -23311,15 +23589,18 @@ void (float playerid, float item_slot, float item_price) Inventory_TradeItem =
 		tchk = find(tchk,classname,"trade_ref");
 	}
 	item_type = Inventory_GetItem ( self.connect_name, item_slot, #RETURN_ITEM_NO );
-	if (!item_type) {
+	if (!item_type)
+	{
 		sprint( self, 2, "Invalid item to sell.\n" );
 		return;
 	}
-	if (item_price < 0 || item_price > 1000000) {
+	if (item_price < 0 || item_price > 1000000)
+	{
 		sprint( self, 2, "Invalid item price.\n" );
 		return;
 	}
-	if (te.gold < item_price) {
+	if (te.gold < item_price)
+	{
 		sprint(self, 2, "Cannot trade with that player.\n");
 	}
 	newmis = spawn();
@@ -23348,7 +23629,8 @@ void (float playerid, float item_slot, float item_price) Inventory_TradeItem =
 };
 void() walkmonster_start = 
 {
-	if (self.nextthink < time && self.nextthink != 0) {
+	if (self.nextthink < time && self.nextthink != 0)
+	{
 		bprint(2,"walkmonster_start: something with nextthink is a little screwy here.\n");
 		self.nextthink = time;
 	}
@@ -23402,7 +23684,8 @@ void() walkmonster_start_go =
 	self.view_ofs = '0 0 16';
 	self.use = monster_use;
 	self.flags = self.flags | 32;
-	if (self.#is_minion == 1) {
+	if (self.#is_minion == 1)
+	{
 		self.th_walk();
 		self.nextthink = self.nextthink + random() * 0.5;
 		return;
@@ -23482,39 +23765,51 @@ void() FoundTarget =
 	}
 	self.show_hostile = time + TF_FLARE_OFF;
 	SightSound();
-		if (self.enemy.playerclass == 8 && self.enemy.#spy_visible_time < time) // spy..
-		{
-			self.enemy.#spy_visible_time = time + 2;
-		}
+	if (self.enemy.playerclass == 8 && self.enemy.#spy_visible_time < time) // spy..
+	{
+		self.enemy.#spy_visible_time = time + 2;
+	}
 	HuntTarget();
 };
 void() SightSound = 
 {
 #ifndef mtf_coop_halflife
-	if (cvar("sv_map_halflife") == 1) {
+	if (cvar("sv_map_halflife") == 1)
+	{
 		if (self.classname == "monster_guard")
 			sound (self, CHAN_VOICE, "001.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_officer")
+		else
+		if (self.classname == "monster_officer")
 			sound (self, CHAN_VOICE, "071.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_ss")
+		else
+		if (self.classname == "monster_ss")
 			sound (self, CHAN_VOICE, "015.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_dog")
+		else
+		if (self.classname == "monster_dog")
 			sound (self, CHAN_VOICE, "002.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_boss")
+		else
+		if (self.classname == "monster_boss")
 			sound (self, CHAN_VOICE, "017.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_gretel")
+		else
+		if (self.classname == "monster_gretel")
 			sound (self, CHAN_VOICE, "112.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_gift")
+		else
+		if (self.classname == "monster_gift")
 			sound (self, CHAN_VOICE, "096.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_fat")
+		else
+		if (self.classname == "monster_fat")
 			sound (self, CHAN_VOICE, "102.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_schabbs")
+		else
+		if (self.classname == "monster_schabbs")
 			sound (self, CHAN_VOICE, "065.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_fake")
+		else
+		if (self.classname == "monster_fake")
 			sound (self, CHAN_VOICE, "054.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_mecha")
+		else
+		if (self.classname == "monster_mecha")
 			sound (self, CHAN_VOICE, "040.wav", 1, ATTN_NORM);
-		else if (self.classname == "monster_hitler")
+		else
+		if (self.classname == "monster_hitler")
 			sound (self, CHAN_VOICE, "040.wav", 1, ATTN_NORM);
 	}
 #endif
@@ -23652,7 +23947,8 @@ void () respawn_think =
 	if (self.classname == "monster_azoth")
 		return;
 	head = findradius (self.origin, 56);
-	while (head) {
+	while (head)
+	{
 		if (head.takedamage && head.health > 0)
 		{
 			if (head.is_monster == 1)
@@ -23661,18 +23957,21 @@ void () respawn_think =
 				head.health = -60;
 				Killed(head, self);
 			}
-			else if (head.classname == "player")
+			else
+			if (head.classname == "player")
 			{
 				self.nextthink = time + 5;
 				return;
 			}
-			else if (head.th_die)
+			else 
+			if (head.th_die)
 			{
 				head.deathtype = "monster_respawn";
 				head.health = -60;
 				Killed(head, self);
 			}
-			else {
+			else
+			{
 				if (self.invisible_finished < 3)
 				{
 					self.nextthink = time + 5;
@@ -23680,7 +23979,8 @@ void () respawn_think =
 					self.invisible_finished = self.invisible_finished + 1;
 					return;
 				}
-				else {
+				else
+				{
 					if (!self.th_die)
 					{
 						dprint("A monster tried to respawn and die without a death function!\nClassname :");
@@ -23700,7 +24000,6 @@ void () respawn_think =
 				}
 			}
 		}
-
 		head = head.chain;
 	}
 	respawn_monster ();
@@ -23728,7 +24027,7 @@ void () respawn_monster =
 		self.deathtype = "monster_respawn";
 		self.health = -60;
 		Killed (self, world);
-	}	
+	}
 };
 void () playerfob_think =
 {

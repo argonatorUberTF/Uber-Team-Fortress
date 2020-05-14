@@ -1077,15 +1077,8 @@ local entity te;
 													{
 														deathstring = " tried to leave.\n";
 													}
-#ifndef mtf_coop
-													if (attacker.classname == "monster_shambler")
-													{
-														deathstring = " was shambled baby!\n";	
-													}
-#endif
 													else
 													{
-#ifdef mtf_coop
 														if (attacker.classname == "func_monsterkill") {
 															if (attacker.netname_broadcast != "none")
 																deathstring = attacker.netname_broadcast;
@@ -1110,9 +1103,6 @@ local entity te;
 														}
 														else
 															deathstring = " died.\n";
-#else
-														deathstring = " died.\n";
-#endif
 													}
 												} } }
 											}

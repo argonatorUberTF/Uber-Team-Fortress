@@ -26,7 +26,8 @@ void() door_blocked =
 void () Delayed_Use;
 void () door_use_netname =
 {
-	if (self.netname) {
+	if (self.netname)
+	{
 		newmis = spawn();
 		newmis.classname = "DelayedTimer";
 		newmis.target = self.netname;
@@ -43,12 +44,14 @@ void() door_hit_top =
 	if (self.spawnflags & 32)
 	{
 #ifdef mtf_coop_halflife
-		if (self.classname == "door_rotating") {
+		if (self.classname == "door_rotating")
+		{
 			self.touch = SUB_Null;
 			self.th_die = SUB_Null;
 			self.hl_use = SUB_Null;
 		}
-		if (self.spawnflags & 256) {
+		if (self.spawnflags & 256)
+		{
 			self.solid = SOLID_BSP;
 			self.takedamage = 1;
 			self.health = 1;
@@ -57,7 +60,8 @@ void() door_hit_top =
 			self.hl_use = door_use;
 			self.touch = door_touch;
 		}
-		if (self.netname && self.spawnflags & 1) {
+		if (self.netname && self.spawnflags & 1)
+		{
 			door_use_netname();
 		}
 #ifdef COOP_HAX2
@@ -70,7 +74,8 @@ void() door_hit_top =
 	self.think = door_go_down;
 	self.nextthink = self.ltime + self.wait;
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		if (self.spawnflags & 256)	// use only.. which means killable too :p
 		{
 			self.solid = SOLID_BSP;
@@ -85,7 +90,8 @@ void() door_hit_top =
 			self.takedamage = 1;
 			self.th_die = door_killed;
 		}
-		if (self.netname && self.spawnflags & 1) {
+		if (self.netname && self.spawnflags & 1)
+		{
 			door_use_netname();
 		}
 #ifdef COOP_HAX2
@@ -101,7 +107,8 @@ void() door_hit_bottom =
 	sound(self, 2, self.noise1, TF_FLARE_OFF, TF_FLARE_OFF);
 	self.state = TF_FLARE_OFF;
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		self.touch = door_touch;
 		self.solid = SOLID_BSP;
 		if (self.health)
@@ -124,7 +131,8 @@ void() door_hit_bottom =
 			self.hl_use = door_use;
 			self.solid = SOLID_BSP;
 		}
-		if (self.netname && !self.spawnflags & 1) {
+		if (self.netname && !self.spawnflags & 1)
+		{
 			door_use_netname();
 		}
 	}
@@ -150,15 +158,14 @@ void() door_go_down =
 	}
 	else
 #else
-#ifdef mtf_coop
 	// Quake 2 ent
 	if (self.classname == "door_rotating")
 		SUB_CalcAngleMove (self.pos1, self.speed, door_hit_bottom);
 	else
 #endif
-#endif
 		SUB_CalcMove (self.pos1, self.speed, door_hit_bottom);
-	if (self.classname == "door_rotating") {
+	if (self.classname == "door_rotating")
+	{
 	}
 };
 void() door_go_up = 
@@ -181,11 +188,9 @@ void() door_go_up =
 	}
 	else
 #else
-#ifdef mtf_coop
 	if (self.classname == "door_rotating")
 		SUB_CalcAngleMove (self.pos2, self.speed, door_hit_top);
 	else
-#endif
 #endif
 		SUB_CalcMove (self.pos2, self.speed, door_hit_top);
 	SUB_UseTargets();
@@ -248,7 +253,8 @@ void() door_use =
 			return;
 			
 		if (self.spawnflags & 512) 
-			if (activator.is_monster == 1) {
+			if (activator.is_monster == 1)
+			{
 				bprint(2,"monster tried to activate door. silleh.\n");
 				return;
 			}
@@ -333,7 +339,8 @@ void() door_touch =
 		sound(other, 2, "misc/talk.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	}
 #ifdef mtf_coop_halflife
-	if (self.classname == "door_rotating") {
+	if (self.classname == "door_rotating")
+	{
 		if (self.spawnflags & 16)
 			return;
 		if (!(self.spawnflags & 87907))
@@ -362,19 +369,19 @@ void() door_touch =
 #endif
 	if (!(self.items))
 	{
-#ifdef mtf_coop
-		if (#DOOM_MAP) {
+		if (#DOOM_MAP)
+		{
 			if (self.wait == -1)
 				self.wait = 9999999;
 			if (self.targetname != "")
 				return;
-			if (self.classname == "door_rotating") {
+			if (self.classname == "door_rotating")
+			{
 				door_use();
 				return;
 			}
 		}
 		else
-#endif
 		return;
 	}
 	
@@ -434,9 +441,10 @@ void() door_touch =
 		}
 		return;
 	}
-#ifdef mtf_coop
-	else {
-		if (!#DOOM_MAP) {
+	else
+	{
+		if (!#DOOM_MAP)
+		{
 			bprint (PRINT_MEDIUM, other.netname);
 			bprint (PRINT_MEDIUM, " unlocked the ");
 			if (self.owner.items == IT_KEY1)
@@ -444,9 +452,8 @@ void() door_touch =
 			else
 				bprint (PRINT_MEDIUM, "gold");
 			bprint (PRINT_MEDIUM, " door\n");
-			}
+		}
 	}
-#endif
 #ifdef HALFLIFE
 	if (!#HL_MAP)
 #endif
@@ -467,9 +474,9 @@ entity(vector fmins, vector fmaxs) spawn_field =
 	local entity trigger;
 	local vector t1;
 	local vector t2;
-#ifdef mtf_coop
 #ifndef mtf_coop_halflife
-	if (cvar("sv_map_halflife") == 1) {
+	if (cvar("sv_map_halflife") == 1)
+	{
 		trigger = spawn();
 		trigger.movetype = MOVETYPE_NONE;
 		trigger.solid = SOLID_TRIGGER;
@@ -484,7 +491,6 @@ entity(vector fmins, vector fmaxs) spawn_field =
 			setsize (trigger, fmins - '60 60 0', fmaxs + '60 60 0');
 		return (trigger);
 	}
-#endif
 #endif
 	trigger = spawn();
 	trigger.movetype = TF_FLARE_LIT;
@@ -594,9 +600,7 @@ void() LinkDoors =
 			self.owner.trigger_field = spawn_field(cmins, cmaxs);
 			return;
 		}
-#ifdef mtf_coop
 		if (world.wad != "q2q1tex.wad" && !#DOOM_MAP)
-#endif
 		if (EntitiesTouching(self, t))
 		{
 			if (t.enemy)
@@ -639,18 +643,20 @@ void() LinkDoors =
 };
 void() func_door = 
 {
-#ifdef mtf_coop
 #ifndef mtf_coop_halflife
-	if (cvar("sv_map_halflife") == 1) {
+	if (cvar("sv_map_halflife") == 1)
+	{
 		func_wolfdoor ();
 		return;
 	}
 #endif
-#endif
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
-		if (self.targetname == "c1a4bdoor5") {
-			if (cvar("c1a4fpower") > 0) {
+	if (#HL_MAP)
+	{
+		if (self.targetname == "c1a4bdoor5")
+		{
+			if (cvar("c1a4fpower") > 0)
+			{
 				self.health = 1;
 			}
 		}
@@ -755,15 +761,14 @@ void() func_door =
 		self.noise2 = "doors/track_st.wav";
 		self.noise1 = "doors/track_e.wav";
 	}
-#ifdef mtf_coop
-	if (#DOOM_MAP) {
+	if (#DOOM_MAP)
+	{
 			precache_sound ("doors/dropen.wav");
 			self.noise2 = "doors/dropen.wav";
 		precache_sound("doors/drclos4.wav");
 		self.noise1 = "doors/drclos4.wav";
 	}
 	if (mapname != "rub2m1" && mapname != "rub2m2" && mapname != "rub2m3")
-#endif
 	SetMovedir();
 	self.max_health = self.health;
 	self.solid = 4;
@@ -779,10 +784,8 @@ void() func_door =
 	}
 	if (self.spawnflags & 8)
 	{
-#ifdef mtf_coop
 		if (world.wad != "q2q1tex.wad" && !#DOOM_MAP)
-#endif
-		self.items = 262144;
+			self.items = 262144;
 	}
 	if (!(self.speed))
 	{
@@ -803,7 +806,6 @@ void() func_door =
 	self.pos1 = self.origin;
 	self.pos2 = self.pos1 + self.movedir * (fabs(self.movedir * self.size) - self.lip);
 	
-#ifdef mtf_coop
 	if (#DOOM_MAP)
 		self.dmg = self.dmg * 100;
 	if (mapname == "rub2m1" || mapname == "rub2m2" || mapname == "rub2m3") {
@@ -820,7 +822,6 @@ void() func_door =
 			self.angles = '0 0 0';
 		}
 	}
-#endif
 	if (self.spawnflags & TF_FLARE_OFF)
 	{
 		setorigin(self, self.pos2);
@@ -842,16 +843,15 @@ void() func_door =
 		self.spawnflags += 4;
 	if (self.targetname == "freezdor")
 		self.wait = -1;	//hackish way to tell we're an HL door
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 	}
 	if (!self.targetname)
 		self.hl_use = door_use;
-		
 #ifdef COOP_HAX2
 	if (self.hl_use)
 		Create_Useme( self, ((self.absmin+self.absmax)*.5) );
 #endif
-		
 	HalfLife_DoRender();
 #endif
 	self.touch = door_touch;

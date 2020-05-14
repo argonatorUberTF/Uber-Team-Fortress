@@ -813,7 +813,7 @@ float EF_ADDITIVE =		32;
 //#define LTB2		// enables the laser-trip bomb for demoman class (STALKER mod)
 #define LTB1		// enables LTB for demo (BTF style)
 #define weapon_bat	// enables bat weapon for scout (from tf2!)
-//#define newsounds2	// " headshot/death6/bye2
+//#define newsounds2	// " headshot/death6/bye2 -disable due to sound precache limit, waiting for upgraded mvdsv .32 with xav tweaks. -arg
 float record_fer;
 float record_frags;
 string record_fragholder;
@@ -837,7 +837,6 @@ entity() spawnbot = #98;
 void(entity botent, float botid, string botname, float botclass) setbot = #98;
 //void(float botid) removebot = #99;
 #endif
-#ifdef mtf_coop
 #define BOT_TEAM		666
 // macros for certain variables so we can reuse unused variables and still give it a unique name
 #define npc_speedfactor				speed
@@ -874,7 +873,6 @@ void() coop_walkmonster_start;
 // xav crap.
 //#define FTE_ONLY //IF YOU TURN THIS ON, you will have to cleanup XAVs filesystem and some engine hooks. making a fork of this for dev. -arg
 #define mtf_coop_expsys
-#ifdef mtf_coop_expsys
 #ifdef FTE_ONLY
 float(string fname, float opentype) fte_open = #110; 
 float(string fname, float opentype) open = #110;
@@ -918,7 +916,6 @@ float (entity plyr, float atype) MTF_Coop_SetArmorAttrib;
 .float attribute_points;	// num of attribute points a player has available
 //.float health_attr, armor_attr, damage_attr, ammo_attr, misc_attr, crit_attr, reload_attr, proj_attr;	// various upgradable attributes // moved down
 // Aboe: Health, Armor, Damage Multiplier, Ammonition Extension, Misc., Critical Strike
-#endif
 // used for smooth movement of monsters, FIXME: change vars I just made up some crap to see if it compiles
 .void() npc_oldthink;
 .float demon_blood;
@@ -963,7 +960,6 @@ void (entity pickuper, float toss) zg_drop;
 float(entity tester_e) IsBuilding;
 #define WEAP_ZEROGRAVITY	4194304
 .entity pickedupobject_hands;
-#endif
 // OfN - Traceline modes
 #define TL_ANY_SOLID	0 // will hit any solid, but not triggers
 //#define TL_BSP_ONLY 	1 // will hit BSP only
@@ -973,7 +969,6 @@ float(entity tester_e) IsBuilding;
 #define FL_FINDABLE_NONSOLID	16384 // OfN - Any entity with this can be "found" with findradius(), even if SOLID_NOT
 #define NEW_DOT	// use new sniper dot instead of precaching 4 different models for blue/red/green/yell sniper dot
 // LMS:
-#ifdef mtf_coop
 float ( string mname ) Coop_SpecialEnd;
 string ( string c_name ) GetMonsterDeathstring;
 .float health_attr, armor_attr, damage_attr, ammo_attr, misc_attr, crit_attr, reload_attr, minion_attr, quickshot_attr, clipex_attr, proj_attr;
@@ -990,19 +985,15 @@ entity lms_entity;
 #define lms_game_begun		health_attr			// defs.pqc'd
 #define lms_useroundlives	armor_attr
 #define mtf_coop_nehahra
-#ifdef mtf_coop_nehahra
 .float brain;
 void () spawn_mister;
 void () precache_mr;
-#endif
 void ( entity s_ent, string mname ) setmodelu;
-#endif
 //#define debug
 #ifdef debug
 float total_killed;
 float really_killed;
 #endif
-#ifdef mtf_coop_expsys
 float no_more_exp;		// when set to "1" this locks the exp gain for the map
 // dual kills code
 #define other_possible_atacker 		gen_slave
@@ -1019,8 +1010,6 @@ void ( entity t_plyr, float attrib_type, float skill_no ) Coop_UseMasterSkill;
 string(string blah) strzone;
 void(string blah) strunzone;
 #define custom_skin			noise4
-#endif
-#ifdef mtf_coop
 // frik bot stuff (for coop score)
 void () ClientInRankings2;
 void (float clientno) clientSetFree2;
@@ -1029,7 +1018,6 @@ float ( entity t_mons, float m_type ) Coop_IsMonster;
 #define MONSTERTYPE_NORMAL	0
 #define MONSTERTYPE_ANY		1
 #define spy_visible_time hn_i_g
-#endif
 #define MODEL_HEALTH_TEN		"maps/b_bh10.bsp"
 #define MODEL_HEALTH_HUNDRED		"maps/b_bh100.bsp"
 #define MODEL_MONSTERDROP		"progs/newmonsterdrop.mdl"
@@ -1048,7 +1036,6 @@ float cake_dispensed;
 #define BDAY_MSG 			"\náâÜ ¬…“‘»ƒ¡Ÿ†≈ƒ…‘…œŒ Üâá\nMay 87\n\nêÕ·∫ "
 //#define BDAY_MSG 			"\náâÜ ¬…“‘»ƒ¡Ÿ†≈ƒ…‘…œŒ Üâá\nDec 15 - Happy Doc Day Bitchesss\n\nêÕ·∫ "
 #endif
-#ifdef mtf_coop
 // rune stuff
 .float a_c, a_r, a_s;
 void () Coop_ThrowRune;
@@ -1065,9 +1052,6 @@ void () Coop_ThrowRune;
 #define rune_type			a_s
 #define rune_time			a_r
 #define rune_finished			a_c
-#else
-#define MODEL_QUAD			"progs/quaddama.mdl"
-#endif
 // Newer votemap code
 entity vote_starter;
 float can_exit;
@@ -1080,14 +1064,7 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote;
 #define VOTE_SURVIVAL_NEXT	5
 #define VOTE_SURVIVAL_NOW	6
 #define VOTE_KICK			7
-#ifndef mtf_coop
-#define VOTE_PROGS			8
-string (string blah) cvar_string = #103;
-#endif
-#ifdef mtf_coop_expsys
 float flawless_bonus;
-#endif
-#ifdef mtf_coop
 // Chain saw!
 #define MODEL_CHAINSAW		"progs/v_chain.mdl"
 #define SOUND_CHAINSAW		"weapons/psaw.wav"
@@ -1128,22 +1105,14 @@ void () MTF_Coop_ResetItems;
 #define MTFITEM_MONSTER_DEMON			256
 #define MTFITEM_DIVIDE_EXP				512
 #define MTFITEM_NEEDLER					1024
-#endif
-//#ifdef mtf_coop_expsys
 // VWEPS require MVDSV/XE, and I dunno if they work with bots (#ifndef botprogs me!!)
 #define VWEPS
-//#endif
-#ifdef VWEPS
 // vweps for coop.. but why not enable for united in the future too? -arg
 float(string model) precache_vwep_model = #532;
 .float vw_index;
 void () VWEPS_SetModel;
-#endif
-#ifdef mtf_coop
 #define MODEL_V_SHOTGUN			"progs/v_hybrid.mdl"
-#else
-#define MODEL_V_SHOTGUN			"progs/v_shot.mdl"
-#endif
+//instead of MODEL_V_SHOTGUN			"progs/v_shot.mdl" -arg
 #define is_warped 		max_inv
 // QUESTS
 //#define mtf_coop_quests
@@ -1180,17 +1149,13 @@ void () Quest_Think;
 #define RESULT_GOTOPART		8
 #endif
 vector(string s) stov = #130;		// mvdsv xe extension
-#ifdef mtf_coop_expsys
 void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop_AddServiceExp;
 #define next_srv_time		follow_mode
 #define SRV_TELEPORT		1
 #define SRV_HEAL			2
 #define SRV_ACHIEVEMENT		4
 #define SRV_RESURRECT		8
-#endif
-#ifdef mtf_coop
 #define	mtf_coop_malice					 	// Malice TC support
-#ifdef mtf_coop_malice
 float malice_ched;					// check if all malice stuff is precache'd
 float num_blooddrops;
 float co2_spread;
@@ -1237,7 +1202,6 @@ float modelindex_hover;
 #define CHT_SCUBASPEED    554
 #define CHT_SUBSPEED    658
 #define CHT_HOVERSPEED    700
-#endif										// End Malice TC support
 //This is the switch that turns on half-life functions and map support. -arg
 //But beware, the maps are not necessarily complete, some monsters not complete. -arg
 //Also there are different changes to basic things like doors and platform switches -arg
@@ -1271,11 +1235,8 @@ float monster_mode;
 #define MONSTER_TEAM_ENABLED		monster_mode == 1
 #define MC_SHAMBLER		1
 #define MC_FIEND		2
-#endif
 // ACHIEVEMENTS
-#ifdef mtf_coop_expsys
 #define mtf_coop_achievements
-#ifdef mtf_coop_achievements
 float (entity t_plyr) Achievements_Setup;
 void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) Achievements_Change;
 float (string mpn) GetEP1MapBit;
@@ -1323,9 +1284,6 @@ void ( float bodytype ) Survival_MakeDummy;
 #define mtf_coop_quake2
 void () Wizard_Bounce_Off_Walls;
 .string pathtarget;		// quake 2
-#endif
-#endif
-#ifdef mtf_coop
 // AOP
 .float walltype;
 // Monster flash time
@@ -1367,13 +1325,10 @@ void ( entity to_res ) MTF_Resurrect_Player;
 .float needles, needler_heat;
 // float ( float getlevel ) Coop_ExpReq; //moved to additional.pqc where vars are there to work with -arg
 // end mtf_coop
-#endif
 #define CSQC
 //#define amnesia_move  // not needed, this isn't tastyspleen needing to notify users of a move. -arg
-#ifdef CSQC
 .float csqc_client;
-#endif
-//#define thanksgiving  //turn on thanksgiving mods
+//#define thanksgiving  //turn on thanksgiving mods, extra models and sound space might be required -arg
 #ifdef thanksgiving
 void () effect_duckpond;
 #endif
@@ -1410,10 +1365,8 @@ void (entity to_bloody, float damage) bloodyme;
 #ifdef mtf_coop_tgiving
 #define MODEL_HGREN2			"progs/cnade3.mdl"
 #endif
-#ifdef mtf_coop
 .entity reload_ent;
 .void() reload_finished_func;
-#endif
 #ifndef mtf_coop
 #define PL_FEM   // for female gender model and deathmessages in client.pqc -arg
 #ifdef PL_FEM
@@ -1428,7 +1381,6 @@ void (entity whom) SetPlayerModelindex;
 #define GENDER_FEMALE			1
 #endif
 #endif
-#ifdef mtf_coop_expsys
 //This switch allows comms to the hub and other MegaTF COOP servers. Since UberTF is
 //not participating with this, it's turned off. I also just put a return only to calls
 //Those functions in case it's called later.
@@ -1457,7 +1409,6 @@ void (string msg) Packet_SendGlobalMessage
 #define BONUS_PROPERTY_ONE			
 #define PROPERTY_
 #endif
-#endif
 #ifndef mtf_coop
 #define BATTLE_ROYALE			1
 #endif
@@ -1465,5 +1416,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v5.09.20United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v5.14.20United\n");
 //END
