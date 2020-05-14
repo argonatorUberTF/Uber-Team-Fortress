@@ -233,7 +233,7 @@ void () item_circuitboard =
 {
 	precache_model ("progs/fromitz.mdl");
 	setmodel (self, "progs/fromitz.mdl");
-	precache_sound ("items/protect.wav");
+	precache_sound2 ("items/protect.wav");
 	self.noise = "items/protect.wav";
 	self.touch = circuitboard_touch;
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
