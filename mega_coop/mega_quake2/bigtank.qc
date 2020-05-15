@@ -32,229 +32,441 @@ $frame death101 death102 death103 death104 death105 death106 death107 death108
 $frame death109 death110 death111 death112 death113 death114 death115 death116
 $frame death117 death118 death119 death120 death121 death122 death123 death124
 $frame death125 death126 death127 death128 death129 death130 death131 death132
-void()  bigtank_stand1     =[      $stand01,        bigtank_stand2     ] {COOP_Idle();
+void()  bigtank_stand1     =[      $stand01,        bigtank_stand2     ]
+{COOP_Idle();
 if(self.ltime < time)
- {
+
+{
   sound (self, CHAN_VOICE, "bigtank/tnkidle1.wav", 0.5, ATTN_NORM);
   self.ltime = time + 2.8;
  }
 };
-void()  bigtank_stand2     =[      $stand02,        bigtank_stand3     ] {COOP_Idle();};
-void()  bigtank_stand3     =[      $stand03,        bigtank_stand4     ] {COOP_Idle();};
-void()  bigtank_stand4     =[      $stand04,        bigtank_stand5     ] {COOP_Idle();};
-void()  bigtank_stand5     =[      $stand05,        bigtank_stand6     ] {COOP_Idle();};
-void()  bigtank_stand6     =[      $stand06,        bigtank_stand7     ] {COOP_Idle();};
-void()  bigtank_stand7     =[      $stand07,        bigtank_stand8     ] {COOP_Idle();};
-void()  bigtank_stand8     =[      $stand08,        bigtank_stand9     ] {COOP_Idle();};
-void()  bigtank_stand9     =[      $stand09,        bigtank_stand10    ] {COOP_Idle();};
-void()  bigtank_stand10    =[      $stand10,        bigtank_stand11    ] {COOP_Idle();};
-void()  bigtank_stand11    =[      $stand11,        bigtank_stand12    ] {COOP_Idle();};
-void()  bigtank_stand12    =[      $stand12,        bigtank_stand13    ] {COOP_Idle();};
-void()  bigtank_stand13    =[      $stand13,        bigtank_stand14    ] {COOP_Idle();};
-void()  bigtank_stand14    =[      $stand14,        bigtank_stand15    ] {COOP_Idle();};
-void()  bigtank_stand15    =[      $stand15,        bigtank_stand1     ] {COOP_Idle();};
-void()  bigtank_walk1      =[      $walk01, bigtank_walk2] {COOP_Walk(6);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
-void()  bigtank_walk2      =[      $walk02, bigtank_walk3] {COOP_Walk(5);};
-void()  bigtank_walk3      =[      $walk03, bigtank_walk4] {COOP_Walk(4);};
-void()  bigtank_walk4      =[      $walk04, bigtank_walk5] {COOP_Walk(3);};
-void()  bigtank_walk5      =[      $walk05, bigtank_walk6] {COOP_Walk(2);};
-void()  bigtank_walk6      =[      $walk06, bigtank_walk7] {COOP_Walk(6);};
-void()  bigtank_walk7      =[      $walk07, bigtank_walk8] {COOP_Walk(5);};
-void()  bigtank_walk8      =[      $walk08, bigtank_walk9] {COOP_Walk(4);};
-void()  bigtank_walk9      =[      $walk09, bigtank_walk10] {COOP_Walk(3);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
-void()  bigtank_walk10     =[      $walk10, bigtank_walk11] {COOP_Walk(2);};
-void()  bigtank_walk11     =[      $walk11, bigtank_walk12] {COOP_Walk(6);};
-void()  bigtank_walk12     =[      $walk12, bigtank_walk13] {COOP_Walk(5);};
-void()  bigtank_walk13     =[      $walk13, bigtank_walk14] {COOP_Walk(4);};
-void()  bigtank_walk14     =[      $walk14, bigtank_walk15] {COOP_Walk(3);};
-void()  bigtank_walk15     =[      $walk15, bigtank_walk16] {COOP_Walk(2);};
-void()  bigtank_walk16     =[      $walk16, bigtank_walk17] {COOP_Walk(6);};
-void()  bigtank_walk17     =[      $walk17, bigtank_walk1] {COOP_Walk(5);};
-void()  bigtank_run1      =[      $walk01, bigtank_run2] {COOP_Run(6);};
-void()  bigtank_run2      =[      $walk02, bigtank_run3] {COOP_Run(5);};
-void()  bigtank_run3      =[      $walk03, bigtank_run4] {COOP_Run(4);};
-void()  bigtank_run4      =[      $walk04, bigtank_run5] {COOP_Run(3);};
-void()  bigtank_run5      =[      $walk05, bigtank_run6] {COOP_Run(2);};
-void()  bigtank_run6      =[      $walk06, bigtank_run7] {COOP_Run(6);};
-void()  bigtank_run7      =[      $walk07, bigtank_run8] {COOP_Run(5);};
-void()  bigtank_run8      =[      $walk08, bigtank_run9] {COOP_Run(4);};
-void()  bigtank_run9      =[      $walk09, bigtank_run10] {COOP_Run(3);};
-void()  bigtank_run10     =[      $walk10, bigtank_run11] {COOP_Run(2);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
-void()  bigtank_run11     =[      $walk11, bigtank_run12] {COOP_Run(6);};
-void()  bigtank_run12     =[      $walk12, bigtank_run13] {COOP_Run(5);};
-void()  bigtank_run13     =[      $walk13, bigtank_run14] {COOP_Run(4);};
-void()  bigtank_run14     =[      $walk14, bigtank_run15] {COOP_Run(3);};
-void()  bigtank_run15     =[      $walk15, bigtank_run16] {COOP_Run(2);};
-void()  bigtank_run16     =[      $walk16, bigtank_run17] {COOP_Run(6);};
-void()  bigtank_run17     =[      $walk17, bigtank_run1] {COOP_Run(5);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
+void()  bigtank_stand2     =[      $stand02,        bigtank_stand3     ]
+{COOP_Idle();};
+void()  bigtank_stand3     =[      $stand03,        bigtank_stand4     ]
+{COOP_Idle();};
+void()  bigtank_stand4     =[      $stand04,        bigtank_stand5     ]
+{COOP_Idle();};
+void()  bigtank_stand5     =[      $stand05,        bigtank_stand6     ]
+{COOP_Idle();};
+void()  bigtank_stand6     =[      $stand06,        bigtank_stand7     ]
+{COOP_Idle();};
+void()  bigtank_stand7     =[      $stand07,        bigtank_stand8     ]
+{COOP_Idle();};
+void()  bigtank_stand8     =[      $stand08,        bigtank_stand9     ]
+{COOP_Idle();};
+void()  bigtank_stand9     =[      $stand09,        bigtank_stand10    ]
+{COOP_Idle();};
+void()  bigtank_stand10    =[      $stand10,        bigtank_stand11    ]
+{COOP_Idle();};
+void()  bigtank_stand11    =[      $stand11,        bigtank_stand12    ]
+{COOP_Idle();};
+void()  bigtank_stand12    =[      $stand12,        bigtank_stand13    ]
+{COOP_Idle();};
+void()  bigtank_stand13    =[      $stand13,        bigtank_stand14    ]
+{COOP_Idle();};
+void()  bigtank_stand14    =[      $stand14,        bigtank_stand15    ]
+{COOP_Idle();};
+void()  bigtank_stand15    =[      $stand15,        bigtank_stand1     ]
+{COOP_Idle();};
+void()  bigtank_walk1      =[      $walk01, bigtank_walk2]
+{COOP_Walk(6);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
+void()  bigtank_walk2      =[      $walk02, bigtank_walk3]
+{COOP_Walk(5);};
+void()  bigtank_walk3      =[      $walk03, bigtank_walk4]
+{COOP_Walk(4);};
+void()  bigtank_walk4      =[      $walk04, bigtank_walk5]
+{COOP_Walk(3);};
+void()  bigtank_walk5      =[      $walk05, bigtank_walk6]
+{COOP_Walk(2);};
+void()  bigtank_walk6      =[      $walk06, bigtank_walk7]
+{COOP_Walk(6);};
+void()  bigtank_walk7      =[      $walk07, bigtank_walk8]
+{COOP_Walk(5);};
+void()  bigtank_walk8      =[      $walk08, bigtank_walk9]
+{COOP_Walk(4);};
+void()  bigtank_walk9      =[      $walk09, bigtank_walk10]
+{COOP_Walk(3);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
+void()  bigtank_walk10     =[      $walk10, bigtank_walk11]
+{COOP_Walk(2);};
+void()  bigtank_walk11     =[      $walk11, bigtank_walk12]
+{COOP_Walk(6);};
+void()  bigtank_walk12     =[      $walk12, bigtank_walk13]
+{COOP_Walk(5);};
+void()  bigtank_walk13     =[      $walk13, bigtank_walk14]
+{COOP_Walk(4);};
+void()  bigtank_walk14     =[      $walk14, bigtank_walk15]
+{COOP_Walk(3);};
+void()  bigtank_walk15     =[      $walk15, bigtank_walk16]
+{COOP_Walk(2);};
+void()  bigtank_walk16     =[      $walk16, bigtank_walk17]
+{COOP_Walk(6);};
+void()  bigtank_walk17     =[      $walk17, bigtank_walk1]
+{COOP_Walk(5);};
+void()  bigtank_run1      =[      $walk01, bigtank_run2]
+{COOP_Run(6);};
+void()  bigtank_run2      =[      $walk02, bigtank_run3]
+{COOP_Run(5);};
+void()  bigtank_run3      =[      $walk03, bigtank_run4]
+{COOP_Run(4);};
+void()  bigtank_run4      =[      $walk04, bigtank_run5]
+{COOP_Run(3);};
+void()  bigtank_run5      =[      $walk05, bigtank_run6]
+{COOP_Run(2);};
+void()  bigtank_run6      =[      $walk06, bigtank_run7]
+{COOP_Run(6);};
+void()  bigtank_run7      =[      $walk07, bigtank_run8]
+{COOP_Run(5);};
+void()  bigtank_run8      =[      $walk08, bigtank_run9]
+{COOP_Run(4);};
+void()  bigtank_run9      =[      $walk09, bigtank_run10]
+{COOP_Run(3);};
+void()  bigtank_run10     =[      $walk10, bigtank_run11]
+{COOP_Run(2);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
+void()  bigtank_run11     =[      $walk11, bigtank_run12]
+{COOP_Run(6);};
+void()  bigtank_run12     =[      $walk12, bigtank_run13]
+{COOP_Run(5);};
+void()  bigtank_run13     =[      $walk13, bigtank_run14]
+{COOP_Run(4);};
+void()  bigtank_run14     =[      $walk14, bigtank_run15]
+{COOP_Run(3);};
+void()  bigtank_run15     =[      $walk15, bigtank_run16]
+{COOP_Run(2);};
+void()  bigtank_run16     =[      $walk16, bigtank_run17]
+{COOP_Run(6);};
+void()  bigtank_run17     =[      $walk17, bigtank_run1]
+{COOP_Run(5);sound (self, CHAN_VOICE, "bigtank/step.wav", 1, ATTN_IDLE);};
 void(float attype, float off) bigtank_fire;
-void()  bigtank_gatk1       =[ $triarm01, bigtank_gatk2  ] {COOP_Turn();};
-void()  bigtank_gatk2       =[ $triarm02, bigtank_gatk3  ] {COOP_Turn();};
-void()  bigtank_gatk3       =[ $triarm03, bigtank_gatk4  ] {COOP_Turn();};
-void()  bigtank_gatk4       =[ $triarm04, bigtank_gatk5  ] {COOP_Turn();};
-void()  bigtank_gatk5       =[ $triarm05, bigtank_gatk6  ] {COOP_Turn();};
-void()  bigtank_gatk6       =[ $triarm06, bigtank_gatk7  ] {COOP_Turn();};
-void()  bigtank_gatk7       =[ $triarm07, bigtank_gatk8  ] {COOP_Turn();};
-void()  bigtank_gatk8       =[ $triarm08, bigtank_gatk9  ] {COOP_Turn();};
-void()  bigtank_gatk9       =[ $triarm09, bigtank_gatk10 ] {COOP_Turn();};
-void()  bigtank_gatk10      =[ $triarm10, bigtank_gatk11 ] {COOP_Turn();bigtank_fire(3, 0);};  // was 0 ratbert
-void()  bigtank_gatk11      =[ $triarm11, bigtank_gatk12 ] {COOP_Turn();};
-void()  bigtank_gatk12      =[ $triarm12, bigtank_gatk13 ] {COOP_Turn();SUB_CheckRefire(bigtank_gatk9);};
-void()  bigtank_gatk13      =[ $triarm13, bigtank_gatk14 ] {COOP_Turn();};
-void()  bigtank_gatk14      =[ $triarm14, bigtank_gatk15 ] {COOP_Turn();};
-void()  bigtank_gatk15      =[ $triarm15, bigtank_gatk16 ] {COOP_Turn();};
-void()  bigtank_gatk16      =[ $triarm16, bigtank_gatk17 ] {COOP_Turn();};
-void()  bigtank_gatk17      =[ $triarm17, bigtank_gatk18 ] {COOP_Turn();};
-void()  bigtank_gatk18      =[ $triarm18, bigtank_gatk19 ] {COOP_Turn();};
-void()  bigtank_gatk19      =[ $triarm19, bigtank_gatk20 ] {COOP_Turn();};
-void()  bigtank_gatk20      =[ $triarm20, bigtank_gatk21 ] {COOP_Turn();};
-void()  bigtank_gatk21      =[ $triarm21, bigtank_run1 ] {COOP_Turn();};
-void()  bigtank_fatk1       =[ $sweep01, bigtank_fatk2  ] {COOP_Turn();};
-void()  bigtank_fatk2       =[ $sweep02, bigtank_fatk3  ] {COOP_Turn();};
-void()  bigtank_fatk3       =[ $sweep03, bigtank_fatk4  ] {COOP_Turn();};
-void()  bigtank_fatk4       =[ $sweep04, bigtank_fatk5  ] {COOP_Turn();};
-void()  bigtank_fatk5       =[ $sweep05, bigtank_fatk6  ] {COOP_Turn();bigtank_fire(1, 5);};
-void()  bigtank_fatk6       =[ $sweep06, bigtank_fatk7  ] {COOP_Turn();bigtank_fire(1, 4);};
-void()  bigtank_fatk7       =[ $sweep07, bigtank_fatk8  ] {COOP_Turn();bigtank_fire(1, 3);};
-void()  bigtank_fatk8       =[ $sweep08, bigtank_fatk9  ] {COOP_Turn();bigtank_fire(1, 2);};
-void()  bigtank_fatk9       =[ $sweep09, bigtank_fatk10 ] {COOP_Turn();bigtank_fire(1, 1);};
-void()  bigtank_fatk10      =[ $sweep10, bigtank_fatk11 ] {COOP_Turn();bigtank_fire(1, 0);};
-void()  bigtank_fatk11      =[ $sweep11, bigtank_fatk12 ] {COOP_Turn();bigtank_fire(1, -1);};
-void()  bigtank_fatk12      =[ $sweep12, bigtank_fatk13 ] {COOP_Turn();bigtank_fire(1, -2);};
-void()  bigtank_fatk13      =[ $sweep13, bigtank_fatk14 ] {COOP_Turn();bigtank_fire(1, -3);};
-void()  bigtank_fatk14      =[ $sweep14, bigtank_fatk15 ] {COOP_Turn();bigtank_fire(1, -4);};
-void()  bigtank_fatk15      =[ $sweep15, bigtank_fatk16 ] {COOP_Turn();bigtank_fire(1, -5);};
-void()  bigtank_fatk16      =[ $sweep16, bigtank_fatk17 ] {COOP_Turn();bigtank_fire(1, -4);};
-void()  bigtank_fatk17      =[ $sweep17, bigtank_fatk18 ] {COOP_Turn();bigtank_fire(1, -3);};
-void()  bigtank_fatk18      =[ $sweep18, bigtank_fatk19 ] {COOP_Turn();bigtank_fire(1, -2);};
-void()  bigtank_fatk19      =[ $sweep19, bigtank_fatk20 ] {COOP_Turn();bigtank_fire(1, -1);};
-void()  bigtank_fatk20      =[ $sweep20, bigtank_fatk21 ] {COOP_Turn();bigtank_fire(1, 0);};
-void()  bigtank_fatk21      =[ $sweep21, bigtank_fatk22 ] {COOP_Turn();bigtank_fire(1, 1);};
-void()  bigtank_fatk22      =[ $sweep22, bigtank_fatk23 ] {COOP_Turn();bigtank_fire(1, 2);};
-void()  bigtank_fatk23      =[ $sweep23, bigtank_fatk24 ] {COOP_Turn();bigtank_fire(1, 3);};
-void()  bigtank_fatk24      =[ $sweep24, bigtank_fatk25 ] {COOP_Turn();bigtank_fire(1, 4);SUB_CheckRefire(bigtank_fatk5);};
-void()  bigtank_fatk25      =[ $sweep25, bigtank_fatk26 ] {COOP_Turn();};
-void()  bigtank_fatk26      =[ $sweep26, bigtank_fatk27 ] {COOP_Turn();};
-void()  bigtank_fatk27      =[ $sweep27, bigtank_fatk28 ] {COOP_Turn();};
-void()  bigtank_fatk28      =[ $sweep28, bigtank_fatk29 ] {COOP_Turn();};
-void()  bigtank_fatk29      =[ $sweep29, bigtank_run1 ] {COOP_Turn();};
-void()  bigtank_ratk1       =[ $launch01, bigtank_ratk2 ] {COOP_Turn();};
-void()  bigtank_ratk2       =[ $launch02, bigtank_ratk3 ] {COOP_Turn();};
-void()  bigtank_ratk3       =[ $launch03, bigtank_ratk4 ] {COOP_Turn();};
-void()  bigtank_ratk4       =[ $launch04, bigtank_ratk5 ] {COOP_Turn();};
-void()  bigtank_ratk5       =[ $launch05, bigtank_ratk6 ] {COOP_Turn();};
-void()  bigtank_ratk6       =[ $launch06, bigtank_ratk7 ] {COOP_Turn();};
-void()  bigtank_ratk7       =[ $launch07, bigtank_ratk8 ] {COOP_Turn();};
-void()  bigtank_ratk8       =[ $launch08, bigtank_ratk9 ] {COOP_Turn();};
-void()  bigtank_ratk9       =[ $launch09, bigtank_ratk10 ] {COOP_Turn();};
-void()  bigtank_ratk10      =[ $launch10, bigtank_ratk11 ] {COOP_Turn();};
-void()  bigtank_ratk11      =[ $launch11, bigtank_ratk12 ] {COOP_Turn();};
-void()  bigtank_ratk12      =[ $launch12, bigtank_ratk13 ] {COOP_Turn();};
-void()  bigtank_ratk13      =[ $launch13, bigtank_ratk14 ] {COOP_Turn();};
-void()  bigtank_ratk14      =[ $launch14, bigtank_ratk15 ] {COOP_Turn();};
-void()  bigtank_ratk15      =[ $launch15, bigtank_ratk16 ] {COOP_Turn();};
-void()  bigtank_ratk16      =[ $launch16, bigtank_ratk17 ] {COOP_Turn();};
-void()  bigtank_ratk17      =[ $launch17, bigtank_ratk18 ] {COOP_Turn();};
-void()  bigtank_ratk18      =[ $launch18, bigtank_ratk19 ] {COOP_Turn();};
-void()  bigtank_ratk19      =[ $launch19, bigtank_ratk20 ] {COOP_Turn();};
-void()  bigtank_ratk20      =[ $launch20, bigtank_ratk21 ] {COOP_Turn();};
-void()  bigtank_ratk21      =[ $launch21, bigtank_ratk22 ] {COOP_Turn();};
-void()  bigtank_ratk22      =[ $launch22, bigtank_ratk23 ] {COOP_Turn();};
-void()  bigtank_ratk23      =[ $launch23, bigtank_ratk24 ] {COOP_Turn();};
-void()  bigtank_ratk24      =[ $launch24, bigtank_ratk25 ] {COOP_Turn();};
-void()  bigtank_ratk25      =[ $launch25, bigtank_ratk26 ] {COOP_Turn();bigtank_fire(2, 0);};
-void()  bigtank_ratk26      =[ $launch26, bigtank_ratk27 ] {COOP_Turn();};
-void()  bigtank_ratk27      =[ $launch27, bigtank_ratk28 ] {COOP_Turn();};
-void()  bigtank_ratk28      =[ $launch28, bigtank_ratk29 ] {COOP_Turn();bigtank_fire(2, 0);};
-void()  bigtank_ratk29      =[ $launch29, bigtank_ratk30 ] {COOP_Turn();};
-void()  bigtank_ratk30      =[ $launch30, bigtank_ratk31 ] {COOP_Turn();};
-void()  bigtank_ratk31      =[ $launch31, bigtank_ratk32 ] {COOP_Turn();bigtank_fire(2, 0);};
-void()  bigtank_ratk32      =[ $launch32, bigtank_ratk33 ] {COOP_Turn();};
-void()  bigtank_ratk33      =[ $launch33, bigtank_ratk34 ] {COOP_Turn();};
-void()  bigtank_ratk34      =[ $launch34, bigtank_ratk35 ] {COOP_Turn();};
-void()  bigtank_ratk35      =[ $launch35, bigtank_ratk36 ] {COOP_Turn();};
-void()  bigtank_ratk36      =[ $launch36, bigtank_ratk37 ] {COOP_Turn();};
-void()  bigtank_ratk37      =[ $launch37, bigtank_ratk38 ] {COOP_Turn();};
-void()  bigtank_ratk38      =[ $launch38, bigtank_ratk39 ] {COOP_Turn();};
-void()  bigtank_ratk39      =[ $launch39, bigtank_ratk40 ] {COOP_Turn();};
-void()  bigtank_ratk40      =[ $launch40, bigtank_ratk41 ] {COOP_Turn();};
-void()  bigtank_ratk41      =[ $launch41, bigtank_ratk42 ] {COOP_Turn();};
-void()  bigtank_ratk42      =[ $launch42, bigtank_ratk43 ] {COOP_Turn();SUB_CheckRefire(bigtank_ratk18);};
-void()  bigtank_ratk43      =[ $launch43, bigtank_ratk44 ] {COOP_Turn();};
-void()  bigtank_ratk44      =[ $launch44, bigtank_ratk45 ] {COOP_Turn();};
-void()  bigtank_ratk45      =[ $launch45, bigtank_ratk46 ] {COOP_Turn();};
-void()  bigtank_ratk46      =[ $launch46, bigtank_ratk47 ] {COOP_Turn();};
-void()  bigtank_ratk47      =[ $launch47, bigtank_ratk48 ] {COOP_Turn();};
-void()  bigtank_ratk48      =[ $launch48, bigtank_ratk49 ] {COOP_Turn();};
-void()  bigtank_ratk49      =[ $launch49, bigtank_ratk50 ] {COOP_Turn();};
-void()  bigtank_ratk50      =[ $launch50, bigtank_ratk51 ] {COOP_Turn();};
-void()  bigtank_ratk51      =[ $launch51, bigtank_ratk52 ] {COOP_Turn();};
-void()  bigtank_ratk52      =[ $launch52, bigtank_ratk53 ] {COOP_Turn();};
-void()  bigtank_ratk53      =[ $launch53, bigtank_ratk54 ] {COOP_Turn();};
-void()  bigtank_ratk54      =[ $launch54, bigtank_run1 ] {COOP_Turn();};
-void()  bigtank_pain1      =[      $pain101,         bigtank_pain2      ] {};
-void()  bigtank_pain2      =[      $pain102,         bigtank_pain3      ] {};
-void()  bigtank_pain3      =[      $pain103,         bigtank_pain4      ] {};
-void()  bigtank_pain4      =[      $pain104,         bigtank_run5      ] {};
-void()  bigtank_painb1      =[      $pain201,         bigtank_painb2      ] {};
-void()  bigtank_painb2      =[      $pain202,         bigtank_painb3      ] {};
-void()  bigtank_painb3      =[      $pain203,         bigtank_painb4      ] {};
-void()  bigtank_painb4      =[      $pain204,         bigtank_painb5      ] {};
-void()  bigtank_painb5      =[      $pain205,         bigtank_run5      ] {};
-void()  bigtank_painc1=[   $pain301,       bigtank_painc2     ] {};
-void()  bigtank_painc2=[   $pain302,       bigtank_painc3     ] {};
-void()  bigtank_painc3=[   $pain303,       bigtank_painc4     ] {};
-void()  bigtank_painc4=[   $pain304,       bigtank_painc5     ] {};
-void()  bigtank_painc5=[   $pain305,       bigtank_painc6     ] {};
-void()  bigtank_painc6=[   $pain306,       bigtank_painc7     ] {};
-void()  bigtank_painc7=[   $pain307,       bigtank_painc8     ] {};
-void()  bigtank_painc8=[   $pain308,       bigtank_painc9     ] {};
-void()  bigtank_painc9=[   $pain309,       bigtank_painc10] {};
-void()  bigtank_painc10=[  $pain310,       bigtank_painc11] {};
-void()  bigtank_painc11=[  $pain311,       bigtank_painc12] {};
-void()  bigtank_painc12=[  $pain312,       bigtank_painc13] {ai_pain(2);};
-void()  bigtank_painc13=[  $pain313,       bigtank_painc14] {};
-void()  bigtank_painc14=[  $pain314,       bigtank_painc15] {};
-void()  bigtank_painc15=[  $pain315,       bigtank_painc16] {};
-void()  bigtank_painc16=[  $pain316,       bigtank_run5       ] {};
-void()  bigtank_die1      =[      $death101,       bigtank_die2      ] {};
-void()  bigtank_die2      =[      $death102,       bigtank_die3      ] {ai_back(5);};
-void()  bigtank_die3      =[      $death103,       bigtank_die4      ] {};
-void()  bigtank_die4      =[      $death104,       bigtank_die5      ] {ai_back(13);};
-void()  bigtank_die5      =[      $death105,       bigtank_die6      ] {ai_back(3);};
-void()  bigtank_die6      =[      $death106,       bigtank_die7      ] {ai_back(4);};
-void()  bigtank_die7      =[      $death107,       bigtank_die8      ] {};
-void()  bigtank_die8      =[      $death108,       bigtank_die9      ] {};
-void()  bigtank_die9      =[      $death109,       bigtank_die10     ] {};
-void()  bigtank_die10     =[      $death110,       bigtank_die11     ] {};
-void()  bigtank_die11     =[      $death111,       bigtank_die12     ] {};
-void()  bigtank_die12     =[      $death112,       bigtank_die13     ] {};
-void()  bigtank_die13     =[      $death113,       bigtank_die14     ] {};
-void()  bigtank_die14     =[      $death114,       bigtank_die15     ] {};
-void()  bigtank_die15     =[      $death115,       bigtank_die16     ] {};
-void()  bigtank_die16     =[      $death116,       bigtank_die17     ] {};
-void()  bigtank_die17     =[      $death117,       bigtank_die18     ] {};
-void()  bigtank_die18     =[      $death118,       bigtank_die19     ] {};
-void()  bigtank_die19     =[      $death119,       bigtank_die20     ] {};
-void()  bigtank_die20     =[      $death120,       bigtank_die21     ] {};
-void()  bigtank_die21     =[      $death121,       bigtank_die22     ] {};
-void()  bigtank_die22     =[      $death122,       bigtank_die23     ] {};
-void()  bigtank_die23     =[      $death123,       bigtank_die24     ] {};
-void()  bigtank_die24     =[      $death124,       bigtank_die25     ] {};
-void()  bigtank_die25     =[      $death125,       bigtank_die26     ] {};
-void()  bigtank_die26     =[      $death126,       bigtank_die27     ] {};
-void()  bigtank_die27     =[      $death127,       bigtank_die28     ] {self.solid = SOLID_NOT; ai_back(4);};
-void()  bigtank_die28     =[      $death128,       bigtank_die29     ] {};
-void()  bigtank_die29     =[      $death129,       bigtank_die30     ] {};
-void()  bigtank_die30     =[      $death130,       bigtank_die31     ] {};
-void()  bigtank_die31     =[      $death131,       bigtank_die32     ] {sound (self, CHAN_VOICE, "bigtank/thud.wav", 1, ATTN_NORM);};
-void()  bigtank_die32     =[      $death132,       bigtank_die32     ] {MonsterCorpse();};
+void()  bigtank_gatk1       =[ $triarm01, bigtank_gatk2  ]
+{COOP_Turn();};
+void()  bigtank_gatk2       =[ $triarm02, bigtank_gatk3  ]
+{COOP_Turn();};
+void()  bigtank_gatk3       =[ $triarm03, bigtank_gatk4  ]
+{COOP_Turn();};
+void()  bigtank_gatk4       =[ $triarm04, bigtank_gatk5  ]
+{COOP_Turn();};
+void()  bigtank_gatk5       =[ $triarm05, bigtank_gatk6  ]
+{COOP_Turn();};
+void()  bigtank_gatk6       =[ $triarm06, bigtank_gatk7  ]
+{COOP_Turn();};
+void()  bigtank_gatk7       =[ $triarm07, bigtank_gatk8  ]
+{COOP_Turn();};
+void()  bigtank_gatk8       =[ $triarm08, bigtank_gatk9  ]
+{COOP_Turn();};
+void()  bigtank_gatk9       =[ $triarm09, bigtank_gatk10 ]
+{COOP_Turn();};
+void()  bigtank_gatk10      =[ $triarm10, bigtank_gatk11 ]
+{COOP_Turn();bigtank_fire(3, 0);};  // was 0 ratbert
+void()  bigtank_gatk11      =[ $triarm11, bigtank_gatk12 ]
+{COOP_Turn();};
+void()  bigtank_gatk12      =[ $triarm12, bigtank_gatk13 ]
+{COOP_Turn();SUB_CheckRefire(bigtank_gatk9);};
+void()  bigtank_gatk13      =[ $triarm13, bigtank_gatk14 ]
+{COOP_Turn();};
+void()  bigtank_gatk14      =[ $triarm14, bigtank_gatk15 ]
+{COOP_Turn();};
+void()  bigtank_gatk15      =[ $triarm15, bigtank_gatk16 ]
+{COOP_Turn();};
+void()  bigtank_gatk16      =[ $triarm16, bigtank_gatk17 ]
+{COOP_Turn();};
+void()  bigtank_gatk17      =[ $triarm17, bigtank_gatk18 ]
+{COOP_Turn();};
+void()  bigtank_gatk18      =[ $triarm18, bigtank_gatk19 ]
+{COOP_Turn();};
+void()  bigtank_gatk19      =[ $triarm19, bigtank_gatk20 ]
+{COOP_Turn();};
+void()  bigtank_gatk20      =[ $triarm20, bigtank_gatk21 ]
+{COOP_Turn();};
+void()  bigtank_gatk21      =[ $triarm21, bigtank_run1 ]
+{COOP_Turn();};
+void()  bigtank_fatk1       =[ $sweep01, bigtank_fatk2  ]
+{COOP_Turn();};
+void()  bigtank_fatk2       =[ $sweep02, bigtank_fatk3  ]
+{COOP_Turn();};
+void()  bigtank_fatk3       =[ $sweep03, bigtank_fatk4  ]
+{COOP_Turn();};
+void()  bigtank_fatk4       =[ $sweep04, bigtank_fatk5  ]
+{COOP_Turn();};
+void()  bigtank_fatk5       =[ $sweep05, bigtank_fatk6  ]
+{COOP_Turn();bigtank_fire(1, 5);};
+void()  bigtank_fatk6       =[ $sweep06, bigtank_fatk7  ]
+{COOP_Turn();bigtank_fire(1, 4);};
+void()  bigtank_fatk7       =[ $sweep07, bigtank_fatk8  ]
+{COOP_Turn();bigtank_fire(1, 3);};
+void()  bigtank_fatk8       =[ $sweep08, bigtank_fatk9  ]
+{COOP_Turn();bigtank_fire(1, 2);};
+void()  bigtank_fatk9       =[ $sweep09, bigtank_fatk10 ]
+{COOP_Turn();bigtank_fire(1, 1);};
+void()  bigtank_fatk10      =[ $sweep10, bigtank_fatk11 ]
+{COOP_Turn();bigtank_fire(1, 0);};
+void()  bigtank_fatk11      =[ $sweep11, bigtank_fatk12 ]
+{COOP_Turn();bigtank_fire(1, -1);};
+void()  bigtank_fatk12      =[ $sweep12, bigtank_fatk13 ]
+{COOP_Turn();bigtank_fire(1, -2);};
+void()  bigtank_fatk13      =[ $sweep13, bigtank_fatk14 ]
+{COOP_Turn();bigtank_fire(1, -3);};
+void()  bigtank_fatk14      =[ $sweep14, bigtank_fatk15 ]
+{COOP_Turn();bigtank_fire(1, -4);};
+void()  bigtank_fatk15      =[ $sweep15, bigtank_fatk16 ]
+{COOP_Turn();bigtank_fire(1, -5);};
+void()  bigtank_fatk16      =[ $sweep16, bigtank_fatk17 ]
+{COOP_Turn();bigtank_fire(1, -4);};
+void()  bigtank_fatk17      =[ $sweep17, bigtank_fatk18 ]
+{COOP_Turn();bigtank_fire(1, -3);};
+void()  bigtank_fatk18      =[ $sweep18, bigtank_fatk19 ]
+{COOP_Turn();bigtank_fire(1, -2);};
+void()  bigtank_fatk19      =[ $sweep19, bigtank_fatk20 ]
+{COOP_Turn();bigtank_fire(1, -1);};
+void()  bigtank_fatk20      =[ $sweep20, bigtank_fatk21 ]
+{COOP_Turn();bigtank_fire(1, 0);};
+void()  bigtank_fatk21      =[ $sweep21, bigtank_fatk22 ]
+{COOP_Turn();bigtank_fire(1, 1);};
+void()  bigtank_fatk22      =[ $sweep22, bigtank_fatk23 ]
+{COOP_Turn();bigtank_fire(1, 2);};
+void()  bigtank_fatk23      =[ $sweep23, bigtank_fatk24 ]
+{COOP_Turn();bigtank_fire(1, 3);};
+void()  bigtank_fatk24      =[ $sweep24, bigtank_fatk25 ]
+{COOP_Turn();bigtank_fire(1, 4);SUB_CheckRefire(bigtank_fatk5);};
+void()  bigtank_fatk25      =[ $sweep25, bigtank_fatk26 ]
+{COOP_Turn();};
+void()  bigtank_fatk26      =[ $sweep26, bigtank_fatk27 ]
+{COOP_Turn();};
+void()  bigtank_fatk27      =[ $sweep27, bigtank_fatk28 ]
+{COOP_Turn();};
+void()  bigtank_fatk28      =[ $sweep28, bigtank_fatk29 ]
+{COOP_Turn();};
+void()  bigtank_fatk29      =[ $sweep29, bigtank_run1 ]
+{COOP_Turn();};
+void()  bigtank_ratk1       =[ $launch01, bigtank_ratk2 ]
+{COOP_Turn();};
+void()  bigtank_ratk2       =[ $launch02, bigtank_ratk3 ]
+{COOP_Turn();};
+void()  bigtank_ratk3       =[ $launch03, bigtank_ratk4 ]
+{COOP_Turn();};
+void()  bigtank_ratk4       =[ $launch04, bigtank_ratk5 ]
+{COOP_Turn();};
+void()  bigtank_ratk5       =[ $launch05, bigtank_ratk6 ]
+{COOP_Turn();};
+void()  bigtank_ratk6       =[ $launch06, bigtank_ratk7 ]
+{COOP_Turn();};
+void()  bigtank_ratk7       =[ $launch07, bigtank_ratk8 ]
+{COOP_Turn();};
+void()  bigtank_ratk8       =[ $launch08, bigtank_ratk9 ]
+{COOP_Turn();};
+void()  bigtank_ratk9       =[ $launch09, bigtank_ratk10 ]
+{COOP_Turn();};
+void()  bigtank_ratk10      =[ $launch10, bigtank_ratk11 ]
+{COOP_Turn();};
+void()  bigtank_ratk11      =[ $launch11, bigtank_ratk12 ]
+{COOP_Turn();};
+void()  bigtank_ratk12      =[ $launch12, bigtank_ratk13 ]
+{COOP_Turn();};
+void()  bigtank_ratk13      =[ $launch13, bigtank_ratk14 ]
+{COOP_Turn();};
+void()  bigtank_ratk14      =[ $launch14, bigtank_ratk15 ]
+{COOP_Turn();};
+void()  bigtank_ratk15      =[ $launch15, bigtank_ratk16 ]
+{COOP_Turn();};
+void()  bigtank_ratk16      =[ $launch16, bigtank_ratk17 ]
+{COOP_Turn();};
+void()  bigtank_ratk17      =[ $launch17, bigtank_ratk18 ]
+{COOP_Turn();};
+void()  bigtank_ratk18      =[ $launch18, bigtank_ratk19 ]
+{COOP_Turn();};
+void()  bigtank_ratk19      =[ $launch19, bigtank_ratk20 ]
+{COOP_Turn();};
+void()  bigtank_ratk20      =[ $launch20, bigtank_ratk21 ]
+{COOP_Turn();};
+void()  bigtank_ratk21      =[ $launch21, bigtank_ratk22 ]
+{COOP_Turn();};
+void()  bigtank_ratk22      =[ $launch22, bigtank_ratk23 ]
+{COOP_Turn();};
+void()  bigtank_ratk23      =[ $launch23, bigtank_ratk24 ]
+{COOP_Turn();};
+void()  bigtank_ratk24      =[ $launch24, bigtank_ratk25 ]
+{COOP_Turn();};
+void()  bigtank_ratk25      =[ $launch25, bigtank_ratk26 ]
+{COOP_Turn();bigtank_fire(2, 0);};
+void()  bigtank_ratk26      =[ $launch26, bigtank_ratk27 ]
+{COOP_Turn();};
+void()  bigtank_ratk27      =[ $launch27, bigtank_ratk28 ]
+{COOP_Turn();};
+void()  bigtank_ratk28      =[ $launch28, bigtank_ratk29 ]
+{COOP_Turn();bigtank_fire(2, 0);};
+void()  bigtank_ratk29      =[ $launch29, bigtank_ratk30 ]
+{COOP_Turn();};
+void()  bigtank_ratk30      =[ $launch30, bigtank_ratk31 ]
+{COOP_Turn();};
+void()  bigtank_ratk31      =[ $launch31, bigtank_ratk32 ]
+{COOP_Turn();bigtank_fire(2, 0);};
+void()  bigtank_ratk32      =[ $launch32, bigtank_ratk33 ]
+{COOP_Turn();};
+void()  bigtank_ratk33      =[ $launch33, bigtank_ratk34 ]
+{COOP_Turn();};
+void()  bigtank_ratk34      =[ $launch34, bigtank_ratk35 ]
+{COOP_Turn();};
+void()  bigtank_ratk35      =[ $launch35, bigtank_ratk36 ]
+{COOP_Turn();};
+void()  bigtank_ratk36      =[ $launch36, bigtank_ratk37 ]
+{COOP_Turn();};
+void()  bigtank_ratk37      =[ $launch37, bigtank_ratk38 ]
+{COOP_Turn();};
+void()  bigtank_ratk38      =[ $launch38, bigtank_ratk39 ]
+{COOP_Turn();};
+void()  bigtank_ratk39      =[ $launch39, bigtank_ratk40 ]
+{COOP_Turn();};
+void()  bigtank_ratk40      =[ $launch40, bigtank_ratk41 ]
+{COOP_Turn();};
+void()  bigtank_ratk41      =[ $launch41, bigtank_ratk42 ]
+{COOP_Turn();};
+void()  bigtank_ratk42      =[ $launch42, bigtank_ratk43 ]
+{COOP_Turn();SUB_CheckRefire(bigtank_ratk18);};
+void()  bigtank_ratk43      =[ $launch43, bigtank_ratk44 ]
+{COOP_Turn();};
+void()  bigtank_ratk44      =[ $launch44, bigtank_ratk45 ]
+{COOP_Turn();};
+void()  bigtank_ratk45      =[ $launch45, bigtank_ratk46 ]
+{COOP_Turn();};
+void()  bigtank_ratk46      =[ $launch46, bigtank_ratk47 ]
+{COOP_Turn();};
+void()  bigtank_ratk47      =[ $launch47, bigtank_ratk48 ]
+{COOP_Turn();};
+void()  bigtank_ratk48      =[ $launch48, bigtank_ratk49 ]
+{COOP_Turn();};
+void()  bigtank_ratk49      =[ $launch49, bigtank_ratk50 ]
+{COOP_Turn();};
+void()  bigtank_ratk50      =[ $launch50, bigtank_ratk51 ]
+{COOP_Turn();};
+void()  bigtank_ratk51      =[ $launch51, bigtank_ratk52 ]
+{COOP_Turn();};
+void()  bigtank_ratk52      =[ $launch52, bigtank_ratk53 ]
+{COOP_Turn();};
+void()  bigtank_ratk53      =[ $launch53, bigtank_ratk54 ]
+{COOP_Turn();};
+void()  bigtank_ratk54      =[ $launch54, bigtank_run1 ]
+{COOP_Turn();};
+void()  bigtank_pain1      =[      $pain101,         bigtank_pain2      ]
+{};
+void()  bigtank_pain2      =[      $pain102,         bigtank_pain3      ]
+{};
+void()  bigtank_pain3      =[      $pain103,         bigtank_pain4      ]
+{};
+void()  bigtank_pain4      =[      $pain104,         bigtank_run5      ]
+{};
+void()  bigtank_painb1      =[      $pain201,         bigtank_painb2      ]
+{};
+void()  bigtank_painb2      =[      $pain202,         bigtank_painb3      ]
+{};
+void()  bigtank_painb3      =[      $pain203,         bigtank_painb4      ]
+{};
+void()  bigtank_painb4      =[      $pain204,         bigtank_painb5      ]
+{};
+void()  bigtank_painb5      =[      $pain205,         bigtank_run5      ]
+{};
+void()  bigtank_painc1=[   $pain301,       bigtank_painc2     ]
+{};
+void()  bigtank_painc2=[   $pain302,       bigtank_painc3     ]
+{};
+void()  bigtank_painc3=[   $pain303,       bigtank_painc4     ]
+{};
+void()  bigtank_painc4=[   $pain304,       bigtank_painc5     ]
+{};
+void()  bigtank_painc5=[   $pain305,       bigtank_painc6     ]
+{};
+void()  bigtank_painc6=[   $pain306,       bigtank_painc7     ]
+{};
+void()  bigtank_painc7=[   $pain307,       bigtank_painc8     ]
+{};
+void()  bigtank_painc8=[   $pain308,       bigtank_painc9     ]
+{};
+void()  bigtank_painc9=[   $pain309,       bigtank_painc10]
+{};
+void()  bigtank_painc10=[  $pain310,       bigtank_painc11]
+{};
+void()  bigtank_painc11=[  $pain311,       bigtank_painc12]
+{};
+void()  bigtank_painc12=[  $pain312,       bigtank_painc13]
+{ai_pain(2);};
+void()  bigtank_painc13=[  $pain313,       bigtank_painc14]
+{};
+void()  bigtank_painc14=[  $pain314,       bigtank_painc15]
+{};
+void()  bigtank_painc15=[  $pain315,       bigtank_painc16]
+{};
+void()  bigtank_painc16=[  $pain316,       bigtank_run5       ]
+{};
+void()  bigtank_die1      =[      $death101,       bigtank_die2      ]
+{};
+void()  bigtank_die2      =[      $death102,       bigtank_die3      ]
+{ai_back(5);};
+void()  bigtank_die3      =[      $death103,       bigtank_die4      ]
+{};
+void()  bigtank_die4      =[      $death104,       bigtank_die5      ]
+{ai_back(13);};
+void()  bigtank_die5      =[      $death105,       bigtank_die6      ]
+{ai_back(3);};
+void()  bigtank_die6      =[      $death106,       bigtank_die7      ]
+{ai_back(4);};
+void()  bigtank_die7      =[      $death107,       bigtank_die8      ]
+{};
+void()  bigtank_die8      =[      $death108,       bigtank_die9      ]
+{};
+void()  bigtank_die9      =[      $death109,       bigtank_die10     ]
+{};
+void()  bigtank_die10     =[      $death110,       bigtank_die11     ]
+{};
+void()  bigtank_die11     =[      $death111,       bigtank_die12     ]
+{};
+void()  bigtank_die12     =[      $death112,       bigtank_die13     ]
+{};
+void()  bigtank_die13     =[      $death113,       bigtank_die14     ]
+{};
+void()  bigtank_die14     =[      $death114,       bigtank_die15     ]
+{};
+void()  bigtank_die15     =[      $death115,       bigtank_die16     ]
+{};
+void()  bigtank_die16     =[      $death116,       bigtank_die17     ]
+{};
+void()  bigtank_die17     =[      $death117,       bigtank_die18     ]
+{};
+void()  bigtank_die18     =[      $death118,       bigtank_die19     ]
+{};
+void()  bigtank_die19     =[      $death119,       bigtank_die20     ]
+{};
+void()  bigtank_die20     =[      $death120,       bigtank_die21     ]
+{};
+void()  bigtank_die21     =[      $death121,       bigtank_die22     ]
+{};
+void()  bigtank_die22     =[      $death122,       bigtank_die23     ]
+{};
+void()  bigtank_die23     =[      $death123,       bigtank_die24     ]
+{};
+void()  bigtank_die24     =[      $death124,       bigtank_die25     ]
+{};
+void()  bigtank_die25     =[      $death125,       bigtank_die26     ]
+{};
+void()  bigtank_die26     =[      $death126,       bigtank_die27     ]
+{};
+void()  bigtank_die27     =[      $death127,       bigtank_die28     ]
+{self.solid = SOLID_NOT; ai_back(4);};
+void()  bigtank_die28     =[      $death128,       bigtank_die29     ]
+{};
+void()  bigtank_die29     =[      $death129,       bigtank_die30     ]
+{};
+void()  bigtank_die30     =[      $death130,       bigtank_die31     ]
+{};
+void()  bigtank_die31     =[      $death131,       bigtank_die32     ]
+{sound (self, CHAN_VOICE, "bigtank/thud.wav", 1, ATTN_NORM);};
+void()  bigtank_die32     =[      $death132,       bigtank_die32     ]
+{MonsterCorpse();};
 void(entity attacker, float damage)     bigtank_pain =
 {
 	local float r;
 	if (self.health <= 0)
 		return;         // allready dying, don't go into pain frame
-	if(self.health < 1000) { self.skin = 1; }
+	if(self.health < 1000)
+{ self.skin = 1; }
 		if (random()*400 > damage)
 			return;         // didn't flinch
 	if (self.pain_finished > time)
@@ -266,7 +478,8 @@ void(entity attacker, float damage)     bigtank_pain =
 		bigtank_pain1 ();
 		sound (self, CHAN_VOICE, "bigtank/pain.wav", 1, ATTN_NORM);
 	}
-	else if (r < 0.6)
+	else
+if (r < 0.6)
 	{
 		self.pain_finished = time + 2;
 		bigtank_painb1 ();
@@ -418,7 +631,8 @@ void(float attype, float off) bigtank_fire =
 			org = self.origin + v_forward * 16 + v_right * 24 + '0 0 48';
 			bigtank_rocket(org);
 		}
-		else if (attype == 3)
+		else
+if (attype == 3)
 		{
 			org = self.origin + v_forward * 16 + v_right * -24 + '0 0 -22';
 			bigtank_groundcrash(org, self.angles_y);
@@ -434,7 +648,8 @@ void() bigtank_decfire =
 		{
 			bigtank_fatk1();
 		}
-		else if((d < 400 && d > 120) || ((d < 600 && d > 90) && self.enemy.origin_z < self.origin_z))
+		else
+if((d < 400 && d > 120) || ((d < 600 && d > 90) && self.enemy.origin_z < self.origin_z))
 		{
 			bigtank_gatk1();
 		}

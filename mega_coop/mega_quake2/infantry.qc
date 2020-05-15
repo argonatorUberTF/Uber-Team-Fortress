@@ -121,7 +121,8 @@ void() guard_fire =
 	dir = normalize(dir - self.origin);
 	if (self.skin <= 1)
 		guard_fire_shotgun (dir);
-	else if (self.skin <= 3)
+	else
+if (self.skin <= 3)
 		guard_fire_blaster ();
 	else
 	{
