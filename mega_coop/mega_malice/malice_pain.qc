@@ -96,10 +96,13 @@ void () wallsplat =
 			return;
 		}
 #ifdef mtf_coop_bloodmod
-		if (random() < 0.5) {
+		if (random() < 0.5)
+{
 			direction = ((dir3 + ((crandom ()*2 * SVC_INTERMISSION) * v_right)) + ((crandom ()*2 * SVC_INTERMISSION) * v_up));
 		}
-		else if (random() < 0.5) {
+		else
+if (random() < 0.5)
+{
 			direction = ((dir2 + ((crandom ()*2 * SVC_INTERMISSION) * v_right)) + ((crandom ()*2 * SVC_INTERMISSION) * v_up));
 		}
 		else
@@ -108,7 +111,8 @@ void () wallsplat =
 		direction = ((dir + ((crandom () * SVC_INTERMISSION) * v_right)) + ((crandom () * SVC_INTERMISSION) * v_up));
 #endif
 		traceline (self.origin, (direction * IT_CELLS), TRUE, self);
-		if (trace_fraction < 1 && !trace_ent) {
+		if (trace_fraction < 1 && !trace_ent)
+{
 			t_drop = spawn ();
 			num_blooddrops = (num_blooddrops + SPAWNFLAG_SUPERSPIKE);
 			setorigin (t_drop, (trace_endpos + trace_plane_normal));

@@ -111,7 +111,8 @@ void () probe_think =
 	local float delta;
 	local float angdelta;
 	local float r;
-	if (self.trigger_field != world) {
+	if (self.trigger_field != world)
+{
 		setorigin (self.trigger_field, self.origin);
 		self.trigger_field.angles = self.angles;
 		self.trigger_field.frame = self.frame;
