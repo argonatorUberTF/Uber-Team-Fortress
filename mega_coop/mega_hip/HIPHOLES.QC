@@ -8,7 +8,8 @@ void() wallsprite =
 	setmodel (self, self.model );
 	if (self.angles == '0 -1 0')
 		self.angles = '-90 0 0';
-	else if (self.angles == '0 -2 0')
+	else
+if (self.angles == '0 -2 0')
 		self.angles = '90 0 0';
 	makevectors(self.angles);
 	setorigin( self, self.origin - ( v_forward * 0.2 ) );

@@ -49,7 +49,8 @@ void() rubble_use =
 		{
 			hipThrowRubble( "progs/rubble1.mdl" );
 		}
-		else if ( which == 2 )
+		else
+if ( which == 2 )
 		{
 			hipThrowRubble( "progs/rubble3.mdl" );
 		}

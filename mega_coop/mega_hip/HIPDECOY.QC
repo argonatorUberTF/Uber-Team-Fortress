@@ -38,7 +38,8 @@ void() decoy_walk1 =[  $rockrun1,  decoy_walk1  ]
 		else
 		if (r < 0.58)
 			sound (self, CHAN_VOICE, "misc/foot4.wav", 0.5, ATTN_NORM);
-		else if (r < 0.72)
+		else
+if (r < 0.72)
 			sound (self, CHAN_VOICE, "misc/foot5.wav", 0.5, ATTN_NORM);
 		else
 		if (r < 0.86)

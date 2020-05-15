@@ -36,11 +36,13 @@ void() keytrigger_use =
 				{
 				centerprint (activator, "You need the gold keycard");
 				}
-				else if (world.worldtype == 1)
+				else
+if (world.worldtype == 1)
 				{
 				centerprint (activator, "You need the gold runekey");
 				}
-				else if (world.worldtype == 0)
+				else
+if (world.worldtype == 0)
 				{
 				centerprint (activator, "You need the gold key");
 				}
@@ -72,14 +74,16 @@ void() trigger_usekey =
 		self.noise3 = "doors/medtry.wav";
 		self.noise4 = "doors/meduse.wav";
 	}
-	else if (world.worldtype == 1)
+	else
+if (world.worldtype == 1)
 	{
 		precache_sound ("doors/runetry.wav");
 		precache_sound ("doors/runeuse.wav");
 		self.noise3 = "doors/runetry.wav";
 		self.noise4 = "doors/runeuse.wav";
 	}
-	else if (world.worldtype == 2)
+	else
+if (world.worldtype == 2)
 	{
 		precache_sound ("doors/basetry.wav");
 		precache_sound ("doors/baseuse.wav");

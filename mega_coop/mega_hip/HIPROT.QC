@@ -97,7 +97,8 @@ void() LinkRotateTargets =
 			 ent.neworigin = ent.origin - self.oldorigin;
 			 ent.owner = self;
 		}
-		else if ( ent.classname == "func_movewall" )
+		else
+if ( ent.classname == "func_movewall" )
 		{
 			ent.rotate_type = OBJECT_MOVEWALL;
 			tempvec = ( ent.absmin + ent.absmax ) * 0.5;
@@ -369,7 +370,8 @@ void() rotate_train_next =
 	{
 		self.think1 = rotate_train_stop;
 	}
-	else if (targ.wait)
+	else
+if (targ.wait)
 	{
 		self.think1 = rotate_train_wait;
 	}

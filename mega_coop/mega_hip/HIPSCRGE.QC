@@ -33,7 +33,8 @@ float() ScourgeCheckAttack =
 	chance = spot2_z - spot1_z;
 	if (chance > 64)
 		return FALSE;
-	else if (chance < -200)
+	else
+if (chance < -200)
 	return FALSE;
 	if (vlen(spot1 - spot2) > 1000)
 		return FALSE;
@@ -119,58 +120,100 @@ void(float dist) ai_left =
 {
 walkmove ( (self.angles_y+270), dist);
 };
-void()   scourge_stand1  =[ $stand1.asc, scourge_stand2  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand2  =[ $stand2.asc, scourge_stand3  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand3  =[ $stand3.asc, scourge_stand4  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand4  =[ $stand4.asc, scourge_stand5  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand5  =[ $stand5.asc, scourge_stand6  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand6  =[ $stand6.asc, scourge_stand7  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand7  =[ $stand7.asc, scourge_stand8  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand8  =[ $stand8.asc, scourge_stand9  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand9  =[ $stand9.asc, scourge_stand10  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand10  =[ $stand10.asc, scourge_stand11  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand11  =[ $stand11.asc, scourge_stand12  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_stand12  =[ $stand12.asc, scourge_stand1  ] {self.spawnsilent = 0;ai_stand();scourge_think();};
-void()   scourge_walk1   =[ $walk1.asc , scourge_walk2   ] {
+void()   scourge_stand1  =[ $stand1.asc, scourge_stand2  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand2  =[ $stand2.asc, scourge_stand3  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand3  =[ $stand3.asc, scourge_stand4  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand4  =[ $stand4.asc, scourge_stand5  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand5  =[ $stand5.asc, scourge_stand6  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand6  =[ $stand6.asc, scourge_stand7  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand7  =[ $stand7.asc, scourge_stand8  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand8  =[ $stand8.asc, scourge_stand9  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand9  =[ $stand9.asc, scourge_stand10  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand10  =[ $stand10.asc, scourge_stand11  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand11  =[ $stand11.asc, scourge_stand12  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_stand12  =[ $stand12.asc, scourge_stand1  ]
+{self.spawnsilent = 0;ai_stand();scourge_think();};
+void()   scourge_walk1   =[ $walk1.asc , scourge_walk2   ]
+{
 if (random() < 0.1)
 sound (self, CHAN_VOICE, "scourge/idle.wav", 1, ATTN_IDLE);
 self.spawnsilent = 1;
 scourge_think();
 ai_walk(8);};
-void()   scourge_walk2   =[ $walk2.asc , scourge_walk3   ] {ai_walk(8);};
-void()   scourge_walk3   =[ $walk3.asc , scourge_walk4   ] {ai_walk(8);};
-void()   scourge_walk4   =[ $walk4.asc , scourge_walk5   ] {ai_walk(8);};
-void()   scourge_walk5   =[ $walk5.asc , scourge_walk6   ] {ai_walk(8);};
-void()   scourge_walk6   =[ $walk6.asc , scourge_walk1   ] {ai_walk(8);};
-void()   scourge_run1 =[ $walk1.asc  , scourge_run2 ] {
+void()   scourge_walk2   =[ $walk2.asc , scourge_walk3   ]
+{ai_walk(8);};
+void()   scourge_walk3   =[ $walk3.asc , scourge_walk4   ]
+{ai_walk(8);};
+void()   scourge_walk4   =[ $walk4.asc , scourge_walk5   ]
+{ai_walk(8);};
+void()   scourge_walk5   =[ $walk5.asc , scourge_walk6   ]
+{ai_walk(8);};
+void()   scourge_walk6   =[ $walk6.asc , scourge_walk1   ]
+{ai_walk(8);};
+void()   scourge_run1 =[ $walk1.asc  , scourge_run2 ]
+{
 if (random() < 0.1)
 sound (self, CHAN_VOICE, "scourge/idle.wav", 1, ATTN_IDLE);
 self.spawnsilent = 1;
 scourge_think();
 ai_run(18);};
-void()   scourge_run2 =[ $walk2.asc  , scourge_run3 ] {scourge_think();ai_run(14);};
-void()   scourge_run3 =[ $walk3.asc  , scourge_run4 ] {ai_run(14);};
-void()   scourge_run4 =[ $walk4.asc  , scourge_run5 ] {ai_run(14);};
-void()   scourge_run5 =[ $walk5.asc  , scourge_run6 ] {ai_run(14);};
-void()   scourge_run6 =[ $walk6.asc  , scourge_run1 ] {ai_run(14);};
-void()   scourge_strafeleft1   =[ $walk1.asc , scourge_strafeleft2   ] {self.spawnsilent = 1;scourge_think();ai_left(20);};
-void()   scourge_strafeleft2   =[ $walk2.asc , scourge_strafeleft3   ] {ai_left(20);};
-void()   scourge_strafeleft3   =[ $walk3.asc , scourge_strafeleft4   ] {ai_left(20);};
-void()   scourge_strafeleft4   =[ $walk4.asc , scourge_strafeleft5   ] {ai_left(14);};
-void()   scourge_strafeleft5   =[ $walk5.asc , scourge_strafeleft6   ] {ai_left(14);};
-void()   scourge_strafeleft6   =[ $walk6.asc , scourge_run1   ] {ai_left(14);};
-void()   scourge_straferight1   =[ $walk1.asc , scourge_straferight2   ] {self.spawnsilent = 1;scourge_think();ai_right(20);};
-void()   scourge_straferight2   =[ $walk2.asc , scourge_straferight3   ] {ai_right(20);};
-void()   scourge_straferight3   =[ $walk3.asc , scourge_straferight4   ] {ai_right(20);};
-void()   scourge_straferight4   =[ $walk4.asc , scourge_straferight5   ] {ai_right(14);};
-void()   scourge_straferight5   =[ $walk5.asc , scourge_straferight6   ] {ai_right(14);};
-void()   scourge_straferight6   =[ $walk6.asc , scourge_run1   ] {ai_right(14);};
-void()   scourge_turn1  =[ $walk1.asc, scourge_turn2  ] {self.spawnsilent = 1;scourge_think();ai_turn_in_place();};
-void()   scourge_turn2  =[ $walk2.asc, scourge_turn3  ] {ai_turn_in_place();};
-void()   scourge_turn3  =[ $walk3.asc, scourge_turn4  ] {ai_turn_in_place();};
-void()   scourge_turn4  =[ $walk4.asc, scourge_turn5  ] {ai_turn_in_place();};
-void()   scourge_turn5  =[ $walk5.asc, scourge_turn6  ] {ai_turn_in_place();};
-void()   scourge_turn6  =[ $walk6.asc, scourge_turn1  ] {ai_turn_in_place();};
+void()   scourge_run2 =[ $walk2.asc  , scourge_run3 ]
+{scourge_think();ai_run(14);};
+void()   scourge_run3 =[ $walk3.asc  , scourge_run4 ]
+{ai_run(14);};
+void()   scourge_run4 =[ $walk4.asc  , scourge_run5 ]
+{ai_run(14);};
+void()   scourge_run5 =[ $walk5.asc  , scourge_run6 ]
+{ai_run(14);};
+void()   scourge_run6 =[ $walk6.asc  , scourge_run1 ]
+{ai_run(14);};
+void()   scourge_strafeleft1   =[ $walk1.asc , scourge_strafeleft2   ]
+{self.spawnsilent = 1;scourge_think();ai_left(20);};
+void()   scourge_strafeleft2   =[ $walk2.asc , scourge_strafeleft3   ]
+{ai_left(20);};
+void()   scourge_strafeleft3   =[ $walk3.asc , scourge_strafeleft4   ]
+{ai_left(20);};
+void()   scourge_strafeleft4   =[ $walk4.asc , scourge_strafeleft5   ]
+{ai_left(14);};
+void()   scourge_strafeleft5   =[ $walk5.asc , scourge_strafeleft6   ]
+{ai_left(14);};
+void()   scourge_strafeleft6   =[ $walk6.asc , scourge_run1   ]
+{ai_left(14);};
+void()   scourge_straferight1   =[ $walk1.asc , scourge_straferight2   ]
+{self.spawnsilent = 1;scourge_think();ai_right(20);};
+void()   scourge_straferight2   =[ $walk2.asc , scourge_straferight3   ]
+{ai_right(20);};
+void()   scourge_straferight3   =[ $walk3.asc , scourge_straferight4   ]
+{ai_right(20);};
+void()   scourge_straferight4   =[ $walk4.asc , scourge_straferight5   ]
+{ai_right(14);};
+void()   scourge_straferight5   =[ $walk5.asc , scourge_straferight6   ]
+{ai_right(14);};
+void()   scourge_straferight6   =[ $walk6.asc , scourge_run1   ]
+{ai_right(14);};
+void()   scourge_turn1  =[ $walk1.asc, scourge_turn2  ]
+{self.spawnsilent = 1;scourge_think();ai_turn_in_place();};
+void()   scourge_turn2  =[ $walk2.asc, scourge_turn3  ]
+{ai_turn_in_place();};
+void()   scourge_turn3  =[ $walk3.asc, scourge_turn4  ]
+{ai_turn_in_place();};
+void()   scourge_turn4  =[ $walk4.asc, scourge_turn5  ]
+{ai_turn_in_place();};
+void()   scourge_turn5  =[ $walk5.asc, scourge_turn6  ]
+{ai_turn_in_place();};
+void()   scourge_turn6  =[ $walk6.asc, scourge_turn1  ]
+{ai_turn_in_place();};
 void()   scourge_atk1 =[ $shoot1.asc,   scourge_atk2 ]
 {
 	self.spawnsilent = 0;
@@ -214,31 +257,45 @@ void()   scourge_atk8 =[ $shoot2.asc,   scourge_run1 ]
 	SCOURGE_FireSpikes(56);
 	SUB_AttackFinished (4*random());
 };
-void()   scourge_melee1 =[ $sting1.asc,   scourge_melee2 ] {self.spawnsilent = 0;scourge_think();ai_charge(3);};
-void()   scourge_melee2 =[ $sting2.asc,   scourge_melee3 ] {ai_charge(3);};
-void()   scourge_melee3 =[ $sting3.asc,   scourge_melee4 ] {ai_charge(2);};
-void()   scourge_melee4 =[ $sting4.asc,   scourge_melee5 ] {ai_charge(2);};
+void()   scourge_melee1 =[ $sting1.asc,   scourge_melee2 ]
+{self.spawnsilent = 0;scourge_think();ai_charge(3);};
+void()   scourge_melee2 =[ $sting2.asc,   scourge_melee3 ]
+{ai_charge(3);};
+void()   scourge_melee3 =[ $sting3.asc,   scourge_melee4 ]
+{ai_charge(2);};
+void()   scourge_melee4 =[ $sting4.asc,   scourge_melee5 ]
+{ai_charge(2);};
 void()   scourge_melee5 =[ $sting5.asc,   scourge_melee6 ]
 {
 	sound (self, CHAN_WEAPON, "scourge/tailswng.wav", 1, ATTN_NORM);
 	ai_charge(3);
 };
-void()   scourge_melee6 =[ $sting6.asc,   scourge_melee7 ] {ai_charge(1);};
+void()   scourge_melee6 =[ $sting6.asc,   scourge_melee7 ]
+{ai_charge(1);};
 void()   scourge_melee7   =[ $sting7.asc,   scourge_melee8   ]
 {
 	Attack_With_Tail();
 };
-void()   scourge_melee8   =[ $sting8.asc,   scourge_melee9   ] {ai_face();};
-void()   scourge_melee9   =[ $sting9.asc,   scourge_melee10   ] {ai_face();};
-void()   scourge_melee10   =[ $sting10.asc,   scourge_melee11   ] {ai_face();};
-void()   scourge_melee11   =[ $sting11.asc,  scourge_run1 ] {ai_face();
+void()   scourge_melee8   =[ $sting8.asc,   scourge_melee9   ]
+{ai_face();};
+void()   scourge_melee9   =[ $sting9.asc,   scourge_melee10   ]
+{ai_face();};
+void()   scourge_melee10   =[ $sting10.asc,   scourge_melee11   ]
+{ai_face();};
+void()   scourge_melee11   =[ $sting11.asc,  scourge_run1 ]
+{ai_face();
 SUB_CheckRefire (scourge_melee1);
 };
-void()   scourge_pain1  =[ $pain1.asc, scourge_pain2  ] {self.spawnsilent = 0;scourge_think();};
-void()   scourge_pain2  =[ $pain2.asc, scourge_pain3  ] {};
-void()   scourge_pain3  =[ $pain3.asc, scourge_pain4  ] {};
-void()   scourge_pain4  =[ $pain4.asc, scourge_pain5  ] {};
-void()   scourge_pain5  =[ $pain5.asc, scourge_run1 ] {};
+void()   scourge_pain1  =[ $pain1.asc, scourge_pain2  ]
+{self.spawnsilent = 0;scourge_think();};
+void()   scourge_pain2  =[ $pain2.asc, scourge_pain3  ]
+{};
+void()   scourge_pain3  =[ $pain3.asc, scourge_pain4  ]
+{};
+void()   scourge_pain4  =[ $pain4.asc, scourge_pain5  ]
+{};
+void()   scourge_pain5  =[ $pain5.asc, scourge_run1 ]
+{};
 void(entity attacker, float damage) scourge_pain =
 {
 	local float r;
@@ -251,11 +308,16 @@ void(entity attacker, float damage) scourge_pain =
 	self.pain_finished = time + 2.0;
 	scourge_pain1 ();
 };
-void()   scourge_die1 =[ $death1.asc, scourge_die2 ] {self.spawnsilent = 0;scourge_think();};
-void()   scourge_die2 =[ $death2.asc, scourge_die3 ] {};
-void()   scourge_die3 =[ $death3.asc, scourge_die4 ] {self.solid = SOLID_NOT;};
-void()   scourge_die4 =[ $death4.asc, scourge_die5 ] {};
-void()   scourge_die5 =[ $death5.asc, scourge_die5 ] {};
+void()   scourge_die1 =[ $death1.asc, scourge_die2 ]
+{self.spawnsilent = 0;scourge_think();};
+void()   scourge_die2 =[ $death2.asc, scourge_die3 ]
+{};
+void()   scourge_die3 =[ $death3.asc, scourge_die4 ]
+{self.solid = SOLID_NOT;};
+void()   scourge_die4 =[ $death4.asc, scourge_die5 ]
+{};
+void()   scourge_die5 =[ $death5.asc, scourge_die5 ]
+{};
 void() scourge_die =
 {
 if (self.lastvictim != world) // < - !!!

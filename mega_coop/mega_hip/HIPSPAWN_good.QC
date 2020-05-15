@@ -1,21 +1,25 @@
 void() spawn_think =
-   {
+  
+{
 return;
    self.think = spawn_think;
    self.nextthink = time + 1;
    };
 void() spawn_use =
-   {
+  
+{
    local entity spawnentity;
    local entity tempself;
    if ((self.spawnmulti == 1) || (horn_active))
-      {
+     
+{
       // spawn the new entity
       spawnentity = spawn();
       SUB_CopyEntity(self.spawnmaster,spawnentity);
       }
    else
-      {
+     
+{
       spawnentity = self.spawnmaster;
       }
    spawnentity.model = spawnentity.spawnmodel;
@@ -29,31 +33,37 @@ void() spawn_use =
    if (self.spawnsilent == 0)
       spawn_tfog (spawnentity.origin);
    if (horn_active)
-      {
+     
+{
       spawnentity.charmer = horn_charmer;
       spawnentity.charmed = 1;
       }
    if (spawnentity.flags & FL_MONSTER)
-      {
+     
+{
       if ((self.spawnmulti != 0) && (horn_active == 0))
-         {
+        
+{
          total_monsters = total_monsters + 1;
          WriteByte (MSG_BROADCAST, SVC_UPDATESTAT);
          WriteByte (MSG_BROADCAST, STAT_TOTALMONSTERS);
          WriteLong (MSG_BROADCAST, total_monsters);
          }
       if (horn_active)
-         {
+        
+{
          spawnentity.effects = spawnentity.effects | EF_DIMLIGHT;
          }
       }
    if ((self.spawnmulti == 0) && (horn_active == 0))
-      {
+     
+{
       remove(self);
       }
    };
 void() func_spawn1 =
-   {
+  
+{
 dremove(self); //xavior:EVIl!
    local entity tempself;
    local entity monster;
@@ -64,7 +74,8 @@ dremove(self); //xavior:EVIl!
    tempdeathmatch = deathmatch;
    deathmatch = 0;
    if (!self.spawnfunction)
-      {
+     
+{
       local float spawnchance;
       spawnchance = random();
       monster = tempself;
@@ -86,7 +97,8 @@ dremove(self); //xavior:EVIl!
       self.think = spawn_think;
       self.nextthink = time + 1;
       if (spawnchance<0.5 && monster==tempself)
-         {
+        
+{
          monster = self;
          }
       self = spawn();
@@ -106,7 +118,8 @@ dremove(self); //xavior:EVIl!
       self.think = spawn_think;
       self.nextthink = time + 1;
       if (spawnchance<0.8 && monster==tempself)
-         {
+        
+{
          monster = self;
          }
       self = spawn();
@@ -126,7 +139,8 @@ dremove(self); //xavior:EVIl!
       self.think = spawn_think;
       self.nextthink = time + 1;
       if (spawnchance<0.92 && monster==tempself)
-         {
+        
+{
          monster = self;
          }
       self = spawn();
@@ -146,7 +160,8 @@ dremove(self); //xavior:EVIl!
       self.think = spawn_think;
       self.nextthink = time + 1;
       if (spawnchance<0.97 && monster==tempself)
-         {
+        
+{
          monster = self;
          }
       self = spawn();
@@ -166,24 +181,28 @@ dremove(self); //xavior:EVIl!
       self.think = spawn_think;
       self.nextthink = time + 1;
       if (monster==tempself)
-         {
+        
+{
          monster = self;
          }
       total_monsters = temptotal_monsters + 1;
       }
    else
-      {
+     
+{
       self = spawn();
       SUB_CopyEntity(tempself,self);
       temptotal_monsters = total_monsters;
       if (self.spawnclassname == string_null)
-         {
+        
+{
          objerror("No spawnclassname defined");
          }
       self.classname = self.spawnclassname;
       self.spawnfunction();
       if (self.spawnmulti != 0)
-         {
+        
+{
          total_monsters = temptotal_monsters;
          }
       self.spawnmodel = self.model;
