@@ -245,13 +245,15 @@ void () TeamFortress_DetpackSet =
 };
 void () TeamFortress_DetpackTouch =
 {
-	if (olddisarm != 1) {
+	if (olddisarm != 1)
+{
 	if ((other.classname != "player"))
 	{
 		sound (self, 3.000000, "zombie/z_hit.wav", 1.000000, 1.000000);
 	}
 	}
-	else {
+	else
+{
 	local entity disarm;
 	if (other.classname != "player")
 	{

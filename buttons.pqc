@@ -37,7 +37,8 @@ void() button_fire =
 	self.state = 2;
 #ifdef mtf_coop_halflife
 	if (#HL_MAP)
-		if (self.spawnflags & 1) {
+		if (self.spawnflags & 1)
+{
 			SUB_CalcMove(self.origin, self.speed, button_wait);
 			return;
 		}
@@ -86,7 +87,8 @@ void() button_touch =
 void() button_killed = 
 {
 #ifdef mtf_coop_halflife
-	if (has_master(self)) {
+	if (has_master(self))
+{
 		self.health = 1;
 		return;
 	}
@@ -104,7 +106,8 @@ void () movewith_think =
 {
 	local vector moveme;
 
-	if (((self.enemy.absmin+self.enemy.absmax)*0.5) != self.enemy.orig_origin) {
+	if (((self.enemy.absmin+self.enemy.absmax)*0.5) != self.enemy.orig_origin)
+{
 		moveme = ((self.enemy.absmin+self.enemy.absmax)*0.5) - self.enemy.orig_origin;
 		setorigin(self.owner, (self.owner.orig_origin + moveme));
 	}
@@ -115,7 +118,8 @@ void () movewith_firstthink =
 	local entity fent;
 	self.owner.orig_origin = self.owner.origin;
 	fent = find(world, targetname, self.owner.movewith);
-	while (fent) {
+	while (fent)
+{
 		self.enemy = fent;
 		fent.orig_origin = ((fent.mins+fent.maxs)*0.5);
 		fent = find(fent, targetname, self.owner.movewith);
@@ -199,12 +203,16 @@ void() func_button =
 	self.pos1 = self.origin;
 	self.pos2 = self.pos1 + self.movedir * (fabs(self.movedir * self.size) - self.lip);
 #ifdef mtf_coop_halflife
-	if (mapname == "c1a1c") {
+	if (mapname == "c1a1c")
+{
 		if (self.model == "*113")
 			self.target = "changetoc1a2";
 	}
-	else if (mapname == "c1a3d") {
-		if (self.target == "c1a3_liftdoor01") {
+	else
+	if (mapname == "c1a3d")
+	{
+		if (self.target == "c1a3_liftdoor01")
+		{
 			newmis = spawn();
 			newmis.classname = "trigger_once";
 			newmis.wait = -1;
@@ -215,8 +223,11 @@ void() func_button =
 			return;
 		}
 	}
-	else if (mapname == "c1a3a") {
-		if (self.target == "c1a3_liftdoor03") {
+	else
+	if (mapname == "c1a3a")
+	{
+		if (self.target == "c1a3_liftdoor03")
+		{
 			newmis = spawn();
 			newmis.classname = "trigger_once";
 			newmis.wait = -1;
@@ -227,8 +238,11 @@ void() func_button =
 			return;
 		}
 	}
-	else if (mapname == "c2a1a") {
-		if (self.target == "p_mm2") {
+	else
+	if (mapname == "c2a1a")
+	{
+		if (self.target == "p_mm2")
+		{
 			self.max_health = 1;
 			self.th_die = button_killed;
 			self.takedamage = 1;

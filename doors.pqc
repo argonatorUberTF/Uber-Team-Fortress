@@ -121,7 +121,8 @@ void() door_hit_bottom =
 			self.solid = SOLID_TRIGGER;
 #endif
 	}
-	if (#HL_MAP) {
+	if (#HL_MAP)
+{
 		if (self.spawnflags & 256)	// use only.. which means killable too :p
 		{
 			self.takedamage = 1;
@@ -151,7 +152,8 @@ void() door_go_down =
 	self.state = 3;
 	
 #ifdef mtf_coop_halflife
-	if (self.classname == "door_rotating") {
+	if (self.classname == "door_rotating")
+{
 		SUB_CalcAngleMove (self.pos1, self.speed, door_hit_bottom);
 		SUB_UseTargets();
 		self.takedamage = 0;
@@ -182,7 +184,8 @@ void() door_go_up =
 	sound(self, 2, self.noise2, TF_FLARE_OFF, TF_FLARE_OFF);
 	self.state = 2;
 #ifdef mtf_coop_halflife
-	if (self.classname == "door_rotating") {
+	if (self.classname == "door_rotating")
+{
 		SUB_CalcAngleMove (self.pos2, self.speed, door_hit_top);
 		self.takedamage = 0;
 	}
@@ -195,7 +198,8 @@ void() door_go_up =
 		SUB_CalcMove (self.pos2, self.speed, door_hit_top);
 	SUB_UseTargets();
 	
-	if (self.classname == "door_rotating") {
+	if (self.classname == "door_rotating")
+{
 	}
 };
 void() door_fire = 
@@ -240,12 +244,14 @@ void() door_use =
 #ifdef mtf_coop_halflife
 	if (has_master(self))
 		return;
-	if (#HL_MAP) {		// FIXME: not sure about this 
+	if (#HL_MAP)
+{		// FIXME: not sure about this 
 		self.enemy = self;
 		self.owner = self;
 	}
 	self.hl_use = SUB_Null;		// disable use for now..
-	if (#HL_MAP) {
+	if (#HL_MAP)
+{
 	
 		if (self.targetname == "sl10_door" || self.targetname == "sl09_door" || self.targetname == "sl08_door")
 			return;
@@ -386,7 +392,8 @@ void() door_touch =
 	}
 	
 #ifdef HALFLIFE
-	if (#HL_MAP) {}
+	if (#HL_MAP)
+{}
 	else
 #endif
 	if ((self.items & other.items) != self.items)
@@ -485,7 +492,8 @@ entity(vector fmins, vector fmaxs) spawn_field =
 		trigger.touch = wolfdoor_trigger_touch;
 		if (self.movedir_x >= 1 || self.movedir_x <= -1)
 			setsize (trigger, fmins - '0 60 0', fmaxs + '0 60 0');
-		else if (self.movedir_y >= 1 || self.movedir_y <= -1)
+		else
+		if (self.movedir_y >= 1 || self.movedir_y <= -1)
 			setsize (trigger, fmins - '60 0 0', fmaxs + '60 0 0');
 		else
 			setsize (trigger, fmins - '60 60 0', fmaxs + '60 60 0');
@@ -808,7 +816,8 @@ void() func_door =
 	
 	if (#DOOM_MAP)
 		self.dmg = self.dmg * 100;
-	if (mapname == "rub2m1" || mapname == "rub2m2" || mapname == "rub2m3") {
+	if (mapname == "rub2m1" || mapname == "rub2m2" || mapname == "rub2m3")
+{
 		if (!self.movedir)
 		{
 			SetMovedir ();

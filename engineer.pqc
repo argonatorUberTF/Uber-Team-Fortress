@@ -200,7 +200,8 @@ void (float chargeDmg) W_FireLaser =
 	local vector org;
 	if ((self.option6 != 0))
 	{
-		if (infokey (world, "superrail") == "1") {
+		if (infokey (world, "superrail") == "1")
+{
 			self.ammo_nails = (self.ammo_nails - 5);
 			self.currentammo = (self.ammo_nails);
 			self.heat = TF_FLARE_LIT;
@@ -478,7 +479,8 @@ void(float objtobuild) TeamFortress_Build =
 	if (CheckArea(newmis, self) == TF_FLARE_LIT)
 	{
 #ifdef mtf_coop_halflife
-		if (self.classname != "player") {
+		if (self.classname != "player")
+{
 			bprint(2,"COULDNT SPAWN A SENTRYGUN\n");
 			dremove(self);
 			dremove(newmis);
@@ -489,7 +491,8 @@ void(float objtobuild) TeamFortress_Build =
 		dremove(newmis);
 		return;
 	}
-	if (infokey(world, "doorbuild") == "0") {
+	if (infokey(world, "doorbuild") == "0")
+{
 	local entity isneardoor;
 	isneardoor = findradius (newmis.origin, 200);
 	while (isneardoor)
@@ -704,7 +707,8 @@ void() TeamFortress_FinishedBuilding =
 			newmis.maxammo_shells = 100;
 			newmis.maxammo_rockets = 20;
 #ifdef mtf_coop_halflife
-			if (self.classname == "monster_sentry") {
+			if (self.classname == "monster_sentry")
+{
 				self.building = newmis;
 			}
 #endif
@@ -756,7 +760,8 @@ void() TeamFortress_FinishedBuilding =
 				oldself.health = oldself.max_health;
 				oldself.waitmin = ((oldself.ammo_shells + 2) * (oldself.ammo_nails + 2));
 				oldself.waitmax = TF_FLARE_LIT;
-				if (infokey(world, "balancedtesla") == "1") {
+				if (infokey(world, "balancedtesla") == "1")
+{
 				oldself.currentammo = 2; }
 				oldself.currentammo = 5 - self.ammo_attr;
 				if (oldself.currentammo < 0)
@@ -1045,7 +1050,8 @@ void (entity gunhead) CheckSentry =
 void () CheckDistance =
 {
 	local vector dist;
-	if (!(self.owner.building.classname == "building_tesla" && self.enemy.classname == "building_dispenser")) {
+	if (!(self.owner.building.classname == "building_tesla" && self.enemy.classname == "building_dispenser"))
+{
 	if ((self.owner.building != self.enemy))
 	{
 		dremove (self);
@@ -1083,7 +1089,8 @@ void(entity tele) Engineer_UseTeleporter =
 	self.current_menu = 33;
 	self.menu_count = 25;
 	self.building = tele;
-	if (teamplay != 0 && !Teammate(self.building.real_owner.team_no,self.team_no)) {
+	if (teamplay != 0 && !Teammate(self.building.real_owner.team_no,self.team_no))
+{
 		Menu_EngineerFix_Teleporter_Input(4);
 		return;
 	}
@@ -1108,7 +1115,8 @@ void(entity cam) Engineer_UseCamera =
 	self.current_menu = 34;
 	self.menu_count = 25;
 	self.building = cam;
-	if (teamplay != 0 && !Teammate(self.building.real_owner.team_no,self.team_no)) {
+	if (teamplay != 0 && !Teammate(self.building.real_owner.team_no,self.team_no))
+{
 		Menu_EngineerFix_Camera_Input(3);
 		return;
 	}

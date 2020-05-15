@@ -11,7 +11,8 @@ float() CheckAttack =
 	spot1 = self.origin + self.view_ofs;
 	spot2 = targ.origin + targ.view_ofs;
 	traceline(spot1, spot2, TF_FLARE_LIT, self);
-	if (self.enemy == self.owner && self.enemy.team_no == self.team_no) {
+	if (self.enemy == self.owner && self.enemy.team_no == self.team_no)
+{
 		return 0;
 	}
 	if (trace_ent != targ)
