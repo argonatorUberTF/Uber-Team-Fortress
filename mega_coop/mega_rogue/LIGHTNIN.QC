@@ -48,7 +48,8 @@ void() ltrail_start_fire =
 				self.spawnflags = self.spawnflags + LT_ACTIVE;
 			}
 		}
-		else if (!(self.spawnflags & LT_ACTIVE))
+		else
+if (!(self.spawnflags & LT_ACTIVE))
 			return;
 	}
 		
@@ -58,7 +59,8 @@ void() ltrail_start_fire =
 		ltrail_fire();
 		self.ltrailLastUsed = time;
 	}
-	else if (self.classname == "ltrail_relay")
+	else
+if (self.classname == "ltrail_relay")
 	{
 		self.items = time + self.weapon;
 		ltrail_fire();

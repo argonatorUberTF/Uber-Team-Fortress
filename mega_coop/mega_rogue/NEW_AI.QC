@@ -4,7 +4,8 @@ void(entity destEnt, float radius, vector offset) ai_orbit =
 	local float dist;
 	if (self.orbitPosition > 3)
 		self.orbitPosition = 0;
-	else if (self.orbitPosition < 0)
+	else
+if (self.orbitPosition < 0)
 		self.orbitPosition = 0;
 	traceline ( self.origin, destEnt.origin + offset, TRUE, world);
 	if ( trace_fraction < 1 )

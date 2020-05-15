@@ -30,7 +30,8 @@ void() dn_and_wait_crush =
 	T_Damage (other, self, self, 1);
 	if (self.state == STATE_UP)
 		dn_and_wait_go_down ();
-	else if (self.state == STATE_DOWN)
+	else
+if (self.state == STATE_DOWN)
 		dn_and_wait_go_up ();
 	else
 		objerror ("plat_new_crush: bad self.state\n");
@@ -71,7 +72,8 @@ void() toggle_crush =
 	T_Damage (other, self, self, 1);
 	if (self.state == STATE_UP)
 		toggle_go_down ();
-	else if (self.state == STATE_DOWN)
+	else
+if (self.state == STATE_DOWN)
 		toggle_go_up ();
 	else
 		objerror ("plat_new_crush: bad self.state\n");
@@ -80,7 +82,8 @@ void() toggle_use =
 {
 	if (self.state == STATE_TOP)
 		toggle_go_down ();
-	else if(self.state == STATE_BOTTOM)
+	else
+if(self.state == STATE_BOTTOM)
 		toggle_go_up ();
 };
 void() elvtr_crush;
@@ -144,7 +147,8 @@ void() elvtr_use =
 			elvtr_go ();
 		}
 	}
-	else if(ELV_BUTN_DIR == 1)
+	else
+if(ELV_BUTN_DIR == 1)
 	{
 		if(self.elevatorOnFloor < (self.cnt - 1))
 		{
@@ -196,7 +200,8 @@ void() plat2_hit_top =
 		self.plat2Called = 0;
 		self.plat2LastMove = 0; // allow immediate move
 	}
-	else if(!(self.spawnflags & START_AT_TOP))
+	else
+if(!(self.spawnflags & START_AT_TOP))
 	{
 		self.think = plat2_go_down;
 		self.nextthink = self.ltime + self.delay;
@@ -215,7 +220,8 @@ void() plat2_hit_bottom =
 		self.plat2Called = 0;
 		self.plat2LastMove = 0; // allow immediate move
 	}
-	else if(self.spawnflags & START_AT_TOP)
+	else
+if(self.spawnflags & START_AT_TOP)
 	{	
 		self.think = plat2_go_up;
 		self.nextthink = self.ltime + self.delay;
@@ -293,7 +299,8 @@ void() plat2_center_touch =
 	}	
 	if (self.state == STATE_BOTTOM)
 		self.plat2GoTo = STATE_UP;
-	else if(self.state == STATE_TOP)
+	else
+if(self.state == STATE_TOP)
 		self.plat2GoTo = STATE_DOWN;
 };
 void() plat2_crush =
@@ -301,7 +308,8 @@ void() plat2_crush =
 	T_Damage (other, self, self, 1);
 	if (self.state == STATE_UP)
 		plat2_go_down ();
-	else if (self.state == STATE_DOWN)
+	else
+if (self.state == STATE_DOWN)
 		plat2_go_up ();
 	else
 		objerror ("plat2_crush: bad self.state\n");
@@ -369,7 +377,8 @@ void() func_new_plat =
 		if (!self.health)
 			self.health = 5;
 	}
-	else if (self.spawnflags & PLT_TOGGLE)
+	else
+if (self.spawnflags & PLT_TOGGLE)
 	{
 		self.use = toggle_use;
 		self.blocked = toggle_crush;
@@ -383,7 +392,8 @@ void() func_new_plat =
 			self.state = STATE_TOP;
 		}
 	}
-	else if (self.spawnflags & ELEVATOR)
+	else
+if (self.spawnflags & ELEVATOR)
 	{
 		self.elevatorOnFloor = 0;
 		self.elevatorToFloor = 0;
@@ -405,7 +415,8 @@ void() func_new_plat =
 		self.use = elvtr_use;
 		self.blocked = elvtr_crush;
 	}
-	else if (self.spawnflags & PLAT2)
+	else
+if (self.spawnflags & PLAT2)
 	{
 		plat2_spawn_inside_trigger ();	// the "start moving" trigger	
 		self.plat2Called = 0;

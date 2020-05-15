@@ -43,7 +43,8 @@ void() pend_swing5   =[ $frame5,  pend_swing6  ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -110 -72', '8 -38 -8' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '-110 -8 -72', '-38 8 -8' );
 	self.nextthink = time + 0.09;
 };
@@ -78,7 +79,8 @@ void() pend_swing9   =[ $frame9,  pend_swing10 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 38 -72', '8 100 -8' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '38 -8 -72', '100 8 -8' );
 	self.nextthink = time + 0.09;
 };
@@ -86,7 +88,8 @@ void() pend_swing10  =[ $frame10, pend_swing11 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 70 -51', '8 138 17' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '70 -8 -51', '138 8 17' );
 	self.nextthink = time + 0.11;
 };
@@ -94,7 +97,8 @@ void() pend_swing11  =[ $frame11, pend_swing12 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 96 -22', '8 160 50' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '96 -8 -22', '160 8 50' );
 	self.nextthink = time + 0.13;
 };
@@ -102,7 +106,8 @@ void() pend_swing12  =[ $frame12, pend_swing13 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 112 12', '8 172 88' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '112 -8 12', '172 8 88' );
 	self.nextthink = time + 0.15;
 };
@@ -110,7 +115,8 @@ void() pend_swing13  =[ $frame13, pend_swing14 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 120 48', '8 176 128' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '120 -8 48', '176 8 128' );
 	self.nextthink = time + 0.17;
 };
@@ -122,7 +128,8 @@ void() pend_swing15  =[ $frame12, pend_swing16 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 112 12', '8 172 88' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '112 -8 12', '172 8 88' );
 	self.nextthink = time + 0.15;
 	impactVelocity = -1;
@@ -131,7 +138,8 @@ void() pend_swing16  =[ $frame11, pend_swing17 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 96 -22', '8 160 50' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '96 -8 -22', '160 8 50' );
 	self.nextthink = time + 0.13;
 };
@@ -140,7 +148,8 @@ void() pend_swing17  =[ $frame10, pend_swing18 ]
 	sound ( self, CHAN_AUTO, "pendulum/swing.wav", 0.5, ATTN_NORM);
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 70 -51', '8 138 17' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '70 -8 -51', '138 8 17' );
 	self.nextthink = time + 0.11;
 };
@@ -148,7 +157,8 @@ void() pend_swing18  =[ $frame9,  pend_swing19 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 38 -72', '8 100 -8' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '38 -8 -72', '100 8 -8' );
 	self.nextthink = time + 0.09;
 };
@@ -156,7 +166,8 @@ void() pend_swing19  =[ $frame8,  pend_swing20 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 0 -83', '8 76 -23' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '0 -8 -83', '76 8 -23' );
 	self.nextthink = time + 0.07;
 };
@@ -164,7 +175,8 @@ void() pend_swing20  =[ $frame7,  pend_swing21 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -40 -88', '8 40 -32' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '-40 -8 -88', '40 8 -32' );
 	self.nextthink = time + 0.05;
 };
@@ -190,7 +202,8 @@ void() pend_swing23  =[ $frame4,  pend_swing24 ]
 { 
 	if( self.spawnflags & PEND_Y)
 		setsize ( self, '-8 -172 -51', '8 -70 17' );
-	else if ( self.spawnflags & PEND_X )
+	else
+if ( self.spawnflags & PEND_X )
 		setsize ( self, '-172 -8 -51', '-70 8 17' );
 	self.nextthink = time + 0.11;
 };
@@ -235,7 +248,8 @@ void() pend_touch =
 	{
 		other.velocity_y = impactVelocity * -250;
 	}
-	else if(self.spawnflags & PEND_X)
+	else
+if(self.spawnflags & PEND_X)
 	{
 		other.velocity_x = impactVelocity * 250;
 	}

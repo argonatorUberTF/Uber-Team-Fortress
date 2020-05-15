@@ -525,8 +525,10 @@ void() actor_fire1 =[$rockatt1, actor_fire2 ]
 	};
 void() actor_fire2 =[$rockatt2, actor_fire3 ] 
 	{self.v_angle_x = 0; self.angles_x = 0; self.nextthink=time+0.15;};
-void() actor_fire3 =[$rockatt3, actor_fire4 ] {self.nextthink=time+0.15;};
-void() actor_fire4 =[$rockatt4, actor_fire5 ] {self.nextthink=time+0.15;};
+void() actor_fire3 =[$rockatt3, actor_fire4 ]
+{self.nextthink=time+0.15;};
+void() actor_fire4 =[$rockatt4, actor_fire5 ]
+{self.nextthink=time+0.15;};
 void() actor_fire5 =[$rockatt5, actor_fire6 ] 
 	{
 		self.nextthink=time+0.15;
@@ -539,20 +541,34 @@ void() actor_fire5 =[$rockatt5, actor_fire6 ]
 	};
 void() actor_fire6 =[$rockatt6, actor_fire7 ] 
 	{ self.effects=0;self.nextthink=time+0.15;};
-void() actor_fire7 =[$stand1,  actor_fire8 ] {self.nextthink=time+0.15;};
-void() actor_fire8 =[$stand2,  actor_fire9 ] {self.nextthink=time+0.15;};
-void() actor_fire9 =[$stand3,  actor_fire10 ] {self.nextthink=time+0.15;};
-void() actor_fire10 =[$stand4, actor_fire11 ] {self.nextthink=time+0.15;};
-void() actor_fire11 =[$stand5, actor_fire12 ] {self.nextthink=time+0.15;};
-void() actor_fire12 =[$stand1, actor_fire13 ] {self.nextthink=time+0.15;};
-void() actor_fire13 =[$stand2, actor_fire14 ] {self.nextthink=time+0.15;};
-void() actor_fire14 =[$stand3, actor_fire15 ] {self.nextthink=time+0.15;};
-void() actor_fire15 =[$stand4, actor_fire16 ] {self.nextthink=time+0.15;};
-void() actor_fire16 =[$stand5, actor_fire17 ] {self.nextthink=time+0.15;};
-void() actor_fire17 =[$stand1, actor_fire18 ] {self.nextthink=time+0.15;};
-void() actor_fire18 =[$stand2, actor_fire19 ] {self.nextthink=time+0.15;};
-void() actor_fire19 =[$stand3, actor_fire20 ] {self.nextthink=time+0.15;};
-void() actor_fire20 =[$stand4, actor_fire21 ] {self.nextthink=time+0.15;};
+void() actor_fire7 =[$stand1,  actor_fire8 ]
+{self.nextthink=time+0.15;};
+void() actor_fire8 =[$stand2,  actor_fire9 ]
+{self.nextthink=time+0.15;};
+void() actor_fire9 =[$stand3,  actor_fire10 ]
+{self.nextthink=time+0.15;};
+void() actor_fire10 =[$stand4, actor_fire11 ]
+{self.nextthink=time+0.15;};
+void() actor_fire11 =[$stand5, actor_fire12 ]
+{self.nextthink=time+0.15;};
+void() actor_fire12 =[$stand1, actor_fire13 ]
+{self.nextthink=time+0.15;};
+void() actor_fire13 =[$stand2, actor_fire14 ]
+{self.nextthink=time+0.15;};
+void() actor_fire14 =[$stand3, actor_fire15 ]
+{self.nextthink=time+0.15;};
+void() actor_fire15 =[$stand4, actor_fire16 ]
+{self.nextthink=time+0.15;};
+void() actor_fire16 =[$stand5, actor_fire17 ]
+{self.nextthink=time+0.15;};
+void() actor_fire17 =[$stand1, actor_fire18 ]
+{self.nextthink=time+0.15;};
+void() actor_fire18 =[$stand2, actor_fire19 ]
+{self.nextthink=time+0.15;};
+void() actor_fire19 =[$stand3, actor_fire20 ]
+{self.nextthink=time+0.15;};
+void() actor_fire20 =[$stand4, actor_fire21 ]
+{self.nextthink=time+0.15;};
 void() actor_fire21 =[$stand5, actor_control ] 
 	{
 		self.nextthink=time+0.15;

@@ -117,7 +117,8 @@ void(float dist) dragon_move =
 		
 		if (leftTurn < 0)
 			leftTurn = 360;
-		else if (rightTurn < 0)
+		else
+if (rightTurn < 0)
 			rightTurn = 360;
 		self.yaw_speed = 10;
 		if (rightTurn < 180)
@@ -149,18 +150,22 @@ void(float dist) dragon_move =
             turnOffset = leftTurn;
 		}
 	}
-	else if (self.angles_z != 0)
+	else
+if (self.angles_z != 0)
 	{
 		if (self.angles_z < -5)
 			self.angles_z = self.angles_z + 5;
-		else if (self.angles_z < 5)
+		else
+if (self.angles_z < 5)
 			self.angles_z = 0;
-		else if (self.angles_z > 5)
+		else
+if (self.angles_z > 5)
 			self.angles_z = self.angles_z - 5;
 	}
 	if ( moveDir_z > 5)
 		setorigin ( self, self.origin + '0 0 5');
-	else if ( moveDir_z < -5) 
+	else
+if ( moveDir_z < -5) 
 		setorigin ( self, self.origin - '0 0 5'); 
 	moveAngles = self.origin;
 	walkmove ( self.angles_y, dist );
@@ -371,38 +376,68 @@ void() dragon_tail =
 	}
 	dragon_stop_attack();
 };
-void() dragon_melee1=[$drgslh01, dragon_melee2 ] { dragon_move(12);};
-void() dragon_melee2=[$drgslh02, dragon_melee3 ] { dragon_move(12);};
-void() dragon_melee3=[$drgslh03, dragon_melee4 ] { dragon_move(12);};
-void() dragon_melee4=[$drgslh04, dragon_melee5 ] { dragon_move(12);};
-void() dragon_melee5=[$drgslh05, dragon_melee6 ] { dragon_move(12);};
-void() dragon_melee6=[$drgslh06, dragon_melee7 ] { dragon_move(12);};
-void() dragon_melee7=[$drgslh07, dragon_melee8 ] { dragon_move(12);};
-void() dragon_melee8=[$drgslh08, dragon_melee9 ] { dragon_move(12);};
-void() dragon_melee9=[$drgslh09, dragon_melee10] { dragon_move(12);};
-void() dragon_melee10=[$drgslh10, dragon_melee11] { dragon_tail();};
-void() dragon_melee11=[$drgslh11, dragon_melee12] { dragon_move(10);};
-void() dragon_melee12=[$drgslh12, dragon_melee13] { dragon_move(10);};
+void() dragon_melee1=[$drgslh01, dragon_melee2 ]
+{ dragon_move(12);};
+void() dragon_melee2=[$drgslh02, dragon_melee3 ]
+{ dragon_move(12);};
+void() dragon_melee3=[$drgslh03, dragon_melee4 ]
+{ dragon_move(12);};
+void() dragon_melee4=[$drgslh04, dragon_melee5 ]
+{ dragon_move(12);};
+void() dragon_melee5=[$drgslh05, dragon_melee6 ]
+{ dragon_move(12);};
+void() dragon_melee6=[$drgslh06, dragon_melee7 ]
+{ dragon_move(12);};
+void() dragon_melee7=[$drgslh07, dragon_melee8 ]
+{ dragon_move(12);};
+void() dragon_melee8=[$drgslh08, dragon_melee9 ]
+{ dragon_move(12);};
+void() dragon_melee9=[$drgslh09, dragon_melee10]
+{ dragon_move(12);};
+void() dragon_melee10=[$drgslh10, dragon_melee11]
+{ dragon_tail();};
+void() dragon_melee11=[$drgslh11, dragon_melee12]
+{ dragon_move(10);};
+void() dragon_melee12=[$drgslh12, dragon_melee13]
+{ dragon_move(10);};
 void() dragon_melee13=[$drgslh13, dragon_walk1 ] 
 { dragon_move(10);};
-void() dragon_painA1 = [ $drgpan1a, dragon_painA2 ] {dragon_move(12);};
-void() dragon_painA2 = [ $drgpan1b, dragon_painA3 ] {dragon_move(12);};
-void() dragon_painA3 = [ $drgpan1c, dragon_walk5 ] {dragon_move(12);};
-void() dragon_painB1 = [ $drgpan2a, dragon_painB2 ] {dragon_move(12);};
-void() dragon_painB2 = [ $drgpan2b, dragon_painB3 ] {dragon_move(12);};
-void() dragon_painB3 = [ $drgpan2c, dragon_walk7 ] {dragon_move(12);};
-void() dragon_painC1 = [ $drgpan3a, dragon_painC2 ] {dragon_move(12);};
-void() dragon_painC2 = [ $drgpan3b, dragon_painC3 ] {dragon_move(12);};
-void() dragon_painC3 = [ $drgpan3c, dragon_walk9 ] {dragon_move(12);};
-void() dragon_painD1 = [ $drgpan4a, dragon_painD2 ] {dragon_move(12);};
-void() dragon_painD2 = [ $drgpan4b, dragon_painD3 ] {dragon_move(12);};
-void() dragon_painD3 = [ $drgpan4c, dragon_walk11 ] {dragon_move(12);};
-void() dragon_painE1 = [ $drgpan5a, dragon_painE2 ] {dragon_move(12);};
-void() dragon_painE2 = [ $drgpan5b, dragon_painE3 ] {dragon_move(12);};
-void() dragon_painE3 = [ $drgpan5c, dragon_walk13 ] {dragon_move(12);};
-void() dragon_painF1 = [ $drgpan6a, dragon_painF2 ] {dragon_move(12);};
-void() dragon_painF2 = [ $drgpan6b, dragon_painF3 ] {dragon_move(12);};
-void() dragon_painF3 = [ $drgpan6c, dragon_walk2 ] {dragon_move(12);};
+void() dragon_painA1 = [ $drgpan1a, dragon_painA2 ]
+{dragon_move(12);};
+void() dragon_painA2 = [ $drgpan1b, dragon_painA3 ]
+{dragon_move(12);};
+void() dragon_painA3 = [ $drgpan1c, dragon_walk5 ]
+{dragon_move(12);};
+void() dragon_painB1 = [ $drgpan2a, dragon_painB2 ]
+{dragon_move(12);};
+void() dragon_painB2 = [ $drgpan2b, dragon_painB3 ]
+{dragon_move(12);};
+void() dragon_painB3 = [ $drgpan2c, dragon_walk7 ]
+{dragon_move(12);};
+void() dragon_painC1 = [ $drgpan3a, dragon_painC2 ]
+{dragon_move(12);};
+void() dragon_painC2 = [ $drgpan3b, dragon_painC3 ]
+{dragon_move(12);};
+void() dragon_painC3 = [ $drgpan3c, dragon_walk9 ]
+{dragon_move(12);};
+void() dragon_painD1 = [ $drgpan4a, dragon_painD2 ]
+{dragon_move(12);};
+void() dragon_painD2 = [ $drgpan4b, dragon_painD3 ]
+{dragon_move(12);};
+void() dragon_painD3 = [ $drgpan4c, dragon_walk11 ]
+{dragon_move(12);};
+void() dragon_painE1 = [ $drgpan5a, dragon_painE2 ]
+{dragon_move(12);};
+void() dragon_painE2 = [ $drgpan5b, dragon_painE3 ]
+{dragon_move(12);};
+void() dragon_painE3 = [ $drgpan5c, dragon_walk13 ]
+{dragon_move(12);};
+void() dragon_painF1 = [ $drgpan6a, dragon_painF2 ]
+{dragon_move(12);};
+void() dragon_painF2 = [ $drgpan6b, dragon_painF3 ]
+{dragon_move(12);};
+void() dragon_painF3 = [ $drgpan6c, dragon_walk2 ]
+{dragon_move(12);};
 void() dragon_pain =
 {
 	local float r;
@@ -496,25 +531,44 @@ void() dragon_death1 = [ $drgdth01, dragon_death2 ]
 	sound (self, CHAN_VOICE, "dragon/death.wav", 1, ATTN_NONE);
 	self.dragonAttacking = FALSE;
 };
-void() dragon_death2 = [ $drgdth02, dragon_death3 ] {dragon_explode();};
-void() dragon_death3 = [ $drgdth03, dragon_death4 ] {dragon_explode();};
-void() dragon_death4 = [ $drgdth04, dragon_death5 ] {dragon_explode();};
-void() dragon_death5 = [ $drgdth05, dragon_death6 ] {dragon_explode();};
-void() dragon_death6 = [ $drgdth06, dragon_death7 ] {dragon_explode();};
-void() dragon_death7 = [ $drgdth07, dragon_death8 ] {dragon_explode();};
-void() dragon_death8 = [ $drgdth08, dragon_death9 ] {dragon_explode();};
-void() dragon_death9 = [ $drgdth09, dragon_death10 ] {dragon_explode();};
-void() dragon_death10 = [ $drgdth10, dragon_death11 ] {dragon_explode();};
-void() dragon_death11 = [ $drgdth11, dragon_death12 ] {dragon_explode();};
-void() dragon_death12 = [ $drgdth12, dragon_death13 ] {dragon_explode();};
-void() dragon_death13 = [ $drgdth13, dragon_death14 ] {dragon_explode();};
-void() dragon_death14 = [ $drgdth14, dragon_death15 ] {dragon_explode();};
-void() dragon_death15 = [ $drgdth15, dragon_death16 ] {dragon_explode();};
-void() dragon_death16 = [ $drgdth16, dragon_death17 ] {dragon_explode();};
-void() dragon_death17 = [ $drgdth17, dragon_death18 ] {dragon_explode();};
-void() dragon_death18 = [ $drgdth18, dragon_death19 ] {dragon_explode();};
-void() dragon_death19 = [ $drgdth19, dragon_death20 ] {dragon_explode();};
-void() dragon_death20 = [ $drgdth20, dragon_death21 ] {dragon_explode();};
+void() dragon_death2 = [ $drgdth02, dragon_death3 ]
+{dragon_explode();};
+void() dragon_death3 = [ $drgdth03, dragon_death4 ]
+{dragon_explode();};
+void() dragon_death4 = [ $drgdth04, dragon_death5 ]
+{dragon_explode();};
+void() dragon_death5 = [ $drgdth05, dragon_death6 ]
+{dragon_explode();};
+void() dragon_death6 = [ $drgdth06, dragon_death7 ]
+{dragon_explode();};
+void() dragon_death7 = [ $drgdth07, dragon_death8 ]
+{dragon_explode();};
+void() dragon_death8 = [ $drgdth08, dragon_death9 ]
+{dragon_explode();};
+void() dragon_death9 = [ $drgdth09, dragon_death10 ]
+{dragon_explode();};
+void() dragon_death10 = [ $drgdth10, dragon_death11 ]
+{dragon_explode();};
+void() dragon_death11 = [ $drgdth11, dragon_death12 ]
+{dragon_explode();};
+void() dragon_death12 = [ $drgdth12, dragon_death13 ]
+{dragon_explode();};
+void() dragon_death13 = [ $drgdth13, dragon_death14 ]
+{dragon_explode();};
+void() dragon_death14 = [ $drgdth14, dragon_death15 ]
+{dragon_explode();};
+void() dragon_death15 = [ $drgdth15, dragon_death16 ]
+{dragon_explode();};
+void() dragon_death16 = [ $drgdth16, dragon_death17 ]
+{dragon_explode();};
+void() dragon_death17 = [ $drgdth17, dragon_death18 ]
+{dragon_explode();};
+void() dragon_death18 = [ $drgdth18, dragon_death19 ]
+{dragon_explode();};
+void() dragon_death19 = [ $drgdth19, dragon_death20 ]
+{dragon_explode();};
+void() dragon_death20 = [ $drgdth20, dragon_death21 ]
+{dragon_explode();};
 void() dragon_death21 = [ $drgdth21, dragon_death21 ] 
 {
 	ViolentDeath(39);

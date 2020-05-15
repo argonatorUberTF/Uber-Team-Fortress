@@ -95,7 +95,8 @@ local float old_armormask;
 		
 		if (self.classname == "wizspike")
 			WriteByte (MSG_BROADCAST, TE_WIZSPIKE);
-		else if (self.classname == "knightspike")
+		else
+if (self.classname == "knightspike")
 			WriteByte (MSG_BROADCAST, TE_KNIGHTSPIKE);
 		else
 			WriteByte (MSG_BROADCAST, TE_SPIKE);

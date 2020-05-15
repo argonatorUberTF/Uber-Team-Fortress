@@ -26,7 +26,8 @@ void() buzzsaw_fly =
 	self.angles_x = self.angles_x - 60;
 	self.avelocity_x = 60;
 }; 
-void() buzzsaw_fly1 = [ $bzzrot01, buzzsaw_fly1 ] { buzzsaw_fly(); };
+void() buzzsaw_fly1 = [ $bzzrot01, buzzsaw_fly1 ]
+{ buzzsaw_fly(); };
 void() buzzsaw_touch = 
 {
 	local vector sprayDir;
@@ -76,7 +77,8 @@ void() buzzsaw =
 	self.movetype = MOVETYPE_FLY;
 	if(self.angles_y == 0 || self.angles_y == 180)
 		setsize (self, '-18 0 -18', '18 0 18');
-	else if(self.angles_y == 90 || self.angles_y == 270)
+	else
+if(self.angles_y == 90 || self.angles_y == 270)
 		setsize (self, '0 -18 -18', '0 18 18');
 	else
 		objerror ("Buzzsaw: Not at 90 degree angle!");

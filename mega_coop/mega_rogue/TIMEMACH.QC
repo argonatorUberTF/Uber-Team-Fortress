@@ -131,7 +131,8 @@ void(entity attacker, float take) time_pain =
 		painEnt = spawn();
 		if ( painRnd < 0.33 )
 			painEnt.origin = self.origin + v_forward*80 - v_up*64;
-		else if (painRnd < 0.66)
+		else
+if (painRnd < 0.66)
 			painEnt.origin = self.origin + v_right*80 - v_up*24;
 		else 
 			painEnt.origin = self.origin + v_forward*64 - v_up*48 - v_right*48;

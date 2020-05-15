@@ -14,7 +14,8 @@ void() RuneTouch =
 {
 	if (other.classname != "player" || other.health <= 0)
 		return;
-	if (other.rune) {
+	if (other.rune)
+{
 		if (other.runetime < time)
 			centerprint(other, "You already have a rune\n");
 		other.runetime = time + 5;
@@ -24,17 +25,21 @@ void() RuneTouch =
 	sound (other, CHAN_ITEM, "weapons/pkup.wav", 1, ATTN_NORM);
 	if (self.rune & ITEM_RUNE1)
 		centerprint(other, "Earth Magic\n\nRESISTANCE");
-	else if (self.rune & ITEM_RUNE2)
+	else
+if (self.rune & ITEM_RUNE2)
 		centerprint(other, "Black Magic\n\nSTRENGTH");
-	else if (self.rune & ITEM_RUNE3)
+	else
+if (self.rune & ITEM_RUNE3)
 		centerprint(other, "Hell Magic\n\nHASTE");
-	else if (self.rune & ITEM_RUNE4)
+	else
+if (self.rune & ITEM_RUNE4)
 		centerprint(other, "Edler Magic\n\nRegeneration");
 	remove(self);
 };
 entity() RuneSpawnPoint =
 {
-	while (1) {
+	while (1)
+{
 		rune_spawn_spot = find(rune_spawn_spot, classname, 
 			"info_player_deathmatch");
 		if (rune_spawn_spot != world)
@@ -67,11 +72,14 @@ void(float r, entity spot) SpawnRune =
 	item.movetype = MOVETYPE_TOSS;
 	if (r & ITEM_RUNE1) 
 			setmodel (item, "progs/end1.mdl");
-	else if (r & ITEM_RUNE2) 
+	else
+if (r & ITEM_RUNE2) 
 			setmodel (item, "progs/end2.mdl");
-	else if (r & ITEM_RUNE3) 
+	else
+if (r & ITEM_RUNE3) 
 			setmodel (item, "progs/end3.mdl");
-	else if (r & ITEM_RUNE4) 
+	else
+if (r & ITEM_RUNE4) 
 			setmodel (item, "progs/end4.mdl");
 	setsize (item, '-16 -16 0', '16 16 56');
 	item.touch = RuneTouch;
@@ -111,8 +119,10 @@ void() SpawnRunes =
 };
 float(float damage, entity who) RuneApplyEarth =
 {
-	if (who.rune & ITEM_RUNE1) {
-		if (who.rune1_last_noise_time < time) {
+	if (who.rune & ITEM_RUNE1)
+{
+		if (who.rune1_last_noise_time < time)
+{
 			sound (who, CHAN_ITEM, "runes/end1.wav", 1, ATTN_NORM);
 			// tune as needed
 			who.rune1_last_noise_time = time + 1.0;
@@ -124,7 +134,8 @@ float(float damage, entity who) RuneApplyEarth =
 void(entity who) RuneApplyBlackNoise =
 {
 	if (who.rune & ITEM_RUNE2)
-		if (who.rune2_last_noise_time < time) {
+		if (who.rune2_last_noise_time < time)
+{
 			sound (who, CHAN_ITEM, "runes/end2.wav", 1, ATTN_NORM);
 			// tune as needed
 			who.rune2_last_noise_time = time + 1.0;
@@ -138,8 +149,10 @@ float(float damage, entity who) RuneApplyBlack =
 };
 float(float tvalue, entity who) RuneApplyHell =
 {
-	if (who.rune & ITEM_RUNE3) {
-		if (who.rune3_last_noise_time < time) {
+	if (who.rune & ITEM_RUNE3)
+{
+		if (who.rune3_last_noise_time < time)
+{
 			sound (who, CHAN_ITEM, "runes/end3.wav", 1, ATTN_NORM);
 			who.rune3_last_noise_time = time + 1.0;
 		}
@@ -149,8 +162,10 @@ float(float tvalue, entity who) RuneApplyHell =
 };
 void(entity who) RuneApplyElder =
 {
-	if (who.rune & ITEM_RUNE4) {
-		if (who.rune4_last_regen_time < time && who.health < 100) {
+	if (who.rune & ITEM_RUNE4)
+{
+		if (who.rune4_last_regen_time < time && who.health < 100)
+{
 			sound (who, CHAN_ITEM, "runes/end4.wav", 1, ATTN_NORM);
 			who.health = who.health + 5;
 			if (who.health > 100)
@@ -168,7 +183,8 @@ float(entity who) RuneHasElder =
 void() RunePrecache = 
 {
 	if (cvar("deathmatch"))
-		if (cvar("gamecfg") & GAMECFG_ENABLE_RUNES) {
+		if (cvar("gamecfg") & GAMECFG_ENABLE_RUNES)
+{
 			precache_model("progs/end1.mdl");
 			precache_model("progs/end2.mdl");
 			precache_model("progs/end3.mdl");

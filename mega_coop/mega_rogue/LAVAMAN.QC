@@ -55,21 +55,36 @@ void() lavaman_rise1	=[	$rise1, lavaman_rise2 ]
 void() lavaman_rise2	=[	$rise2, lavaman_rise3 ] 
 	{
 sound (self, CHAN_VOICE, "boss1/sight1.wav", 1, ATTN_NORM); };
-void() lavaman_rise3	=[	$rise3, lavaman_rise4 ] {};
-void() lavaman_rise4	=[	$rise4, lavaman_rise5 ] {};
-void() lavaman_rise5	=[	$rise5, lavaman_rise6 ] {};
-void() lavaman_rise6	=[	$rise6, lavaman_rise7 ] {};
-void() lavaman_rise7	=[	$rise7, lavaman_rise8 ] {};
-void() lavaman_rise8	=[	$rise8, lavaman_rise9 ] {};
-void() lavaman_rise9	=[	$rise9, lavaman_rise10 ] {};
-void() lavaman_rise10	=[	$rise10, lavaman_rise11 ] {};
-void() lavaman_rise11	=[	$rise11, lavaman_rise12 ] {};
-void() lavaman_rise12	=[	$rise12, lavaman_rise13 ] {};
-void() lavaman_rise13	=[	$rise13, lavaman_rise14 ] {};
-void() lavaman_rise14	=[	$rise14, lavaman_rise15 ] {};
-void() lavaman_rise15	=[	$rise15, lavaman_rise16 ] {};
-void() lavaman_rise16	=[	$rise16, lavaman_rise17 ] {};
-void() lavaman_rise17	=[	$rise17, lavaman_fire1 ] {};
+void() lavaman_rise3	=[	$rise3, lavaman_rise4 ]
+{};
+void() lavaman_rise4	=[	$rise4, lavaman_rise5 ]
+{};
+void() lavaman_rise5	=[	$rise5, lavaman_rise6 ]
+{};
+void() lavaman_rise6	=[	$rise6, lavaman_rise7 ]
+{};
+void() lavaman_rise7	=[	$rise7, lavaman_rise8 ]
+{};
+void() lavaman_rise8	=[	$rise8, lavaman_rise9 ]
+{};
+void() lavaman_rise9	=[	$rise9, lavaman_rise10 ]
+{};
+void() lavaman_rise10	=[	$rise10, lavaman_rise11 ]
+{};
+void() lavaman_rise11	=[	$rise11, lavaman_rise12 ]
+{};
+void() lavaman_rise12	=[	$rise12, lavaman_rise13 ]
+{};
+void() lavaman_rise13	=[	$rise13, lavaman_rise14 ]
+{};
+void() lavaman_rise14	=[	$rise14, lavaman_rise15 ]
+{};
+void() lavaman_rise15	=[	$rise15, lavaman_rise16 ]
+{};
+void() lavaman_rise16	=[	$rise16, lavaman_rise17 ]
+{};
+void() lavaman_rise17	=[	$rise17, lavaman_fire1 ]
+{};
 void() lavaman_stand =
 {
 	if (self.enemy)
@@ -83,14 +98,22 @@ void() lavaman_idle1	=[	$walk1, lavaman_idle2 ]
 	if ( random() < 0.2 )
 		sound (self, CHAN_VOICE, "boss1/sight1.wav", 1, ATTN_NORM);
 };
-void() lavaman_idle2	=[	$walk2, lavaman_idle3 ] {lavaman_stand();};
-void() lavaman_idle3	=[	$walk3, lavaman_idle4 ] {lavaman_stand();};
-void() lavaman_idle4	=[	$walk4, lavaman_idle5 ] {lavaman_stand();};
-void() lavaman_idle5	=[	$walk5, lavaman_idle6 ] {lavaman_stand();};
-void() lavaman_idle6	=[	$walk4, lavaman_idle7 ] {lavaman_stand();};
-void() lavaman_idle7	=[	$walk3, lavaman_idle8 ] {lavaman_stand();};
-void() lavaman_idle8	=[	$walk2, lavaman_idle9 ] {lavaman_stand();};
-void() lavaman_idle9	=[	$walk1, lavaman_idle1 ] {lavaman_stand();};
+void() lavaman_idle2	=[	$walk2, lavaman_idle3 ]
+{lavaman_stand();};
+void() lavaman_idle3	=[	$walk3, lavaman_idle4 ]
+{lavaman_stand();};
+void() lavaman_idle4	=[	$walk4, lavaman_idle5 ]
+{lavaman_stand();};
+void() lavaman_idle5	=[	$walk5, lavaman_idle6 ]
+{lavaman_stand();};
+void() lavaman_idle6	=[	$walk4, lavaman_idle7 ]
+{lavaman_stand();};
+void() lavaman_idle7	=[	$walk3, lavaman_idle8 ]
+{lavaman_stand();};
+void() lavaman_idle8	=[	$walk2, lavaman_idle9 ]
+{lavaman_stand();};
+void() lavaman_idle9	=[	$walk1, lavaman_idle1 ]
+{lavaman_stand();};
 void() lavaman_walk =
 {
 	if (self.#lm_next_check_time > time)
@@ -102,37 +125,68 @@ void() lavaman_walk =
 		lavaman_hunt();
 	ai_walk (2);		
 };
-void() lavaman_walk1	=[	$walk1, lavaman_walk2 ] {lavaman_walk();};
-void() lavaman_walk2	=[	$walk2, lavaman_walk3 ] {lavaman_walk();};
-void() lavaman_walk3	=[	$walk3, lavaman_walk4 ] {lavaman_walk();};
-void() lavaman_walk4	=[	$walk4, lavaman_walk5 ] {lavaman_walk();};
-void() lavaman_walk5	=[	$walk5, lavaman_walk6 ] {lavaman_walk();};
-void() lavaman_walk6	=[	$walk6, lavaman_walk7 ] {lavaman_walk();};
-void() lavaman_walk7	=[	$walk7, lavaman_walk8 ] {lavaman_walk();};
-void() lavaman_walk8	=[	$walk8, lavaman_walk9 ] {lavaman_walk();};
-void() lavaman_walk9	=[	$walk9, lavaman_walk10 ] {lavaman_walk();};
-void() lavaman_walk10	=[	$walk10, lavaman_walk11 ] {lavaman_walk();};
-void() lavaman_walk11	=[	$walk11, lavaman_walk12 ] {lavaman_walk();};
-void() lavaman_walk12	=[	$walk12, lavaman_walk13 ] {lavaman_walk();};
-void() lavaman_walk13	=[	$walk13, lavaman_walk14 ] {lavaman_walk();};
-void() lavaman_walk14	=[	$walk14, lavaman_walk15 ] {lavaman_walk();};
-void() lavaman_walk15	=[	$walk15, lavaman_walk16 ] {lavaman_walk();};
-void() lavaman_walk16	=[	$walk16, lavaman_walk17 ] {lavaman_walk();};
-void() lavaman_walk17	=[	$walk17, lavaman_walk18 ] {lavaman_walk();};
-void() lavaman_walk18	=[	$walk18, lavaman_walk19 ] {lavaman_walk();};
-void() lavaman_walk19	=[	$walk19, lavaman_walk20 ] {lavaman_walk();};
-void() lavaman_walk20	=[	$walk20, lavaman_walk21 ] {lavaman_walk();};
-void() lavaman_walk21	=[	$walk21, lavaman_walk22 ] {lavaman_walk();};
-void() lavaman_walk22	=[	$walk22, lavaman_walk23 ] {lavaman_walk();};
-void() lavaman_walk23	=[	$walk23, lavaman_walk24 ] {lavaman_walk();};
-void() lavaman_walk24	=[	$walk24, lavaman_walk25 ] {lavaman_walk();};
-void() lavaman_walk25	=[	$walk25, lavaman_walk26 ] {lavaman_walk();};
-void() lavaman_walk26	=[	$walk26, lavaman_walk27 ] {lavaman_walk();};
-void() lavaman_walk27	=[	$walk27, lavaman_walk28 ] {lavaman_walk();};
-void() lavaman_walk28	=[	$walk28, lavaman_walk29 ] {lavaman_walk();};
-void() lavaman_walk29	=[	$walk29, lavaman_walk30 ] {lavaman_walk();};
-void() lavaman_walk30	=[	$walk30, lavaman_walk31 ] {lavaman_walk();};
-void() lavaman_walk31	=[	$walk31, lavaman_walk1 ] {};
+void() lavaman_walk1	=[	$walk1, lavaman_walk2 ]
+{lavaman_walk();};
+void() lavaman_walk2	=[	$walk2, lavaman_walk3 ]
+{lavaman_walk();};
+void() lavaman_walk3	=[	$walk3, lavaman_walk4 ]
+{lavaman_walk();};
+void() lavaman_walk4	=[	$walk4, lavaman_walk5 ]
+{lavaman_walk();};
+void() lavaman_walk5	=[	$walk5, lavaman_walk6 ]
+{lavaman_walk();};
+void() lavaman_walk6	=[	$walk6, lavaman_walk7 ]
+{lavaman_walk();};
+void() lavaman_walk7	=[	$walk7, lavaman_walk8 ]
+{lavaman_walk();};
+void() lavaman_walk8	=[	$walk8, lavaman_walk9 ]
+{lavaman_walk();};
+void() lavaman_walk9	=[	$walk9, lavaman_walk10 ]
+{lavaman_walk();};
+void() lavaman_walk10	=[	$walk10, lavaman_walk11 ]
+{lavaman_walk();};
+void() lavaman_walk11	=[	$walk11, lavaman_walk12 ]
+{lavaman_walk();};
+void() lavaman_walk12	=[	$walk12, lavaman_walk13 ]
+{lavaman_walk();};
+void() lavaman_walk13	=[	$walk13, lavaman_walk14 ]
+{lavaman_walk();};
+void() lavaman_walk14	=[	$walk14, lavaman_walk15 ]
+{lavaman_walk();};
+void() lavaman_walk15	=[	$walk15, lavaman_walk16 ]
+{lavaman_walk();};
+void() lavaman_walk16	=[	$walk16, lavaman_walk17 ]
+{lavaman_walk();};
+void() lavaman_walk17	=[	$walk17, lavaman_walk18 ]
+{lavaman_walk();};
+void() lavaman_walk18	=[	$walk18, lavaman_walk19 ]
+{lavaman_walk();};
+void() lavaman_walk19	=[	$walk19, lavaman_walk20 ]
+{lavaman_walk();};
+void() lavaman_walk20	=[	$walk20, lavaman_walk21 ]
+{lavaman_walk();};
+void() lavaman_walk21	=[	$walk21, lavaman_walk22 ]
+{lavaman_walk();};
+void() lavaman_walk22	=[	$walk22, lavaman_walk23 ]
+{lavaman_walk();};
+void() lavaman_walk23	=[	$walk23, lavaman_walk24 ]
+{lavaman_walk();};
+void() lavaman_walk24	=[	$walk24, lavaman_walk25 ]
+{lavaman_walk();};
+void() lavaman_walk25	=[	$walk25, lavaman_walk26 ]
+{lavaman_walk();};
+void() lavaman_walk26	=[	$walk26, lavaman_walk27 ]
+{lavaman_walk();};
+void() lavaman_walk27	=[	$walk27, lavaman_walk28 ]
+{lavaman_walk();};
+void() lavaman_walk28	=[	$walk28, lavaman_walk29 ]
+{lavaman_walk();};
+void() lavaman_walk29	=[	$walk29, lavaman_walk30 ]
+{lavaman_walk();};
+void() lavaman_walk30	=[	$walk30, lavaman_walk31 ]
+{lavaman_walk();};
+void() lavaman_walk31	=[	$walk31, lavaman_walk1 ]
+{};
 void() lavaman_run =
 {
 	if (self.enemy)
@@ -141,70 +195,134 @@ void() lavaman_run =
 		lavaman_hunt();
 	ai_run (2);		
 };
-void() lavaman_run1	=[	$walk1, lavaman_run2 ] {lavaman_run();};
-void() lavaman_run2	=[	$walk2, lavaman_run3 ] {lavaman_run();};
-void() lavaman_run3	=[	$walk3, lavaman_run4 ] {lavaman_run();};
-void() lavaman_run4	=[	$walk4, lavaman_run5 ] {lavaman_run();};
-void() lavaman_run5	=[	$walk5, lavaman_run6 ] {lavaman_run();};
-void() lavaman_run6	=[	$walk6, lavaman_run7 ] {lavaman_run();};
-void() lavaman_run7	=[	$walk7, lavaman_run8 ] {lavaman_run();};
-void() lavaman_run8	=[	$walk8, lavaman_run9 ] {lavaman_run();};
-void() lavaman_run9	=[	$walk9, lavaman_run10 ] {lavaman_run();};
-void() lavaman_run10 =[	$walk10, lavaman_run11 ] {lavaman_run ();};
-void() lavaman_run11 =[	$walk11, lavaman_run12 ] {lavaman_run ();};
-void() lavaman_run12 =[	$walk12, lavaman_run13 ] {lavaman_run ();};
-void() lavaman_run13 =[	$walk13, lavaman_run14 ] {lavaman_run ();};
-void() lavaman_run14 =[	$walk14, lavaman_run15 ] {lavaman_run ();};
-void() lavaman_run15 =[	$walk15, lavaman_run16 ] {lavaman_run ();};
-void() lavaman_run16 =[	$walk16, lavaman_run17 ] {lavaman_run ();};
-void() lavaman_run17 =[	$walk17, lavaman_run18 ] {lavaman_run ();};
-void() lavaman_run18 =[	$walk18, lavaman_run19 ] {lavaman_run ();};
-void() lavaman_run19 =[	$walk19, lavaman_run20 ] {lavaman_run ();};
-void() lavaman_run20 =[	$walk20, lavaman_run21 ] {lavaman_run ();};
-void() lavaman_run21 =[	$walk21, lavaman_run22 ] {lavaman_run ();};
-void() lavaman_run22 =[	$walk22, lavaman_run23 ] {lavaman_run ();};
-void() lavaman_run23 =[	$walk23, lavaman_run24 ] {lavaman_run ();};
-void() lavaman_run24 =[	$walk24, lavaman_run25 ] {lavaman_run ();};
-void() lavaman_run25 =[	$walk25, lavaman_run26 ] {lavaman_run ();};
-void() lavaman_run26 =[	$walk26, lavaman_run27 ] {lavaman_run ();};
-void() lavaman_run27 =[	$walk27, lavaman_run28 ] {lavaman_run ();};
-void() lavaman_run28 =[	$walk28, lavaman_run29 ] {lavaman_run ();};
-void() lavaman_run29 =[	$walk29, lavaman_run30 ] {lavaman_run ();};
-void() lavaman_run30 =[	$walk30, lavaman_run31 ] {lavaman_run ();};
-void() lavaman_run31 =[	$walk31, lavaman_run1 ] {};
-void() lavaman_fire1 =[ $attack1, lavaman_fire2 ] { ai_face();};
-void() lavaman_fire2 =[ $attack2, lavaman_fire3 ] {ai_charge(1);};
-void() lavaman_fire3 =[ $attack3, lavaman_fire4 ] { ai_face();};
-void() lavaman_fire4 =[ $attack4, lavaman_fire5 ] {ai_face();};
-void() lavaman_fire5 =[ $attack5, lavaman_fire6 ] {ai_charge(1);};
-void() lavaman_fire6 =[ $attack6, lavaman_fire7 ] {ai_face();};
-void() lavaman_fire7 =[ $attack7, lavaman_fire8 ] {lavaman_missile(1);};
-void() lavaman_fire8 =[ $attack8, lavaman_fire9 ] {ai_face();};
-void() lavaman_fire9 =[ $attack9, lavaman_fire10 ] {ai_face();};
-void() lavaman_fire10 =[ $attack10, lavaman_fire11 ] {ai_charge(1);};
-void() lavaman_fire11 =[ $attack11, lavaman_fire12 ] {ai_face();};
-void() lavaman_fire12 =[ $attack12, lavaman_fire13 ] {ai_charge(1);};
-void() lavaman_fire13 =[ $attack13, lavaman_fire14 ] {ai_face();};
-void() lavaman_fire14 =[ $attack14, lavaman_fire15 ] {ai_face();};
-void() lavaman_fire15 =[ $attack15, lavaman_fire16 ] {ai_charge(1);};
-void() lavaman_fire16 =[ $attack16, lavaman_fire17 ] {ai_charge(1);};
-void() lavaman_fire17 =[ $attack17, lavaman_fire18 ] {ai_face();};
-void() lavaman_fire18 =[ $attack18, lavaman_fire19 ] {lavaman_missile(2);};
-void() lavaman_fire19 =[ $attack19, lavaman_fire20 ] {ai_face();};
-void() lavaman_fire20 =[ $attack20, lavaman_fire21 ] {ai_face();};
-void() lavaman_fire21 =[ $attack21, lavaman_fire22 ] {ai_face();};
-void() lavaman_fire22 =[ $attack22, lavaman_fire23 ] {ai_charge(1);};
-void() lavaman_fire23 =[ $attack23, lavaman_run1 ] {};
-void() lavaman_shocka1 =[ $shocka1, lavaman_shocka2 ] {};
-void() lavaman_shocka2 =[ $shocka2, lavaman_shocka3 ] {};
-void() lavaman_shocka3 =[ $shocka3, lavaman_shocka4 ] {};
-void() lavaman_shocka4 =[ $shocka4, lavaman_shocka5 ] {};
-void() lavaman_shocka5 =[ $shocka5, lavaman_shocka6 ] {};
-void() lavaman_shocka6 =[ $shocka6, lavaman_shocka7 ] {};
-void() lavaman_shocka7 =[ $shocka7, lavaman_shocka8 ] {};
-void() lavaman_shocka8 =[ $shocka8, lavaman_shocka9 ] {};
-void() lavaman_shocka9 =[ $shocka9, lavaman_shocka10 ] {};
-void() lavaman_shocka10 =[ $shocka10, lavaman_run1 ] {};
+void() lavaman_run1	=[	$walk1, lavaman_run2 ]
+{lavaman_run();};
+void() lavaman_run2	=[	$walk2, lavaman_run3 ]
+{lavaman_run();};
+void() lavaman_run3	=[	$walk3, lavaman_run4 ]
+{lavaman_run();};
+void() lavaman_run4	=[	$walk4, lavaman_run5 ]
+{lavaman_run();};
+void() lavaman_run5	=[	$walk5, lavaman_run6 ]
+{lavaman_run();};
+void() lavaman_run6	=[	$walk6, lavaman_run7 ]
+{lavaman_run();};
+void() lavaman_run7	=[	$walk7, lavaman_run8 ]
+{lavaman_run();};
+void() lavaman_run8	=[	$walk8, lavaman_run9 ]
+{lavaman_run();};
+void() lavaman_run9	=[	$walk9, lavaman_run10 ]
+{lavaman_run();};
+void() lavaman_run10 =[	$walk10, lavaman_run11 ]
+{lavaman_run ();};
+void() lavaman_run11 =[	$walk11, lavaman_run12 ]
+{lavaman_run ();};
+void() lavaman_run12 =[	$walk12, lavaman_run13 ]
+{lavaman_run ();};
+void() lavaman_run13 =[	$walk13, lavaman_run14 ]
+{lavaman_run ();};
+void() lavaman_run14 =[	$walk14, lavaman_run15 ]
+{lavaman_run ();};
+void() lavaman_run15 =[	$walk15, lavaman_run16 ]
+{lavaman_run ();};
+void() lavaman_run16 =[	$walk16, lavaman_run17 ]
+{lavaman_run ();};
+void() lavaman_run17 =[	$walk17, lavaman_run18 ]
+{lavaman_run ();};
+void() lavaman_run18 =[	$walk18, lavaman_run19 ]
+{lavaman_run ();};
+void() lavaman_run19 =[	$walk19, lavaman_run20 ]
+{lavaman_run ();};
+void() lavaman_run20 =[	$walk20, lavaman_run21 ]
+{lavaman_run ();};
+void() lavaman_run21 =[	$walk21, lavaman_run22 ]
+{lavaman_run ();};
+void() lavaman_run22 =[	$walk22, lavaman_run23 ]
+{lavaman_run ();};
+void() lavaman_run23 =[	$walk23, lavaman_run24 ]
+{lavaman_run ();};
+void() lavaman_run24 =[	$walk24, lavaman_run25 ]
+{lavaman_run ();};
+void() lavaman_run25 =[	$walk25, lavaman_run26 ]
+{lavaman_run ();};
+void() lavaman_run26 =[	$walk26, lavaman_run27 ]
+{lavaman_run ();};
+void() lavaman_run27 =[	$walk27, lavaman_run28 ]
+{lavaman_run ();};
+void() lavaman_run28 =[	$walk28, lavaman_run29 ]
+{lavaman_run ();};
+void() lavaman_run29 =[	$walk29, lavaman_run30 ]
+{lavaman_run ();};
+void() lavaman_run30 =[	$walk30, lavaman_run31 ]
+{lavaman_run ();};
+void() lavaman_run31 =[	$walk31, lavaman_run1 ]
+{};
+void() lavaman_fire1 =[ $attack1, lavaman_fire2 ]
+{ ai_face();};
+void() lavaman_fire2 =[ $attack2, lavaman_fire3 ]
+{ai_charge(1);};
+void() lavaman_fire3 =[ $attack3, lavaman_fire4 ]
+{ ai_face();};
+void() lavaman_fire4 =[ $attack4, lavaman_fire5 ]
+{ai_face();};
+void() lavaman_fire5 =[ $attack5, lavaman_fire6 ]
+{ai_charge(1);};
+void() lavaman_fire6 =[ $attack6, lavaman_fire7 ]
+{ai_face();};
+void() lavaman_fire7 =[ $attack7, lavaman_fire8 ]
+{lavaman_missile(1);};
+void() lavaman_fire8 =[ $attack8, lavaman_fire9 ]
+{ai_face();};
+void() lavaman_fire9 =[ $attack9, lavaman_fire10 ]
+{ai_face();};
+void() lavaman_fire10 =[ $attack10, lavaman_fire11 ]
+{ai_charge(1);};
+void() lavaman_fire11 =[ $attack11, lavaman_fire12 ]
+{ai_face();};
+void() lavaman_fire12 =[ $attack12, lavaman_fire13 ]
+{ai_charge(1);};
+void() lavaman_fire13 =[ $attack13, lavaman_fire14 ]
+{ai_face();};
+void() lavaman_fire14 =[ $attack14, lavaman_fire15 ]
+{ai_face();};
+void() lavaman_fire15 =[ $attack15, lavaman_fire16 ]
+{ai_charge(1);};
+void() lavaman_fire16 =[ $attack16, lavaman_fire17 ]
+{ai_charge(1);};
+void() lavaman_fire17 =[ $attack17, lavaman_fire18 ]
+{ai_face();};
+void() lavaman_fire18 =[ $attack18, lavaman_fire19 ]
+{lavaman_missile(2);};
+void() lavaman_fire19 =[ $attack19, lavaman_fire20 ]
+{ai_face();};
+void() lavaman_fire20 =[ $attack20, lavaman_fire21 ]
+{ai_face();};
+void() lavaman_fire21 =[ $attack21, lavaman_fire22 ]
+{ai_face();};
+void() lavaman_fire22 =[ $attack22, lavaman_fire23 ]
+{ai_charge(1);};
+void() lavaman_fire23 =[ $attack23, lavaman_run1 ]
+{};
+void() lavaman_shocka1 =[ $shocka1, lavaman_shocka2 ]
+{};
+void() lavaman_shocka2 =[ $shocka2, lavaman_shocka3 ]
+{};
+void() lavaman_shocka3 =[ $shocka3, lavaman_shocka4 ]
+{};
+void() lavaman_shocka4 =[ $shocka4, lavaman_shocka5 ]
+{};
+void() lavaman_shocka5 =[ $shocka5, lavaman_shocka6 ]
+{};
+void() lavaman_shocka6 =[ $shocka6, lavaman_shocka7 ]
+{};
+void() lavaman_shocka7 =[ $shocka7, lavaman_shocka8 ]
+{};
+void() lavaman_shocka8 =[ $shocka8, lavaman_shocka9 ]
+{};
+void() lavaman_shocka9 =[ $shocka9, lavaman_shocka10 ]
+{};
+void() lavaman_shocka10 =[ $shocka10, lavaman_run1 ]
+{};
 void() lavaman_pain =
 {
 	if ( self.pain_finished > time )
@@ -219,13 +337,20 @@ void() lavaman_death1 = [$death1, lavaman_death2]
 {
 sound (self, CHAN_VOICE, "boss1/death.wav", 1, ATTN_NORM);
 };
-void() lavaman_death2 = [$death2, lavaman_death3] {};
-void() lavaman_death3 = [$death3, lavaman_death4] {};
-void() lavaman_death4 = [$death4, lavaman_death5] {};
-void() lavaman_death5 = [$death5, lavaman_death6] {};
-void() lavaman_death6 = [$death6, lavaman_death7] {};
-void() lavaman_death7 = [$death7, lavaman_death8] {};
-void() lavaman_death8 = [$death8, lavaman_death9] {};
+void() lavaman_death2 = [$death2, lavaman_death3]
+{};
+void() lavaman_death3 = [$death3, lavaman_death4]
+{};
+void() lavaman_death4 = [$death4, lavaman_death5]
+{};
+void() lavaman_death5 = [$death5, lavaman_death6]
+{};
+void() lavaman_death6 = [$death6, lavaman_death7]
+{};
+void() lavaman_death7 = [$death7, lavaman_death8]
+{};
+void() lavaman_death8 = [$death8, lavaman_death9]
+{};
 void() lavaman_death9 = [$death9, lavaman_death10]
 {
 	sound (self, CHAN_BODY, "boss1/out1.wav", 1, ATTN_NORM);
@@ -273,7 +398,8 @@ void(float AttackNumber) lavaman_missile =
 	{
 		org = self.origin + v_forward*40 + v_right*65 + v_up*130;
 	}
-	else if ( AttackNumber == 2)
+	else
+if ( AttackNumber == 2)
 	{
 		org = self.origin + v_forward*40 - v_right*75 + v_up*125;
 	}
@@ -343,7 +469,8 @@ void() lavaman_awake =
 void() monster_lava_man1 =
 {
     if (self.spawnflags & 2)
-    {
+   
+{
         self.use = lavaman_awake;
         return;
     }

@@ -19,73 +19,140 @@ $frame wrthdt01 wrthdt02 wrthdt03 wrthdt04 wrthdt05
 $frame wrthdt06 wrthdt07 wrthdt08 wrthdt09 wrthdt10
 $frame wrthdt11 wrthdt12 wrthdt13 wrthdt14 wrthdt15
 void(float AttackNumber) WrathMissile;
-void()	wrath_stand1 =[	$wrthwk01,	wrath_stand1 ] { ai_stand();};
-void()	wrath_walk01 =[	$wrthwk01,	wrath_walk02 ] { ai_walk(8); };
-void()	wrath_walk02 =[	$wrthwk02,	wrath_walk03 ] { ai_walk(8); };
-void()	wrath_walk03 =[	$wrthwk03,	wrath_walk04 ] { ai_walk(8); };
-void()	wrath_walk04 =[	$wrthwk04,	wrath_walk05 ] { ai_walk(8); };
-void()	wrath_walk05 =[	$wrthwk05,	wrath_walk06 ] { ai_walk(8); };
-void()	wrath_walk06 =[	$wrthwk06,	wrath_walk07 ] { ai_walk(8); };
-void()	wrath_walk07 =[	$wrthwk07,	wrath_walk08 ] { ai_walk(8); };
-void()	wrath_walk08 =[	$wrthwk08,	wrath_walk09 ] { ai_walk(8); };
-void()	wrath_walk09 =[	$wrthwk09,	wrath_walk10 ] { ai_walk(8); };
-void()	wrath_walk10 =[	$wrthwk10,	wrath_walk11 ] { ai_walk(8); };
-void()	wrath_walk11 =[	$wrthwk11,	wrath_walk12 ] { ai_walk(8); };
-void()	wrath_walk12 =[	$wrthwk12,	wrath_walk01 ] { ai_walk(8); };
-void()	wrath_run01	=[	$wrthwk01,	wrath_run02 ] { ai_run(12); };
-void()	wrath_run02	=[	$wrthwk02,	wrath_run03 ] { ai_run(12); };
-void()	wrath_run03	=[	$wrthwk03,	wrath_run04 ] { ai_run(12); };
-void()	wrath_run04	=[	$wrthwk04,	wrath_run05 ] { ai_run(12); };
-void()	wrath_run05	=[	$wrthwk05,	wrath_run06 ] { ai_run(12); };
-void()	wrath_run06	=[	$wrthwk06,	wrath_run07 ] { ai_run(12); };
-void()	wrath_run07	=[	$wrthwk07,	wrath_run08 ] { ai_run(12); };
-void()	wrath_run08	=[	$wrthwk08,	wrath_run09 ] { ai_run(12); };
-void()	wrath_run09	=[	$wrthwk09,	wrath_run10 ] { ai_run(12); };
-void()	wrath_run10 =[	$wrthwk10,	wrath_run11 ] { ai_run(12); };
-void()	wrath_run11 =[	$wrthwk11,	wrath_run12 ] { ai_run(12); };
-void()	wrath_run12 =[	$wrthwk12,	wrath_run01 ] { ai_run(12); };
-void()	wrath_at_a01 =[	$wrthaa01,	wrath_at_a02 ] {ai_charge(12);};
-void()	wrath_at_a02 =[	$wrthaa02,	wrath_at_a03 ] {ai_charge(12);};
-void()	wrath_at_a03 =[	$wrthaa03,	wrath_at_a04 ] {ai_charge(12);};
-void()	wrath_at_a04 =[	$wrthaa04,	wrath_at_a05 ] {ai_charge(12);};
-void()	wrath_at_a05 =[	$wrthaa05,	wrath_at_a06 ] {ai_charge(12);};
-void()	wrath_at_a06 =[	$wrthaa06,	wrath_at_a07 ] {ai_charge(12);};
-void()	wrath_at_a07 =[	$wrthaa07,	wrath_at_a08 ] {ai_charge(12);};
-void()	wrath_at_a08 =[	$wrthaa08,	wrath_at_a09 ] {ai_charge(12);};
-void()	wrath_at_a09 =[	$wrthaa09,	wrath_at_a10 ] {ai_charge(12);};
-void()	wrath_at_a10 =[	$wrthaa10,	wrath_at_a11 ] {ai_charge(12);};
-void()	wrath_at_a11 =[	$wrthaa11,	wrath_at_a12 ] {WrathMissile(1);};
-void()	wrath_at_a12 =[	$wrthaa12,	wrath_at_a13 ] {ai_charge(12);};
-void()	wrath_at_a13 =[	$wrthaa13,	wrath_at_a14 ] {ai_charge(12);};
-void()	wrath_at_a14 =[	$wrthaa14,	wrath_run01 ] {ai_charge(12);};
-void()	wrath_at_b01 =[	$wrthab01,	wrath_at_b02 ] {ai_charge(12);};
-void()	wrath_at_b02 =[	$wrthab02,	wrath_at_b03 ] {ai_charge(12);};
-void()	wrath_at_b03 =[	$wrthab03,	wrath_at_b04 ] {ai_charge(12);};
-void()	wrath_at_b04 =[	$wrthab04,	wrath_at_b05 ] {ai_charge(12);};
-void()	wrath_at_b05 =[	$wrthab05,	wrath_at_b06 ] {ai_charge(12);};
-void()	wrath_at_b06 =[	$wrthab06,	wrath_at_b07 ] {WrathMissile(2);};
-void()	wrath_at_b07 =[	$wrthab07,	wrath_at_b08 ] {ai_charge(12);};
-void()	wrath_at_b08 =[	$wrthab08,	wrath_at_b09 ] {ai_charge(12);};
-void()	wrath_at_b09 =[	$wrthab09,	wrath_at_b10 ] {ai_charge(12);};
-void()	wrath_at_b10 =[	$wrthab10,	wrath_at_b11 ] {ai_charge(12);};
-void()	wrath_at_b11 =[	$wrthab11,	wrath_at_b12 ] {ai_charge(12);};
-void()	wrath_at_b12 =[	$wrthab12,	wrath_at_b13 ] {ai_charge(12);};
-void()	wrath_at_b13 =[	$wrthab13,	wrath_run01 ] {ai_charge(12);};
-void()	wrath_at_c01 =[	$wrthac01,	wrath_at_c02 ] {ai_charge(12);};
-void()	wrath_at_c02 =[	$wrthac02,	wrath_at_c03 ] {ai_charge(12);};
-void()	wrath_at_c03 =[	$wrthac03,	wrath_at_c04 ] {ai_charge(12);};
-void()	wrath_at_c04 =[	$wrthac04,	wrath_at_c05 ] {ai_charge(12);};
-void()	wrath_at_c05 =[	$wrthac05,	wrath_at_c06 ] {ai_charge(12);};
-void()	wrath_at_c06 =[	$wrthac06,	wrath_at_c07 ] {ai_charge(12);};
-void()	wrath_at_c07 =[	$wrthac07,	wrath_at_c08 ] {WrathMissile(3);};
-void()	wrath_at_c08 =[	$wrthac08,	wrath_at_c09 ] {ai_charge(12);};
-void()	wrath_at_c09 =[	$wrthac09,	wrath_at_c10 ] {ai_charge(12);};
-void()	wrath_at_c10 =[	$wrthac10,	wrath_at_c11 ] {ai_charge(12);};
-void()	wrath_at_c11 =[	$wrthac11,	wrath_at_c12 ] {ai_charge(12);};
-void()	wrath_at_c12 =[	$wrthac12,	wrath_at_c13 ] {ai_charge(12);};
-void()	wrath_at_c13 =[	$wrthac13,	wrath_at_c14 ] {ai_charge(12);};
-void()	wrath_at_c14 =[	$wrthac14,	wrath_at_c15 ] {ai_charge(12);};
-void()	wrath_at_c15 =[	$wrthac15,	wrath_run01 ] {ai_charge(12);};
+void()	wrath_stand1 =[	$wrthwk01,	wrath_stand1 ]
+{ ai_stand();};
+void()	wrath_walk01 =[	$wrthwk01,	wrath_walk02 ]
+{ ai_walk(8); };
+void()	wrath_walk02 =[	$wrthwk02,	wrath_walk03 ]
+{ ai_walk(8); };
+void()	wrath_walk03 =[	$wrthwk03,	wrath_walk04 ]
+{ ai_walk(8); };
+void()	wrath_walk04 =[	$wrthwk04,	wrath_walk05 ]
+{ ai_walk(8); };
+void()	wrath_walk05 =[	$wrthwk05,	wrath_walk06 ]
+{ ai_walk(8); };
+void()	wrath_walk06 =[	$wrthwk06,	wrath_walk07 ]
+{ ai_walk(8); };
+void()	wrath_walk07 =[	$wrthwk07,	wrath_walk08 ]
+{ ai_walk(8); };
+void()	wrath_walk08 =[	$wrthwk08,	wrath_walk09 ]
+{ ai_walk(8); };
+void()	wrath_walk09 =[	$wrthwk09,	wrath_walk10 ]
+{ ai_walk(8); };
+void()	wrath_walk10 =[	$wrthwk10,	wrath_walk11 ]
+{ ai_walk(8); };
+void()	wrath_walk11 =[	$wrthwk11,	wrath_walk12 ]
+{ ai_walk(8); };
+void()	wrath_walk12 =[	$wrthwk12,	wrath_walk01 ]
+{ ai_walk(8); };
+void()	wrath_run01	=[	$wrthwk01,	wrath_run02 ]
+{ ai_run(12); };
+void()	wrath_run02	=[	$wrthwk02,	wrath_run03 ]
+{ ai_run(12); };
+void()	wrath_run03	=[	$wrthwk03,	wrath_run04 ]
+{ ai_run(12); };
+void()	wrath_run04	=[	$wrthwk04,	wrath_run05 ]
+{ ai_run(12); };
+void()	wrath_run05	=[	$wrthwk05,	wrath_run06 ]
+{ ai_run(12); };
+void()	wrath_run06	=[	$wrthwk06,	wrath_run07 ]
+{ ai_run(12); };
+void()	wrath_run07	=[	$wrthwk07,	wrath_run08 ]
+{ ai_run(12); };
+void()	wrath_run08	=[	$wrthwk08,	wrath_run09 ]
+{ ai_run(12); };
+void()	wrath_run09	=[	$wrthwk09,	wrath_run10 ]
+{ ai_run(12); };
+void()	wrath_run10 =[	$wrthwk10,	wrath_run11 ]
+{ ai_run(12); };
+void()	wrath_run11 =[	$wrthwk11,	wrath_run12 ]
+{ ai_run(12); };
+void()	wrath_run12 =[	$wrthwk12,	wrath_run01 ]
+{ ai_run(12); };
+void()	wrath_at_a01 =[	$wrthaa01,	wrath_at_a02 ]
+{ai_charge(12);};
+void()	wrath_at_a02 =[	$wrthaa02,	wrath_at_a03 ]
+{ai_charge(12);};
+void()	wrath_at_a03 =[	$wrthaa03,	wrath_at_a04 ]
+{ai_charge(12);};
+void()	wrath_at_a04 =[	$wrthaa04,	wrath_at_a05 ]
+{ai_charge(12);};
+void()	wrath_at_a05 =[	$wrthaa05,	wrath_at_a06 ]
+{ai_charge(12);};
+void()	wrath_at_a06 =[	$wrthaa06,	wrath_at_a07 ]
+{ai_charge(12);};
+void()	wrath_at_a07 =[	$wrthaa07,	wrath_at_a08 ]
+{ai_charge(12);};
+void()	wrath_at_a08 =[	$wrthaa08,	wrath_at_a09 ]
+{ai_charge(12);};
+void()	wrath_at_a09 =[	$wrthaa09,	wrath_at_a10 ]
+{ai_charge(12);};
+void()	wrath_at_a10 =[	$wrthaa10,	wrath_at_a11 ]
+{ai_charge(12);};
+void()	wrath_at_a11 =[	$wrthaa11,	wrath_at_a12 ]
+{WrathMissile(1);};
+void()	wrath_at_a12 =[	$wrthaa12,	wrath_at_a13 ]
+{ai_charge(12);};
+void()	wrath_at_a13 =[	$wrthaa13,	wrath_at_a14 ]
+{ai_charge(12);};
+void()	wrath_at_a14 =[	$wrthaa14,	wrath_run01 ]
+{ai_charge(12);};
+void()	wrath_at_b01 =[	$wrthab01,	wrath_at_b02 ]
+{ai_charge(12);};
+void()	wrath_at_b02 =[	$wrthab02,	wrath_at_b03 ]
+{ai_charge(12);};
+void()	wrath_at_b03 =[	$wrthab03,	wrath_at_b04 ]
+{ai_charge(12);};
+void()	wrath_at_b04 =[	$wrthab04,	wrath_at_b05 ]
+{ai_charge(12);};
+void()	wrath_at_b05 =[	$wrthab05,	wrath_at_b06 ]
+{ai_charge(12);};
+void()	wrath_at_b06 =[	$wrthab06,	wrath_at_b07 ]
+{WrathMissile(2);};
+void()	wrath_at_b07 =[	$wrthab07,	wrath_at_b08 ]
+{ai_charge(12);};
+void()	wrath_at_b08 =[	$wrthab08,	wrath_at_b09 ]
+{ai_charge(12);};
+void()	wrath_at_b09 =[	$wrthab09,	wrath_at_b10 ]
+{ai_charge(12);};
+void()	wrath_at_b10 =[	$wrthab10,	wrath_at_b11 ]
+{ai_charge(12);};
+void()	wrath_at_b11 =[	$wrthab11,	wrath_at_b12 ]
+{ai_charge(12);};
+void()	wrath_at_b12 =[	$wrthab12,	wrath_at_b13 ]
+{ai_charge(12);};
+void()	wrath_at_b13 =[	$wrthab13,	wrath_run01 ]
+{ai_charge(12);};
+void()	wrath_at_c01 =[	$wrthac01,	wrath_at_c02 ]
+{ai_charge(12);};
+void()	wrath_at_c02 =[	$wrthac02,	wrath_at_c03 ]
+{ai_charge(12);};
+void()	wrath_at_c03 =[	$wrthac03,	wrath_at_c04 ]
+{ai_charge(12);};
+void()	wrath_at_c04 =[	$wrthac04,	wrath_at_c05 ]
+{ai_charge(12);};
+void()	wrath_at_c05 =[	$wrthac05,	wrath_at_c06 ]
+{ai_charge(12);};
+void()	wrath_at_c06 =[	$wrthac06,	wrath_at_c07 ]
+{ai_charge(12);};
+void()	wrath_at_c07 =[	$wrthac07,	wrath_at_c08 ]
+{WrathMissile(3);};
+void()	wrath_at_c08 =[	$wrthac08,	wrath_at_c09 ]
+{ai_charge(12);};
+void()	wrath_at_c09 =[	$wrthac09,	wrath_at_c10 ]
+{ai_charge(12);};
+void()	wrath_at_c10 =[	$wrthac10,	wrath_at_c11 ]
+{ai_charge(12);};
+void()	wrath_at_c11 =[	$wrthac11,	wrath_at_c12 ]
+{ai_charge(12);};
+void()	wrath_at_c12 =[	$wrthac12,	wrath_at_c13 ]
+{ai_charge(12);};
+void()	wrath_at_c13 =[	$wrthac13,	wrath_at_c14 ]
+{ai_charge(12);};
+void()	wrath_at_c14 =[	$wrthac14,	wrath_at_c15 ]
+{ai_charge(12);};
+void()	wrath_at_c15 =[	$wrthac15,	wrath_run01 ]
+{ai_charge(12);};
 void() wrath_attack = 
 {
 	local float r;
@@ -94,7 +161,8 @@ void() wrath_attack =
 	{
 		wrath_at_a01 ();
 	}
-	else if (r < 0.65)
+	else
+if (r < 0.65)
 	{
 		wrath_at_b01 ();
 	}
@@ -104,23 +172,40 @@ void() wrath_attack =
 	}
 	sound (self, CHAN_VOICE, "wrath/watt.wav", 1, ATTN_NORM);
 };
-void()	wrath_pn_a01	=[	$wrthpa01,	wrath_pn_a02	] {};
-void()	wrath_pn_a02	=[	$wrthpa02,	wrath_pn_a03	] {};
-void()	wrath_pn_a03	=[	$wrthpa03,	wrath_pn_a04	] {};
-void()	wrath_pn_a04	=[	$wrthpa04,	wrath_pn_a05	] {};
-void()	wrath_pn_a05	=[	$wrthpa05,	wrath_pn_a06	] {};
-void()	wrath_pn_a06	=[	$wrthpa06,	wrath_run01		] {};
-void()	wrath_pn_b01	=[	$wrthpb01,	wrath_pn_b02	] {};
-void()	wrath_pn_b02	=[	$wrthpb02,	wrath_pn_b03	] {};
-void()	wrath_pn_b03	=[	$wrthpb03,	wrath_pn_b04	] {};
-void()	wrath_pn_b04	=[	$wrthpb04,	wrath_pn_b05	] {};
-void()	wrath_pn_b05	=[	$wrthpb05,	wrath_pn_b06	] {};
-void()	wrath_pn_b06	=[	$wrthpb06,	wrath_pn_b07	] {};
-void()	wrath_pn_b07	=[	$wrthpb07,	wrath_pn_b08	] {};
-void()	wrath_pn_b08	=[	$wrthpb08,	wrath_pn_b09	] {};
-void()	wrath_pn_b09	=[	$wrthpb09,	wrath_pn_b10	] {};
-void()	wrath_pn_b10	=[	$wrthpb10,	wrath_pn_b11	] {};
-void()	wrath_pn_b11	=[	$wrthpb11,	wrath_run01		] {};
+void()	wrath_pn_a01	=[	$wrthpa01,	wrath_pn_a02	]
+{};
+void()	wrath_pn_a02	=[	$wrthpa02,	wrath_pn_a03	]
+{};
+void()	wrath_pn_a03	=[	$wrthpa03,	wrath_pn_a04	]
+{};
+void()	wrath_pn_a04	=[	$wrthpa04,	wrath_pn_a05	]
+{};
+void()	wrath_pn_a05	=[	$wrthpa05,	wrath_pn_a06	]
+{};
+void()	wrath_pn_a06	=[	$wrthpa06,	wrath_run01		]
+{};
+void()	wrath_pn_b01	=[	$wrthpb01,	wrath_pn_b02	]
+{};
+void()	wrath_pn_b02	=[	$wrthpb02,	wrath_pn_b03	]
+{};
+void()	wrath_pn_b03	=[	$wrthpb03,	wrath_pn_b04	]
+{};
+void()	wrath_pn_b04	=[	$wrthpb04,	wrath_pn_b05	]
+{};
+void()	wrath_pn_b05	=[	$wrthpb05,	wrath_pn_b06	]
+{};
+void()	wrath_pn_b06	=[	$wrthpb06,	wrath_pn_b07	]
+{};
+void()	wrath_pn_b07	=[	$wrthpb07,	wrath_pn_b08	]
+{};
+void()	wrath_pn_b08	=[	$wrthpb08,	wrath_pn_b09	]
+{};
+void()	wrath_pn_b09	=[	$wrthpb09,	wrath_pn_b10	]
+{};
+void()	wrath_pn_b10	=[	$wrthpb10,	wrath_pn_b11	]
+{};
+void()	wrath_pn_b11	=[	$wrthpb11,	wrath_run01		]
+{};
 void() wrath_pain = 
 {
 	local float r;
@@ -143,13 +228,20 @@ void() wrath_pain =
 };
 void()	wrath_die02 =[ $wrthdt02, wrath_die03 ] 
 	{ sound (self, CHAN_VOICE, "wrath/wdthc.wav", 1, ATTN_NORM); };
-void()	wrath_die03 =[ $wrthdt03, wrath_die04 ] {};
-void()	wrath_die04 =[ $wrthdt04, wrath_die05 ] {};
-void()	wrath_die05 =[ $wrthdt05, wrath_die07 ] {};
-void()	wrath_die07 =[ $wrthdt07, wrath_die09 ] {};
-void()	wrath_die09 =[ $wrthdt09, wrath_die11 ] {};
-void()	wrath_die11 =[ $wrthdt11, wrath_die13 ] {};
-void()	wrath_die13 =[ $wrthdt13, wrath_die15 ] {};
+void()	wrath_die03 =[ $wrthdt03, wrath_die04 ]
+{};
+void()	wrath_die04 =[ $wrthdt04, wrath_die05 ]
+{};
+void()	wrath_die05 =[ $wrthdt05, wrath_die07 ]
+{};
+void()	wrath_die07 =[ $wrthdt07, wrath_die09 ]
+{};
+void()	wrath_die09 =[ $wrthdt09, wrath_die11 ]
+{};
+void()	wrath_die11 =[ $wrthdt11, wrath_die13 ]
+{};
+void()	wrath_die13 =[ $wrthdt13, wrath_die15 ]
+{};
 void()	wrath_die15 =[ $wrthdt15, wrath_die15 ] 
 {
 	ThrowGib ("progs/wrthgib1.mdl", self.health);
@@ -229,15 +321,18 @@ void(float AttackNumber) WrathMissile =
 	{
 		org = self.origin + v_forward*20 + v_up*12; // 20 // 44;
 	}
-	else if ( AttackNumber == 2)
+	else
+if ( AttackNumber == 2)
 	{
 		org = self.origin + v_forward*18 + v_up*10; // 18 // 42;
 	}
-	else if ( AttackNumber == 3)
+	else
+if ( AttackNumber == 3)
 	{
 		org = self.origin + v_forward*12 + v_up*12 + v_right*20;
 	}
-    else if ( AttackNumber == 4)
+    else
+if ( AttackNumber == 4)
 	{
         org = self.origin + v_forward*20 + v_up*16;
 	}
