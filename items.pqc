@@ -198,7 +198,8 @@ void() health_touch =
 	}
 	activator = other;
 	SUB_UseTargets();
-	if (self.orig_origin != '0 0 0') {
+	if (self.orig_origin != '0 0 0')
+{
 		self.origin = self.orig_origin;
 	}
 };
@@ -360,7 +361,8 @@ void() item_armor1 =
 		return;
 	}
 #ifdef mtfcoop_uberhardmode
-	if (uberhardmode) {
+	if (uberhardmode)
+{
 		remove(self);
 		return;
 	}
@@ -381,7 +383,8 @@ void() item_armor2 =
 		return;
 	}
 #ifdef mtfcoop_uberhardmode
-	if (uberhardmode) {
+	if (uberhardmode)
+{
 		remove(self);
 		return;
 	}
@@ -402,7 +405,8 @@ void() item_armorInv =
 		return;
 	}
 #ifdef mtfcoop_uberhardmode
-	if (uberhardmode) {
+	if (uberhardmode)
+{
 		remove(self);
 		return;
 	}

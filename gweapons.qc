@@ -24,7 +24,8 @@ float (entity pickupee) zg_getpickupdist;
 void (entity pickuper, entity pickupee, vector destt) zg_movetowards =
 {
 	local float vel, distfrompickuper;
-	if (pickupee == world) {
+	if (pickupee == world)
+{
 		bprint(2, "zg_movetowards: pickupee is world, so wtf?\n");
 		return;
 	}
@@ -32,7 +33,8 @@ void (entity pickuper, entity pickupee, vector destt) zg_movetowards =
 	vel = vlen (pickupee.origin - destt);
 	distfrompickuper = vlen(pickuper.origin - pickupee.origin);
 
-	if (distfrompickuper > zg_getpickupdist(pickupee) + 32) {
+	if (distfrompickuper > zg_getpickupdist(pickupee) + 32)
+{
 		pickupee.velocity = '0 0 0';
 		zg_drop (pickuper, 2);
 		return;
@@ -77,10 +79,12 @@ float (entity tester_e, entity test) zg_invalidtarget =
 		return TRUE;
 	if (test.classname == "timer")
 		return TRUE;
-	else if (test.is_minion == 1)
+	else
+	if (test.is_minion == 1)
 		return TRUE;
 #ifdef GW_ALLOW_PICKUP_ITEM
-	if (test.flags & FL_ITEM) {
+	if (test.flags & FL_ITEM)
+{
 		if (ZG_ItemType(test) > 0)
 			return FALSE;
 		return 3;
@@ -113,21 +117,25 @@ entity (entity source) zg_findtarget =
 	if (ret > 1)
 		badpickup = ret;
 	radiusent = findradius (source.origin, 64);
-	while (radiusent) {
+	while (radiusent)
+{
 		if (!(ret = zg_invalidtarget(source, radiusent)))
 			return radiusent;
 		if (ret > 1)
 			badpickup = ret;
 		radiusent = radiusent.chain;
 	}
-	if (source.flags & FL_CLIENT) {
+	if (source.flags & FL_CLIENT)
+	{
 		if (badpickup == 2)
 			sprint (source, PRINT_HIGH, "Sorry, only the owner can pickup his builds!\n");
 #ifdef GW_ALLOW_PICKUP_ITEM
-		else if (badpickup == 3)
+		else
+		if (badpickup == 3)
 			sprint (source, PRINT_HIGH, "You cannot pick up this item\n");
 #else
-		else if (badpickup == 3)
+		else
+		if (badpickup == 3)
 			sprint (source, PRINT_HIGH, "Sorry, picking up items is disabled!\n");
 #endif
 		else
@@ -166,12 +174,16 @@ void (entity pickuper, float toss) zg_drop =
 		return;
 	remove (pickuper.pickupthink_hands);
 #ifdef GW_ALLOW_PICKUP_ITEM
-	if (pickupee.flags & FL_ITEM) {
-		if (pickuper.health <= 0 || toss == 2) {
+	if (pickupee.flags & FL_ITEM)
+{
+		if (pickuper.health <= 0 || toss == 2)
+{
 			pickupee.movetype = 10;
 			pickupee.velocity_z = pickupee.velocity_z + 10;
 		}
-		else if (ZG_ItemType(pickupee) == 1) {
+		else
+		if (ZG_ItemType(pickupee) == 1)
+{
 			ZG_FireItem (pickupee);
 			if (pickupee.orig_origin != '0 0 0')
 				pickupee.origin = pickupee.orig_origin;
@@ -183,13 +195,15 @@ void (entity pickuper, float toss) zg_drop =
 			pickupee.th_fireball = pickupee.touch;
 			pickupee.touch = SUB_Null;
 		}
-		else {
+		else
+		{
 			pickupee.movetype = 10;
 			pickupee.velocity = v_forward * 700;
 		}
 		pickuper.owner = pickuper._oldowner;
 		pickuper.pickedupobject_hands = world;
-		if (pickuper.health > 0) {
+		if (pickuper.health > 0)
+		{
 			oldself = self;
 			self = pickuper;
 			W_SetCurrentAmmo ();
@@ -198,14 +212,17 @@ void (entity pickuper, float toss) zg_drop =
 		return;
 	}
 #endif
-	if (toss == 1) {
+	if (toss == 1)
+	{
 		pickupee.velocity = v_forward * 500;
 
 		if (pickupee.oldmovetype != MOVETYPE_FLY && pickupee.oldmovetype != MOVETYPE_FLYMISSILE)
 			pickupee.velocity = pickupee.velocity + v_up * 200;
-	} else
+	}
+	else
 		pickupee.velocity_z = pickupee.velocity_z + 10;	// *
-	if (InSolid(pickupee)) {
+	if (InSolid(pickupee))
+{
 		oldself = self;
 		self = pickupee;
 		self.velocity = '0 0 0';
@@ -217,7 +234,8 @@ void (entity pickuper, float toss) zg_drop =
 	pickupee.movetype = pickupee.oldmovetype;
 	pickupee.pickedupobject_hands = world;			// *
 	pickuper.pickedupobject_hands = world;
-	if (pickuper.health > 0) {
+	if (pickuper.health > 0)
+{
 		oldself = self;
 		self = pickuper;
 		W_SetCurrentAmmo ();
@@ -245,8 +263,10 @@ void (entity pickuper) zg_pickup =
 	thinker.think = zg_think;
 	pickuper.pickupthink_hands = thinker;
 #ifdef GW_ALLOW_PICKUP_ITEM
-	if (trace_ent.flags & FL_ITEM) {
-		if (trace_ent.orig_origin == '0 0 0') {
+	if (trace_ent.flags & FL_ITEM)
+	{
+		if (trace_ent.orig_origin == '0 0 0')
+		{
 			trace_ent.orig_origin = trace_ent.origin;
 		}
 	}
@@ -339,7 +359,8 @@ void () ZG_ExplosiveTouch =
 void () ZG_ammobox_regen =
 {
 	self.touch = self.th_fireball;
-	if (self.orig_origin != '0 0 0') {
+	if (self.orig_origin != '0 0 0')
+{
 		self.origin = self.orig_origin;
 		//self.orig_origin = '0 0 0';
 	}

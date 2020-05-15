@@ -525,26 +525,46 @@ void () misc_fireworks =
 void () SetSpawnObject =
 {
 	if (self.spawnobject == 1) item_armor1();
-//	else if (self.spawnobject == 2) item_healthkit();
-//	else if (self.spawnobject == 3) item_ammo_pistol();
-//	else if (self.spawnobject == 4) item_ammo_pistol_large();
-//	else if (self.spawnobject == 5)   	item_ammo_smg1();
-//	else if (self.spawnobject == 6)   	item_ammo_smg1_large();
-//	else if (self.spawnobject == 7)   	item_smg1_grenade();
-//	else if (self.spawnobject == 8)   	weapon_supershotgun();
-//	else if (self.spawnobject == 9)   	item_box_buckshot();
-//	else if (self.spawnobject == 10)   	weapon_supernailgun();
-//	else if (self.spawnobject == 11)   	item_box_sniper_rounds();
-//	else if (self.spawnobject == 12)   	item_ammo_ar2_large();
-//	else if (self.spawnobject == 13)   	item_ammo_ar2_large();
-//	else if (self.spawnobject == 14)   	weapon_rocketlauncher();
-//	else if (self.spawnobject == 15)   	item_rockets();
-//	else if (self.spawnobject == 16)   	item_cells();
-//	else if (self.spawnobject == 17)   	weapon_grenadelauncher();
-	else if (self.spawnobject == 18)   	weapon_nailgun();
-	else if (self.spawnobject == 19)   	weapon_supernailgun();
-//	else if (self.spawnobject == 20)   	item_ammo_ar2_large();
-//	else if (self.spawnobject == 21)   	weapon_lightning();
+//	else
+if (self.spawnobject == 2) item_healthkit();
+//	else
+if (self.spawnobject == 3) item_ammo_pistol();
+//	else
+if (self.spawnobject == 4) item_ammo_pistol_large();
+//	else
+if (self.spawnobject == 5)   	item_ammo_smg1();
+//	else
+if (self.spawnobject == 6)   	item_ammo_smg1_large();
+//	else
+if (self.spawnobject == 7)   	item_smg1_grenade();
+//	else
+if (self.spawnobject == 8)   	weapon_supershotgun();
+//	else
+if (self.spawnobject == 9)   	item_box_buckshot();
+//	else
+if (self.spawnobject == 10)   	weapon_supernailgun();
+//	else
+if (self.spawnobject == 11)   	item_box_sniper_rounds();
+//	else
+if (self.spawnobject == 12)   	item_ammo_ar2_large();
+//	else
+if (self.spawnobject == 13)   	item_ammo_ar2_large();
+//	else
+if (self.spawnobject == 14)   	weapon_rocketlauncher();
+//	else
+if (self.spawnobject == 15)   	item_rockets();
+//	else
+if (self.spawnobject == 16)   	item_cells();
+//	else
+if (self.spawnobject == 17)   	weapon_grenadelauncher();
+	else
+if (self.spawnobject == 18)   	weapon_nailgun();
+	else
+if (self.spawnobject == 19)   	weapon_supernailgun();
+//	else
+if (self.spawnobject == 20)   	item_ammo_ar2_large();
+//	else
+if (self.spawnobject == 21)   	weapon_lightning();
 };
 */
 //END

@@ -261,15 +261,20 @@ void() CamOffset =
 {
 	if (self.view_ofs == '0 0 22')
 		self.view_ofs = '0 0 18';
-	else if (self.view_ofs == '0 0 18')
+	else
+	if (self.view_ofs == '0 0 18')
 		self.view_ofs = '0 0 13';
-	else if (self.view_ofs == '0 0 13')
+	else
+	if (self.view_ofs == '0 0 13')
 		self.view_ofs = '0 0 7';
-	else if (self.view_ofs == '0 0 7')
+	else
+	if (self.view_ofs == '0 0 7')
 		self.view_ofs = '0 0 1';
-	else if (self.view_ofs == '0 0 1')
+	else
+	if (self.view_ofs == '0 0 1')
 		self.view_ofs = '0 0 -10';
-	else if (self.view_ofs == '0 0 -10')
+	else
+	if (self.view_ofs == '0 0 -10')
 		self.view_ofs = '0 0 -18';
 	else
 		self.view_ofs = '0 0 22';
@@ -595,8 +600,8 @@ void () Cam =
 	_l_1802 = trace_endpos - (v_forward * 8.000000);
 	if ((trace_fraction != 1.000000))
 	{
-	        if (trace_plane_normal_z != 0)  // Wall is not perfectly vertical
-		                return;   
+		if (trace_plane_normal_z != 0)  // Wall is not perfectly vertical
+			return;   
 		if (trace_ent.th_die)
 			return;
 		sprint (self, 2.000000, "Camera set! Drop3 looks through it.\n");
