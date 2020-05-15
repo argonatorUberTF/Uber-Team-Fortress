@@ -4,16 +4,20 @@ void () lsoul_check_frame =
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
 	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	else
+if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;
@@ -104,7 +108,8 @@ void () lsoul_atk3 = [ 24, lsoul_atk3 ]
 		self.dest1 = self.origin;
 	self.dest2 = self.origin;
 		
-	if (self.dest1 == self.dest2) {
+	if (self.dest1 == self.dest2)
+{
 		self.movetype = MOVETYPE_STEP; //go back to movetype_step movement for monster AI
 		self.touch = SUB_Null; //reset touch function to nothing
 		self.think = lsoul_run1; //break out of the charge loop

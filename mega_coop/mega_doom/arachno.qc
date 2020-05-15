@@ -263,7 +263,8 @@ void () arachnotron_pain =
 void () arachnotron_die1 = [ 0, arachnotron_die1 ]
 {
 	self.frame = 65 + self.cells_bonus;
-	if (self.frame >= 71) {
+	if (self.frame >= 71)
+{
 		self.frame = 71;
 		self.cells_bonus = self.cells_bonus - 1;
 	}

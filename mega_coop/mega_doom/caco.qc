@@ -3,16 +3,20 @@ void () caco_check_frame =
 	if (self.frame >= 0 && self.frame <= 17)			/* idle */
 	{
 	}
-	else if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
+	else
+if (self.frame >= 39 && self.frame <=  54)  	/* walk and run */
 	{
 	}
-	else if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
+	else
+if (self.frame >= 55 && self.frame <=  58)  	/* attacking */
 	{
 	}
-	else if (self.frame >= 17 && self.frame <=  32)  	/* death */
+	else
+if (self.frame >= 17 && self.frame <=  32)  	/* death */
 	{
 	}
-	else if (self.frame >= 33 && self.frame <=  38)  	/* pain */
+	else
+if (self.frame >= 33 && self.frame <=  38)  	/* pain */
 	{
 	}
 	self.oframe = self.frame;

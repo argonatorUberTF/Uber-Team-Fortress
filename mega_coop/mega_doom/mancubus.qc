@@ -253,7 +253,8 @@ void () mancubus_pain =
 void () mancubus_die1 = [ 0, mancubus_die1 ]
 {
 	self.frame = 66 + self.cells_bonus;
-	if (self.frame >= 75) {
+	if (self.frame >= 75)
+{
 		self.frame = 75;
 		self.cells_bonus = self.cells_bonus - 1;
 	}

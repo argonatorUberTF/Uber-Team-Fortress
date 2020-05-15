@@ -186,13 +186,17 @@ void () revenant_atk1 = [ 0, revenant_atk1 ]
 	ai_face ();
 	if (self.cells_bonus < 3)
 		self.frame = 72;
-	else if (self.cells_bonus == 3) {
-		if (coop_visible(self, self.enemy)) {
+	else
+if (self.cells_bonus == 3)
+{
+		if (coop_visible(self, self.enemy))
+{
 			self.frame = 80;
 			RevFireBall();
 		}
 	}
-	else if (self.cells_bonus == 4)
+	else
+if (self.cells_bonus == 4)
 		self.frame = 80;
 	else	{
 		revenant_run1 ();
