@@ -170,7 +170,8 @@ enum
 	VF_DRAWCROSSHAIR = 21,
 	VF_PERSPECTIVE = 200
 };
-enumflags {
+enumflags
+{
 	RF_VIEWMODEL,
 	RF_EXTERNALMODEL,
 	RF_DEPTHHACK,
@@ -448,7 +449,8 @@ string() getentitytoken = #355;
 /*
 	This builtin is valid only inside CSQC_WorldLoaded.
 	It returns the next token from the bsp.
-	Entities take the form { key value }
+	Entities take the form
+{ key value }
 	Each return is a tempstring, of which there will be at least two alternating tempstrings.
 	Returns the null string when there are no more tokens. This is distinct from an empty string.
 	Tokenizing rules match the server loading.

@@ -23,12 +23,12 @@ void() CSQC_Init =
 	registercommand("testmenu2");
 // Menu stuff (now less ugly)
 	registercvar("csqcgui_menu","0");			// info on the current menu
-   /*
-   registercvar("csqcgui_menu_1","0");
-   registercvar("csqcgui_menu_2","0");
-   registercvar("csqcgui_menu_3","0");
-   registercvar("csqcgui_menu_4","0");
-   */
+/*
+	registercvar("csqcgui_menu_1","0");
+	registercvar("csqcgui_menu_2","0");
+	registercvar("csqcgui_menu_3","0");
+	registercvar("csqcgui_menu_4","0");
+*/
 #ifdef ODE_PHYSICS
 	precache_model("progs/snow_gib1.mdl");
 	precache_model("progs/snow_gib2.mdl");
@@ -64,15 +64,20 @@ float (float t_menu, float meflag_a, float meflag_b) SetupMenu =
 	in_menu = t_menu;
 	if (in_menu == MENU_CLASS_SELECT)
 		Menu_ClassSelect(meflag_a, meflag_b);
-	else if (in_menu == 12)
+	else
+	if (in_menu == 12)
 		Menu_SpySpecial();
-	else if (in_menu == 13)
+	else
+	if (in_menu == 13)
 		Menu_SpyChangeSkin();
-	else if (in_menu == 14)
+	else
+	if (in_menu == 14)
 		Menu_SpyChangeColor();
-	else if (in_menu == 20)
+	else
+	if (in_menu == 20)
 		Menu_MegaTF();
-	else {
+	else
+	{
 		CSQCGUI_ClearMenu();
 	}
 	return TRUE;
@@ -121,31 +126,40 @@ float(string cmd) ParseCommand =
 	local vector spawnorg, blowup;
 #endif
 	args = tokenize(cmd);
-	if (argv(1) == "showprogress") {
-		if (argv(2) != "") {
+	if (argv(1) == "showprogress")
+	{
+		if (argv(2) != "")
+{
 			reloadtime_begin = cltime;
 			reloadtime_end = cltime + stof(argv(2));
 		}
 		return TRUE;
 	}
-	else if (argv(1) == "grentimer") {
-		if (argv(2) != "") {
+	else
+if (argv(1) == "grentimer")
+	{
+		if (argv(2) != "")
+{
 			cgrentimer = cltime + stof(argv(2)) + 1;
 		}
 		return TRUE;
 	}
 #ifdef ODE_PHYSICS
-	else if (argv(1) == "spawngibs") {
+	else
+if (argv(1) == "spawngibs")
+	{
 		
 		gibtype = stof(argv(2));
 		spawnorg_x = stof(argv(3));
 		spawnorg_y = stof(argv(4));
 		spawnorg_z = stof(argv(5));
-		if (!gibtype) {
+		if (!gibtype)
+		{
 			print("warning: spawngibs called without any arguments\n");
 			return TRUE;
 		}
-		if (!spawnorg) {
+		if (!spawnorg)
+		{
 			print("warning: spawngibs called without enough vectors\n");
 			return TRUE;
 		}
@@ -158,7 +172,8 @@ float(string cmd) ParseCommand =
 		else
 			blowup_y = stof(argv(6)) * (2*random());
 		blowup_x = stof(argv(6)) * -1;
-		if (gibtype == 1) {			// snowman
+		if (gibtype == 1)
+{			// snowman
 			SpawnPhysObj( 1, "progs/snow_gib1.mdl", spawnorg, blowup );
 			SpawnPhysObj( 1, "progs/snow_gib2.mdl", spawnorg + '0 0 20', blowup );
 			SpawnPhysObj( 1, "progs/h_snowman.mdl", spawnorg + '0 0 50', blowup );
@@ -166,12 +181,16 @@ float(string cmd) ParseCommand =
 		return TRUE;
 	}
 #endif
-	else if (argv(1) == "setexp") {
-		if (!csqc_sent) {
+	else
+	if (argv(1) == "setexp")
+	{
+		if (!csqc_sent)
+		{
 			localcmd("cmd csqc_client\n");
 			csqc_sent = TRUE;
 		}
-		if (argv(2) != "") {
+		if (argv(2) != "")
+		{
 			ShowAddedEXP ( stof(argv(2)) - coop_exp );
 			coop_exp = stof(argv(2));
 			//print(argv(2)," arg2\n");
@@ -179,18 +198,24 @@ float(string cmd) ParseCommand =
 		}
 		return TRUE;
 	}
-	else if (argv(1) == "monsbar") {
+	else
+	if (argv(1) == "monsbar")
+	{
 		if (monsterbar == world)
 			monsterbar = spawn();
 		monsterbar.alpha = 2;
 		monsterbar.bt_no = stof(argv(2)) / stof(argv(3));
 		//print(argv(2), " and ", argv(3), "\n");
 	}
-	else if (argv(1) == "loadmenu") {
-		if (argv(2) == "clear" || stof(argv(2)) < 1) {
+	else
+if (argv(1) == "loadmenu")
+	{
+		if (argv(2) == "clear" || stof(argv(2)) < 1)
+		{
 			CSQCGUI_ClearMenu();
 		}
-		if (argv(2) != "") {
+		if (argv(2) != "")
+		{
 			SetupMenu( stof(argv(2)), stof(argv(3)), stof(argv(4)) );
 		}
 		return TRUE;
@@ -228,16 +253,13 @@ entity (vector entorg, string entmodel, float turnangle, float entmass, float x)
 	else
 		tent2.mass = entmass;
 	tent2.solid = SOLID_PHYSICS_BOX;
-	//tent2.movetype = 0;
-	if (x == 1) {
+	if (x == 1)
+	{
 		print("NOMOVE\n");
 		tent2.movetype = 0;
 	}
 	else
 		tent2.movetype = MOVETYPE_PHYSICS;
-	//tent2.movetype = 0;
-	//tent2.bouncefactor = 1000;
-	//tent2.bouncestop = 1000;
 	return tent2;
 };
 entity (vector entorg, string entmodel, float turnangle, float entmass) Bone_MakeBone =
@@ -253,10 +275,7 @@ entity (vector entorg, string entmodel, float turnangle, float entmass) Bone_Mak
 	else
 		tent2.mass = entmass;
 	tent2.solid = SOLID_PHYSICS_BOX;
-//tent2.movetype = 0;
 	tent2.movetype = MOVETYPE_PHYSICS;
-	//tent2.bouncefactor = 1000;
-	//tent2.bouncestop = 1000;
 	return tent2;
 };
 entity (vector jointorg, vector jointoffset, string jointmodel, entity attach1, entity attach2, float yforce, float zforce) Joint_MakeJoint =
@@ -268,13 +287,11 @@ entity (vector jointorg, vector jointoffset, string jointmodel, entity attach1, 
 	joint1.drawmask = MASK_NORMAL;
 	makevectors(attach1.angles);
 	joffset = (v_forward * jointoffset_x) + (v_right * (jointoffset_y * -1)) + (v_up * jointoffset_z);
-	//print(vtos(joffset), "is joffset\n");
 	setorigin(joint1, jointorg + joffset);
 	joint1.jointtype = JOINTTYPE_UNIVERSAL;
 	joint1.movetype = 0;
 	joint1.aiment = attach1;
 	joint1.enemy = attach2;
-	//joint1.origin = jointorg;
 	joint1.movedir_x = 22;
 	if (yforce)
 		joint1.movedir_y = yforce;
@@ -301,13 +318,14 @@ void (vector topleft_org) Make_Cloth =
 	x_width = 10;				// horizontal spacing between joints
 	y_width = 10;				///
 	i=0;
-	while (i < #MAX_CLOTH) {
+	while (i < #MAX_CLOTH)
+	{
 		cloth[i] = world;
 		i++;
 	}
-	// Create the points
 	i=0;
-	while (i < x*y) {
+	while (i < x*y)
+	{
 		point_org = topleft_org;
 		point_org_z -= y_width * y_pos;
 		point_org_x += x_width * x_pos;
@@ -317,7 +335,8 @@ void (vector topleft_org) Make_Cloth =
 			flag_sphere = Bone_MakeCloth(point_org, "progs/phys/phys_sphere.mdl", 0, 0.3, 0);
 		cloth[i] = flag_sphere;
 		x_pos++;
-		if (x_pos >= x) {
+		if (x_pos >= x)
+		{
 			x_pos = 0;
 			y_pos++;
 		}
@@ -336,7 +355,8 @@ void (vector topleft_org) Make_Cloth =
 	//joint = Joint_MakeJoint( cloth[jointpos].origin, cloth[jointpos+1].origin, "progs/dot1.spr", cloth[jointpos], cloth[jointpos+1], 100, 1.7 );
 	//joint = Joint_MakeJoint( cloth[jointpos].origin, cloth[jointpos+1+(y_pos*(x+1))].origin, "", cloth[jointpos], cloth[jointpos+1+(y_pos*(x+1))], 100, 1.7 );
 	i=0;
-	while (i < x*y) {
+	while (i < x*y)
+	{
 		jointpos = x_pos + y_pos*x;
 	
 		if (cloth[jointpos+1] == world)
@@ -353,7 +373,8 @@ void (vector topleft_org) Make_Cloth =
 		if (cloth[jointpos+x+1] != world)
 			joint = Joint_MakeJoint( cloth[jointpos].origin, (cloth[jointpos].origin-cloth[jointpos+x+1].origin), "", cloth[jointpos], cloth[jointpos+x+1], 500, 0.1 );
 #else
-		if (x_pos < 8 && cloth[jointpos+x+1] != world) {
+		if (x_pos < 8 && cloth[jointpos+x+1] != world)
+		{
 			point1 = cloth[jointpos];
 			point2 = cloth[jointpos+x+1];
 			joint = Joint_MakeJoint( point1.origin, ((point2.origin-point1.origin)*0.5), "", point1, point2, 500, 0.1 );
@@ -384,14 +405,12 @@ void (vector topleft_org) Make_Cloth =
 		
 		//if (cloth[jointpos] != world)
 		//	cloth[jointpos].velocity_x = random()*-100000;
-		
-		
 		x_pos++;
-		if (x_pos >= x) {
+		if (x_pos >= x)
+		{
 			x_pos = 0;
 			y_pos++;
 		}
-	
 		i++;
 	}
 	
@@ -406,8 +425,10 @@ float CSQC_ConsoleCommand(string strMessage) =
 #endif
 	args = tokenize(strMessage);
 	
-	if (argv(0) == "testmenu") {
-		if (in_menu) {
+	if (argv(0) == "testmenu")
+	{
+		if (in_menu)
+		{
 			CSQCGUI_ClearMenu();
 			return TRUE;
 		}
@@ -417,13 +438,17 @@ float CSQC_ConsoleCommand(string strMessage) =
 		
 	}
 	
-	if (argv(0) == "clearmenu") {
-		if (in_menu) {
+	if (argv(0) == "clearmenu")
+	{
+		if (in_menu)
+		{
 			CSQCGUI_ClearMenu();
 			return TRUE;
 		}
 	}
-	else if (argv(0) == "testmenu2") {
+	else
+if (argv(0) == "testmenu2")
+	{
 		CSQCGUI_ClearMenu();		// Clear the current menu
 		in_menu = MENU_TEST_DROPDOWN;
 		//print(argv(1)," eyyy\n");
@@ -432,20 +457,25 @@ float CSQC_ConsoleCommand(string strMessage) =
 	}
 	if (argv(0) == "test2")
 		cprint(ftos(time));
-	if (argv(0) == "showprogress") {
-		if (argv(1) != "") {
+	if (argv(0) == "showprogress")
+	{
+		if (argv(1) != "")
+		{
 			reloadtime_begin = cltime;
 			reloadtime_end = cltime + stof(argv(1));
 		}
 		return 1;
 	}
-	if (argv(0) == "spawnbox") {
-		if (argv(1) != "") {
+	if (argv(0) == "spawnbox")
+	{
+		if (argv(1) != "")
+		{
 		}
 		return 1;
 	}
 #ifdef ODE_PHYSICS
-	if (argv(0) == "spawnrag") {
+	if (argv(0) == "spawnrag")
+	{
 		Make_Cloth('624 320 104');
 		/*
 		bone_angle = 86;
@@ -508,10 +538,11 @@ float CSQC_ConsoleCommand(string strMessage) =
 	tent3.bouncestop = 1000;
 	*/
 		//tent.velocity_x = random()*300;
-		
 		print("RAG SPAWNED\n");
 	}
-	else if (argv(0) == "spawnball") {
+	else
+	if (argv(0) == "spawnball")
+	{
 	print("heyyy\n");
 		tent = Bone_MakeBone(getviewpropv(VF_ORIGIN) + '0 0 24', "progs/phys/phys_ball.mdl", 0, 50);
 		makevectors(getviewpropv(VF_ANGLES));
@@ -558,7 +589,8 @@ entity () RagSoldier =
 void() Soldier_Animate =
 {
 	local entity ragme;
-	if (self.frame == 8 || self.frame == 18) {
+	if (self.frame == 8 || self.frame == 18)
+	{
 		print("INSERT RAGDOLL HERE\n");
 		if (self.ragmodel == world)
 			self.ragmodel = RagSoldier();

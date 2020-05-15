@@ -83,7 +83,8 @@ void (float meflag_a, float meflag_b) Menu_ClassSelect =
 	men_y = vid_conheight*0.15;
 	but_size = '120 35 0';
 	
-	if (meflag_a == 666) {		// hehe, civ menu :)
+	if (meflag_a == 666)
+{		// hehe, civ menu :)
 		CreateButton( "1. Civilian!", 			"default", men, "progs/csqc/csqcguiback.tga", but_size, class_enabled);
 		return;
 	}
@@ -170,7 +171,8 @@ void () Menu_SpyChangeSkin =
 void (float cno, vector text_startpos) TF_Class_Info =
 {
 	local string l1,l2,l3,l4,l5,l6,l7,l8;
-	switch (cno) {
+	switch (cno)
+{
 		case 1:
 			l1 = "The scout is maneuverable and fast.";
 			l2 = "This class is primarily used for flag";
@@ -244,7 +246,8 @@ void (float mn_flags) Menu_DropdownMenu =
 		CreateButton( "-",			"testmenu2",			men, buttonback, '25 35 0',				MENUFLAG_BRANCH);
 	else
 		CreateButton( "+",			"testmenu2 1",			men, buttonback, '25 35 0',				MENUFLAG_BRANCH);	
-	if (mn_flags > 0) {
+	if (mn_flags > 0)
+{
 		men_x-=(but_size_x - 25);	//
 		men_y+=but_size_y;			// draw new menu items below the "More Options" button
 	}

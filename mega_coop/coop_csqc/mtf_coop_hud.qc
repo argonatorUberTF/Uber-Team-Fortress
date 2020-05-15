@@ -1,31 +1,31 @@
 void drawline(vector center_ofs, vector linesize, vector do_rgb, float do_alpha, float do_flags, float posflag)
 {
-   local vector barpos;
-   barpos_x = vid_conwidth;
-   barpos_y = vid_conheight;
-   barpos = barpos*0.5 + center_ofs;
-  barpos_y += 175;
-   drawfillrgb(barpos, linesize, do_rgb, do_alpha/*, do_flags*/);
+	local vector barpos;
+	barpos_x = vid_conwidth;
+	barpos_y = vid_conheight;
+	barpos = barpos*0.5 + center_ofs;
+	barpos_y += 175;
+	drawfillrgb(barpos, linesize, do_rgb, do_alpha/*, do_flags*/);
 };
 void DrawProgressEmpty(void)
 {
-   drawline(' -200 -2 0 ', '400 1 0', '1 0.91 0.51', 0.7, 0, 1); // Top
-   drawline(' -200 -2 0 ', '1 9.5 0', '1 0.91 0.51', 0.7, 0, 1); // Left
-   drawline(' -200 7 0 ', '400 0.5 0', '1 0.91 0.51', 0.7, 0, 1); // Bottom
-   drawline(' 200 -2 0 ', '1 9.5 0', '1 0.91 0.51', 0.7, 0, 1); // Right
+	drawline(' -200 -2 0 ', '400 1 0', '1 0.91 0.51', 0.7, 0, 1); // Top
+	drawline(' -200 -2 0 ', '1 9.5 0', '1 0.91 0.51', 0.7, 0, 1); // Left
+	drawline(' -200 7 0 ', '400 0.5 0', '1 0.91 0.51', 0.7, 0, 1); // Bottom
+	drawline(' 200 -2 0 ', '1 9.5 0', '1 0.91 0.51', 0.7, 0, 1); // Right
 };
 void DrawProgress(void)
 {
-   local vector barpos, fillsize;
-   local float progrs;
-   progrs = (cltime - reloadtime_begin)/(reloadtime_end - reloadtime_begin)*100;
-   DrawProgressEmpty(); // Draw an empty box
-   fillsize_x  = (progrs*396) / 100; // This finds the correct % of our fill
-   fillsize_y = 6; // Give it a hieght of 6
-   barpos_x = vid_conwidth;
-   barpos_y = vid_conheight;
-   barpos = barpos*0.5 - '198 -175.25 0'; // center the progress bar on the screen
-   drawfillrgb(barpos, fillsize, '1 0.91 0.51', 0.7/*, 0*/); // The Fill //'396 6 0'
+	local vector barpos, fillsize;
+	local float progrs;
+	progrs = (cltime - reloadtime_begin)/(reloadtime_end - reloadtime_begin)*100;
+	DrawProgressEmpty(); // Draw an empty box
+	fillsize_x  = (progrs*396) / 100; // This finds the correct % of our fill
+	fillsize_y = 6; // Give it a hieght of 6
+	barpos_x = vid_conwidth;
+	barpos_y = vid_conheight;
+	barpos = barpos*0.5 - '198 -175.25 0'; // center the progress bar on the screen
+	drawfillrgb(barpos, fillsize, '1 0.91 0.51', 0.7/*, 0*/); // The Fill //'396 6 0'
 };
 void(float width, float height) grentimer =
 {
@@ -37,13 +37,17 @@ void(float width, float height) grentimer =
 	iconsize = '45 45 0';
 	if (cgrentimer-cltime > 4) 
 		drawpic(barpos, "progs/csqc/grenclock04.tga", iconsize, '1 0.91 0.51', iconalpha);
-	else if (cgrentimer-cltime > 3) 
+	else
+	if (cgrentimer-cltime > 3) 
 		drawpic(barpos, "progs/csqc/grenclock03.tga", iconsize, '1 0.91 0.51', iconalpha);
-	else if (cgrentimer-cltime > 2) 
+	else
+	if (cgrentimer-cltime > 2) 
 		drawpic(barpos, "progs/csqc/grenclock02.tga", iconsize, '1 0.91 0.51', iconalpha);
-	else if (cgrentimer-cltime > 1) 
+	else
+	if (cgrentimer-cltime > 1) 
 		drawpic(barpos, "progs/csqc/grenclock01.tga", iconsize, '1 0.91 0.51', iconalpha);
-	else if (cgrentimer-cltime > 0) 
+	else
+	if (cgrentimer-cltime > 0) 
 		drawpic(barpos, "progs/csqc/grenclock05.tga", iconsize, '1 0.91 0.51', iconalpha);
 };
 void(float width, float height) DrawExperience =
@@ -83,7 +87,8 @@ void () CSQCGUI_ClearMenu =
 	menu_selected = 0;
 	in_menu = 0;
 	menu_impulse = 0;
-	if (!mouse_branch) {
+	if (!mouse_branch)
+	{
 		mousepos_x = vid_conwidth*.5;
 		mousepos_y = vid_conheight*.5;
 	}
@@ -103,13 +108,16 @@ void () CSQCGUI_Render =
 	while (button)
 	{
 		boxno = button.bt_no;
-		if (mouse_box == boxno) {
+		if (mouse_box == boxno)
+		{
 			CSQC_GUI_MouseOverButton( button.bt_img, button.origin, button.size, button.bt_text, mouse_box );
-			if (menu_selected) {
+			if (menu_selected)
+			{
 				CSQC_GUI_ButtonClick( button );
 			}
 		}
-		else {
+		else
+		{
 			if (button.bt_flags & MENUFLAG_DISABLED)
 				spawnbox(button.origin, button.size, button.bt_text, '.4 .4 .4', .2);
 			else
@@ -149,7 +157,8 @@ float () MouseInBox =
 	while (button)
 	{
 		if (mousepos_y >= button.origin_y && mousepos_y <= button.origin_y+button.size_y) 
-			if (mousepos_x >= button.origin_x && mousepos_x <= button.origin_x+button.size_x) {
+			if (mousepos_x >= button.origin_x && mousepos_x <= button.origin_x+button.size_x)
+{
 				if (!button.bt_flags & MENUFLAG_DISABLED)
 					boxval = button.bt_no;
 				break;
@@ -172,11 +181,13 @@ entity (vector find_from, float find_type, float in_box) FindClosestButton =
 {
 	float best_distance;
 	entity button, best_distance_ent;
-	if (find_from != '0 0 0') {
+	if (find_from != '0 0 0')
+	{
 		button = find(world, classname, "gui_button");
 		while (button)
 		{
-			if (button.bt_no == in_box) {
+			if (button.bt_no == in_box)
+			{
 				find_from = button.origin;
 				break;
 			}
@@ -187,7 +198,8 @@ entity (vector find_from, float find_type, float in_box) FindClosestButton =
 	button = find(world, classname, "gui_button");
 	while (button)
 	{
-		if (!button.bt_flags & MENUFLAG_DISABLED && button.bt_no != in_box && button.origin_x >= 0 && button.origin_y >= 0) {
+		if (!button.bt_flags & MENUFLAG_DISABLED && button.bt_no != in_box && button.origin_x >= 0 && button.origin_y >= 0)
+		{
 			if (find_type == 0)								// find value higher than X
 				if (button.origin_x > find_from_x)
 					best_distance_ent = BestDistanceEnt( button, best_distance_ent, find_from );
@@ -203,44 +215,54 @@ entity (vector find_from, float find_type, float in_box) FindClosestButton =
 		}
 		button = find(button, classname, "gui_button");
 	}
-	
 	return best_distance_ent;
 };
 float(float eventtype, float param1, float param2) CSQC_InputEvent =
 {
 	local entity but_ent;
 	local float in_box;
-	if ( in_menu ) {
+	if ( in_menu )
+	{
 		if (eventtype == 0)	{//keypress down inputs
-			if (global_menu_flags & MFG_KEYBOARDINPUT) {
+			if (global_menu_flags & MFG_KEYBOARDINPUT)
+			{
 				in_box = MouseInBox();
-				if (param1 >= 128 && param1 <= 131) {
-					if (!in_box) {					// Nothing is selected so lets look for a button from the top-left of the screen
+				if (param1 >= 128 && param1 <= 131)
+				{
+					if (!in_box)
+{					// Nothing is selected so lets look for a button from the top-left of the screen
 						but_ent = FindClosestButton( '0 0 0', 0, in_box );
 						if (but_ent == world)
 							but_ent = FindClosestButton( '0 0 0', 2, in_box );
 					}
-					else {
+					else
+					{
 						if (param1 == 128)				// up
 							but_ent = FindClosestButton( mousepos, 3, in_box );
-						else if (param1 == 129) 		// down
+						else
+if (param1 == 129) 		// down
 							but_ent = FindClosestButton( mousepos, 2, in_box );
-						else if (param1 == 130) 		// left
+						else
+if (param1 == 130) 		// left
 							but_ent = FindClosestButton( mousepos, 1, in_box );
-						else if (param1 == 131) 		// right
+						else
+if (param1 == 131) 		// right
 							but_ent = FindClosestButton( mousepos, 0, in_box );
 					}
 					if (but_ent != world)
 						mousepos = but_ent.origin+ '1 1 0';
 					return TRUE;
 				}
-				else if (param1 == 13)					// enter is pressed
-					if (in_box) {
+				else
+				if (param1 == 13)					// enter is pressed
+					if (in_box)
+{
 						menu_selected = in_box;
 						return TRUE;
 					}
 			}
-			if (param1 == 512 && !(global_menu_flags & MFG_NOCURSOR)) {		// Left Click
+			if (param1 == 512 && !(global_menu_flags & MFG_NOCURSOR))
+{		// Left Click
 				if (MouseInBox())
 				{
 					menu_selected = MouseInBox();			// Actual menu selection is handled in CSQCGUI_Render() for modability purposes
@@ -248,13 +270,18 @@ float(float eventtype, float param1, float param2) CSQC_InputEvent =
 				}
 				return TRUE;
 			}
-			else if (param1 == 513) {			// Right click
+			else
+			if (param1 == 513)
+{			// Right click
 				print(vtos(mousepos),"\n");
 			}
-			else if (param1 == 514) {			// Middle click
+			else 
+			if (param1 == 514)
+{			// Middle click
 				if (testsize_one == '0 0 0')
 					testsize_one = mousepos;
-				else {
+				else
+				{
 					print(vtos(mousepos-testsize_one),"\n");
 					testsize_one = '0 0 0';
 				}
@@ -281,11 +308,13 @@ void () DrawAddedExperience =
 {
 	local entity newexp;
 	newexp = find(world, classname, "show_exp");
-	while (newexp) {
+	while (newexp)
+	{
 		newexp.alpha -= .01;
 		newexp.origin_y -= .24;
 		//print(ftos(newexp.bt_no), "HEHE\n");
-		if (newexp.alpha <= 0) {
+		if (newexp.alpha <= 0)
+		{
 			remove(newexp);
 			return;
 		}
@@ -299,7 +328,8 @@ void () DrawAddedExperience =
 void () DrawMonsterBar =
 {
 	local vector barpos, barsize, sbarpos, sbarsize;
-	if (monsterbar.alpha > 0 && monsterbar.bt_no > 0) {
+	if (monsterbar.alpha > 0 && monsterbar.bt_no > 0)
+	{
 		barsize_x = vid_conwidth * .1;
 		barsize_y = vid_conheight * .03;
 		barpos_x = vid_conwidth - barsize_x;
@@ -315,7 +345,8 @@ void () DrawMonsterBar =
 };
 void (float width, float height) HUD_Render =
 {
-	if (getstati(STAT_HEALTH) < 1) {
+	if (getstati(STAT_HEALTH) < 1)
+	{
 		reloadtime_end = 0;
 		return;
 	}
@@ -337,7 +368,8 @@ void () Physics_Cleanup =
 		return;
 	physics_cleanup_time = time + 1;
 	physobj = find(world, classname, "object_physics");
-	while (physobj) {
+	while (physobj)
+{
 		if (physobj.physics_time < time)
 			remove(physobj);		// ADDME: fade?
 		physobj = find(physobj, classname, "object_physics");
@@ -347,8 +379,8 @@ void () Physics_Cleanup =
 void(float width, float height, float menushown) CSQC_UpdateView =
 {
 	clearscene();       //wipe the scene, and apply the default rendering values.
-   vid_conwidth = width;
-   vid_conheight = height;
+	vid_conwidth = width;
+	vid_conheight = height;
 	setviewprop(VF_MIN_X, 0);	//set the left of the view
 	setviewprop(VF_MIN_Y, 0);	//set the top of the view
 	setviewprop(VF_SIZE_X, width);	//set how wide the view is (full width)

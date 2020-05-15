@@ -4,15 +4,18 @@
 // A button is clicked..
 void ( entity t_button ) CSQC_GUI_ButtonClick =
 {
-	switch(in_menu) {
+	switch(in_menu)
+{
 		default:
-			if (!menu_impulse) {			// if the menu didn't already send the reply to the server regarding the menu..
+			if (!menu_impulse)
+{			// if the menu didn't already send the reply to the server regarding the menu..
 				menu_impulse = TRUE;
 				if (t_button.bt_flags & MENUFLAG_BRANCH) 
 					mouse_branch = TRUE;
 				if (t_button.bt_cmd == "default")
 					localcmd("impulse ", ftos(t_button.bt_no), "\n");
-				else {
+				else
+{
 					//print(t_button.bt_cmd, " is the cmd\n");
 					localcmd(t_button.bt_cmd, "\n");
 				}
@@ -26,7 +29,8 @@ void (string button_image, vector button_position, vector button_size, string bu
 	local float /*selected_button, */stl;
 	//selected_button = MouseInBox();
 	
-	switch(in_menu) {
+	switch(in_menu)
+{
 		case MENU_CLASS_SELECT:
 			stl = strlen(button_text);
 			drawstring('260 180 0', substring(button_text , 2, stl), '12 12 0', '1 1 .5', 1);
@@ -46,7 +50,8 @@ void () CSQC_GUI_MenuBackground =
 {
 	local vector menback_pos, menback_size;
 	
-	switch(in_menu) {
+	switch(in_menu)
+{
 		case MENU_CLASS_SELECT:
 			//drawpic('254 18 0', "progs/csqc/mtfn.jpg", '332 85 0', '1 1 1', 1);						// MegaTF logo
 			drawpic('254 18 0', "progs/csqc/tsbanner_600.png", '332 125 0', '1 1 1', 1);					// TastySpleen logo
@@ -69,7 +74,8 @@ void () CSQC_GUI_MenuBackground =
 // Called after the menu buttons are rendered
 void () CSQC_GUI_MenuForeground =
 {
-	switch(in_menu) {
+	switch(in_menu)
+{
 		default:			// No default foreground image
 			break;
 	}
