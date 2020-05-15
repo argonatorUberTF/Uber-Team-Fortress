@@ -16,9 +16,11 @@ void () hl_rotating =
 	
 	if (self.spawnflags & 4)
 		self.pos1_z += mvspd;
-	else if (self.spawnflags & 8)
+	else
+if (self.spawnflags & 8)
 		self.pos1_x += mvspd;
-	else {
+	else
+{
 		//bprint(2,"rotating object with no axis specified\n");
 		self.pos1_y += mvspd;
 	}
@@ -27,7 +29,8 @@ void () hl_rotating =
 };
 void () func_rotating_use =
 {
-	if (self.has_tesla == 0) {
+	if (self.has_tesla == 0)
+{
 		hl_rotating();
 		self.has_tesla = 1;
 	}
@@ -70,7 +73,8 @@ void () func_rotating =
 	//SetMovedir();
 	//self.pos1 = self.origin;
 	//self.pos2 = self.pos1 + self.movedir/* * (fabs(self.movedir * self.size) - self.lip)*/;
-	if (self.spawnflags & 1) {	// start on
+	if (self.spawnflags & 1)
+{	// start on
 		func_rotating_use();
 	}
 	self.use = func_rotating_use;
@@ -132,7 +136,8 @@ void () pendulum_swing =
 		self.speed += self.m_accel * dt;
 	if ( self.speed > self.m_maxSpeed )
 		self.speed = self.m_maxSpeed;
-	else if ( self.speed < -self.m_maxSpeed )
+	else
+if ( self.speed < -self.m_maxSpeed )
 		self.speed = -self.m_maxSpeed;
 		
 // scale the destdelta vector by the time spent traveling to get velocity
@@ -148,9 +153,11 @@ void () pendulum_swing =
 			self.think = SUB_Null;
 			self.avelocity = self.g_vecZero;
 		}
-		else if ( self.speed > self.m_dampSpeed )
+		else
+if ( self.speed > self.m_dampSpeed )
 			self.speed = self.m_dampSpeed;
-		else if ( self.speed < -self.m_dampSpeed )
+		else
+if ( self.speed < -self.m_dampSpeed )
 			self.speed = -self.m_dampSpeed;
 	}
 //_bprint(vtos(self.avelocity) , " is avelocity4\n");
@@ -218,7 +225,8 @@ void () func_pendulum =
 	self.m_start = self.angles;
 	self.m_center = self.angles + (self.m_distance * 0.5) * self.movedir;
 	self.speed = 0;
-	if (self.spawnflags & #SF_BRUSH_ROTATE_INSTANT) {
+	if (self.spawnflags & #SF_BRUSH_ROTATE_INSTANT)
+{
 		self.think = pendulum_use;
 		self.nextthink = self.ltime + 0.1;
 	}
@@ -239,7 +247,8 @@ void () func_rot_button_reactivate =
 };
 void () hl_rotating_button_toggle =
 {
-	if (self.building == world) {
+	if (self.building == world)
+{
 		bprint(2, "hl_rotating_button_toggle: no .building\n");
 		return;
 	}
@@ -260,7 +269,8 @@ void () hl_rotating_button =
 		mvspd = mvspd + (self.armorvalue - self.distance);
 	}
 	self = self.owner;
-	if (self.spawnflags & #SF_MOMENTARY) {
+	if (self.spawnflags & #SF_MOMENTARY)
+{
 		plyr_found = 0;
 		t_plyr = findradius(((self.absmax+self.absmin)*.5), 40);
 		while (t_plyr != world)
@@ -272,12 +282,15 @@ void () hl_rotating_button =
 			t_plyr = t_plyr.chain;
 		}
 	}
-	if (!plyr_found) {
-		if (self.spawnflags & 32) { // toggle = we dont return
+	if (!plyr_found)
+{
+		if (self.spawnflags & 32)
+{ // toggle = we dont return
 			oself.armorvalue += mvspd * -1;
 			mvspd = 0;
 		}
-		else {
+		else
+{
 			oself.armorvalue += mvspd * -2;
 			if (oself.armorvalue < 0){
 				oself.armorvalue = 0;
@@ -292,14 +305,17 @@ void () hl_rotating_button =
 		mvspd = mvspd * -1;
 	if (self.spawnflags & 64)
 		self.pos1_z += mvspd;
-	else if (self.spawnflags & 128)
+	else
+if (self.spawnflags & 128)
 		self.pos1_x += mvspd;
 	else 
 		self.pos1_y += mvspd;
 //self.angles = self.pos1;
 	SUB_CalcAngleMove (self.pos1, realmvspd, SUB_Null);
-	if (self.owner) {
-		if (mapname == "hldemo3") {			// FIXME: I dislike map hacks. Make this work natively!!
+	if (self.owner)
+{
+		if (mapname == "hldemo3")
+{			// FIXME: I dislike map hacks. Make this work natively!!
 			if (self.owner.angles_y > 260 && self.owner.angles_y < 280)
 				Delayed_Timer( "on", 0 );
 //else
@@ -307,33 +323,41 @@ void () hl_rotating_button =
 		}
 		if (self.owner.spawnflags & 64)
 			self.owner.pos1_z += mvspd;
-		else if (self.owner.spawnflags & 128)
+		else
+if (self.owner.spawnflags & 128)
 			self.owner.pos1_x += mvspd;
 		else 
 			self.owner.pos1_y += mvspd;
 		SUB_CalcAngleMoveEnt (self.owner, self.owner.pos1, realmvspd, SUB_Null);
 	}
 // move the door that we're connected to in conjunction with our position
-	if (self.spawnflags & #SF_MOMENTARY) {
-		if (self.enemy != world) {
+	if (self.spawnflags & #SF_MOMENTARY)
+{
+		if (self.enemy != world)
+{
 			targ = find(world, targetname, oself.owner.target);
-			while (targ) {
+			while (targ)
+{
 				self = targ;
 				movedoor = (oself.armorvalue/oself.distance);
-				if (movedoor > 1) {
+				if (movedoor > 1)
+{
 					movedoor = 1;
 				}
 //_bprint(ftos(movedoor)," is movedoor val\n");
-				if (self.state == STATE_TOP) {
+				if (self.state == STATE_TOP)
+{
 					SUB_CalcMove (self.pos1 + (self.pos2 * (1 - movedoor)), 999, SUB_Null);		// FIXME: goes instant instead of in tandem with rot_button
 					oself.owner.ideal_yaw = (vlen( self.origin - self.pos1 ) / vlen( self.pos2 - self.pos1 ));
 				}
-				else {
+				else
+{
 					SUB_CalcMove (self.pos2 * movedoor, 999, SUB_Null);
 					oself.owner.ideal_yaw = 1 - (vlen( self.origin - self.pos2 ) / vlen( self.pos1 - self.pos2 ));
 				}
 					
-				if (movedoor >= 1) {
+				if (movedoor >= 1)
+{
 					if (self.state != STATE_TOP)
 						self.state = STATE_TOP;
 					else
@@ -349,16 +373,19 @@ void () hl_rotating_button =
 	if (self.armorvalue >= self.distance)
 	{
 		self.owner.hl_use = func_rot_button_use;	// hmm, not sure when this should be deactivated though
-		if (self.owner.spawnflags & 32) {
+		if (self.owner.spawnflags & 32)
+{
 			//bprint(2,"BLAAAAHHH\n");
 		}
-		else {
+		else
+{
 //self.owner.hl_use = func_rot_button_use;
 //self.owner.solid = SOLID_BSP;
 //self.owner.health = 1;
 //self.owner.th_die = func_rot_button_use;
 		}
-		if (self.owner.spawnflags & #SF_MOMENTARY) {
+		if (self.owner.spawnflags & #SF_MOMENTARY)
+{
 			self = self.owner;
 			//SUB_UseTargets();
 			self.touch = func_rot_button_touch;
@@ -376,7 +403,8 @@ void () hl_rotating_button =
 			
 		return;
 	}
-	if (self.owner.spawnflags & #SF_MOMENTARY && self.owner.spawnflags & 32 || self.owner.spawnflags & #SF_MOMENTARY && self.owner.targetname) {
+	if (self.owner.spawnflags & #SF_MOMENTARY && self.owner.spawnflags & 32 || self.owner.spawnflags & #SF_MOMENTARY && self.owner.targetname)
+{
 		self.use = hl_rotating_button;
 		self.owner.use = hl_rotating_button_toggle;
 		self.owner.hl_use = hl_rotating_button_toggle;
@@ -401,7 +429,8 @@ void () func_rot_button_use =
 	newmis.think = hl_rotating_button;
 	newmis.nextthink = time + .1;
 	self.building = newmis;
-	if (self.spawnflags & #SF_MOMENTARY) {		// find momentary door to move..
+	if (self.spawnflags & #SF_MOMENTARY)
+{		// find momentary door to move..
 		targ = find(world, targetname, self.target);
 		if (targ == world)
 			bprint(2,"WARNING: func_rot_button_use: momentary_rot_button has no momentary_door associated with it.\n");		// should probably be objerror, but I'm too forgiving :x
@@ -416,8 +445,10 @@ void () func_rot_button_use =
 	self.use = SUB_Null;
 	self.touch = SUB_Null;
 	targ = find(world, targetname, self.targetname);		// mainly for Uplink demo to work somewhat properly
-	while (targ) {
-		if (targ.classname == self.classname && targ != self) {
+	while (targ)
+{
+		if (targ.classname == self.classname && targ != self)
+{
 			self.owner = targ;
 		}
 		targ = find(targ, targetname, self.targetname);
@@ -454,7 +485,8 @@ void () func_rot_button =
     self.th_die = func_rot_button_use;
 	self.hl_use = func_rot_button_use;
 #ifdef COOP_HAX
-	if (self.hl_use) {
+	if (self.hl_use)
+{
 		self.takedamage = 1;
 		if (self.health == 0)
 			self.health = 1;

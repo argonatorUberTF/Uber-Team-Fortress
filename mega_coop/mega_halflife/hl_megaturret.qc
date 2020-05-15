@@ -12,7 +12,8 @@ float () MTurret_FindTarget =
 	te = find(world, monster_string, "on");
 	while (te)
 	{
-		if (te.health > 0 && visible(te)) {
+		if (te.health > 0 && visible(te))
+{
 			self.enemy = te;
 			self.show_hostile = time + 1;
 			SightSound();
@@ -625,7 +626,8 @@ void() monster_turret =
 {
 #ifdef mtf_coop_halflife
 	if (#HL_MAP)
-		if (!self.team_no) {
+		if (!self.team_no)
+{
 				self.classname = "monster_miniturret";
 				self.team_no = 2;
 				self.origin_z -= 30;
@@ -676,7 +678,8 @@ void() monster_turret =
 	}
 	self.currentammo = 1;
 #ifdef mtf_coop_halflife
-	if (self.classname == "monster_miniturret") {
+	if (self.classname == "monster_miniturret")
+{
 		self.netname = "monster_miniturret";
 	}
 #endif

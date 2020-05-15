@@ -12,14 +12,16 @@ void() func_door_rotating =
 		self.noise3 = "doors/medtry.wav";
 		self.noise4 = "doors/meduse.wav";
 	}
-	else if (world.worldtype == 1)
+	else
+if (world.worldtype == 1)
 	{
 		precache_sound ("doors/runetry.wav");
 		precache_sound ("doors/runeuse.wav");
 		self.noise3 = "doors/runetry.wav";
 		self.noise4 = "doors/runeuse.wav";
 	}
-	else if (world.worldtype == 2)
+	else
+if (world.worldtype == 2)
 	{
 		precache_sound ("doors/basetry.wav");
 		precache_sound ("doors/baseuse.wav");
@@ -67,7 +69,8 @@ void() func_door_rotating =
 	}
 	if (self.spawnflags & DOOR_X_AXIS)
 		self.movedir_z = 1.0;
-	else if (self.spawnflags & DOOR_Y_AXIS)
+	else
+if (self.spawnflags & DOOR_Y_AXIS)
 		self.movedir_x = 1.0;
 	else // Z_AXIS
 		self.movedir_y = 1.0;
@@ -111,12 +114,14 @@ void() func_door_rotating =
 //if (!self.spawnflags & 256)	// use only - but use is touch in quake anyways lol
 		self.touch = door_touch;
 	self.hl_use = door_use;
-	if (self.targetname) {		// Door is locked if it must be triggered
+	if (self.targetname)
+{		// Door is locked if it must be triggered
 		self.touch = SUB_Null;
 		self.th_die = SUB_Null;
 		self.hl_use = SUB_Null;
 	}	
-	if (self.spawnflags & 32) {		// Door does not return to original place
+	if (self.spawnflags & 32)
+{		// Door does not return to original place
 		self.th_die = SUB_Null;
 	}		
 	if (self.spawnflags & 256)	// use only.. which means killable too :p
@@ -137,7 +142,8 @@ void() func_door_rotating =
 	if (mapname == "c2a5g")
 		if (self.targetname == "roll")
 			self.targetname = "rollcar";
-		else if (self.targetname == "kick")
+		else
+if (self.targetname == "kick")
 			self.targetname = "kickcar";
 };
 // addme: add proper support :)

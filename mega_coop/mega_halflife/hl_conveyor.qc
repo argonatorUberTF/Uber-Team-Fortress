@@ -11,9 +11,11 @@ void () conveyor_touch =
 	makevectors (self.v_angle);
 	if (self.has_tesla == 180)
 		pvec = v_forward * -1;
-	else if (self.has_tesla == 270)
+	else
+if (self.has_tesla == 270)
 		pvec = v_right;
-	else if (self.has_tesla == 90)
+	else
+if (self.has_tesla == 90)
 		pvec = v_right * -1;
 	else
 		pvec = v_forward;
@@ -24,9 +26,11 @@ void () conveyor_use =
 {
 	if (self.has_tesla == 180)
 		self.has_tesla = 0;
-	else if (self.has_tesla == 270)
+	else
+if (self.has_tesla == 270)
 		self.has_tesla = 90;
-	else if (self.has_tesla == 90)
+	else
+if (self.has_tesla == 90)
 		self.has_tesla = 270;
 	else
 		self.has_tesla = 180;

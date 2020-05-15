@@ -104,7 +104,8 @@ void ( string psnd ) random_pain_sound =
 {
 	if (!self.noise3)
 		self.noise3 = psnd;
-	else if (random() < .3)
+	else
+if (random() < .3)
 		self.noise3 = psnd;
 };
 void () func_breakable_pain =
@@ -158,7 +159,8 @@ void () func_breakable_pain =
 			i = 0;
 			break;
 	}
-	if (self.noise3) {
+	if (self.noise3)
+{
 		newmis = spawn();
 		newmis.owner = self;
 		newmis.origin = ((self.absmax+self.absmin)*.5);
@@ -191,13 +193,15 @@ void(string rubblename) hlThrowRubble =
 	new.frame = 0;
 	new.flags = 0;
 };
-void () Breakaway  = {
+void () Breakaway  =
+{
 	local entity itsp, oself;
 	local float usesnd;
 	self.use = SUB_Null;
 	self.th_die = SUB_Null;
 	oself = self;
-	if (self.spawnobject > 0) {		// spawn armor, health, or whatever this should give the player
+	if (self.spawnobject > 0)
+{		// spawn armor, health, or whatever this should give the player
 		if (self.building != world)
 			setorigin(self.building, ((self.absmin+self.absmax)*.5));
 		itsp = spawn();
@@ -207,7 +211,8 @@ void () Breakaway  = {
 		self = oself;
 		self.building = itsp;
 	}	
-	if (self.noise1 || self.noise2) {			// play death noise and create specified rubble
+	if (self.noise1 || self.noise2)
+{			// play death noise and create specified rubble
 		if (self.noise2)
 			if (random() < .51)
 				usesnd = 2;
@@ -294,7 +299,8 @@ void () Breakaway  = {
 		SUB_UseTargets();
 		dremove(self);		// don't stick around, since we're not a multiplayer game
 };
-void () Breakuse = {
+void () Breakuse =
+{
 	self.use = SUB_Null;
 	Breakaway();
 	self.spawnflags = (self.spawnflags - 1.000);
@@ -316,7 +322,8 @@ void () bk_think =
 	self.owner.building = self;
 };
 
-void () Delayed_Use = {
+void () Delayed_Use =
+{
 	SUB_UseTargets();
 	strunzone(self.target);		// UNZONE OR DIEEEEEEish. well it's quite nasty anyways..
 	dremove(self);
@@ -324,19 +331,24 @@ void () Delayed_Use = {
 void () HalfLife_DoRender =
 {
 	local vector osize, omins, omaxs, oabsmin, oabsmax;
-	if (self.rendercolor != '0 0 0') {}	// ADDME
+	if (self.rendercolor != '0 0 0')
+{}	// ADDME
 	if (self.rendermode > 0)
-		if (self.renderamt > 0) {
+		if (self.renderamt > 0)
+{
 			self.alpha = self.renderamt/255;
 			if (self.alpha == 0)
 				self.alpha = .01;
 		}
-		else {
+		else
+{
 			self.rendermode = 2;
 		}
-		if (self.rendermode == 2) {
+		if (self.rendermode == 2)
+{
 			self.alpha = self.renderamt/255;
-			if (self.alpha == 0) {
+			if (self.alpha == 0)
+{
 				//self.alpha = 0.01;
 				osize = self.size;
 				omins = self.mins;
@@ -344,7 +356,8 @@ void () HalfLife_DoRender =
 				oabsmin = self.absmin;
 				oabsmax = self.absmax;
 				
-				if (self.solid == SOLID_BSP) {
+				if (self.solid == SOLID_BSP)
+{
 						self.solid = SOLID_BBOX;
 				}
 				setmodel(self, string_null);
@@ -357,11 +370,13 @@ void () HalfLife_DoRender =
 			}
 		}
 };
-void () func_breakable = {
+void () func_breakable =
+{
 	local entity itsp, oself;
 	oself = self;
 	precache_model ("progs/debris.mdl");
-	if (self.spawnobject > 0) {
+	if (self.spawnobject > 0)
+{
 		// mainly to precache the item.. don't worry about it yet.
 		itsp = spawn();
 		itsp.owner = self;
@@ -410,17 +425,23 @@ void () func_breakable = {
 	self.th_pain = func_breakable_pain;
 	if (self.material == matWood)		// wood
 		pSoundsWood();
-	else if (self.material == matMetal)	// metal
+	else
+if (self.material == matMetal)	// metal
 		pSoundsMetal();
-	else if (self.material == matFlesh)	// flesh
+	else
+if (self.material == matFlesh)	// flesh
 		pSoundsFlesh();
-	else if (self.material == matCinderBlock)	// cinder blocks
+	else
+if (self.material == matCinderBlock)	// cinder blocks
 		pSoundsConcrete();
-	else if (self.material == matCeilingTile)	// ceiling tiles
+	else
+if (self.material == matCeilingTile)	// ceiling tiles
 		pSoundsConcrete();
-	else if (self.material == matComputer)	// computer
+	else
+if (self.material == matComputer)	// computer
 		pSoundsConcrete();	
-	else if (self.material == matRocks)	// computer
+	else
+if (self.material == matRocks)	// computer
 		pSoundsConcrete();	
 	else 
 		pSoundsGlass();
@@ -477,7 +498,8 @@ void () nmsound =
 //return;
 	if (self.has_tesla == 1)
 		sound (self, CHAN_VOICE, self.owner.noise1, 1, ATTN_NORM);
-	else if (self.has_tesla == 2)
+	else
+if (self.has_tesla == 2)
 		sound (self, CHAN_VOICE, self.owner.noise2, 2, ATTN_NORM);
 	else
 		sound (self, CHAN_VOICE, self.owner.noise3, 1, ATTN_NORM);

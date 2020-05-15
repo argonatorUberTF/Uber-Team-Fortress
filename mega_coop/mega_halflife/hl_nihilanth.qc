@@ -11,54 +11,100 @@ $frame old40 old41 old42 old43 old44 old45 old46
 $frame shake1 shake2 shake3 shake4 shake5 shake6 shake7 shake8
 $frame shake9 shake10 shake11 shakex shake12 shake13 shake14
 $frame shake15 shake16 shake17 shake18 shake19 shake20
-void() nihilanth_idle1        =[      $old1,  nihilanth_idle2       ] {};
-void() nihilanth_idle2        =[      $old2,  nihilanth_idle3       ] {};
-void() nihilanth_idle3        =[      $old3,  nihilanth_idle4       ] {};
-void() nihilanth_idle4        =[      $old4,  nihilanth_idle5       ] {};
-void() nihilanth_idle5        =[      $old5,  nihilanth_idle6       ] {};
-void() nihilanth_idle6        =[      $old6,  nihilanth_idle7       ] {};
-void() nihilanth_idle7        =[      $old7,  nihilanth_idle8       ] {};
-void() nihilanth_idle8        =[      $old8,  nihilanth_idle9       ] {};
-void() nihilanth_idle9        =[      $old9,  nihilanth_idle10      ] {};
-void() nihilanth_idle10       =[      $old10, nihilanth_idle11      ] {};
-void() nihilanth_idle11       =[      $old11, nihilanth_idle12      ] {};
-void() nihilanth_idle12       =[      $old12, nihilanth_idle13      ] {};
-void() nihilanth_idle13       =[      $old13, nihilanth_idle14      ] {};
-void() nihilanth_idle14       =[      $old14, nihilanth_idle15      ] {};
-void() nihilanth_idle15       =[      $old15, nihilanth_idle16      ] {};
-void() nihilanth_idle16       =[      $old16, nihilanth_idle17      ] {};
-void() nihilanth_idle17       =[      $old17, nihilanth_idle18      ] {
+void() nihilanth_idle1        =[      $old1,  nihilanth_idle2       ]
+{};
+void() nihilanth_idle2        =[      $old2,  nihilanth_idle3       ]
+{};
+void() nihilanth_idle3        =[      $old3,  nihilanth_idle4       ]
+{};
+void() nihilanth_idle4        =[      $old4,  nihilanth_idle5       ]
+{};
+void() nihilanth_idle5        =[      $old5,  nihilanth_idle6       ]
+{};
+void() nihilanth_idle6        =[      $old6,  nihilanth_idle7       ]
+{};
+void() nihilanth_idle7        =[      $old7,  nihilanth_idle8       ]
+{};
+void() nihilanth_idle8        =[      $old8,  nihilanth_idle9       ]
+{};
+void() nihilanth_idle9        =[      $old9,  nihilanth_idle10      ]
+{};
+void() nihilanth_idle10       =[      $old10, nihilanth_idle11      ]
+{};
+void() nihilanth_idle11       =[      $old11, nihilanth_idle12      ]
+{};
+void() nihilanth_idle12       =[      $old12, nihilanth_idle13      ]
+{};
+void() nihilanth_idle13       =[      $old13, nihilanth_idle14      ]
+{};
+void() nihilanth_idle14       =[      $old14, nihilanth_idle15      ]
+{};
+void() nihilanth_idle15       =[      $old15, nihilanth_idle16      ]
+{};
+void() nihilanth_idle16       =[      $old16, nihilanth_idle17      ]
+{};
+void() nihilanth_idle17       =[      $old17, nihilanth_idle18      ]
+{
 Nihilanth_Thrownewdir();		// Move shub in a random direction
 };
-void() nihilanth_idle18       =[      $old18, nihilanth_idle19      ] {};
-void() nihilanth_idle19       =[      $old19, nihilanth_idle20      ] {};
-void() nihilanth_idle20       =[      $old20, nihilanth_idle21      ] {};
-void() nihilanth_idle21       =[      $old21, nihilanth_idle22      ] {};
-void() nihilanth_idle22       =[      $old22, nihilanth_idle23      ] {};
-void() nihilanth_idle23       =[      $old23, nihilanth_idle24      ] {};
-void() nihilanth_idle24       =[      $old24, nihilanth_idle25      ] {};
-void() nihilanth_idle25       =[      $old25, nihilanth_idle26      ] {};
-void() nihilanth_idle26       =[      $old26, nihilanth_idle27      ] {};
-void() nihilanth_idle27       =[      $old27, nihilanth_idle28      ] {};
-void() nihilanth_idle28       =[      $old28, nihilanth_idle29      ] {};
-void() nihilanth_idle29       =[      $old29, nihilanth_idle30      ] {};
-void() nihilanth_idle30       =[      $old30, nihilanth_idle31      ] {};
-void() nihilanth_idle31       =[      $old31, nihilanth_idle32      ] {};
-void() nihilanth_idle32       =[      $old32, nihilanth_idle33      ] {};
-void() nihilanth_idle33       =[      $old33, nihilanth_idle34      ] {};
-void() nihilanth_idle34       =[      $old34, nihilanth_idle35      ] {};
-void() nihilanth_idle35       =[      $old35, nihilanth_idle36      ] {};
-void() nihilanth_idle36       =[      $old36, nihilanth_idle37      ] {};
-void() nihilanth_idle37       =[      $old37, nihilanth_idle38      ] {};
-void() nihilanth_idle38       =[      $old38, nihilanth_idle39      ] {};
-void() nihilanth_idle39       =[      $old39, nihilanth_idle40      ] {};
-void() nihilanth_idle40       =[      $old40, nihilanth_idle41      ] {};
-void() nihilanth_idle41       =[      $old41, nihilanth_idle42      ] {};
-void() nihilanth_idle42       =[      $old42, nihilanth_idle43      ] {};
-void() nihilanth_idle43       =[      $old43, nihilanth_idle44      ] {};
-void() nihilanth_idle44       =[      $old44, nihilanth_idle45      ] {};
-void() nihilanth_idle45       =[      $old45, nihilanth_idle46      ] {};
-void() nihilanth_idle46       =[      $old46, nihilanth_idle1       ] {};
+void() nihilanth_idle18       =[      $old18, nihilanth_idle19      ]
+{};
+void() nihilanth_idle19       =[      $old19, nihilanth_idle20      ]
+{};
+void() nihilanth_idle20       =[      $old20, nihilanth_idle21      ]
+{};
+void() nihilanth_idle21       =[      $old21, nihilanth_idle22      ]
+{};
+void() nihilanth_idle22       =[      $old22, nihilanth_idle23      ]
+{};
+void() nihilanth_idle23       =[      $old23, nihilanth_idle24      ]
+{};
+void() nihilanth_idle24       =[      $old24, nihilanth_idle25      ]
+{};
+void() nihilanth_idle25       =[      $old25, nihilanth_idle26      ]
+{};
+void() nihilanth_idle26       =[      $old26, nihilanth_idle27      ]
+{};
+void() nihilanth_idle27       =[      $old27, nihilanth_idle28      ]
+{};
+void() nihilanth_idle28       =[      $old28, nihilanth_idle29      ]
+{};
+void() nihilanth_idle29       =[      $old29, nihilanth_idle30      ]
+{};
+void() nihilanth_idle30       =[      $old30, nihilanth_idle31      ]
+{};
+void() nihilanth_idle31       =[      $old31, nihilanth_idle32      ]
+{};
+void() nihilanth_idle32       =[      $old32, nihilanth_idle33      ]
+{};
+void() nihilanth_idle33       =[      $old33, nihilanth_idle34      ]
+{};
+void() nihilanth_idle34       =[      $old34, nihilanth_idle35      ]
+{};
+void() nihilanth_idle35       =[      $old35, nihilanth_idle36      ]
+{};
+void() nihilanth_idle36       =[      $old36, nihilanth_idle37      ]
+{};
+void() nihilanth_idle37       =[      $old37, nihilanth_idle38      ]
+{};
+void() nihilanth_idle38       =[      $old38, nihilanth_idle39      ]
+{};
+void() nihilanth_idle39       =[      $old39, nihilanth_idle40      ]
+{};
+void() nihilanth_idle40       =[      $old40, nihilanth_idle41      ]
+{};
+void() nihilanth_idle41       =[      $old41, nihilanth_idle42      ]
+{};
+void() nihilanth_idle42       =[      $old42, nihilanth_idle43      ]
+{};
+void() nihilanth_idle43       =[      $old43, nihilanth_idle44      ]
+{};
+void() nihilanth_idle44       =[      $old44, nihilanth_idle45      ]
+{};
+void() nihilanth_idle45       =[      $old45, nihilanth_idle46      ]
+{};
+void() nihilanth_idle46       =[      $old46, nihilanth_idle1       ]
+{};
 void () Nihilanth_Throwspawns =
 {
 };
@@ -72,7 +118,8 @@ void () Nihilanth_Thrownewdir =
 		arnd = -1;
 	else
 		arnd = 1;
-	if (shub.building == world) {
+	if (shub.building == world)
+{
 		ndir = spawn ();
 		ndir.owner = self;
 		setsize (ndir, self.mins, self.maxs);
@@ -89,7 +136,8 @@ void () Nihilanth_Thrownewdir =
 		ndir.nextthink = time + 1.5;
 		self.building = ndir;
 		brnd = random();
-		if (brnd > .7) {
+		if (brnd > .7)
+{
 			ndir.velocity = '0 0 0';
 			ndir.origin = self.orig_origin;
 		}
@@ -131,11 +179,14 @@ void () shub_moveme =
 	local float mvspd;
 	if (self.owner.health > 2000)
 		mvspd = 350;
-	else if (self.owner.health > 1000)
+	else
+if (self.owner.health > 1000)
 		mvspd = 450;
-	else if (self.owner.health > 0)
+	else
+if (self.owner.health > 0)
 		mvspd = 600;
-	if (!self.owner || self.owner.health <= 0) {
+	if (!self.owner || self.owner.health <= 0)
+{
 		dremove(self);
 		return;
 	}
@@ -197,17 +248,21 @@ void () teleball_touch =
 	local entity tdest;
 	local string tdstr;
 	local float i, foundit;
-	if (other.classname != "player" || other.health <= 0) {
+	if (other.classname != "player" || other.health <= 0)
+{
 		dremove(self);
 		return;
 	}
 	i = 1;
-	while (i < 10) {
+	while (i < 10)
+{
 		tdest = find( world, classname, "trigger_teleport" );
-		while (tdest) {
+		while (tdest)
+{
 			tdstr = strcat("n_teleport", ftos(i));
 			tdstr = strzone(tdstr);
-			if (tdest.targetname == tdstr) {
+			if (tdest.targetname == tdstr)
+{
 				foundit = 1;
 				//_bprint(tdest.targetname, " is tdest targ!\n");
 				strunzone(tdstr);
@@ -223,7 +278,8 @@ void () teleball_touch =
 	}
 	dremove(self);
 };
-void (vector org, entity shooter) LaunchMortars = {
+void (vector org, entity shooter) LaunchMortars =
+{
    local float xdir;
    local float ydir;
    local float zdir;
@@ -251,7 +307,8 @@ void () mortarball_touch =
 {
 	local float i;
    while (i < 6) 
-   {
+  
+{
 		LaunchMortars ((self.origin + '0 0 -1'),self.owner);
 		i++;
    }
@@ -278,7 +335,8 @@ void() monster_wizard_spawn =
 void () desolidify =
 {
 	self.solid = SOLID_BBOX;
-	if (self.think1) {
+	if (self.think1)
+{
 		self.think = self.think1;
 		self.nextthink = time;
 	}
@@ -386,22 +444,27 @@ void () shubmover_think =
 	// shub has 4 phases of attack which overlap
 	local entity t_plyr, oself;
 	local float rnd;
-	if (self.owner.health <= 0) {
+	if (self.owner.health <= 0)
+{
 		remove(self);
 		return;
 	}
 	
 	oself = self;
 	self = self.owner;
-	if (self.health > 3000) {								// PHASE 1
+	if (self.health > 3000)
+{								// PHASE 1
 		t_plyr = find( world, classname, "player" );
-		while (t_plyr) {
+		while (t_plyr)
+{
 			if (visible(t_plyr))
 			{
-				if (random() < .7) {
+				if (random() < .7)
+{
 					hurtball_throw( 0, 350, t_plyr );
 				}
-				else {
+				else
+{
 					voreball_throw( 0, 400, t_plyr );
 				}
 			
@@ -409,19 +472,26 @@ void () shubmover_think =
 			t_plyr = find( t_plyr, classname, "player" );
 		}
 	}
-	else if (self.health > 2000) {							// PHASE 2
+	else
+if (self.health > 2000)
+{							// PHASE 2
 		t_plyr = find( world, classname, "player" );
-		while (t_plyr) {
+		while (t_plyr)
+{
 			if (visible(t_plyr))
 			{
 				rnd = random();
-				if (rnd > .7) {
+				if (rnd > .7)
+{
 					voreball_throw( 0, 400, t_plyr );
 				}
-				else if (rnd > .3) {
+				else
+if (rnd > .3)
+{
 					teleball_throw( 0, 400, t_plyr );
 				}
-				else {
+				else
+{
 					hurtball_throw( 0, 500, t_plyr );
 				}
 			
@@ -429,19 +499,26 @@ void () shubmover_think =
 			t_plyr = find( t_plyr, classname, "player" );
 		}
 	}
-	else if (self.health > 1000) {							// PHASE 3
+	else
+if (self.health > 1000)
+{							// PHASE 3
 		t_plyr = find( world, classname, "player" );
-		while (t_plyr) {
+		while (t_plyr)
+{
 			if (visible(t_plyr))
 			{
 				rnd = random();
-				if (rnd > .7) {
+				if (rnd > .7)
+{
 					voreball_throw( 0, 400, t_plyr );
 				}
-				else if (rnd > .3) {
+				else
+if (rnd > .3)
+{
 					mortarball_throw( 0, 600, t_plyr );
 				}
-				else {
+				else
+{
 					teleball_throw( 0, 400, t_plyr );
 				}
 			
@@ -449,19 +526,26 @@ void () shubmover_think =
 			t_plyr = find( t_plyr, classname, "player" );
 		}
 	}
-	else if (self.health > 0) {								// PHASE 4
+	else
+if (self.health > 0)
+{								// PHASE 4
 		t_plyr = find( world, classname, "player" );
-		while (t_plyr) {
+		while (t_plyr)
+{
 			if (visible(t_plyr))
 			{
 				rnd = random();
-				if (rnd > .6) {
+				if (rnd > .6)
+{
 					mortarball_throw( 0, 700, t_plyr );
 				}
-				else if (rnd > .2) {
+				else
+if (rnd > .2)
+{
 					voreball_throw( 0, 550, t_plyr );
 				}
-				else {
+				else
+{
 					spawnball_throw( 0, 1000, t_plyr );
 				}
 			
@@ -502,7 +586,8 @@ void () nihilanth_explode =
 				r = random();
 				if (r < 0.3)				
 					ThrowGib ("progs/gib1.mdl", -999);
-				else if (r < 0.6)
+				else
+if (r < 0.6)
 					ThrowGib ("progs/gib2.mdl", -999);
 				else
 					ThrowGib ("progs/gib3.mdl", -999);
@@ -520,7 +605,8 @@ void () nihilanth_end_touch =
 	if (other.classname != "player" || other.health <= 0)
 		return;
 	tend = find( world, targetname, "n_ending");
-	if (tend) {
+	if (tend)
+{
 		tend2 = find( world, targetname, tend.target);
 		if (tend2 != world)
 			other.origin = tend2.origin;

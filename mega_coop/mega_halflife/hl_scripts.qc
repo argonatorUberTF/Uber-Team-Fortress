@@ -18,11 +18,13 @@ void () move_actor =
 	oself = self;
 //droptofloor();
 	
-	if (!self.enemy) {
+	if (!self.enemy)
+{
 		dremove(self);
 		return;
 	}
-	if (!self.enemy.th_run) {
+	if (!self.enemy.th_run)
+{
 		// probably chthon or something
 		dremove(self);
 		return;
@@ -45,13 +47,16 @@ void () scripted_sequence_use =
 //_bprint(ftos(self.spawnflags), " is me spawnflags and ", self.targetname, " is me targetname and ", self.target, " is me target\n");
 	local entity targ, newmt;
 	targ = find(world, targetname, self.m_iszEntity);
-	if (targ != world) {
-		if (self.m_fMoveTo > 2 || targ.health <= 0) {
+	if (targ != world)
+{
+		if (self.m_fMoveTo > 2 || targ.health <= 0)
+{
 			setorigin(targ, self.origin + '0 0 20');
 			targ.npc_originalloc = self.origin + '0 0 30';
 			targ.#npc_originalloc = self.origin + '0 0 30';
 		}
-		else {
+		else
+{
 // walk or run to the destination. 
 			hldprint(2,"walk or run here\n");
 			newmt = spawn();
@@ -97,7 +102,8 @@ void () scripted_sequence_findtrigger =
 	head = findradius(self.origin, 100);
 	while(head)
 	{
-		if (head.classname == "player") {
+		if (head.classname == "player")
+{
 			other = head;
 			scripted_sequence_touch();
 		}
@@ -117,7 +123,8 @@ void () FindMyTrigger_think =
 	local entity te, oself;
 	local float foundit, i;
 	oself=self;
-	if (!self.owner) {
+	if (!self.owner)
+{
 		dremove(self);
 		return;
 	}
@@ -126,13 +133,16 @@ void () FindMyTrigger_think =
 	te = nextent(world);
 	while (te != world)
 	{
-		if ( te.target == self.targetname ) {
+		if ( te.target == self.targetname )
+{
 			foundit = 1;
 			break;
 		}
-		if ( te.classname == "multi_manager" ) {		// fixme: saner method to look through these :\
+		if ( te.classname == "multi_manager" )
+{		// fixme: saner method to look through these :\
 			tokenize(te.netname);
-			while (argv(i) != string_null && argv(i) != "}") {
+			while (argv(i) != string_null && argv(i) != "}")
+{
 				if (argv(i) == self.targetname)
 				{
 					// OK, we found  a multi_manager that trigers us. No need to run automatically then..
@@ -165,14 +175,17 @@ void ( entity for_ent, float wait_time, void() found, void() notfound ) FindMyTr
 };
 void () scripted_sequence =
 {
-	if (self.m_iszEntity) {
+	if (self.m_iszEntity)
+{
 		self.use = scripted_sequence_use;
-		if (!self.targetname || self.spawnflags & 16) {		// if we're not targeted, that generally means we gotta look for something
+		if (!self.targetname || self.spawnflags & 16)
+{		// if we're not targeted, that generally means we gotta look for something
 			self.touch = scripted_sequence_touch;
 			self.think = scripted_sequence_findtrigger;
 			self.nextthink = time + 1;
 		}
-		else {
+		else
+{
 			FindMyTrigger(self, 3, scripted_sequence_fix, SUB_Null);
 		}
 	}
@@ -186,19 +199,22 @@ void () env_message_use =
 	local string msgstr, a;
 	local entity targ;
 	file = fopen ("titles.txt", 0);
-	while ( i < 1100 ) {
+	while ( i < 1100 )
+{
 		a = fgets (file);
 //a = strzone(a);
 		if (self.has_tesla == 1)
 		{
 			if (a == "}")
 				break;
-			if (a != "{") {
+			if (a != "{")
+{
 				msgstr = strcat(msgstr, a);
 				msgstr = strcat(msgstr, "\n");
 			}
 		}
-		if (a == self.message) {
+		if (a == self.message)
+{
 			self.has_tesla = 1;
 		}
 //strunzone(a);

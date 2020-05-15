@@ -6,7 +6,8 @@ float be_null;
 float VIEWONLY = 1;
 void () func_chargerunit_use =
 {
-	if (self.has_tesla == 0) {
+	if (self.has_tesla == 0)
+{
 		if (activator.health == activator.max_health)
 			return;
 		activator.health = activator.health + 5;
@@ -15,12 +16,15 @@ void () func_chargerunit_use =
 			
 		self.max_health -= 5;
 		
-		if (self.max_health <= 0) {
+		if (self.max_health <= 0)
+{
 			self.hl_use = SUB_Null;
 			self.frame = 1;
 		}
 	}
-	else if (self.has_tesla == 1) {
+	else
+if (self.has_tesla == 1)
+{
 		if (activator.armorvalue == 200)
 			return;
 		activator.armorvalue = activator.armorvalue + 5;
@@ -29,7 +33,8 @@ void () func_chargerunit_use =
 			
 		self.armorvalue -= 5;
 		
-		if (self.armorvalue <= 0) {
+		if (self.armorvalue <= 0)
+{
 			self.hl_use = SUB_Null;
 			self.frame = 1;
 		}
@@ -94,15 +99,18 @@ void () world_items =
 	{
 		item_health();
 	}
-	else if (self.type == 43)	// security?
+	else
+if (self.type == 43)	// security?
 	{
 		item_armor1();
 	}
-	else if (self.type == 44)	// Battery?
+	else
+if (self.type == 44)	// Battery?
 	{
 		item_armor2();
 	}
-	else if (self.type == 45)	// HEV
+	else
+if (self.type == 45)	// HEV
 	{
 	bprint(2,"hehehe\n");
 		setmodel(self,"progs/player.mdl");
@@ -129,11 +137,13 @@ void () env_bubbles =
 // env_sprite: Half-life sprites do not load properly or at all on most quake engines.
 void () env_sprite_use =
 {
-	if (self.has_tesla == 0) {
+	if (self.has_tesla == 0)
+{
 		setmodel( self, self.model );
 		self.has_tesla = 1;
 	}
-	else {
+	else
+{
 		setmodel( self, string_null );
 		self.has_tesla = 0;
 	}
@@ -144,7 +154,8 @@ void () env_sprite =
 	precache_model( self.model );
 	self.use = env_sprite_use;
 	self.effects = self.effects & EF_ADDITIVE;		// so transparency works (val=32)
-	if (self.spawnflags & 1 || self.spawnflags & 2) {
+	if (self.spawnflags & 1 || self.spawnflags & 2)
+{
 		setmodel( self, self.model );
 		self.has_tesla = 1;
 	}
@@ -229,7 +240,8 @@ void () env_sound =
 };
 void() shake_think =
 {
-	if (self.attack_finished < time) {// Done
+	if (self.attack_finished < time)
+{// Done
 		
 		self.nextthink = -1;
 		
@@ -242,16 +254,19 @@ void() shake_think =
 	plyr = findradius(self.origin, self.count);
 	while(plyr)
 	{
-		if (plyr.classname == "player") {
+		if (plyr.classname == "player")
+{
 			local float	d;
 // Scale effect by distance
 			d = vlen(self.origin - plyr.origin);
 			d = (self.count - d)/self.count;
-			if (d > 0) {
+			if (d > 0)
+{
 // shake up the view
 				plyr.punchangle_x = -1 * (random() + (0.025*self.dmg*d));
 // push the player around
-				if (plyr.flags & FL_ONGROUND && !self.spawnflags & VIEWONLY) {
+				if (plyr.flags & FL_ONGROUND && !self.spawnflags & VIEWONLY)
+{
 					d = self.dmg*d;
 					plyr.velocity_x = plyr.velocity_x + (random()*d*2 - d);
 					plyr.velocity_y = plyr.velocity_y + (random()*d*2 - d);
@@ -275,7 +290,8 @@ void() shake_use =
 };
 void() trigger_shake =
 {	
-	if (!self.targetname) {
+	if (!self.targetname)
+{
 		/*objerror*/bprint(2,"trigger_shake without name");
 		dremove(self);
 	}
@@ -299,34 +315,45 @@ string (string matname) hl_material_convert =
 	local float stlen;
 	if (matname == "TOOLS/TOOLSSKYBOX")
 		return "SKY";
-	else if (matname == "TOOLS/TOOLSCLIP")
+	else
+if (matname == "TOOLS/TOOLSCLIP")
 		return "AAATRIGGER";//"clip";		// hmm needs fixing because this may change per map
-	else if (matname == "TOOLS/TOOLSNODRAW")
+	else
+if (matname == "TOOLS/TOOLSNODRAW")
 		return "sky";	// also hackish
-	else if (matname == "TOOLS/TOOLSTRIGGER")
+	else
+if (matname == "TOOLS/TOOLSTRIGGER")
 		return "AAATRIGGER";
-	else if (matname == "TOOLS/GENERIC011")
+	else
+if (matname == "TOOLS/GENERIC011")
 		return "AAATRIGGER";
-//	else if (matname == "TOOLS/GENERIC011")
+//	else
+if (matname == "TOOLS/GENERIC011")
 //		return "GENERIC011";
-	else if (matname == "TOOLS/TOOLSORIGIN")
+	else
+if (matname == "TOOLS/TOOLSORIGIN")
 		return "origin";
-	else {
+	else
+{
 		stlen = strlen (matname);
 		st2 = substr(matname , 0, 8);
-		if (st2 == "HALFLIFE/" || st2 == "HALFLIFE") {
+		if (st2 == "HALFLIFE/" || st2 == "HALFLIFE")
+{
 			return substr(matname , 9, stlen);
 		}
 		st2 = substr(matname , 0, 8);
-		if (st2 == "LIQUIDS/") {
+		if (st2 == "LIQUIDS/")
+{
 			return substr(matname , 8, stlen);
 		}
 		st2 = substr(matname , 0, 7);
-		if (st2 == "decals/") {
+		if (st2 == "decals/")
+{
 			return substr(matname , 7, stlen);
 		}
 		st2 = substr(matname , 0, 5);
-		if (st2 == "XENO/") {
+		if (st2 == "XENO/")
+{
 			return substr(matname , 5, stlen);
 		}
 		return matname;
@@ -338,7 +365,8 @@ string (string ms_size) ms_cme =
 	local float ms_flsize;
 	if (ms_size == ")")
 		return ")";
-	else if (ms_size == "(")
+	else
+if (ms_size == "(")
 		return "(";
 	ms_flsize = stof(ms_size);
 	return ftos(ms_flsize);

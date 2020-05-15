@@ -10,7 +10,8 @@ void () player_push2 =
 	}
 	if (IsOnTopOf(other, self))
 		return;
-    if (self.flags & FL_ONGROUND) {
+    if (self.flags & FL_ONGROUND)
+{
       self.flags = self.flags - FL_ONGROUND;
       }
 	yaw = other.angles_y* 3.14159265358979323846 *2 / 360;
@@ -20,7 +21,8 @@ void () player_push2 =
 };
 void () func_pushable_think =
 {
-	if (self.buoyancy) {
+	if (self.buoyancy)
+{
 		if (pointcontents((self.absmax+self.absmin)*.5) == CONTENT_WATER/* || pointcontents((self.absmax+self.absmin)*.5) == -1*/)
 		{
 			self.movetype = MOVETYPE_BOUNCE;
@@ -34,12 +36,15 @@ void () func_pushable_think =
 };
 void () func_pushable_use_think =
 {
-	if (self.enemy != world) {
-		if (time > self.has_tesla) {
+	if (self.enemy != world)
+{
+		if (time > self.has_tesla)
+{
 			self.enemy = world;
 			self.touch = player_push2;
 		}
-		else {
+		else
+{
 			walkmove (self.enemy.angles_y, -10);
 		}
 	}
@@ -47,7 +52,8 @@ void () func_pushable_use_think =
 };
 void () func_pushable_hluse =
 {
-	if (time < self.has_tesla) {
+	if (time < self.has_tesla)
+{
 		self.has_tesla = 0;
 		return;
 	}

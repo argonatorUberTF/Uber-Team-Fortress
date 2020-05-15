@@ -22,7 +22,8 @@ void () env_global =
 void () trigger_auto_go =
 {
 	local entity timer;
-	if (self.delay) {
+	if (self.delay)
+{
 	  timer = spawn ();
 	  timer.classname = "DelayedTimer";
 	  timer.target = self.target;
@@ -32,7 +33,8 @@ void () trigger_auto_go =
 	  dremove(self);
 	  return;
 	}
-	else {
+	else
+{
 		SUB_UseTargets();
 		dremove(self);
 	}
@@ -40,7 +42,8 @@ void () trigger_auto_go =
 #ifdef SVEN_COOP
 void () trigger_auto_think =
 {
-	if (!self.globalstate || cvar(self.globalstate) == 1) {
+	if (!self.globalstate || cvar(self.globalstate) == 1)
+{
 		trigger_auto_go();
 		if (self.spawnflags & 1)
 			dremove(self);
@@ -54,15 +57,18 @@ void () trigger_auto =
 #else
 void () trigger_auto_think =
 {
-	if (!self.globalstate) {
+	if (!self.globalstate)
+{
 		trigger_auto_go();
 		return;
 	}
-	if (cvar(self.globalstate) == 1) {
+	if (cvar(self.globalstate) == 1)
+{
 	 hldprint(2,"WHEE AUTO ACTIVATED!\n");
 		trigger_auto_go();
 	}
-	else {
+	else
+{
 		self.nextthink = time + 1;		// FIXME: this is improper usage of this entity. It needs to reactivate when a level is re-entered.
 										// sven coop method works well, but is not meant for singleplayer consistency.
 	}

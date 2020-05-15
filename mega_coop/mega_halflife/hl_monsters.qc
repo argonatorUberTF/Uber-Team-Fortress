@@ -113,7 +113,8 @@ void () info_bigmomma_use =
 		if (self.owner.health > 0)
 			return;
 	SUB_UseTargets();
-	if (self.reachtarget) {
+	if (self.reachtarget)
+{
 		self.target = self.reachtarget;
 		SUB_UseTargets();
 	}
@@ -187,7 +188,8 @@ void () monster_osprey =
 	self.origin_z += 30;
 	self.classname = "monster_wizard";
 	monster_wizard();
-	if (mapname == "c1a3b") {
+	if (mapname == "c1a3b")
+{
 		setorigin(self, '-1184 -656 772');
 		self.target = "blah";
 	}
@@ -219,21 +221,26 @@ void () monstermaker_use =
 	te = nextent(world);
 	while (te != world)
 	{
-		if ( te.owner == self ) {
-			if ( te.health > 0 ) {
+		if ( te.owner == self )
+{
+			if ( te.health > 0 )
+{
 				foundit = #TRUE;
 				break;
 			}
 		}
 		te = nextent(te); 
 	}
-	if (te == world || !foundit) {
+	if (te == world || !foundit)
+{
 		dremove(self);
 		return;
 	}
-	if (self.m_imaxlivechildren > 0) {	// incomplete!
+	if (self.m_imaxlivechildren > 0)
+{	// incomplete!
 		if ( self.owner != world )
-			if ( self.owner.health > 0 ) {
+			if ( self.owner.health > 0 )
+{
 				self.think = monstermaker_use;
 				self.nextthink = time + self.delay;
 				return;
@@ -249,7 +256,8 @@ void () monstermaker_use =
 	self.monstercount -= 1;
 	if (self.monstercount <= 0)
 		dremove(self);
-	else {
+	else
+{
 		self.think = monstermaker_use;
 		self.nextthink = time + self.delay;
 	}
@@ -266,7 +274,8 @@ void () monstermaker =
 	self.origin_z += 25;	// account for the difference in hull sizes b/w half-life and quake monsters
 	if (self.monstertype)
 	{
-		while (i < self.monstercount) {
+		while (i < self.monstercount)
+{
 			newmon = spawn();
 			self = newmon;
 			oself.monstertype();
@@ -278,11 +287,13 @@ void () monstermaker =
 		self.owner = world;//newmon;
 		self.use = monstermaker_use;
 	}
-	else {
+	else
+{
 		bprint(2, "teleport_spawner: No monstertype specified.\n");
 		dremove(self);
 	}
-	if (self.has_tesla) {
+	if (self.has_tesla)
+{
 		self.think = monstermaker_use;
 		self.nextthink = time + self.has_tesla;
 	}

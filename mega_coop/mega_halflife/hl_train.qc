@@ -12,7 +12,8 @@ void() tracktrain_wait =
 {
 //self.nextthink = self.ltime + 0.1;
 //self.think = tracktrain_next;
-	if (self.pausetime) {
+	if (self.pausetime)
+{
 		self.nextthink = self.ltime + .1;
 		self.think = tracktrain_wait;
 		return;
@@ -26,12 +27,16 @@ void() tracktrain_next =
 	local entity targ, targ2, targmsg, oself, ent_user;
 	local vector endpos, apos;
 	targ = find(world, targetname, self.target);
-	if (self.#xavior_hack1 <= 0) {
-		if (self.message) {
+	if (self.#xavior_hack1 <= 0)
+{
+		if (self.message)
+{
 //bprint(2,"message is clear\n");
 			targmsg = find(world, targetname, self.message);
-			if (targmsg != world) {
-				if (targmsg.use) {
+			if (targmsg != world)
+{
+				if (targmsg.use)
+{
 					ent_user = spawn();
 					ent_user.target = self.message;
 					ent_user.target = strzone(ent_user.target);
@@ -45,11 +50,14 @@ void() tracktrain_next =
 			}
 			self.message = string_null;
 		}
-		if (self.netname) {
+		if (self.netname)
+{
 //bprint(2,"netname is clear\n");
 			targmsg = find(world, targetname, self.netname);
-			if (targmsg != world) {
-				if (targmsg.use) {
+			if (targmsg != world)
+{
+				if (targmsg.use)
+{
 					ent_user = spawn();
 					ent_user.target = self.netname;
 					ent_user.target = strzone(ent_user.target);
@@ -74,7 +82,8 @@ void() tracktrain_next =
 		self.#xavior_hack1 -= 1;
 	}
 	
-	if (targ.classname != "path_track") {
+	if (targ.classname != "path_track")
+{
 		//bprint(2,"train going to a non-path_track classname\n");
 		self.think = func_tracktrain_find;
 		return;
@@ -110,7 +119,8 @@ void() tracktrain_next =
 			self.speed = targ.speed;
 	SUB_CalcMove(endpos, self.speed, tracktrain_wait);
 	targ2 = find(world, targetname, targ.target);
-	if (targ) {
+	if (targ)
+{
 		apos = vectoangles(targ.origin - self.origin);
 		apos_y += 180;
 		apos = apos - self.angles;
@@ -140,14 +150,17 @@ void() func_tracktrain_find =
 	targ = find(world, targetname, self.target);
 	targ2 = find(world, targetname, targ.target);
 	self.target = targ.target;
-	if (self.state > 0) {		// hack
+	if (self.state > 0)
+{		// hack
 		SUB_CalcMoveAndRotateDone();
 		return;
 	}
 
 #ifndef COOP_HAX3	
-	if (targ.classname == "path_track") {
-		if (targ2.classname == "path_track") {
+	if (targ.classname == "path_track")
+{
+		if (targ2.classname == "path_track")
+{
 			self.angles = vectoangles(targ2.origin - targ.origin);
 		}
 		else
@@ -155,7 +168,8 @@ void() func_tracktrain_find =
 	}
 #endif
 #ifndef SVEN_COOP
-	if (cvar_string(self.globalname) != "" && cvar_string(self.globalname) != "0") {
+	if (cvar_string(self.globalname) != "" && cvar_string(self.globalname) != "0")
+{
 //FIXME: train needs to find next track properly
 // set origin
 		orgs = cvar_string(self.globalname);
@@ -166,7 +180,8 @@ void() func_tracktrain_find =
 // end set origin
 // set angles
 		orgs = cvar_string(strcat(self.globalname,"_ang"));
-		if (orgs != "0") {
+		if (orgs != "0")
+{
 			tokenize(orgs);
 			self.angles_x = stof(argv(0));
 			self.angles_y = stof(argv(1));
@@ -178,7 +193,8 @@ void() func_tracktrain_find =
 		if (mapname == "c0a0e")		// map specific hack :(
 			self.angles = '0 0 0';
 // end set angles
-		if (!self.hl_use) {
+		if (!self.hl_use)
+{
 			newmis = spawn();
 			newmis.classname = "DelayedTimer";
 			newmis.target = self.targetname;
@@ -186,16 +202,20 @@ void() func_tracktrain_find =
 			newmis.nextthink = time + 2;
 			newmis.think = Transition_Use;
 		}
-		if (cvar_string("train_targ") != "0") {
+		if (cvar_string("train_targ") != "0")
+{
 			self.target = cvar_string("train_targ");
 		
 			// now make sure the target exists..
 			newtarg = find(world, targetname, self.target);
-			if (!newtarg) {
+			if (!newtarg)
+{
 				lastdist = 9999;		// look for anything closer than this
 				newtarg = find(world, classname, "path_track");
-				while (newtarg) {
-					if (vlen(self.origin - newtarg.origin) < lastdist) {
+				while (newtarg)
+{
+					if (vlen(self.origin - newtarg.origin) < lastdist)
+{
 						lastdist = vlen(self.origin - newtarg.origin);
 						realnewtarg = newtarg.targetname;
 					}
@@ -209,7 +229,8 @@ void() func_tracktrain_find =
 //localcmd( self.globalname );
 //localcmd( " 0\n" );
 	}
-	else {
+	else
+{
 #endif
 		endpos = targ.origin/* - ((self.mins+self.maxs)*.5)*/;
 		endpos_z += self.height;
@@ -228,21 +249,26 @@ void() func_tracktrain_find =
 
 void() tracktrain_use = 
 {
-	if (self.spawnflags & 2) {
-		if (self.#ttrain_firstactivated) {
-			if (self.pausetime == 0) {
+	if (self.spawnflags & 2)
+{
+		if (self.#ttrain_firstactivated)
+{
+			if (self.pausetime == 0)
+{
 				self.pausetime = 1;
 				self.velocity = '0 0 0';
 				self.think = SUB_Null;
 			}
-			else {
+			else
+{
 				self.pausetime = 0;
 				self.think = tracktrain_next;
 				self.nextthink = self.ltime + .1;
 			}
 			return;
 		}
-		if (self.velocity == '0 0 0') {
+		if (self.velocity == '0 0 0')
+{
 			self.#ttrain_firstactivated = #TRUE;
 		}
 	}
@@ -320,7 +346,8 @@ void () func_tracktrain =
 	setorigin(self, self.origin);
 	self.nextthink = self.ltime + 0.1;
 	self.think = func_tracktrain_find;
-	if (!(self.spawnflags & 2)) {		// spawnflags == 2 means no user control
+	if (!(self.spawnflags & 2))
+{		// spawnflags == 2 means no user control
 		self.touch = func_tracktrain_touch;
 		self.max_health = 1;
 		self.hl_use = func_tracktrain_damage;
@@ -361,8 +388,10 @@ void () tc_rotating =
 	local entity oself;
 	oself = self;
 	self = self.owner;
-	if (self.height) {
-		if (!self.spawnflags & 16) {
+	if (self.height)
+{
+		if (!self.spawnflags & 16)
+{
 			if (self.#track_activated == #TRUE)	// going up
 				mval = self.armorvalue;
 			else								// going down
@@ -384,14 +413,17 @@ void () tc_rotating =
 	self.enemy.angles = self.pos1;
 	self = oself;
 	self.health = self.health - 1;
-	if (self.health <= 0) {
+	if (self.health <= 0)
+{
 		oself = self;
 		self = self.owner;
-		if (self.#track_activated == #FALSE) {
+		if (self.#track_activated == #FALSE)
+{
 			self.#track_activated = #TRUE;
 			self.enemy.target = self.bottomtrack;
 		}
-		else {
+		else
+{
 			self.#track_activated = #FALSE;
 			self.enemy.target = self.toptrack;
 		}
@@ -416,7 +448,8 @@ void () hl_rotate_think =
 	local vector delta;
 	self.owner.avelocity = '0 0 0';
 // now make sure we're not far off.. if we are, then "fix" the angle.
-	if ( vlen(self.owner.angles - self.owner.finalangle) > 5 ) {
+	if ( vlen(self.owner.angles - self.owner.finalangle) > 5 )
+{
 		delta = self.owner.finalangle - self.owner.angles;
 		traveltime = vlen (delta) / self.mtf_items;
 		CreateRotator( self.owner, #ROTATE_Y, traveltime, delta_y, self.mtf_items );
@@ -473,7 +506,8 @@ void() SUB_CalcMoveAndRotateDone =
 // For rotation and movement set to different timings, use SUB_CalcMove() and CreateRotator() (see tracktrain_next)
 void(vector torg, vector tdest, float rtate, float tspeed, void() func) SUB_CalcMoveAndRotate = 
 {
-	if (self.classname == "player") {
+	if (self.classname == "player")
+{
 		// WTF? this actually happens, though I'm not sure why..
 		return;
 	}
@@ -502,7 +536,8 @@ void(vector torg, vector tdest, float rtate, float tspeed, void() func) SUB_Calc
 		self.velocity = '0 0 0';
 		traveltime = 3;
 	}
-	else {
+	else
+{
 		self.velocity = vdestdelta * (1 / traveltime);
 	}
 	self.nextthink = self.ltime + traveltime;
@@ -516,18 +551,21 @@ void() tchanger_hit =
 {
 	local entity oself;
 	oself = self;
-	if (self.#track_activated == #FALSE) {
+	if (self.#track_activated == #FALSE)
+{
 		self.#track_activated = #TRUE;
 		if (self.enemy != world)
 			self.enemy.target = self.bottomtrack;
 	}
-	else {
+	else
+{
 		self.#track_activated = #FALSE;
 		if (self.enemy != world)
 			self.enemy.target = self.toptrack;
 		hldprint(2,"TARGET BOTTOM\n");
 	}
-	if (self.enemy != world) {
+	if (self.enemy != world)
+{
 		self.enemy.netname = "neeh";
 		self.enemy.message = "naaahhh";
 		self.enemy.#xavior_hack1 = 2;
@@ -566,7 +604,8 @@ void() tchanger_go_down =
 	self.pos2_z -= self.height;
 	ppos2 = self.pos2;
 	SUB_CalcMoveAndRotate(self.origin, ppos2, self.rotation, 200, tchanger_hit);
-	if (self.enemy != world) {
+	if (self.enemy != world)
+{
 		self = self.enemy;
 		self.use = SUB_Null;
 		self.think = SUB_Null;
@@ -591,7 +630,8 @@ void() tchanger_go_up =
 	self.pos2_z += self.height;
 	ppos2 = self.pos2;
 	SUB_CalcMoveAndRotate(self.origin, ppos2, self.rotation*-1, 200, tchanger_hit);
-	if (self.enemy != world) {
+	if (self.enemy != world)
+{
 		self = self.enemy;
 		self.use = SUB_Null;
 		self.state = 2;
@@ -612,12 +652,15 @@ void () func_trackchange_use =
 		targ2 = find(world, targetname, self.toptrack);
 	else						// start below
 		targ2 = find(world, targetname, self.bottomtrack);
-	if (self.classname != "func_platrot") {
-		if (targ2 == world) {
+	if (self.classname != "func_platrot")
+{
+		if (targ2 == world)
+{
 			bprint(2, "func_trackchange_use: top and/or bottom track is missing\n");
 			return;
 		}
-		if (targ == world) {
+		if (targ == world)
+{
 			bprint(2, "func_trackchange_use: cannot find train\n");
 			return;
 		}
@@ -626,14 +669,17 @@ void () func_trackchange_use =
 	dist = vlen(((self.absmax+self.absmin)*.5) - ((targ.absmax+targ.absmin)*.5));
 	if (dist > 150 || dist < -150)
 	{
-		if (self.height) {	// hack
+		if (self.height)
+{	// hack
 			dist = vlen(targ2.origin - ((targ.absmax+targ.absmin)*.5));
-			if (dist > 150 || dist < -150) {
+			if (dist > 150 || dist < -150)
+{
 				bprint(2,"train needs to be closer to rotate ent to work properly 2\n");
 				return;
 			}
 		}
-		else {
+		else
+{
 			bprint(2,"train needs to be closer to rotate ent to work properly\n");
 			return;
 		}
@@ -652,7 +698,8 @@ void () func_trackchange_use =
 			tchanger_go_up();
 		return;
 	}
-//if (self.height) {
+//if (self.height)
+{
 		if (self.#track_activated)	// go up
 			tchanger_go_up();
 		else						// go down
@@ -670,7 +717,8 @@ void () func_trackchange_setangles =
 		self.#track_activated = #TRUE;	// top
 		self.origin_z -= self.height;
 	}
-	else {
+	else
+{
 		mtarg = self.toptrack;
 		self.#track_activated = #FALSE;	// bottom
 	}
@@ -678,7 +726,8 @@ void () func_trackchange_setangles =
 	
 	targ = find(world, targetname, mtarg);
 	
-	if (targ) {
+	if (targ)
+{
 		vang = vectoangles(targ.origin - self.origin);
 #ifndef COOP_HAX3
 		self.angles_y += 180 + vang_y;
@@ -720,11 +769,13 @@ void () func_trackchange =
 
 void () func_platrot =
 {
-	if (self.height < 0) {
+	if (self.height < 0)
+{
 		
 //self.height *= -1;
 	}
-	if (self.targetname) {	// start top
+	if (self.targetname)
+{	// start top
 #ifdef COOP_HAX3
 // i meant to do something here..
 #else

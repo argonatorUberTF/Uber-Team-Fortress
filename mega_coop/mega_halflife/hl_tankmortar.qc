@@ -8,28 +8,33 @@ void () func_mortar_field_use =
 		orgplace_x = activator.origin_x;
 		orgplace_y = activator.origin_y;
 	}
-	else if (self.m_fControl == 2)	{	// table controlled
+	else
+if (self.m_fControl == 2)	{	// table controlled
 		xtarg = find( world, targetname, self.m_iszXController );
 		if (xtarg == world)
 			bprint( 2, "func_mortar_field: .m_iszXController does not target anything\n" );
-		else {
+		else
+{
 			orgplace_x = self.mins_x + ((self.size_x*self.size_x)/self.size_x) * xtarg.ideal_yaw;
 		}	
 		ytarg = find( world, targetname, self.m_iszYController );
 		if (ytarg == world)
 			bprint( 2, "func_mortar_field: .m_iszYController does not target anything\n" );
-		else {
+		else
+{
 			orgplace_y = self.mins_y + ((self.size_y*self.size_y)/self.size_y)*ytarg.ideal_yaw;
 		}	
 	}
-	else {
+	else
+{
 		// random spread
 		orgplace_x = self.mins_x + random()*(self.maxs_x-self.mins_x);
 		orgplace_y = self.mins_y + random()*(self.maxs_y-self.mins_y);
 		orgplace_z = self.maxs_z;
 	}
 	makevectors(self.angles);
-	while (i < self.m_iCount) {
+	while (i < self.m_iCount)
+{
 		randv_x = random()*self.m_flSpread;
 		randv_y = random()*self.m_flSpread;
 		PRJ_FireProjectile(self, 
@@ -110,13 +115,16 @@ void() mortar_face =
 				self.enemy = find(self.enemy, classname, "player");
 		} 
 	}
-	if (self.spawnflags & 32) {
+	if (self.spawnflags & 32)
+{
 	
-		if (vlen(self.enemy.origin - self.origin) > 70 && self.enemy.classname == "player") {
+		if (vlen(self.enemy.origin - self.origin) > 70 && self.enemy.classname == "player")
+{
 			self.enemy = world;
 			bprint(2,"enemy left vicinity of tank thing\n");
 		}
-		if (self.enemy.classname == "player") {
+		if (self.enemy.classname == "player")
+{
 			if (self.enemy.button0)	{		// player is pressing fire, so we fire
 				fireme = #TRUE;
 			}
@@ -124,37 +132,46 @@ void() mortar_face =
 			t_Dest = self.enemy.angles;
 			t_Dest_x *= -1;
 		}
-		else {
+		else
+{
 		}
 	}
-	else {
+	else
+{
 		if (random() < .03)
 			fireme = #TRUE;
 		t_Dest = vectoangles((self.enemy.origin + self.enemy.view_ofs) - self.origin);
 		t_Destx = vectoangles(self.origin - (self.enemy.origin + self.enemy.view_ofs));
 		t_Dest_x = t_Destx_x;			
 	}
-	if (t_Dest == self.angles) {
+	if (t_Dest == self.angles)
+{
 		self.nextthink = self.ltime + .1;
 		return;
 	}
 	if (!self.spawnflags & 32)	// fix
 	{
-		if (self.yawtolerance) {
-			if ( t_Dest_y > (self.orig_angles_y + (self.yawtolerance*4.5)) || t_Dest_y < (self.orig_angles_y - (self.yawtolerance*4.5)) ) {
+		if (self.yawtolerance)
+{
+			if ( t_Dest_y > (self.orig_angles_y + (self.yawtolerance*4.5)) || t_Dest_y < (self.orig_angles_y - (self.yawtolerance*4.5)) )
+{
 				self.nextthink = self.ltime + .1;
 				return;
 			}
 		}
-		if (self.pitchtolerance) {
-			if ( t_Dest_x > self.pitchtolerance*2.5 && t_Dest_x < (360 - self.pitchtolerance*2.5) ) {
+		if (self.pitchtolerance)
+{
+			if ( t_Dest_x > self.pitchtolerance*2.5 && t_Dest_x < (360 - self.pitchtolerance*2.5) )
+{
 				self.nextthink = self.ltime + .1;
 				return;
 			}
 		}
 	}
-	if (fireme) {
-		if (self.has_tesla < time) {
+	if (fireme)
+{
+		if (self.has_tesla < time)
+{
 			makevectors(self.angles);
 			if (self.mtf_items & 1)	// fire bullets
 			{
@@ -163,7 +180,8 @@ void() mortar_face =
 				//TE_tarexplosion(self.origin + v_forward*self.barrel);
 				Tank_FireBullets (1, dir, '0.04 0.04 0', 666);
 			}
-			else {
+			else
+{
 				self.has_tesla = time + self.firerate;
 				PRJ_FireProjectile(self, 
 					"progs/missile.mdl", 

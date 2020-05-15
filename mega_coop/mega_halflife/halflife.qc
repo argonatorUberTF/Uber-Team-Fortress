@@ -46,21 +46,25 @@ string __fullspawndata;
 
 .string LaserTarget;
 
-void () info_target = {
+void () info_target =
+{
 
 };
 
-void () item_healthkit = {
+void () item_healthkit =
+{
 
    self.origin_z = self.origin_z + 40;
    item_health ();
 };
 
 .float damage;
-void() lightning_fire2 = {
+void() lightning_fire2 =
+{
    local entity te;
    te = find (world,targetname,self.LaserTarget);
-   if (te) {
+   if (te)
+{
    self.team_no = 666;
    traceline (self.origin, te.origin, true, self);
    LightningDamage (self.origin, te.origin, self, self.damage*5);
@@ -77,7 +81,8 @@ void() lightning_fire2 = {
     multicast (self.origin ,1.000);
    }
    else
-   {
+  
+{
       dprint (te.classname);
       dprint (" missing laser targets\n");
    }
@@ -85,14 +90,17 @@ void() lightning_fire2 = {
 
 void()lbeam_think;
 
-void () laser_use = {
+void () laser_use =
+{
 local entity lbeam;
-   if (self.spawnflags & 1.000) {
+   if (self.spawnflags & 1.000)
+{
       //lightning_fire2();
       self.spawnflags = (self.spawnflags - 1.000);
    }
    else 
-   {
+  
+{
   		lbeam = spawn();
 		lbeam.owner = self;
 		lbeam.think = lbeam_think;
@@ -103,7 +111,8 @@ local entity lbeam;
 
 };
 
-void () env_laser = {
+void () env_laser =
+{
 local entity lbeam;
 	precache_model("progs/spark.spr");
 	lbeam = spawn();
@@ -115,7 +124,8 @@ local entity lbeam;
 
 };
 
-void () Explode = {
+void () Explode =
+{
    WriteByte (4.000,23.000);
    WriteByte (4.000,3.000);
    WriteCoord (4.000,self.origin_x);
@@ -128,23 +138,27 @@ void () Explode = {
 		T_RadiusDamage(self, self.owner, 120, world);
 };
 
-void () env_explosion = {
+void () env_explosion =
+{
 	if (!self.iMagnitude)
 		self.iMagnitude = 120;
   self.use = Explode;
 
 };
 
-void () env_glow = {
+void () env_glow =
+{
    dremove(self);
 };
 
 
-void () FadeUse {
+void () FadeUse
+{
    eprint(activator);
 }
 
-void () env_fade = {
+void () env_fade =
+{
    self.use = FadeUse;
 };
 
@@ -159,7 +173,8 @@ void () SUB_SparkRemove =
 void (vector org, vector dir) beam_spark =
 {
 	local entity spark;
-	if (total_beam_sparks <= #MAX_BEAM_SPARKS) {
+	if (total_beam_sparks <= #MAX_BEAM_SPARKS)
+{
 		spark = spawn ();
 		spark.owner = self;
 		spark.solid = SOLID_NOT;
@@ -205,28 +220,34 @@ void () lbeam_think =
 	local vector dir;
 	local entity lstart, lend, oself;
 	oself = self;
-	if (!self.owner.spawnflags & 1) {
+	if (!self.owner.spawnflags & 1)
+{
 		dremove(self);
 		return;
 	}
 	self = self.owner;
-	if (self.LightningStart) {
+	if (self.LightningStart)
+{
 	   lstart = find(world, targetname, self.LightningStart);
 	   lend = find(world, targetname, self.LightningEnd);
 	   // xavior: quake lets us use lightning.. SO LET THERE BE LIGHT :)
 	   if (lend != world && lstart != world && lend.classname != "player")
 		TE_lightning1(self, lstart.origin, lend.origin);
 	}
-	else {
-		if (self.LaserTarget) {
+	else
+{
+		if (self.LaserTarget)
+{
 			lend = find(world, targetname, self.LaserTarget);
 			//traceline (self.origin, lend.origin, true, self);
-			if (lend != world) {
+			if (lend != world)
+{
 				LightningDamage (self.origin, lend.origin, self, self.damage*5);
 				TE_lightning3(self, self.origin, lend.origin);
 			}
 		}
-		else {
+		else
+{
 			// ADDME: create random beams
 		}
 	}
@@ -245,10 +266,12 @@ void () lbeam_think =
 	self.nextthink = time + .2;
 };
 
-void () env_beam_use = {
+void () env_beam_use =
+{
 
 	local entity lbeam;
-   if ( (self.spawnflags & 1.000) ) {
+   if ( (self.spawnflags & 1.000) )
+{
 
       self.solid = 0.000;
       //setmodel (self, string_null);
@@ -256,7 +279,8 @@ void () env_beam_use = {
 
    }
    else
-   {
+  
+{
 
 		lbeam = spawn();
 		lbeam.owner = self;
@@ -268,25 +292,29 @@ void () env_beam_use = {
 
    }
    
-   if (self.think == env_beam_think) {
+   if (self.think == env_beam_think)
+{
 		self.think = SUB_Null;
 		return;
 	}
 };
 
-void () beam_delayed_spawn = {
+void () beam_delayed_spawn =
+{
    local vector orgStart;
    local vector orgEnd;
    local entity te;
    te = find( world, targetname,self.LightningStart);
    if (te != world)
-   {
+  
+{
 //dprint("found start\n");
       orgStart = te.origin;
    }
    te = find( world, targetname, self.LightningEnd);
    if (te != world)
-   {
+  
+{
       orgEnd = te.origin;
 //dprint("found end\n");
     }
@@ -298,16 +326,19 @@ void () beam_delayed_spawn = {
    self.think = SUB_Null;
 };
 
-void () env_beam = {
+void () env_beam =
+{
 local entity lbeam;
    self.solid = 1.000;
    self.movetype = 5.000;
    precache_model("progs/spark.spr");
-   if ( self.mdl ) {
+   if ( self.mdl )
+{
       precache_model (self.mdl);
    }
    else
-   {
+  
+{
       precache_model ("progs/beam.mdl");
       self.mdl = "progs/beam.mdl";
       //if (self.team_no = 2.000
@@ -324,7 +355,8 @@ local entity lbeam;
    self.nextthink = (time + 3.000);
    if (self.rendercolor_z < self.rendercolor_x) 
       self.skin = 1.000;
-   if (self.spawnflags & 1.000) {
+   if (self.spawnflags & 1.000)
+{
   		lbeam = spawn();
 		lbeam.owner = self;
 		lbeam.think = lbeam_think;
@@ -333,11 +365,14 @@ local entity lbeam;
    }
 };
 
-void () Item_Use = {
+void () Item_Use =
+{
       if ( (self.use != SUB_Null) )
-      {
+     
+{
          if ( self.use )
-         {
+        
+{
 
             self.use ();
          }
@@ -345,14 +380,16 @@ void () Item_Use = {
 
 };
 
-void () Delayed_Use = {
+void () Delayed_Use =
+{
 	SUB_UseTargets();
 	strunzone(self.target);		// UNZONE OR DIEEEEEEish. well it's quite nasty anyways..
 	dremove(self);
 };
 
 #define NEW_METHOD
-void () multi_spawn = {
+void () multi_spawn =
+{
 	local float args, i, d_time, stlen;
 	local string c_a, st, st2, c_a2;
 	local entity t, timer;
@@ -360,7 +397,8 @@ void () multi_spawn = {
 	local string value;
 	self.activated = #TRUE;
 	self.use = SUB_Null;
-	if (self.has_tesla == 0 || self.has_tesla == 2) {
+	if (self.has_tesla == 0 || self.has_tesla == 2)
+{
 		i = 0;
 		if (self.has_tesla == 2)
 			i = 1;		// skip the "}"
@@ -390,7 +428,8 @@ void () multi_spawn = {
 #else
 	        st = strstr (c_a, "#1");	
 	        if (st != string_null)
-	        {
+	       
+{
 	            stlen = strlen (c_a);
 	            st = substr(c_a , 0 , stlen - 2);
 				strunzone(c_a);
@@ -404,8 +443,10 @@ void () multi_spawn = {
 			t = find (world,targetname, c_a);
 			if ( t )
 			{
-				if (c_a != self.targetname) {
-					if (d_time > 0) {
+				if (c_a != self.targetname)
+{
+					if (d_time > 0)
+{
 						timer = spawn ();
 						timer.classname = "DelayedTimer";
 						timer.target = c_a;
@@ -413,7 +454,9 @@ void () multi_spawn = {
 						timer.nextthink = (time + d_time);
 						timer.think = Delayed_Use;
 					}
-					else if (t.classname == "multi_manager") {
+					else
+if (t.classname == "multi_manager")
+{
 						// delay multi_spawns because they interfere with argv calls.
 						timer = spawn ();
 						timer.classname = "DelayedTimer";
@@ -422,7 +465,8 @@ void () multi_spawn = {
 						timer.nextthink = (time + .1);
 						timer.think = Delayed_Use;
 					}
-					else {
+					else
+{
 						timer = spawn ();
 						timer.classname = "DelayedTimer";
 						timer.target = c_a;
@@ -438,33 +482,39 @@ void () multi_spawn = {
 			args = args - 2;
 		}
 	}
-	else {		// Note: this is almost NEVER used
+	else
+{		// Note: this is almost NEVER used
 		  tokenize(self.netname);
 		  args = argc() - 2; 
 		  while(args>0)
-		  {
+		 
+{
 		   key = (argv(args - 1));
 		   value = (argv(args));
 			key = strzone(key);
 			value = strzone(value);
 
 		     if ((((key != "classname") && (key != "targetname")) && (key != "origin")))
-		     {
+		    
+{
 		        self.target = key;
 				self.target = strzone(self.target);
 		        self.delay = stof(value);
 		        st = strstr (key, "#1");
 		        if (st != string_null)
-		        {
+		       
+{
 		            stlen = strlen (key);
 					strunzone(key);
 		            key = substr(self.target , 0 , stlen - 2);
 					key = strzone(key);
 		        }
 		        if (self.delay)
-		        {
+		       
+{
 		           if (stlen)
-		           {
+		          
+{
 		              timer = spawn ();
 		              timer.classname = "DelayedTimer";
 		              timer.target = strzone(key);
@@ -472,11 +522,14 @@ void () multi_spawn = {
 		              timer.think = Delayed_Use;
 		           }
 		           else
-		           {
+		          
+{
 		              t = find (world,targetname, key);
 		              if ( t )
-		              { 
-						if (t.classname == "multi_manager") {
+		             
+{ 
+						if (t.classname == "multi_manager")
+{
 							// delay multi_spawns because they interfere with argv calls.
 			              timer = spawn ();
 			              timer.classname = "DelayedTimer";
@@ -485,7 +538,8 @@ void () multi_spawn = {
 			              timer.nextthink = (time + .1);
 			              timer.think = Delayed_Use;
 						}
-						else {
+						else
+{
 		                 t.nextthink = (time + self.delay);
 		                 t.think = Item_Use;
 						}
@@ -493,7 +547,8 @@ void () multi_spawn = {
 		           }
 		        }
 		        else
-		        {
+		       
+{
 
 		           SUB_UseTargets();
 		        }
@@ -508,9 +563,11 @@ void () multi_spawn = {
 };
 
 //NOTE: c3a1 has a multi_manager that has a field value of "blocked" "0".. need to change that in the .ent or use FTE
-void () multi_manager = {
+void () multi_manager =
+{
 	local float i;
-	if (__fullspawndata != string_null) {
+	if (__fullspawndata != string_null)
+{
 		if (checkextension("FRIK_FILE"))
 		{
 			// whee, nothing - just allows compat for frik_file's strzone
@@ -521,19 +578,22 @@ void () multi_manager = {
 		}
 		tokenize(__fullspawndata);
 		i = 1;
-		while (argv(i) != string_null && argv(i) != "}") {
+		while (argv(i) != string_null && argv(i) != "}")
+{
 			self.netname = strcat(self.netname, argv(i));
 			self.netname = strcat(self.netname, " ");
 			i++;
 		}
 	}
-	if (self.netname) {
+	if (self.netname)
+{
 		self.use = multi_spawn;
 	}
 	self.netname = strzone(self.netname);
 };
 
-void () SplashTouch = {
+void () SplashTouch =
+{
   if (other.classname != "player") return;
       other.watertype = -3;
       other.waterlevel = 1;
@@ -543,25 +603,29 @@ void ()ladder_touch;
 
 void () func_wall_toggle_use =
 {
-	if (self.solid == 0) {
+	if (self.solid == 0)
+{
 	   self.movetype = 7.000;
 	   self.solid = 4.000;
 	   setmodel (self,self.mdl);
 	}
-	else {
+	else
+{
       self.solid = 0.000;
       setmodel (self,string_null);
 	}
 };
 
-void () func_wall_toggle = {
+void () func_wall_toggle =
+{
    self.movetype = 7.000;
    self.solid = 4.000;
    self.mdl = self.model;
    setmodel (self,self.mdl);
  if (self.targetname)
   self.use = func_wall_toggle_use; 
-  	if (self.spawnflags & 1) {	// starts invisible
+  	if (self.spawnflags & 1)
+{	// starts invisible
       self.solid = 0.000;
       setmodel (self,string_null);
 	}
@@ -570,18 +634,21 @@ void () func_wall_toggle = {
 
 
 
-void () info_areadef = {
+void () info_areadef =
+{
    dremove(self);
 };  
 
-void () infodecal = {
+void () infodecal =
+{
    dremove(self);
 };  
 
 void ( string t_Target, float t_Time ) Delayed_Timer =
 {
 	local entity timer;
-	if (t_Time < 0) {
+	if (t_Time < 0)
+{
 		bprint(2, "Delayed_Timer: t_Time < 0\n");
 		t_Time = .1;
 	}
@@ -597,26 +664,32 @@ void ( string t_Target, float t_Time ) Delayed_Timer =
 void () HalfLife_DoRender =
 {
 	local vector osize, omins, omaxs, oabsmin, oabsmax;
-	if (self.rendercolor != '0 0 0') {}	// ADDME
+	if (self.rendercolor != '0 0 0')
+{}	// ADDME
 	if (self.rendermode > 0)
-		if (self.renderamt > 0) {
+		if (self.renderamt > 0)
+{
 			self.alpha = self.renderamt/255;
 			if (self.alpha == 0)
 				self.alpha = .01;
 		}
-		else {
+		else
+{
 			self.rendermode = 2;
 		}
-		if (self.rendermode == 2) {
+		if (self.rendermode == 2)
+{
 			self.alpha = self.renderamt/255;
-			if (self.alpha == 0) {
+			if (self.alpha == 0)
+{
 				//self.alpha = 0.01;
 				osize = self.size;
 				omins = self.mins;
 				omaxs = self.maxs;
 				oabsmin = self.absmin;
 				oabsmax = self.absmax;
-				if (self.solid == SOLID_BSP) {
+				if (self.solid == SOLID_BSP)
+{
 
 						self.solid = SOLID_BBOX;
 				}
@@ -638,7 +711,8 @@ void () Useme_touch =
 		return;
 	if (self.has_tesla > time)
 		return;
-	if (self.owner.hl_use != SUB_Null && self.owner.hl_use) {
+	if (self.owner.hl_use != SUB_Null && self.owner.hl_use)
+{
 		oself = self;
 		self = self.owner;
 		self.hl_use();

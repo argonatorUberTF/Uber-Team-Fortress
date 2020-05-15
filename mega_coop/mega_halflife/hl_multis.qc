@@ -7,8 +7,10 @@ void () multisource_use =
 	te = find(world, target, self.targetname);
 	while (te)
 	{
-		if (te.target == self.targetname) {			// mtf coop needs this.. wtF?!!!
-			if (te.activated != #TRUE) {
+		if (te.target == self.targetname)
+{			// mtf coop needs this.. wtF?!!!
+			if (te.activated != #TRUE)
+{
 				return;
 			}
 		}
@@ -18,11 +20,14 @@ void () multisource_use =
 	te = find(world, classname, "multi_manager");
 	while (te)
 	{
-		if (te.activated != #TRUE) {
+		if (te.activated != #TRUE)
+{
 			args = tokenize(te.netname);
 			i = 1;
-			while (argv(i) != string_null) {
-				if (argv(i) == self.targetname && argv(i-1) != "targetname") {
+			while (argv(i) != string_null)
+{
+				if (argv(i) == self.targetname && argv(i-1) != "targetname")
+{
 					//_bprint(self.targetname, " is triggered by a  trigger_multiple\n");
 					bprint(2," TWO IS ACTIVATED\n");
 					return;
@@ -32,8 +37,10 @@ void () multisource_use =
 		}
 		te = find(te, classname, "multi_manager");
 	}
-	if (self.globalstate) {
-		if (cvar(self.globalstate) < 1) {
+	if (self.globalstate)
+{
+		if (cvar(self.globalstate) < 1)
+{
 			bprint(2,"global state not set\n");
 			return;
 		}
@@ -65,9 +72,11 @@ float ( entity t_ent ) has_master =
 		hldprint(2,"NO MASTER\n");
 		return 0;
 	}
-	if (t.classname == "multisource") {
+	if (t.classname == "multisource")
+{
 		if (t.globalstate)
-			if (cvar(t.globalstate) > 0) {
+			if (cvar(t.globalstate) > 0)
+{
 				dremove(t);
 				hldprint(2,"DE GLOBALIZED!\n");
 				return 0;
@@ -88,8 +97,10 @@ float ( entity t_ent ) activate_master =
 	{
 		return 0;
 	}
-	if (t.classname == "multisource") {
-		if (t.use) {
+	if (t.classname == "multisource")
+{
+		if (t.use)
+{
 			self = t;
 			self.use();
 			self = oself;

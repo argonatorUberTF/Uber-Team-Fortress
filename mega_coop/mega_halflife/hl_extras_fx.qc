@@ -44,7 +44,8 @@ void() spark_touch =
 		kill = 0.4;
 	else
 		kill = 0.1;
-	if (random() < kill || self.owner.classname == "env_spark") { // remove some sparks on touch
+	if (random() < kill || self.owner.classname == "env_spark")
+{ // remove some sparks on touch
 		total_sparks -= 1;
 		remove(self);
 	}
@@ -56,12 +57,14 @@ void() spark_start =
 };
 void() spark_think =
 {
-	if (self.attack_finished < time) {
+	if (self.attack_finished < time)
+{
 		total_sparks -= 1;
 		remove(self);
 		return;
 	}
-	if (pointcontents(self.origin + '0 0 -8') < CONTENT_SOLID) {
+	if (pointcontents(self.origin + '0 0 -8') < CONTENT_SOLID)
+{
 		total_sparks -= 1;
 		remove(self);
 		return;
@@ -77,18 +80,22 @@ void() spark_spawn =
 {	
 	local entity spark;
 	local float r;
-	if (!(self.spawnflags & SILENT)) {
+	if (!(self.spawnflags & SILENT))
+{
 		r = rint(random() * 3);	// play a random spark sound	
 		if (r == 1)
 			sound (self, CHAN_AUTO, "misc/spark1.wav", 1, ATTN_NORM);
-		else if (r == 2)
+		else
+if (r == 2)
 			sound (self, CHAN_AUTO, "misc/spark2.wav", 1, ATTN_NORM);
-		else if (r == 0)
+		else
+if (r == 0)
 			sound (self, CHAN_AUTO, "misc/spark3.wav", 1, ATTN_NORM);
 		else
 			sound (self, CHAN_AUTO, "misc/spark4.wav", 1, ATTN_NORM);
 	}
-	if (total_sparks <= #MAX_SPARKS) {
+	if (total_sparks <= #MAX_SPARKS)
+{
 		spark = spawn ();
 		setorigin (spark, self.origin);
 		spark.solid = SOLID_NOT;
@@ -112,7 +119,8 @@ void() spark_spawn =
 };
 void() fx_spark =
 {	
-	if (!(self.spawnflags & SILENT)) {
+	if (!(self.spawnflags & SILENT))
+{
 		precache_sound ("misc/spark1.wav");
 		precache_sound ("misc/spark2.wav");
 		precache_sound ("misc/spark3.wav");
@@ -159,12 +167,18 @@ void(float ox) spawn_ngspark =
 void() drip_spawn;
 void() drip_pause;
 // splash animation (runs at 20fps)
-void()	s_splash1	=	[0,	s_splash2] {self.nextthink = time+0.05;};
-void()	s_splash2	=	[1,	s_splash3] {self.nextthink = time+0.05;};
-void()	s_splash3	=	[2,	s_splash4] {self.nextthink = time+0.05;};
-void()	s_splash4	=	[3,	s_splash5] {self.nextthink = time+0.05;};
-void()	s_splash5	=	[4,	s_splash6] {self.nextthink = time+0.05;};
-void()	s_splash6	=	[5,	SUB_Remove] {self.nextthink = time+0.05;};
+void()	s_splash1	=	[0,	s_splash2]
+{self.nextthink = time+0.05;};
+void()	s_splash2	=	[1,	s_splash3]
+{self.nextthink = time+0.05;};
+void()	s_splash3	=	[2,	s_splash4]
+{self.nextthink = time+0.05;};
+void()	s_splash4	=	[3,	s_splash5]
+{self.nextthink = time+0.05;};
+void()	s_splash5	=	[4,	s_splash6]
+{self.nextthink = time+0.05;};
+void()	s_splash6	=	[5,	SUB_Remove]
+{self.nextthink = time+0.05;};
 void() drip_touch =
 {
 	local float r;
@@ -177,9 +191,11 @@ void() drip_touch =
 		r = rint(random() * 2);
 		if (r == 1)
 			sound (self, CHAN_AUTO, "misc/drip1.wav", 1, ATTN_STATIC);
-		else if (r == 2)
+		else
+if (r == 2)
 			sound (self, CHAN_AUTO, "misc/drip2.wav", 1, ATTN_STATIC);
-		else if (r == 0)
+		else
+if (r == 0)
 			sound (self, CHAN_AUTO, "misc/drip3.wav", 1, ATTN_STATIC);
 	}	
 // particle effect - GL quake tends to blur the slpash.spr...
@@ -190,12 +206,14 @@ void() drip_touch =
 // Splash on liquids
 void() drip_think =
 {
-	if (self.attack_finished < time) {
+	if (self.attack_finished < time)
+{
 		self.nextthink = -1;
 		drip_touch();
 		return;
 	}
-	if (pointcontents(self.origin + '0 0 -16') < CONTENT_SOLID) {
+	if (pointcontents(self.origin + '0 0 -16') < CONTENT_SOLID)
+{
 		self.nextthink = -1;
 		drip_touch();
 		return;
@@ -229,7 +247,8 @@ void() drip_spawn =
 	setsize (drip, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (drip, self.origin);
 	drip.touch = drip_touch;
-	if (self.cnt) {// Check for water
+	if (self.cnt)
+{// Check for water
 		drip.think = drip_think;
 		drip.attack_finished = time + 3;
 		drip.nextthink = time + 0.1;
@@ -246,7 +265,8 @@ void() fx_drip =
 	vector spot1, spot2;
 	precache_model ("progs/drip.spr");
 	precache_model ("progs/splash.spr");
-	if (!(self.spawnflags & SILENT)) {
+	if (!(self.spawnflags & SILENT))
+{
 		precache_sound ("misc/drip1.wav");
 		precache_sound ("misc/drip2.wav");
 		precache_sound ("misc/drip3.wav");
@@ -284,7 +304,8 @@ void() sound_pause =
 };
 void() sound_play = 
 {
-	if (self.state == 0) {// no more repeats - reset & pause
+	if (self.state == 0)
+{// no more repeats - reset & pause
 		self.state = self.count;		
 		sound_pause();
 		return;
@@ -319,10 +340,12 @@ void() fx_sound =
 // Make sure random seed is valid
 	if (self.cnt < 0) self.cnt = 0;
 // start sound when triggered
-	if (self.targetname != string_null && !self.spawnflags & START_ONFX) {
+	if (self.targetname != string_null && !self.spawnflags & START_ONFX)
+{
 		self.use = sound_start;
 	}
-	else {// Start immediately
+	else
+{// Start immediately
 		self.use = sound_pause;// next use stops it
 		self.think = sound_play;
 		self.nextthink = time + 1.0;// FIXME! - WTF?

@@ -33,22 +33,27 @@ void () stry_stand =
     local float r;
     ai_stand();
     if (self.enemy != world)
-    {
+   
+{
         ai_face();
         r = range (self.enemy);
         if (r == RANGE_FAR)
-        {
+       
+{
             self.enemy = world;
         }
         if (!visible (self.enemy))
-        {
+       
+{
             self.enemy = world;
         }
     }
     if (self.enemy == world)
-    {
+   
+{
         if (self.aflag > 0)
-        {
+       
+{
             sound (self, CHAN_VOICE, "doors/hydro2.wav", 1, ATTN_NORM);
 // bprint ("sentry: deactivating...\n");
             self.aflag = 0;
@@ -57,57 +62,70 @@ void () stry_stand =
 // seeks for enemies
         self.angles_y = self.angles_y + 3;
         if (self.angles_y > 359)
-        {
+       
+{
             self.angles_y = self.angles_y - 359;
         }
         if (self.wait < time)
-        {
+       
+{
             sound (self, CHAN_VOICE, "misc/talk.wav", 1, ATTN_NORM);
             self.wait = time + 2;
         }
     }
     else
-    {
+   
+{
         if (self.aflag == 0)
-        {
+       
+{
 // bprint ("sentry: enemy found!\n");
             sound (self, CHAN_VOICE, "doors/hydro1.wav", 1, ATTN_NORM);
             self.aflag = 1;
             self.cnt = 0;
         }
         else
-        {
+       
+{
             if ((r == RANGE_NEAR) || (r == RANGE_MELEE))
-            {
+           
+{
                 // bprint ("sentry: enemy in range!\n");
                 if (infront (self.enemy))
-                {
+               
+{
                     self.aflag = 2;
                 }
             }
             else
-            {
+           
+{
                 self.aflag = 1;
             }
         }
     }
     if (self.aflag == 1)
-    {
+   
+{
         self.frame = $spin1 + self.cnt;
         self.cnt = self.cnt + 1;
         if (self.cnt > 7)
-        {
+       
+{
             self.cnt = 0;
         }
     }
-    else if (self.aflag == 2)
-    {
+    else
+if (self.aflag == 2)
+   
+{
         self.frame = $shot1 + self.cnt;
         stry_spike ();
         self.effects = self.effects | EF_MUZZLEFLASH;
         self.cnt = self.cnt + 1;
         if (self.cnt > 7)
-        {
+       
+{
             self.cnt = 0;
         }
     }
@@ -120,19 +138,23 @@ void () stry_die =
     OgreGrenadeExplode_b();
     r = random();
     if (r > 0.66)
-    {
+   
+{
         ThrowHead ("progs/strygib1.mdl", -120);
         ThrowGib ("progs/strygib2.mdl", -120);
         ThrowGib ("progs/strygib3.mdl", -120);
     }
-    else if (r > 0.33)
-    {
+    else
+if (r > 0.33)
+   
+{
         ThrowHead ("progs/strygib2.mdl", -120);
         ThrowGib ("progs/strygib1.mdl", -120);
         ThrowGib ("progs/strygib3.mdl", -120);
     }
     else
-    {
+   
+{
         ThrowHead ("progs/strygib3.mdl", -120);
         ThrowGib ("progs/strygib1.mdl", -120);
         ThrowGib ("progs/strygib2.mdl", -120);

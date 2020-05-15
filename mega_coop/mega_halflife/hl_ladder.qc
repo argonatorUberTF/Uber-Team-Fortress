@@ -36,7 +36,8 @@ void() ladder_touch =
 	if (v_forward*self.movedir<-0.5)// a little more than 180¼ of freedom
 		return;// not facing the right way
 	// Avoid problems if the player is on the top edge (act like an 8 unit step)
-	if (other.origin_z + other.mins_z + 8 >= self.absmax_z) {
+	if (other.origin_z + other.mins_z + 8 >= self.absmax_z)
+{
 		if ((!other.flags & FL_ONGROUND))
 			other.flags = other.flags + FL_ONGROUND;
 		return;
@@ -46,12 +47,15 @@ void() ladder_touch =
 // Stop all vertical movement
 		other.velocity_z = 0;
 // Check if the player is moving sideways (don't go up/down)
-	if (v_right*other.velocity > 25) {
+	if (v_right*other.velocity > 25)
+{
 			other.velocity = '0 0 0';
 			other.origin = other.origin + v_right*0.5;// boost strafes
 			return;
 		}
-		else if (v_right*other.velocity < -25) {
+		else
+if (v_right*other.velocity < -25)
+{
 			other.velocity = '0 0 0';
 			other.origin = other.origin - v_right*0.5;// boost strafes
 			return;
@@ -61,24 +65,31 @@ void() ladder_touch =
 //	}
 	vel = '0 0 0';// Our new velocity
 // Up (facing up/forward)
-	if (other.v_angle_x <= 15 && fvel>0 ) {
+	if (other.v_angle_x <= 15 && fvel>0 )
+{
 		other.origin = other.origin - self.movedir*LADDEROFS;// Pull back to keep from hitting the backing wall
 		vel_z = fabs(other.v_angle_x)*6;// go faster when facing forward	
 		if (vel_z < 90) vel_z = 90;// minimum speed
 	}
 // Up (facing down)
- 	else if ( other.v_angle_x >= 15 && fvel<0 ) {
+ 	else
+if ( other.v_angle_x >= 15 && fvel<0 )
+{
 		other.origin = other.origin + self.movedir*LADDEROFS;// Pull in to keep from falling off
 		vel_z = other.v_angle_x*4;
 	}
 // Down (facing up/forward)
-	else if (other.v_angle_x <= 15 && fvel<0 ) {	
+	else
+if (other.v_angle_x <= 15 && fvel<0 )
+{	
 		other.origin = other.origin + self.movedir*LADDEROFS;// Pull in to keep from falling off
 		vel_z = fabs(other.v_angle_x)*-5;// go faster when facing forward	
 		if (vel_z > -80) vel_z = -80;// minimum speed
 	}
 // Down (facing down)
-	else if ( other.v_angle_x >= 15 && fvel>0 ) {		
+	else
+if ( other.v_angle_x >= 15 && fvel>0 )
+{		
 		other.origin = other.origin - self.movedir*LADDEROFS;// Pull back to keep from hitting the backing wall
 		vel_z = other.v_angle_x*-4;
 	}
@@ -86,7 +97,8 @@ void() ladder_touch =
 //spd = cvar("cl_upspeed");
 	spd = LADDER_MOVESPEED;
 	if (vel_z > spd) vel_z = spd;
-	else if (vel_z < -1*spd) vel_z = -1*spd;
+	else
+if (vel_z < -1*spd) vel_z = -1*spd;
 // Add the parent's velocity - FIXME! - Physics on a moving ladder don't quite work
 //if (self.owner) vel = vel + self.owner.velocity;
 // Set the player's new veloctity

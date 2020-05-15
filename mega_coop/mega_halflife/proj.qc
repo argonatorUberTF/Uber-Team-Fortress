@@ -1,6 +1,7 @@
 // Generic projectile spawning code (PRJ) ---
 // projectile effect enumerator
-enum {
+enum
+{
 	PE_NONE,
 	PE_SPIKE,
 	PE_SUPERSPIKE,
@@ -45,7 +46,8 @@ void() _PRJ_Touch =
 // check validity of projectile
 	if (other == self.owner)
 		return; // don't explode on owner
-	if (self.voided) {
+	if (self.voided)
+{
 		return;
 	}
 	if (pointcontents(self.origin) == CONTENT_SKY)
