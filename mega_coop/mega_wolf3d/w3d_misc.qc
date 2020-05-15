@@ -7,7 +7,8 @@ void() ai_sprite_orient =
 				return;
 		best_client_dist = 9999;
 		clienta = find(world, classname, "player");
-		while (clienta) {
+		while (clienta)
+{
 			if (coop_visible(self, clienta))
 				break;
 			if (vlen (self.origin - clienta.origin) < best_client_dist)
@@ -80,7 +81,8 @@ void(vector dir) FireMonsterBullets =
 			{
 				damg = rint(random()*64);
 			}
-			else if (endist < 4)
+			else
+if (endist < 4)
 			{
 				damg = rint(random()*32);
 			}
@@ -99,7 +101,8 @@ void(string muzspr, float muztime, float mzlfrm) ai_monster_fire =
 	ai_face();
 	if (self.classname == "monster_ss")
 		sound (self, CHAN_WEAPON, "024.wav", 1, ATTN_NORM);	
-	else if (self.classname == "monster_boss")
+	else
+if (self.classname == "monster_boss")
 		sound (self, CHAN_WEAPON, "022.wav", 1, ATTN_NORM);	
 	else
 		sound (self, CHAN_WEAPON, "049.wav", 1, ATTN_NORM);	
@@ -291,7 +294,8 @@ void() wolf_decor =
 	}
 	if (!self.frame)
 		self.frame = 0;
-	if (total_static_decor < 124) {
+	if (total_static_decor < 124)
+{
 		total_static_decor = total_static_decor + 1;
 		makestatic (self);
 	}
@@ -361,11 +365,14 @@ entity(vector fmins, vector fmaxs) spawn_pushwall_field =
 	trigger.touch = pushwall_trigger_touch;
 	if (self.movedir_x >= 1)
 		setsize (trigger, fmins - '32 0 0', fmaxs - '64 0 0');
-	else if (self.movedir_x <= -1)
+	else
+if (self.movedir_x <= -1)
 		setsize (trigger, fmins + '64 0 0', fmaxs + '32 0 0');
-	else if (self.movedir_y >= 1)
+	else
+if (self.movedir_y >= 1)
 		setsize (trigger, fmins - '0 32 0', fmaxs - '0 64 0');
-	else if (self.movedir_y <= -1)
+	else
+if (self.movedir_y <= -1)
 		setsize (trigger, fmins + '0 64 0', fmaxs + '0 32 0');
 	else
 		setsize (trigger, fmins - '32 32 0', fmaxs + '32 32 0');
