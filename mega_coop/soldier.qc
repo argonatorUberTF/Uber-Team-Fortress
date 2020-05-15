@@ -339,7 +339,8 @@ void () army_fire =
 	en = self.enemy;
 	dir = (en.origin - (en.velocity * 0.2));
 	dir = normalize ((dir - self.origin));
-	if (self.weapon & #MWEAPON_ROCKETLAUNCHER && self.cooldown < time) {
+	if (self.weapon & #MWEAPON_ROCKETLAUNCHER && self.cooldown < time)
+{
 		newmis = spawn ();
 		newmis.owner = self;
 		newmis.team_no = self.team_no;

@@ -5,13 +5,16 @@ void ( string fname_a, string fname_b, float changeline, string changecontext, f
 	i=1;
 	file = open (fname_a, 0);
 	dummyfile = open (fname_b, 2);
-	while ( i < lines + 1 ) {
-		if (i == changeline) {
+	while ( i < lines + 1 )
+{
+		if (i == changeline)
+{
 			write( dummyfile, changecontext );
 			write( dummyfile, "\n" );
 			read(file);
 		}
-		else {
+		else
+{
 			write( dummyfile, read(file) );
 			write( dummyfile, "\n" );
 		}
@@ -68,7 +71,8 @@ float ( string fromme, string str_section, string str_value, float str_valueno )
 		strunzone(a);
 		i++;
 	}
-	if (i > #TFI_MAXLINES) {
+	if (i > #TFI_MAXLINES)
+{
 		bprint( 2, "TFI_GetLine: TFI_MAXLINES exceeded in file\n" );
 		close (file);
 		return -1;
@@ -84,7 +88,8 @@ void ( string fromme, string str_section, string str_value, float str_valueno, s
 	if ( ln < 0 )
 		return;
 	tln = TFI_GetLine ( fromme, string_null, "//end", 0 );
-	if (tln == -1) {
+	if (tln == -1)
+{
 		bprint( 2, "TFI_WriteValueFor: File " );
 		bprint( 2, fromme );
 		bprint( 2, " has no \"//end\" for a last line\n" );

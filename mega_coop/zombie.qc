@@ -744,7 +744,8 @@ void () zombie_paine12 = [ 173, zombie_paine13 ]
 	{
 		self.think = zombie_paine11;
 		head = findradius (self.origin, 56);
-		while (head) {
+		while (head)
+{
 			if (head.classname == "player" || head.is_monster == 1)
 			{
 				droptofloor ();

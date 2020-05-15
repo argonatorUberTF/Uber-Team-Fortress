@@ -441,30 +441,18 @@ void () monster_dog1 =
 	self.th_missile = dog_leap1;
 	coop_walkmonster_start ();
 };
-#ifdef decemberween
-void () monster_elf;
-#endif
 void () monster_dog =
 {
-#ifndef mtf_coop_halflife
-//	if (cvar("sv_map_halflife") == 1) {  //removed wolf3d dog to free up precache -arg
+//	if (cvar("sv_map_halflife") == 1)
+//removed wolf3d dog to free up precache -arg
 //		monster_wolf_dog ();
 //		return;
 //	}
-#endif
 	if (deathmatch)
 	{
 		remove (self);
 		return;
 	}
-#ifdef thanksgiving
-	if (lms_entity == world) {
-		self.option = 0.5;
-		self.option2 = 8;
-		effect_duckpond();
-		return;
-	}
-#endif
 	precache_model (mtf_savemodel("progs/h_dog.mdl"));
 	precache_model ("progs/dog.mdl");
 	precache_sound2 ("dog/dattack1.wav");
@@ -472,12 +460,6 @@ void () monster_dog =
 	precache_sound2 ("dog/dpain1.wav");
 	precache_sound2 ("dog/dsight.wav");
 	precache_sound2 ("dog/idle.wav");
-#ifdef decemberween
-	if (random() < .7) {
-		monster_elf();
-		return;
-	}
-#endif
 	self.netname = "rottweiler";
 	self.monsterweight = #MWEIGHT_NORMAL;
 	self.monsterflags = #MFLAG_HASWEAPON | #MFLAG_HUMANOID;

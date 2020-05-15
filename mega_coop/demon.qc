@@ -251,23 +251,38 @@ void () demon1_pain6 = [ 44, demon1_run1 ]
 {};
 void() demon1_fire1;
 void(float side) Demon_Shoot_Fire;
-void()	demon1_fire1	=[	$attacka1,		demon1_fire2	] {ai_charge(16);};
-void()	demon1_fire2	=[	$attacka2,		demon1_fire3	] {ai_charge(8);};
-void()	demon1_fire3	=[	$attacka3,		demon1_fire4	] {ai_charge(2);};
-void()	demon1_fire4	=[	$attacka4,		demon1_fire5	] {ai_charge(4);
+void()	demon1_fire1	=[	$attacka1,		demon1_fire2	]
+{ai_charge(16);};
+void()	demon1_fire2	=[	$attacka2,		demon1_fire3	]
+{ai_charge(8);};
+void()	demon1_fire3	=[	$attacka3,		demon1_fire4	]
+{ai_charge(2);};
+void()	demon1_fire4	=[	$attacka4,		demon1_fire5	]
+{ai_charge(4);
 };
-void()	demon1_fire5	=[	$attacka5,		demon1_fire6	] {ai_charge(8);};
-void()	demon1_fire6	=[	$attacka6,		demon1_fire7	] {ai_charge(4); Demon_Shoot_Fire(-1);};
-void()	demon1_fire7	=[	$attacka7,		demon1_fire8	] {ai_charge(24);};
-void()	demon1_fire8	=[	$attacka8,		demon1_fire9	] {ai_charge(32);};
-void()	demon1_fire9	=[	$attacka9,		demon1_fire10	] {ai_charge(16);};
-void()	demon1_fire10	=[	$attacka10,		demon1_fire11	] {ai_charge(8);
+void()	demon1_fire5	=[	$attacka5,		demon1_fire6	]
+{ai_charge(8);};
+void()	demon1_fire6	=[	$attacka6,		demon1_fire7	]
+{ai_charge(4); Demon_Shoot_Fire(-1);};
+void()	demon1_fire7	=[	$attacka7,		demon1_fire8	]
+{ai_charge(24);};
+void()	demon1_fire8	=[	$attacka8,		demon1_fire9	]
+{ai_charge(32);};
+void()	demon1_fire9	=[	$attacka9,		demon1_fire10	]
+{ai_charge(16);};
+void()	demon1_fire10	=[	$attacka10,		demon1_fire11	]
+{ai_charge(8);
 };
-void()	demon1_fire11	=[	$attacka11,		demon1_fire12	] {ai_charge(4); Demon_Shoot_Fire(1);};
-void()	demon1_fire12	=[	$attacka12,		demon1_fire13	] {ai_charge(20);};
-void()	demon1_fire13	=[	$attacka13,		demon1_fire14	] {ai_charge(32);};
-void()	demon1_fire14	=[	$attacka14,		demon1_fire15	] {ai_charge(16);};
-void()	demon1_fire15	=[	$attacka15,		demon1_run1		] {ai_charge(16);};
+void()	demon1_fire11	=[	$attacka11,		demon1_fire12	]
+{ai_charge(4); Demon_Shoot_Fire(1);};
+void()	demon1_fire12	=[	$attacka12,		demon1_fire13	]
+{ai_charge(20);};
+void()	demon1_fire13	=[	$attacka13,		demon1_fire14	]
+{ai_charge(32);};
+void()	demon1_fire14	=[	$attacka14,		demon1_fire15	]
+{ai_charge(16);};
+void()	demon1_fire15	=[	$attacka15,		demon1_run1		]
+{ai_charge(16);};
 void (entity attacker, float damage) demon1_pain =
 {
 	if ((self.touch == Demon_JumpTouch))

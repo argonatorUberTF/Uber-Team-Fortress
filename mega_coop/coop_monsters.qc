@@ -4,7 +4,8 @@
 #else
 //============================================================================
 float	spawner_noTriggerId;		// next id of a spawner without a targetname, so we can tell them apart
-void() monster_spawner_spawn = {
+void() monster_spawner_spawn =
+{
 	local entity	e, oself;
 	local string	oldTarget;
 	local float		maxCount, ftmp, rchance;
@@ -21,7 +22,8 @@ void() monster_spawner_spawn = {
 		}
 		return;
 	}
-	if ( !self.currentammo ) {
+	if ( !self.currentammo )
+{
 		objerror( "no valid monsters specified" );
 		return;
 	}
@@ -163,7 +165,8 @@ void() monster_spawner_spawn = {
 	}
 	if ( self.spawnflags & 64 )
 		e.angles = vectoangles( self.origin - e.origin );
-	else if ( self.spawnflags & 128 )
+	else
+if ( self.spawnflags & 128 )
 		e.angles = vectoangles( e.origin - self.origin );
 	spawn_tfog( e.origin );
 	// fire event
@@ -174,7 +177,8 @@ void() monster_spawner_spawn = {
 	self.target = oldTarget;
 	// setup to spawn another monster if needed
 	// don't worry about zero waits because those are done as they die
-	if ( self.wait > 0 ) {
+	if ( self.wait > 0 )
+{
 		if ( self.think )
 			self.nextthink = time + self.wait;
 	}
@@ -190,7 +194,7 @@ void() monster_spawner_use =
 		return;
 	// check if we're being used because of a monster death
 	// map monsters can have a monster_spawner as a target and things will work fine
-	//if ( COOP_IsCoopMonster( other ) && other.enemy == activator && other.#npc_isCoopMonster == self.ammo_detpack ) {
+	//if ( COOP_IsCoopMonster( other ) && other.enemy == activator && other.#npc_isCoopMonster == self.ammo_detpack ){
 	if (other.is_monster == #TRUE)
 	{
 		self.cnt = self.cnt - 1;
@@ -213,7 +217,8 @@ void() monster_spawner_use =
 			return;
 		}
 		// if spawning is enabled then spawn a new monster after the wait time
-		if ( self.wait > 0 ) {
+		if ( self.wait > 0 )
+{
 			if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 			{
 				self.nextthink = time + self.wait;
@@ -230,7 +235,8 @@ void() monster_spawner_use =
 					self.think = SUB_Null;
 			}
 		}
-		else if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+		else
+if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 			monster_spawner_spawn();
 		// fire our targets when a monster dies
 		SUB_UseTargets();
@@ -258,7 +264,8 @@ void() monster_spawner_use =
 				while ( self.cnt < self.count && self.lives )
 					monster_spawner_spawn();
 			}
-			else if ( self.spawnflags & 256 )
+			else
+			if ( self.spawnflags & 256 )
 			{
 				// spawn one right away (if we're suppose to)
 				monster_spawner_spawn();
@@ -280,7 +287,8 @@ void() monster_spawner =
 	// this is stored in the #isCoopMonster field, so make sure it's greater than 1
 	if ( !spawner_noTriggerId )
 		spawner_noTriggerId = 2;
-	if ( CheckExistence() == #FALSE ) {
+	if ( CheckExistence() == #FALSE )
+	{
 		dremove( self );
 		return;
 	}
@@ -298,7 +306,8 @@ void() monster_spawner =
 	if ( self.spawnflags & 8 )
 	if ( self.spawnflags & 16 )
 		objerror( "spawn_first and spawn_count_first doesn't make sense" );
-	if ( self.spawnflags & 4 ) {
+	if ( self.spawnflags & 4 )
+	{
 		// only valid if targetname and wait are present
 		if ( self.wait <= 0 || self.targetname == "" )
 			objerror( "start_on is only valid if targetname and wait are set" );
@@ -449,7 +458,8 @@ void() monster_spawner =
 			self.think = monster_spawner_spawn;
 		}
 	}
-	else if ( self.wait > 0 )
+	else
+if ( self.wait > 0 )
 	{
 	// if self.wait > 0 and self.targetname is set and START_ON isn't set, then we don't need to do anything
 		if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
@@ -471,7 +481,8 @@ void() monster_spawner =
 				self.think = monster_spawner_spawn;
 			}
 		}
-	} else if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+	} else
+if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 	{
 		do
 		{
@@ -529,7 +540,8 @@ void() monsterteam_touch =
 					self.enemy = world;
 					return;
 				}
-			} else if ( self.spawnflags & 4 )
+			} else
+if ( self.spawnflags & 4 )
 			{
 				if ( other == self.enemy )	// if it's the activator, reset .enemy and fire the targets
 					self.enemy = world;
@@ -574,7 +586,8 @@ void() monsterteam_use =
 				if ( !( self.spawnflags & 2 ) || te != activator )
 				if ( !( self.spawnflags & 4 ) || te == activator )
 				if ( !self.team_no || te.team_no == self.team_no )
-				if ( te.team_no != self.team ) {
+				if ( te.team_no != self.team )
+{
 					te.team_no = self.team;
 					numChanged = 1;	// for now we don't care how many, just that some were
 				}

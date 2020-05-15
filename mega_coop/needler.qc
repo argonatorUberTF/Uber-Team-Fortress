@@ -74,13 +74,16 @@ void ( entity f_plyr, entity t_plyr, float at_height ) Add_Needle =
 void () Needler_Touch =
 {
 	self.owner = self.real_owner;
-	if (other.takedamage != FALSE && other.health > 0) {
+	if (other.takedamage != FALSE && other.health > 0)
+{
 		if (other.team_no != self.team_no)
 			T_Damage (other, self, self.owner, 10);	//was 7 -arg
 		deathmsg = 1124;
 		Add_Needle(self.owner, other, self.origin_x);
 	}
-	else if (self.lives > 0) {
+	else
+if (self.lives > 0)
+{
 		Bounce_Off_Walls ();
 		self.lives -= 1;
 		return;

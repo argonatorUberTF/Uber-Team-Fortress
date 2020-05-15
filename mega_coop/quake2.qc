@@ -25,9 +25,11 @@ void () hl_rotating =
 		mvspd = mvspd * -1;
 	if (self.spawnflags & 4)
 		self.pos1_z += mvspd;
-	else if (self.spawnflags & 8)
+	else
+if (self.spawnflags & 8)
 		self.pos1_x += mvspd;
-	else {
+	else
+{
 		self.pos1_y += mvspd;
 	}
 	SUB_CalcAngleMove (self.pos1, realmvspd, hl_rotating);
@@ -206,14 +208,16 @@ void() func_door_rotating =
 		self.noise3 = "doors/medtry.wav";
 		self.noise4 = "doors/meduse.wav";
 	}
-	else if (world.worldtype == 1)
+	else
+if (world.worldtype == 1)
 	{
 		precache_sound ("doors/runetry.wav");
 		precache_sound ("doors/runeuse.wav");
 		self.noise3 = "doors/runetry.wav";
 		self.noise4 = "doors/runeuse.wav";
 	}
-	else if (world.worldtype == 2)
+	else
+if (world.worldtype == 2)
 	{
 		precache_sound ("doors/basetry.wav");
 		precache_sound ("doors/baseuse.wav");
@@ -261,7 +265,8 @@ void() func_door_rotating =
 	}
 	if (self.spawnflags & DOOR_X_AXIS)
 		self.movedir_z = 1.0;
-	else if (self.spawnflags & DOOR_Y_AXIS)
+	else
+if (self.spawnflags & DOOR_Y_AXIS)
 		self.movedir_x = 1.0;
 	else // Z_AXIS
 		self.movedir_y = 1.0;
@@ -328,10 +333,12 @@ void () func_timer_preuse =
 	local float nt;
 	nt = 0;
 	self.use = func_timer_pause;
-	if (self.delay) {
+	if (self.delay)
+{
 		nt = self.delay;
 	}
-	if (nt) {
+	if (nt)
+{
 		self.think = func_timer_execute;
 		self.nextthink = time + nt;
 	}
@@ -340,7 +347,8 @@ void () func_timer_preuse =
 };
 void () func_timer =
 {
-	if (!self.target) {
+	if (!self.target)
+{
 		bprint(2, "func_timer without target\n");
 		dremove(self);
 		return;
@@ -349,8 +357,10 @@ void () func_timer =
 	if (!self.wait)
 		self.wait = 1;		// not sure about this tbh, i need to look at actual q2 code some day..
 	self.use = func_timer_preuse;
-	if (self.spawnflags & 1) {	// start on
-		if (self.pausetime) {
+	if (self.spawnflags & 1)
+{	// start on
+		if (self.pausetime)
+{
 			self.think = func_timer_preuse;
 			self.nextthink = time + self.pausetime;
 			self.pausetime = 0;
@@ -508,7 +518,8 @@ void () nkey_think =
 	saf = findradius (self.origin, 40);		// orig 30 worked ok, but on ome maps was meh
 	while (saf)
 	{
-		if (saf.classname == "player" && saf.health >= 1) {
+		if (saf.classname == "player" && saf.health >= 1)
+{
 			other = saf;
 			key_remove();
 		}
@@ -560,10 +571,12 @@ void () trigger_key_use =
 	local entity te;
 	local float found_solid;
 	te = find(world,classname,self.item);
-	while (te) {
+	while (te)
+{
 		if (te.solid != SOLID_NOT)
 			found_solid = TRUE;
-		if (te.has_tesla == 1) {
+		if (te.has_tesla == 1)
+{
 			te.has_tesla = 0;
 			multi_use();
 			bprint(2,"A door has been unlocked using the ");
@@ -574,7 +587,8 @@ void () trigger_key_use =
 		}
 		te = find(te,classname,self.item);
 	}
-	if (!found_solid) {			// no key exists for this door, so just open it
+	if (!found_solid)
+{			// no key exists for this door, so just open it
 		multi_use();
 		bprint(2,"A door has been opened\n");
 		dremove(self);
@@ -584,7 +598,8 @@ void () trigger_key_use =
 void () trigger_key =
 {
 	trigger_once ();
-	if (#DOOM_MAP) {
+	if (#DOOM_MAP)
+{
 		self.use = trigger_key_use;
 		self.touch = SUB_Null;
 	}
@@ -702,7 +717,8 @@ void () monster_brain =
 };
 void () monster_mutant =
 {
-	if (#DOOM_MAP) {
+	if (#DOOM_MAP)
+{
 		self.has_tesla = 1;
 		monster_pinky();
 	}
@@ -711,7 +727,8 @@ void () monster_mutant =
 };
 void () monster_tank_commander =
 {
-	if (#DOOM_MAP) {
+	if (#DOOM_MAP)
+{
 		if (#DOOM2_MAP)
 			monster_arachnotron();
 		else

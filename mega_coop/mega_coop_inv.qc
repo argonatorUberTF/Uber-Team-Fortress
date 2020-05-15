@@ -14,19 +14,22 @@ float (string nname) MTF_Coop_SetupInventory =
 		bprint(2, self.connect_name);
 		bprint(2, ")\n");
 	}
-	if ( nname == "" || !nname ) {
+	if ( nname == "" || !nname )
+{
 		self.#gold = -1;
 		return ( -1 );
 	}
 	filenamee = frik_strcat( "ranks/inv/", nname, "_inv.tfi" );
 	filenamee = strzone(filenamee);
-	if ( invalid_exp_name(filenamee) == 1 ) {
+	if ( invalid_exp_name(filenamee) == 1 )
+{
 		strunzone(nname);
 		strunzone(filenamee);
 		self.#gold = -1;
 		return ( -1 );
 	}
-	if ( checkfilename(filenamee) != 1 ) {	// done in C - makes sure the file name is writable
+	if ( checkfilename(filenamee) != 1 )
+{	// done in C - makes sure the file name is writable
 		strunzone(nname);
 		strunzone(filenamee);
 		self.#gold = -1;
@@ -108,61 +111,89 @@ string ( float item_no ) Inventory_GetItemName =
 		return "Invalid/Unknown Item";
 	if ( item_no == 670 + #RUNE_VAMPRIC )
 		return "Vampric Rune";
-	else if ( item_no == 670 + #RUNE_RESISTANCE )
+	else
+if ( item_no == 670 + #RUNE_RESISTANCE )
 		return "Greater Resistance Rune";
-	else if ( item_no == 670 + #RUNE_BERSERKER )
+	else
+if ( item_no == 670 + #RUNE_BERSERKER )
 		return "Berserker Rune";
-	else if ( item_no == 670 + #RUNE_EXPBONUS )
+	else
+if ( item_no == 670 + #RUNE_EXPBONUS )
 		return "Double Experience Rune";
-	else if ( item_no == 670 + #RUNE_AMMO )
+	else
+if ( item_no == 670 + #RUNE_AMMO )
 		return "Infinite Ammo Rune";
-	else if ( item_no == 670 + #RUNE_EXPLOSIVE )
+	else
+if ( item_no == 670 + #RUNE_EXPLOSIVE )
 		return "Triple Explosive Rune";
-	else if ( item_no == 670 + #RUNE_UBEREXP )
+	else
+if ( item_no == 670 + #RUNE_UBEREXP )
 		return "Quad EXP Rune";
-	else if ( item_no == 670 + #RUNE_ARMOR )
+	else
+if ( item_no == 670 + #RUNE_ARMOR )
 		return "Armor Steal Rune";
-	else if ( item_no == 670 + #RUNE_ELERESIST )
+	else
+if ( item_no == 670 + #RUNE_ELERESIST )
 		return "Elemental Resistance Rune";
-	else if ( item_no == 1)		// QUAD
+	else
+if ( item_no == 1)		// QUAD
 		return "Quad Damage";
-	else if ( item_no == 2)	
+	else
+if ( item_no == 2)	
 		return "Invisibility Ring";
-	else if ( item_no == 3)	
+	else
+if ( item_no == 3)	
 		return "Yellow Armor";
-	else if ( item_no == 4)
+	else
+if ( item_no == 4)
 		return "Megahealth";
-	else if ( item_no == 5)	
+	else
+if ( item_no == 5)	
 		return "Red Armor";
-	else if ( item_no == 6)	
+	else
+if ( item_no == 6)	
 		return "Medium Health Pack";
-	else if ( item_no == 7)	
+	else
+if ( item_no == 7)	
 		return "Pentagram";
-	else if ( item_no == 9)	
+	else
+if ( item_no == 9)	
 		return "Small Inventory Pocket";
-	else if ( item_no == 10)	
+	else
+if ( item_no == 10)	
 		return "Medium Inventory Pocket";
-	else if ( item_no == 11)	
+	else
+if ( item_no == 11)	
 		return "Large Inventory Pocket";
-	else if ( item_no == 12)	
+	else
+if ( item_no == 12)	
 		return "JUMBO (best) Inventory Pocket";
-	else if ( item_no == 13)	
+	else
+if ( item_no == 13)	
 		return "Medium Ammo Pack";
-	else if ( item_no == 14)	
+	else
+if ( item_no == 14)	
 		return "Jumbo Ammo Pack";
-	else if ( item_no == 15)	
+	else
+if ( item_no == 15)	
 		return "Extra Grenades Pack (+2 +2)";
-	else if ( item_no == 16)
+	else
+if ( item_no == 16)
 		return "Rocket Upgrade: Ricochet";
-	else if ( item_no == 17)
+	else
+if ( item_no == 17)
 		return "Item Pickup (adds the next picked up item into your inventory)";
-	else if ( item_no == 18)
+	else
+if ( item_no == 18)
 		return "Uber Railgun Upgrade";
-	else if ( item_no == 19)
+	else
+if ( item_no == 19)
 		return "Lightning Gun (Replaces SG)";
-	else if ( item_no == 20)
+	else
+if ( item_no == 20)
 		return "Resurrection Cube";
-	else if ( item_no == 0)
+	else
+if ( item_no == 0)
 		return "";
 	r_str = frik_strcat( "Item ", ftos( item_no ) );
 	return r_str;
@@ -171,45 +202,65 @@ float ( float item_no ) Inventory_GetItemPrice =
 {
 	if (item_no == 1)		// QUAD
 		return 500;
-	else if (item_no == 3)
+	else
+if (item_no == 3)
 		return 250;
-	else if (item_no == 4)
+	else
+if (item_no == 4)
 		return 600;
-	else if (item_no == 5)
+	else
+if (item_no == 5)
 		return 350;
-	else if (item_no == 6)
+	else
+if (item_no == 6)
 		return 200;
-	else if (item_no == 7)
+	else
+if (item_no == 7)
 		return 1200;
-	else if (item_no == 9)
+	else
+if (item_no == 9)
 		return 5000;
-	else if (item_no == 10)
+	else
+if (item_no == 10)
 		return 10000;
-	else if (item_no == 11)
+	else
+if (item_no == 11)
 		return 20000;
-	else if (item_no == 12)
+	else
+if (item_no == 12)
 		return 50000;
-	else if (item_no == 13)
+	else
+if (item_no == 13)
 		return 100;
-	else if (item_no == 14)
+	else
+if (item_no == 14)
 		return 165;
-	else if (item_no == 15)
+	else
+if (item_no == 15)
 		return 100;
-	else if (item_no == 16)
+	else
+if (item_no == 16)
 		return 425;
-	else if (item_no == 17)
+	else
+if (item_no == 17)
 		return 250;
-	else if (item_no == 18)
+	else
+if (item_no == 18)
 		return 450;
-	else if (item_no == 19)
+	else
+if (item_no == 19)
 		return 400;
-	else if (item_no == 20)
+	else
+if (item_no == 20)
 		return 6000;
-	else if (item_no == 670 + #RUNE_AMMO)
+	else
+if (item_no == 670 + #RUNE_AMMO)
 		return 800;
-	else if (item_no == 670 + #RUNE_UBEREXP)
+	else
+if (item_no == 670 + #RUNE_UBEREXP)
 		return 500;
-	else if (item_no == 670 + #RUNE_BERSERKER)
+	else
+if (item_no == 670 + #RUNE_BERSERKER)
 		return 550;
 	return 400;			// default value
 };
@@ -237,15 +288,19 @@ void ( string nname, float print_type ) Inventory_PrintItems =
 	a = read (file);
 	a = read (file);
 	i = 1;
-	while (i < self.#max_inv + 1) {
+	while (i < self.#max_inv + 1)
+{
 		a = read (file);
 		a = strzone(a);
-		if (print_type == #P_TO_SELF || print_type == #P_TO_SELF_W_VALUE) {
+		if (print_type == #P_TO_SELF || print_type == #P_TO_SELF_W_VALUE)
+{
 			sprint( self, 2, ftos(i) );
 			sprint( self, 2, ") " );
 			sprint( self, 2, Inventory_GetItemName( stof(a) ) );
-			if (print_type == #P_TO_SELF_W_VALUE) {
-				if (a != "0" && a != string_null) {
+			if (print_type == #P_TO_SELF_W_VALUE)
+{
+				if (a != "0" && a != string_null)
+{
 					sprint( self, 2, " (צבלץו: " );
 					sprint( self, 2, ftos( ceil(.75 * Inventory_GetItemPrice(stof(a))) ) );
 					sprint( self, 2, ")" );
@@ -307,7 +362,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropInventory =
 	t_item = spawn();
 	t_item.#rune_time = 30;		// TODO: dynamize this so that misc attrib makes em last longer
 	t_item.weapon = 8;			// Gold drop
-	if (monster.#gold > 0) {
+	if (monster.#gold > 0)
+{
 		t_item.#gold = monster.#gold;			// monster gold drop based on exp
 		monster.#gold = 0;
 	}
@@ -330,7 +386,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropInventory =
 	t_item.nextthink = time + .2;
 	t_item.owner.effects = EF_RED;
 #ifndef mtf_coop_halflife
-	if (cvar("sv_map_halflife") == 1 || #DOOM_MAP) {
+	if (cvar("sv_map_halflife") == 1 || #DOOM_MAP)
+{
 		t_item.owner.effects = 0;
 	}
 #endif
@@ -348,12 +405,14 @@ float ( entity t_plyr, float item_no, float item_cost ) Inventory_AddItem =
 	if ( item_no == 0 )
 		return #FALSE;
 	free_slot = Inventory_GetItem ( t_plyr.connect_name, 0, #RETURN_FREE_SLOT );		// find a free slot.. if we have one
-	if ( free_slot == 0 ) {
+	if ( free_slot == 0 )
+{
 		sprint( t_plyr, 2, "You need to free up an inventory slot before acquiring a new item.\n" );
 		return #FALSE;
 	}
 	
-	if ( item_cost > t_plyr.#gold ) {
+	if ( item_cost > t_plyr.#gold )
+{
 		sprint( t_plyr, 2, "You need more gold to purchase this item.\n" );
 		return #FALSE;
 	}
@@ -388,7 +447,8 @@ void () Merchant_Touch =
 		return;
 	if (other.health < 0)
 		return;
-	if (self.#item1 == 0 && self.#item2 == 0 && self.#item3 == 0 && self.#item4 == 0) {
+	if (self.#item1 == 0 && self.#item2 == 0 && self.#item3 == 0 && self.#item4 == 0)
+{
 		bprint(2, "Merchant: See ya later!\n");
 		dremove(self);
 		return;
@@ -403,7 +463,8 @@ float () Merchant_SetrRandomItem =
 {
 	local float ittype, i;
 	ittype = 1;
-		if (merchant.#merchant_type == 1) {
+		if (merchant.#merchant_type == 1)
+{
 		i = rint(random() * 7);
 		ittype = i;
 		if (random() < .15)
@@ -413,7 +474,9 @@ float () Merchant_SetrRandomItem =
 		if (random() < .03)
 			ittype = 17;
 	}
-	else if (merchant.#merchant_type == 2) {
+	else
+if (merchant.#merchant_type == 2)
+{
 		i = rint(random() * 10);
 		if (i == 1)
 				ittype = 13;
@@ -440,13 +503,17 @@ float () Merchant_SetrRandomItem =
 		if (random() < .04)
 			ittype = 11;
 	}
-	else if (merchant.#merchant_type == 3) {
+	else
+if (merchant.#merchant_type == 3)
+{
 		i = rint(random() * 12);
 		if (i == 10)
 			ittype = 2;
-		else if (i == 11)
+		else
+if (i == 11)
 			ittype = 7;
-		else if (i == 12)
+		else
+if (i == 12)
 			ittype = 4;
 		else
 			ittype = 670 + i;
@@ -483,31 +550,42 @@ void () Inventory_SetupMerchant =
 	if ( m_type == 2 )
 		if (checkmodelprecache("progs/enforcer.mdl") == #FALSE )
 			m_type = 1;
-	if ( m_type == 1 ) {
+	if ( m_type == 1 )
+{
 		bprint( 2, "QuakeGuy Merchant is looking to sell his wares.\n" );
 		merchant.#gold = 1000;
 	}
-	else if ( m_type == 2 ) {
+	else
+if ( m_type == 2 )
+{
 		bprint( 2, "Weapons Merchant is looking to sell some weapons upgrades.\n" );
 		merchant.#gold = 2500;
 	}
-	else if ( m_type == 3 ) {
+	else
+if ( m_type == 3 )
+{
 		bprint( 2, "Shambler Merchant is looking to sell some mystic powers.\n" );
 		merchant.#gold = 5000;
 	}
 	merchant.#merchant_type = m_type;
 	
-	if (m_type == 1) {		// player merchant
+	if (m_type == 1)
+{		// player merchant
 		setmodel( merchant, "progs/player.mdl" );
 		merchant.frame = 13;
 	}
-	else if (m_type == 2) {		// weapons merchant
+	else
+if (m_type == 2)
+{		// weapons merchant
 		setmodel( merchant, "progs/enforcer.mdl" );
 	}
-	else if (m_type == 3) {		// shambler merchant
+	else
+if (m_type == 3)
+{		// shambler merchant
 		setmodel( merchant, "progs/shambler.mdl" );
 	}
-	else {
+	else
+{
 		bprint(2, "MERCHANT ERROR! INVALID MERCHANT TYPE ");
 		bprint(2, ftos(m_type));
 		bprint(2, "\n");

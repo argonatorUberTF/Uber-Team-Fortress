@@ -27,10 +27,12 @@ void () enforcer_fire =
 				}
 				TF_T_Damage (trace_ent, self, self, 13, 0, 8);
 			}
-			else {
+			else
+{
 				if (vlen(trace_ent.velocity) > 500 && random() > 0.3)
 					TF_T_Damage (trace_ent, self, self, 10, 0, 8);
-				else if (vlen(trace_ent.velocity) > 300 && random() > 0.5)
+				else
+if (vlen(trace_ent.velocity) > 300 && random() > 0.5)
 					TF_T_Damage (trace_ent, self, self, 20, 0, 8);
 				else
 					TF_T_Damage (trace_ent, self, self, 40, 0, 8);	// xav: maybe randomize damage here a bit..

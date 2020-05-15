@@ -263,7 +263,8 @@ void () ShalMissileTouch =
 	{
 		T_Damage (other, self, self, 110);
 	}
-	if (self.real_owner.classname == "building_sentrygun") {
+	if (self.real_owner.classname == "building_sentrygun")
+{
 		deathmsg = 27;
 		self.owner = self.real_owner;
 		T_RadiusDamage (self, self.owner, 130, world/*, "shalrath"*/);

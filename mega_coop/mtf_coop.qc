@@ -15,9 +15,11 @@ void () MTF_Setup_Monster =
 	rnd = cvar ("monster_throwrunes");
 	if (rnd == 0)
 		rnd = .045;
-	else if (rnd < 0)
+	else
+if (rnd < 0)
 		rnd = 0;
-	else if (rnd > 1)
+	else
+if (rnd > 1)
 		rnd = 1;
 	if (random() < rnd)
 		if (self.#is_minion != #TRUE)
@@ -46,9 +48,11 @@ void () MTF_Setup_Monster =
 			rnd = random();
 			if (rnd < .25)
 				self.monster_items = self.monster_items | MITEM_FLAME;
-			else if (rnd < .50)
+			else
+if (rnd < .50)
 				self.monster_items = self.monster_items | MITEM_ICE;
-			else if (rnd < .75)
+			else
+if (rnd < .75)
 				self.monster_items = self.monster_items | MITEM_LIGHTNING;
 			else
 				self.monster_items = self.monster_items | MITEM_AIR;
@@ -196,7 +200,8 @@ void () MTF_Setup_Monster =
 		newmis.nextthink = time + .1;		
 	}	
 #ifndef mtf_coop_halflife
-	if (cvar("sv_map_halflife") == 1 || #DOOM_MAP) {
+	if (cvar("sv_map_halflife") == 1 || #DOOM_MAP)
+{
 		self.effects = 0; // makes wolf3d sprites have boxes on ezquake
 	}
 #endif
@@ -247,13 +252,16 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 	s_mult = cvar ("monster_inflictdamage");
 	if (!s_mult || s_mult == 0)
 		s_mult = 1;
-	if (survival_mode == 1) {
+	if (survival_mode == 1)
+{
 		s_mult = num_players * 0.15;
 		s_mult+= 0.55;
 		if (s_mult > 1.2)
 			s_mult = 1.2;
 	}
-	else if (survival_mode == 2) {
+	else
+if (survival_mode == 2)
+{
 		s_mult = .5 + (num_players * .15);
 		if (s_mult > 1)
 			s_mult = 1;
@@ -280,7 +288,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 					flame = FlameSpawn("1", targ);
 				else
 					flame = FlameSpawn("3", targ);
-				if (flame != world) {			// this caused a crashie before
+				if (flame != world)
+{			// this caused a crashie before
 					flame.classname = "fire";
 					flame.health = 30;
 					targ.numflames = targ.numflames + 1;
@@ -295,7 +304,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				}
 				origdmg = ceil(origdmg * .2);
 		}
-		else if (atckr.monster_items & MITEM_ICE)
+		else
+if (atckr.monster_items & MITEM_ICE)
 		{
 			if (targ.classname == "player")
 			{
@@ -317,7 +327,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				}
 			}
 		}
-		else if (atckr.monster_items & MITEM_LIGHTNING && inflictor.classname != "timer" && atckr.last_saveme_sound < time)
+		else
+if (atckr.monster_items & MITEM_LIGHTNING && inflictor.classname != "timer" && atckr.last_saveme_sound < time)
 		{
 			if (atckr.is_monster == 1)
 				atckr.last_saveme_sound = time + 1;
@@ -329,7 +340,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 			timer.real_owner = atckr;
 			timer.classname = "timer";
 		}
-		else if (atckr.monster_items & MITEM_AIR && atckr.last_saveme_sound < time && targ.classname == "player")
+		else
+if (atckr.monster_items & MITEM_AIR && atckr.last_saveme_sound < time && targ.classname == "player")
 		{
 			if (atckr.is_monster == 1)
 				atckr.last_saveme_sound = time + 1;
@@ -350,7 +362,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				timer.owner = targ;
 				timer.health = 400;
 			}
-			else if (no_conc == #FALSE)
+			else
+if (no_conc == #FALSE)
 			{
 				stuffcmd(targ, "v_iroll_cycle 0.5\n");
 				stuffcmd(targ, "v_ipitch_cycle 1\n");
@@ -376,7 +389,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				if (atckr.health > 0)
 					atckr.health = atckr.health + 200;
 			}
-			else if (targ.invisible_finished > time)
+			else
+if (targ.invisible_finished > time)
 			{
 				origdmg = 0;
 				targ.invisible_finished = time + 3;
@@ -388,7 +402,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 					setmodel(atckr, "progs/eyes.mdl");
 				}
 			}			
-			else if (targ.super_damage_finished > time)
+			else
+if (targ.super_damage_finished > time)
 			{
 				origdmg = 0;
 				targ.super_damage_finished = time;
@@ -399,7 +414,8 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 					atckr.effects = atckr.effects | EF_BLUE;
 				}
 			}
-			else if (targ.invincible_finished > time)
+			else
+if (targ.invincible_finished > time)
 			{
 				origdmg = 0;
 				atckr.invincible_finished = time + (targ.invincible_finished - time);
@@ -421,9 +437,11 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 		entv = vlen(targ.velocity);
 		if (entv > 350)
 			origdmg *= .35;
-		else if (entv > 500)
+		else
+if (entv > 500)
 			origdmg *= .3;
-		else if (entv > 700)
+		else
+if (entv > 700)
 			origdmg *= .25;
 		else
 			origdmg *= .5;
@@ -446,12 +464,15 @@ float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
 	s_mult = cvar ("monster_takedamage");
 	if (!s_mult || s_mult == 0)
 		s_mult = 1;
-	if (survival_mode == 1) {
+	if (survival_mode == 1)
+{
 		s_mult = 4 / num_players;
 		if (s_mult < 1)
 			s_mult = 1;
 	}
-	else if (survival_mode == 2) {
+	else
+if (survival_mode == 2)
+{
 		s_mult = 3.25 / num_players;
 		if (s_mult < 1)
 			s_mult = 1;
@@ -468,7 +489,8 @@ float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
 		origdmg *= .43;
 		if (targ.monster_items & MITEM_FLAME)
 			origdmg *= .37;	// if we're a flame monster, take less damage from fire
-		else if (targ.monster_items & MITEM_ICE)
+		else
+if (targ.monster_items & MITEM_ICE)
 			origdmg *= 3;	// flame melts ice. gg. ;)
 	}
 	if ( deathmsg == 6 )		// Rocket Launcher
@@ -530,7 +552,8 @@ float (entity atckr, entity targ, float origdmg) MTF_Monster_Take_Damage =
 			}
 			if ( atckr.#rune_type == #RUNE_BERSERKER )
 			{
-				if (self.current_weapon != 16 && self.current_weapon != 8 && self.current_weapon != 4 && self.current_weapon != 2) {}
+				if (self.current_weapon != 16 && self.current_weapon != 8 && self.current_weapon != 4 && self.current_weapon != 2)
+{}
 				else
 					origdmg *= 2.75;
 			}
@@ -568,23 +591,32 @@ string ( string pc_name/*, float m_type*/ ) mtf_savemodel =
 	dfactor = #RETURN_HEAD_NORMAL;
 	if (mapname == "hip1m4")	// there's not a snowball's chance in hell this map will work anyways but whatever..
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "hip2m2")	// also doesnt work :(
+	else
+if (mapname == "hip2m2")	// also doesnt work :(
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "hip2m4")
+	else
+if (mapname == "hip2m4")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "r2m4")
+	else
+if (mapname == "r2m4")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "r2m5")
+	else
+if (mapname == "r2m5")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "r2m6")
+	else
+if (mapname == "r2m6")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "r1m5")
+	else
+if (mapname == "r1m5")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "neh1m9" || mapname == "neh2m3")
+	else
+if (mapname == "neh1m9" || mapname == "neh2m3")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "qte1m3" || mapname == "qte1m4")
+	else
+if (mapname == "qte1m3" || mapname == "qte1m4")
 		dfactor = #RETURN_HEAD_ZOMBIE;
-	else if (mapname == "qte2m2" || mapname == "qte2m3"/* || mapname == "qte2m4"*/)
+	else
+if (mapname == "qte2m2" || mapname == "qte2m3"/* || mapname == "qte2m4"*/)
 		dfactor = #RETURN_HEAD_ZOMBIE;
 	if (dfactor == #RETURN_HEAD_ZOMBIE)
 		return ("progs/h_zombie.mdl");
@@ -712,7 +744,8 @@ void () Coop_ThrowRune =
 	newmis.effects = #EF_GREEN;
 	newmis.noise = "items/protect.wav";
 	Coop_SetRune(newmis);
-	if (lms_entity != world) {
+	if (lms_entity != world)
+{
 		newmis.nextthink = time + 30;
 		newmis.think = SUB_Remove;
 	}
@@ -743,11 +776,13 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	{
 		if (mkiller.frags > 200 && mkiller.frags < 240)
 		{
-			if (mapname == "08" || mapname == "04") {
+			if (mapname == "08" || mapname == "04")
+{
 				if (random() < .03)
 					spawn_cube = 1;
 			}
-			else if (random() < .04) //Was .03 chance -arg
+			else
+if (random() < .04) //Was .03 chance -arg
 				spawn_cube = 1;
 		}
 	}
@@ -776,10 +811,12 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		newmis.items = 1048576;	
 	}
 #ifdef mtf_coop_halloween
-	else if (random() < exp_probability)
+	else
+if (random() < exp_probability)
 	{
 		newmis.weapon = 666;	// 50 exp
-		if (random() < .20) {
+		if (random() < .20)
+{
 			newmis.weapon = 667;	// 250 exp
 			newmis.effects = EF_BLUE;
 		}
@@ -793,7 +830,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	}
 #endif
 #ifdef mtf_coop_birthday
-	else if (random() < .02 && cake_dispensed == #FALSE && lms_entity == world)
+	else
+if (random() < .02 && cake_dispensed == #FALSE && lms_entity == world)
 	{
 		cake_dispensed = #TRUE;
 		newmis.weapon = 669;
@@ -803,7 +841,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		bprint(2, "... or is it?\n");
 	}
 #endif
-	else if (random() < exp_probability && lms_entity == world)
+	else
+if (random() < exp_probability && lms_entity == world)
 	{
 		setmodel(newmis, "progs/grenade3.mdl");
 		newmis.skin = 1;
@@ -842,15 +881,18 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 	else
 	if (monster.monster_items & MITEM_SPEED)
 	{
-		if (mkiller.playerclass == 9) {	// Spy kills = better loot
-			if (random() > .1) {
+		if (mkiller.playerclass == 9)
+{	// Spy kills = better loot
+			if (random() > .1)
+{
 				newmis.speed_time = 25;
 				newmis.effects = newmis.effects | EF_RED;
 			}
 		}
 		else 
 		{
-			if (random() < .55) {
+			if (random() < .55)
+{
 				newmis.speed_time = 20;
 				newmis.effects = newmis.effects | EF_RED;
 			}
@@ -870,7 +912,8 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropItem =
 		else
 			if (random() < .45)
 				newmis.weapon = 4;
-		if (newmis.weapon == 4) {
+		if (newmis.weapon == 4)
+{
 			setmodel(newmis, #MODEL_HEALTH_HUNDRED);
 			newmis.noise = "items/r_item2.wav";
 			newmis.healamount = 100;
@@ -929,16 +972,20 @@ void ( entity to_res ) MTF_Resurrect_Player =
 	if (to_res.team_no == 0)
 		reconplaya = 1;
 	oself = self;
-	if (self.classname == "player") {
+	if (self.classname == "player")
+{
 		head = findradius (to_res.origin, 56);
-		while (head) {
+		while (head)
+{
 			if (head.solid > 0 && head != world && head.mdl != "progs/backpack.mdl" && !(head.flags & FL_ITEM))
 			{
-				if (survival_mode) {
+				if (survival_mode)
+{
 					bts = #TRUE;
 					break;
 				}
-				else {
+				else
+{
 					sprint(self, 2, "You can't resurrect ");
 					sprint(self, 2, to_res.netname);
 					sprint(self, 2, " from where he is. Remove all obstacles nearby first.\n");
@@ -952,7 +999,8 @@ void ( entity to_res ) MTF_Resurrect_Player =
 	oorigin = to_res.origin;
 	if (to_res.model == "progs/h_player.mdl" || (to_res.mins == '-16 -16 0' && to_res.maxs == '16 16 56'))	// is a gibbed head..
 		oorigin_z = oorigin_z + 24;
-	if (reconplaya == 0) {
+	if (reconplaya == 0)
+{
 		CopyToBodyQue(to_res);
 		setspawnparms(to_res);
 	}
@@ -984,7 +1032,8 @@ void ( entity to_res ) MTF_Resurrect_Player =
 			to_res.armorvalue = to_res.armorvalue * .75;
 		}
 	}
-	if (self.classname == "player") {
+	if (self.classname == "player")
+{
 		if (self.playerclass == 5)
 			self.monsterweight = time + 30;
 		else
@@ -1302,7 +1351,8 @@ float ( entity t_mons, float m_type ) Coop_IsMonster =
 		if ( t_mons.is_monster == #TRUE && t_mons.monster_string == "on" && t_mons.health > 0 && t_mons.is_minion == #FALSE )
 			return #TRUE;
 	}
-	else if (m_type == #MONSTERTYPE_ANY)	// any monster, minion or otherwise, and is alive
+	else
+if (m_type == #MONSTERTYPE_ANY)	// any monster, minion or otherwise, and is alive
 	{
 		if ( t_mons.is_monster == #TRUE && t_mons.health > 0 )
 			return #TRUE;
@@ -1332,7 +1382,8 @@ void ( float mtype, float wepno ) Monsterweapon_setmodel =
 {
 	local string m_vwep;
 	if (mtype == 6)
-		if (self.current_weapon == 16) {
+		if (self.current_weapon == 16)
+{
 			sprint(self, 2, "Lightning attack selected.\n");
 		}
 		else 
@@ -1350,7 +1401,8 @@ void ( entity t_plyr, float mtype) Monsterteam_setmodel =
 	local string m_model;
 	if (mtype == 6)		// shammy
 		m_model = "progs/ratsham5.mdl";
-	else if (mtype == 7)
+	else
+if (mtype == 7)
 		m_model = "progs/demon.mdl";
 	setmodel(t_plyr, m_model);
 };
@@ -1362,11 +1414,14 @@ void () trigger_message_use =
 {
 	if (self.health == 0)
 		bprint(2, self.noise1);
-	else if (self.health == 1)
+	else
+if (self.health == 1)
 		bprint(2, self.noise2);
-	else if (self.health == 2)
+	else
+if (self.health == 2)
 		bprint(2, self.noise3);
-	else if (self.health == 3)
+	else
+if (self.health == 3)
 		bprint(2, self.noise4);		
 	self.health++;
 	if (self.health > 3)
@@ -1374,7 +1429,8 @@ void () trigger_message_use =
 };
 void () trigger_message =
 {
-	if (!self.noise1) {
+	if (!self.noise1)
+{
 		bprint(2, "trigger_message: no noise1 message field\n");
 		dremove(self);
 	}
@@ -1383,7 +1439,8 @@ void () trigger_message =
 };
 void () trigger_sound_use =
 {
-	if (self.ammo_cells == 0) {
+	if (self.ammo_cells == 0)
+{
 		sound(world, 4, self.noise1, 1, 0);
 		dremove(self);
 		return;
@@ -1391,7 +1448,8 @@ void () trigger_sound_use =
 };
 void () trigger_sound =
 {
-	if (!self.noise1) {
+	if (!self.noise1)
+{
 		bprint(2, "trigger_sound: No noise1\n");
 		dremove(self);
 		return;

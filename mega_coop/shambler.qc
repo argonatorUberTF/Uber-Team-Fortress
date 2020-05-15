@@ -472,7 +472,8 @@ void () sham_Flamer_stream_touch =
 	setorigin(flame, vtemp);
 	flame.nextthink = time + 0.1;
 	flame.think = FlameFollow;
-	if (self.classname == "newmisrnewmis") {
+	if (self.classname == "newmisrnewmis")
+{
 		deathmsg = 27;
 		T_Damage (other, self.owner, self.owner, 10);
 	}
@@ -679,7 +680,8 @@ void () monster_shambler1 =
 	setmodel (self, "progs/ratsham5.mdl");
 #endif
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
-	if (self.monster_items & MITEM_BOSS) {
+	if (self.monster_items & MITEM_BOSS)
+{
 		self.health = MTF_Monster_Health(6000);
 		self.lives = 0;
 		self.skin = 3;
@@ -693,7 +695,8 @@ void () monster_shambler1 =
 	self.th_melee = sham_melee;
 	if (self.monster_items & MITEM_BOSS)
 		self.th_missile = sham_fmagic1;		// special fmagic1
-	else if (self.weapon & MWEAPON_FLAME)
+	else
+if (self.weapon & MWEAPON_FLAME)
 		self.th_missile = sham_fmagic1;
 	else
 		self.th_missile = sham_magic1;
@@ -736,7 +739,8 @@ void () monster_shambler =
 	precache_sound ("shambler/melee2.wav");
 	precache_sound ("shambler/smack.wav");
 #ifdef decemberween
-	if (random() < .51) {
+	if (random() < .51)
+{
 		monster_santa();
 		return;
 	}

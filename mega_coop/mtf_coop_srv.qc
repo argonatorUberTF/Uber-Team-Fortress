@@ -71,7 +71,8 @@ void () aidirector_monsterspawn =
 		bprint(2, " has no targetname - FIXME\n");
 		return;
 	}
-	if (!self.noise1) {
+	if (!self.noise1)
+{
 		bprint(2, "aidirector_monsterspawn at ");
 		bprint(2, vtos(self.origin));
 		bprint(2, " has no monster class specified in noise1 property\n");
@@ -199,7 +200,8 @@ float () Survival_Fail =
 			}
 			te = find(te, classname, "player");
 		}
-		if (!survivors) {
+		if (!survivors)
+{
 			bprint(2,"No players left alive. Better luck next time!\n");
 			execute_changelevel();
 			return #TRUE;
@@ -219,7 +221,8 @@ void () pdummy_think =
 		self.health = self.health - 1;
 	if (self.health < 0)
 		self.health = 0;
-	if (self.monster_type == 1) {			// awaiting disconnected player 
+	if (self.monster_type == 1)
+{			// awaiting disconnected player 
 		if (self.real_owner != world)
 			if (self.owner != self.real_owner)
 			{
@@ -231,7 +234,8 @@ void () pdummy_think =
 			self.nextthink = time + .5;			// we wait
 			return;
 		}
-		else {				// player has reconnected..
+		else
+{				// player has reconnected..
 			onewself = self.owner;
 			self.enemy = self.owner.real_owner;
 		}
@@ -270,7 +274,8 @@ void () pdummy_think =
 			return;
 		}
 	}
-	if (self.origin_z < -4200) {
+	if (self.origin_z < -4200)
+{
 		bprint(2, "pdummy_think: Body has fallen off map. TELL DEV\n");
 		self.enemy.ammo_cells = 666;
 		MTF_Resurrect_Player ( self.enemy );
@@ -289,7 +294,8 @@ void () pdummy_think =
 		}
 		te = te.chain;
 	}
-	if (pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME || self.enemy.ammo_cells == 666) {
+	if (pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME || self.enemy.ammo_cells == 666)
+{
 		if (random() < .75)
 			if (self.armorvalue > 28)
 				sprint( self.enemy, 2, "Your body is disintegrating... you will respawn shortly...\n" );
@@ -310,7 +316,8 @@ void () pdummy_think =
 	}
 	if (self.health > 9)
 	{
-		if (vlen(gte.origin - self.origin) <= 56) {
+		if (vlen(gte.origin - self.origin) <= 56)
+{
 			self.health = 10;
 			sprint (gte, PRINT_HIGH, "You cannot stand on ");
 			sprint (gte, PRINT_HIGH, self.enemy.netname);
@@ -324,7 +331,8 @@ void () pdummy_think =
 			centerprint(self.enemy, "\n");
 		if (self.model == "progs/player.mdl")
 			self.enemy.origin = self.origin + '0 0 1';
-		else if (self.model == "progs/h_player.mdl") 
+		else
+if (self.model == "progs/h_player.mdl") 
 			self.enemy.origin = self.origin + '0 0 24';
 		te = self.enemy;
 		self = gte;

@@ -37,7 +37,8 @@ void () OgreFireGrenade =
 	missile.owner = self;
 	missile.movetype = MOVETYPE_BOUNCE;
 	missile.solid = SOLID_BBOX;
-	if (self.weapon & #MWEAPON_LRG) {
+	if (self.weapon & #MWEAPON_LRG)
+{
 		enlen = vlen (self.enemy.origin - self.origin);
 		if (enlen < 600)
 			enlen = 600;
@@ -46,7 +47,8 @@ void () OgreFireGrenade =
 	}
 	makevectors (self.angles);
 	missile.velocity = normalize ((self.enemy.origin - self.origin));
-	if (self.weapon & #MWEAPON_LRG) {
+	if (self.weapon & #MWEAPON_LRG)
+{
 		missile.velocity = missile.velocity * enlen;
 		missile.velocity_z = missile.velocity_z + 200;
 	}
