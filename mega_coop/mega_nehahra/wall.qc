@@ -509,7 +509,8 @@ dremove(self);
 		self.speed = 4;
 	}
 	self.speed = (1000 / self.speed);
-	if (!self.think || self.think == SUB_Null) {
+	if (!self.think || self.think == SUB_Null)
+{
 		bprint(2,"BAAAAHHH\n");
 		return;
 	}

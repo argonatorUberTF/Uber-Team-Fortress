@@ -184,7 +184,8 @@ void () M_MissileTouch =
 		return;
 	}
 	damg = 40 + (random () * 20);
-	if (self.owner.model == "progs/soldier_neh.mdl") {
+	if (self.owner.model == "progs/soldier_neh.mdl")
+{
 		damg *= .65;
 		damg = ceil(damg);
 	}

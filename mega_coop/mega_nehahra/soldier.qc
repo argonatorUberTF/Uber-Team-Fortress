@@ -729,7 +729,8 @@ void () army_fire =
 		en = self.enemy;
 		dir = en.origin - (en.velocity * 0.2);
 		dir = normalize ((dir - self.origin));
-		if (self.weapon & #MWEAPON_ROCKETLAUNCHER && self.cooldown < time) {
+		if (self.weapon & #MWEAPON_ROCKETLAUNCHER && self.cooldown < time)
+{
 		Mons_fire_rocket();
 		self.cooldown = time + 1;
 		}
@@ -804,7 +805,8 @@ void () army_cdie11 = [ 28, army_cdie11/*corpse_think*/ ]
 {};
 void () army_die =
 {
-	if (self.health > 0) {
+	if (self.health > 0)
+{
 		bprint(2,"WTF army tried to die but still has health.?! Tell Xav.\n");
 		return;
 	}
