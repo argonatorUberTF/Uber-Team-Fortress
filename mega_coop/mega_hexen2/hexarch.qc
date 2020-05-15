@@ -94,14 +94,17 @@ void archer_duck () [++ $duck1..$duck14]
 		thinktime self : 0;
 		return;
 	}
-	else if (self.frame==$duck1)
+	else
+if (self.frame==$duck1)
 		if (self.classname == "monster_archer")
 			sound (self, CHAN_VOICE, "archer/growl.wav", 1, ATTN_NORM);
 		else
 			sound (self, CHAN_VOICE, "archer/pain2.wav", 1, ATTN_NORM);
-	else if (self.frame == $duck5)	
+	else
+if (self.frame == $duck5)	
 			setsize(self,'-16 -16 0','16 16 28');
-	else if (self.frame==$duck7)
+	else
+if (self.frame==$duck7)
 	{
 		archer_check_defense();
 		thinktime self :0.2;
@@ -166,7 +169,8 @@ void archer_arrow_touch(void)
 	sound (self, CHAN_WEAPON, "weapons/explode.wav", 1, ATTN_NORM);
 	if (self.classname == "gold_arrow")
 		CreateSpark (self.origin); 
-	else if (self.classname == "red_arrow")
+	else
+if (self.classname == "red_arrow")
 		CreateRedSpark (self.origin); 
 	else
 		CreateGreenSpark (self.origin); 
@@ -240,7 +244,8 @@ void archer_launcharrow (float arrowtype,vector spot1,vector spot2)
 		sound (self, CHAN_WEAPON, "archer/arrowg.wav", 1, ATTN_NORM);
 		Create_Missile(self,spot1,spot2, "models/akarrow.mdl","green_arrow",0,1000,archer_arrow_touch);
 	}
-	else if (arrowtype==RED_ARROW)
+	else
+if (arrowtype==RED_ARROW)
 	{
 		sound (self, CHAN_WEAPON, "archer/arrowr.wav", 1, ATTN_NORM);
 		CreateRedFlash(spot1);
@@ -311,11 +316,14 @@ vector spot1, spot2;
 			enemy_range = range(self.enemy);
 			if (enemy_range < RANGE_MELEE)   // Which arrow to use?
 				chance = 0.80;
-			else if (enemy_range < RANGE_NEAR)
+			else
+if (enemy_range < RANGE_NEAR)
 				chance = 0.50;
-			else if (enemy_range < RANGE_MID)
+			else
+if (enemy_range < RANGE_MID)
 				chance = 0.30;
-			else if (enemy_range < RANGE_FAR)
+			else
+if (enemy_range < RANGE_FAR)
 				chance = 0.10;
 			if (self.classname=="monster_archer")
 			{
@@ -351,7 +359,8 @@ vector spot1, spot2;
 		self.frame = $draw10 ;
 		archerredraw();
 	}
-	else if(visible(self.enemy))
+	else
+if(visible(self.enemy))
 		ai_face();
 };
 void archerredraw () [++ $redraw1..$redraw12]
@@ -362,7 +371,8 @@ void archerredraw () [++ $redraw1..$redraw12]
 		sound (self, CHAN_WEAPON, "archer/draw.wav", 1, ATTN_NORM);
 	if (cycle_wrapped)
 		archermissile();
-	else if(visible(self.enemy))
+	else
+if(visible(self.enemy))
 		ai_face();
 	else
 	{
@@ -403,7 +413,8 @@ float chance,startframe,endframe;
 	enemy_range = range(self.enemy);
 	if (enemy_range < RANGE_NEAR && random() < 0.4)
 		archermissile();
-	else if (cycle_wrapped||random()<skill/20+self.skin/10)
+	else
+if (cycle_wrapped||random()<skill/20+self.skin/10)
 	{
 		if (!archer_check_shot())
 		{
@@ -417,11 +428,14 @@ float chance,startframe,endframe;
 		{
 			if (enemy_range <= RANGE_MELEE)
 			chance = 1;
-			else if (enemy_range <= RANGE_NEAR)
+			else
+if (enemy_range <= RANGE_NEAR)
 				chance = 0.70;
-			else if (enemy_range <= RANGE_MID)
+			else
+if (enemy_range <= RANGE_MID)
 				chance = 0.60;
-			else if (enemy_range <= RANGE_FAR)
+			else
+if (enemy_range <= RANGE_FAR)
 				chance = 0.50;
 		}
 		else
@@ -449,7 +463,8 @@ void archerdraw () [++ $tranA1..$tranA13]
 		walkmove(self.angles_y+180,.28,FALSE);
 	if (cycle_wrapped)  // Archer has drawn the arrow
 		archerdrawhold();
-	else if (visible(self.enemy))
+	else
+if (visible(self.enemy))
 		ai_face();
 	else
 	{
@@ -634,9 +649,11 @@ float ArcherCheckAttack (void)
 	enemy_range = range(self.enemy);
 	if (enemy_range == RANGE_MELEE)
 		chance = 0.40;
-	else if (enemy_range == RANGE_NEAR)
+	else
+if (enemy_range == RANGE_NEAR)
 		chance = 0.3;
-	else if (enemy_range == RANGE_MID)
+	else
+if (enemy_range == RANGE_MID)
 		chance = 0.2;
 	else
 		chance = 0;
