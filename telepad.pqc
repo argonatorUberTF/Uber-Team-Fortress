@@ -76,7 +76,8 @@ void() Teleporter_touch =
 					{
 						if (self.is_malfunctioning & #SCREWUP_TWO)
 							te.martyr_enemy = self.martyr_enemy;
-						else if (te.is_malfunctioning & #SCREWUP_TWO)
+						else
+if (te.is_malfunctioning & #SCREWUP_TWO)
 							self.martyr_enemy = te.martyr_enemy;
 						TF_T_Damage(other, self, self, 500, 0, 0);
 					}
@@ -135,7 +136,8 @@ float(entity targ) Teleporter_check_person =
 		return #FALSE;
 	if (targ.is_detpacking)
 		return #FALSE;
-	if (targ.playerclass == #PC_CIVILIAN) {
+	if (targ.playerclass == #PC_CIVILIAN)
+	{
 		CenterPrint(targ, "Civilian + Teleporter = No, NFC!\n");
 		return #FALSE;
 	}
@@ -162,7 +164,8 @@ void() Teleporter_heat_think =
 		self.heat = self.heat - 1;
 	self.think = Teleporter_heat_think; //keep in loop
 	self.nextthink = time + 1;
-	if (self.spawnflags > 0) {
+	if (self.spawnflags > 0)
+	{
 		self.spawnflags = self.spawnflags - 1;
 		num = 0; //16 checks
 	}

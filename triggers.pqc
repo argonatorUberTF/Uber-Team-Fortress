@@ -184,9 +184,11 @@ void () trigger_relay_checktargs =
 	local entity targ;
 	targ = find(world, target, self.targetname);
 	
-	if (targ == world) {
+	if (targ == world)
+	{
 		targ = find(world, TriggerTarget, self.targetname);
-		if (targ != world) {
+		if (targ != world)
+		{
 			if (targ.classname == "env_global")
 			{
 				hldprint(2,"No setting of globals!\n");
@@ -197,7 +199,8 @@ void () trigger_relay_checktargs =
 		}
 		hldprint(2,"trigger_relay: not targeted by anything\n");
 	}
-	else {
+	else
+	{
 		hldprint(2, "Am targeted!\n");
 	}
 };
@@ -215,12 +218,14 @@ void() trigger_relay =
 	}
 #ifdef HALFLIFE
 	self.use = trigger_relay_use;
-	if (self.killtarget == "xentalkmm") {	// lol dont ask
+	if (self.killtarget == "xentalkmm")
+	{	// lol dont ask
 		self.killtarget = "blah";
 		dremove(self);
 		return;
 	}
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		self.think = trigger_relay_checktargs;
 		self.nextthink = time + 2;
 	}
@@ -457,7 +462,8 @@ void() teleport_touch =
 			if (other.classname != "player")
 				return;
 
-	if (has_master(self)) {
+	if (has_master(self))
+	{
 			return;
 	}
 		
@@ -674,8 +680,10 @@ void() hurt_touch =
 		self.solid = TF_FLARE_LIT;
 		deathmsg = 36;
 #ifdef mtf_coop_halflife
-		if (#HL_MAP) {
-			if (self.spawnflags & 8) {
+		if (#HL_MAP)
+		{
+			if (self.spawnflags & 8)
+			{
 				if (other.classname == "player")
 				{
 					// dont hurt clients
@@ -849,14 +857,16 @@ void() trigger_push =
 		self.speed = 1000;
 	}
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		if (self.spawnflags & 2)
 		{
 			self.use = trigger_push_use;
 			self.touch = SUB_Null;
 		}
 	}
-	else {
+	else
+	{
 #endif
 	if (self.spawnflags & 2)
 	{

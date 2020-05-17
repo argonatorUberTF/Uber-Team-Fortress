@@ -177,17 +177,18 @@ void() DecodeLevelParms =
 			ent = find(world, classname, "info_player_team1");
 			if (ent != world || CTF_Map == TF_FLARE_OFF)
 			{
-if (!coop) {
-				CTF_Map = TF_FLARE_OFF;
-				if (teamplay == 0)
+				if (!coop)
+				{
+					CTF_Map = TF_FLARE_OFF;
+					if (teamplay == 0)
 				{
 					cvar_set("teamplay", "21?TeamFortress");
-				}
+			}
 				ent = spawn();
 				ent.nextthink = time + 30;
 				ent.think = CTF_FlagCheck;
 				number_of_teams = 2; // because this is for ctf only maps. -arg
-}
+			}
 			}
 			else
 			{
@@ -353,7 +354,8 @@ if (!coop) {
 		{
 			oldconc = 1;
 		}
-		else if (st == "2")
+		else
+		if (st == "2")
 		{
 			oldconc = 2;
 		}
@@ -570,7 +572,6 @@ if (!coop) {
 		{
 			drop1 = 1.000000;
 		}
-
 		st = infokey(world, "footsteps");
 		if (st == "off")
 		{
@@ -739,7 +740,8 @@ float /*WARNING: could not determine return type*/ (entity _p_5763) IsLegalClien
 #ifdef HALFLIFE
 void (string str_a, string str_b) changelevel2 =
 {
-	if (landmarked) {
+	if (landmarked)
+	{
 		changelevel_save(str_a, str_b);	// save the map (FTE only)
 		intermission_running = 0;
 		landmarked = 0;
@@ -942,9 +944,9 @@ void() ExitIntermission =
 			return;
 		}
 		GotoNextMap();
-	}
-	if (intermission_running == 3)
-	{
+		}
+		if(intermission_running == 3)
+		{
 		if (!cvar("registered"))
 		{
 			WriteByte(2, 33);
@@ -979,16 +981,19 @@ void () MTF_Coop_UpdateMapRanks;
 void () relandmark_touch =
 {
 	local entity targ, oself;
-	if (!landmarked) {
+	if (!landmarked)
+	{
 		oself = self;
 		targ = find( world, targetname, infokey (world, "landmark") );
-		if (targ) {
+		if (targ)
+{
 			self = targ;
 			info_landmark();
 			self = oself;
 			self.touch = changelevel_touch;
 		}
-		else {
+		else
+		{
 			bprint(2,"WE BE SCREWED.\n");
 			self.touch = changelevel_touch;
 		}
@@ -997,14 +1002,16 @@ void () relandmark_touch =
 #endif
 void() changelevel_use =
 {
-	if (num_players > 1 && can_exit == #FALSE) {
+	if (num_players > 1 && can_exit == #FALSE)
+	{
 		if (votestarted == #VOTE_EXIT)
 			return;
 		if (total_monsters > killed_monsters)
 		{
 			if (votestarted > 0)
 				return;
-			else {
+			else
+			{
 				self = activator;
 				Vote_StartVote( #VOTE_EXIT, "", world );
 				return;
@@ -1016,12 +1023,14 @@ void() changelevel_use =
 	if (other.classname != "player")
 		return;
 #endif
-	if (cvar("samelevel") == 2 || (cvar("samelevel") == 3 && mapname != "start")) {
+	if (cvar("samelevel") == 2 || (cvar("samelevel") == 3 && mapname != "start"))
+	{
 		T_Damage (other, self, self, 50000);
 		return;
 	}
 	bprint (#PRINT_HIGH, other.netname);
-	if ( self.message ) {
+	if ( self.message )
+	{
 		bprint( #PRINT_HIGH, self.message );
 		bprint( #PRINT_HIGH, "\n" );
 	} else
@@ -1079,7 +1088,8 @@ void() trigger_changelevel =
 		self.map = "qtstart";
 	InitTrigger();
 #ifdef SVEN_COOP
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		precache_model ( "progs/hlexit.spr" );
 		self.think = trigger_changelevel_parse;
 #ifdef COOP_HAX
@@ -1099,8 +1109,10 @@ void () trigger_changelevel_parse =
 {
 	local string nmt;
 	nmt = cvar_string( "nomaptrans" );
-	if ( nmt != "" ) {
-		if ( self.map == nmt ) {
+	if ( nmt != "" )
+	{
+		if ( self.map == nmt )
+		{
 			self.touch = SUB_Null;
 			self.use = SUB_Null;
 			self.solid = SOLID_BBOX;
@@ -1109,8 +1121,10 @@ void () trigger_changelevel_parse =
 			return;
 		}
 	}
-	if ( cvar_string( "nextmap" ) != "" ) {
-		if (!self.map) {
+	if ( cvar_string( "nextmap" ) != "" )
+	{
+		if (!self.map)
+	{
 			self.use = self.use = changelevel_use;//trigger_changelevel_activate;
 			self.map = cvar_string( "nextmap" );
 			return;
@@ -1128,18 +1142,22 @@ void () trigger_changelevel_parse =
 		trigger_changelevel_activate();
 		return;
 	}
-	else {
+	else
+	{
 		if (!self.map)
 			objerror ("changelevel trigger doesn't have map.");
 		if ( self.targetname )
 			self.use = changelevel_use;
 	}
-	if (self.landmark) {
-		if (self.targetname == "changetoc1a1e") {
+	if (self.landmark)
+	{
+		if (self.targetname == "changetoc1a1e")
+		{
 			dremove(self);
 			return;
 		}
-		if (hlt_think(self) == #TRUE) {
+		if (hlt_think(self) == #TRUE)
+	{
 			dremove(self);
 			return;
 		}
@@ -1190,7 +1208,8 @@ void() ClientKill =
 #ifndef NO_SUICIDE_WAIT
 	if (self.suicide_time > time)
 	{
-		if (self.suicideoverride < time) {
+		if (self.suicideoverride < time)
+		{
 			sprint(self, 2, "30 sec delay to stop cheating!\n");
 			return;
 		}
@@ -1218,7 +1237,8 @@ void() ClientKill =
 	self.suicide_time = time + 25 + random() * 5;
 	bprint(TF_FLARE_OFF, self.netname);
 	bprint(TF_FLARE_OFF, " suicides  :)\n");
-	if (lms_entity != world) {
+	if (lms_entity != world)
+	{
 		if (self.classname == "player")
 			self.#lms_lives = self.#lms_lives - 1;
 	}
@@ -1258,11 +1278,11 @@ void() ClientKill =
 	TeamFortress_RemoveTimers();
 	TeamFortress_SetupRespawn(TF_FLARE_OFF);
 	if (self.health < self.max_health)//Which means they were in combat..damaged or was in combat
-		{
+	{
 		sprint(self, 2, self.netname);
 		sprint(self, 2, " was alive. For being a wuss for suiciding in combat, subtracting 6 points from him.\n");
 		self.real_frags = self.real_frags - (TF_FLARE_OFF * 5 );
-		}
+	}
 	self.health = self.health - (self.health + TF_FLARE_OFF);
 	self.th_die();
 	self.deadflag = 3;
@@ -1703,9 +1723,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		bprint (1.000000, "\n");
 		if (self.stats_on)
 		{
-#ifndef mtf_coop
-			stuffcmd (self, "set stats_execed 0\nexec progs/stats.cfg\n");
-#endif
 		}
 	}
 	setsize (self, '-16.000000 -16.000000 -24.000000', '16.000000 16.000000 32.000000');
@@ -1735,13 +1752,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 };
 void() info_player_start = 
 {
-#ifndef mtf_coop
-	if (CheckExistence() == 0)
-	{
-		dremove(self);
-		return;
-	}
-#endif
 	if ((world.model == "maps/nehend.bsp") || mapname == "nehend")
 	{
 		if (deathmatch)
@@ -1767,11 +1777,13 @@ void() info_player_start2 =
 #ifdef SVEN_COOP
 void () info_player_deathmatch_use =
 {
-	if (self.has_tesla == 1) {
+	if (self.has_tesla == 1)
+	{
 		self.has_tesla = 0;
 		self.classname = "info_player_coop";
 	}
-	else {
+	else
+	{
 		self.has_tesla = 1;
 		self.classname = "info_poop";
 	}
@@ -1788,7 +1800,8 @@ void() testplayerstart =
 void() info_player_deathmatch = 
 {
 #ifdef SVEN_COOP
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		if (self.spawnflags & 2)
 		{	// start disabled
 			self.has_tesla = 1;
@@ -1809,7 +1822,8 @@ void() info_player_deathmatch =
 };
 void() info_player_coop = 
 {
-	if (self.targetname) {
+	if (self.targetname)
+	{
 		dremove(self);
 		return;
 	}
@@ -1938,8 +1952,10 @@ void () pdummy_wait_on_reconnect =
 	local entity te;
 	local float isgud;
 	te = find(world, classname, "player");
-	while (te) {
-		if (te.connect_name == self.netname) {
+	while (te)
+{
+		if (te.connect_name == self.netname)
+		{
 			isgud = 1;
 			self.real_owner = te;
 			break;
@@ -1950,7 +1966,8 @@ void () pdummy_wait_on_reconnect =
 		self.has_tesla = 1;
 	else
 		self.has_tesla = 0;
-	if (self.enemy == world || self.real_owner.team_no != 0) {
+	if (self.enemy == world || self.real_owner.team_no != 0)
+	{
 		strunzone(self.netname);
 		dremove(self);
 		dremove(self.enemy);
@@ -2078,12 +2095,15 @@ void () PlayerDeathThink =
 						}
 						te = find(te, classname, "resdummy");
 					}
-					if (!foundme && (self.view_ofs != '0 0 -8') ) {
+
+					if (!foundme && (self.view_ofs != '0 0 -8') )
+					{
 						bprint(2,"PlayerDeathThink: PDUMMY Not Found - Take a screenshot of your console and send it to DEV\n");
 						self.ammo_cells = 666;				// so we spawn at the beginning
 						MTF_Resurrect_Player ( self );
 					}
-					else if (!foundme)
+					else
+					if (!foundme)
 					{
 						if (self.velocity_x < 1 && self.velocity_x > -1 &&
 						self.velocity_y < 1 && self.velocity_y > -1 &&
@@ -2192,7 +2212,8 @@ void () PlayerJump =
 	}
 #ifdef HALFLIFE
 	local float lad;
-	if (self.laddertime > time && self.ladderjump < time) {
+	if (self.laddertime > time && self.ladderjump < time)
+	{
 		if (!(self.flags & FL_ONGROUND)) self.flags = self.flags + FL_ONGROUND;
 		self.ladderjump = time+0.4;
 		self.velocity_z = 0;
@@ -2252,20 +2273,32 @@ void () PlayerJump =
 		{
 			sound (self, 4.000000, "hknight/slash1.wav", 0.700000, 1.000000);
 			self.velocity_z = (self.velocity_z + 400.000000);
-			if (infokey(world, "prozacserver") == "1") { if( self.velocity_z < 0 ) self.velocity_z = 0; }
+			if (infokey(world, "prozacserver") == "1")
+			{
+			if( self.velocity_z < 0 )
+				self.velocity_z = 0;
+			}
 		}
 		else
 		{
 			sound (self, 4.000000, "player/plyrjmp8.wav", 1.000000, 1.000000);
 			self.velocity_z = (self.velocity_z + 270.000000);
-			if (infokey(world, "prozacserver") == "1") { if( self.velocity_z < 0 ) self.velocity_z = 0; }
+			if (infokey(world, "prozacserver") == "1")
+			{
+			if( self.velocity_z < 0 )
+				self.velocity_z = 0;
+			}
 		}
 	}
 	else
 	{
 		sound (self, 4.000000, "player/plyrjmp8.wav", 1.000000, 1.000000);
 		self.velocity_z = (self.velocity_z + 270.000000);
-		if (infokey(world, "prozacserver") == "1") { if( self.velocity_z < 0 ) self.velocity_z = 0; }
+		if (infokey(world, "prozacserver") == "1")
+		{
+		if( self.velocity_z < 0 )
+			self.velocity_z = 0;
+		}
 	}
 };
 void() WaterMove = 
@@ -2519,12 +2552,16 @@ void () PlayerPreThink =
 		{
 #ifdef PL_FEM
 			if (self.current_menu == 3 && self.playerclass == 0)
-				if (self.offgroundmessage < time) {
-					if (self.gender == GENDER_MALE) {
+				if (self.offgroundmessage < time)
+				{
+					if (self.gender == GENDER_MALE)
+					{
 						sprint(self,2, "Gender set to: Female.\n");
 						self.gender = GENDER_FEMALE;
 					}
-					else if (self.gender == GENDER_FEMALE) {
+					else
+					if (self.gender == GENDER_FEMALE)
+					{
 						sprint(self,2, "Gender set to: Male.\n");
 						self.gender = GENDER_MALE;
 					}
@@ -2648,7 +2685,8 @@ void() CheckPowerups =
 		self.modelindex = modelindex_null;
 	}
 #ifdef PL_FEM
-	if (self.gender == GENDER_FEMALE) {
+	if (self.gender == GENDER_FEMALE)
+{
 		self.vw_index = 0;
 	}
 #endif
@@ -2665,7 +2703,8 @@ void() CheckPowerups =
 		if (self.#rune_time < (time + 1))
 			self.#rune_finished = 1;
 
-		if (self.#rune_type == #RUNE_AMMO) {
+		if (self.#rune_type == #RUNE_AMMO)
+	{
 			self.ammo_shells = self.maxammo_shells;
 			self.ammo_nails = self.maxammo_nails;
 			self.ammo_cells = self.maxammo_cells;
@@ -2836,7 +2875,8 @@ void() CheckPowerups =
 #ifdef mega_hats
 void () hat_checkowner =
 {
-	if (self.owner.has_disconnected == 1 || self.owner == world) {
+	if (self.owner.has_disconnected == 1 || self.owner == world)
+{
 		dremove(self);
 		return;
 	}
@@ -2872,10 +2912,10 @@ void() PlayerPostThink =
 		self.impulse = 0;
 		return;
 	}
-	if (cutscene_running)
-	{
-		xpackEnding();
-	}
+//	if (cutscene_running)
+//	{
+//		xpackEnding(); //what is this and the code is missing. -arg
+//	}
 	if (self.being_juggled > 0)
 	{
 		if (self.flags & FL_ONGROUND)
@@ -2902,9 +2942,13 @@ void() PlayerPostThink =
 				if (self.playerclass == 8)
 				{
 					sound(self, 2, "hknight/hit.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-					if (!self.is_feigning) {
-					if (infokey(world, "prozacserver") == "1") { if( self.velocity_z < 0 ) self.velocity_z = 0; } }
-				}
+					if (!self.is_feigning)
+					{
+						if (infokey(world, "prozacserver") == "1")
+						{
+							if( self.velocity_z < 0 ) self.velocity_z = 0; }
+						}
+					}
 				else
 				{
 					sound(self, 2, "player/land.wav", TF_FLARE_OFF, TF_FLARE_OFF);
@@ -2973,7 +3017,8 @@ void() PlayerPostThink =
 #ifdef mega_hats
 		tvec = self.angles;
 		tvec_x = 0;
-		if (self.hat == world)  {
+		if (self.hat == world)
+		{
 			self.hat = spawn();
 			self.hat.owner = self;
 			setmodel(self.hat, #HAT_MODEL);
@@ -2982,30 +3027,40 @@ void() PlayerPostThink =
 			self.hat.nextthink = time + .2;
 			if (self.connect_name == "ØavioÒ")
 				self.hat.frame = 0;
-			else if (self.connect_name == "ÓðáíLite")
+			else
+			if (self.connect_name == "ÓðáíLite")
 				self.hat.frame = 2;
 			else
 				self.hat.frame = 1;
 		}
-		else {
-			if (self.health <= 0 || self.model != "progs/player.mdl" || self.playerclass == 0) {
+		else
+		{
+			if (self.health <= 0 || self.model != "progs/player.mdl" || self.playerclass == 0)
+			{
 				setorigin(self.hat, '0 0 -4000');
 				self.hat.angles = self.angles;
 			}
-			else if (self.frame >= 12 && self.frame <= 16) {
+			else
+			if (self.frame >= 12 && self.frame <= 16)
+			{
 				setorigin(self.hat, self.origin);
 				self.hat.angles = self.angles;
 			}
-			else if (self.frame >= 17 && self.frame <= 28) {		// axe
+			else
+			if (self.frame >= 17 && self.frame <= 28)
+			{		// axe
 				makevectors (tvec);
 				setorigin(self.hat, (self.origin + v_forward * 3.5) - '0 0 0');
 				self.hat.angles = self.angles;
 			}
-			else if (self.frame == 57) {
+			else
+			if (self.frame == 57)
+			{
 				setorigin(self.hat, self.origin - '0 0 36');
 				self.hat.angles = tvec;
 			}
-			else {
+			else
+			{
 				setorigin(self.hat, '0 0 -4000');
 				self.hat.angles = self.angles;
 			}
@@ -3027,13 +3082,14 @@ void() ClientConnect =
 #endif
 #ifdef HALFLIFE
 	local entity relandmark, oself;
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		oself = self;
-
 		relandmark = find(world,classname,"trigger_changelevel");
 		while (relandmark)
 		{
-			if (relandmark.touch == relandmark_touch) {
+			if (relandmark.touch == relandmark_touch)
+			{
 				self = relandmark;
 				self.touch();
 				self = oself;
@@ -3063,14 +3119,12 @@ void() ClientConnect =
 		self.mtf_items |= MTFITEM_LIGHTGUN;
 	if (self.coop_exp >= Coop_ExpReq(80))
 		self.mtf_items |= MTFITEM_NEEDLER;
-	if (Achievements_Setup(self) == 1) {
+	if (Achievements_Setup(self) == 1)
+	{
 	}
 #ifdef mtf_coop_quests
 	Quest_SetupPlayer( self );
 #endif
-//#ifndef mtf_coop
-//	CSQC_SendExperience(self, -666);
-//#endif
 	num_players = num_players + 1;
 	globaluserid = globaluserid + 1;
 	self.userid = globaluserid;
@@ -3087,7 +3141,8 @@ void() ClientConnect =
 	bprint(2, self.netname);
 	if (FTE_Server)
 		bprint(2, strcat(" joined! (rank: ",ftos(self.global_rank),").\n"));
-	else if (self.netname != "")
+	else
+	if (self.netname != "")
 		bprint(2, strcat(" joined! (exp: ",ftos(self.coop_exp),").\n"));
 	else
 		bprint(2, " joined!\n");
@@ -3262,10 +3317,22 @@ void() ClientDisconnect =
 	if (FTE_Server)
 		Rank_UpdateStats(self);
 	self.userid = 0;
-	if (self.team_no == 1) { teamcount1 = teamcount1 - 1; }
-	if (self.team_no == 2) { teamcount2 = teamcount2 - 1; }
-	if (self.team_no == 3) { teamcount3 = teamcount3 - 1; }
-	if (self.team_no == 4) { teamcount4 = teamcount4 - 1; }
+	if (self.team_no == 1)
+	{
+		teamcount1 = teamcount1 - 1;
+	}
+	if (self.team_no == 2)
+	{
+		teamcount2 = teamcount2 - 1;
+	}
+	if (self.team_no == 3)
+	{
+		teamcount3 = teamcount3 - 1;
+	}
+	if	(self.team_no == 4)
+	{ 
+		teamcount4 = teamcount4 - 1;
+	}
 	local entity te;
 //#ifdef newsounds2
 //	if (random() > 0.5)
@@ -3318,7 +3385,6 @@ void() ClientDisconnect =
 		}
 		te = find (te, classname, "trip_bomb");
 	}
-
 	te = find (world, classname, "trip_bomb");
 	while (te)
 	{
@@ -3508,7 +3574,8 @@ void(entity targ, entity attacker) ClientObituary =
 	if (attacker != targ)
 		Record_Check(attacker, (attacker.frags + 1), #RECORD_FRAGS);
 	if (attacker.classname == "building_sentrygun")
-		if (attacker.real_owner) {
+		if (attacker.real_owner)
+		{
 			b_ent = attacker;
 			attacker = attacker.real_owner;
 		}
@@ -3528,22 +3595,28 @@ void(entity targ, entity attacker) ClientObituary =
 			}
 			if (FTE_Server && attacker != targ)
 				Rank_AddFrags(attacker, 1);
-				if (targ.classname == "building_dispenser") {
-				attacker.num_kills = attacker.num_kills - 1; }
-				else if (targ.think == DroneJet) {
-				attacker.num_kills = attacker.num_kills - 1; }
-				else if (targ.touch == KickHead) {
-				attacker.num_kills = attacker.num_kills - 1; }
-				else if (targ.th_die == Reset_My_Grapple) {
-				attacker.num_kills = attacker.num_kills - 1; }
-//#ifndef mtf_coop
-//			if (targ.classname == "monster_shambler")
-//			{
-//				attacker.num_kills = attacker.num_kills + 1336;
-//			}
-//#endif
+				if (targ.classname == "building_dispenser")
+				{
+					attacker.num_kills = attacker.num_kills - 1;
+				}
+				else
+				if (targ.think == DroneJet)
+				{
+					attacker.num_kills = attacker.num_kills - 1;
+				}
+				else
+				if (targ.touch == KickHead)
+				{
+					attacker.num_kills = attacker.num_kills - 1;
+				}
+				else
+				if (targ.th_die == Reset_My_Grapple)
+				{
+					attacker.num_kills = attacker.num_kills - 1;
+				}
 			attacker.killstack = attacker.killstack + 1;
-			if (attacker.netname) { 	// we don't want world entities getting these hehe
+			if (attacker.netname)
+			{ 	// we don't want world entities getting these hehe
 			if (attacker.killstack == 7)
 			{
 				bprint (1, attacker.netname);
@@ -3565,7 +3638,8 @@ void(entity targ, entity attacker) ClientObituary =
 			}
 		}
 	}
-	if (lms_entity != world) {
+	if (lms_entity != world)
+	{
 		if (targ.classname == "player")
 			targ.#lms_lives = targ.#lms_lives - 1;
 	}
@@ -3578,21 +3652,25 @@ void(entity targ, entity attacker) ClientObituary =
 	}
 	if (attacker.ischangingteams > 0)
 	{
-		if (attacker.health < 1) {
+		if (attacker.health < 1)
+		{
 		}
-	}
+		}
 	if (attacker.classname == "bot")
 	{
-		if (attacker.is_active_mini == 1) {
+		if (attacker.is_active_mini == 1)
+		{
 			attacker.netname = attacker.real_owner.netname;
 			attacker.real_owner.frags = attacker.real_owner.frags + 1;
 			attacker.real_owner.real_frags = attacker.real_owner.real_frags + 1;
 		}
 	}
-	if (attacker.#is_minion == #TRUE) {
+	if (attacker.#is_minion == #TRUE)
+	{
 		if (attacker.owner == world)
 			return;
-		if (targ != self.owner) {
+		if (targ != self.owner)
+		{
 			attacker.owner.frags = attacker.owner.frags + 1;
 			attacker.owner.real_frags = attacker.owner.real_frags + 1;
 			MTF_Coop_AddExperience ( attacker.owner, targ, FALSE );
@@ -3628,7 +3706,8 @@ void(entity targ, entity attacker) ClientObituary =
 		Achievements_Change( attacker, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_JUGGLER, 1 );
 	}
 #ifdef PL_FEM
-	if (targ.gender == GENDER_FEMALE) {
+	if (targ.gender == GENDER_FEMALE)
+	{
 		FemaleClientObituary( targ, attacker );
 		return;
 	}
@@ -3636,7 +3715,8 @@ void(entity targ, entity attacker) ClientObituary =
 	rnum = random();
 	if (targ.classname == "player" || targ.is_monster == 1)
 	{
-	if (attacker.coop_exp != -1 && attacker.classname == "player" && targ.is_monster == 1) {
+	if (attacker.coop_exp != -1 && attacker.classname == "player" && targ.is_monster == 1)
+	{
 		attacker.coop_exp += 5;
 		MTF_Coop_AddExperience ( attacker, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker, attacker.connect_name, attacker.coop_exp );
@@ -4365,7 +4445,8 @@ void(entity targ, entity attacker) ClientObituary =
 																																				deathstring = "'s was obliterated by ";
 																																				deathstring2 = "'s tesla coil.\n";
 																																			}
-																																		} else {
+																																		} else
+	{
 																																										if ((deathmsg == 52))
 																																										{
 																																											if ((rnum < 0.5))
@@ -4379,15 +4460,20 @@ void(entity targ, entity attacker) ClientObituary =
 																																												deathstring2 = "'s sentry gun.\n";
 																																											}
 																																										}
-	else if (deathmsg == 1124) {
+	else
+	if (deathmsg == 1124)
+	{
 		deathstring = " is pinned by ";
 		deathstring2 = "'s needler.\n";
 	}
-	else if (deathmsg == 1125) {
+	else
+	if (deathmsg == 1125)
+	{
 		deathstring = " is set aflare by ";
 		deathstring2 = "'s flare gun.\n";
 	}
-	else {
+	else
+	{
 																																		if (deathmsg == 28)
 																																		{
 																																			if (rnum <= 0.5)
@@ -4501,7 +4587,8 @@ void(entity targ, entity attacker) ClientObituary =
 						bprint(TF_FLARE_OFF, GetMonsterPowers(targ, 0));
 					bprint(TF_FLARE_OFF, targ.netname);
 					if (targ.is_monster)
-						if (targ.lives > 0) {
+						if (targ.lives > 0)
+					{
 							bprint(2, "(");
 							bprint(2, ftos(targ.lives));
 							bprint(2, ")");
@@ -4571,14 +4658,17 @@ void(entity targ, entity attacker) ClientObituary =
 						}
 					}
 local entity te;
-				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss") {
-	te = find ( world, classname, "monster_score" );
-	if (te.netname == "Monsters") {
-		te.frags += 1;
-		svcUpdateFrags (te.fClientNo, te.frags);
-	}
+				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss")
+				{
+					te = find ( world, classname, "monster_score" );
+					if (te.netname == "Monsters")
+					{
+						te.frags += 1;
+						svcUpdateFrags (te.fClientNo, te.frags);
+					}
 				}
-	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1) {
+	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1)
+	{
 		//attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 5;
 		MTF_Coop_AddExperience ( attacker.real_owner, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker.real_owner, attacker.real_owner.connect_name, attacker.real_owner.coop_exp );
@@ -4706,24 +4796,33 @@ local entity te;
 													}
 													else
 													{
-														if (attacker.classname == "func_monsterkill") {
+														if (attacker.classname == "func_monsterkill")
+														{
 															if (attacker.netname_broadcast != "none")
 																deathstring = attacker.netname_broadcast;
 														}
-														else if (targ.classname != "player") {
-															if (random() > .5) {	
+														else
+														if (targ.classname != "player")
+														{
+															if (random() > .5)
+															{
 																deathstring = strcat(" died in an unfortunate gardening accident (", attacker.classname);
 																deathstring = strcat(deathstring, ")\n");
 															}
-															else if (random() > .5) {
+															else
+															if (random() > .5)
+															{
 																deathstring = strcat(" flew into a wall and went splat :(  (", attacker.classname);
 																deathstring = strcat(deathstring, ")\n");
 															}
-															else if (random() > .5) {
+															else
+															if (random() > .5)
+															{
 																deathstring = strcat(" drove his chevy THROUGH the levy (", attacker.classname);
 																deathstring = strcat(deathstring, ")\n");
 															}
-															else {
+															else
+															{
 																deathstring = strcat(" got a BSOD (", attacker.classname);
 																deathstring = strcat(deathstring, ")\n");
 															}
@@ -4740,17 +4839,20 @@ local entity te;
 						}
 					}
 				}
-				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss") {
+				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss")
+				{
 	te = find ( world, classname, "monster_score" );
-	if (te.netname == "Monsters") {
-		if (targ.deathtype != "monster_respawn") {
+	if (te.netname == "Monsters")
+	{
+		if (targ.deathtype != "monster_respawn")
+		{
 			te.frags += 1;
 			svcUpdateFrags (te.fClientNo, te.frags);
 		}
 	}
 				}
-				if (targ.deathtype == "monster_respawn"
-				) {
+				if (targ.deathtype == "monster_respawn")
+				{
 					deathstring = strcat(" was telefragged by a ", GetMonsterPowers(attacker, 2));
 					targ.deathtype = string_null;
 				}
@@ -4819,19 +4921,19 @@ local entity te;
 					deathstring = strcat(" joins the ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_azoth")
-deathstring = strcat(" was vanquished by ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was vanquished by ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_vermis")
-deathstring = strcat(" was eradicated by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was eradicated by a ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_spider")
-deathstring = strcat(" was desiccated by a ", GetMonsterPowers(attacker, 2));
+						deathstring = strcat(" was desiccated by a ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_juggernaut")
-deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_ubs")
-deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 				if ((attacker.classname == "monster_gaunt"))
 				{
 					if ((attacker.enemy.deathtype == "swoop"))
@@ -4866,49 +4968,50 @@ deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 					deathstring = strcat(" was zapped by a ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_gremlin")
-deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_scourge")
-deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
 				else
 				if (attacker.classname == "monster_armagon")
-deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
-            else if (attacker.classname == "trap_spike_mine")
-deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
+				else
+				if (attacker.classname == "trap_spike_mine")
+					deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
 				else
 				if ((attacker.classname == "monster_eel"))
 				{
-deathstring = strcat(" was electrified by an ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was electrified by an ", GetMonsterPowers(attacker, 2));
 				}
 				else
 				if ((attacker.classname == "monster_wrath"))
 				{
-deathstring = strcat(" was disintegrated by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was disintegrated by a ", GetMonsterPowers(attacker, 2));
 				}
 				else
 				if ((attacker.classname == "monster_super_wrath"))
 				{
-deathstring = strcat(" was obliterated by an ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was obliterated by an ", GetMonsterPowers(attacker, 2));
 				}
 				else
 				if ((attacker.classname == "monster_sword"))
 				{
-deathstring = strcat(" was slit open by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was slit open by a ", GetMonsterPowers(attacker, 2));
 				}
 				else 
 				if ((attacker.classname == "monster_lava_man"))
 				{
-deathstring = strcat(" fries in the fury of ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" fries in the fury of ", GetMonsterPowers(attacker, 2));
 				}
 				else
 				if ((attacker.classname == "monster_morph"))
 				{
-deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
 				}
 				else
 				if ((attacker.classname == "monster_mummy"))
 				{
-deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 				}
 				else
 				if (attacker.classname == "monster_cyberdemon")
@@ -4975,7 +5078,6 @@ deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 		}
 	}
 };
-
 void(entity attacker) fertimer = 
 {
 	attacker.fertracker = 1;
@@ -5038,11 +5140,24 @@ void(entity targeh) teamchange =
 	{
 		targ = self.enemy;
 	}
-	if (targ.team_no == 1) { teamcount1 = teamcount1 - 1; }
-	if (targ.team_no == 2) { teamcount2 = teamcount2 - 1; }
-	if (targ.team_no == 3) { teamcount3 = teamcount3 - 1; }
-	if (targ.team_no == 4) { teamcount4 = teamcount4 - 1; }
-		if (targ.ischangingteams == 1)	{
+	if (targ.team_no == 1)
+	{
+		teamcount1 = teamcount1 - 1;
+	}
+	if (targ.team_no == 2)
+	{
+		teamcount2 = teamcount2 - 1;
+	}
+	if (targ.team_no == 3)
+	{
+		teamcount3 = teamcount3 - 1;
+	}
+	if (targ.team_no == 4)
+	{
+		teamcount4 = teamcount4 - 1;
+	}
+		if (targ.ischangingteams == 1)
+		{
 		targ.team_no = 1;
 		teamcount1 = teamcount1 + 1;
 		stuffcmd (targ, "color 13");
@@ -5050,31 +5165,37 @@ void(entity targeh) teamchange =
 		stuffcmd (targ, "team blue");
 		stuffcmd (targ, "\n");
 		targ.ischangingteams = 0; }
-		if (targ.ischangingteams == 2)	{
-		teamcount2 = teamcount2 + 1;
-		targ.team_no = 2;
-		stuffcmd (targ, "color 4");
-		stuffcmd (targ, "\n");
-		stuffcmd (targ, "team red");
-		stuffcmd (targ, "\n");
-		targ.ischangingteams = 0; }
-		if (targ.ischangingteams == 3)	{
-		targ.team_no = 3;
-		teamcount3 = teamcount3 + 1;
-		stuffcmd (targ, "color 12");
-		stuffcmd (targ, "\n");
-		stuffcmd (targ, "team yellow");
-		stuffcmd (targ, "\n");
-		targ.ischangingteams = 0; }
-		if (targ.ischangingteams == 4)	{
-		targ.team_no = 4;
-		teamcount4 = teamcount4 + 1;
-		stuffcmd (targ, "color 11");
-		stuffcmd (targ, "\n");
-		stuffcmd (targ, "team green");
-		stuffcmd (targ, "\n");
-		targ.ischangingteams = 0; }
-	dremove (self);
+		if (targ.ischangingteams == 2)
+		{
+			teamcount2 = teamcount2 + 1;
+			targ.team_no = 2;
+			stuffcmd (targ, "color 4");
+			stuffcmd (targ, "\n");
+			stuffcmd (targ, "team red");
+			stuffcmd (targ, "\n");
+			targ.ischangingteams = 0;
+		}
+		if (targ.ischangingteams == 3)
+		{
+			targ.team_no = 3;
+			teamcount3 = teamcount3 + 1;
+			stuffcmd (targ, "color 12");
+			stuffcmd (targ, "\n");
+			stuffcmd (targ, "team yellow");
+			stuffcmd (targ, "\n");
+			targ.ischangingteams = 0;
+		}
+			if (targ.ischangingteams == 4)
+			{
+				targ.team_no = 4;
+				teamcount4 = teamcount4 + 1;
+				stuffcmd (targ, "color 11");
+				stuffcmd (targ, "\n");
+				stuffcmd (targ, "team green");
+				stuffcmd (targ, "\n");
+				targ.ischangingteams = 0;
+			}
+		dremove (self);
 };
 void () FixSoundCrap =
 {

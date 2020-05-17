@@ -136,30 +136,33 @@ void() TF_MovePlayer;
 void() W_Precache = 
 {
 missing_precaches(); //precache the stuff missing or overlooked or called all the time -arg
-	if (mapname == "hip1m4") {
-precache_model2("progs/b_s_key.mdl");
-precache_model2("progs/b_g_key.mdl");
+	if (mapname == "hip1m4")
+	{
+		precache_model2("progs/b_s_key.mdl");
+		precache_model2("progs/b_g_key.mdl");
 	}
-	if (mapname == "hip2m2") {
+	if (mapname == "hip2m2")
+	{
 		precache_model2("progs/knight.mdl");
 		precache_model2("progs/shambler.mdl");
-precache_model2("progs/shalrath.mdl");
-precache_model2("progs/demon.mdl");
-precache_model2("progs/ogre.mdl");
-precache_model2("progs/wizard.mdl");
+	precache_model2("progs/shalrath.mdl");
+	precache_model2("progs/demon.mdl");
+	precache_model2("progs/ogre.mdl");
+	precache_model2("progs/wizard.mdl");
 	}
-	if (mapname == "hip2m4") {
-precache_model2("progs/zombie.mdl");
-precache_model2("progs/shambler.mdl");
-precache_model2("progs/spikmine.mdl");
+	if (mapname == "hip2m4")
+	{
+	precache_model2("progs/zombie.mdl");
+	precache_model2("progs/shambler.mdl");
+	precache_model2("progs/spikmine.mdl");
 	}
-	if (mapname == "hipend") {
+	if (mapname == "hipend")
+	{
 		precache_model2("progs/lasrspik.mdl");
 	}
 #ifdef BATTLE_ROYALE
 	precache_model2("progs/s_light.spr");
 #endif
-	precache_model2 ("progs/medexp.spr");
 	precache_sound2 ("speech/needlite.wav");
 	precache_sound("effects/bodyhit1.wav");
 	precache_sound("effects/bodyhit2.wav");
@@ -357,8 +360,10 @@ void(float att_delay) Attack_Finished =
 	self.attack_finished = time + att_delay / 4;
 	if ( self.#rune_time > time )
 	{
-		if (self.#rune_type == #RUNE_BERSERKER) {
-			if (self.current_weapon == 16 || self.current_weapon == 8 || self.current_weapon == 4 || self.current_weapon == 2) {
+		if (self.#rune_type == #RUNE_BERSERKER)
+		{
+			if (self.current_weapon == 16 || self.current_weapon == 8 || self.current_weapon == 4 || self.current_weapon == 2)
+			{
 				att_delay = .2;
 			}
 		}
@@ -375,19 +380,28 @@ void(float att_delay) Attack_Finished =
 float ( float t_wep ) GetClipSize =
 {
 	local float rt_amt;
-	if (t_wep == 128) {
+	if (t_wep == 128)
+{
 		rt_amt = 8;
 	}
-	else if (t_wep == 256) {
+	else
+	if (t_wep == 256)
+	{
 		rt_amt = 16;
 	}
-	else if (t_wep == 2048) {
+	else
+	if (t_wep == 2048)
+	{
 		rt_amt = 6;
 	}
-	else if (t_wep == 8192) {
+	else
+	if (t_wep == 8192)
+	{
 		rt_amt = 4;
 	}
-	else if (t_wep == 524288) {
+	else
+	if (t_wep == 524288)
+	{
 		rt_amt = 10;
 	}
 	if (self.clipex_attr)
@@ -1194,7 +1208,8 @@ void () W_FireSaw =
 		else
 			if (self.ammo_nails > 0)
 				TF_T_Damage (trace_ent, self, self, 54, 2, 0.000000);
-			else {
+			else
+			{
 				TF_T_Damage (trace_ent, self, self, 25, 2, 0.000000);
 			}
 	}
@@ -1233,7 +1248,8 @@ void () W_FireAxe =
 	{
 		trace_ent.axhitme = 1;
 		SpawnBlood (org, 20);
-if (allow_bat == 1) {
+if (allow_bat == 1)
+{
 		if (self.playerclass == 1)
 		{
 			makevectors (trace_ent.v_angle);
@@ -1275,32 +1291,33 @@ if (allow_bat == 1) {
 	}
 	else
 				TF_T_Damage (trace_ent, self, self, 65, 2, 0.000000);
-			}
+	}
 			else
 			{
 				deathmsg = 446;
-				if (trace_ent.is_monster == 1) {
-	delta = trace_ent.origin - self.origin + self.view_ofs;
-	if (delta_z < 0)
-	delta_z = delta_z / -2;
-	delta = delta * 0.7;
-	if (delta_z < 100)
-	delta_z = 100;
-	trace_ent.flags = trace_ent.flags - FL_ONGROUND;
-	dist = vlen(delta);
-	strength = 800;
-	delta = normalize(delta);
-	delta = delta * strength;
-	delta_z *= .3;
-	trace_ent.velocity = trace_ent.velocity + delta;
-	TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
-	}
-	else
-		TF_T_Damage (trace_ent, self, self, 30, 2, 0.000000);
+				if (trace_ent.is_monster == 1)
+				{
+					delta = trace_ent.origin - self.origin + self.view_ofs;
+					if (delta_z < 0)
+						delta_z = delta_z / -2;
+					delta = delta * 0.7;
+					if (delta_z < 100)
+						delta_z = 100;
+					trace_ent.flags = trace_ent.flags - FL_ONGROUND;
+					dist = vlen(delta);
+					strength = 800;
+					delta = normalize(delta);
+					delta = delta * strength;
+					delta_z *= .3;
+					trace_ent.velocity = trace_ent.velocity + delta;
+					TF_T_Damage (trace_ent, self, self, 105, 2, 0.000000);
+				}
+				else
+					TF_T_Damage (trace_ent, self, self, 30, 2, 0.000000);
 			}
 			sound(trace_ent, 3, "zombie/z_miss.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 			return;
-		}
+	}
 }
 		if (((self.playerclass != 8) || (trace_ent.classname != "player" && trace_ent.is_monster != 1)))
 		{
@@ -1322,13 +1339,15 @@ if (allow_bat == 1) {
 			if ((crossproduct (def, v_forward) > 0.000000))
 			{
 				deathmsg = 22;
-				if (trace_ent.is_monster == 1) {
+				if (trace_ent.is_monster == 1)
+				{
 					if (other.tfstate & #MONSTER_TRANQUILIZED)
 						TF_T_Damage (trace_ent, self, self, 230, 2, 0.000000);
 					else
 						TF_T_Damage (trace_ent, self, self, 195, 2, 0.000000);
 				}
-				else {
+				else
+				{
 					TF_T_Damage (trace_ent, self, self, 120, 2, 0.000000);
 				}
 			}
@@ -1710,18 +1729,22 @@ void () W_FireMedikit =
 				}
 				if (((healam > 0.000000) && (trace_ent.health < trace_ent.max_health)))
 				{
-					if (pointcontents(trace_ent.origin) != CONTENT_LAVA && pointcontents(trace_ent.origin) != CONTENT_SLIME) {
-					if ( trace_ent.health < (trace_ent.max_health*.9) ) {
-						if ( trace_ent.health < (trace_ent.max_health*.3) ) 
-							MTF_Coop_AddServiceExp( self, trace_ent, 20, #SRV_HEAL );
-						else if ( trace_ent.health < (trace_ent.max_health*.5) ) 
-							MTF_Coop_AddServiceExp( self, trace_ent, 15, #SRV_HEAL );
-						else if ( trace_ent.health < (trace_ent.max_health*.7) ) 
-							MTF_Coop_AddServiceExp( self, trace_ent, 10, #SRV_HEAL );
-						else 
+					if (pointcontents(trace_ent.origin) != CONTENT_LAVA && pointcontents(trace_ent.origin) != CONTENT_SLIME)
+					{
+						if ( trace_ent.health < (trace_ent.max_health*.9) )
+						{
+							if ( trace_ent.health < (trace_ent.max_health*.3) ) 
+								MTF_Coop_AddServiceExp( self, trace_ent, 20, #SRV_HEAL );
+							else
+							if ( trace_ent.health < (trace_ent.max_health*.5) ) 
+								MTF_Coop_AddServiceExp( self, trace_ent, 15, #SRV_HEAL );
+							else
+							if ( trace_ent.health < (trace_ent.max_health*.7) ) 
+								MTF_Coop_AddServiceExp( self, trace_ent, 10, #SRV_HEAL );
+							else 
 							MTF_Coop_AddServiceExp( self, trace_ent, 5, #SRV_HEAL );
-						Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEAL, 1 );
-					}
+							Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEAL, 1 );
+						}
 					}
 					sound (trace_ent, 1, "items/r_item1.wav", 1, 1);
 					trace_ent.axhitme = 1;
@@ -1966,7 +1989,8 @@ void () W_FireSuperShotgun =
 		W_FireShotgun ();
 		return;
 	}
-	if (self.mtf_items & MTFITEM_NEEDLER) {
+	if (self.mtf_items & MTFITEM_NEEDLER)
+	{
 		W_FireNeedler ();
 		return;
 	}
@@ -2056,7 +2080,8 @@ void () W_FireSniperRifle =
 				use_this != 1;
 			}
 		}
-		if (!use_this) {
+		if (!use_this)
+		{
 			use_this = 0;
 		}
 	}
@@ -2145,7 +2170,9 @@ void () W_FireSniperRifle =
 				}
 			}
 		}
-		else if ( Coop_IsMonster( trace_ent, #MONSTERTYPE_NORMAL ) ) {
+		else
+		if ( Coop_IsMonster( trace_ent, #MONSTERTYPE_NORMAL ) )
+		{
 			f = trace_endpos - src;
 			g_x = trace_endpos_x;
 			g_y = trace_endpos_y;
@@ -2156,7 +2183,8 @@ void () W_FireSniperRifle =
 			x = vlen(g - h);
 			f = (normalize(f) * x) + trace_endpos;
 			zdif = f_z - trace_ent.origin_z;
-			if ( zdif < trace_ent.mins_z * 0.5 ) {
+			if ( zdif < trace_ent.mins_z * 0.5 )
+			{
 				dam_mult = 0.5;
 				trace_ent.leg_damage = (trace_ent.leg_damage + 1);	// coop_todo: make leg damage cause monsters to move slower
 				sprint( self, PRINT_MEDIUM, "Leg shot - that'll slow it down!\n" );
@@ -2164,15 +2192,17 @@ void () W_FireSniperRifle =
 				T_Damage (trace_ent, self, self, (self.heat * dam_mult));
 				return;
 			}
-			if ( zdif > trace_ent.maxs_z * 0.60 ) {	// 75 old - monsters have much larger hitboxes
-				if ( zdif < trace_ent.maxs_z * 0.89 || zdif > trace_ent.maxs_z * 0.99 ) {	// so we dont get much for aiming above their heads lol
-				dam_mult = 1.65;
-				sprint( self, PRINT_MEDIUM, "Head shot - that's gotta hurt!\n" );
-				deathmsg = 29;
-				T_Damage (trace_ent, self, self, (self.heat * dam_mult));
-				if (trace_ent.health <= 0)
-					Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEADSHOT, 1 );
-				return;
+			if ( zdif > trace_ent.maxs_z * 0.60 )
+			{	// 75 old - monsters have much larger hitboxes
+				if ( zdif < trace_ent.maxs_z * 0.89 || zdif > trace_ent.maxs_z * 0.99 )
+				{	// so we dont get much for aiming above their heads lol
+					dam_mult = 1.65;
+					sprint( self, PRINT_MEDIUM, "Head shot - that's gotta hurt!\n" );
+					deathmsg = 29;
+					T_Damage (trace_ent, self, self, (self.heat * dam_mult));
+					if (trace_ent.health <= 0)
+						Achievements_Change( self, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HEADSHOT, 1 );
+					return;
 				}
 			}
 		}
@@ -2394,7 +2424,6 @@ void () FlashMineTouch =
 };
 void () SpikeTrapTouch =
 {
-
 	if ((self.pausetime > time))
 	{
 		return;
@@ -2424,7 +2453,8 @@ void () SpikeTrapTouch =
 	{
 		return;
 	}
-	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL)) {
+	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
+	{
 		sound (self, 3, "shambler/smack.wav", 1, 1);
 		sprint (self.owner, 2, "Your Trap worked!\n");
 		self.pausetime = (time + 5);
@@ -2486,7 +2516,8 @@ void () MagnetMineTouch =
 	{
 		return;
 	}
-	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL)) {
+	if (Coop_IsMonster(other, #MONSTERTYPE_NORMAL))
+	{
 		MagMineActivate ();
 		sprint (self.owner, 2.000000, "Your Magnet Mine worked!\n");
 		self.pausetime = (time + 5.000000);
@@ -3045,7 +3076,9 @@ void () spike_touch =
 		{
 			TF_T_Damage (other, self, self.owner.owner, 9, 2, 2);
 		}
-		else if (self.owner.classname == "monster_wizard") {
+		else
+		if (self.owner.classname == "monster_wizard")
+		{
 			TF_T_Damage (other, self, self.owner, 5, 2, 2);
 		}
 		else
@@ -3138,12 +3171,14 @@ void (entity reloaded_player, float type_rl) W_ReloadSetCurrentAmmo =
 		reloaded_player.items = (reloaded_player.items - (reloaded_player.items & (((256 | 512) | 1024) | 2048)));
 		reloaded_player.currentammo = 0;
 	}
- 	else if (type_rl == 1)
+ 	else
+	if (type_rl == 1)
 	{
 		reloaded_player.currentammo = reloaded_player.ammo_shells;
 		reloaded_player.items = (reloaded_player.items | 2048);
 	}
- 	else if (type_rl == 3)
+	else
+	if (type_rl == 3)
 	{
 		reloaded_player.currentammo = reloaded_player.ammo_nails;
 		reloaded_player.items = (reloaded_player.items | 512);
@@ -3166,65 +3201,86 @@ void () VWEPS_SetModel =
 		vw_model = 7;
 	else
 		vw_model = 1;
-	if (self.monster_type > 0) {
+	if (self.monster_type > 0)
+	{
 		self.vw_index = 0;
 		return;
 	}
-	if (self.items & 524288 || self.model == "progs/mini-sub.mdl" || self.model == "progs/helo2.mdl") {
+	if (self.items & 524288 || self.model == "progs/mini-sub.mdl" || self.model == "progs/helo2.mdl")
+	{
 		self.vw_index = 31;
 		return;
 	}
 	if (self.weaponmodel == #MODEL_V_SHOTGUN)
 		vw_model = 2;
-	else if (self.weaponmodel == "progs/v_shot2.mdl")
+	else
+	if (self.weaponmodel == "progs/v_shot2.mdl")
 		vw_model = 3;
-	else if (self.weaponmodel == "progs/v_mac10.mdl")
+	else
+	if (self.weaponmodel == "progs/v_mac10.mdl")
 		vw_model = 4;
-	else if (self.weaponmodel == "progs/v_nail2.mdl")
+	else
+	if (self.weaponmodel == "progs/v_nail2.mdl")
 		vw_model = 5;
-	else if (self.weaponmodel == "progs/v_rock.mdl")
+	else
+	if (self.weaponmodel == "progs/v_rock.mdl")
 		vw_model = 6;
-	else if (self.weaponmodel == "progs/v_srifle.mdl")
+	else
+	if (self.weaponmodel == "progs/v_srifle.mdl")
 		vw_model = 18;
-	else if (self.weaponmodel == "progs/v_grap.mdl")
+	else
+	if (self.weaponmodel == "progs/v_grap.mdl")
 		vw_model = 19;
-	else if (self.weaponmodel == "progs/v_rail.mdl")
+	else
+	if (self.weaponmodel == "progs/v_rail.mdl")
 		vw_model = 14;		// invalid #, but that makes the player model hold the normal sausage gun
-	else if (self.weaponmodel == "progs/v_asscan.mdl")
+	else
+	if (self.weaponmodel == "progs/v_asscan.mdl")
 		vw_model = 15;
-	else if (self.weaponmodel == "progs/proxgren.mdl")
+	else
+	if (self.weaponmodel == "progs/proxgren.mdl")
 		vw_model = 17;
-	else if (self.weaponmodel == #MODEL_CHAINSAW)
+	else
+	if (self.weaponmodel == #MODEL_CHAINSAW)
 		vw_model = 11;
-	else if (self.current_weapon == 32768)		// 20mm cannon
+	else
+	if (self.current_weapon == 32768)		// 20mm cannon
 		vw_model = 5;
-	else if (self.current_weapon == 524288)		// railgun
+	else
+	if (self.current_weapon == 524288)		// railgun
 		vw_model = 2;
 	if (self.weaponmodel == "progs/v_bio.mdl" || self.weaponmodel == "progs/v_medi.mdl")
 		vw_model = 10;
-	else if (self.weaponmodel == "progs/v_bat.mdl")
+	else
+	if (self.weaponmodel == "progs/v_bat.mdl")
 		vw_model = 9;
-	else if (self.weaponmodel == "progs/v_knife.mdl")
+	else
+	if (self.weaponmodel == "progs/v_knife.mdl")
 		vw_model = 12;
-	else if (self.weaponmodel == "progs/v_knife2.mdl")
+	else
+	if (self.weaponmodel == "progs/v_knife2.mdl")
 		vw_model = 13;
 	if (self.playerclass == 9 && self.weaponmodel == "progs/v_mac10.mdl")	// gravity gun
 		vw_model = 8;
-	else if (self.weaponmodel == "progs/v_span.mdl")
+	else
+	if (self.weaponmodel == "progs/v_span.mdl")
 		vw_model = 16;
-	else if (self.weaponmodel == "progs/proxgren.mdl" && self.current_weapon == 16)
+	else
+	if (self.weaponmodel == "progs/proxgren.mdl" && self.current_weapon == 16)
 		vw_model = 12;
 	if ( self.mtf_items & #MTFITEM_LIGHTGUN && self.current_weapon == 128 || self.current_weapon == #WEAP_ZEROGRAVITY )
 		vw_model = 8;		// LG
 	if (self.tfstate & 65536 && self.is_detpacking == #TRUE)		// laying det..
 		vw_model = 1;
-	else if (self.tfstate & 65536 && self.playerclass != 8)	// building
+	else
+	if (self.tfstate & 65536 && self.playerclass != 8)	// building
 		vw_model = 16;
 	if (self.maxs_z == 8 || self.is_feigning == #TRUE)		// player is laying
 		vw_model = 31;
 	if (self.hook_out && (self.frame == 137 || self.frame == 138 || self.frame == 139))
 		vw_model = 31; // todo: 19 looks nicer. Problem with dying in mid-air though O.o
-	if (self.tfstate & 2 && self.weaponmodel != "progs/proxgren.mdl") {		// if reloading, dont do anything
+	if (self.tfstate & 2 && self.weaponmodel != "progs/proxgren.mdl")
+	{		// if reloading, dont do anything
 		if (vw_model == 1 || vw_model == 31)
 			self.vw_index = vw_model;
 		return;
@@ -3290,7 +3346,8 @@ void ( entity slave, entity master ) Hax_Fixowner =
 {
 	if (master == world)
 		return;
-	if (slave.owner == world) {
+	if (slave.owner == world)
+{
 		slave.owner = master;
 		bprint(2,"Hax_Fixowner: NO OWNER - TELL DEV this.\n");
 	}
@@ -3331,7 +3388,8 @@ void () W_Reload_grenade_launcher =
 void () W_Reload_rocket_launcher =
 {
 	Hax_Fixowner ( self, self.real_owner );
-	if (self.owner == world) {
+	if (self.owner == world)
+	{
 		bprint(2,"W_Reload_rocket_launcher: WORLD OWNER - TELL DEV this.\n");
 	}
 	self.owner.tfstate = (self.owner.tfstate - (self.owner.tfstate & 2));
@@ -3363,7 +3421,8 @@ float () CheckForReload =
 			return (1);
 		}
 	}
-	else if ((self.current_weapon == 256))
+	else
+if ((self.current_weapon == 256))
 	{
 		if ((self.reload_super_shotgun > GetClipSize(256)))
 		{
@@ -3375,7 +3434,8 @@ float () CheckForReload =
 			return (1);
 		}
 	}
-	else if ((self.current_weapon == 2048))
+	else
+	if ((self.current_weapon == 2048))
 	{
 		if (((self.reload_grenade_launcher >= GetClipSize(2048)) && (self.ammo_rockets > 0.000000)))
 		{
@@ -3383,7 +3443,8 @@ float () CheckForReload =
 			return (1);
 		}
 	}
-	else if ((self.current_weapon == 8192))
+	else
+	if ((self.current_weapon == 8192))
 	{
 		if (((self.reload_rocket_launcher >= GetClipSize(8192)) && (self.ammo_rockets > 0.000000)))
 		{
@@ -3391,8 +3452,10 @@ float () CheckForReload =
 			return (1);
 		}
 	}
-	if (lms_entity != world) {}							// no rg reload in LMS mode
-	else if (self.current_weapon == 524288)
+	if (lms_entity != world)
+{}							// no rg reload in LMS mode
+	else
+	if (self.current_weapon == 524288)
 	{
 		if (((self.reload_rail_gun >= GetClipSize(524288)) && (self.ammo_cells > 0.000000)))
 		{
@@ -3487,7 +3550,8 @@ void() W_Attack =
 	{
 		return;
 	}
-	if (self.monster_type > 0) {
+	if (self.monster_type > 0)
+	{
 		monster_attack();
 		return;
 	}
@@ -3598,7 +3662,8 @@ void() W_Attack =
 							CheckForReload ();				
 							if (self.needler_heat > 10)
 								Attack_Finished (0.07);
-							else if (self.needler_heat > 5)
+							else
+							if (self.needler_heat > 5)
 								Attack_Finished (0.12);
 							else
 								Attack_Finished (0.7);	
@@ -3637,16 +3702,20 @@ void() W_Attack =
 									if ((self.option == 1.000000 || self.option4 == 1))
 									{
 										self.reload_grenade_launcher = (self.reload_grenade_launcher + 1.000000);
-										if (self.useclip == 1) {
+										if (self.useclip == 1)
+										{
 												self.reload_grenade_launcher = (self.reload_grenade_launcher - 1.000000);
-											if (self.option == 1) {
+											if (self.option == 1)
+											{
 												self.reload_grenade_launcher = (self.reload_grenade_launcher + 1.000000);
-												if (infokey(world, "newclip") != "1") {
+												if (infokey(world, "newclip") != "1")
+												{
 													self.reload_grenade_launcher = (self.reload_grenade_launcher + 1.000000);
 												}
 											}
 										}
-										if (self.useclip == 3) {
+										if (self.useclip == 3)
+										{
 												self.reload_grenade_launcher = (self.reload_grenade_launcher + 1.000000);
 										}
 									}
@@ -3835,7 +3904,8 @@ void() W_Attack =
 																					W_FireLaser (175);
 																					Attack_Finished (2.7);
 																				}
-																				else {
+																				else
+																				{
 																				if ((self.option6 != 1))
 																				{
 																					if ((CheckForReload () == 1.000000))
@@ -3857,21 +3927,27 @@ void() W_Attack =
 																				}
 																			}
 																			}
-																			else {
-																				if (self.current_weapon == #WEAP_ZEROGRAVITY) {
+																			else
+																			{
+																				if (self.current_weapon == #WEAP_ZEROGRAVITY)
+																				{
 																					zg_togglepickup (self, FALSE);
 																					Attack_Finished (0.4);
 																				}
 #ifdef NEW_CLASS1
-																			else {
-																				if (self.current_weapon == #WEAPON_THUMPER) {
+																			else
+																			{
+																				if (self.current_weapon == #WEAPON_THUMPER)
+																				{
 																					player_shot1 ();
 																					W_FireThumper ();
 																					self.attack_finished = (time + 0.7);
 																				}
 																			
-																				else {
-																					if (self.current_weapon == #WEAPON_CROSSBOW) {
+																				else
+																				{
+																					if (self.current_weapon == #WEAPON_CROSSBOW)
+																					{
 																						player_shot1 ();
 																						W_FireCrossbowArrow ();
 																						self.attack_finished = (time + 0.8);
@@ -3905,11 +3981,13 @@ void () W_PrintWeaponMessage =
 	{
 		if ((self.playerclass != 8))
 		{
-			if (allow_bat == 1) {
+			if (allow_bat == 1)
+			{
 				if (self.playerclass == 1) // scout
 					sprint (self, 1, "Bat selected.\n");
-				}
-			else {
+			}
+			else
+			{
 				sprint (self, 1, "Knife selected.\n");
 				self.weaponmode = 3;
 			}
@@ -3936,7 +4014,8 @@ void () W_PrintWeaponMessage =
 					{
 						sprint (self, 1, "Long-range grenade mode.\n");
 						self.useclip = 3;
-						if (infokey(world, "newclip") == "1") {
+						if (infokey(world, "newclip") == "1")
+						{
 							self.useclip = 2;
 						}
 					}
@@ -3946,7 +4025,10 @@ void () W_PrintWeaponMessage =
 						{
 							sprint (self, 1.000000, "Sticky Pipebomb mode.\n");
 							self.useclip = 2;
-							if (self.option == 1) { self.useclip = 3; }
+							if (self.option == 1)
+							{
+								self.useclip = 3;
+							}
 						}
 						else
 						{
@@ -4071,7 +4153,8 @@ void () W_ChangeWeapon =
 }
 }
 }
-	else if ((self.impulse == 1.000000))
+	else
+if ((self.impulse == 1.000000))
 	{
 		if ((fl == 8.000000))
 		{
@@ -4205,7 +4288,8 @@ void () W_ChangeWeapon =
 													sound (self, 1.000000, "weapons/rocklr1a.wav", 0.800000, 1.000000);
 												}
 											}
-											else if ((it & 32.000000))
+											else
+if ((it & 32.000000))
 #else
 					if ((it & 32.000000))
 #endif
@@ -4284,7 +4368,6 @@ void () W_ChangeWeapon =
 													sprint (self, 1.000000, "Regular Railgun mode.\n");
 												}
 											}
-
 										}
 										self.weaponmode = 1;
 										if ((srailcheck != "1"))
@@ -4350,7 +4433,8 @@ void () W_ChangeWeapon =
 													sound (self, 1.000000, "weapons/rocklr1a.wav", 0.800000, 1.000000);
 												}
 											}
-							else if ((it & 2048))
+							else
+							if ((it & 2048))
 #else
 							if ((it & 2048))
 #endif
@@ -4554,7 +4638,7 @@ void () W_ChangeWeapon =
 												}
 											}
 										}
-}
+									}
 									}
 									else
 									{
@@ -4606,7 +4690,10 @@ void () W_ChangeWeapon =
 	}
 	if (self.current_weapon == #WEAP_ZEROGRAVITY && self.pickedupobject_hands != world)
 		zg_drop (self, #FALSE);
- if (fl != self.current_weapon) { self.last_weapon = self.current_weapon; }
+	if (fl != self.current_weapon)
+	{
+	self.last_weapon = self.current_weapon;
+	}
 	self.current_weapon = fl;
 	W_SetCurrentAmmo ();
 	W_PrintWeaponMessage ();
@@ -4619,7 +4706,6 @@ void () CycleWeaponCommand =
 	local float cont;
 	local float loopcount;
 	local float lw;		// last weapon
-
 	if (((self.weaponmodel == string_null) || (self.current_weapon == 0.000000)))
 	{
 		return;
@@ -4894,7 +4980,8 @@ void () CycleWeaponCommand =
 			{
 				self.weaponmode = 0.000000;
 			}
-			if (self.last_weapon != lw) { self.last_weapon = lw; }
+			if (self.last_weapon != lw)
+{ self.last_weapon = lw; }
 			W_SetCurrentAmmo ();
 			W_PrintWeaponMessage ();
 			self.StatusRefreshTime = (time + 0.1);
@@ -4914,15 +5001,18 @@ void() ImpulseCommands =
 		{
 			W_ChangeWeapon ();
 		}
-		else if (self.impulse == 9)
-			if (self.mtf_items & MTFITEM_NEEDLER || self.mtf_items & MTFITEM_LIGHTGUN) {
+		else
+if (self.impulse == 9)
+			if (self.mtf_items & MTFITEM_NEEDLER || self.mtf_items & MTFITEM_LIGHTGUN)
+			{
 				if (self.mtf_items & MTFITEM_NEEDLER)
 					self.mtf_items -= MTFITEM_NEEDLER;
 				if (self.mtf_items & MTFITEM_LIGHTGUN)
 					self.mtf_items -= MTFITEM_LIGHTGUN;					
 				sprint(self,2, "Special Weapons Disabled.\n");
 			}
-			else {
+			else
+			{
 				if (self.coop_exp >= Coop_ExpReq(80))
 					self.mtf_items |= MTFITEM_NEEDLER;
 				if (Coop_HasMasterSkill( self, #ATTRIB_QUICKSHOT ))
@@ -4951,7 +5041,6 @@ void() ImpulseCommands =
 			return;
 		}
 	}
-
 																								if ((self.impulse == 59.000000))
 																								{
 																									if (!drop3)
@@ -4988,8 +5077,6 @@ void() ImpulseCommands =
 																										}
 																									}
 																								}
-
-
 	if ((self.tools == (self.tools | 32.000000)))
 	{
 		return;
@@ -5167,10 +5254,12 @@ void() ImpulseCommands =
 																}
 																else
 																{
-																	if (laymode == 0) {
+																	if (laymode == 0)
+																	{
 																		sprint (self, 2, "Lay mode has been disabled by the admin!\n"); 
 																	}
-																	else {
+																	else
+																	{
 																		self.is_squating = 1.000000;
 																		lay ();
 																		sprint (self, 2.000000, "Laying mode, (stop walking to lay).\n");
@@ -5452,7 +5541,8 @@ void() ImpulseCommands =
 																																			{
 																																				drop_gravity();
 																																			}
-																																			else {
+																																			else
+																																			{
 																																				if ((self.impulse == 68))
 																																				{
 																																					beartrap_dropBearTrap ();
@@ -5623,7 +5713,10 @@ void() ImpulseCommands =
 																	}
 																	else
 																	{
-																		if (self.impulse != 245) { DeadImpulses (); }
+																		if (self.impulse != 245)
+																		{
+																			DeadImpulses ();
+																		}
 																	}
 																}
 															}
@@ -6236,7 +6329,8 @@ void () LTB_PreArm =
 		sprint (self.real_owner, 2, "Walls must be closer together.\n");
 		if (self.real_owner.no_grenades_2 < 3)
 			self.real_owner.no_grenades_2 = (self.real_owner.no_grenades_2 + 2);
-		else if (self.real_owner.no_grenades_2 == 3)
+		else
+if (self.real_owner.no_grenades_2 == 3)
 			self.real_owner.no_grenades_2 = (self.real_owner.no_grenades_2 + 1);
 		dremove(self);
 		return;
@@ -6278,11 +6372,14 @@ void () LTB_Arm =
 		dist = vlen(org - trace_endpos);
 		if (dist > 150)
 			self.frame = #FRAME_125PERCENT;
-		else if (dist > 112)
+		else
+		if (dist > 112)
 			self.frame = #FRAME_100PERCENT;
-		else if (dist > 75)
+		else
+		if (dist > 75)
 			self.frame = #FRAME_75PERCENT;
-		else if (dist > 37)
+		else
+		if (dist > 37)
 			self.frame = #FRAME_50PERCENT;
 		else
 			self.frame = #FRAME_25PERCENT;
@@ -6653,11 +6750,13 @@ void () TeamFortress_SaveMe =
 	if (self.team_no == 0)
 		return;
 	if (survival_mode)
-		if (self.deadflag >= 2) {
+		if (self.deadflag >= 2)
+{
 			te = find(world, classname, "resdummy");
 			while (te)
 			{
-				if (te.owner == self) {
+				if (te.owner == self)
+				{
 					WriteByte(4, 23);
 					WriteByte(4, 11);
 					WriteCoord(4, te.origin_x);
@@ -6679,7 +6778,8 @@ void () TeamFortress_SaveMe =
 	te = findradius(self.origin, 350);
 	while (te)
 	{
-		if (te.classname == "player" && te.current_menu == 0) {
+		if (te.classname == "player" && te.current_menu == 0)
+		{
 			if (!survival_mode)
 				te.current_menu = 41;
 		}
@@ -7000,14 +7100,14 @@ void () TeamFortress_ReloadCurrentWeapon =
 			sprint (self, 2, "Not enough ammo to reload.\n");
 		}
 	}
-#ifdef CSQC	
 	CSQC_SendReloadBar(self, time+rt);
-#endif
-	if (tWeapon != world && tWeapon.nextthink <= time) {
+	if (tWeapon != world && tWeapon.nextthink <= time)
+	{
 		bprint(2,"tWeapon.nextthink is less than or equal to time..  - TELL DEV this.\n");
 		tWeapon.nextthink = time + 0.01;
 	}
-	if (tWeapon != world) {
+	if (tWeapon != world)
+	{
 		self.reload_ent = tWeapon;
 		self.reload_finished_func = tWeapon.think;
 	}
@@ -7243,7 +7343,7 @@ void () DroneJet =
 	}
 // monster string defines monsters and not minions. No point having the drone shoot your own minions. -arg
 // was defined as is_monster in parameter 2 of find, which needs to be a .string -arg
-te = find (world, monster_string, "on");
+	te = find (world, monster_string, "on");
 	while (te)
 	{
 		if ((self != te))
@@ -8293,7 +8393,8 @@ void () TeamFortress_Timeleft =
 		sprint(self,2,"Timeleft has been disabled.\n");
 		return;
 	}
-	else if ((st != "off") && (te == world))
+	else
+	if ((st != "off") && (te == world))
 	{
 		sprint(self,2,"Unknown.\n");
 		return;

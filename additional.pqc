@@ -132,7 +132,11 @@
 #define TFI_MAXLINES		350			// no TFI file should exceed this many lines
 #define LOAD_THINKWALK					1
 #define LOAD_THINKSTAND					2
-#define	CheckScoreCVAR		if (cvar("monster_noscoreboard") == 1) { return; }
+#define	CheckScoreCVAR
+//if (cvar("monster_noscoreboard") == 1)
+//{
+//return;
+//}
 #define LAZY_WAY			// client number hax
 #ifdef COOP_HAX
 #define HL_MAP		cvar("sv_map_halflife") == 1
@@ -1644,7 +1648,9 @@ string (entity whom) GetPlayerModel =
 	if (whom.gender == GENDER_FEMALE)
 		if (whom.team_no == 1)
 			return FEMALE_MODEL_BLUE;
-		else if (whom.team_no == 2)
+		else
+
+		if (whom.team_no == 2)
 			return FEMALE_MODEL_RED;
 	return "progs/player.mdl";
 };
@@ -1653,17 +1659,21 @@ float (entity whom) GetPlayerModelindex =
 	if (whom.gender == GENDER_FEMALE)
 		if (whom.team_no == 1)
 			return modelindex_player_f_blue;
-		else if (whom.team_no == 2)
+		else
+		if (whom.team_no == 2)
 			return modelindex_player_f_red;
 			
 	return modelindex_player;
 };
 void (entity whom) SetPlayerModelindex =
 {
-	if (whom.gender == GENDER_FEMALE) {
+	if (whom.gender == GENDER_FEMALE)
+{
 		if (whom.team_no == 1)
 			modelindex_player_f_blue = whom.modelindex;
-		else if (whom.team_no == 2)
+		else
+
+		if (whom.team_no == 2)
 			modelindex_player_f_red = whom.modelindex;
 	}
 	else
@@ -1793,6 +1803,7 @@ void() ResetMenu =
 		CenterPrint(self, "\n");
 	}
 	else
+
 	{
 		self.StatusRefreshTime = time + 0.1;
 	}
@@ -1811,12 +1822,15 @@ float() customize_frame =
 	if (totang < 157.5 && totang >= 112.5)
 		self.walkframe = 1;
 	else
+
 	if (totang < 112.5 && totang >= 67.5)
 		self.walkframe = 2;
 	else
+
 	if (totang < 67.5 && totang >= 22.5)
 		self.walkframe = 3;
 	else
+
 	if (totang < 22.5 || totang >= 337.5)
 		self.walkframe = 4;
 	else
@@ -2302,7 +2316,10 @@ void (entity pl) RefreshStatusBar =
 	{
 		s2 = strcat(ftos(self.inflicted), " damage\n");
 	}
-	else { s2 = "\n"; }
+	else
+	{
+		s2 = "\n";
+	}
 	}
 	centerprint (pl, s1, s2, s3, s4, s5, s6, s7);
 };
@@ -2349,7 +2366,8 @@ float() TeamFortress_TeamPutPlayerInTeam =
 				likely_team = i;
 			}
 		}
-		else if (j == lowest)
+		else
+		if (j == lowest)
 		{
 			
 			if (TeamFortress_TeamGetMaxPlayers(i) > j)
@@ -2361,7 +2379,8 @@ float() TeamFortress_TeamPutPlayerInTeam =
 				{
 					likely_team = i;
 				}
-				else if (score1 == score2)
+				else
+				if (score1 == score2)
 				{
 					if (random() > 0.5)
 					{
@@ -2554,14 +2573,18 @@ float(float tno) TeamFortress_TeamSet =
 	te = find ( world, classname, "info_lmsdetect" );
 	while (te)
 	{
-		if (te.#lms_usegloballives > 0) {
+		if (te.#lms_usegloballives > 0)
+		{
 			if (te.#lms_game_begun == #TRUE)
 				self.#lms_lives = -1;
 			else
 				self.#lms_lives = te.#lms_usegloballives;
 		}
-		else if (te.#lms_useroundlives > 0) {
-			if (te.#lms_game_begun == #TRUE) {
+		else
+		if (te.#lms_useroundlives > 0)
+		{
+			if (te.#lms_game_begun == #TRUE)
+		{
 				self.#lms_lives = -1;
 				self.monster_items = 1;//#lms_replenish_lives = 1;
 			}
@@ -2873,7 +2896,9 @@ void(float tno, float scoretoadd) TeamFortress_TeamIncreaseScore =
 		}
 	}
 #ifdef BATTLE_ROYALE
-	else if (battle_royale_e != world) {
+	else
+	if (battle_royale_e != world)
+	{
 		e = find(world, classname, "player");
 		while (e)
 		{
@@ -3071,17 +3096,18 @@ void (float all) TeamFortress_TeamShowScores =
 			fix2 = ((TeamFortress_TeamGetScore (_l_7159)));
 			totalf = (fix1 - fix2);
 			totals = ftos (totalf);
-			if (totalf != 0) {
-			bprint (2, "");
-			bprint (2, TeamFortress_TeamGetColorString (_l_7158));
-			bprint (2, " éó ìåáäéîç âù ");
-			bprint (2, totals);
-			bprint (2, "\n"); }
-			else
+			if (totalf != 0)
 			{
-				bprint (2, "Ôèå çáíå éó tied\n");
-			}	
-		}
+				bprint (2, "");
+				bprint (2, TeamFortress_TeamGetColorString (_l_7158));
+				bprint (2, " éó ìåáäéîç âù ");
+				bprint (2, totals);
+				bprint (2, "\n"); }
+				else
+				{
+					bprint (2, "Ôèå çáíå éó tied\n");
+				}	
+			}
 		else
 		{
 			bprint (2, "Ôèå çáíå éó tied\n");
@@ -3780,9 +3806,11 @@ void() TeamFortress_ChangeClass =
 		if (self.team_no == 0)		// survival mode hack allows players to join any team :\
 			return;
 #ifdef BATTLE_ROYALE
-	if (battle_royale_e != world) {
+	if (battle_royale_e != world)
+	{
 		spot = SelectSpawnPoint ();
-		if (spot == world) {
+		if (spot == world)
+		{
 			sprint( self, 2, "No more valid spawn points. Please wait for the Battle Royale match to finish.\n");
 			self.playerclass = 0;
 			self.tfstate = self.tfstate - (self.tfstate & 8);
@@ -3803,12 +3831,6 @@ void() TeamFortress_ChangeClass =
 	else
 	if (self.playerclass != 0)
 	{
-#ifndef mtf_coop
-		if (deathmatch != 3)
-		{
-			return;
-		}
-#endif
 		if (TeamFortress_TeamIsCivilian(self.team_no))
 		{
 			sprint(self, 2, "You cannot change class.\n");
@@ -3842,11 +3864,13 @@ void() TeamFortress_ChangeClass =
 			return;
 		}
 		self.nextpc = self.impulse - 100;
-		if (self.health > 0 && self.classname == "player") {
+		if (self.health > 0 && self.classname == "player")
+		{
 			merchanty = findradius (self.origin, 140);
 			while (merchanty)
 			{
-				if (merchanty.classname == "merchant") {
+				if (merchanty.classname == "merchant")
+				{
 					sprint(self,2, "Merchant: There ya go, buddy! This is the way!\n");
 					oldpos = self.origin;
 					oldhealth = self.health;
@@ -3988,7 +4012,8 @@ void() TeamFortress_ChangeClass =
 	modelindex_null = self.modelindex;
 	setmodel(self, "progs/eyes.mdl");
 	modelindex_eyes = self.modelindex;
-	if (self.monster_type > 0) {
+	if (self.monster_type > 0)
+	{
 		self.monster_type = self.playerclass;
 		Monsterteam_setmodel(self, self.monster_type);
 		if (spot.is_monster == 1)
@@ -4157,7 +4182,8 @@ void(entity Goal) UpdateAbbreviations =
 		{
 			Goal.has_item_from_group = Goal.h_i_g;
 		}
-	if ((Goal.hn_i_g != 0) && (Goal.hasnt_item_from_group == 0)) {
+	if ((Goal.hn_i_g != 0) && (Goal.hasnt_item_from_group == 0))
+	{
 	    Goal.hasnt_item_from_group = Goal.hn_i_g;
 	}
 		if (Goal.r_i_g != TF_FLARE_LIT && Goal.remove_item_group == TF_FLARE_LIT)
@@ -4714,7 +4740,8 @@ entity() SelectSpawnPoint =
 	else
 	{
 #ifdef BATTLE_ROYALE		
-		if (battle_royale_e == world) {
+		if (battle_royale_e == world)
+		{
 #endif				
 		if (deathmatch)
 		{		
@@ -4751,7 +4778,8 @@ entity() SelectSpawnPoint =
 		}
 #ifdef BATTLE_ROYALE
 		}
-		else {
+		else
+		{
 			return world;
 		}
 #endif
@@ -4775,7 +4803,8 @@ entity() SelectSpawnPoint =
 		error("PutClientInServer: no info_player_start on level\n");
 	}
 #ifdef BATTLE_ROYALE		
-	if (battle_royale_e != world) {
+	if (battle_royale_e != world)
+{
 		return world;
 	}
 #endif
@@ -4793,7 +4822,8 @@ float (entity tcl) hlt_think =
 	lmstats = strzone(lmstats);
 	if (!lmstats)
 		return #FALSE;
-	if (tcl.landmark == lmstats) {
+	if (tcl.landmark == lmstats)
+	{
 		ips = find(world, classname, "info_player_start");
 		while (ips != world)
 		{
@@ -4806,37 +4836,53 @@ float (entity tcl) hlt_think =
 		setorigin(nips,lmsv /*+ '0 0 15'*/);
 		if (lmstats == "lm_c1a3_da" && mapname == "c1a3a")
 			setorigin(nips, '831.4 -1050.8 -100.0');
-		else if (mapname == "c1a3b" && lmstats == "lm_c1a3_ab")
+		else
+		if (mapname == "c1a3b" && lmstats == "lm_c1a3_ab")
 			setorigin(nips, '170.7 -888.9 680.2');
-		else if (mapname == "c1a3c" && lmstats == "lm_c1a3_bc")
+		else
+		if (mapname == "c1a3c" && lmstats == "lm_c1a3_bc")
 			neworg = '-932.1 -1555.3 180.1';
-		else if (mapname == "c1a4b" && lmstats == "c1a4k_to_c1a4b")
+		else
+		if (mapname == "c1a4b" && lmstats == "c1a4k_to_c1a4b")
 			neworg = '-647.4 -3534.6 -960.4';
-		else if (mapname == "c1a4i" && lmstats == "c1a4btoi1")
+		else
+		if (mapname == "c1a4i" && lmstats == "c1a4btoi1")
 			neworg = '-152.1 -1060.9 -945.0';
-		else if (mapname == "c1a4b" && lmstats == "c1a4btoi5")
+		else
+		if (mapname == "c1a4b" && lmstats == "c1a4btoi5")
 			neworg = '-536.4 -583.9 -1346.7';
-		else if (mapname == "c1a4f" && lmstats == "c1a4btoc")
+		else
+		if (mapname == "c1a4f" && lmstats == "c1a4btoc")
 			neworg = '-966.8 -165.3 1096.8';
-		else if (mapname == "c1a1b" && lmstats == "c1a1b")
+		else
+		if (mapname == "c1a1b" && lmstats == "c1a1b")
 			neworg = '-322.3 -153.1 -145.6';
-		else if (mapname == "c1a3" && lmstats == "lm_c1a3_0d")
+		else
+		if (mapname == "c1a3" && lmstats == "lm_c1a3_0d")
 			neworg = '76.5 1527.5  43.4';
-		else if (mapname == "c1a4b" && lmstats == "c1a4btoc")
+		else
+		if (mapname == "c1a4b" && lmstats == "c1a4btoc")
 			neworg = '-1109.5 -1159.1 -1138.0';
-		else if (mapname == "c1a4b" && lmstats == "c1a4btoi3")
+		else
+		if (mapname == "c1a4b" && lmstats == "c1a4btoi3")
 			neworg = '-1109.1 -1103.0 -1149.9';
-		else if (mapname == "c1a4b" && lmstats == "c1a4atod")
+		else
+		if (mapname == "c1a4b" && lmstats == "c1a4atod")
 			neworg = '-2433.6 -1433.2 -1159.9';
-		else if (mapname == "c1a4d" && lmstats == "c1a4atod")
+		else
+		if (mapname == "c1a4d" && lmstats == "c1a4atod")
 			neworg = '2610.1 1502.1 361.5';
-		else if (mapname == "c1a4d" && lmstats == "c1a4dtoe")
+		else
+		if (mapname == "c1a4d" && lmstats == "c1a4dtoe")
 			neworg = '1640.7 716.6 268.0';
-		else if (mapname == "c1a4i" && lmstats == "c1a4btoi3")
+		else
+		if (mapname == "c1a4i" && lmstats == "c1a4btoi3")
 			neworg = '-1132.8 -1144.5 -1152.6';
-		else if (mapname == "c1a3" && lmstats == "c1a2_to_c1a3")
+		else
+		if (mapname == "c1a3" && lmstats == "c1a2_to_c1a3")
 			neworg = '71.3 1511.1 39.5';
-		else if (mapname == "c2a2h" && lmstats == "c2a2gc2a2h")
+		else
+		if (mapname == "c2a2h" && lmstats == "c2a2gc2a2h")
 			neworg = '65.4 -406.9 -713.0';
 		if (neworg != '0 0 0')
 			setorigin(nips, neworg);
@@ -4931,25 +4977,33 @@ void (entity pl, float fr) TF_AddFrags =
 	pl.real_frags = pl.real_frags + fr;
 	if (!pl.team_no)
 	return;
-	if (toggleflags & 2048) {
-	if (pl.team_no == 1)
-	    team1score = team1score + fr;
-	else if (pl.team_no == 2)
-	    team2score = team2score + fr;
-	else if (pl.team_no == 3)
-	    team3score = team3score + fr;
-	else if (pl.team_no == 4)
-	    team4score = team4score + fr;
+	if (toggleflags & 2048)
+	{
+		if (pl.team_no == 1)
+			team1score = team1score + fr;
+		else
+		if (pl.team_no == 2)
+			team2score = team2score + fr;
+		else
+		if (pl.team_no == 3)
+			team3score = team3score + fr;
+		else
+		if (pl.team_no == 4)
+			team4score = team4score + fr;
 	}
 	if (pl.team_no == 1)
 	team1frags = team1frags + fr;
-	else if (pl.team_no == 2)
+	else
+	if (pl.team_no == 2)
 	team2frags = team2frags + fr;
-	else if (pl.team_no == 3)
+	else
+	if (pl.team_no == 3)
 	team3frags = team3frags + fr;
-	else if (pl.team_no == 4)
+	else
+	if (pl.team_no == 4)
 	team4frags = team4frags + fr;
-	if (toggleflags & 2048) {
+	if (toggleflags & 2048)
+	{
 	e = find (world, classname, "player");
 	while (e)
 	{
@@ -4957,7 +5011,8 @@ void (entity pl, float fr) TF_AddFrags =
 		e.frags = TeamFortress_TeamGetScore (e.team_no);
 		e = find (e, classname, "player");
 	}
-	} else if (!(toggleflags & 128))
+	} else
+	if (!(toggleflags & 128))
 	pl.frags = pl.real_frags;
 };
 
@@ -5060,7 +5115,8 @@ void (entity _p_1249, entity _p_1250) Killed =
 	}
 	if (((self.movetype == 7.000000) || (self.movetype == 0.000000)))
 	{
-		if (self.is_monster != 1) {
+		if (self.is_monster != 1)
+		{
 		self.th_die ();
 		self = _l_1251;
 		return;
@@ -5072,7 +5128,8 @@ void (entity _p_1249, entity _p_1250) Killed =
 		if (self.is_monster == 1)
 		{
 		}
-		else {
+		else
+{
 bprint(2,"IF YOU SEE THIS MESSAGE TELL DEVELOPER THAT SOMETHING IS REALLY BAD HERE KTHXBAI\n");
 bprint(2, "entity 1: ");
 bprint(2, _p_1249.classname);
@@ -5947,8 +6004,6 @@ float(entity targ, entity inflictor) CanDamage =
 };
 void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 {
-//	local entity te;
-//	local float tm;
 	local entity newmon;
 	local float rtime;
 	local entity hax;	
@@ -5969,38 +6024,46 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 //		bprint (PRINT_HIGH, "Invalid spawn func!\n");  //Who cares if you remove a monster and the map has it defined, skip it. -arg
 		return;
 	}
-	if ((mtf_saveentity() == 1 && self.lives <= 0) || self.lives == -1) {
+	if ((mtf_saveentity() == 1 && self.lives <= 0) || self.lives == -1)
+	{
 		newmis = spawn();
 		newmis.think = MTF_RemoveMonster;
 		newmis.nextthink = time + 5;
 		newmis.enemy = self;
 	}
-	if (self.#is_minion == #TRUE) {
+	if (self.#is_minion == #TRUE)
+	{
 		newmis = spawn();
 		newmis.think = MTF_RemoveMonster;
 		newmis.nextthink = time + 5;
 		newmis.enemy = self;	
 		return;
 	}
-	if (self.lives <= 0) {
+	if (self.lives <= 0)
+	{
 		killed_monsters = killed_monsters + 1.000000;
 		hax = find(world, monster_string, "on");
 		while (hax)
 		{
-			if (hax.#is_minion == #FALSE) {
+			if (hax.#is_minion == #FALSE)
+			{
 				hax_tm = hax_tm + 1;
 				hax = find(hax, monster_string, "on");
 			}
-		}
+	}
 		WriteByte (2.000000, 27.000000);
-		if ( special_end > 0 ) {
-			if ( killed_monsters >= special_end ) {
+		if ( special_end > 0 )
+		{
+			if ( killed_monsters >= special_end )
+			{
 				exit_ent = spawn();
 				other = checkclient();
-				if (!other) {
+				if (!other)
+			{
 					dremove(exit_ent);
 				}
-				else {
+				else
+				{
 					exit_ent.think = changelevel_touch;
 					exit_ent.nextthink = time;
 				}
@@ -6019,7 +6082,8 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 			WriteByte (MSG_ALL, 14);
 			WriteLong (MSG_ALL, killed_monsters);
 		}
-		if (hax_tm == 0 && lms_entity != world) {
+		if (hax_tm == 0 && lms_entity != world)
+		{
 			killed_monsters = total_monsters;
 			WriteByte (MSG_ALL, 38);
 			WriteByte (MSG_ALL, 14);
@@ -6068,12 +6132,14 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 	newmon.brain = self.brain;
 	if ( newmon.spawnflags & #SPAWN_USETARGETSONRESPAWN )
 		newmon.#npc_useTargetsOnRespawn = #TRUE;
-	if (newmon.netname == "armagon") {
+	if (newmon.netname == "armagon")
+	{
 		dremove(newmon);
 		return;
 	}
 	newmon.think = respawn_think;
-	if (!spawn_func) {
+	if (!spawn_func)
+	{
 		bprint(2,"DEV: SPAWN_FUNC ERROR\n");
 		dremove(newmis);
 	}
@@ -6443,7 +6509,8 @@ void(entity p) TeamFortress_SetSkin =
 void () MTF_Priority_Precache =
 {
 	if (mapname == "qte1m3" || mapname == "qte1m4" || mapname == "qte2m2" 
-	   || mapname == "qte2m3" || mapname == "qte2m4") {
+	   || mapname == "qte2m3" || mapname == "qte2m4")
+	{
 		precache_model("progs/wizard.mdl");
 		precache_model("progs/zombie.mdl");
 		precache_model("progs/ogre.mdl");
@@ -6459,16 +6526,16 @@ void () MTF_Priority_Precache =
 		precache_model("progs/v_asscan.mdl");
 		precache_model("progs/v_mac10.mdl");
 		precache_model("progs/v_grap.mdl");
-}
-	if (mapname == "qte1m3" || mapname == "qte2m2" || mapname == "qte2m3" 
-	   || mapname == "qte2m4") {
+	}
+	if (mapname == "qte1m3" || mapname == "qte2m2" || mapname == "qte2m3" || mapname == "qte2m4")
+	{
 		precache_model("progs/v_knife.mdl");
 		precache_model("progs/v_knife2.mdl");
 		precache_model("progs/v_span.mdl");
 		precache_model("progs/v_rail.mdl");
 	}
-	if (mapname == "qte1m4" || mapname == "qte2m2" || mapname == "qte2m3" 
-	   || mapname == "qte2m4") {
+	if (mapname == "qte1m4" || mapname == "qte2m2" || mapname == "qte2m3" || mapname == "qte2m4")
+	{
 		if (mapname == "qte2m3")
 		{
 			precache_model ("progs/demon.mdl");
@@ -6491,7 +6558,8 @@ void () MTF_Priority_Precache =
 		precache_model("progs/v_srifle.mdl");
 		precache_model ("progs/demon.mdl");
 	}
-	else if (mapname == "qte2m2")
+	else
+	if (mapname == "qte2m2")
 	{
 		precache_model ("progs/demon.mdl");
 		precache_model ("progs/boss.mdl");
@@ -6595,7 +6663,8 @@ string ( entity monster, float return_name ) GetMonsterPowers =
 		else
 			rtrn = strcat(rtrn, monster.netname);
 	}
-	if (monster.#is_minion == #TRUE) {
+	if (monster.#is_minion == #TRUE)
+	{
 		rtrn = strcat(rtrn, " (");
 		rtrn = strcat(rtrn, monster.owner.netname);
 		rtrn = strcat(rtrn, ")");
@@ -6628,7 +6697,8 @@ void () W_SetCurrentAmmo =
 		self.currentammo = 0.000000;
 		if ((self.weaponmode == 0.000000))
 		{
-			if (self.playerclass == 7) {
+			if (self.playerclass == 7)
+			{
 				self.weaponmodel = #MODEL_CHAINSAW;
 				self.currentammo = self.ammo_nails;
 			}
@@ -6646,7 +6716,9 @@ if (allow_bat == 1)
 	}
 		self.weaponframe = 0.000000;
 	}
-	else if (self.current_weapon == #WEAP_ZEROGRAVITY) {
+	else
+	if (self.current_weapon == #WEAP_ZEROGRAVITY)
+	{
 		self.currentammo = 0;
 		self.weaponmodel = #MODEL_V_SHOTGUN;
 		self.weaponframe = 7;
@@ -6675,7 +6747,8 @@ if (allow_bat == 1)
 			{
 				if ((self.current_weapon == 128))
 				{
-					if ( self.mtf_items & #MTFITEM_LIGHTGUN ) {
+					if ( self.mtf_items & #MTFITEM_LIGHTGUN )
+					{
 						self.mtf_items |= #MTFITEM_LIGHTGUN;
 						self.currentammo = self.ammo_cells;
 						if (!(self.tfstate & 2))
@@ -6685,7 +6758,8 @@ if (allow_bat == 1)
 						}
 						self.items = (self.items | 2048);
 					}
-					else {
+					else
+					{
 					self.currentammo = self.ammo_shells;
 					self.items = (self.items | 2048);
 					if (!(self.tfstate & 2))
@@ -7849,7 +7923,8 @@ void () TeamFortress_GrenadePrimed =
 	local entity _l_10250;
 	local entity _l_10251;
 	local float _l_10252;
-	if (self.owner != self.real_owner) {
+	if (self.owner != self.real_owner)
+	{
 		bprint( 2, "TeamFortress_GrenadePrimed: self.owner does not match self.real_owner - SHOW THIS TO DEV\n");
 		self.owner = self.real_owner;
 	}
@@ -7859,7 +7934,7 @@ void () TeamFortress_GrenadePrimed =
 		self.nextthink = (time + 0.100000);
 		if (!self.think)
 		{
-bprint(2,"TeamFortress_GrenadePrimed: GREN LOGIC FAIL # 1 TELL DEV\n");
+			bprint(2,"TeamFortress_GrenadePrimed: GREN LOGIC FAIL # 1 TELL DEV.\n");
 			dremove (self);
 		}
 		if ((time > self.heat))
@@ -8420,20 +8495,22 @@ void () TeamFortress_SetEquipment =
 										self.tp_grenades_1 = 1.000000;
 										self.tp_grenades_2 = 7.000000;
 										self.tf_items = 0.000000;
-if (spy_armor == 1) {
-										self.armorclass = (self.armorclass | 4);
-										self.armortype = 0.6;
-										self.armorvalue = 25;
-										self.armor_allowed = 0.6;
-										self.maxarmor = 50;
-}
-else {
+										if (spy_armor == 1)
+										{
+											self.armorclass = (self.armorclass | 4);
+											self.armortype = 0.6;
+											self.armorvalue = 25;
+											self.armor_allowed = 0.6;
+											self.maxarmor = 50;
+										}
+										else
+										{
 										self.armorclass = (self.armorclass | 0.000000);
 										self.armortype = 0.300000;
 										self.armorvalue = 25.000000;
 										self.armor_allowed = 0.300000;
 										self.maxarmor = 100.000000;
-}
+										}
 										self.current_weapon = 262144.000000;
 										self.items_allowed = 262928.000000;
 										self.items = (self.items | 71.000000);
@@ -8873,9 +8950,11 @@ void(float Suicided) TeamFortress_SetupRespawn =
 		self.lives = self.lives - 1;
 	}
 #ifdef BATTLE_ROYALE
-	if (battle_royale_e != world) {
+	if (battle_royale_e != world)
+	{
 		spot = SelectSpawnPoint ();
-		if (spot == world) {
+		if (spot == world)
+	{
 			sprint( self, 2, "No more valid spawn points. Please wait for the Battle Royale match to finish.\n");
 			self.playerclass = 0;
 			self.tfstate = self.tfstate - (self.tfstate & 8);
@@ -9425,44 +9504,50 @@ float(vector veca, vector vecb) crossproduct =
 	return result;
 };
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = 
-        {
-          	local vector dir;
-          	local entity oldself;
-          	local entity te;
-          	local float save;
-          	local float take;
-          	if (!(targ.takedamage))
-          	{
-				return;
-			}
-			if (inflictor.monster_type > 0)
-				damage *= 4.5;
+{
+	local vector dir;
+	local entity oldself;
+	local entity te;
+	local float save;
+	local float take;
+	if (!(targ.takedamage))
+	{
+		return;
+	}
+	if (inflictor.monster_type > 0)
+		damage *= 4.5;
 	if (((targ.classname == "player_prop") && (targ.team_no == attacker.team_no) && targ != attacker))
 	{
 		return;
 	}
-	if (attacker.#is_minion == #TRUE && attacker.classname != "player") {
+	if (attacker.#is_minion == #TRUE && attacker.classname != "player")
+	{
 		// TODO: multiply damage here for higher level minion master
 	}
 	if (targ.#is_minion == #TRUE && targ.team_no == attacker.team_no && attacker.classname != "player")
 		return;
 		if (targ.classname == "player" && targ.health <= 0 && targ.solid == 0)
 			return;
-		if (attacker.is_monster == 1) {
+		if (attacker.is_monster == 1)
+		{
 			damage = MTF_Monster_Damage( attacker, inflictor, targ, damage );
 		}
 		if (targ.is_monster == 1 && attacker.classname == "player")
 		{
-			if (targ.movetype != MOVETYPE_FLY) {
+			if (targ.movetype != MOVETYPE_FLY)
+			{
 				if (targ.flags & FL_ONGROUND) 
-					if (targ.being_juggled) {
+					if (targ.being_juggled)
+					{
 						targ.being_juggled = 0;
 					}
-				if (targ.being_juggled) {
+				if (targ.being_juggled)
+				{
 					damage *= 2;
 					targ.being_juggled = targ.being_juggled + 1;
 				}
-				if (inflictor.touch == T_MissileTouch /*|| inflictor.touch == GrenadeTouch */|| inflictor.touch == NormalGrenadeTouch || inflictor.touch == Napalm_touch || inflictor.touch == T_IncendiaryTouch) {
+				if (inflictor.touch == T_MissileTouch /*|| inflictor.touch == GrenadeTouch */|| inflictor.touch == NormalGrenadeTouch || inflictor.touch == Napalm_touch || inflictor.touch == T_IncendiaryTouch)
+				{
 					
 					dir = targ.origin - (inflictor.absmin + inflictor.absmax) * 0.5;
 					dir = normalize(dir);
@@ -9475,13 +9560,17 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			}
 			damage = MTF_Monster_Take_Damage( attacker, targ, damage );
 		}
-		if (canusenew == 1) {
-		if (attacker.netname && attacker != world) {
-		if (attacker.infstaytime > time) {
+		if (canusenew == 1)
+		{
+		if (attacker.netname && attacker != world)
+		{
+		if (attacker.infstaytime > time)
+		{
 			attacker.infstaytime = time + 1.25;
 			attacker.inflicted = attacker.inflicted + damage;
 		}
-		else {
+		else
+		{
 			attacker.inflicted = damage;
 			attacker.infstaytime = time + 2.25; } }
 		}
@@ -9650,13 +9739,17 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 	local entity te;
 	local float save;
 	local float take;
-		if (canusenew == 1) {
-		if (attacker.netname && attacker != world) {
-		if (attacker.infstaytime > time) {
-			attacker.infstaytime = time + 1.25;
-			attacker.inflicted = attacker.inflicted + damage;
-		}
-		else {
+		if (canusenew == 1)
+		{
+			if (attacker.netname && attacker != world)
+			{
+				if (attacker.infstaytime > time)
+				{
+					attacker.infstaytime = time + 1.25;
+					attacker.inflicted = attacker.inflicted + damage;
+				}
+		else
+		{
 			attacker.inflicted = damage;
 			attacker.infstaytime = time + 2.25; } }
 		}
@@ -9671,21 +9764,26 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 			damage *= .25;
 		if (targ.classname == "player" && targ.health <= 0 && targ.solid == 0)
 			return;
-		if (attacker.is_monster == 1) {
+		if (attacker.is_monster == 1)
+		{
 			damage = MTF_Monster_Damage( attacker, inflictor, targ, damage );
 		}
 		if (targ.is_monster == 1 && attacker.classname == "player")
 		{
-			if (targ.movetype != MOVETYPE_FLY) {
+			if (targ.movetype != MOVETYPE_FLY)
+			{
 				if (targ.flags & FL_ONGROUND) 
-					if (targ.being_juggled) {
+					if (targ.being_juggled)
+					{
 						targ.being_juggled = 0;
 					}
-				if (targ.being_juggled) {
+				if (targ.being_juggled)
+				{
 					damage *= 2;
 					targ.being_juggled = targ.being_juggled + 1;
 				}
-				if (inflictor.touch == T_MissileTouch /*|| inflictor.touch == GrenadeTouch*/ || inflictor.touch == NormalGrenadeTouch) {
+				if (inflictor.touch == T_MissileTouch /*|| inflictor.touch == GrenadeTouch*/ || inflictor.touch == NormalGrenadeTouch)
+				{
 					dir = targ.origin - (inflictor.absmin + inflictor.absmax) * 0.5;
 					dir = normalize(dir);
 					if (targ.flags & FL_ONGROUND) 
@@ -9924,7 +10022,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 	{
 		dir*=5.25;
 	}
-if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "player"))) & (attacker.netname != targ.netname)))
+	if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "player"))) & (attacker.netname != targ.netname)))
 	{
 		if (attacker.playerclass == 5)
 		{
@@ -9936,9 +10034,9 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
 					}
 		}
 		else
-				{
+		{
 			targ.velocity = targ.velocity + dir * damage * 8;
-				}
+		}
 				if (rj > TF_FLARE_OFF && (attacker.classname == "player" && targ.classname == "player") && attacker.netname == targ.netname)
 				{
 					targ.velocity = targ.velocity + dir * damage * rj;
@@ -10083,7 +10181,8 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 		if (self.classname == "grenade")		// so players can't be stupid and disconnect with a primed gren to damage teammates
 			if (self.owner == world)
 				return;
-		if (attacker.rune_time > time) {
+		if (attacker.rune_time > time)
+		{
 			if (attacker.#rune_type == #RUNE_EXPLOSIVE)
 				damage *= 3;
 		}
@@ -10149,7 +10248,8 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 							{
 								T_Damage(head, inflictor, attacker, points * 0.75);
 							}
-							else if (head.classname == "monster_shambler")
+							else
+							if (head.classname == "monster_shambler")
 							{
 								T_Damage(head, inflictor, attacker, points * 0.5);
 							}
@@ -10235,7 +10335,8 @@ void () FlameMonster_Flame =
 		fls = self.size_z;
 	endp = self.owner.origin;
 	endp_z += fls;
-	if (self.armorvalue == 1) {
+	if (self.armorvalue == 1)
+	{
 		if (self.owner.invincible_time > time)
 			self.effects = EF_RED;
 		else
@@ -10282,17 +10383,18 @@ void() changelevel_touch =
 #ifdef HALFLIFE
 	if (self.spawnflags & 2)		// no touch exit
 		return;
-
 	HalfLife_SetupLandmark();
 #endif
-	if (num_players > 1 && can_exit == #FALSE) {
+	if (num_players > 1 && can_exit == #FALSE)
+	{
 		if (votestarted == #VOTE_EXIT)
 			return;
 		if (total_monsters > killed_monsters)
 		{
 			if (votestarted > 0)
 				return;
-			else {
+			else
+			{
 				self = other;
 				Vote_StartVote( #VOTE_EXIT, "", world );
 				return;
@@ -10325,7 +10427,8 @@ void () summon_respawn_think =
 {
 	local entity head;
 	head = findradius (self.origin, 56);
-	while (head) {
+	while (head)
+	{
 		if (head.classname == "player" && head.health > 0)
 		{
 			self.nextthink = time + 1;
@@ -10400,7 +10503,8 @@ entity(float team_num) FindTeamSpawnPoint =
 	{
 		if (team_num == 2)
 		{
-			if (self.monster_type > 0) {
+			if (self.monster_type > 0)
+			{
 				spot = lastspawn_team2;
 				attempts = 0;
 				while (TF_FLARE_OFF)
@@ -10409,7 +10513,8 @@ entity(float team_num) FindTeamSpawnPoint =
 					spot = find(world, monster_string, "on");
 					while (spot)
 					{
-						if (spot.health > 1) {
+						if (spot.health > 1)
+						{
 							spot_found = 1;
 							break;
 						}
@@ -10634,16 +10739,21 @@ float (entity us, entity test) COOP_IsValidTarget =
 {
 	local float r;
 	local entity the_client;
-	if (test.classname == "monster_demon1" || test.classname == "monster_army" || test.classname == "monster_shambler" ||
-				test.classname == "monster_wizard" ) {
+	if (test.classname == "monster_demon1" || test.classname == "monster_army" || test.classname == "monster_shambler" || test.classname == "monster_wizard" )
+	{
 		if (!Teammate(test.real_owner.team_no, us.team_no))
 			return #TRUE;
-	} else if (!Teammate(test.team_no, us.team_no)) {
+	}
+	else
+	if (!Teammate(test.team_no, us.team_no))
+	{
 		if (IsBuilding(test) && test.classname != "building_sentrygun_base")
 			return #TRUE;
-		else if (test.classname == "player") {
+		else
+		if (test.classname == "player")
+		{
 			r = vlen(test.origin - us.origin);
-	the_client = test;
+			the_client = test;
 	if (the_client == self.enemy)
 	{
 		return TF_FLARE_LIT;
@@ -10702,8 +10812,10 @@ entity (entity scanner) COOP_FindTarget =
 		return world;
 	self.#npc_noticedelay = time + 1.3;
 	head = findradius (scanner.origin, 2048);
-	while (head) {
-		if (visible2(head, scanner) && head.takedamage && head.health > 0) {
+	while (head)
+	{
+		if (visible2(head, scanner) && head.takedamage && head.health > 0)
+		{
 			if (COOP_IsValidTarget(scanner, head))
 				return head;
 		}
@@ -10715,15 +10827,16 @@ void () COOP_SmoothFrame =
 {
 	local float oldyaw;
 	local float speedmod;
-	if (time >= self.#npc_smoothtime) {
+	if (time >= self.#npc_smoothtime)
+	{
 		self.nextthink = time;
 		self.think = self.npc_oldthink;
 		self.#npc_lastruntime = 0;
 		return;
 	}
-	if (!self.#npc_lastruntime) {
+	if (!self.#npc_lastruntime)
+	{
 		self.#npc_lastruntime = self.lastruntime;
-
 		self.nextthink = time + #NPC_LERPTIME;
 		return;
 	}
@@ -10731,7 +10844,8 @@ void () COOP_SmoothFrame =
 	speedmod = self.#npc_smoothdist;
 	speedmod = speedmod * .45;
 	movedist = (speedmod/*self.#npc_smoothdist*/ / #NPC_FRAMETIME) * (self.lastruntime - self.#npc_lastruntime);
-	if (movedist) {
+	if (movedist)
+	{
 		oldyaw = self.yaw_speed;
 		self.yaw_speed = (oldyaw / #NPC_FRAMETIME) * (self.lastruntime - self.#npc_lastruntime);
 		movetogoal (movedist);
@@ -10739,7 +10853,10 @@ void () COOP_SmoothFrame =
 		self.#npc_lastruntime = self.lastruntime;
 		self.#npc_hax = self.lastruntime;
 		self.#npc_attemptednextthink = self.nextthink = time + #NPC_LERPTIME;
-	} else if (self.#npc_smoothdist) {
+	} 
+	else
+	if (self.#npc_smoothdist)
+	{
 		self.#npc_attemptednextthink = self.nextthink = self.#npc_attemptednextthink + 0.01;
 	}
 };
@@ -10942,31 +11059,40 @@ void (entity t_other) MTF_DoEndBonus =
 	else
 		other = world;
 	other = world;
-	if (no_more_exp == #FALSE) {
-	if (survival_mode) {
-		bprint(2,"Players have completed survival mode! Good team work!\n");
-		te = find ( world, classname, "player" );
-		while (te)
+	if (no_more_exp == #FALSE)
+	{
+		if (survival_mode)
 		{
-			if (te.coop_exp != -1 && te != other && te.has_disconnected != 1) {
-				if (te.frags > 0) {
+			bprint(2,"Players have completed survival mode! Good team work!\n");
+			te = find ( world, classname, "player" );
+			while (te)
+			{
+				if (te.coop_exp != -1 && te != other && te.has_disconnected != 1)
+				{
+					if (te.frags > 0)
+			{
 					expcurve = 27;
 					if (te.mtf_items & MTFITEM_DIVIDE_EXP)
 						expcurve = 13;
 					if (mapname == "08")
 						expcurve = 1;
-					else if (mapname == "04")
+					else
+					if (mapname == "04")
 						expcurve = 1;						
 					MTF_Coop_AddExperience(te, world, expcurve * te.real_frags);
 					MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
-					if (killed_monsters >= (total_monsters-15)) {		// -12 b/c you can't always kill all monsters in survival maps
+					if (killed_monsters >= (total_monsters-15))
+					{		// -12 b/c you can't always kill all monsters in survival maps
 						if (GetEP1MapBit(mapname) != -1)
 							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE1, GetEP1MapBit(mapname) );
-						else if (GetEP2MapBit(mapname) != -1)
+						else
+						if (GetEP2MapBit(mapname) != -1)
 							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE2, GetEP2MapBit(mapname) );
-						else if (GetEP3MapBit(mapname) != -1)
+						else
+						if (GetEP3MapBit(mapname) != -1)
 							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE3, GetEP3MapBit(mapname) );
-						else if (GetEP4MapBit(mapname) != -1)
+						else
+						if (GetEP4MapBit(mapname) != -1)
 							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE4, GetEP4MapBit(mapname) );							
 					}
 				}
@@ -10986,7 +11112,8 @@ void (entity t_other) MTF_DoEndBonus =
 			exptotal = (ceil(total_monsters*3.5)+ 500);
 
 			te = find ( world, classname, "monster_score" );
-			if (te.netname == "Monsters") {
+			if (te.netname == "Monsters")
+			{
 				if (te.frags == 0)
 				{
 					bprint(2, "FLAWLESS VICTORY! Mega EXP bonus!\n");
@@ -10994,7 +11121,8 @@ void (entity t_other) MTF_DoEndBonus =
 						Achievements_Change( world, world, ACHIEVEMENTS_GLOBALADD, ACHIEVEMENT_FLAWLESS, 1 );
 					if (mapname == "e1m1")
 						exptotal = exptotal + (total_monsters * 25);	// e1m1 abuse :\
-					else if (mapname == "doom2_01")
+					else
+					if (mapname == "doom2_01")
 						exptotal = exptotal + (total_monsters * 5);	// abuse
 					else
 						exptotal = exptotal + flawless_bonus;
@@ -11003,21 +11131,35 @@ void (entity t_other) MTF_DoEndBonus =
 			if (mapname == "insane")
 			{
 				bprint(2, "Stop playing insane you exp hoarding nubs! ;)\n");
-				if (exptotal > 600) { exptotal = 600; }
+				if (exptotal > 600)
+				{
+					exptotal = 600;
+				}
 			}
 			if (mapname == "08")
 			{
-				if (exptotal > 600) { exptotal = 600; }
+				if (exptotal > 600)
+				{
+					exptotal = 600;
+				}
 			}
-			else if (mapname == "beach")
+			else 
+			if (mapname == "beach")
 			{
 				bprint(2, "Flaw-less flawless eh?\n");
-				if (exptotal > 200) { exptotal = 200; }
+				if (exptotal > 200)
+				{
+					exptotal = 200;
+				}
 			}
-			else if (mapname == "undrhall")
+			else
+			if (mapname == "undrhall")
 			{
 				bprint(2, "Flaw-less flawless eh?\n");
-				if (exptotal > 200) { exptotal = 200; }
+				if (exptotal > 200)
+				{
+					exptotal = 200;
+				}
 			}
 		}
 	}
@@ -11034,13 +11176,14 @@ void (entity t_other) MTF_DoEndBonus =
 		te = find ( world, classname, "player" );
 		while (te)
 		{
-			if (te.coop_exp != -1 && te != other && te.has_disconnected != 1) {
-			if (found_secrets == total_secrets)
-				if (GetW3DMapBit(mapname) != -1)
-					Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_TREASURE, GetW3DMapBit(mapname) );
+			if (te.coop_exp != -1 && te != other && te.has_disconnected != 1)
+			{
+				if (found_secrets == total_secrets)
+					if (GetW3DMapBit(mapname) != -1)
+						Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_TREASURE, GetW3DMapBit(mapname) );
 				MTF_Coop_AddExperience(te, world, exptotal);
 				MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
-stuffcmd(te, "cmd sayexp\n");
+				stuffcmd(te, "cmd sayexp\n");
 			}
 			te = find (te, classname, "player");
 		}
@@ -11288,7 +11431,8 @@ void(entity Goal, entity AP, float addb) DoResults =
 };
 void () Wizard_Bounce_Off_Walls =
 {
-	if (self.attack_finished < 1) {
+	if (self.attack_finished < 1)
+	{
 		BecomeExplosion ();
 		dremove (self);
 	}
@@ -11371,7 +11515,8 @@ void() DelayedResult =
 };
 void () Bounce_Off_Walls =
 {
-	if (self.attack_finished < 1) {
+	if (self.attack_finished < 1)
+	{
 		BecomeExplosion ();
 		dremove (self);
 	}
@@ -11451,7 +11596,8 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 	oself = self;
 	if (override_exp == 0)
 	{
-		if ( cvar(frik_strcat("exp_", targ.classname)) == 0) {
+		if ( cvar(frik_strcat("exp_", targ.classname)) == 0)
+		{
 			filename = frik_strcat( "exp/", targ.classname, ".tfi" );
 			filename = strzone(filename);
 			file = open (filename, 0);
@@ -11475,23 +11621,51 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 			}
 			strunzone(filename);
 		}
-		else {
+		else
+		{
 			addexp = cvar(frik_strcat("exp_", targ.classname));
 		}
 	}
 	if (targ.coop_exp < 0) 
 		addexp = 0;
-	else if (targ.coop_exp > 0)
+	else
+if (targ.coop_exp > 0)
 		addexp = targ.coop_exp;
-	if (targ.monster_items & MITEM_QUAD) { addexp += 5; }
-	if (targ.monster_items & MITEM_INVISIBLE) { addexp += 5; }
-	if (targ.monster_items & MITEM_SPEED) { addexp += 5; }
-	if (targ.monster_items & MITEM_MEGAHEALTH) { addexp += 10; }
-	if (targ.monster_items & MITEM_FLAME) { addexp += 5; }
-	if (targ.monster_items & MITEM_ICE) { addexp += 5; }
-	if (targ.monster_items & MITEM_LIGHTNING) { addexp += 5; }
-	if (targ.monster_items & MITEM_AIR) { addexp += 5; }
-	if (targ.monster_items & MITEM_POWERSTEALER) { addexp += 5; }
+	if (targ.monster_items & MITEM_QUAD)
+	{
+	addexp += 5;
+	}
+	if (targ.monster_items & MITEM_INVISIBLE)
+	{
+		addexp += 5;
+	}
+	if (targ.monster_items & MITEM_SPEED)
+	{
+		addexp += 5;
+	}
+	if (targ.monster_items & MITEM_MEGAHEALTH)
+	{
+		addexp += 10;
+	}
+	if (targ.monster_items & MITEM_FLAME)
+	{
+		addexp += 5;
+	}
+	if (targ.monster_items & MITEM_ICE)
+	{
+		addexp += 5;		}
+	if (targ.monster_items & MITEM_LIGHTNING)
+	{
+		addexp += 5;
+	}
+	if (targ.monster_items & MITEM_AIR)
+	{
+		addexp += 5;
+	}
+	if (targ.monster_items & MITEM_POWERSTEALER)
+	{
+		addexp += 5;
+	}
 	if (total_monsters < 30)
 		flawless_bonus += addexp * .55;
 	else
@@ -11511,7 +11685,8 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 	if (targ.is_minion == #FALSE)
 		if (targ != world)
 			targ.#gold = addexp;
-	if (targ.#other_attacker != world && targ.#other_attacker != plyr && targ.#other_attacker.classname == "player" && addexp > 0) {
+	if (targ.#other_attacker != world && targ.#other_attacker != plyr && targ.#other_attacker.classname == "player" && addexp > 0)
+	{
 		addexp = ceil( addexp * .5 );
 		self = targ.#other_attacker;
 		MTF_Coop_CheckNewLevel( targ.#other_attacker.coop_exp, targ.#other_attacker.coop_exp + addexp );	// check if player levels up
@@ -11519,14 +11694,19 @@ void (entity plyr, entity targ, float override_exp) MTF_Coop_AddExperience =
 		targ.#other_attacker.coop_exp = targ.#other_attacker.coop_exp + addexp;
 		Achievements_Change( targ.#other_attacker, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_HELPER, 1 );
 	}
-	if ( plyr.#rune_time > time ) {
-		if ( plyr.#rune_type == #RUNE_EXPBONUS ) {
-			if ( !override_exp ) {
+	if ( plyr.#rune_time > time )
+	{
+		if ( plyr.#rune_type == #RUNE_EXPBONUS )
+		{
+			if ( !override_exp )
+			{
 				addexp *= 2;
 			}
 		}
-		if ( plyr.#rune_type == #RUNE_UBEREXP ) {
-			if ( !override_exp ) {
+		if ( plyr.#rune_type == #RUNE_UBEREXP )
+		{
+			if ( !override_exp )
+			{
 				addexp *= 4;
 			}
 		}
@@ -11575,11 +11755,13 @@ void () MTF_Coop_UpdateMapRanks =
 	local entity plyr;
 	if (total_monsters == 0)
 		return;
-	if (survival_mode) {
+	if (survival_mode)
+	{
 		if (killed_monsters < (total_monsters-12))
 			return;
 	}
-	else if (killed_monsters < total_monsters)
+	else
+	if (killed_monsters < total_monsters)
 			return;
 	filename = frik_strcat( "ranks/maps/", mapname, ".tfi" );
 	new_best_time = time;
@@ -11667,7 +11849,8 @@ void (string vname, float addness) MTF_Coop_RanksMapVote =
 	{
 		i++;
 		a = read (file);
-		if (a == vname) {
+		if (a == vname)
+		{
 			a = read (file);
 			foundit = 1;
 			vcnt = stof(a);
@@ -11684,7 +11867,8 @@ void (string vname, float addness) MTF_Coop_RanksMapVote =
 		i++;
 		a = read (file);
 		a = read (file);
-		if (stof(a) <= vcnt) {
+		if (stof(a) <= vcnt)
+		{
 			close (file);
 			MTF_Coop_WriteNewMapRank( i, vname, vcnt );
 			return;
@@ -11917,11 +12101,13 @@ void () TF_PlaceGoal =
 		self.nextthink = (time + self.search_time);
 		self.classname = "info_tfgoal";
 	}
-	if (self.goal_activation & 2048) {
+	if (self.goal_activation & 2048)
+	{
 	self.movetype = MOVETYPE_TOSS;
 	self.origin_z = self.origin_z + 6;
 	oldz = self.origin_z;
-	if (!droptofloor ()) {
+	if (!droptofloor ())
+	{
 		dprint ("Goal fell out of level at ");
 		dprint (vtos (self.origin));
 		dprint ("\n");
@@ -12001,7 +12187,8 @@ void () info_tfdetect =
 		}
 		haltloop3 = 1;
 	}
-	if (quotestart != 1) {
+	if (quotestart != 1)
+	{
 	quotetimer ();
 	quotestart = 1;
 	}
@@ -12290,18 +12477,6 @@ void(entity AD) ParseTFDetect =
 		illegalclasses4 = TF_FLARE_LIT;
 		civilianteams = civilianteams | 8;
 	}
-#ifndef mtf_coop
-	if ((AD.frags > 0.000000))
-	{
-		FlagTag = AD.frags;
-		localcmd ("localinfo FlagTag Running\n");
-	}
-	else
-	{
-		FlagTag = 0.000000;
-		localcmd ("localinfo FlagTag NotRunning\n");
-	}
-#endif
 };
 entity(float ino) Finditem = 
 {
@@ -12923,26 +13098,31 @@ float(entity Goal, entity AP) APMeetsCriteria =
 			}
 		}
 	}
-	if (AP != world) {
-	gotone = 0;
-	if (Goal.has_item_from_group) {
-	    te = find (world, classname, "item_tfgoal");
-	    while ((te != world) && !gotone) {
-		if ((te.group_no == Goal.has_item_from_group) && (te.owner == AP))
-		    gotone = 1;
-		te = find (te, classname, "item_tfgoal");
+	if (AP != world)
+	{
+		gotone = 0;
+		if (Goal.has_item_from_group)
+		{
+			te = find (world, classname, "item_tfgoal");
+			while ((te != world) && !gotone)
+			{
+				if ((te.group_no == Goal.has_item_from_group) && (te.owner == AP))
+				gotone = 1;
+				te = find (te, classname, "item_tfgoal");
+			}
+			if (!gotone)
+			return (0);
 		}
-		if (!gotone)
-		return (0);
-	}
-	if (Goal.hasnt_item_from_group) {
-		te = find (world, classname, "item_tfgoal");
-		while ((te != world) && !gotone) {
-		if ((te.group_no == Goal.hasnt_item_from_group) && (te.owner == AP))
-		    return (0);
-		te = find (te, classname, "item_tfgoal");
-	    }
-	}
+		if (Goal.hasnt_item_from_group)
+		{
+			te = find (world, classname, "item_tfgoal");
+			while ((te != world) && !gotone)
+			{
+				if ((te.group_no == Goal.hasnt_item_from_group) && (te.owner == AP))
+				return (0);
+			te = find (te, classname, "item_tfgoal");
+			}
+		}
 	}
 	return (1);
 };
@@ -13788,8 +13968,10 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	key2on = 0;
 	spyoff = 0;
 	te = find (world, classname, "item_tfgoal");
-	while (te) {
-	if ((te.owner == AP) && (te != Item)) {
+	while (te)
+	{
+	if ((te.owner == AP) && (te != Item))
+	{
 		if (te.goal_activation & 1)
 		lighton = 1;
 		if (te.goal_activation & 2)
@@ -13830,7 +14012,8 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	if (!key2on)
 	AP.items = AP.items - (AP.items & 262144);
 	te = find (world, classname, "player");
-	while (te != world) {
+	while (te != world)
+	{
 	if (IsAffectedBy (Item, te, AP))
 	    RemoveResults (Item, te);
 	te = find (te, classname, "player");
@@ -13864,9 +14047,10 @@ void (entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer =
 	{
 		DelayReturn = spawn ();
 		DelayReturn.enemy = Item;
-		if (method3 == 0) {
-		DelayReturn.weapon = 0;
-	}
+		if (method3 == 0)
+		{
+			DelayReturn.weapon = 0;
+		}
 	else
 	{
 		DelayReturn.weapon = 1;
@@ -14008,13 +14192,14 @@ void (entity Item, float PAlive, entity P) tfgoalitem_drop =
 	}
 	setsize(Item, '-16 -16 0', '16 16 56');		// replaced!
 	Item.owner = P;
-	if (PAlive == 1) {
-	setsize(Item, '-16 -16 0', '16 16 56');
-	makevectors (P.v_angle);
-	if (P.v_angle_x)
+	if (PAlive == 1)
 	{
-		Item.velocity = (v_forward * 400) + (v_up * 200);
-	}
+		setsize(Item, '-16 -16 0', '16 16 56');
+		makevectors (P.v_angle);
+		if (P.v_angle_x)
+		{
+			Item.velocity = (v_forward * 400) + (v_up * 200);
+		}
 	else
 	{
 		Item.velocity = aim (P, 10000);
@@ -14392,16 +14577,16 @@ void () DropGoalItems =
 	v_forward = normalize (v_forward) * 64;
 	newmis.origin = self.origin + v_forward;
 	te = find (world, classname, "item_tfgoal");
-	while (te) {
-	if (te.owner == self)
-	    if (te.goal_activation & 4096 || te.owner == self)
-		{
-			tfgoalitem_RemoveFromPlayer (te, self, 2);
-			te.no_bounce = time + 2;
-			te.option5 = time + 2;
-			te.tent = self;
-		}
-	
+	while (te)
+	{
+		if (te.owner == self)
+			if (te.goal_activation & 4096 || te.owner == self)
+			{
+				tfgoalitem_RemoveFromPlayer (te, self, 2);
+				te.no_bounce = time + 2;
+				te.option5 = time + 2;
+				te.tent = self;
+			}
 	te = find (te, classname, "item_tfgoal");
 	}
 	dremove (newmis);
@@ -14447,7 +14632,8 @@ void() EMPGrenadeExplode =
 	multicast(self.origin, TF_FLARE_OFF);
 	local entity head;
 		head = findradius (self.origin, 175);
-		while (head) {
+		while (head)
+{
 			if (head.classname == "monster_zombie" && head.is_monster == 1)
 			{
 deathmsg = 30;
@@ -14849,9 +15035,11 @@ void() FlashGrenadeExplode =
 	te = findradius(self.origin, 200);
 	while (te)
 	{
-		if (Coop_IsMonster(te, #MONSTERTYPE_NORMAL)) {
+		if (Coop_IsMonster(te, #MONSTERTYPE_NORMAL))
+{
 			te.enemy = world;
-			if (te.#mflash_time < (time - 10)) {
+			if (te.#mflash_time < (time - 10))
+			{
 				te.#mflash_time = time + 4;
 				deathmsg = 35;
 				TF_T_Damage(te, self, self.owner, 60, TF_FLARE_LIT, 16);
@@ -14978,14 +15166,16 @@ float () Coop_ExpCurve =
 void ( float exptotal, string reason, float sayamount ) MTF_Coop_AddExpToAll =
 {
 	local entity te;
-	if (reason != string_null) {
+	if (reason != string_null)
+	{
 		bprint( 2, reason );
 		bprint( 2, "\n" );
 	}
 	te = find ( world, classname, "player" );
 	while (te)
 	{
-		if (te.coop_exp != -1 && te != other && te.has_disconnected != 1) {
+		if (te.coop_exp != -1 && te != other && te.has_disconnected != 1)
+		{
 			MTF_Coop_AddExpAndWrite (te, world, exptotal, sayamount);
 		}
 		te = find (te, classname, "player");
@@ -15298,7 +15488,8 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 	local float i;
 	i=0;
 	file = open ("topmaps.tfi", 0);
-	if (file == -1) {
+	if (file == -1)
+	{
 		bprint(2,"topmaps.tfi does not exist! Add it to /fortress or experience unholy amounts of crashes!\n");
 		return;
 	}
@@ -15364,14 +15555,16 @@ void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop
 	if (t_player.coop_exp == -1)
 		return;
 	self.#next_srv_time = time + 1;
-	if ( exp_srv == 0 ) {
+	if ( exp_srv == 0 )
+	{
 		bprint( 2, "MTF_Coop_AddServiceExp: No service specified.\n" );
 		return;
 	}
 	sprint( t_player, 2, "+" );
 	sprint( t_player, 2, ftos(exptotal) );
 	sprint( t_player, 2, " exp " );
-	if ( exp_srv == #SRV_HEAL ) {
+	if ( exp_srv == #SRV_HEAL )
+	{
 		sprint( t_player, 2, "(player heal)\n" );
 	}
 	else
@@ -15408,7 +15601,8 @@ void (entity plyr) Attributes_over_limit =
 };
 float (float attrib_count) CheckAttributes =
 {
-	if (attrib_count > #MAX_SPEND) {
+	if (attrib_count > #MAX_SPEND)
+	{
 		return 1;
 	}
 	return 0;
@@ -15620,12 +15814,14 @@ float (string nname) MTF_Coop_GetExperience =
 		return ( -1 );
 	filename = /*strzone(*/frik_strcat( "ranks/", nname, ".tfi" )/*)*/;
 	filename = strzone(filename);
-	if ( invalid_exp_name(filename) == 1 ) {
+	if ( invalid_exp_name(filename) == 1 )
+	{
 		strunzone(nname);
 		strunzone(filename);
 		return ( -1 );
 	}
-	if ( checkfilename(filename) != 1 ) {	// done in C - makes sure the file name 
+	if ( checkfilename(filename) != 1 )
+	{	// done in C - makes sure the file name 
 		strunzone(nname);
 		strunzone(filename);
 		if (checkfilename( "ranks/test" ) == #FALSE)
@@ -15637,13 +15833,13 @@ float (string nname) MTF_Coop_GetExperience =
 	if (filename != oopsname || self.has_disconnected == 1)
 	{
 		bprint(2, "!!!!!!!!!!!!! EXP BUG ERROR IN READ!!! FILENAME IS NOT THE SAME AS CONNECT NAME !!!!!!!!!!!!! \n");
-bprint(2, "CNAME: ");
-bprint(2, self.connect_name);
-bprint(2, " filename: ");
-bprint(2, filename);
-bprint(2, " oopsname: ");
-bprint(2, oopsname);
-bprint(2,"\n");
+		bprint(2, "CNAME: ");
+	bprint(2, self.connect_name);
+	bprint(2, " filename: ");
+	bprint(2, filename);
+	bprint(2, " oopsname: ");
+	bprint(2, oopsname);
+	bprint(2,"\n");
 		strunzone(filename);
 		strunzone(oopsname);
 		return ( -1 );
@@ -15812,7 +16008,8 @@ void () MTF_Coop_RanksExperienceSet =
 		i++;
 		a = read (file);
 		a = read (file);
-		if (stof(a) <= exp) {
+		if (stof(a) <= exp)
+		{
 			close (file);
 			MTF_Coop_WriteNewRank( i, t_plyr.connect_name/*nname*/, exp );
 			dremove(self);
@@ -16102,52 +16299,62 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 	newlvl = 0;
 	// fixme addme: stop messing around and add a while() loop here
 	lvlg = #COOP_LEVEL_ONE;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 1;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_TWO;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 2;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_THREE;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 3;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_FOUR;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 4;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_FIVE;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 5;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_SIX;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 6;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_SEVEN;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 7;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_EIGHT;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 8;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_NINE;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 9;
 		self.attribute_points += 1;
 	}
 	lvlg = #COOP_LEVEL_TEN;
-	if (origexp < lvlg && newexp >= lvlg) {
+	if (origexp < lvlg && newexp >= lvlg)
+	{
 		newlvl = 10;
 		self.attribute_points += 1;
 	}
@@ -16164,13 +16371,15 @@ void (float origexp, float newexp) MTF_Coop_CheckNewLevel =
 				newlvl = 10 + chklvl;
 				chklvl = 0;
 			}
-			else if (newexp > lvlg)
+			else
+			if (newexp > lvlg)
 				chklvl += 1;
 			else
 				chklvl = 0;
 		}
 	}
-	if (newlvl > 0) {
+	if (newlvl > 0)
+	{
 		bprint(2, self.netname);
 		bprint(2, " is now level ");
 		bprint(2, ftos(newlvl));
@@ -16188,7 +16397,8 @@ void (string nname, float exp/*, float reset_attribs*/) MTF_Coop_ForceWriteExper
 		return;
 	nname = strzone(nname);
 	filename = strzone( frik_strcat( "ranks/", nname, ".tfi" ) );
-	if ( checkfilename(filename) != 1 ) {	// done in C - makes sure the file name 
+	if ( checkfilename(filename) != 1 )
+	{	// done in C - makes sure the file name 
 		return;				// is writable
 	}
 	file = open (filename, 0);
@@ -16385,20 +16595,27 @@ float ( float currexp, float attrib_type ) Coop_GetNextLevelNeeded =
 	local float current_amount;
 	current_amount = Coop_GetAttributeTotal( self, attrib_type );
 	current_amount += 1;
-	if (attrib_type == #ATTRIB_DAMAGE) {
+	if (attrib_type == #ATTRIB_DAMAGE)
+	{
 		if (current_amount == 1)
 			return #COOP_LEVEL_ONE;
-		else if (current_amount == 2)
+		else
+		if (current_amount == 2)
 			return #COOP_LEVEL_THREE;
-		else if (current_amount == 3)
+		else
+		if (current_amount == 3)
 			return #COOP_LEVEL_SIX;
-		else if (current_amount == 4)
+		else
+		if (current_amount == 4)
 			return #COOP_LEVEL_EIGHT;
-		else if (current_amount == 5)
+		else
+		if (current_amount == 5)
 			return #COOP_LEVEL_TEN;
-		else if (current_amount == 6)
+		else
+		if (current_amount == 6)
 			return #COOP_LEVEL_TEN;  // edited to ten instead of 12 and 15 since the #defines are not there ? whatever. -arg
-		else if (current_amount == 7)
+		else
+		if (current_amount == 7)
 			return #COOP_LEVEL_TEN;
 	}
 	else
@@ -16409,7 +16626,8 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 	local string attr_name;
 	local float for_dmg;
 	local float attrib_count, attrib_cost;
-	if (attrib_type == 0 || ! attrib_type) {
+	if (attrib_type == 0 || ! attrib_type)
+	{
 		sprint(self, 2, "To spend attributes type \"cmd spend attrib#\". Attrib#'s are:\n");
 		sprint(self, 2, "1 - health (higher health attributes allow better armor types).\n");
 		sprint(self, 2, "2 - armor (percent increase in total armor).\n");
@@ -16571,11 +16789,13 @@ float (entity plyr, float attrib_type) MTF_Coop_AttribGain =
 		return ( (.15 * plyr.misc_attr) );
 	}
 	else
-	if (attrib_type == #ATTRIB_AMMO) {
+	if (attrib_type == #ATTRIB_AMMO)
+	{
 		return ( 1 + (.36 * plyr.ammo_attr) );		// 2/23/11: used to be .2
 	}
 	else
-	if (attrib_type == #ATTRIB_CRIT) {
+	if (attrib_type == #ATTRIB_CRIT)
+	{
 		return ( 1 + (1.75 * plyr.crit_attr) );
 	}
 	else
@@ -16622,9 +16842,11 @@ float (entity plyr, float atype) MTF_Coop_SetArmorAttrib =
 	}
 	if (plyr.health_attr == 1)
 		return (0.6);
-	else if (plyr.health_attr == 2)
+	else
+	if (plyr.health_attr == 2)
 		return (0.7);
-	else if (plyr.health_attr >= 3)
+	else
+	if (plyr.health_attr >= 3)
 		return (0.8);
 
 	return ( plyr.armor_allowed );
@@ -16693,7 +16915,8 @@ void () summon_think =
 	}
 	if (time >= self.armorvalue)		// time for summoned monster to die! :(
 	{
-		if (self.owner.th_die) {
+		if (self.owner.th_die)
+		{
 			self.owner.flags = self.flags | FL_MONSTER;
 			self.owner.deathtype = "monster_respawn";
 			self.owner.health = -60;
@@ -16780,7 +17003,8 @@ void (entity p, string newskin) MTF_Coop_SetCustomSkin =
 		return;
 	}
 		
-	if (newskin == "") {
+	if (newskin == "")
+	{
 		sprint(p, 2, "No skin specified. Use CMD customskin skinname\n");
 		return;
 	}
@@ -16825,7 +17049,8 @@ float ( entity t_plyr, float attrib_type ) Coop_HasMasterSkill =
 {
 	local float attr_total;
 	attr_total = Coop_GetAttributeTotal( t_plyr, attrib_type );
-	if ( attr_total >= #MASTERS_LEVEL ) {				// no longer MAX_SPEND because I raised the caqp from 7 to 10 now
+	if ( attr_total >= #MASTERS_LEVEL )
+	{				// no longer MAX_SPEND because I raised the caqp from 7 to 10 now
 		return #TRUE;
 	}
 	return #FALSE;
@@ -16838,7 +17063,8 @@ void () Masters_MinionSpawnThink =
 		dremove(self);
 		return;
 	}
-	if (InSolid(self)) {
+	if (InSolid(self))
+	{
 		sprint( self.enemy, 2, "Move to a more open area to teleport your minion in\n" );
 		dremove(self);
 		return;
@@ -16861,11 +17087,13 @@ void ( entity t_plyr, float attrib_type, float skill_no ) Coop_UseMasterSkill =
 	if ( t_plyr.health < 1 )
 		return;
 // If you don't have the skill and not medic class back you go. -arg
-	if ( Coop_HasMasterSkill( t_plyr, attrib_type ) == #FALSE && (self.playerclass != 5) ) {
+	if ( Coop_HasMasterSkill( t_plyr, attrib_type ) == #FALSE && (self.playerclass != 5) )
+	{
 		sprint( t_plyr, 2, "You don't have the master skill for this particular attribute\n" );
 		return;
 	}
-	if ( time < t_plyr.#next_masters_time ) {
+	if ( time < t_plyr.#next_masters_time )
+	{
 		sprint ( t_plyr, 2, "Your Masters Skill needs to recharge.\n" );
 		return;
 	}
@@ -17274,7 +17502,8 @@ void() ammo_touch =
 		W_SetCurrentAmmo();
 		self = stemp;
 	}
-	if (self.orig_origin != '0 0 0') {
+	if (self.orig_origin != '0 0 0')
+	{
 		self.origin = self.orig_origin;
 		//self.orig_origin = '0 0 0';
 	}
@@ -18016,7 +18245,8 @@ void (string nname, float exp) MTF_Coop_WriteExperience =
 	nname = strzone(nname);
 	filename = strzone( frik_strcat( "ranks/", nname, ".tfi" ) );
 	strzone(filename);
-	if ( checkfilename(filename) != 1 ) {	// done in C - makes sure the file name 
+	if ( checkfilename(filename) != 1 )
+	{	// done in C - makes sure the file name 
 		return;				// is writable
 	}
 	file = open (filename, 0);
@@ -18613,7 +18843,8 @@ float() Sentry_Fire =
 		{
 			muzzleflash();
 		}
-		if (self.#sentry_power == #SENTRY_FLAME) {
+		if (self.#sentry_power == #SENTRY_FLAME)
+		{
 			newmis = spawn();
 			newmis.owner = self;
 			newmis.real_owner = self;
@@ -18633,10 +18864,14 @@ float() Sentry_Fire =
 			setorigin(newmis, self.origin + v_forward * 16 + '0 0 16');
 			self.ammo_shells = (self.ammo_shells - 1);
 		}
-		else if (self.#sentry_power == #SENTRY_SEEKER) {
+		else
+		if (self.#sentry_power == #SENTRY_SEEKER)
+		{
 			self.ammo_shells = self.maxammo_shells;
 		}
-		else if (self.#sentry_power == #SENTRY_QUAD) {
+		else
+		if (self.#sentry_power == #SENTRY_QUAD)
+		{
 			FireBullets (3.000000, dir, '0.100000 0.100000 0.000000');
 		}
 		else
@@ -19055,7 +19290,9 @@ void() turret_deathAnim =
 {
 	local float numOfGibs;
 	if(self.turret_base.flags & FL_ONGROUND)
-    while(turret_clearGround(self.turret_base)) {}
+	while(turret_clearGround(self.turret_base))
+	{
+	}
 	turret_throwGib ("progs/turgib1.mdl", -50);
 	turret_throwGib ("progs/turgib2.mdl", -50);
 	turret_throwGib ("progs/turgib3.mdl", -50);
@@ -19266,25 +19503,36 @@ void() Remove_Splash =
 	remove (self);
 };
 $frame splash1 splash2 splash3 splash4 splash5
-void() do_small_splash1 = [ $splash1, do_small_splash2 ] {};
-void() do_small_splash2 = [ $splash1, do_small_splash3 ] {};
-void() do_small_splash3 = [ $splash2, do_small_splash4 ] {};
-void() do_small_splash4 = [ $splash2, do_small_splash5 ] {};
+void() do_small_splash1 = [ $splash1, do_small_splash2 ]
+{};
+void() do_small_splash2 = [ $splash1, do_small_splash3 ]
+{};
+void() do_small_splash3 = [ $splash2, do_small_splash4 ]
+{};
+void() do_small_splash4 = [ $splash2, do_small_splash5 ]
+{};
 void() do_small_splash5 = [ $splash3, do_small_splash1 ]
 {
 	Remove_Splash();
 };
-void() do_large_splash1 = [ $splash1, do_large_splash2 ] {};
-void() do_large_splash2 = [ $splash2, do_large_splash3 ] {};
-void() do_large_splash3 = [ $splash3, do_large_splash4 ] {};
-void() do_large_splash4 = [ $splash4, do_large_splash5 ] {};
+void() do_large_splash1 = [ $splash1, do_large_splash2 ]
+{};
+void() do_large_splash2 = [ $splash2, do_large_splash3 ]
+{};
+void() do_large_splash3 = [ $splash3, do_large_splash4 ]
+{};
+void() do_large_splash4 = [ $splash4, do_large_splash5 ]
+{};
 void() do_large_splash5 = [ $splash5, do_large_splash1 ]
 {
 	Remove_Splash();
 };
-void() do_lava_splash1 = [ $splash1, do_lava_splash2 ] {};
-void() do_lava_splash2 = [ $splash2, do_lava_splash3 ] {};
-void() do_lava_splash3 = [ $splash3, do_lava_splash4 ] {};
+void() do_lava_splash1 = [ $splash1, do_lava_splash2 ]
+{};
+void() do_lava_splash2 = [ $splash2, do_lava_splash3 ]
+{};
+void() do_lava_splash3 = [ $splash3, do_lava_splash4 ]
+{};
 void() do_lava_splash4 = [ $splash4, do_lava_splash1 ]
 {
 	Remove_Splash();
@@ -19345,7 +19593,8 @@ void() CheckWaterLevels =
 						e.think = beartrapDie;
 						e.nextthink = time + 0.1;
 					}
-					else if (e.classname == "turret")
+					else
+					if (e.classname == "turret")
 					{
 						e.think = turret_deathAnim;
 						e.nextthink = time + 0.1;
@@ -19623,7 +19872,8 @@ void() SUB_Null =
 void() SUB_RemoveClearGround =
 {
 	if(self.flags & FL_ONGROUND)
-	while(turret_clearGround(self)) {}
+	while(turret_clearGround(self))
+{}
 	remove (self);
 };
 void() InitTrigger =
@@ -19977,7 +20227,8 @@ void () Rank_UpdateStatsGlobal =
 	head = nextent(world);
 	while (head != world)
 	{
-		if (head.classname == "player") { Rank_UpdateStats(head); }
+		if (head.classname == "player")
+{ Rank_UpdateStats(head); }
 		head = nextent(head); 
 	}
 };
@@ -20005,11 +20256,14 @@ void (entity rank_ent, float addscore) Rank_AddFrags =
 	rank_ent.global_frags = rank_ent.global_frags + addscore;
 	if (rank_ent.global_rank == 0 && rank_ent.global_frags >= RANK_ONE)
 		Rank_AddRank(rank_ent, 1);
-	else if (rank_ent.global_rank == 1 && rank_ent.global_frags >= RANK_TWO)
+	else 
+	if (rank_ent.global_rank == 1 && rank_ent.global_frags >= RANK_TWO)
 		Rank_AddRank(rank_ent, 1);
-	else if (rank_ent.global_rank == 2 && rank_ent.global_frags >= RANK_THREE)
+	else
+	if (rank_ent.global_rank == 2 && rank_ent.global_frags >= RANK_THREE)
 		Rank_AddRank(rank_ent, 1);
-	else if (rank_ent.global_rank == 3 && rank_ent.global_frags >= RANK_FOUR)
+	else
+	if (rank_ent.global_rank == 3 && rank_ent.global_frags >= RANK_FOUR)
 		Rank_AddRank(rank_ent, 1);
 };
 void (entity rank_ent, float addscore) Rank_AddFers =
@@ -20168,7 +20422,7 @@ void() beartrapTouch =
 		return ;   //don't clamp things on the same team. includes minions
 	}
 if (other.takedamage)
-{
+	{
 	other.beartrap_time = 1; 									// SWP: 14/05/97
 	self.beartrap_target = other;  // was = other  Now it's the player who stepped on it ? -arg
 	self.beartrap_time = 0;
@@ -20178,7 +20432,7 @@ if (other.takedamage)
 	self.touch = SUB_Null;
 	deathmsg = 202; // Set death type for obituary. -arg
 	sound (self, CHAN_AUTO, "weapons/btrap/btrap_1.wav", 1, ATTN_NORM);
-}
+	}
 };
 void() beartrap_dropBearTrap =
 {
@@ -20640,22 +20894,27 @@ void ( float p_type, entity t_plyr ) Achievements_Print =
 		return;
 	if (p_type == 0)
 		sprint(self, 2, "Your achievements:\n");
-	else if (p_type == 1) {
+	else
+	if (p_type == 1)
+	{
 		stuffcmd(self, "say \"My achievements\n");
 	}
-	else if (p_type == 2)
+	else
+	if (p_type == 2)
 		sprint(self, 2, "Your achievements (detailed):\n");
 	i = 1;
 	file = open (frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" ), 0);
 	while ( i < (#MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE + 1) )
 	{
-		if (i >= #FIRST_AWD_LINE) {
+		if (i >= #FIRST_AWD_LINE)
+		{
 			if (Achievements_GetName(i - #FIRST_AWD_LINE) != "noname")
 			{
 				read(file);
 				infa = stof( read(file) );
 				infb = stof( read(file) );
-				if (infb > 0) {
+				if (infb > 0)
+				{
 					if (p_type == 0)
 					{
 						sprint(self, 2, Achievements_GetName(i - #FIRST_AWD_LINE));
@@ -20743,7 +21002,8 @@ void () Achievements_Set =
 				if (ach_total < 0)		// since you can add negatives
 					ach_total = 0;
 			}
-			else if (s_type == ACHIEVEMENTS_ADDBIT)
+			else
+			if (s_type == ACHIEVEMENTS_ADDBIT)
 			{
 				ach_total = stof(a);
 				if ((!ach_total) & (a_var))
@@ -20751,7 +21011,8 @@ void () Achievements_Set =
 				if (ach_total < 0)		// since you can add negatives
 					ach_total = 0;
 			}
-			else if (s_type == ACHIEVEMENTS_SET)
+			else
+			if (s_type == ACHIEVEMENTS_SET)
 			{
 					ach_total = a_var;
 			}
@@ -20799,7 +21060,8 @@ void ( entity t_plyr, entity t_other, float s_type, float a_type, float a_var ) 
 	local entity ach_ent, te;
 	if (achievements_enabled == #FALSE)
 		return;
-	if (s_type == ACHIEVEMENTS_GLOBALADD) {			// add to every player in the game (used for flawless, completionist, lms, etc.)
+	if (s_type == ACHIEVEMENTS_GLOBALADD)
+	{			// add to every player in the game (used for flawless, completionist, lms, etc.)
 		te = find ( world, classname, "player" );
 		while (te)
 		{
@@ -20828,17 +21090,23 @@ float (string mpn) GetEP1MapBit =
 {
 	if (mpn  == "e1m1")
 		return 1;
-	else if (mpn  == "e1m2")
+	else
+	if (mpn  == "e1m2")
 		return 2;
-	else if (mpn  == "e1m3")
+	else
+	if (mpn  == "e1m3")
 		return 4;
-	else if (mpn  == "e1m4")
+	else
+	if (mpn  == "e1m4")
 		return 8;
-	else if (mpn  == "e1m5")
+	else
+	if (mpn  == "e1m5")
 		return 16;
-	else if (mpn  == "e1m6")
+	else
+	if (mpn  == "e1m6")
 		return 32;
-	else if (mpn  == "e1m8")			// meh, forget e1m7 :D
+	else
+	if (mpn  == "e1m8")			// meh, forget e1m7 :D
 		return 64;
 		
 	return -1;
@@ -20847,55 +21115,71 @@ float (string mpn) GetEP2MapBit =
 {
 	if (mpn  == "e2m1")
 		return 1;
-	else if (mpn  == "e2m2")
+	else
+	if (mpn  == "e2m2")
 		return 2;
-	else if (mpn  == "e2m3")
+	else
+	if (mpn  == "e2m3")
 		return 4;
-	else if (mpn  == "e2m4")
+	else
+	if (mpn  == "e2m4")
 		return 8;
-	else if (mpn  == "e2m5")
+	else
+	if (mpn  == "e2m5")
 		return 16;
-	else if (mpn  == "e2m6")
+	else
+	if (mpn  == "e2m6")
 		return 32;
-	else if (mpn  == "e2m7")
+	else
+	if (mpn  == "e2m7")
 		return 64;
-		
 	return -1;
 };
 float (string mpn) GetEP3MapBit = 
 {
 	if (mpn  == "e3m1")
 		return 1;
-	else if (mpn  == "e3m2")
+	else
+	if (mpn  == "e3m2")
 		return 2;
-	else if (mpn  == "e3m3")
+	else
+	if (mpn  == "e3m3")
 		return 4;
-	else if (mpn  == "e3m4")
+	else
+	if (mpn  == "e3m4")
 		return 8;
-	else if (mpn  == "e3m5")
+	else
+	if (mpn  == "e3m5")
 		return 16;
-	else if (mpn  == "e3m6")
+	else
+	if (mpn  == "e3m6")
 		return 32;
-	else if (mpn  == "e3m7")
+	else
+	if (mpn  == "e3m7")
 		return 64;
-		
 	return -1;
 };
 float (string mpn) GetEP4MapBit = 
 {
 	if (mpn  == "e4m1")
 		return 1;
-	else if (mpn  == "e4m2")
+	else
+	if (mpn  == "e4m2")
 		return 2;
-	else if (mpn  == "e4m3")
+	else
+	if (mpn  == "e4m3")
 		return 4;
-	else if (mpn  == "e4m4")
+	else
+	if (mpn  == "e4m4")
 		return 8;
-	else if (mpn  == "e4m5")
+	else
+	if (mpn  == "e4m5")
 		return 16;
-	else if (mpn  == "e4m6")
+	else
+	if (mpn  == "e4m6")
 		return 32;
-	else if (mpn  == "e4m7")
+	else
+	if (mpn  == "e4m7")
 		return 64;
 	return -1;
 };
@@ -20903,21 +21187,29 @@ float (string mpn) GetW3DMapBit =
 {
 	if (mpn  == "e1f1")
 		return 1;
-	else if (mpn  == "e1f2")
+	else
+	if (mpn  == "e1f2")
 		return 2;
-	else if (mpn  == "e1f3")
+	else
+	if (mpn  == "e1f3")
 		return 4;
-	else if (mpn  == "e1f4")
+	else
+	if (mpn  == "e1f4")
 		return 8;
-	else if (mpn  == "e1f5")
+	else
+	if (mpn  == "e1f5")
 		return 16;
-	else if (mpn  == "e1f6")
+	else
+	if (mpn  == "e1f6")
 		return 32;
-	else if (mpn  == "e1f7")
+	else
+	if (mpn  == "e1f7")
 		return 64;
-	else if (mpn  == "e1f8")
+	else
+	if (mpn  == "e1f8")
 		return 128;	
-	else if (mpn  == "e1f9")
+	else
+	if (mpn  == "e1f9")
 		return 256;
 	return -1;
 };
@@ -21057,7 +21349,8 @@ void () MTF_Coop_SummonMinion =
 	{
 		if (te.monster_string == "off" && te.#is_summoned != #TRUE && te.owner != self)
 		{
-			if (vlen(self.origin - te.origin) <= bestdist) {		// summon the closest monster
+			if (vlen(self.origin - te.origin) <= bestdist)
+			{		// summon the closest monster
 				tgood = te;
 				bestdist = vlen(self.origin - te.origin);
 			}
@@ -21117,14 +21410,14 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 					{
 						gotthrough = 1;
 						stuffcmd(te, "play misc/talk.wav\n");
-sprint(te, 2, "From ");
-sprint(te, 2, self.netname );
-sprint(te, 2, "message ");
-sprint(te, 2, arg3);
-sprint(te, 2, "\n");
-sprint(self, 2, "PM to ");
-sprint(self, 2, te.netname );
-sprint(self, 2, " sent.\n");
+						sprint(te, 2, "From ");
+						sprint(te, 2, self.netname );
+						sprint(te, 2, "message ");
+						sprint(te, 2, arg3);
+						sprint(te, 2, "\n");
+						sprint(self, 2, "PM to ");
+						sprint(self, 2, te.netname );
+						sprint(self, 2, " sent.\n");
 						stuffcmd(self, "play misc/talk.wav\n");
 						self.cooldown = (time + 4);
 						return 1;
@@ -21147,8 +21440,10 @@ sprint(self, 2, " sent.\n");
 	}
 	if (!strcasecmp("votemap",arg1))
 	{
-		if (!strcasecmp("hippos",arg2)) {
-			if (num_players < 2) {
+		if (!strcasecmp("hippos",arg2))
+		{
+			if (num_players < 2)
+			{
 				sprint(self, 2, "More players are required to initiate this vote.\n");
 				return 1;
 			}
@@ -21183,7 +21478,7 @@ sprint(self, 2, " sent.\n");
 			thisiscnn = strzone(thisiscnn);
 			votemap_start(thisiscnn);
 			strunzone(thisiscnn);
-                        return 1;
+			return 1;
 		}
  		else
 		{
@@ -21193,11 +21488,12 @@ sprint(self, 2, " sent.\n");
 			return 1;
 		}
 	}
-	if (infokey(world, "allowstuff") == "1") {
-	if (!strcasecmp("stuff",arg1))
+	if (infokey(world, "allowstuff") == "1")
 	{
-		rconpw = infokey (world, "rcon_password");
-		if (!rconpw)
+		if (!strcasecmp("stuff",arg1))
+		{
+			rconpw = infokey (world, "rcon_password");
+			if (!rconpw)
 		{
 			sprint (self, 2.000000, "This command is either disabled or rcon_password is not specified in localinfo.\n");
 			return 1;
@@ -21397,7 +21693,8 @@ void (float accept) Inventory_TradeItemDecision =
 	{
 		if (tchk.enemy == self)
 		{
-			if (accept == 0) {
+			if (accept == 0)
+			{
 				sprint(self,2, "You have cancelled the offer.\n");
 				sprint(tchk.owner,2, self.netname);
 				sprint(tchk.owner,2, " has cancelled the offer.\n");
@@ -21473,7 +21770,8 @@ float ( float slot_no ) Inventory_UseItem =
 		t_item.healtype = 2;
 		t_item.healamount = 100;
 	}
-	else if (item_type == 6) // reg health
+	else
+	if (item_type == 6) // reg health
 	{
 		t_item.healtype = 1;
 		t_item.healamount = 75;
@@ -21523,13 +21821,15 @@ float ( string nname, float inv_slot, float return_type ) Inventory_GetItem =
 	maxitems = stof(a);
 	a = read (file);
 	i = 1;
-	while (i < maxitems + 1) {
+	while (i < maxitems + 1)
+	{
 		a = read (file);
 		if (return_type == #RETURN_ITEM_NO)
 			if (i == inv_slot)
 				inv_item_no = stof(a);
 		if (return_type == #RETURN_FREE_SLOT)
-			if (a == "0" || a == "") {
+			if (a == "0" || a == "")
+			{
 				inv_item_no = i;
 				break;
 			}
@@ -21567,7 +21867,6 @@ void ( float sell_type, float slot_no, entity seller, entity buyer ) Inventory_S
 			sprint( seller, 2, "You are not close enough to the merchant to sell any items.\n" );
 			return;
 		}
-		
 		buybackrate = .75;
 	}
 	Inventory_AddGold( seller, ceil( buybackrate * Inventory_GetItemPrice( item_type ) ) );
@@ -21575,13 +21874,17 @@ void ( float sell_type, float slot_no, entity seller, entity buyer ) Inventory_S
 	{
 		if ( !merchant.#item1 )
 			merchant.#item1 = item_type;
-		else if ( !merchant.#item2 )
+		else
+		if ( !merchant.#item2 )
 			merchant.#item2 = item_type;
-		else if ( !merchant.#item3 )
+		else
+		if ( !merchant.#item3 )
 			merchant.#item3 = item_type;
-		else if ( !merchant.#item4 )
+		else
+		if ( !merchant.#item4 )
 			merchant.#item4 = item_type;
-		else if ( !merchant.#item5 )
+		else
+		if ( !merchant.#item5 )
 			merchant.#item5 = item_type;
 	}
 	sprint( seller, 2, "You sold the " );
@@ -21613,7 +21916,8 @@ float () Changelevel_SaveMapData =
 	an_ent = nextent(world);
 	while (an_ent != world)
 	{
-		if (SaveLevel_CanWrite(an_ent.classname, an_ent.model) == TRUE) {
+		if (SaveLevel_CanWrite(an_ent.classname, an_ent.model) == TRUE)
+		{
 			write (file, "// Entity #");
 			write (file, ftos(i));
 			write (file, "\n");
@@ -21681,7 +21985,8 @@ float () Changelevel_GetMapData =
 		while (i<1024)
 		{			// Assuming there are 1024 entities.. could be dangerous lol
 			a = read (file);
-			if (a == "END") {
+			if (a == "END")
+			{
 				bprint(2, "END'd!\n");
 				break;
 			}
@@ -21703,7 +22008,8 @@ float () Changelevel_GetMapData =
 					else
 						loadme = FALSE;
 				}
-				if (te.classname == clsn && loadme == TRUE) {			// CHANGEME: Gibs? Helloooo?
+				if (te.classname == clsn && loadme == TRUE)
+				{			// CHANGEME: Gibs? Helloooo?
 					if (te.solid == SOLID_BSP || te.solid == SOLID_TRIGGER)
 						loaded_obj = te;
 					else
@@ -21881,7 +22187,8 @@ string ( string fromme, string str_value, float str_valueno, string str_section 
 						a = strzone(a);
 						endtest = a;
 						endtest = substr(endtest, 0, 2);
-						if (endtest == "//" || endtest == "") {
+						if (endtest == "//" || endtest == "")
+						{
 							strunzone(a);
 							close (file);
 							return(b);
@@ -21909,7 +22216,8 @@ string ( string fromme, string str_value, float str_valueno, string str_section 
 		strunzone(a);
 		i++;
 	}
-	if (i > #TFI_MAXLINES) {
+	if (i > #TFI_MAXLINES)
+	{
 		bprint( 2, "TFI_GetValueFor: TFI_MAXLINES exceeded in file\n" );
 		close (file);
 		return( "TFI_GetValueFor: TFI_MAXLINES exceeded in file\n" );
@@ -21929,7 +22237,8 @@ void ( ) MTF_Resurrect_Player_Find =
 		sprint(self, 2, " seconds.\n");
 		return;
 	}
-	if (self.health <= 0) {
+	if (self.health <= 0)
+	{
 		sprint(self, 2, "You can't resurrect someone while you're dead.\n");
 		return;
 	}
@@ -21948,7 +22257,8 @@ void ( ) MTF_Resurrect_Player_Find =
 		if (head.is_monster < 1 && head.classname == "player" && head.has_disconnected == 0 && head.health <= 0 && (head.team_no == self.team_no))
 		//added logic to only allow cmd res on team members of the same team. Don't assume there is only team 1 and monsters only. -arg
 		{
-			if (vlen(head.origin - self.origin) <= 56) {
+			if (vlen(head.origin - self.origin) <= 56)
+			{
 				sprint (self, PRINT_HIGH, "You cannot stand on ");
 				sprint (self, PRINT_HIGH, head.netname);
 				sprint (self, PRINT_HIGH, " and resurrect him at the same time!\n");
@@ -21980,7 +22290,8 @@ void (entity loadent, string strflgs) ParseLoadFlags =
 	loadflags = stof(strflgs);
 	if (loadflags & LOAD_THINKWALK)
 		loadent.think = loadent.th_walk;
-	if (loadflags & LOAD_THINKSTAND) {
+	if (loadflags & LOAD_THINKSTAND)
+	{
 		loadent.pausetime = 100000000;
 		loadent.think = loadent.th_stand;
 		bprint(2,"MAKE ME STAND\n");
@@ -21990,7 +22301,8 @@ float (entity checkme) Set_SaveFlags =
 {
 	if (checkme.pausetime > time && checkme.th_stand != SUB_Null)
 		return LOAD_THINKSTAND;
-	else if (checkme.think == checkme.th_walk && checkme.th_walk != SUB_Null)
+	else
+	if (checkme.think == checkme.th_walk && checkme.th_walk != SUB_Null)
 		return LOAD_THINKWALK;
 	return 0;
 };
@@ -21999,11 +22311,13 @@ float (string cln, string mdln) SaveLevel_CanWrite =
 {
 	if (cln == "player")
 		return FALSE;
-	else if (cln == "merchant")
+	else
+if (cln == "merchant")
 		return FALSE;
 	if (mdln == string_null)
 		return FALSE;
-	else if (cln == string_null)
+	else
+if (cln == string_null)
 		return FALSE;
 	return 1;
 };
@@ -22013,7 +22327,6 @@ void () PreMonsterItemTouch =
 		return;
 	MonsterItemTouch ( FALSE );
 };
-
 void (float can_be_dead) MonsterItemTouch =
 {
 	local float type, value, bit;
@@ -22051,7 +22364,8 @@ void (float can_be_dead) MonsterItemTouch =
 				dremove( self );
 				return;
 			}
-	if (self.weapon == 1) {		// QUAD
+	if (self.weapon == 1)
+	{		// QUAD
 		other.super_time = 1;
 		if (other.super_damage_finished > time)
 			other.super_damage_finished = other.super_damage_finished + 20;
@@ -22190,7 +22504,9 @@ void (float can_be_dead) MonsterItemTouch =
 		}
 		sound(other, 3, "items/armor1.wav", 1, 1);		
 	}
-	else if (self.weapon == 4 || self.weapon == 6) {	// Health or MegaHealth
+	else
+	if (self.weapon == 4 || self.weapon == 6)
+	{	// Health or MegaHealth
 		medi = 0;
 		if (self.healtype == 2)
 		{
@@ -22254,7 +22570,8 @@ void (float can_be_dead) MonsterItemTouch =
 			newmis.owner = other;
 		}
 	}
-	else if (self.weapon == 7)
+	else
+	if (self.weapon == 7)
 	{		// INVULNERABILITY (PENT)
 		other.invincible_time = 1;
 		if (other.invincible_finished > time)
@@ -22385,7 +22702,8 @@ void (float can_be_dead) MonsterItemTouch =
 		}
 		self = oldself;
 		hax = find(world,classname,"monster_score");
-		if (hax != world) {
+		if (hax != world)
+		{
 			if (hax.noise1 != "")
 				minfo = hax.noise1;
 			hax.noise1 = strzone("none");
@@ -22685,7 +23003,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		{
 			if ( self.health < 0 )
 				return 1;
-			if ( Inventory_UseItem( stof(s3) ) == #FALSE ) {
+			if ( Inventory_UseItem( stof(s3) ) == #FALSE )
+			{
 				sprint( self, 2, "Invalid or unknown item specified.\n" );
 				return 1;
 			}
@@ -22695,7 +23014,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		{
 			Inventory_SellItem( #SELL_TO_MERCHANT, stof(s3), self, merchant );
 		}
-		else if (s2 != string_null)
+		else
+		if (s2 != string_null)
 		{
 			stuffcmd( self, frik_strcat( "cmd inv use ", s2, "\n" ) );
 			return 1;
@@ -22879,7 +23199,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, "Ring invisibility time left: ");
 		sprint(self, 2, ftos(self.invisible_finished-time));
 		sprint(self, 2, " seconds.\n");		
-	}		
+	}
 #ifdef mega_hats
 	else
 	if (s1 == "hatsoff")
@@ -23330,7 +23650,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, ".\n" );
 	}
 #ifdef DEBUG
-	else if (s1 == "omg")
+	else
+	if (s1 == "omg")
 	{
 		bprint(2, ftos(illegalclasses));
 		bprint(2, " are ILLEGAL.\n");
@@ -23340,11 +23661,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 #endif
 #ifdef BATTLE_ROYALE
 	else
-	if (s1 == "bro")
+	if
+	(s1 == "bro")
 	{
 		sprint(self, 2, vtos(self.origin) );
 		sprint(self, 2, "\n");
-		if (battle_royale_e == world) {
+		if (battle_royale_e == world)
+		{
 			battle_royale_e = spawn ();
 			battle_royale_e.solid = 1;
 			battle_royale_e.movetype = 9;
@@ -23355,7 +23678,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			battle_royale_e.nextthink = time + 1;
 			sprint(self, 2, "Battle Royale NOW ACTIVE!.\n");
 		}
-		else {
+		else
+		{
 			sprint(self, 2, "Battle Royale Entity Already Spawned!.\n");
 		}
 		return 1;
@@ -23367,8 +23691,10 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		voteyes ();
 	}
 	else
-	if (s1 == "votenext" || s1 == "votenextmap") {
-		if (s2 == "hippos") {
+	if (s1 == "votenext" || s1 == "votenextmap")
+	{
+		if (s2 == "hippos")
+		{
 			if (num_players < 300)
 			{
 				sprint(self, 2, "More players are required to initiate this vote.\n");
@@ -23377,7 +23703,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		}
 		Vote_StartVote( #VOTE_NEXTMAP, s2, world );
 	}
-//	else if (s1 == "voteprogs")   // This is for non-coop mode, not sure how to rework -arg
+//	else
+// if (s1 == "voteprogs")   // This is for non-coop mode, not sure how to rework -arg
 //		Vote_StartVote( #VOTE_PROGS, s2, world );
 	else
 	if (s1 == "voteexit")
@@ -23532,7 +23859,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		}
 	}
 #endif
-	else if (s1 == "sayl")
+	else
+	if (s1 == "sayl")
 	{
 		stuffcmd( self, "say I'm at " );
 		stuffcmd( self, ftos(self.lastruntime));
@@ -23636,7 +23964,8 @@ void() walkmonster_start =
 	}
 	self.nextthink = self.nextthink + random() * 0.5;
 	self.think = walkmonster_start_go;
-	if (!self.takedamage && self.health > 0) {
+	if (!self.takedamage && self.health > 0)
+	{
 		self.takedamage = 2;
 	}
 #ifndef mtf_coop
@@ -24122,4 +24451,4 @@ void() NailGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-//END 
+//END

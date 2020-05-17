@@ -309,7 +309,8 @@ void () worldspawn =
 //	precache_model ("progs/dot3.spr");	// also used for airstrike. newdot.spr instead.
 	precache_model ("progs/rope.mdl");
 	precache_model ("progs/dispencr.mdl");
-	if (mapname == "r2m6") { precache_model ("progs/tf_flag.mdl"); }
+	if (mapname == "r2m6")
+{ precache_model ("progs/tf_flag.mdl"); }
 	if (Hipnotic_SaveModels2() != 1)
 	precache_model ("progs/tf_flag.mdl");
 	if (mapname == "r2m4")
@@ -347,7 +348,8 @@ void () worldspawn =
 		bprint (PRINT_HIGH, "uberhardmode skill on.\n");
 #endif
 	vw_available = checkextension("ZQ_VWEP");
-	if (vw_available) {
+	if (vw_available)
+	{
 		precache_vwep_model ("progs/vwplayer.mdl");  // vwep-enabled player model to use
 		precache_vwep_model ( "progs/w_axe.mdl");
 		precache_vwep_model ( "progs/w_shot.mdl");
@@ -389,7 +391,8 @@ void () worldspawn =
 	if (survival_mode)
 		localcmd("localinfo srv_ips \"\"\n");
 #ifdef SVEN_COOP
-	if (#HL_MAP) {
+	if (#HL_MAP)
+	{
 		//cvar_set( "nextmap", "" );
 		//cvar_set( "nomaptrans", "" );
 		localcmd( "set nextmap \"\"\n" );
@@ -488,12 +491,14 @@ void() setup_strcat =
 			}
 		}
 	}
-	if (infokey(world, "prozacserver") != "1" && infokey(world, "c7server") != "1") {
+	if (infokey(world, "prozacserver") != "1" && infokey(world, "c7server") != "1")
+	{
 	dprint("Warning: could not detect an strcat builtin, assuming cpqwsv - If this is a server running Often's cpqwsv please set localinfo prozacserver 1\n");
 	dprint("Warning: If this is an equake server with vote support or if you dont want to see this message again set localinfo prozacvote 1\n");
 	}
 	strcat = cpqwsv_strcat;
-	if (infokey(world, "prozacserver") == "1" || infokey(world, "c7server") == "1") {
+	if (infokey(world, "prozacserver") == "1" || infokey(world, "c7server") == "1")
+	{
 	canusenew = 1; }
 };
 void (string info, float value) flocalinfo_add =

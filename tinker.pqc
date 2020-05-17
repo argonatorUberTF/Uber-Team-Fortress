@@ -5,11 +5,13 @@ void () BadTinker =
 	if (prob <= 0.6){ // Zilch
 		sprint(self,2,"Nothing happened.\n");
 	}
-	else if (prob <= 0.8){ // Zowie!
+	else
+if (prob <= 0.8){ // Zowie!
 		TF_T_Damage(self.building, world, world, self.building.health+1, 0, 0);
 		sprint(self,2,"The tesla blew up.\n");
 	}
-	else { // ZAP!
+	else
+	{ // ZAP!
 		self.building.health = 100; //WK Make it easy to kill
 		if (self.building.max_health == 100)
 			self.building.max_health = 65;
@@ -23,7 +25,8 @@ void () DoTinker =
 {
 	float prob;		// probability of what upgrade you'll get
 	float thresh;	// probability the tesla will blow itself up
-	if (self.building.currentammo < 6) {
+	if (self.building.currentammo < 6)
+	{
 		sprint(self,2,"You have to fully upgrade before tinkering.\n");
 		return;
 	}
@@ -32,7 +35,8 @@ void () DoTinker =
 		sprint(self,2,"You cant tinker the Tesla any further.\n");
 		return;
 	}
-	if (self.ammo_cells < 100) {//not enough cells
+	if (self.ammo_cells < 100)
+{//not enough cells
 		sprint(self,2,"You need more cells to tinker on the tesla.\n");
 		return;
 	}
@@ -41,7 +45,8 @@ void () DoTinker =
 	self.building.lip = self.building.lip + 1; // Increment Tinker Count
 	if (self.building.lip == 1)
 		thresh = 0.25;
-	else if (self.building.lip <= 3)
+	else
+	if (self.building.lip <= 3)
 		thresh = 0.5;
 	else
 		thresh = 0.75;
@@ -52,31 +57,44 @@ void () DoTinker =
 		return;
 	}
 	prob = random();		// here's the main deciding factor for what you'll get
-	if (prob <= .2) {
+	if (prob <= .2)
+	{
 		sprint(self,2, "Nothing Happened.\n");
 	}
-	else if (prob <= .35) {
+	else
+	if (prob <= .35)
+	{
 		sprint(self,2,"The tesla gets a free improved targeter!\n");
 		self.building.tf_items = (self.building.tf_items | 1);
 	}
-	else if (prob <= 0.4) {
+	else
+	if (prob <= 0.4)
+	{
 		sprint(self,2,"The tesla got a free spy detector!\n");
 		self.building.tf_items = (self.building.tf_items | 1024);
 	}
-	else if (prob <= 0.7) {
+	else
+	if (prob <= 0.7)
+	{
 		sprint(self,2,"Free normal upgrade!\n");
 		self.building.currentammo = self.building.currentammo - 1;
 	}
-	else if (prob <= 0.8) {
+	else
+	if (prob <= 0.8)
+	{
 		sprint(self,2,"Free Extra Tinker upgrade!\n");
 		self.building.ammo_medikit = self.building.ammo_medikit + 2;
 	}
-	else if (prob <= 0.9) {
+	else
+	if (prob <= 0.9)
+	{
 		self.building.max_health = self.building.max_health + 100;
 		self.building.health = self.building.health + 100;
 		sprint(self,2,"The tesla got more health.\n");
 	}
-	else if (prob <= 1) {
+	else
+	if (prob <= 1)
+	{
 		self.building.cells_bonus = self.building.cells_bonus + 100;
 		self.building.ammo_cells = self.building.ammo_cells + 100;
 		sprint(self,2,"The tesla got more cells.\n");

@@ -33,7 +33,8 @@ void() display_message =
 			localcmd (mesg2);
 			localcmd ("\n");
 		}
-		else {
+		else
+		{
 			localcmd ("say ");
 			localcmd (t_message);
 			localcmd ("\n");
@@ -77,7 +78,8 @@ void() display_message2 =
 			localcmd (mesg22);
 			localcmd ("\n");
 		}
-		else {
+		else
+	{
 			localcmd ("say ");
 			localcmd (mesg2);
 			localcmd ("\n");
@@ -129,7 +131,8 @@ void() display_message3 =
 			localcmd (mesg32);
 			localcmd ("\n");
 		}
-		else {
+		else
+	{
 			localcmd ("say ");
 			localcmd (message3);
 			localcmd ("\n");
@@ -246,83 +249,109 @@ string(float whee) quotetostring =
 {
 	local float val;
 	val = whee;
-	if (val == 1) {
-	return "I have come here to chew bubblegum and kick ass, and I'm all out of bubblegum";
+	if (val == 1)
+	{
+		return "I have come here to chew bubblegum and kick ass, and I'm all out of bubblegum";
 	}
-	if (val == 2) {
-	return "Now, if my calculations are correct, when this baby hits eighty-eight miles per hour, you're gonna see some serious shit";
+	if (val == 2)
+	{
+		return "Now, if my calculations are correct, when this baby hits eighty-eight miles per hour, you're gonna see some serious shit";
 	}
-	if (val == 3) {
-	return "\"She's supposed to have transwarp.\" -- Sulu, \"Aye. And if my grandmother had wheels, she'd be a wagon.\" -- Scotty";
+	if (val == 3)
+	{
+		return "\"She's supposed to have transwarp.\" -- Sulu, \"Aye. And if my grandmother had wheels, she'd be a wagon.\" -- Scotty";
 	}
-	if (val == 4) {
-	return "\"Stand back?!\" -- Kirk/Spock/Mccoy, (Boom!), \"What are ya standin' there for. Da ya not know a jailbreak when ya see one.\" -- Scotty";
+	if (val == 4)
+	{
+		return "\"Stand back?!\" -- Kirk/Spock/Mccoy, (Boom!), \"What are ya standin' there for. Da ya not know a jailbreak when ya see one.\" -- Scotty";
 	}
-	if (val == 5) {
-	return "All right you primitive screwheads, listen up! You see this? This is my BOOMSTICK!";
+	if (val == 5)
+	{
+		return "All right you primitive screwheads, listen up! You see this? This is my BOOMSTICK!";
 	}
-	if (val == 6) {
-	return "Don't be too proud of this technological terror you've constructed. The ability to destroy a planet is insignificant next to the power of the Force";
+	if (val == 6)
+	{
+		return "Don't be too proud of this technological terror you've constructed. The ability to destroy a planet is insignificant next to the power of the Force";
 	}
-	if (val == 7) {
-	return "Hokey religions and ancient weapons are no match for a good blaster at your side, kid";
+	if (val == 7)
+	{
+		return "Hokey religions and ancient weapons are no match for a good blaster at your side, kid";
 	}
-	if (val == 8) {
-	return "That's no moon. It's a space station.";
+	if (val == 8)
+	{
+		return "That's no moon. It's a space station.";
 	}
-	if (val == 9) {
-	return "Size matters not. Look at me. Judge me by my size, do you? Hm? And well you should not. For my ally is the Force. And a powerful ally it is..";
+	if (val == 9)
+	{
+		return "Size matters not. Look at me. Judge me by my size, do you? Hm? And well you should not. For my ally is the Force. And a powerful ally it is..";
 	}
-	if (val == 10) {
-	return "You're gonna need a bigger boat.";
+	if (val == 10)
+	{
+		return "You're gonna need a bigger boat.";
 	}
-	if (val == 11) {
-	return "Kids, you tried your best and you failed miserably. The lesson is, never try";
+	if (val == 11)
+	{
+		return "Kids, you tried your best and you failed miserably. The lesson is, never try";
 	}
-	if (val == 12) {
-	return "Relax. What is mind? No matter. What is matter? Never mind!";
+	if (val == 12)
+	{
+		return "Relax. What is mind? No matter. What is matter? Never mind!";
 	}
-	if (val == 13) {
-	return "Simpson-Homer Simpson, he's the greatest guy in his-tor-y. From the town of Springfield, he's about to hit a chestnut tree....D'oh!";
+	if (val == 13)
+	{
+		return "Simpson-Homer Simpson, he's the greatest guy in his-tor-y. From the town of Springfield, he's about to hit a chestnut tree....D'oh!";
 	}
-	if (val == 14) {
-	return "Now, son, you don't want to drink beer. That's for daddies and kids with fake IDs";
+	if (val == 14)
+	{
+		return "Now, son, you don't want to drink beer. That's for daddies and kids with fake IDs";
 	}
-	if (val == 15) {
-	return "There's no reason to become alarmed, and we hope you'll enjoy the rest of your flight. By the way, is there anyone on board who knows how to fly a plane?";
+	if (val == 15)
+	{
+		return "There's no reason to become alarmed, and we hope you'll enjoy the rest of your flight. By the way, is there anyone on board who knows how to fly a plane?";
 	}
-	if (val == 16) {
-	return "The survival of everyone on board depends on just one thing: finding someone on board who can not only fly this plane, but who didn't have fish for dinner";
+	if (val == 16)
+	{
+		return "The survival of everyone on board depends on just one thing: finding someone on board who can not only fly this plane, but who didn't have fish for dinner";
 	}
-	if (val == 17) {
-	return "Why, ye could go on a REGAL rampage!";
+	if (val == 17)
+	{
+		return "Why, ye could go on a REGAL rampage!";
 	}
-	if (val == 18) {
-	return "Hey, Stickly Man, whaaaaat are you doing?";
+	if (val == 18)
+	{
+		return "Hey, Stickly Man, whaaaaat are you doing?";
 	}
-	if (val == 19) {
-	return "You hear me talkin', hillbilly boy? I ain't through with you by a damn sight. I'ma get medieval on your ass";
+	if (val == 19)
+	{
+		return "You hear me talkin', hillbilly boy? I ain't through with you by a damn sight. I'ma get medieval on your ass";
 	}
-	if (val == 20) {
-	return "Whether or not what we experienced was an According to Hoyle miracle is insignificant. What is significant is that I felt the touch of God. God got involved";
+	if (val == 20)
+	{
+		return "Whether or not what we experienced was an According to Hoyle miracle is insignificant. What is significant is that I felt the touch of God. God got involved";
 	}
-	if (val == 21) {
-	return "Damn you, vile woman, you've impeded my work since the day I escaped your wretched womb.";
+	if (val == 21)
+	{
+		return "Damn you, vile woman, you've impeded my work since the day I escaped your wretched womb.";
 	}
-	if (val == 22) {
-	return "And Saint Attila raised the hand grenade up on high, saying,'O Lord, bless this thy hand grenade that with it thou mayest blow thine enemies to tiny bits, in thy mercy.' And the Lord did grin, and the people did feast upon the lambs and sloths and carp and anchovies and orangutans and breakfast cereals and fruit bats and large chu--";
+	if (val == 22)
+	{
+		return "And Saint Attila raised the hand grenade up on high, saying,'O Lord, bless this thy hand grenade that with it thou mayest blow thine enemies to tiny bits, in thy mercy.' And the Lord did grin, and the people did feast upon the lambs and sloths and carp and anchovies and orangutans and breakfast cereals and fruit bats and large chu--";
 	}
-	if (val == 23) {
-	return "And the Lord spake, saying, 'First shalt thou take out the Holy Pin. Then shalt thou count to three, no more, no less. Three shall be the number thou shalt count, and the number of the counting shall be three. Four shalt thou not count, neither count thou two, excepting that thou then proceed to three. Five is right out. Once the number three, being the third number, be reached, then lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, who, being naughty in my sight, shall snuff it.";
+	if (val == 23)
+	{
+		return "And the Lord spake, saying, 'First shalt thou take out the Holy Pin. Then shalt thou count to three, no more, no less. Three shall be the number thou shalt count, and the number of the counting shall be three. Four shalt thou not count, neither count thou two, excepting that thou then proceed to three. Five is right out. Once the number three, being the third number, be reached, then lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, who, being naughty in my sight, shall snuff it.";
 	}
-	if (val == 24) {
-	return "King Arthur: Who are you who can summon fire without flint or tinder? sorcerer: There are some who call me... Tim. ";
+	if (val == 24)
+	{
+		return "King Arthur: Who are you who can summon fire without flint or tinder? sorcerer: There are some who call me... Tim. ";
 	}
-	if (val == 25) {
-	return "*Rabbit flies at Bors’s throat and savages him to death* TIM: I warned you, but did you listen to me? Oh, no, you knew it all, didn't you? Oh, it's just a harmless little bunny, isn't it? Well, it's always the same. I always tell them--";
+	if (val == 25)
+	{
+		return "*Rabbit flies at Bors’s throat and savages him to death* TIM: I warned you, but did you listen to me? Oh, no, you knew it all, didn't you? Oh, it's just a harmless little bunny, isn't it? Well, it's always the same. I always tell them--";
 	}
-	if (val == 26) {
-	return "King Arthur: Did you say shrubberies? Roger the Shrubber: Yes, shrubberies are my trade. I am a shrubber. My name is Roger the Shrubber. I arrange, design, and sell shrubberies.";
+	if (val == 26)
+	{
+		return "King Arthur: Did you say shrubberies? Roger the Shrubber: Yes, shrubberies are my trade. I am a shrubber. My name is Roger the Shrubber. I arrange, design, and sell shrubberies.";
 	}
 	else
 		return "invalid quote";
