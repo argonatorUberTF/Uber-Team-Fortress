@@ -262,12 +262,12 @@ void ( float side ) pDemon_Melee =
 	if (trace_ent.takedamage)
 	{
 		if (side == -666)
-{
+		{
 			ldmg = (MOVETYPE_BOUNCE + (MOVETYPE_FLY * random ())) * .5;
 			SpawnMeatSpray ((self.origin + (v_forward * FL_INWATER)), (1 * v_right));
 		}
 		else
-{
+	{
 			ldmg = (MOVETYPE_BOUNCE + (MOVETYPE_FLY * random ()));
 			SpawnMeatSpray ((self.origin + (v_forward * FL_INWATER)), (side * v_right));
 		}
@@ -313,10 +313,10 @@ void () monster_attack_go =
 	if (self.bubble_count == 2)
 		psham_magic();
 	else
-if (self.bubble_count == 3)
+	if (self.bubble_count == 3)
 		pdemon_attack();
 	else
-if (self.bubble_count == 4)
+	if (self.bubble_count == 4)
 		pdemon_jump();
 	parse_anim( self.monsterframe, monster_attack_go );
 	if (self.fly_sound == self.monsterframe)
@@ -350,7 +350,7 @@ void () monster_attack =
 			monster_run_attack( 1.75, 65, 76, SUB_Null, 41, 2 );
 		}
 		else
-{									// Shammy melee
+	{									// Shammy melee
 			if (((chance > 0.6)))
 			{
 				sound (self, CHAN_VOICE, "shambler/melee1.wav", true, ATTN_NORM);

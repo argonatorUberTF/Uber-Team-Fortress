@@ -146,7 +146,7 @@ void () info_lmsdetect =
 		close (file);
 	}
 	if (lms_entity != world)
-{
+	{
 		bprint( 2, "info_lmsdetect: too many info_lmsdetect entities in this map - you only need one.\n" );
 		dremove(self);
 	}
@@ -329,7 +329,7 @@ void () spawnwave =
 	if ( lms_team1lives <= 0 )
 		return;
 	if (self.#lms_level == 0)
-{
+	{
 		bprint( 2, "spawnwave: invalid lms level\n" );
 		return;
 	}
@@ -379,25 +379,25 @@ void () spawnwave =
 float ( float m_level ) GetLevelTiming =
 {
 	if ( lms_entity.#lms_override_speed > 0 )
-{
+	{
 		return lms_entity.#lms_override_speed;
 	}
 	if ( m_level == 8 ) // lots and lots of dogs :D
 		return .5;
 	else
-if ( m_level == 5 ) // lots of zombies and knights :D
+	if ( m_level == 5 ) // lots of zombies and knights :D
 		return 1;
 	else
-if ( m_level == 10 ) // spaaaaaawwwwwnnnnsssss
+	if ( m_level == 10 ) // spaaaaaawwwwwnnnnsssss
 		return .85;
 	else
-if ( m_level == 2 || m_level == 3 || m_level == 4 )
+	if ( m_level == 2 || m_level == 3 || m_level == 4 )
 		return 1.25;
 	else
-if ( m_level == 1 )
+	if ( m_level == 1 )
 		return 1;
 	else
-{
+	{
 		if ( m_level > 12 )
 			return 1.1;
 		else
@@ -420,7 +420,7 @@ void () func_monsterspawn =
 	if ( !self.target )
 		dprint( "func_monsterspawn: no target - can't tell monsters where to go!\n" );
 	if ( self.#spawn_active == 0 || self.#lms_level == 0 )
-{
+	{
 		self.nextthink = time + 1;
 		self.think = func_monsterspawn;
 		return;
@@ -431,7 +431,7 @@ void () func_monsterspawn =
 	newang_y = self.angles_y;
 	self.#npc_origangle = newang;
 	if ( ( rndspawn < .5  || self.#spawn_tries == 3 ) && self.#lms_disactivated == #FALSE )
-{
+	{
 		self.#spawn_tries = 0;
 		newmon = spawn();
 		newmon.monster_string = "on";
@@ -470,7 +470,7 @@ void ( entity newmon, float m_level ) GetMonsterSpawn =
 	local float file, c1, c2, c3, tfid;
 	lname = strcat( "level_", ftos(lms_entity.#lms_level - 1) );
 	if ( lms_entity.#lms_readfile == #TRUE )
-{
+	{
 		tfid = #TRUE;
 		fname = frik_strcat( "maps/", mapname, ".tfi" );
 		file = open (fname, 0);
@@ -513,10 +513,10 @@ void ( entity newmon, float m_level ) GetMonsterSpawn =
 			if (rnd > c1)
 				m_cln = a1;
 			else
-if (rnd > c2)
+			if (rnd > c2)
 				m_cln = a2;
 			else
-if (rnd > c3)
+			if (rnd > c3)
 				m_cln = a3;
 			rnd = random();
 			if ( m_cln == "" )
@@ -539,7 +539,7 @@ dprint(" is spawning\n");
 			m_cln = "monster_dog";
 	}
 	else
-if ( m_level == 2 )
+	if ( m_level == 2 )
 	{
 		if (rnd > .4)
 			m_cln = "monster_army";
@@ -547,7 +547,7 @@ if ( m_level == 2 )
 			m_cln = "monster_dog";
 	}
 	else
-if ( m_level == 3 )
+	if ( m_level == 3 )
 	{
 		if (rnd > .4)
 			m_cln = "monster_army";
@@ -555,12 +555,12 @@ if ( m_level == 3 )
 			m_cln = "monster_enforcer";
 	}
 	else
-if ( m_level == 4 )
+	if ( m_level == 4 )
 	{
 			m_cln = "monster_enforcer";
 	}
 	else
-if ( m_level == 5 )
+	if ( m_level == 5 )
 	{
 		if (rnd > .6)
 			m_cln = "monster_zombie";
@@ -568,7 +568,7 @@ if ( m_level == 5 )
 			m_cln = "monster_knight";
 	}
 	else
-if ( m_level == 6 )
+	if ( m_level == 6 )
 	{
 		if (rnd > .4)
 			m_cln = "monster_knight";
@@ -576,39 +576,39 @@ if ( m_level == 6 )
 			m_cln = "monster_hell_knight";
 	}
 	else
-if ( m_level == 7 )
+	if ( m_level == 7 )
 	{
 		if (rnd > .8)
 			m_cln = "monster_ogre";
 		else
-if (rnd > .3)
+	if (rnd > .3)
 			m_cln = "monster_hell_knight";
 		else
 			m_cln = "monster_knight";
 	}
 	else
-if ( m_level == 8 )
+	if ( m_level == 8 )
 	{
 		m_cln = "monster_dog";		// really fast respawning dogs :p
 	}
 	else
-if ( m_level == 9 )
+	if ( m_level == 9 )
 	{
 		if (rnd > .8)
 			m_cln = "monster_tarbaby";
 		else
-if (rnd > .5)
+	if (rnd > .5)
 			m_cln = "monster_ogre";
 		else
 			m_cln = "monster_hell_knight";
 	}
 	else
-if ( m_level == 10 )
+	if ( m_level == 10 )
 	{
 			m_cln = "monster_tarbaby";
 	}
 	else
-if ( m_level == 11 )
+	if ( m_level == 11 )
 	{
 		if (rnd > .5)
 			m_cln = "monster_shalrath";
@@ -616,29 +616,29 @@ if ( m_level == 11 )
 			m_cln = "monster_knight";
 	}
 	else
-if ( m_level == 12 )
+	if ( m_level == 12 )
 	{
 		if (rnd > .7)
 			m_cln = "monster_demon1";
 		else
-if (rnd > .4)
+	if (rnd > .4)
 			m_cln = "monster_shalrath";
 		else
 			m_cln = "monster_wizard";
 	}
 	else
-if ( m_level == 13 )
+	if ( m_level == 13 )
 	{
 		if (rnd > .5)
 			m_cln = "monster_demon1";
 		else
-if (rnd > .4)
+	if (rnd > .4)
 			m_cln = "monster_shambler";
 		else
 			m_cln = "monster_wizard";
 	}
 	else
-if ( m_level == 14 )
+	if ( m_level == 14 )
 	{
 		if (rnd > .5)
 			m_cln = "monster_shambler";
@@ -870,7 +870,7 @@ void () alamo_use =
 {
 	self.cnt = self.cnt - 1;
 	if (self.cnt <= 0)
-{
+	{
 		self.#alamo_active = #TRUE;
 	}
 };
