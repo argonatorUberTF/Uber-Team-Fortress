@@ -253,7 +253,7 @@ void () TeamFortress_DetpackTouch =
 	}
 	}
 	else
-{
+	{
 	local entity disarm;
 	if (other.classname != "player")
 	{
@@ -345,7 +345,6 @@ void () TeamFortress_DetpackDisarm =
 	dremove (self.enemy);
 	dremove (self);
 };
-
 void () TeamFortress_DetpackCountDown =
 {
 	local string _l_9580;

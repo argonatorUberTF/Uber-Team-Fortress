@@ -384,8 +384,8 @@ void (float _p_9330) TeamFortress_SpyFeignDeath =
 			if (te.goal_no == 1)
 			bprint (PRINT_HIGH, self.netname, " has the BLUE flag!\n");
 			else
-if (te.goal_no == 2)
-			bprint (PRINT_HIGH, self.netname, " has the RED flag!\n");
+			if (te.goal_no == 2)
+				bprint (PRINT_HIGH, self.netname, " has the RED flag!\n");
 		}
 		}
 		te = find (te, classname, "item_tfgoal");

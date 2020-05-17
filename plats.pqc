@@ -277,7 +277,8 @@ void() train_blocked =
 void() train_use = 
 {
 //johnfitz -- retriggerable trains
-	if (self.spawnflags & TRAIN_RETRIGGER) {
+	if (self.spawnflags & TRAIN_RETRIGGER)
+{
 		train_next();
 		return;
 	}
@@ -286,8 +287,10 @@ void() train_use =
 		return;
 	}
 #ifdef mtf_coop_halflife
-	if (#HL_MAP) {
-		if (self.target == "waterpath2" || self.targetname == "water_door_move3") {
+	if (#HL_MAP)
+	{
+		if (self.target == "waterpath2" || self.targetname == "water_door_move3")
+		{
 			self.solid = 1;
 		}
 	}
@@ -302,8 +305,10 @@ void() train_moving_use =
 }
 void() train_wait = 
 {
-	if (self.spawnflags & TRAIN_RETRIGGER) {
-		if (self.cnt > 0) { //triggered early, so continue now
+	if (self.spawnflags & TRAIN_RETRIGGER)
+	{
+		if (self.cnt > 0)
+		{ //triggered early, so continue now
 			self.cnt = self.cnt - 1;
 			self.nextthink = self.ltime + 0.1;
 			self.think = train_next;
@@ -314,13 +319,15 @@ void() train_wait =
 		return;
 	}
 #ifdef mtf_coop_halflife
-	if (self.has_tesla == 1) {
+	if (self.has_tesla == 1)
+	{
 		self.use = train_use;
 		self.think = func_train_find;
 		self.has_tesla = 0;
 		return;
 	}
-	if (self.message) {
+	if (self.message)
+	{
 		Delayed_Timer( self.message, 0 );
 		self.message = "";
 	}
@@ -339,7 +346,8 @@ void() train_wait =
 		if (self.wait == -1)
 		{
 			self.think = func_train_find;
-			if (self.spawnflags & 2) {
+			if (self.spawnflags & 2)
+			{
 				self.use = train_use;
 				return;
 			}
@@ -361,7 +369,8 @@ void() train_wait =
 void() train_next = 
 {
 	local entity targ;
-	if (self.spawnflags & TRAIN_RETRIGGER) {
+	if (self.spawnflags & TRAIN_RETRIGGER)
+	{
 		self.use = train_moving_use; //store up any premature triggerings until current movement is finished
 	}
 	targ = find(world, targetname, self.target);
@@ -389,20 +398,24 @@ void() train_next =
 	self.sounds = 4;
 		sound(self, 2, self.noise1, 1, 1);
 #ifdef mtf_coop_halflife
-	if (self.mtf_items > 0) {
+	if (self.mtf_items > 0)
+	{
 			self.speed = self.mtf_items;
 		self.mtf_items = 0;
 	}
-	if (#HL_MAP) {//self.globalname)
+	if (#HL_MAP)
+{//self.globalname)
 		if (targ.speed > 0)			// change our speed to match the path_corner's
 			self.mtf_items = targ.speed;
-		if (targ.spawnflags & 1) {
+		if (targ.spawnflags & 1)
+		{
 			self.has_tesla = 1;		// wait till triggered again
 		}
 		if (targ.message)
 			self.message = targ.message;
 
-		if (targ.spawnflags & 2) {	// teleport there auto
+		if (targ.spawnflags & 2)
+		{	// teleport there auto
 			setorigin(self, targ.origin - ((self.mins+self.maxs)*.5));
 			SUB_CalcMove(targ.origin - ((self.mins+self.maxs)*.5), 9999, train_wait);
 		}
@@ -412,14 +425,16 @@ void() train_next =
 	else
 #endif
 	// quake 2 stuff
-	if (targ.spawnflags & 1) {
+	if (targ.spawnflags & 1)
+	{
 		// yeah in q2 it's spawnflags & 1 and in HL it's spawnflags & 2.. why can nobody make my life easy? :\
 			setorigin(self, targ.origin - ((self.mins+self.maxs)*.5));
 			SUB_CalcMove(targ.origin - ((self.mins+self.maxs)*.5), 9999, train_wait);
 	}
 	else
 	SUB_CalcMove(targ.origin - self.mins, self.speed, train_wait);
-	if (targ != world) {
+	if (targ != world)
+	{
 		self.real_owner = targ;
 	}
 };
@@ -431,7 +446,9 @@ void() func_train_find =
 #ifdef mtf_coop_halflife
 	if (targ.speed > 0)
 		self.speed = targ.speed;
-	if (#HL_MAP) {//self.globalname) {
+	if (#HL_MAP)
+	{ //self.globalname)
+//{   why was this extra { here ? -arg
 		setorigin(self, targ.origin - ((self.mins + self.maxs)*.5));
 	}
 	else
@@ -463,7 +480,8 @@ void() func_train =
 	if (!(self.target))
 	{
 #ifdef mtf_coop_halflife
-		if (self.targetname == "c1a3_pole01") {
+		if (self.targetname == "c1a3_pole01")
+		{
 			dremove(self);
 			return;
 		}
@@ -515,19 +533,25 @@ void() func_train =
 	setsize(self, self.mins, self.maxs);
 	setorigin(self, self.origin);
 #ifdef mtf_coop_halflife
-	if (mapname == "c1a1b" || mapname == "c1a1c") {
+	if (mapname == "c1a1b" || mapname == "c1a1c")
+{
 		if (self.globalname == "c1a1b_zombie_vent1")
 			dremove(self);
 	}
-	else if (mapname == "c1a1c") {
+	else
+	if (mapname == "c1a1c")
+	{
 		self.globalname = "downward_vent";
 	}
-	else if (mapname == "c1a2c")
+	else
+	if (mapname == "c1a2c")
 		if (self.target == "freezer_train_2")
 			self.globalname = "halflife_thing";
 	
-	if (#HL_MAP) {
-		if (self.spawnflags & 8) {	// swimmy!
+	if (#HL_MAP)
+	{
+		if (self.spawnflags & 8)
+		{	// swimmy!
 			self.spawnflags = 8;
 			self.solid = 1;
 			setorigin (self, self.origin);
@@ -536,8 +560,10 @@ void() func_train =
 		else
 			self.spawnflags = 0;		// halflife trains only have "8" for spawn flags afaik
 	}
-	if (#HL_MAP) {
-		if (self.target == "waterpath2" || self.targetname == "water_door_move3") {
+	if (#HL_MAP)
+	{
+		if (self.target == "waterpath2" || self.targetname == "water_door_move3")
+		{
 			self.solid = 0;
 			setorigin(self, self.origin - '0 0 1000');
 		}

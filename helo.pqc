@@ -461,7 +461,7 @@ void () Aircraft_Touch =
 		}
 	}
 	if (other.classname == "player")
-{
+	{
 		other.vw_index = 31;
 	}
 };

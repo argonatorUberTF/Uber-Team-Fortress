@@ -316,10 +316,12 @@ void () SecurityCameraTossTouch =
 	}
 	local entity te;
 	te = find(world, classname, "player");
-	while (te) {
+	while (te)
+	{
 		if (self.origin_x - 16 < te.absmax_x && self.origin_x + 16 > te.absmin_x &&
 			self.origin_y - 16 < te.absmax_y && self.origin_y + 16 > te.absmin_y &&
-			self.origin_z -  6 < te.absmax_z && self.origin_z + 10 > te.absmin_z) {
+			self.origin_z -  6 < te.absmax_z && self.origin_z + 10 > te.absmin_z)
+	{
 			Security_Camera_Die();
 			return;
 		}

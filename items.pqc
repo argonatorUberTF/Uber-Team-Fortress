@@ -114,12 +114,6 @@ void() health_touch =
 	{
 		if (!(other.tfstate & 16))
 		{
-#ifndef mtf_coop
-			if (other.health >= 250)
-			{
-				return;
-			}
-#endif
 			if (!T_Heal(other, self.healamount, TF_FLARE_OFF))
 			{
 				return;
@@ -374,7 +368,6 @@ void() item_armor1 =
 	setsize(self, '-16 -16 0', '16 16 56');
 	StartItem();
 };
-
 void() item_armor2 = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -396,7 +389,6 @@ void() item_armor2 =
 	setsize(self, '-16 -16 0', '16 16 56');
 	StartItem();
 };
-
 void() item_armorInv = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -406,7 +398,7 @@ void() item_armorInv =
 	}
 #ifdef mtfcoop_uberhardmode
 	if (uberhardmode)
-{
+	{
 		remove(self);
 		return;
 	}

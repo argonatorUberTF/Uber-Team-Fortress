@@ -25,7 +25,7 @@ void (entity pickuper, entity pickupee, vector destt) zg_movetowards =
 {
 	local float vel, distfrompickuper;
 	if (pickupee == world)
-{
+	{
 		bprint(2, "zg_movetowards: pickupee is world, so wtf?\n");
 		return;
 	}
@@ -34,7 +34,7 @@ void (entity pickuper, entity pickupee, vector destt) zg_movetowards =
 	distfrompickuper = vlen(pickuper.origin - pickupee.origin);
 
 	if (distfrompickuper > zg_getpickupdist(pickupee) + 32)
-{
+	{
 		pickupee.velocity = '0 0 0';
 		zg_drop (pickuper, 2);
 		return;
@@ -84,7 +84,7 @@ float (entity tester_e, entity test) zg_invalidtarget =
 		return TRUE;
 #ifdef GW_ALLOW_PICKUP_ITEM
 	if (test.flags & FL_ITEM)
-{
+	{
 		if (ZG_ItemType(test) > 0)
 			return FALSE;
 		return 3;
@@ -118,7 +118,7 @@ entity (entity source) zg_findtarget =
 		badpickup = ret;
 	radiusent = findradius (source.origin, 64);
 	while (radiusent)
-{
+	{
 		if (!(ret = zg_invalidtarget(source, radiusent)))
 			return radiusent;
 		if (ret > 1)
@@ -175,15 +175,15 @@ void (entity pickuper, float toss) zg_drop =
 	remove (pickuper.pickupthink_hands);
 #ifdef GW_ALLOW_PICKUP_ITEM
 	if (pickupee.flags & FL_ITEM)
-{
+	{
 		if (pickuper.health <= 0 || toss == 2)
-{
+		{
 			pickupee.movetype = 10;
 			pickupee.velocity_z = pickupee.velocity_z + 10;
 		}
 		else
 		if (ZG_ItemType(pickupee) == 1)
-{
+		{
 			ZG_FireItem (pickupee);
 			if (pickupee.orig_origin != '0 0 0')
 				pickupee.origin = pickupee.orig_origin;
@@ -222,7 +222,7 @@ void (entity pickuper, float toss) zg_drop =
 	else
 		pickupee.velocity_z = pickupee.velocity_z + 10;	// *
 	if (InSolid(pickupee))
-{
+	{
 		oldself = self;
 		self = pickupee;
 		self.velocity = '0 0 0';
@@ -235,7 +235,7 @@ void (entity pickuper, float toss) zg_drop =
 	pickupee.pickedupobject_hands = world;			// *
 	pickuper.pickedupobject_hands = world;
 	if (pickuper.health > 0)
-{
+	{
 		oldself = self;
 		self = pickuper;
 		W_SetCurrentAmmo ();
@@ -329,7 +329,6 @@ void(entity pickupee) ZG_FireItem =
 	setsize(newmis, '0 0 0', '0 0 0');
 	setorigin(newmis, pickupee.origin);
 };
-
 void () ZG_ExplosiveTouch =
 {
 	local float damg;
@@ -355,12 +354,11 @@ void () ZG_ExplosiveTouch =
 	BecomeExplosion ();
 	dremove (self);
 };
-
 void () ZG_ammobox_regen =
 {
 	self.touch = self.th_fireball;
 	if (self.orig_origin != '0 0 0')
-{
+	{
 		self.origin = self.orig_origin;
 		//self.orig_origin = '0 0 0';
 	}

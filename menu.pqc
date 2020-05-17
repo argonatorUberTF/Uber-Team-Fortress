@@ -96,7 +96,8 @@ void () Player_Menu =
 		self.menu_count = (self.menu_count + 1.000000);
 		return;
 	}
-	if (self.current_menu == 3) {
+	if (self.current_menu == 3)
+{
 		if (TeamFortress_TeamIsCivilian(self.team_no))
 			CSQC_SendMenu(self, self.current_menu, 666, 0);
 		else
@@ -417,14 +418,16 @@ void(float inp) Menu_Team_Input =
 		{
 			if (inp == 1 || inp > 2)
 				TeamFortress_TeamSet(1);
-			else if (inp == 2)
+			else
+if (inp == 2)
 				if (!Monsterteam_full())
 				{
 					self.monster_type = 10;
 					TeamFortress_TeamSet(2);
 				}
 		}
-		else if (inp == 1)
+		else
+if (inp == 1)
 		{
 			TeamFortress_TeamSet(1);
 		}
@@ -483,12 +486,14 @@ void(float inp) Menu_Team_Input =
 };
 void() Menu_Class = 
 {
-	if (lms_entity == world) {
+	if (lms_entity == world)
+{
 		// kick idlers (send them to spec)
 		if (!self.#kick_idle_time)
 			self.#kick_idle_time = time + 160;
 
-		if (self.#kick_idle_time < time && !self.playerclass) {
+		if (self.#kick_idle_time < time && !self.playerclass)
+{
 			bprint( 2, self.netname );
 			bprint( 2, " is idling - moving to spectator\n" );
 			stuffcmd( self, "spectator 1\n" );
@@ -542,8 +547,11 @@ void() Menu_Class =
 			}
 		}
 	}
-	else if (MONSTER_TEAM_ENABLED) {
-		if (self.team_no == 2) {
+	else
+if (MONSTER_TEAM_ENABLED)
+{
+		if (self.team_no == 2)
+{
 			CenterPrint(self, "=== Choose your class ===\n\n“.. Grunt   \n”.. Enforcer\n•.. Vore    \n–.. Ogre    \n—.. Zombie  \n˜.. Shambler\n™.. Fiend   \n›..         \n’..         \n");
 			return;
 		}
@@ -578,19 +586,25 @@ void(float inp) Menu_Class_Input =
 	}
 	local entity ipl;
 	local string minfo;
-	if (survival_mode && MONSTER_TEAM_ENABLED) {
-		if (self.team_no == 2) {
+	if (survival_mode && MONSTER_TEAM_ENABLED)
+{
+		if (self.team_no == 2)
+{
 			if (inp > 8)
 				return;	// random and class 9 not implemented
-			if (Monsterclass_allow(inp) != 1) {
+			if (Monsterclass_allow(inp) != 1)
+{
 				sprint(self, 2, "That class is not available on this map.\n");
 				return;
 			}
 		}
 	}
-	else if (survival_mode) {
+	else
+if (survival_mode)
+{
 		ipl = find(world,classname,"monster_score");
-		if (ipl != world) {
+		if (ipl != world)
+{
 			if (ipl.noise1 != "")
 				minfo = ipl.noise1;
 			ipl.noise1 = strzone(frik_strcat(minfo, " ", infokey(self, "ip")));
@@ -1727,7 +1741,8 @@ void () Menu_Engineer =
 			line2 = "                                  \n";
 		}
 	}
-	if (self.classname == "player") {
+	if (self.classname == "player")
+{
 	if ((self.has_tesla == TF_FLARE_OFF))
 	{
 		line3 = "•.. Destroy Tesla Sentry Gun      \n";
@@ -1745,21 +1760,25 @@ void () Menu_Engineer =
 	} }
 	if (self.has_camera == 1)
 		line4 = "®® Destroy Security Camera       \n"; //CH impulse 4 for both
-	else if (self.ammo_cells >= 55)
+	else
+if (self.ammo_cells >= 55)
 		line4 = ".. Launch Security Camera        \n";
 	else
 		line4 = "                                  \n";
-	if (infokey(world, "telepads") == "1") {
+	if (infokey(world, "telepads") == "1")
+{
 	if (self.has_teleporter != 0) //CH messy, yes
 	{
 		if (self.has_teleporter == 1 && self.ammo_cells >= 90)
 			line5 = ".. Build a Teleporter Pad        \n®® Destroy a Teleporter Pad      \n";
-		else if (self.has_teleporter == 1 && self.ammo_cells < 90)
+		else
+if (self.has_teleporter == 1 && self.ammo_cells < 90)
 			line5 = "®® Destroy a Teleporter Pad      \n"; // 6
 		if (self.has_teleporter == 2)
 			line5 = ".. Destroy your last Teleporter  \n®® Destroy Both Teleporter Pads  \n"; // 5, 6
 		}
-	else if (self.ammo_cells >= 90)
+	else
+if (self.ammo_cells >= 90)
 		line5 = ".. Build a Teleporter Pad        \n                                  \n";
 	else
 		line5 = "                                  \n";
@@ -1780,11 +1799,13 @@ void () Menu_Engineer =
 	{
 		miscgen = "’.. Reset/Shutdown FieldGens        \n";
 	}
-	if (infokey(world, "fieldgens") == "1") {
+	if (infokey(world, "fieldgens") == "1")
+{
 		centerprint (self, "Action:                           \n", line1, line2, line3, line5, fieldgen, ".. Nothing                       \n\n");
 		return;
 	}
-	if (infokey(world, "telepads") == "1") {
+	if (infokey(world, "telepads") == "1")
+{
 		centerprint (self, "Action:                           \n", line1, line2, line3, line4, line5, ".. Nothing                       \n\n");
 	}
 	else
@@ -1795,21 +1816,24 @@ void () Menu_Engineer =
 void(float inp) Menu_Engineer_Input = 
 {
 	local entity te;
-	if (infokey(world, "telepads") == "1") {
+	if (infokey(world, "telepads") == "1")
+{
 		if ((inp == 7))
 		{
 			ResetMenu ();
 			self.impulse = TF_FLARE_LIT;
 		}
 	}
-	if (infokey(world, "telepads") != "1") {
+	if (infokey(world, "telepads") != "1")
+{
 		if ((inp == 4))
 		{
 			ResetMenu ();
 			self.impulse = TF_FLARE_LIT;
 		}
 	}
-	if (infokey(world, "telepads") == "1") {
+	if (infokey(world, "telepads") == "1")
+{
 	if (inp == 4)
 	{
 		if (!self.ammo_cells >= 55)
@@ -1863,7 +1887,8 @@ void(float inp) Menu_Engineer_Input =
 					te = find(te, classname, "building_teleporter");
 				}	
 		}
-		else if (self.has_teleporter == 2)
+		else
+if (self.has_teleporter == 2)
 		{
 				te = find(world, classname, "building_teleporter");
 				while (te)
@@ -1897,7 +1922,8 @@ void(float inp) Menu_Engineer_Input =
 		self.impulse = TF_FLARE_LIT;
 	}
 	if (((inp == 8) && (((self.ammo_cells >= 150) && (self.has_fieldgen <= TF_FLARE_OFF)) || (self.has_fieldgen >= 2))))
-	if (infokey(world, "fieldgens") == "1") {
+	if (infokey(world, "fieldgens") == "1")
+{
 	{
 		if ((self.has_fieldgen >= 2))
 		{
@@ -1967,7 +1993,9 @@ void(float inp) Menu_Engineer_Input =
 				}
 				self.has_sentry = 0;
 			}		
-			else if (self.has_tesla == 1 && self.ammo_attr < 7) {
+			else
+if (self.has_tesla == 1 && self.ammo_attr < 7)
+{
 				sprint(self,2,"Upgrade your ammo attributes to 7 to allow dual sentry buildings.\n");
 			}
 			else
@@ -1980,7 +2008,8 @@ void(float inp) Menu_Engineer_Input =
 		}
 		else
 		{
-			if (self.classname == "player") {
+			if (self.classname == "player")
+{
 			if (((inp == 3) && ((self.ammo_cells >= 150) || (self.has_tesla == 1))))
 			{
 				if (self.has_tesla)
@@ -1996,7 +2025,9 @@ void(float inp) Menu_Engineer_Input =
 					}
 					self.has_tesla = 0;			// HACK so players can rebuild tesla when it falls outta the map
 				}
-				else if (self.has_sentry == 1 && self.ammo_attr < 7) {
+				else
+if (self.has_sentry == 1 && self.ammo_attr < 7)
+{
 					sprint(self,2,"Upgrade your ammo attributes to 7 to allow dual sentry buildings.\n");
 				}
 				else
@@ -2014,7 +2045,8 @@ void(float inp) Menu_Engineer_Input =
 					ResetMenu ();
 					self.impulse = TF_FLARE_LIT;
 				}
-				if (infokey(world, "telepads") == "1") {
+				if (infokey(world, "telepads") == "1")
+{
 					if ((inp == 7))
 					{
 						ResetMenu ();
@@ -2110,7 +2142,8 @@ void() Menu_EngineerFix_Dispenser =
 	{
 		CenterPrint(self, "Action:                            \n“‘.. Put Ammo into Dispenser     \n”‘.. Put Armor into Dispenser    \n•‘.. Repair Dispenser            \n–‘.. Dismantle Dispenser         \n—‘.. Access Turretized Tesla     \n˜‘.. Nothing                     \n\n");
 	}
-	else {
+	else
+	{
 	CenterPrint(self, "Action:                            \n“‘.. Put Ammo into Dispenser     \n”‘.. Put Armor into Dispenser    \n•‘.. Repair Dispenser            \n–‘.. Dismantle Dispenser         \n—‘.. Nothing                     \n\n");
 	}
 };
@@ -2490,27 +2523,38 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
 			}
 		}
 	}
-	if (self.building.weapon == 3 && self.building.#sentry_power == 0) {
-		if (inp == 8 || inp == 9 || inp == 10) {
-			if (self.ammo_cells < 120) {
+	if (self.building.weapon == 3 && self.building.#sentry_power == 0)
+{
+		if (inp == 8 || inp == 9 || inp == 10)
+{
+			if (self.ammo_cells < 120)
+{
 				sprint(self, 2, "You need 120 cells to upgrade your sentrygun's power.\n");
 			}
-			else if (lms_entity != world) {
+			else
+if (lms_entity != world)
+{
 				sprint(self, 2, "Not available in LMS mode.\n");
 			}
-			else {
+			else
+	{
 				self.ammo_cells = (self.ammo_cells - 120);
-				if (inp == 8) {
+				if (inp == 8)
+{
 					self.building.#sentry_power = #SENTRY_FLAME;
 					self.building.effects |= EF_RED;
 					sprint (self, 2, "You have upgraded your sentrygun to shoot FIRE.\n");
 				}
-				else if (inp == 9) {
+				else
+if (inp == 9)
+{
 					self.building.#sentry_power = #SENTRY_SEEKER;
 					self.building.effects |= EF_GREEN;
 					sprint (self, 2, "You have upgraded your sentrygun to shoot SEEKERS.\n");
 				}
-				else if (inp == 10) {
+				else
+if (inp == 10)
+{
 					self.building.#sentry_power = #SENTRY_QUAD;
 					self.building.effects |= 64;//EF_BLUE;
 					sprint (self, 2, "You have upgraded your sentrygun to inflict QUAD damage.\n");
@@ -2534,7 +2578,8 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
 };
 void () Menu_EngineerFix_Tesla =
 {
-	if (infokey(world, "balancedtesla") == "1") {
+	if (infokey(world, "balancedtesla") == "1")
+{
 	CenterPrint (self, "Tesla Modification Lab: – Upgrades Max\n.. Upgrade Voltage           - 1u\n.. Upgrade Amperage          - 1u\n•.. Upgrade Power Supply      - 1u\n–.. Make TeslaTurret(tm)      - 2u\n—.. Improved Targeting System - 2u\n˜.. Add Spy Detector          - 2u\n.. Repair and Recharge           \n.. Dismantle                     \n›.. Tinker Tesla                  \n’.. Îïôèéîç                       ");
 	}
 	else
@@ -3097,13 +3142,13 @@ void (float _p_1052) Menu_Dispenser_Input =
 void() Menu_EngineerFix_Teleporter =
 {
 	if (self.building.classname == "building_teleporter" && (self.building.tf_items & 2))
-    {
-        CenterPrint(self, "Áãôéïî:                \n\n.. Repair Teleporter .    \n.. Recharge Teleporter .  \n\n.. Îïôèéîç .             \n\n.. Dismantle .            \n");
-    }
-    else
-    {
-          CenterPrint(self, "Áãôéïî:                \n\n.. Repair Teleporter.     \n.. Recharge Teleporter   \n\n.. Îïôèéîç               \n\n.. Dismantle.             \n");
-    }
+	{
+		CenterPrint(self, "Áãôéïî:                \n\n.. Repair Teleporter .    \n.. Recharge Teleporter .  \n\n.. Îïôèéîç .             \n\n.. Dismantle .            \n");
+	}
+	else
+	{
+		CenterPrint(self, "Áãôéïî:                \n\n.. Repair Teleporter.     \n.. Recharge Teleporter   \n\n.. Îïôèéîç               \n\n.. Dismantle.             \n");
+	}
 };
 void(float inp) Menu_EngineerFix_Teleporter_Input =
 {
@@ -3120,7 +3165,8 @@ void(float inp) Menu_EngineerFix_Teleporter_Input =
 		self.ammo_cells = self.ammo_cells - metalcost;
 		self.building.health = self.building.health + (metalcost * 5);
 	}
-	else if (inp == 2)
+	else
+	if (inp == 2)
 	{
 		metalcost = (self.building.maxammo_cells - self.building.ammo_cells);
 		if (metalcost > self.ammo_cells)
@@ -3130,7 +3176,8 @@ void(float inp) Menu_EngineerFix_Teleporter_Input =
 		if (self.building.ammo_cells > self.building.maxammo_cells)
 			self.building.ammo_cells = self.building.maxammo_cells;
 	}
-	else if (inp == 8)
+	else
+	if (inp == 8)
 	{
 		sprint(self, #PRINT_HIGH, "You dismantle the Teleporter Pad.\n");
 		self.ammo_cells = self.ammo_cells + (90 * 0.5) + floor(self.building.health / 15);
@@ -3138,13 +3185,14 @@ void(float inp) Menu_EngineerFix_Teleporter_Input =
 		self.building.health=0; // - OfN aborts hacks on it
 		dremove(self.building);
 	}
-	else if (inp == 10)
+	else
+	if (inp == 10)
 	{
 		ResetMenu();		
 		self.impulse = 0;
 		return;
 	}
-	if ((inp >= 1 && inp <= 3) || inp == 8)
+		if ((inp >= 1 && inp <= 3) || inp == 8)
 	{
 		ResetMenu();		
 		self.impulse = 0;
@@ -3175,7 +3223,8 @@ void(float inp) Menu_EngineerFix_Camera_Input =
 		self.ammo_cells = self.ammo_cells - metalcost;
 		self.building.health = self.building.health + (metalcost * 10);
 	}
-	else if (inp == 3)
+	else
+	if (inp == 3)
 	{
 		sprint(self, #PRINT_HIGH, "You dismantle the Security Camera.\n");
 		self.ammo_cells = self.ammo_cells + (#BUILD_COST_CAMERA * 0.5) + floor(self.building.health / 40);
@@ -3305,7 +3354,8 @@ void(float inp) Menu_NewTaunts_Input =
 					{
 						if (inp == 6)
 						{
-							if ( !(self.last_saveme_sound > time) ) {
+							if ( !(self.last_saveme_sound > time) )
+							{
 								self.last_saveme_sound = (time + 5);
 								bprint (1, self.netname);
 								bprint (1.000000, " says Ni! Ni! Ni!\n");
@@ -3439,9 +3489,11 @@ void () Menu_Bot_Team =
 {
 	if (number_of_teams < 3)
 		CenterPrint (self, "=== Choose his team ===\n\n“.. Blue\n”.. Red \n\n");
-	else if (number_of_teams == 3)
+	else
+if (number_of_teams == 3)
 		CenterPrint (self, "=== Choose his team ===\n\n“.. Blue  \n”.. Red   \n•.. Yellow\n\n");
-	else if (number_of_teams == 4)
+	else
+if (number_of_teams == 4)
 		CenterPrint (self, "=== Choose his team ===\n\n“.. Blue  \n”.. Red   \n•.. Yellow\n–.. Green \n\n");
 	else 
 		CenterPrint (self, "=== Choose his team ===\n\n“.. Blue\n”.. Red \n\n");
@@ -3455,17 +3507,26 @@ void (float _p_1327) Menu_Bot_Team_Input =
 		return;
 	}
 	}
-	else if (number_of_teams == 3)
-		if (((_p_1327 < 1.000000) || (_p_1327 > 3.000000))) { return; }
-	else if (number_of_teams == 4)
-		if (((_p_1327 < 1.000000) || (_p_1327 > 4.000000))) { return; }
-
+	else
+	if (number_of_teams == 3)
+		if (((_p_1327 < 1.000000) || (_p_1327 > 3.000000)))
+		{
+			return;
+		}
+	else
+	if(number_of_teams == 4)
+		if (((_p_1327 < 1.000000) || (_p_1327 > 4.000000)))
+		{
+			return;
+		}
 	CenterPrint (self, "\n");
-	if ( TeamFortress_TeamIsCivilian(_p_1327) ) {
+	if ( TeamFortress_TeamIsCivilian(_p_1327) )
+	{
 		botConnect (_p_1327, 10);
 		self.current_menu = 0;
 	}
-	else {
+	else
+	{
 		self.current_menu = 202;
 		self.obs_time = _p_1327;
 	}
@@ -3510,34 +3571,41 @@ void (float inp) Menu_Bot_Buddy_Input =
 					bprint(2,"stay.\n");
 					b_bot.follow_type = #FOLLOW_STOP;
 				}
-				else if (inp == 2)
+				else
+	if(inp == 2)
 				{
 					bprint(2,"follow me\n");
 					b_bot.follow_type = #FOLLOW_OWNER;
 				}
-				else if (inp == 3)
+				else
+	if(inp == 3)
 				{
 					b_bot.do_action = #ACTION_JUMP;
 				}
-				else if (inp == 4)
+				else
+	if(inp == 4)
 				{
 					b_bot.do_action = #ACTION_SUICIDE;
 				}
-				else if (inp == 5)
+				else
+	if(inp == 5)
 				{
 					b_bot.follow_type = #FOLLOW_WAYPOINTS;
 					b_bot.follow_wp = 1;
 					bprint(2, "GO WAYPOINTS GO!\n");
 				}
-				else if (inp == 6)
+				else
+	if(inp == 6)
 				{
 					b_bot.buddy_wp_one = self.origin;
 				}
-				else if (inp == 7)
+				else
+	if(inp == 7)
 				{
 					b_bot.buddy_wp_two = self.origin;
 				}
-				else if (inp == 8 )
+				else
+	if(inp == 8 )
 				{
 					
 	makevectors (self.v_angle);
@@ -3603,23 +3671,28 @@ void (float inp) Menu_VoteChoice_Input =
 void () Menu_Merchant =
 {
 	local string itemlist;
-	if (merchant.#item1) {
+	if (merchant.#item1)
+	{
 		itemlist = strcat( "1) ", Inventory_GetItemName( merchant.#item1 ), " - Cost: " );
 		itemlist = strcat(itemlist, ftos(Inventory_GetItemPrice( merchant.#item1 )), "\n");
 	}
-	if (merchant.#item2) {
+	if (merchant.#item2)
+	{
 		itemlist = strcat( itemlist, "2) ", Inventory_GetItemName( merchant.#item2 ), " - Cost: " );
 		itemlist = strcat(itemlist, ftos(Inventory_GetItemPrice( merchant.#item2 )), "\n");
 	}
-	if (merchant.#item3) {
+	if (merchant.#item3)
+	{
 		itemlist = strcat( itemlist, "3) ", Inventory_GetItemName( merchant.#item3 ), " - Cost: " );
 		itemlist = strcat(itemlist, ftos(Inventory_GetItemPrice( merchant.#item3 )), "\n");
 	}
-	if (merchant.#item4) {
+	if (merchant.#item4)
+	{
 		itemlist = strcat( itemlist, "4) ", Inventory_GetItemName( merchant.#item4 ), " - Cost: " );
 		itemlist = strcat(itemlist, ftos(Inventory_GetItemPrice( merchant.#item4 )), "\n");
 	}
-	if (merchant.#item5) {
+	if (merchant.#item5)
+	{
 		itemlist = strcat( itemlist, "5) ", Inventory_GetItemName( merchant.#item5 ), " - Cost: " );
 		itemlist = strcat(itemlist, ftos(Inventory_GetItemPrice( merchant.#item5 )), "\n");
 	}
@@ -3632,7 +3705,8 @@ void () Menu_Merchant =
 
 	if (merchant.#merchant_type == 3)
 		CenterPrint6( self, "Runes, powerups, and rare items for sale!\n", itemlist );
-	else if (merchant.#merchant_type == 2)
+	else
+	if(merchant.#merchant_type == 2)
 		CenterPrint6( self, "Weapon upgrades and ammo boosts for sale\n", itemlist );
 	else
 		CenterPrint6( self, "Got a lot of good items up for sale!\n", itemlist );
@@ -3650,14 +3724,16 @@ void () Blackjack_Think =
 		dremove(self);
 	if (self.owner.current_menu != 44)
 		dremove(self);
-	if (merchant.#gold <= 0 && self.#gold == 0) {
+	if (merchant.#gold <= 0 && self.#gold == 0)
+	{
 		sprint( self.owner, 2, "Merchant is no longer currently dealing blackjack. Try again later.\n");
 		self.owner.impulse = 0;
 		self.owner.current_menu = 0;
 		CenterPrint (self.owner, "\n");
 		dremove(self);
 	}
-	if (self.#gold > 0) {		// Game has started
+	if (self.#gold > 0)
+	{		// Game has started
 		if (self.#dealerhand == 0)
 			self.#dealerhand = 15 + rint(random() * 6);
 		dealerstring = strcat("Your current bet: ", ftos(self.#gold), "\n");
@@ -3667,19 +3743,24 @@ void () Blackjack_Think =
 		strunzone(dealerstring);
 		if (self.has_tesla == 1)
 			self.#playerhand += 1 + rint(random() * 9);
-		else if (self.has_tesla == 2) {
-			if (self.#playerhand >= self.#dealerhand) {
+		else
+		if (self.has_tesla == 2)
+		{
+			if (self.#playerhand >= self.#dealerhand)
+			{
 				self.#resultmenu = 1;
 				Inventory_AddGold( self.owner, self.#gold * 2);
 				sprint( self.owner, 2, "You win " );
 				sprint( self.owner, 2, ftos(self.#gold) );
 				sprint( self.owner, 2, " gold!\n" );
-				if (self.#gold >= 1000) {
+				if (self.#gold >= 1000)
+				{
 					Achievements_Change( self.owner, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_GAMBLER, 1 );
 				}
 				self.#gold = 0;
-			}
-			else {
+		}
+			else
+			{
 				self.#resultmenu = 2;
 				sprint( self.owner, 2, "Dealer's hand was " );
 				sprint( self.owner, 2, ftos(self.#dealerhand) );
@@ -3689,7 +3770,8 @@ void () Blackjack_Think =
 			self.#dealerhand = 0;
 			self.#playerhand = 0;
 		}
-		if (self.#playerhand > 21) {
+		if (self.#playerhand > 21)
+		{
 			self.#resultmenu = 2;
 			sprint( self.owner, 2, "Player's hand exceeds 21. Better luck next time, pal.\n" );
 			self.#gold = 0;
@@ -3702,27 +3784,36 @@ void () Blackjack_Think =
 	{	// Game hasn't started yet
 		if (self.#resultmenu == 0)
 			CenterPrint (self.owner, "Choose how much you want to bet:\n\n1) 100 \n2) 500 \n3) 1000\n4) Exit" );
-		else if (self.#resultmenu == 1)
+		else
+		if (self.#resultmenu == 1)
 			CenterPrint (self.owner, "You won!\nWant to try again?\n\n1) 100 \n2) 500 \n3) 1000\n4) Nah " );
-		else if (self.#resultmenu == 2)
+		else
+		if (self.#resultmenu == 2)
 			CenterPrint (self.owner, "You lost :(\nTry again?\n\n1) 100 \n2) 500 \n3) 1000\n4) Nah " );
 		if (self.has_tesla == 1)
 			goldamount = 100;
-		else if (self.has_tesla == 2)
+		else
+		if (self.has_tesla == 2)
 			goldamount = 500;
-		else if (self.has_tesla == 3)
+		else
+		if (self.has_tesla == 3)
 			goldamount = 1000;
-		else if (self.has_tesla == 4)
+		else
+		if (self.has_tesla == 4)
 			goldamount = -1;
-		if (goldamount > self.owner.#gold) {
+		if (goldamount > self.owner.#gold)
+		{
 			sprint( self.owner, 2, "You do not have enough gold to make that bet.\n" );
 		}
-		else if (goldamount > 0) {
+		else
+		if (goldamount > 0)
+		{
 			self.#gold = goldamount;
 			merchant.#gold -= goldamount;
 			Inventory_AddGold (self.owner, -1 * goldamount );
 		}
-		else if (goldamount == -1)
+		else
+		if (goldamount == -1)
 		{
 			self.owner.impulse = 0;
 			self.owner.current_menu = 0.000000;
@@ -3736,32 +3827,45 @@ void () Blackjack_Think =
 void ( float inp ) Menu_Merchant_Input =
 {
 	local entity minigame;
-	if (inp == 1) {
+	if (inp == 1)
+	{
 		if (Inventory_AddItem( self, merchant.#item1, Inventory_GetItemPrice( merchant.#item1 ) ))
 			merchant.#item1 = 0;
 	}
-	else if (inp == 2) {
+	else
+	if (inp == 2)
+	{
 		if (Inventory_AddItem( self, merchant.#item2, Inventory_GetItemPrice( merchant.#item2 ) ))
 			merchant.#item2 = 0;
 	}
-	else if (inp == 3) {
+	else
+	if (inp == 3)
+	{
 		if (Inventory_AddItem( self, merchant.#item3, Inventory_GetItemPrice( merchant.#item3 ) ))
 			merchant.#item3 = 0;
 	}
-	else if (inp == 4) {
+	else
+	if (inp == 4)
+	{
 		if (Inventory_AddItem( self, merchant.#item4, Inventory_GetItemPrice( merchant.#item4 ) ))
 			merchant.#item4 = 0;
 	}
-	else if (inp == 5) {
+	else
+	if (inp == 5)
+	{
 		if (Inventory_AddItem( self, merchant.#item5, Inventory_GetItemPrice( merchant.#item5 ) ))
 			merchant.#item5 = 0;
 	}
-	else if (inp == 6) {
+	else
+	if (inp == 6)
+	{
 		sprint( self, 2, "Inventory items this merchant will buy off you:\n" );
 		Inventory_PrintItems( self.connect_name, #P_TO_SELF_W_VALUE );
 		sprint( self, 2, "To sell one of these items, use \"cmd inv sell #\" .\n" );
 	}
-	else if (inp == 7) {
+	else
+	if (inp == 7)
+	{
 		self.impulse = 0;
 		self.current_menu = 44;
 		CenterPrint (self, "\n");
@@ -3773,7 +3877,9 @@ void ( float inp ) Menu_Merchant_Input =
 		return;	
 	}
 #ifdef mtf_coop_quests
-	else if (inp == 8) {
+	else
+	if (inp == 8)
+	{
 		self.impulse = 0;
 		self.current_menu = 45;
 		CenterPrint (self, "\n");
@@ -3786,7 +3892,9 @@ void ( float inp ) Menu_Merchant_Input =
 		return;	
 	}
 #endif
-	else if (inp == 8) {				// Change class menu
+	else
+	if (inp == 8)
+	{				// Change class menu
 		CenterPrint (self, "\n");
 		self.current_menu = 3;
 		self.menu_displaytime = 25;		
@@ -3846,7 +3954,6 @@ void ( float inp ) Menu_Quest_Input =
 		}
 		return;
 	}
-
 	self.impulse = 0.000000;
 	self.current_menu = 0.000000;
 	CenterPrint (self, "\n");
@@ -3858,13 +3965,15 @@ void () Quest_Think =
 		dremove(self);
 	if (self.owner.current_menu != 45)
 		dremove(self);
-	if (self.#questid == 0) {
+	if (self.#questid == 0)
+	{
 		self.owner.impulse = 0;
 		self.owner.current_menu = 0;
 		CenterPrint (self.owner, "\n");
 		dremove(self);
 	}
-	if (merchant.#questid == 0) {
+	if (merchant.#questid == 0)
+	{
 		sprint( self.owner, 2, "This merchant has no quests available.\n");
 		self.owner.impulse = 0;
 		self.owner.current_menu = 0;
@@ -3875,22 +3984,27 @@ void () Quest_Think =
 		CenterPrint6 (self.owner, "[Quests]\n\nAvailable Quest:\n", "[1] ", Quest_GetValueFor( #QUESTINFO_DESCRIPTION, merchant.#questid, self.owner ), "\n[4] Return\n" );
 	else
 		CenterPrint6 (self.owner, "[", Quest_GetValueFor( #QUESTINFO_DESCRIPTION, merchant.#questid, self.owner ), "]\n\n", Quest_GetValueFor( #QUESTINFO_DIALOGUE, merchant.#questid, self.owner ), "\n\n[1] Accept \n[2] Decline \n");
-	if (self.#quest_menu == 0) {
-		if (self.has_tesla == 1) {
+	if (self.#quest_menu == 0)
+	{
+		if (self.has_tesla == 1)
+		{
 			self.#quest_menu = 1;
 		}
-		else if (self.has_tesla == 2)
+		else
+		if (self.has_tesla == 2)
 			self.#questid = 0;
-			
 		self.has_tesla = 0;
 	}
-	else {
-		if (self.has_tesla == 1) {
+	else
+	{
+		if (self.has_tesla == 1)
+		{
 			if (self.owner.#questid == merchant.#questid)
 			{
 				sprint( self.owner, 2, "You have not completed this quest yet. If you wish to cancel a quest, use \"cmd quest cancel\" in the console.\n" );
 			}
-			else if (self.owner.#questid)
+			else
+			if (self.owner.#questid)
 			{
 				sprint( self.owner, 2, "You are currently engaged in a quest. If you wish to cancel a quest, use \"cmd quest cancel\" in the console.\n" );
 			}
@@ -3901,7 +4015,8 @@ void () Quest_Think =
 			}
 			self.has_tesla = 0;
 		}
-		else if (self.has_tesla == 2)
+		else
+		if (self.has_tesla == 2)
 			self.#questid = 0;
 	}
 	self.nextthink = time + .1;

@@ -66,7 +66,8 @@ void () player_stand1 = [ 17, player_stand1 ]
 		player_run ();
 		return;
 	}
-	if (self.monster_type > 0) {
+	if (self.monster_type > 0)
+	{
 		monster_stand1();
 		return;
 	}
@@ -118,7 +119,8 @@ void () player_stand1 = [ 17, player_stand1 ]
 		else
 		{
 			self.frame = (12.000000 + self.walkframe);
-			if (self.heat > 1 && self.current_weapon == 32) {
+			if (self.heat > 1 && self.current_weapon == 32)
+			{
 				self.frame = 105;	//light1
 			}
 		}
@@ -1102,10 +1104,13 @@ void ( float bodytype ) Survival_MakeDummy =
 		return;
 	if (!self.team_no)
 		return;
-	if (self.classname == "observer") {		// player is already dead (means they must have disconnected while dead.. i hope)
+	if (self.classname == "observer")
+	{		// player is already dead (means they must have disconnected while dead.. i hope)
 		te = find(world, classname, "resdummy");
-		while (te) {
-			if (te.enemy == self) {
+		while (te)
+		{
+			if (te.enemy == self)
+			{
 				found_dummy = 1;
 					self.origin = te.origin;
 				dremove(te);
@@ -1190,7 +1195,8 @@ void() PlayerDie =
 		self.hook_out = 1;
 	}
 #ifdef mtfcoop_uberhardmode
-	if (uberhardmode) {
+	if (uberhardmode)
+	{
 		uberhardmode_RemoveHealthTimer (self);
 	}
 #endif
@@ -1251,7 +1257,8 @@ void() PlayerDie =
 	DeathSound();
 	self.angles_x = TF_FLARE_LIT;
 	self.angles_z = TF_FLARE_LIT;
-	if (self.monster_type > 0) {
+	if (self.monster_type > 0)
+	{
 		monster_die();
 		return;
 	}

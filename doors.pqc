@@ -35,7 +35,7 @@ void () door_use_netname =
 		newmis.nextthink = time;
 		newmis.think = Delayed_Use;
 	}
-}
+};
 #endif
 void() door_hit_top = 
 {
@@ -122,7 +122,7 @@ void() door_hit_bottom =
 #endif
 	}
 	if (#HL_MAP)
-{
+	{
 		if (self.spawnflags & 256)	// use only.. which means killable too :p
 		{
 			self.takedamage = 1;
@@ -150,10 +150,9 @@ void() door_go_down =
 		self.health = self.max_health;
 	}
 	self.state = 3;
-	
 #ifdef mtf_coop_halflife
 	if (self.classname == "door_rotating")
-{
+	{
 		SUB_CalcAngleMove (self.pos1, self.speed, door_hit_bottom);
 		SUB_UseTargets();
 		self.takedamage = 0;
@@ -185,7 +184,7 @@ void() door_go_up =
 	self.state = 2;
 #ifdef mtf_coop_halflife
 	if (self.classname == "door_rotating")
-{
+	{
 		SUB_CalcAngleMove (self.pos2, self.speed, door_hit_top);
 		self.takedamage = 0;
 	}
@@ -199,7 +198,7 @@ void() door_go_up =
 	SUB_UseTargets();
 	
 	if (self.classname == "door_rotating")
-{
+	{
 	}
 };
 void() door_fire = 
@@ -245,13 +244,13 @@ void() door_use =
 	if (has_master(self))
 		return;
 	if (#HL_MAP)
-{		// FIXME: not sure about this 
+	{		// FIXME: not sure about this 
 		self.enemy = self;
 		self.owner = self;
 	}
 	self.hl_use = SUB_Null;		// disable use for now..
 	if (#HL_MAP)
-{
+	{
 	
 		if (self.targetname == "sl10_door" || self.targetname == "sl09_door" || self.targetname == "sl08_door")
 			return;
@@ -393,7 +392,7 @@ void() door_touch =
 	
 #ifdef HALFLIFE
 	if (#HL_MAP)
-{}
+	{}
 	else
 #endif
 	if ((self.items & other.items) != self.items)

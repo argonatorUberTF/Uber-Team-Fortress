@@ -30,7 +30,6 @@ void() t_movetarget =
 	local string oldtarg;
 	if (self.pathtarget)
 	{
-//	bprint(2,"HOLY MOLY AWESOME\n");
 		oldtarg = self.target;
 		self.target = self.pathtarget;
 		SUB_UseTargets();
@@ -135,7 +134,7 @@ void() followtarget_f =
 };
 void() path_follow =
 {
-   followtarget_f ();
+	followtarget_f ();
 };
 void() path_follow2 =
 {
@@ -206,8 +205,10 @@ float() FindTarget =
 			if (guns != world)
 			{
 				head = findradius (guns.origin, 2048);
-				while (head) {
-					if (head.is_monster == 1 && coop_visible(guns, head) &&/* head.takedamage && */head.health > 0) {
+				while (head)
+				{
+					if (head.is_monster == 1 && coop_visible(guns, head) &&/* head.takedamage && */head.health > 0)
+					{
 						if (head.enemy == world)
 						{
 							head.wooha = guns;
@@ -221,11 +222,13 @@ float() FindTarget =
 	}
 	if (self.wooha != world)
 	{
-		if (self.#is_minion == #TRUE) {
+		if (self.#is_minion == #TRUE)
+		{
 			if (self.wooha.team_no == self.team_no)
 				self.wooha = world;
 		}
-		else {
+		else
+		{
 		self.enemy = self.wooha;
 		self.wooha = world;
 		FoundTarget();
@@ -237,8 +240,10 @@ float() FindTarget =
 		the_client = sight_entity;
 		if (the_client.enemy == self.enemy)
 		{
-			if (survival_mode == 1/*SURVIVAL_NATIVE*/) {		// xav: HAHAAAAAAX
-				if (self.health > 0 && self.enemy.health > 0 && self.th_run) {
+			if (survival_mode == 1/*SURVIVAL_NATIVE*/)
+			{		// xav: HAHAAAAAAX
+				if (self.health > 0 && self.enemy.health > 0 && self.th_run)
+				{
 					FoundTarget();
 					return 1;
 				}
@@ -254,17 +259,20 @@ float() FindTarget =
 			if (self.spawnflags & 16)		// notarget flag for HL monsters
 				the_client = world;
 #endif
-		if (self.#is_minion == 1) {
+		if (self.#is_minion == 1)
+		{
 			guns = world;
 			guns = findradius(self.origin, 850);
 			while (guns)
 			{
 				if (guns.monster_string == "on" && guns.#is_minion != #TRUE)
 				{
-					if (self.wooha != guns) {
+					if (self.wooha != guns)
+					{
 					}
 						self.wooha = guns;
-					if (visible(guns)) {
+					if (visible(guns))
+					{
 						self.enemy = guns;
 						FoundTarget();
 						return 1;
@@ -392,7 +400,8 @@ void(float dist) ai_walk =
 		dist /= self.leg_damage;
 	if (sp_mult > 0)
 		dist *= sp_mult;
-	if (self.health <= 0) {
+	if (self.health <= 0)
+	{
 		bprint(2,"Tell DEV that a dead monster is moving.. sigh\n");
 		eprint(self);
 		self.think = SUB_Null;
@@ -432,13 +441,15 @@ void(float dist) ai_walk =
 			self.follow_mode = 0;
 		}
 	}
-	if (self.#is_minion == #TRUE) {
+	if (self.#is_minion == #TRUE)
+	{
 		self.goalentity = self.owner;
 		self.enemy = self.owner;
 		self.think = self.th_run;
 		return;
 	}
-	if (lms_entity != world) {
+	if (lms_entity != world)
+	{
 		if (self.enemy)
 			self.th_run();
 	}
@@ -510,7 +521,6 @@ void() ai_stand =
 	if (FindTarget())
 	{
 		found_targ = 1;
-		//return;
 	}
 	if (self.classname == "minifiend")
 	{
@@ -526,9 +536,6 @@ void() ai_stand =
 				if ((vlen ((self.origin - self.owner.origin)) > 100))
 				{
 					self.follow_mode = 1;
-#ifdef minipets
-					demon1_run1();
-#endif
 					return;
 				}
 			}
@@ -754,10 +761,12 @@ void(float dist) ai_run =
 {
 	local float sp_mult;
 #ifdef HALFLIFE
-	if (self.enemy.classname == "script_corner") {
+	if (self.enemy.classname == "script_corner")
+	{
 		self.angles = vectoangles(self.enemy.origin - self.origin);
 		self.angles_x = 0;
-		if (walkmove (self.angles_y + (random()*17), dist) == #FALSE) {
+		if (walkmove (self.angles_y + (random()*17), dist) == #FALSE)
+		{
 			if (FindTarget ())
 				self.enemy = world;
 		}
@@ -767,7 +776,8 @@ void(float dist) ai_run =
 	sp_mult = cvar ("monster_speed");
 	if (self.monster_items & MITEM_SPEED)
 		dist *= #MONSTER_SPEED_MULT;
-	if (self.tfstate & #MONSTER_TRANQUILIZED) {
+	if (self.tfstate & #MONSTER_TRANQUILIZED)
+	{
 		dist *= .3;
 	}
 	if (self.leg_damage)

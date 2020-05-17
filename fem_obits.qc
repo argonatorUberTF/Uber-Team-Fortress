@@ -6,7 +6,8 @@ void(entity targ, entity attacker) FemaleClientObituary =
 	rnum = random();
 	if (targ.classname == "player" || targ.is_monster == 1)
 	{
-	if (attacker.coop_exp != -1 && attacker.classname == "player" && targ.is_monster == 1) {
+	if (attacker.coop_exp != -1 && attacker.classname == "player" && targ.is_monster == 1)
+	{
 		attacker.coop_exp += 10;
 		MTF_Coop_AddExperience ( attacker, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker, attacker.connect_name, attacker.coop_exp );
@@ -118,7 +119,6 @@ void(entity targ, entity attacker) FemaleClientObituary =
 				}
 				else
 				{
-
 					if (deathmsg == 52)
 					{
 						deathstring = " tries to fly with her turretizing tesla.\n";
@@ -752,17 +752,15 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																																												deathstring2 = "'s sentry gun.\n";
 																																											}
 																																										}
-#ifdef mtf_coop																																									
-	else if (deathmsg == 1124)
+	else
+if (deathmsg == 1124)
 	{
 		deathstring = " is pinned by ";
 		deathstring2 = "'s needler.\n";
 	}
-	else {
+	else
+	{
 // megatf coop new weapons death messages
-#elseif
-																																										else {
-#endif																																										
 																																		if (deathmsg == 28)
 																																		{
 																																			if (rnum <= 0.5)
@@ -874,7 +872,8 @@ void(entity targ, entity attacker) FemaleClientObituary =
 						bprint(TF_FLARE_OFF, GetMonsterPowers(targ, 0));
 					bprint(TF_FLARE_OFF, targ.netname);
 					if (targ.is_monster)
-						if (targ.lives > 0) {
+						if (targ.lives > 0)
+						{
 							bprint(2, "(");
 							bprint(2, ftos(targ.lives));
 							bprint(2, ")");
@@ -944,14 +943,17 @@ void(entity targ, entity attacker) FemaleClientObituary =
 						}
 					}
 local entity te;
-				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss") {
-	te = find ( world, classname, "monster_score" );
-	if (te.netname == "Monsters") {
-		te.frags += 1;
-		svcUpdateFrags (te.fClientNo, te.frags);
-	}
+				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss")
+				{
+					te = find ( world, classname, "monster_score" );
+					if (te.netname == "Monsters")
+					{
+						te.frags += 1;
+						svcUpdateFrags (te.fClientNo, te.frags);
+					}
 				}
-	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1) {
+	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1)
+	{
 		attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 10;
 		MTF_Coop_AddExperience ( attacker.real_owner, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker.real_owner, attacker.real_owner.connect_name, attacker.real_owner.coop_exp );
@@ -1079,24 +1081,33 @@ local entity te;
 													}
 													else
 													{
-														if (attacker.classname == "func_monsterkill") {
+														if (attacker.classname == "func_monsterkill")
+														{
 															if (attacker.netname_broadcast != "none")
 																deathstring = attacker.netname_broadcast;
 														}
-														else if (targ.classname != "player") {
-															if (random() > .5) {	
+														else
+														if (targ.classname != "player")
+														{
+															if (random() > .5)
+															{
 																deathstring = strcat(" died in an unfortunate gardening accident (", attacker.classname);
 																deathstring = strcat(deathstring, ").\n");
 															}
-															else if (random() > .5) {
+															else
+															if (random() > .5)
+															{
 																deathstring = strcat(" flew into a wall and went splat :(  (", attacker.classname);
 																deathstring = strcat(deathstring, ").\n");
 															}
-															else if (random() > .5) {
+															else
+															if (random() > .5)
+															{
 																deathstring = strcat(" drove her chevy THROUGH the levy (", attacker.classname);
 																deathstring = strcat(deathstring, ").\n");
 															}
-															else {
+															else
+															{
 																deathstring = strcat(" got a BSOD (", attacker.classname);
 																deathstring = strcat(deathstring, ").\n");
 															}
@@ -1113,72 +1124,101 @@ local entity te;
 						}
 					}
 				}
-				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss") {
-	te = find ( world, classname, "monster_score" );
-	if (te.netname == "Monsters") {
-		if (targ.deathtype != "monster_respawn") {
-			te.frags += 1;
-			svcUpdateFrags (te.fClientNo, te.frags);
-		}
-	}
+				if (targ.is_monster != 1 && attacker.is_monster == 1 || attacker.classname == "monster_boss")
+				{
+					te = find ( world, classname, "monster_score" );
+					if (te.netname == "Monsters")
+					{
+						if (targ.deathtype != "monster_respawn")
+						{
+							te.frags += 1;
+							svcUpdateFrags (te.fClientNo, te.frags);
+						}
+					}
 				}
-				if (targ.deathtype == "monster_respawn") {
+				if (targ.deathtype == "monster_respawn")
+				{
 					deathstring = strcat(" was telefragged by a ", GetMonsterPowers(attacker, 2));
 					targ.deathtype = string_null;
 				}
-				else if (targ.deathtype == "monster_respawn") {
+				else
+				if (targ.deathtype == "monster_respawn")
+				{
 					deathstring = attacker.netname_broadcast;
 					targ.deathtype = string_null;
 				}
-				else if (attacker.classname == "monster_army")
+				else
+				if (attacker.classname == "monster_army")
 					deathstring = strcat(" was shot by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_demon1")
+				else
+				if (attacker.classname == "monster_demon1")
 					deathstring = strcat(" was eviscerated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_dog")
+				else
+				if (attacker.classname == "monster_dog")
 					deathstring = strcat(" was mauled by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_dragon")
+				else
+				if (attacker.classname == "monster_dragon")
 					deathstring = strcat(" was fried by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_enforcer")
+				else
+				if (attacker.classname == "monster_enforcer")
 					if (attacker.weapon & 16)//#MWEAPON_SNIPER)
 						deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
 					else
 						deathstring = strcat(" was blasted by an ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_fish")
+				else
+				if (attacker.classname == "monster_fish")
 					deathstring = strcat(" was fed to the ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_hell_knight")
+				else
+				if (attacker.classname == "monster_hell_knight")
 					deathstring = strcat(" was slain by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_knight")
+				else
+				if (attacker.classname == "monster_knight")
 					deathstring = strcat(" was slashed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_ogre" || attacker.classname == "monster_ogre_marksman")
+				else
+				if (attacker.classname == "monster_ogre" || attacker.classname == "monster_ogre_marksman")
 					deathstring = strcat(" was destroyed by an ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_boss")
+				else
+				if (attacker.classname == "monster_boss")
 					deathstring = " burns in the flames of chthon\n";
-				else if (attacker.classname == "monster_killable_boss")
+				else
+				if (attacker.classname == "monster_killable_boss")
 					deathstring = " burns in the flames of uber chthon\n";
-				else if (attacker.classname == "monster_oldone")
+				else
+				if (attacker.classname == "monster_oldone")
 					deathstring = " became one with Shub-Niggurath\n";
-				else if (attacker.classname == "monster_shalrath")
+				else
+				if (attacker.classname == "monster_shalrath")
 					deathstring = strcat(" was exploded by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_shambler")
+				else
+				if (attacker.classname == "monster_shambler")
 					deathstring = strcat(" was smashed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_tarbaby")
+				else
+				if (attacker.classname == "monster_tarbaby")
 					deathstring = strcat(" was slimed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_vomit")
+				else
+				if (attacker.classname == "monster_vomit")
 					deathstring = strcat(" was vomited on by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_wizard")
+				else
+				if (attacker.classname == "monster_wizard")
 					deathstring = strcat(" was scragged by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_zombie")
+				else
+				if (attacker.classname == "monster_zombie")
 					deathstring = strcat(" joins the ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_azoth")
-deathstring = strcat(" was vanquished by ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_vermis")
-deathstring = strcat(" was eradicated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_spider")
-deathstring = strcat(" was desiccated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_juggernaut")
-deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_ubs")
-deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
+				else
+				if (attacker.classname == "monster_azoth")
+					deathstring = strcat(" was vanquished by ", GetMonsterPowers(attacker, 2));
+				else
+				if (attacker.classname == "monster_vermis")
+					deathstring = strcat(" was eradicated by a ", GetMonsterPowers(attacker, 2));
+				else
+				if (attacker.classname == "monster_spider")
+					deathstring = strcat(" was desiccated by a ", GetMonsterPowers(attacker, 2));
+				else
+				if (attacker.classname == "monster_juggernaut")
+					deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
+				else
+				if (attacker.classname == "monster_ubs")
+					deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 				if ((attacker.classname == "monster_gaunt"))
 				{
 					if ((attacker.enemy.deathtype == "swoop"))
@@ -1190,67 +1230,89 @@ deathstring = strcat(" was uberscragged by an ", GetMonsterPowers(attacker, 2));
 						deathstring = strcat(" was charred by a ", GetMonsterPowers(attacker, 2));
 					}
 				}
-				else if (attacker.classname == "monster_voreling")
+				else
+				if (attacker.classname == "monster_voreling")
 					deathstring = strcat(" was violated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_deathguard")
+				else
+				if (attacker.classname == "monster_deathguard")
 					deathstring = strcat(" was slaughtered by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_death_lord")
+				else
+				if (attacker.classname == "monster_death_lord")
 					deathstring = strcat(" was executed by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_polyp")
+				else
+				if (attacker.classname == "monster_polyp")
 					deathstring = strcat(" was popped by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_drole")
+				else
+				if (attacker.classname == "monster_drole")
 					deathstring = strcat(" was decimated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_gug")
+				else
+				if (attacker.classname == "monster_gug")
 					deathstring = strcat(" was obliterated by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.classname == "monster_bob")
+				else
+				if (attacker.classname == "monster_bob")
 					deathstring = strcat(" was zapped by a ", GetMonsterPowers(attacker, 2));
-			else if (attacker.classname == "monster_gremlin")
-deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
+			else
+			if (attacker.classname == "monster_gremlin")
+				deathstring = strcat("  was outsmarted by a ", GetMonsterPowers(attacker, 2));
 			bprint ("Gremlin.\n");
-			else if (attacker.classname == "monster_scourge")
-deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
-				bprint ("Centroid.\n");
-            else if (attacker.classname == "monster_armagon")
-deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
-				bprint ("Armagon.\n");
-			else if (attacker.classname == "trap_spike_mine")
-deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
-				else if ((attacker.classname == "monster_eel"))
+			else
+			if (attacker.classname == "monster_scourge")
+				deathstring = strcat(" was stung by a ", GetMonsterPowers(attacker, 2));
+			bprint ("Centroid.\n");
+			else
+			if (attacker.classname == "monster_armagon")
+				deathstring = strcat(" was outgunned by ", GetMonsterPowers(attacker, 2));
+			bprint ("Armagon.\n");
+			else
+			if (attacker.classname == "trap_spike_mine")
+				deathstring = strcat(" was blasted by a ", GetMonsterPowers(attacker, 2));
+			else
+				if ((attacker.classname == "monster_eel"))
 				{
-deathstring = strcat(" was electrified by an ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was electrified by an ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_wrath"))
+				else
+				if ((attacker.classname == "monster_wrath"))
 				{
-deathstring = strcat(" was disintegrated by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was disintegrated by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_super_wrath"))
+				else
+				if ((attacker.classname == "monster_super_wrath"))
 				{
-deathstring = strcat(" was obliterated by an ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was obliterated by an ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_sword"))
+				else
+				if ((attacker.classname == "monster_sword"))
 				{
-deathstring = strcat(" was slit open by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was slit open by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_lava_man"))
+				else
+				if ((attacker.classname == "monster_lava_man"))
 				{
-deathstring = strcat(" fries in the fury of ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" fries in the fury of ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_morph"))
+				else
+				if ((attacker.classname == "monster_morph"))
 				{
-deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was crushed by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if ((attacker.classname == "monster_mummy"))
+				else
+				if ((attacker.classname == "monster_mummy"))
 				{
-deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
+					deathstring = strcat(" was was mummified by a ", GetMonsterPowers(attacker, 2));
 				}
-				else if (attacker.classname == "monster_cyberdemon")
+				else
+				if (attacker.classname == "monster_cyberdemon")
 					deathstring = strcat(" was shot into Doom II by a ", GetMonsterPowers(attacker, 2));
-				else if (attacker.netname != "" && attacker != world && deathstring == " died\n")
+				else
+				if (attacker.netname != "" && attacker != world && deathstring == " died\n")
 				{
 					deathstring = GetMonsterDeathstring(attacker.classname);
 					deathstring = strcat(deathstring, GetMonsterPowers(attacker, 2));
 				}
-				else if (deathstring == " died\n") {
+				else
+				if (deathstring == " died\n")
+				{
 					deathstring = frik_strcat(" met an uncertain fate (", attacker.classname, ").\n");
 					targ.ammo_cells = 666;	// hackish, but so we know the player died by a trigger_hurt for survival mode dummy
 				}

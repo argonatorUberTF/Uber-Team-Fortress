@@ -36,15 +36,18 @@ void (entity t_plyr, float gibtype, vector giborigin, float veracity) CSQC_SendG
 	if (t_plyr == world)		// send to all players with CSQC capabilities
 	{
 		te = find(world, classname, "player");
-		while (te) {
-			if (te.csqc_client) {
+		while (te)
+		{
+			if (te.csqc_client)
+			{
 				CSQC_SendGibs(te, gibtype, giborigin, veracity);
 			}
 			te = find(te, classname, "player");
 		}
 		return;
 	}
-	else if (!t_plyr.csqc_client)
+	else
+if (!t_plyr.csqc_client)
 		return;
 	stuffcmd( t_plyr, "cmd spawngibs " );
 	stuffcmd( t_plyr, ftos(gibtype) );

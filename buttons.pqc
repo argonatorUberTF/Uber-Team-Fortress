@@ -38,7 +38,7 @@ void() button_fire =
 #ifdef mtf_coop_halflife
 	if (#HL_MAP)
 		if (self.spawnflags & 1)
-{
+		{
 			SUB_CalcMove(self.origin, self.speed, button_wait);
 			return;
 		}
@@ -88,7 +88,7 @@ void() button_killed =
 {
 #ifdef mtf_coop_halflife
 	if (has_master(self))
-{
+	{
 		self.health = 1;
 		return;
 	}
@@ -105,9 +105,8 @@ void() button_killed =
 void () movewith_think =
 {
 	local vector moveme;
-
 	if (((self.enemy.absmin+self.enemy.absmax)*0.5) != self.enemy.orig_origin)
-{
+	{
 		moveme = ((self.enemy.absmin+self.enemy.absmax)*0.5) - self.enemy.orig_origin;
 		setorigin(self.owner, (self.owner.orig_origin + moveme));
 	}
@@ -119,7 +118,7 @@ void () movewith_firstthink =
 	self.owner.orig_origin = self.owner.origin;
 	fent = find(world, targetname, self.owner.movewith);
 	while (fent)
-{
+	{
 		self.enemy = fent;
 		fent.orig_origin = ((fent.mins+fent.maxs)*0.5);
 		fent = find(fent, targetname, self.owner.movewith);
@@ -204,7 +203,7 @@ void() func_button =
 	self.pos2 = self.pos1 + self.movedir * (fabs(self.movedir * self.size) - self.lip);
 #ifdef mtf_coop_halflife
 	if (mapname == "c1a1c")
-{
+	{
 		if (self.model == "*113")
 			self.target = "changetoc1a2";
 	}
