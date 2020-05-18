@@ -8414,7 +8414,7 @@ void () TeamFortress_Timeleft =
 		sprint(self,2,"Time is up.\n");
 		return;
 	}
-	sprint(self,2,"");
+	sprint(self,2," ");
 	intplaceholder = remaining;
 	remaining = remaining / 60;
 	seconds = 0;

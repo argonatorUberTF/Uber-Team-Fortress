@@ -15446,32 +15446,32 @@ void () review_timeleft =
 	remaining = seconds - self.no_grenades_1;
 	if ((remaining == 5) & (seconds >= 5))
 	{
-		bprint(2,"µ óåãïîäó remaining!\n");
+		bprint(2,"5 seconds remaining!\n");
 	}
 	else
 	if ((remaining == 30) & (seconds >= 30))
 	{
-		 bprint(2,"³° óåãïîäó remaining.\n");
+		 bprint(2,"30 seconds remaining.\n");
 	}
 	else
 	if ((remaining == 60) & (seconds >= 60))
 	{
-		 bprint(2,"± íéîõôå remaining.\n");
+		 bprint(2,"60 seconds remaining.\n");
 	}
 	else
 	if ((remaining == 300) & (seconds >= 300))
 	{
-		 bprint(2,"µ íéîõôåó remaining.\n");
+		 bprint(2,"5 minutes remaining.\n");
 	}
 	else
 	if ((remaining == 900) & (seconds >= 900))
 	{
-		bprint(2, "±µ íéîõôåó remaining.\n");
+		bprint(2, "15 minutes remaining.\n");
 	}
 	else
 	if ((remaining == 1800) & (seconds >= 1800))
 	{
-		bprint(2, "³° íéîõôåó remaining.\n");
+		bprint(2, "30 minutes remaining.\n");
 	}
 	else
 	if (remaining <= 0) 
@@ -15529,7 +15529,7 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 			write( file, rname );
 			write( file, "\n" );
 			write( file, rval );
-			write( file, "\n" );		
+			write( file, "\n" );
 			strunzone (rval);
 			strunzone (rname);
 		}
