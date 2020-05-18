@@ -111,7 +111,7 @@ float (float anum) Achievements_CheckComplete =
 			break;
 		case ACHIEVEMENT_COMPLETIONIST:
 			return 500;
-			break;		
+			break;
 		case ACHIEVEMENT_FLAWLESS:
 			return 100;
 			break;
@@ -342,12 +342,12 @@ float (entity t_plyr) Achievements_Setup =
 		write (filee, "// First line is achievement name\n// Second line is player's progress in earning the achievement\n// Third line is how many of that achievement the player has\n");
 		write (filee, "// ADDME: use this line for something?\n");
 		while (i < MAXLINES_ACHIEVEMENTS + #FIRST_AWD_LINE)
-{
+		{
 			tstr = Achievements_GetName(i);
 			if (tstr == "noname")
 				write (filee, "0\n");
 			else
-if (tstr == "endname")
+			if (tstr == "endname")
 				break;
 			else
 			{
@@ -383,7 +383,7 @@ void ( float p_type, entity t_plyr ) Achievements_Print =
 		stuffcmd(self, "say \"My achievements\n");
 	}
 	else
-if (p_type == 2)
+	if (p_type == 2)
 		sprint(self, 2, "Your achievements (detailed):\n");
 	i = 1;
 	file = open (frik_strcat( "ranks/inv/", t_plyr.connect_name, "_awd.tfi" ), 0);
@@ -397,9 +397,9 @@ if (p_type == 2)
 				infa = stof( read(file) );
 				infb = stof( read(file) );
 				if (infb > 0)
-{
+				{
 					if (p_type == 0)
-{
+					{
 						sprint(self, 2, Achievements_GetName(i - #FIRST_AWD_LINE));
 						sprint(self, 2, "(" );
 						sprint(self, 2, ftos(infb));
@@ -493,7 +493,7 @@ void () Achievements_Set =
 					ach_total = 0;
 			}
 			else
-if (s_type == ACHIEVEMENTS_SET)
+			if (s_type == ACHIEVEMENTS_SET)
 			{
 					ach_total = a_var;
 			}
@@ -572,22 +572,22 @@ float (string mpn) GetEP1MapBit =
 	if (mpn  == "e1m1")
 		return 1;
 	else
-if (mpn  == "e1m2")
+	if (mpn  == "e1m2")
 		return 2;
 	else
-if (mpn  == "e1m3")
+	if (mpn  == "e1m3")
 		return 4;
 	else
-if (mpn  == "e1m4")
+	if (mpn  == "e1m4")
 		return 8;
 	else
-if (mpn  == "e1m5")
+	if (mpn  == "e1m5")
 		return 16;
 	else
-if (mpn  == "e1m6")
+	if (mpn  == "e1m6")
 		return 32;
 	else
-if (mpn  == "e1m8")			// meh, forget e1m7 :D
+	if (mpn  == "e1m8")			// meh, forget e1m7 :D
 		return 64;
 		
 	return -1;
@@ -597,22 +597,22 @@ float (string mpn) GetEP2MapBit =
 	if (mpn  == "e2m1")
 		return 1;
 	else
-if (mpn  == "e2m2")
+	if (mpn  == "e2m2")
 		return 2;
 	else
-if (mpn  == "e2m3")
+	if (mpn  == "e2m3")
 		return 4;
 	else
-if (mpn  == "e2m4")
+	if (mpn  == "e2m4")
 		return 8;
 	else
-if (mpn  == "e2m5")
+	if (mpn  == "e2m5")
 		return 16;
 	else
-if (mpn  == "e2m6")
+	if (mpn  == "e2m6")
 		return 32;
 	else
-if (mpn  == "e2m7")
+	if (mpn  == "e2m7")
 		return 64;
 	return -1;
 };
@@ -621,22 +621,22 @@ float (string mpn) GetEP3MapBit =
 	if (mpn  == "e3m1")
 		return 1;
 	else
-if (mpn  == "e3m2")
+	if (mpn  == "e3m2")
 		return 2;
 	else
-if (mpn  == "e3m3")
+	if (mpn  == "e3m3")
 		return 4;
 	else
-if (mpn  == "e3m4")
+	if (mpn  == "e3m4")
 		return 8;
 	else
-if (mpn  == "e3m5")
+	if (mpn  == "e3m5")
 		return 16;
 	else
-if (mpn  == "e3m6")
+	if (mpn  == "e3m6")
 		return 32;
 	else
-if (mpn  == "e3m7")
+	if (mpn  == "e3m7")
 		return 64;
 	return -1;
 };
@@ -645,22 +645,22 @@ float (string mpn) GetEP4MapBit =
 	if (mpn  == "e4m1")
 		return 1;
 	else
-if (mpn  == "e4m2")
+	if (mpn  == "e4m2")
 		return 2;
 	else
-if (mpn  == "e4m3")
+	if (mpn  == "e4m3")
 		return 4;
 	else
-if (mpn  == "e4m4")
+	if (mpn  == "e4m4")
 		return 8;
 	else
-if (mpn  == "e4m5")
+	if (mpn  == "e4m5")
 		return 16;
 	else
-if (mpn  == "e4m6")
+	if (mpn  == "e4m6")
 		return 32;
 	else
-if (mpn  == "e4m7")
+	if (mpn  == "e4m7")
 		return 64;
 	return -1;
 };
@@ -669,28 +669,28 @@ float (string mpn) GetW3DMapBit =
 	if (mpn  == "e1f1")
 		return 1;
 	else
-if (mpn  == "e1f2")
+	if (mpn  == "e1f2")
 		return 2;
 	else
-if (mpn  == "e1f3")
+	if (mpn  == "e1f3")
 		return 4;
 	else
-if (mpn  == "e1f4")
+	if (mpn  == "e1f4")
 		return 8;
 	else
-if (mpn  == "e1f5")
+	if (mpn  == "e1f5")
 		return 16;
 	else
-if (mpn  == "e1f6")
+	if (mpn  == "e1f6")
 		return 32;
 	else
-if (mpn  == "e1f7")
+	if (mpn  == "e1f7")
 		return 64;
 	else
-if (mpn  == "e1f8")
+	if (mpn  == "e1f8")
 		return 128;	
 	else
-if (mpn  == "e1f9")
+	if (mpn  == "e1f9")
 		return 256;
 	return -1;
 };
