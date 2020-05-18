@@ -1399,7 +1399,7 @@ float(string sender, string contents) SV_ParseConnectionlessPacket =
 				if (ips[i] == sender)
 				{}
 				else
-					QC_SendPacket(ips[i], send_what);	
+					QC_SendPacket(ips[i], send_what);
 				i++;
 			}
 			strunzone(send_what);

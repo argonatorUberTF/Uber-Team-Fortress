@@ -376,12 +376,12 @@ void () worldspawn =
 			survival_mode = 2;
 	if (infokey(world,"survivalnext") == "1")
 		if (lms_entity == world){
-			survival_mode = 2;	
+			survival_mode = 2;
 			localcmd("localinfo survivalnext \"\"\n");
 		}
 	if (infokey(world,"monstermode") == "1")
 		if (lms_entity == world){
-			monster_mode = 1;	
+			monster_mode = 1;
 		}
 	if (infokey(world,"monstermodenext") == "1")
 		if (lms_entity == world){

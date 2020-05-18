@@ -242,9 +242,9 @@ void(entity targ, entity attacker) FemaleClientObituary =
 																					}
 																					else
 																					{
-																						if (deathmsg == 40)																					
+																						if (deathmsg == 40)
 																						{
-																							deathstring = " couldn't outrun her air spam.\n";																							
+																							deathstring = " couldn't outrun her air spam.\n";
 																						}
 																						else
 																						{

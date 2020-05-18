@@ -1796,7 +1796,7 @@ void () W_FireBioweapon =
 	local vector source;
 	local vector org;
 	local entity BioInfection;
-	source = (self.origin + '0 0 16');	
+	source = (self.origin + '0 0 16');
 	traceline (source, source + v_forward*64, 0.000000, self);
 	if ((trace_fraction == 1))
 	{
@@ -2074,7 +2074,7 @@ void () W_FireSniperRifle =
 		}
 		else
 		{
-			traceline (self.origin, self.target1.origin, FALSE, world);	
+			traceline (self.origin, self.target1.origin, FALSE, world);
 			if (trace_fraction == 1)
 			{
 				use_this != 1;
@@ -2894,7 +2894,7 @@ void () BalloonMIRV =
 	self.last_saveme_sound = (time + 2);
 	self.no_grenades_2 = (self.no_grenades_2 - TF_FLARE_OFF);
 	sprint (self, 2, "AirMIRV released!\n");
-	sound (self, 3, "weapons/chngnu1a.wav", TF_FLARE_OFF, TF_FLARE_OFF);	
+	sound (self, 3, "weapons/chngnu1a.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	newmis = spawn ();
 	newmis.health = 180;
 	newmis.takedamage = 2;
@@ -3659,20 +3659,20 @@ void() W_Attack =
 						{
 							self.reload_super_shotgun = (self.reload_super_shotgun + 0.5);
 							self.StatusRefreshTime = (time + 0.100000);
-							CheckForReload ();				
+							CheckForReload ();
 							if (self.needler_heat > 10)
 								Attack_Finished (0.07);
 							else
 							if (self.needler_heat > 5)
 								Attack_Finished (0.12);
 							else
-								Attack_Finished (0.7);	
+								Attack_Finished (0.7);
 						}
 						else
 						{
 						self.reload_super_shotgun = (self.reload_super_shotgun + 2.000000);
 						self.StatusRefreshTime = (time + 0.100000);
-						CheckForReload ();				
+						CheckForReload ();
 						Attack_Finished (0.700000);
 						}
 					}
@@ -5008,7 +5008,7 @@ if (self.impulse == 9)
 				if (self.mtf_items & MTFITEM_NEEDLER)
 					self.mtf_items -= MTFITEM_NEEDLER;
 				if (self.mtf_items & MTFITEM_LIGHTGUN)
-					self.mtf_items -= MTFITEM_LIGHTGUN;					
+					self.mtf_items -= MTFITEM_LIGHTGUN;
 				sprint(self,2, "Special Weapons Disabled.\n");
 			}
 			else

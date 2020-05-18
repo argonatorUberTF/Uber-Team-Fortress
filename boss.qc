@@ -22,7 +22,7 @@ $frame shockc9 shockc10
 void (vector p) boss_missile;
 void () boss_missile1;
 void boss_face(float bIsIdling)
-{	
+{
 	if (self.enemy.health <= 0 || random() < 0.02)
 	{
 		self.enemy = find(self.enemy, classname, "player");
@@ -280,7 +280,7 @@ void (vector p) boss_missile =
 	local	entity enMissile;
 	local float vVelocity;
 		vVelocity = 475;
-	offang = vectoangles (self.enemy.origin - self.origin);	
+	offang = vectoangles (self.enemy.origin - self.origin);
 	makevectors (offang);
 
 	org = self.origin + p_x*v_forward + p_y*v_right + p_z*'0 0 1';
@@ -289,7 +289,7 @@ void (vector p) boss_missile =
 		t = vlen(self.enemy.origin - org) / vVelocity;
 		vec = self.enemy.velocity;
 		vec_z = 0;
-		d = self.enemy.origin + t * vec;		
+		d = self.enemy.origin + t * vec;
 	}
 	else
 	{
@@ -299,7 +299,7 @@ void (vector p) boss_missile =
 	enMissile = boss_launch_spike (org, vec);
 	setmodel (enMissile, "progs/lavaball.mdl");
 	enMissile.avelocity = '200 100 300';
-	setsize (enMissile, VEC_ORIGIN, VEC_ORIGIN);		
+	setsize (enMissile, VEC_ORIGIN, VEC_ORIGIN);
 	enMissile.velocity = vec*vVelocity;
 	enMissile.real_owner = self;
 	enMissile.touch = T_MissileTouch; // rocket explosion

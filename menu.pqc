@@ -81,9 +81,7 @@ void (float inp) Menu_Blackjack_Input;
 void () Menu_Quest;
 void (float inp) Menu_Quest_Input;
 #endif
-#ifdef CSQC
 float (float tmno) TeamFortress_TeamGetIllegalClasses;
-#endif
 void (float tno,entity ignore,string st) teamsprint;
 void () Player_Menu =
 {
@@ -556,12 +554,10 @@ if (MONSTER_TEAM_ENABLED)
 			return;
 		}
 	}
-#ifdef CSQC
 	if (TeamFortress_TeamIsCivilian(self.team_no))
 		CSQC_SendMenu(self, self.current_menu, 666, 0);
 	else
 		CSQC_SendMenu(self, self.current_menu, illegalclasses, TeamFortress_TeamGetIllegalClasses(self.team_no));
-#endif
 	if (TeamFortress_TeamIsCivilian(self.team_no))
 	{
 		CenterPrint(self, "Your team can only be Civilians.\n");
@@ -1581,7 +1577,7 @@ void (float inp) Menu_Spy_Input =
 		if (inp == 5)
 		{
 			ResetMenu ();
-			self.impulse = 0.000000;	
+			self.impulse = 0.000000;
 		}
 	}
 	if (((inp == 1.000000) || (inp == 2.000000)))
@@ -1856,7 +1852,7 @@ void(float inp) Menu_Engineer_Input =
 			}
 			te = find (te, classname, "building_camera");
 		}
-		ResetMenu();		
+		ResetMenu();
 		self.impulse = 0;
 		}
 		}
@@ -1879,8 +1875,8 @@ void(float inp) Menu_Engineer_Input =
 						}
 						else
 						{
-							TeamFortress_Build(5);	
-							ResetMenu();		
+							TeamFortress_Build(5);
+							ResetMenu();
 							self.impulse = 0;
 						}
 					}
@@ -1898,12 +1894,12 @@ if (self.has_teleporter == 2)
 						TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
 					}
 					te = find(te, classname, "building_teleporter");
-				}			
+				}
 		}
 		else
 		{
-			TeamFortress_Build(5);	
-			ResetMenu();		
+			TeamFortress_Build(5);
+			ResetMenu();
 			self.impulse = 0;
 		}
 	}
@@ -3188,13 +3184,13 @@ void(float inp) Menu_EngineerFix_Teleporter_Input =
 	else
 	if (inp == 10)
 	{
-		ResetMenu();		
+		ResetMenu();
 		self.impulse = 0;
 		return;
 	}
 		if ((inp >= 1 && inp <= 3) || inp == 8)
 	{
-		ResetMenu();		
+		ResetMenu();
 		self.impulse = 0;
 		bound_other_ammo(self);
 		if (self.armorvalue == 0)
@@ -3234,7 +3230,7 @@ void(float inp) Menu_EngineerFix_Camera_Input =
 	}
 	if (inp >= 1 && inp <= 3)
 	{
-		ResetMenu();		
+		ResetMenu();
 		self.impulse = 0;
 		bound_other_ammo(self);
 		if (self.armorvalue == 0)
@@ -3874,7 +3870,7 @@ void ( float inp ) Menu_Merchant_Input =
 		minigame.think = Blackjack_Think;
 		minigame.nextthink = time;
 		minigame.classname = "minigame";
-		return;	
+		return;
 	}
 #ifdef mtf_coop_quests
 	else
@@ -3897,7 +3893,7 @@ void ( float inp ) Menu_Merchant_Input =
 	{				// Change class menu
 		CenterPrint (self, "\n");
 		self.current_menu = 3;
-		self.menu_displaytime = 25;		
+		self.menu_displaytime = 25;
 		self.menu_count = 25;
 		self.oldcurrentammo = 1;
 		self.impulse = 0.000000;

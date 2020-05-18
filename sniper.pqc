@@ -65,7 +65,7 @@ void(vector org) AirStrike_Target =
 	newmis.owner = self.owner;
 	setsize(newmis, '0 0 0', '0 0 1');
 	setmodel(newmis, "progs/newdot.spr");
-	newmis.frame = 2;	//yellow
+	newmis.frame = self.team_no -1;	//Set airstrike spot to the color of the team that called it. -arg
 	newmis.effects = 8;
 	setorigin(newmis, org + '0 0 5');
 	newmis.nextthink = time + 10 + random() * 10;

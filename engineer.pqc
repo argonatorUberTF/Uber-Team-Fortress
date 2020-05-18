@@ -63,7 +63,7 @@ void(float radius, float xValue, float stretch, float dir, float fltTime) joeTra
 	bubble1.movetype = #MOVETYPE_NONE;
 	bubble1.solid = SOLID_NOT;
 	setmodel (bubble1, "progs/s_bubble.spr");
-	setsize (bubble1, '0 0 0', '0 0 0');		
+	setsize (bubble1, '0 0 0', '0 0 0');
 	setorigin (bubble1, side1);
 	bubble1.think = SUB_Remove;
 	bubble1.nextthink = time + fltTime + 1;

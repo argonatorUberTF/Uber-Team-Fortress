@@ -3949,15 +3949,15 @@ void(entity targ, entity attacker) ClientObituary =
 																					}
 																					else
 																					{
-																						if (deathmsg == 40)																					
+																						if (deathmsg == 40)
 																						{
-																							deathstring = " couldn't outrun his airspam.\n";																							
+																							deathstring = " couldn't outrun his airspam.\n";
 																						}
 																						else
 																						{
 																							if (deathmsg == 201)
 																							{
-																								deathstring = " used his dispenser for all the wrong reasons.\n";																								
+																								deathstring = " used his dispenser for all the wrong reasons.\n";
 																							}
 																						}
 																					}

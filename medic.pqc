@@ -24,7 +24,7 @@ void () HealSelf =
 	}
 	if ((te != world))
 	{
-		stuffcmd (self, "v_idlescale 0\n");		
+		stuffcmd (self, "v_idlescale 0\n");
 		sprint (self, 2, "you have been healed of your concussion\n");
 		dremove (te);
 		healed = 1;

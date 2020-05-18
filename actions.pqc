@@ -46,16 +46,16 @@ void () DropFlag =
 	}
 	if (Item == world)
 	{
-		sprint (self, 2, "You don't have the flag.\n");	
+		sprint (self, 2, "You don't have the flag.\n");
 		return;
 	}
 	if (self.DropFlagDelay > time)
 	{
-		sprint (self, 2, "Can't drop again for another ");	
+		sprint (self, 2, "Can't drop again for another ");
 		f = ceil(self.DropFlagDelay - time);
 		st = ftos(f);
 		sprint (self, 2, st);
-		sprint (self, 2, " seconds.\n");	
+		sprint (self, 2, " seconds.\n");
 		return;
 	}
 	self.DropFlagDelay = time + 10;
@@ -137,7 +137,7 @@ void () Det_Sent =
 void (entity pent) KickIdler =
 {
 	sprint (pent, 2, "You have been kicked for idling for more than 3 minutes without joining a team/class.\n");
-	stuffcmd(pent, "disconnect\n");	
+	stuffcmd(pent, "disconnect\n");
 };
 void () CheckIdlers =
 {

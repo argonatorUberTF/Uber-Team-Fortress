@@ -1261,6 +1261,7 @@ void () MTF_Resurrect_Player_Find;
 void () Vote_CheckWin;
 void () summon_think;
 void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..
+//It is impossible almost to remove LMS code from the main loop. -arg
 void(entity Item) mtf_tfgoalitem_drop;
 void () tfgoalitem_remove;
 void () tfgoalitem_dropthink;
@@ -1852,7 +1853,7 @@ float() customize_frame =
 };
 float(entity targ) ai_distance =
 {
-local float		r;	
+local float		r;
 	r = vlen (self.origin - targ.origin);
 	r = r / 64;
 	return r;
@@ -2331,7 +2332,7 @@ float (float tno) TeamFortress_GetRealScore =
 	while (te)
 	{
 		if (te.team_no == tno)
-		{			
+		{
 			total = total + te.real_frags;
 		}
 		te = find (te, classname, "player");
@@ -3821,8 +3822,8 @@ void() TeamFortress_ChangeClass =
 			self.velocity = '0 0 0';
 			self.avelocity = '0 0 0';
 			self.enemy = world;
-			self.lives = -1;	
-			return;			
+			self.lives = -1;
+			return;
 		}
 	}
 #endif
@@ -4047,7 +4048,7 @@ void() TeamFortress_ChangeClass =
 		spawn_tfog(self.origin + v_forward * 20);
 	}
 	if (self.playerclass == 10)
-	{		
+	{
 		sprint(self, 2, "Random Playerclass.\n");
 		self.tfstate = self.tfstate | 8;
 		tc = 1 + floor(random() * (10 - 1));
@@ -4742,9 +4743,9 @@ entity() SelectSpawnPoint =
 #ifdef BATTLE_ROYALE		
 		if (battle_royale_e == world)
 		{
-#endif				
+#endif
 		if (deathmatch)
-		{		
+		{
 			spot = find(lastspawn, classname, "info_player_deathmatch");
 			if (spot == world)
 			{
@@ -4789,11 +4790,11 @@ entity() SelectSpawnPoint =
 		spot = find(world, classname, "info_player_start2");
 		if (spot)
 		{
-#ifdef BATTLE_ROYALE		
+#ifdef BATTLE_ROYALE
 			if (brzone_valid(spot.origin) == 0)	{	
 				return world;
 			}
-#endif				
+#endif
 			return spot;
 		}
 	}
@@ -5834,7 +5835,7 @@ void(entity p) TeamFortress_SetSpeed =
 		}
 	}
 	if (p.tfstate & 65536 || p.playerclass == 0)
-	{		
+	{
 		p.maxspeed = 0;
 		p.maxfbspeed = 0;
 		p.maxstrafespeed = 0;
@@ -6006,9 +6007,9 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 {
 	local entity newmon;
 	local float rtime;
-	local entity hax;	
-	local float hax_tm;		
-	local float special_end;	
+	local entity hax;
+	local float hax_tm;
+	local float special_end;
 	local entity exit_ent;
 	special_end = Coop_SpecialEnd( mapname );
 	self.flags = #FL_FINDABLE_NONSOLID;		// for minion summon
@@ -6036,7 +6037,7 @@ void (float respawntime, void() spawn_func) COOP_SetupRespawn =
 		newmis = spawn();
 		newmis.think = MTF_RemoveMonster;
 		newmis.nextthink = time + 5;
-		newmis.enemy = self;	
+		newmis.enemy = self;
 		return;
 	}
 	if (self.lives <= 0)
@@ -8966,8 +8967,8 @@ void(float Suicided) TeamFortress_SetupRespawn =
 			self.avelocity = '0 0 0';
 			self.enemy = world;
 			self.lives = -1;
-			setmodel(self, "");			
-			return;			
+			setmodel(self, "");
+			return;
 		}
 	}
 #endif	
@@ -9790,7 +9791,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 						targ.being_juggled = 1;
 					targ.flags = targ.flags - FL_ONGROUND;
 					targ.velocity_z += 300;
-					targ.velocity = targ.velocity + dir * damage * 4;			
+					targ.velocity = targ.velocity + dir * damage * 4;
 				}
 			}
 			damage = MTF_Monster_Take_Damage( attacker, targ, damage );
@@ -10322,7 +10323,7 @@ float () mtf_saveentity =
 	if (mapname == "neh1m9" || mapname == "neh2m3")
 		dfactor = 1;
 	if (mapname == "insane")
-		dfactor = 1;		
+		dfactor = 1;
 	return ( dfactor );
 };
 void () FlameMonster_Flame =
@@ -11078,7 +11079,7 @@ void (entity t_other) MTF_DoEndBonus =
 						expcurve = 1;
 					else
 					if (mapname == "04")
-						expcurve = 1;						
+						expcurve = 1;
 					MTF_Coop_AddExperience(te, world, expcurve * te.real_frags);
 					MTF_Coop_PreWriteExperience( te, te.connect_name, te.coop_exp );
 					if (killed_monsters >= (total_monsters-15))
@@ -11093,7 +11094,7 @@ void (entity t_other) MTF_DoEndBonus =
 							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE3, GetEP3MapBit(mapname) );
 						else
 						if (GetEP4MapBit(mapname) != -1)
-							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE4, GetEP4MapBit(mapname) );							
+							Achievements_Change( te, world, ACHIEVEMENTS_ADDBIT, ACHIEVEMENT_EPISODE4, GetEP4MapBit(mapname) );
 					}
 				}
 			}
@@ -11653,7 +11654,8 @@ if (targ.coop_exp > 0)
 	}
 	if (targ.monster_items & MITEM_ICE)
 	{
-		addexp += 5;		}
+		addexp += 5;
+	}
 	if (targ.monster_items & MITEM_LIGHTNING)
 	{
 		addexp += 5;
@@ -11677,7 +11679,7 @@ if (targ.coop_exp > 0)
 		if (targ.is_monster == #TRUE)
 			addexp = ceil(addexp * .4);						// less exp.
 	if (plyr.mtf_items & MTFITEM_DIVIDE_EXP)
-		addexp = floor(addexp * .25);	
+		addexp = floor(addexp * .25);
 	if (override_exp != #FALSE)
 		addexp = override_exp;
 	if (override_exp == #FALSE)
@@ -11730,8 +11732,8 @@ if (targ.coop_exp > 0)
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_ATOMICPUNK, 1 );
 	else
 	if (deathmsg == 446 || deathmsg == 447)
-		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_BAT, 1 );		
-	if (lms_entity == world)	
+		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_BAT, 1 );
+	if (lms_entity == world)
 		Achievements_Change( plyr, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_KILLINGMACHINE, 1 );
 };
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience =
@@ -12769,7 +12771,7 @@ void(entity Goal, entity Player, entity AP, float addb) Apply_Results =
 		oldself = self;
 		self = Player;
 		TeamFortress_CheckClassStats();
-		W_SetCurrentAmmo();	
+		W_SetCurrentAmmo();
 		self = oldself;
 	}
 	if (Player.playerclass == 8 && (Goal.goal_result & 16))
@@ -15504,7 +15506,7 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewMapRank =
 	dummyfile = open ("dummy_topmaps.tfi", 0);
 	close (file);
 	file = open ("topmaps.tfi", 2);
-	i=0;	
+	i=0;
 	while (i < #MAX_MAPRANKS)
 	{
 		i++;
@@ -15543,7 +15545,7 @@ void ( entity t_player, entity t_monster, float exptotal, float sayamount) MTF_C
 	MTF_Coop_AddExperience(t_player, t_monster, exptotal);
 	MTF_Coop_PreWriteExperience( t_player, t_player.connect_name, t_player.coop_exp );
 	if (sayamount == #TRUE)
-		stuffcmd(t_player, "cmd sayexp\n");	
+		stuffcmd(t_player, "cmd sayexp\n");
 };
 
 void ( entity t_player, entity t_other, float exptotal, float exp_srv ) MTF_Coop_AddServiceExp =
@@ -15655,17 +15657,17 @@ void (float file) MTF_Coop_GetAttributes =
 	b = strzone(b);
 	self.minion_attr = stof(b);
 	treif = treif + CheckAttributes(stof(b));
-	strunzone(b);	
+	strunzone(b);
 	b = read (file);
 	b = strzone(b);
 	self.quickshot_attr = stof(b);
 	treif = treif + CheckAttributes(stof(b));
-	strunzone(b);	
+	strunzone(b);
 	b = read (file);
 	b = strzone(b);
 	self.clipex_attr = stof(b);
 	treif = treif + CheckAttributes(stof(b));
-	strunzone(b);	
+	strunzone(b);
 	b = read (file);
 	b = strzone(b);
 	self.proj_attr = stof(b);
@@ -15954,7 +15956,7 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank =
 	dummyfile = open ("dummy_topranks.tfi", 0);
 	close (file);
 	file = open ("topranks.tfi", 2);
-	i=0;	
+	i=0;
 	while (i < #MAX_RANKS)
 	{
 		i++;
@@ -15979,7 +15981,7 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank =
 			write( file, rname );
 			write( file, "\n" );
 			write( file, rval );
-			write( file, "\n" );		
+			write( file, "\n" );
 			strunzone (rval);
 			strunzone (rname);
 		}
@@ -16229,63 +16231,63 @@ float ( float getlevel ) Coop_ExpReq =
 		case 90:
 			return 15000000;
 		case 91:
-			return 15500000;	
+			return 15500000;
 		case 92:
 			return 16000000;
 		case 93:
-			return 16500000;	
+			return 16500000;
 		case 94:
 			return 17000000;
 		case 95:
-			return 17500000;	
+			return 17500000;
 		case 96:
 			return 18000000;
 		case 97:
-			return 18500000;	
+			return 18500000;
 		case 98:
 			return 19000000;
 		case 99:
-			return 19500000;	
+			return 19500000;
 		case 100:
-			return 20000000;	
+			return 20000000;
 		case 101:
-			return 20750000;	
+			return 20750000;
 		case 102:
-			return 21600000;	
+			return 21600000;
 		case 103:
-			return 22400000;	
+			return 22400000;
 		case 104:
-			return 23200000;	
+			return 23200000;
 		case 105:
-			return 24020000;	
+			return 24020000;
 		case 106:
-			return 24860000;	
+			return 24860000;
 		case 107:
-			return 25720000;	
+			return 25720000;
 		case 108:
-			return 26600000;	
+			return 26600000;
 		case 109:
-			return 27500000;	
+			return 27500000;
 		case 110:
-			return 28420000;	
+			return 28420000;
 		case 111:
-			return 29360000;	
+			return 29360000;
 		case 112:
-			return 30320000;	
+			return 30320000;
 		case 113:
-			return 31300000;	
+			return 31300000;
 		case 114:
-			return 32300000;	
+			return 32300000;
 		case 115:
-			return 33320000;	
+			return 33320000;
 		case 116:
-			return 34360000;	
+			return 34360000;
 		case 117:
-			return 35420000;	
+			return 35420000;
 		case 118:
-			return 36500000;	
+			return 36500000;
 		case 119:
-			return 37600000;	
+			return 37600000;
 		case 120:
 			return 38720000;
 		default:
@@ -16580,12 +16582,12 @@ void () MTF_Coop_ShowAttrib =
 	sprint(self, 2, "\n -- 8) Minion Summon Attributes: ");
 	sprint(self, 2, ftos(self.minion_attr));
 	sprint(self, 2, "\n -- 9) Quick Shot Attributes: ");
-	sprint(self, 2, ftos(self.quickshot_attr));	
+	sprint(self, 2, ftos(self.quickshot_attr));
 	sprint(self, 2, "\n -- 10) Clip Extender Attributes: ");
-	sprint(self, 2, ftos(self.clipex_attr));	
+	sprint(self, 2, ftos(self.clipex_attr));
 	sprint(self, 2, "\n -- 11) Projectile Speed Attributes: ");
-	sprint(self, 2, ftos(self.proj_attr));	
-	sprint(self, 2, "\n -- Max spend of attribute points per category is: ");	
+	sprint(self, 2, ftos(self.proj_attr));
+	sprint(self, 2, "\n -- Max spend of attribute points per category is: ");
 	sprint(self, 2, ftos(#MAX_SPEND));
 	sprint(self, 2, " .\n");
 	sprint(self, 2, "\nType [cmd spend] for information on spending attributes.\n");
@@ -16644,7 +16646,7 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 		sprint(self, 2, "For example level 5 costs 6 free attribute points.\n");		
 		sprint(self, 2, " -- Max attribute points spent per category is: ");	
 		sprint(self, 2, ftos(#MAX_SPEND));
-		sprint(self, 2, " .\n");		
+		sprint(self, 2, " .\n");
 		return;
 	}
 	attrib_count = Coop_GetAttributeTotal( self, attrib_type );
@@ -16663,9 +16665,8 @@ void ( float attrib_type ) MTF_Coop_SpendAttrib =
 	if (attrib_count >= #MAX_SPEND)
 	{
 		sprint(self, 2, "You cannot spend any more of that attribute on this server.\n");
-		return;	
+		return;
 	}
-	
 	if (attrib_type == #ATTRIB_HEALTH)
 	{
 		attr_name = "Health Increase";
@@ -16878,7 +16879,7 @@ void () Coop_MinionMonsterTouch =
 		self.flags = self.flags - FL_ONGROUND;
 		self.#fixflags = 1;
 	}
-	self.velocity = self.velocity + delta;	
+	self.velocity = self.velocity + delta;
 };
 void () summon_think =
 {
@@ -16986,7 +16987,7 @@ string (string nname, float currexp) MTF_Coop_GetSkin =
 			return ( self.#custom_skin );
 		}
 		else
-		{	
+		{
 			return "";
 		}
 	}
@@ -18528,7 +18529,7 @@ float turret_clearGround (entity head) =
 	local float radius;
 	local float childrenOfHeadOnGround;  
 	radius = vlen (head.size);
-	e = findradius (head.origin, radius);	
+	e = findradius (head.origin, radius);
 	childrenOfHeadOnGround = FALSE;
 	parent = head;
 	while(e)
@@ -18538,14 +18539,14 @@ float turret_clearGround (entity head) =
 	childrenOfHeadOnGround = TRUE;
 	parent = e;
 		radius = vlen (parent.size);
-		e = findradius (parent.origin, radius);	
+		e = findradius (parent.origin, radius);
 	}
 	else
 	{
 		e = e.chain; 
 	}
 	}
-	parent.flags = parent.flags - FL_ONGROUND;	
+	parent.flags = parent.flags - FL_ONGROUND;
 	if(childrenOfHeadOnGround)
 	{
 		return TRUE;  
@@ -19251,7 +19252,7 @@ void() turret_attackEnemy =
 				projectedPosition = self.enemy.origin; // + enemyVelocity * timeToEnemy;
 				if (self.frame == 1)
 				{
-					firePosition = self.origin + (v_forward * 21) - (v_right * 3);					
+					firePosition = self.origin + (v_forward * 21) - (v_right * 3);
 					turret_launchNail(firePosition, (projectedPosition + self.enemy.view_ofs) - firePosition);
 				}
 				else
@@ -19385,7 +19386,7 @@ void() turret_nailTouch =
 		if (self.super_damage_finished > time)  // add damage if player is on quad.
 		{
 			deathmsg = 44;
-			T_Damage (other, self, self.owner, 200);	
+			T_Damage (other, self, self.owner, 200);
 		}
 	}
 	else
@@ -20544,13 +20545,13 @@ string (float anum) Achievements_GetName =
 			break;
 		case ACHIEVEMENT_COMPLETIONIST:
 			return "Completionist";
-			break;	
+			break;
 		case ACHIEVEMENT_FLAWLESS:
 			return "Flawless Junkie";
 			break;
 		case ACHIEVEMENT_ATOMICPUNK:
 			return "Atomic Punk";
-			break;	
+			break;
 		case ACHIEVEMENT_KILLINGMACHINE:
 			return "Killing Machine";
 			break;
@@ -20638,7 +20639,7 @@ float (float anum) Achievements_CheckComplete =
 			break;
 		case ACHIEVEMENT_COMPLETIONIST:
 			return 500;
-			break;		
+			break;
 		case ACHIEVEMENT_FLAWLESS:
 			return 100;
 			break;
@@ -20732,7 +20733,7 @@ float ( float anum ) Achievements_GetExp =
 			break;
 		case ACHIEVEMENT_COMPLETIONIST:
 			return 2500;
-			break;		
+			break;
 		case ACHIEVEMENT_FLAWLESS:
 			return 7500;
 			break;
@@ -20878,7 +20879,7 @@ float (entity t_plyr) Achievements_Setup =
 			i++;
 		}
 		close (filee);
-		strunzone(filenamee);	
+		strunzone(filenamee);
 		return ( 0 );
 	}
 	close (filee);
@@ -21207,7 +21208,7 @@ float (string mpn) GetW3DMapBit =
 		return 64;
 	else
 	if (mpn  == "e1f8")
-		return 128;	
+		return 128;
 	else
 	if (mpn  == "e1f9")
 		return 256;
@@ -21269,7 +21270,7 @@ void (float rcrd, float amnt, entity plyr) Record_Add =
 		}
 	else
 	if (rcrd == #RECORD_DEATHS)
-	{	
+	{
 	localcmd("localinfo r_deaths ");
 	}
 	else
@@ -21699,7 +21700,7 @@ void (float accept) Inventory_TradeItemDecision =
 				sprint(tchk.owner,2, self.netname);
 				sprint(tchk.owner,2, " has cancelled the offer.\n");
 				dremove(tchk);
-				return;			
+				return;
 			}
 			if (tchk.owner == world)
 			{
@@ -21710,7 +21711,7 @@ void (float accept) Inventory_TradeItemDecision =
 			if (self.gold < tchk.health)
 			{
 				sprint(self,2, "You do not have enough gold.\n");
-				return;			
+				return;
 			}
 			item_type = Inventory_GetItem ( tchk.owner.connect_name, tchk.playerclass, #RETURN_ITEM_NO );
 			if (item_type != tchk.armorvalue)
@@ -21806,7 +21807,7 @@ float ( string nname, float inv_slot, float return_type ) Inventory_GetItem =
 		return 0;
 	nname = strzone(nname);
 	filename = frik_strcat( "ranks/inv/", nname, "_inv.tfi" );
-	filename = strzone(filename);	
+	filename = strzone(filename);
 	file = open (filename, 0);
 	a = read (file);
 	if (!a)
@@ -22502,7 +22503,7 @@ void (float can_be_dead) MonsterItemTouch =
 			other.armorvalue = value;
 			other.items = other.items - (other.items & (8192 | 16384 | 32768)) + bit;
 		}
-		sound(other, 3, "items/armor1.wav", 1, 1);		
+		sound(other, 3, "items/armor1.wav", 1, 1);
 	}
 	else
 	if (self.weapon == 4 || self.weapon == 6)
@@ -22750,13 +22751,13 @@ void (float can_be_dead) MonsterItemTouch =
 			lvl2 = Coop_GetLevel(other.coop_exp - 2000);
 			if (lvl1 == lvl2)
 			{
-				sprint(other, 2, "Rut Roh! The cake is a lie! You lose 2000 exp :( .\n");	
+				sprint(other, 2, "Rut Roh! The cake is a lie! You lose 2000 exp :( .\n");
 				other.coop_exp = other.coop_exp - 2000;
 				MTF_Coop_PreWriteExperience( other, other.connect_name, other.coop_exp );
 			}
 			else
 			{
-				sprint(other, 2, "The cake is a lie...\nThe cake is a lie...\nThe cake is a lie...\nThe cake is a lie...\n");	
+				sprint(other, 2, "The cake is a lie...\nThe cake is a lie...\nThe cake is a lie...\nThe cake is a lie...\n");
 			}
 		}
 	}
@@ -22950,7 +22951,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "customskin (skinname)> - Allows players to use a custom skin. Contact admin of server to upload yours.\n");
 			sprint( self, 2, "res - Resurrects a nearby player for medic class only.\n");
 			sprint( self, 2, "beg - Resurrects you if you get disconnected in survival mode.\nDo not use it non-survival mode(penalty applies).\n");
-			sprint( self, 2, "powerleft - Shows your invicibility, quad, and invisbility time left.\n");		
+			sprint( self, 2, "powerleft - Shows your invicibility, quad, and invisbility time left.\n");
 			sprint (self, 2.000000, "Impulse 120 - Launches an auto turret sentry gun.\n");
 			sprint (self, 2.000000, "Impulse 121 - Sprinkles some caltrops if you are Scout, Medic, or Spy. It costs you a type one grenade.\n");
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost.\n");
@@ -23192,13 +23193,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	{
 		sprint(self, 2, "Invincibility time left: ");
 		sprint(self, 2, ftos(self.invincible_finished-time));
-		sprint(self, 2, " seconds.\n");	
+		sprint(self, 2, " seconds.\n");
 		sprint(self, 2, "Quad time left: ");
 		sprint(self, 2, ftos(self.super_damage_finished-time));
 		sprint(self, 2, " seconds.\n");
 		sprint(self, 2, "Ring invisibility time left: ");
 		sprint(self, 2, ftos(self.invisible_finished-time));
-		sprint(self, 2, " seconds.\n");		
+		sprint(self, 2, " seconds.\n");
 	}
 #ifdef mega_hats
 	else
@@ -23377,7 +23378,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		stuffcmd( self, ", ");
 		stuffcmd( self, "Projectile Speed: ");
 		stuffcmd( self, ftos(self.proj_attr));
-		stuffcmd( self, ", ");		
+		stuffcmd( self, ", ");
 		stuffcmd( self, "Misc: ");
 		stuffcmd( self, ftos(self.misc_attr));
 		stuffcmd( self, ", ");
