@@ -598,16 +598,16 @@ void () Show_Uptime =
 {
 	local float t;
 	local string s;
-	sprint(self, 2, " Σεςφες Υπτινε \n"); // Server Uptime:
-	sprint(self, 2, "Δαωσ: ");		//Days:
+	sprint(self, 2, "Serer Uptime /n"); // Server Uptime:
+	sprint(self, 2, " days: ");		//Days:
 	t = f_uptime_d (server_time);
 	s = ftos (t);
 	sprint(self, 2, s);
-	sprint(self, 2, " Θουςσ: ");		//Hours:
+	sprint(self, 2, " hours: ");		//Hours:
 	t = f_uptime_h (server_time);
 	s = ftos (t);
 	sprint(self, 2, s);
-	sprint(self, 2, " Νιξυτεσ: ");		//Minutes:
+	sprint(self, 2, " minutes: ");		//Minutes:
 	t = f_uptime_m (server_time);
 	s = ftos (t);
 	sprint(self, 2, s);

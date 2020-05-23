@@ -135,7 +135,8 @@ void() TeamFortress_CTF_FlagInfo;
 void() TF_MovePlayer;
 void() W_Precache = 
 {
-missing_precaches(); //precache the stuff missing or overlooked or called all the time -arg
+	precache_model ("progs/toaster.mdl");	//A real toaster from After Dark ? -arg
+	missing_precaches();	//precache the stuff missing or overlooked or called all the time -arg
 	if (mapname == "hip1m4")
 	{
 		precache_model2("progs/b_s_key.mdl");
@@ -581,7 +582,7 @@ void() W_LaunchStinger =
 	missile.touch = StingerTouch;
 	missile.nextthink = time + 3;
 	missile.think = StingerElec;
-	setmodel(missile, "progs/v_spike.mdl");
+	setmodel(missile, "progs/toaster.mdl");
 	setsize(missile, '0 0 0', '0 0 0');
 	setorigin(missile, self.origin);
 };
@@ -7233,7 +7234,6 @@ void () DroneDie =
 	WriteCoord (4, self.origin_z);
 	multicast (self.origin, TF_FLARE_OFF);
 	T_RadiusDamage (self, self.owner.owner, 90, world); //Do some shrapnel damage when crashed. Game Over Man! -arg
-	BecomeExplosion ();
 	MushroomFlame(); // Make a pretty fireball with explosion. -arg
 	TeamFortress_DetpackExplode(); //make a crowd pleaser of a boom. -arg
 };

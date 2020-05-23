@@ -468,7 +468,8 @@ entity horn_charmer;			// horn of conjuring hipnotic hipitems.qc -arg
 .float is_undercover;
 .float is_building;
 .float is_detpacking;
-.float is_feigning;
+.float is_feigning;		// The switch to determine if a player is feigning death as spy.
+.float is_fob_disabled;	// If this gets turned on with cmd "dfob" it moves the colored player fob away from player. -arg
 .float is_unabletospy;
 .float has_disconnected;
 .float has_dispenser;
@@ -2838,7 +2839,7 @@ void() TeamFortress_CheckTeamCheats =
 #endif
 #ifndef mtf_coop_halloween
 				TeamFortress_SetSkin(self);
-				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
+//				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
 				sprint(self, 2, "You have been warned for changing your skin. Use CMD CUSTOMSKIN instead.\n");
 				return;
 #endif
@@ -3036,7 +3037,101 @@ float() TeamFortress_TeamGetSecond =
 	}
 	return secondteam;
 };
-void (float all) TeamFortress_TeamShowScores =
+void (float _p_6876) TeamFortress_TeamShowScores =
+{
+	local string _l_6877;
+	local float _l_6878;
+	local float _l_6879;
+
+	_l_6878 = 1.000000;
+	if ((_p_6876 == 2.000000))
+	{
+		while ((_l_6878 <= number_of_teams))
+		{
+			if ((TeamFortress_TeamGetColor (_l_6878) > 0.000000))
+			{
+				_l_6879 = TeamFortress_TeamGetScore (_l_6878);
+				_l_6877 = TeamFortress_TeamGetColorString (_l_6878);
+				bprint (2.000000, _l_6877);
+				bprint (2.000000, ": ");
+				_l_6877 = ftos (_l_6879);
+				bprint (2.000000, _l_6877);
+				bprint (2.000000, " ");
+			}
+			_l_6878 = _l_6878 + 1.000000;
+		}
+		bprint (2.000000, "\n");
+		return;
+	}
+	while ((_l_6878 <= number_of_teams))
+	{
+		if ((TeamFortress_TeamGetColor (_l_6878) > 0.000000))
+		{
+			if (_p_6876)
+			{
+				bprint (2.000000, "Team ");
+			}
+			else
+			{
+				sprint (self, 2.000000, "Team ");
+			}
+			_l_6877 = ftos (_l_6878);
+			if (_p_6876)
+			{
+				bprint (2.000000, _l_6877);
+			}
+			else
+			{
+				sprint (self, 2.000000, _l_6877);
+			}
+			if (_p_6876)
+			{
+				bprint (2.000000, " (");
+			}
+			else
+			{
+				sprint (self, 2.000000, " (");
+			}
+			_l_6877 = TeamFortress_TeamGetColorString (_l_6878);
+			if (_p_6876)
+			{
+				bprint (2.000000, _l_6877);
+			}
+			else
+			{
+				sprint (self, 2.000000, _l_6877);
+			}
+			if (_p_6876)
+			{
+				bprint (2.000000, ") : ");
+			}
+			else
+			{
+				sprint (self, 2.000000, ") : ");
+			}
+			_l_6879 = TeamFortress_TeamGetScore (_l_6878);
+			_l_6877 = ftos (_l_6879);
+			if (_p_6876)
+			{
+				bprint (2.000000, _l_6877);
+			}
+			else
+			{
+				sprint (self, 2.000000, _l_6877);
+			}
+			if (_p_6876)
+			{
+				bprint (2.000000, "\n");
+			}
+			else
+			{
+				sprint (self, 2.000000, "\n");
+			}
+		}
+		_l_6878 = _l_6878 + 1.000000;
+	}
+};
+void (float all) TeamFortress_TeamShowScores2 =
 {
 	local string st;
 	local float i;
@@ -3082,7 +3177,7 @@ void (float all) TeamFortress_TeamShowScores =
 			{
 				bprint (2, "");
 				bprint (2, TeamFortress_TeamGetColorString (1));
-				bprint (2, " èáó ÷ïî ôèå íáôãè¡\n");
+				bprint (2, " has won the match!¡\n");
 				execute_changelevel ();
 				return;
 			}
@@ -3106,7 +3201,7 @@ void (float all) TeamFortress_TeamShowScores =
 				bprint (2, "\n"); }
 				else
 				{
-					bprint (2, "Ôèå çáíå éó tied\n");
+					bprint (2, "Tied.\n");
 				}	
 			}
 		else
@@ -4160,7 +4255,7 @@ void(entity Viewer, float pc, float rpc, float xavior_Var) TeamFortress_PrintCla
 	}
 	if (xavior_Var == 2)
 	{
-		sprint(Viewer, 2, "\n");
+		sprint(Viewer, 2, " \n");
 	}
 	else
 	{
@@ -10411,7 +10506,7 @@ void() changelevel_touch =
 		return;
 	}
 	bprint(2, other.netname);
-	bprint(2, " exited the level\n");
+	bprint(2, " has exited the level.\n");
 	MTF_DoEndBonus ( other );
 	nextmap = self.map;
 	SUB_UseTargets();
@@ -11312,7 +11407,7 @@ void(entity Goal, entity AP, float addb) DoResults =
 	{
 		if (Goal.broadcast != string_null && CTF_Map == TF_FLARE_LIT)
 		{
-			CenterPrint2(te, "\n\n\n", Goal.broadcast);
+			CenterPrint2(te, "\n\n\n ", Goal.broadcast);	//I think this is where the space is needed for "dropped the flag" when goal.broadcast is set to that. -arg
 		}
 		if (Goal.netname_broadcast != string_null && CTF_Map == TF_FLARE_LIT)
 		{
@@ -11807,7 +11902,7 @@ void () MTF_Coop_UpdateMapRanks =
 		write (file, "// Best time, best player, best player frags\n");
 		if (new_best_time < old_best_time)
 		{
-			MTF_Coop_AddExpToAll ( (total_monsters * 2), frik_strcat("ÂÏÎÕÓ ÅØÐ¡ New best time record set for ", mapname, frik_strcat(": ", ftos(new_best_time), " seconds!\nExp Bonus for all!") ), #FALSE);
+			MTF_Coop_AddExpToAll ( (total_monsters * 2), frik_strcat("Congratulations! New best time record set for ", mapname, frik_strcat(": ", ftos(new_best_time), " seconds!\nExp Bonus for all!") ), #FALSE);
 			Achievements_Change( world, world, ACHIEVEMENTS_GLOBALADD, ACHIEVEMENT_SPEEDY, 1 );
 			write (file, ftos(new_best_time));
 		}
@@ -23396,6 +23491,16 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		TF_T_Damage (self, self, self, 999, 2, 8);
 	}
 	else
+	if (s1 == "dfob")
+	{
+	self.is_fob_disabled = 1;		//Tthis sets the colored playerfob like the spy feign for those who find it annoying. -arg
+	}
+	else
+	if (s1 == "efob")
+	{
+	self.is_fob_disabled = 0 ;		//Tthis sets the colored playerfob like the spy feign for those who find it annoying. -arg
+	}
+	else
 	if (s1 == "summon")
 	{
 		MTF_Coop_SummonMinion ();
@@ -24389,7 +24494,7 @@ void () playerfob_think =
 			self.angles = self.owner.angles;
 	}
 		self.orig_origin = endp;
-	if (self.owner.is_feigning)
+	if (self.owner.is_feigning || self.owner.is_fob_disabled)
 	{
 	setorigin (self, (endp + ' 900 900 950'));
 	self.nextthink = time + 1;
@@ -24419,7 +24524,7 @@ local entity playerfob;
 	playerfob.nextthink = time + .1;
 	playerfob.velocity = self.velocity; // move at the same rate as player. ?
 	playerfob.team_no = self.team_no; //Same team number as the player -arg
-	playerfob.origin = self.origin + '0 0 60'; //put fob above the player.
+	playerfob.origin = self.origin + '0 0 75'; //put fob above the player.
 	playerfob.touch = SUB_Null; // it does nothing, if touched.
 	self.playerfob_target = self; // for following with beartrap logic code.
 	setmodel (playerfob, "progs/newdot.spr");
