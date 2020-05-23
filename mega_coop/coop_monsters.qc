@@ -23,7 +23,7 @@ void() monster_spawner_spawn =
 		return;
 	}
 	if ( !self.currentammo )
-{
+	{
 		objerror( "no valid monsters specified" );
 		return;
 	}
@@ -166,7 +166,7 @@ void() monster_spawner_spawn =
 	if ( self.spawnflags & 64 )
 		e.angles = vectoangles( self.origin - e.origin );
 	else
-if ( self.spawnflags & 128 )
+	if ( self.spawnflags & 128 )
 		e.angles = vectoangles( e.origin - self.origin );
 	spawn_tfog( e.origin );
 	// fire event
@@ -178,7 +178,7 @@ if ( self.spawnflags & 128 )
 	// setup to spawn another monster if needed
 	// don't worry about zero waits because those are done as they die
 	if ( self.wait > 0 )
-{
+	{
 		if ( self.think )
 			self.nextthink = time + self.wait;
 	}
@@ -218,7 +218,7 @@ void() monster_spawner_use =
 		}
 		// if spawning is enabled then spawn a new monster after the wait time
 		if ( self.wait > 0 )
-{
+		{
 			if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 			{
 				self.nextthink = time + self.wait;
@@ -236,7 +236,7 @@ void() monster_spawner_use =
 			}
 		}
 		else
-if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+		if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 			monster_spawner_spawn();
 		// fire our targets when a monster dies
 		SUB_UseTargets();
@@ -459,7 +459,7 @@ void() monster_spawner =
 		}
 	}
 	else
-if ( self.wait > 0 )
+	if ( self.wait > 0 )
 	{
 	// if self.wait > 0 and self.targetname is set and START_ON isn't set, then we don't need to do anything
 		if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
@@ -481,8 +481,9 @@ if ( self.wait > 0 )
 				self.think = monster_spawner_spawn;
 			}
 		}
-	} else
-if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
+	}
+	else
+	if ( self.targetname == #DEFAULT_SPAWNER_TARGETNAME )
 	{
 		do
 		{
@@ -540,8 +541,9 @@ void() monsterteam_touch =
 					self.enemy = world;
 					return;
 				}
-			} else
-if ( self.spawnflags & 4 )
+			}
+			else
+			if ( self.spawnflags & 4 )
 			{
 				if ( other == self.enemy )	// if it's the activator, reset .enemy and fire the targets
 					self.enemy = world;
@@ -587,7 +589,7 @@ void() monsterteam_use =
 				if ( !( self.spawnflags & 4 ) || te == activator )
 				if ( !self.team_no || te.team_no == self.team_no )
 				if ( te.team_no != self.team )
-{
+				{
 					te.team_no = self.team;
 					numChanged = 1;	// for now we don't care how many, just that some were
 				}
