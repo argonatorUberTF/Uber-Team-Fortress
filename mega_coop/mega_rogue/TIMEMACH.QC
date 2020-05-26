@@ -115,7 +115,7 @@ void() time_crash =
 	self.target = "timeramp";
 	SUB_UseTargets();
 };
-void(entity attacker, float take) time_pain =
+void() time_pain =
 {	
 	local entity	painEnt;
 	local float 	painRnd;
