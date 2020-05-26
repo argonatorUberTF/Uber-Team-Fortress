@@ -112,7 +112,7 @@ Submit said source to github for Open Source under GNU/GPL. - here now -arg
 Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 If possible upgrade the lightning gun to the painkeep chain lightning gun.
 
-Not tested on FTE or Prozac server yet. Volunteers ? 
+Not tested on FTE or Prozac server yet. Volunteers ? The code is now possible to compile with limited number of warnings. I suggest a fork or a combined United release if all the defects in mvdsv with current map settings can be resolved. It should resolve the number of sounds to precache and possibly the edict limit of >512.
 
 Upgraded medic nail gun to nails with more damage, similar to the lava nails, but not quad damage. - done -arg.
 
@@ -124,6 +124,7 @@ This makes it possible to plant a prox mine from the start as soldier for exampl
 Possibly put in an anti-bunny hopping system to remove the game glitch of angled bouncing.
 It was never intended in the design and unbalances gameplay. A cheese.
 It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing a scout.
+The bear traps, spikes, caltrops, and auto sentry guns should slow down combat movement speed as it halts bunny hoppers.
 (Possibly add this as an anti-cheat system)
 
 Add another weapon to the Pyro for even more destructive backup. multi pyro rockets?
@@ -173,9 +174,8 @@ All classes can buy weapon upgrades, powerups, and inventory then with the merch
 
 Custom skins are possible. Not restricted per class. Use "cmd customskin" Frag with your favorite character on.
 
-Deployment of client and server files see releases.
-
-A new combat rule. If you fight, you fight to the death.
+Deployment of client and server files see releases.  New maps, models, and sound effects added from Frag Friday map designers Agent,
+and K3vin. 
 
 If you suicide after fighting, you will be punished 5 additional frags for denying your opponent their prey.
 
