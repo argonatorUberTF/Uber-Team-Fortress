@@ -355,7 +355,7 @@ void () merc_shoot =
 		}
 	}
 };
-void (entity attacker, float damage) merc_pain =
+void () merc_pain =
 {
 	local float r;
 	blooddrops ();

@@ -334,7 +334,7 @@ void () cbt_pain9 = [ 39, cbt_run1 ]
 {
 	cbot_attack ();
 };
-void (entity attacker, float damage) cbt_pain =
+void () cbt_pain =
 {
 	local float r;
 	if ((self.pain_finished > time))

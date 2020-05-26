@@ -138,7 +138,7 @@ void () hang_die =
 		hang_die01 ();
 	}
 };
-void (entity attacker, float damage) hang_pain =
+void () hang_pain =
 {
 	local float n;
 	n = random ();

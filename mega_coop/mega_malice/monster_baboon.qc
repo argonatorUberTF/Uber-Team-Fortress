@@ -537,7 +537,7 @@ void () baboon_pain6 = [ 41, baboon_pain7 ]
 void () baboon_pain7 = [ 42, baboon_run1 ]
 {
 };
-void (entity attacker, float damage) baboon_pain =
+void () baboon_pain =
 {
 	blooddrops ();
 	if ((self.pain_finished > time))

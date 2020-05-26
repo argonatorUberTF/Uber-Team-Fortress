@@ -789,7 +789,7 @@ void () swat_die =
 		}
 	}
 };
-void (entity attacker, float damage) swat_pain =
+void () swat_pain =
 {
 	local float n;
 	local float x;

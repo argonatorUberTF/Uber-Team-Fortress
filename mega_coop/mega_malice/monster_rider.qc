@@ -608,7 +608,7 @@ void () rider_die10 = [ 76, rider_die11 ]
 };
 void () rider_die11 = [ 76, SUB_Null ]
 {};
-void (entity attacker, float damage) rider_pain =
+void () rider_pain =
 {
 	if ((self.health <= MSG_BROADCAST))
 	{

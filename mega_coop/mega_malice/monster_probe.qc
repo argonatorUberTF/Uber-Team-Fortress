@@ -631,16 +631,16 @@ void () probe_die3 = [ 15, SUB_Remove ]
 	if (self.trigger_field != world)
 		self.trigger_field.frame = self.frame;
 };
-void (entity attacker, float damage) probe_pain =
+void () probe_pain =
 {
 	if ((self.health <= MSG_BROADCAST))
 	{
 		return;
 	}
-	if ((damage < 25))
-	{
-		return;
-	}
+//	if ((damage < 25))
+//	{
+//		return;
+//	}
 	if ((self.pain_finished > time))
 	{
 		return;

@@ -412,7 +412,7 @@ void () bar_pain5 = [ 17, bar_run1 ]
 {
 	ai_pain (TE_LIGHTNING2);
 };
-void (entity attacker, float damage) baracuda_pain =
+void () baracuda_pain =
 {
 	if ((self.pain_finished > time))
 	{

@@ -213,7 +213,7 @@ void () frogmen_pain4 = [ 31, frogmen_pain5 ]
 {};
 void () frogmen_pain5 = [ 32, frogmen_run1 ]
 {};
-void (entity attacker, float damage) frogmen_pain =
+void () frogmen_pain =
 {
 	if ((self.pain_finished > time))
 	{

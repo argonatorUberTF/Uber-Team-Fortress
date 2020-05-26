@@ -436,7 +436,7 @@ void () blowfish_hurt7 = [ 77, blowfish_hurt8 ]
 {};
 void () blowfish_hurt8 = [ 78, blowfish_run1 ]
 {};
-void (entity attacker, float damage) blowfish_pain =
+void () blowfish_pain =
 {
 	if ((self.pain_finished > time))
 	{

@@ -549,7 +549,7 @@ void () torcher_flameb12 = [ 59, torcher_run01 ]
 {
 	ai_face ();
 };
-void (entity attacker, float damage) torcher_pain =
+void () torcher_pain =
 {
 	local float r;
 	blooddrops ();

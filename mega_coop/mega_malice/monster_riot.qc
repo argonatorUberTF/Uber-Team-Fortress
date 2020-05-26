@@ -447,7 +447,7 @@ void () riot_painb10 = [ 62, riot_run1 ]
 {
 	ai_run (15);
 };
-void (entity attacker, float damage) riot_pain =
+void () riot_pain =
 {
 	local float x;
 	blooddrops ();

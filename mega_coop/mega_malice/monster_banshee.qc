@@ -836,13 +836,9 @@ void () banshee_die18 = [ 74, banshee_die19 ]
 void () banshee_die19 = [ 74, banshee_die19 ]
 {
 };
-void (entity attacker, float damage) banshee_pain =
+void () banshee_pain =
 {
 	if ((self.health <= MSG_BROADCAST))
-	{
-		return;
-	}
-	if ((damage < 25))
 	{
 		return;
 	}
