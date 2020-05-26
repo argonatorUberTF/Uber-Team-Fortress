@@ -762,12 +762,12 @@ void()   armagon_body_explode1 =
 	self.think = armagon_body_explode2;
 	}
 };
-void(entity attacker, float damage) armagon_pain =
+void() armagon_pain =
 {
 	if (self.health <= 0)
 		return;		// allready dying, don't go into pain frame
-	if (damage < 25)
-		return;
+//	if (damage < 25)
+//		return;
 	if (self.pain_finished > time)
 		return;
 	self.pain_finished = time + 2;

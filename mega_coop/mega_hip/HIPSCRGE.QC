@@ -296,11 +296,11 @@ void()   scourge_pain4  =[ $pain4.asc, scourge_pain5  ]
 {};
 void()   scourge_pain5  =[ $pain5.asc, scourge_run1 ]
 {};
-void(entity attacker, float damage) scourge_pain =
+void() scourge_pain =
 {
 	local float r;
-	if (random()*50 > damage)
-		return;		// didn't flinch
+//	if (random()*50 > damage)
+//		return;		// didn't flinch
 	if (self.pain_finished > time)
 		return;
 	r = random ();

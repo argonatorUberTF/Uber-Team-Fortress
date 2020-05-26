@@ -743,4 +743,4 @@ void () trap_gravity_well =
 	self.nextthink = (time + 0.1);
 	self.ltime = time;
 };
-//END 
+//END
