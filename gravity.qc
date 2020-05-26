@@ -39,8 +39,8 @@ void() gravity_pull =
 	e = findradius (self.origin, gDist);
 	while (e)
 	{
-if (e.classname != "backpack") //Don't pull in backpacks. bad things can happen on touch. -arg
-if (e.classname != "merchant") //Don't grab the merchant. He's still shook up losing Elvis.
+	if (e.classname != "backpack") //Don't pull in backpacks. bad things can happen on touch. -arg
+	if (e.classname != "merchant") //Don't grab the merchant. He's still shook up losing Elvis.
 		//if (visible(e)) //comment out to pull through walls!!! SH*(crazy -arg)
 		if (e.classname != "gravity") // don't yank on any other gravity wells
 				if (e.team_no != self.team_no) // don't pull in team mates, no whee!!  -arg

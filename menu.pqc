@@ -1832,7 +1832,7 @@ void(float inp) Menu_Engineer_Input =
 {
 	if (inp == 4)
 	{
-		if (!self.ammo_cells >= 55)
+		if (!(self.ammo_cells >= 55))
 		{
 			ResetMenu ();
 			self.impulse = TF_FLARE_LIT;

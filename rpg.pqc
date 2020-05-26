@@ -287,7 +287,7 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 		else
-if (d == "!map")
+		if (d == "!map")
 		{
 			if (f)
 			{
@@ -310,15 +310,15 @@ if (d == "!map")
 					sprint (self, 2, "Couldn't find (pcc-called) ", map_name, "\n");
 					return;
 				}
-				map_name = "dm9";
-		handle = search_begin(strcat("maps/", map_name, ".bsp"), false, true);
-		if (handle>=0)
-		{
-			search_end(handle);
-		}
-		else
-		bprint("done\n");
+			map_name = "dm9";
+			handle = search_begin(strcat("maps/", map_name, ".bsp"), false, true);
+			if (handle>=0)
+			{
+				search_end(handle);
 			}
+			else
+			bprint("done\n");
+		}
 		clientcommand(self, st);
 		sprint (self, 2, "Please use !map mapname .\n");
 		return;

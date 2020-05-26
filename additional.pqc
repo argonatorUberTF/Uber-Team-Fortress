@@ -1473,7 +1473,7 @@ void()player_touch;
 void()TeamFortress_SetEquipment;
 void()TeamFortress_SetHealth;
 void()PlayerDie;
-void(entity te) ferdisplay;
+void() ferdisplay;
 void(entity ritem, entity act) Respawn_Item;
 void()ammo_touch;
 void()SUB_regen;
@@ -5305,7 +5305,7 @@ void (float _p_10461) TeamFortress_DropAmmo =
 			{
 				if (((self.ammo_cells / 3.000000) > (_l_10462 - self.ammo_shells)))
 				{
-	if ((!self.monster_string == "on"))
+	if ((!(self.monster_string == "on")))
 					sprint (self, 2.000000, "you make some shells.\n");
 					self.ammo_cells = (self.ammo_cells - ((_l_10462 - self.ammo_shells) * 3.000000));
 					self.ammo_shells = _l_10462;
@@ -5331,7 +5331,7 @@ void (float _p_10461) TeamFortress_DropAmmo =
 				{
 					if (((self.ammo_cells / 2.000000) > (_l_10462 - self.ammo_nails)))
 					{
-	if ((!self.monster_string == "on"))
+	if ((!(self.monster_string == "on")))
 						sprint (self, 2.000000, "you make some nails.\n");
 						self.ammo_cells = (self.ammo_cells - ((_l_10462 - self.ammo_nails) * 2.000000));
 						self.ammo_nails = _l_10462;
@@ -5357,7 +5357,7 @@ void (float _p_10461) TeamFortress_DropAmmo =
 					{
 						if (((self.ammo_cells / 5.000000) > (_l_10462 - self.ammo_rockets)))
 						{
-	if ((!self.monster_string == "on"))
+	if ((!(self.monster_string == "on")))
 							sprint (self, 2.000000, "you make some rockets.\n");
 							self.ammo_cells = (self.ammo_cells - ((_l_10462 - self.ammo_rockets) * 5.000000));
 							self.ammo_rockets = _l_10462;
@@ -5383,7 +5383,7 @@ void (float _p_10461) TeamFortress_DropAmmo =
 						{
 							if (((self.ammo_cells / 5.000000) > (_l_10462 - self.ammo_cells)))
 							{
-	if ((!self.monster_string == "on"))
+	if ((!(self.monster_string == "on")))
 								sprint (self, 2.000000, "you make some cells.\n");
 								self.ammo_cells = (self.ammo_cells - ((_l_10462 - self.ammo_cells) * 5.000000));
 								self.ammo_cells = _l_10462;
@@ -5415,7 +5415,7 @@ void (float _p_10461) TeamFortress_DropAmmo =
 		}
 		self.no_grenades_2 = (self.no_grenades_2 - 1.000000);
 	}
-	if ((!self.monster_string == "on"))
+	if ((!(self.monster_string == "on"))) 
 	W_SetCurrentAmmo ();
 	if ((self.team_no != 0.000000))
 	{
@@ -9819,7 +9819,7 @@ if (attacker.classname == "player" && (targ.classname == "player" || targ.classn
 		}
 	if (self.th_pain)
 	{
-		self.th_pain(attacker, take);  
+		self.th_pain();		//Removed extra parameters -arg
 			self.#npc_lastruntime = 0;
 		if (skill >= 3)
 		{
@@ -10258,7 +10258,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float T_flags
 		}
 	if (self.th_pain)
 	{
-		self.th_pain(attacker, take);
+		self.th_pain();	//Removed "attacker, take" -arg
 			self.#npc_lastruntime = 0;
 		if (skill >= 3)
 		{
@@ -23321,7 +23321,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	else
 	if (s1 == "fixmon")
 	{
-		return 1;
+		return 1;  // Code was removed, didn't work and is not needed.
 	}
 	else
 	if (s1 == "entinf")

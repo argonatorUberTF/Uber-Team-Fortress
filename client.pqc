@@ -5087,7 +5087,7 @@ void(entity attacker) fertimer =
 	newmis.nextthink = time + 3;
 	newmis.think = ferdisplay;
 };
-void(entity te) ferdisplay =
+void() ferdisplay =
 {
 	local entity playernamefer;
 	playernamefer = self.enemy;

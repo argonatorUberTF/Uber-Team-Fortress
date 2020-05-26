@@ -76,7 +76,7 @@ void() t_followtarget =
 	local vector   spot1, spot2;
 	local entity   targ;
 	local entity   client_t;
-	if (!other.flags & FL_MONSTER)
+	if (!(other.flags & FL_MONSTER))
 	return;
 	if (other.classname == "monster_decoy")
 	return;

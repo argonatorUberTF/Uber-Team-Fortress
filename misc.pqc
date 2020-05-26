@@ -903,7 +903,7 @@ void() fire_burst =
 	self.nextthink = time + random() * 5 + TF_FLARE_OFF;
 	self.think = fire_burst;
 };
-Void() effect_burner = 
+void() effect_burner = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
@@ -1240,7 +1240,7 @@ void() blocker_use =
 		sound(self, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
 	}
 };
-void(entity attacker, float damage) glass_pain = 
+void() glass_pain = 
 {
 	if (self.spawnflags & 8)
 	{

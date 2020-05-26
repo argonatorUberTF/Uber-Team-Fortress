@@ -1,0 +1,357 @@
+FTEQCC: 5595 (2019-12-17T19:21:29.947488Z)
+Source file: coop_regular_progs.src
+outputfile: qwprogs.dat
+compiling usecoop.pqc
+compiling defs.pqc
+compiling mega_coop/mega_hip/hipdefs.qc
+compiling mega_coop/mega_rogue/mtf_rogue.qc
+compiling additional.pqc
+compiling mega_coop/mega_halflife/hl_defs.qc
+compiling ss_csqc.qc
+compiling mega_coop/uberhard.qc
+compiling mega_coop/mega_nehahra/neh_defsfuncs.qc
+compiling menu.pqc
+compiling combat.pqc
+compiling items.pqc
+compiling gravity.qc
+compiling weapons.pqc
+in function Build_Chain (line 7894),
+weapons.pqc:7895: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
+weapons.pqc:42:    const entity(float head) MakeLink is defined here
+weapons.pqc:7900: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
+weapons.pqc:42:    const entity(float head) MakeLink is defined here
+weapons.pqc:7901: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
+weapons.pqc:42:    const entity(float head) MakeLink is defined here
+compiling mega_coop/mega_hip/HIPMTF.qc
+compiling world.pqc
+compiling status.pqc
+compiling client.pqc
+in function fertimer (line 5082),
+client.pqc:5088: warning F307: type mismatch: void(entity te) ferdisplay to void() newmis.think
+additional.pqc:1476:    const void(entity te) ferdisplay is defined here
+in function teamchangetimer (line 5127),
+client.pqc:5133: warning F307: type mismatch: void(entity targ) teamchange to void() newmis.think
+defs.pqc:650:    const void(entity targ) teamchange is defined here
+compiling player.pqc
+compiling doors.pqc
+compiling buttons.pqc
+compiling triggers.pqc
+compiling plats.pqc
+compiling misc.pqc
+compiling monsters.pqc
+compiling ai.pqc
+compiling fight.pqc
+compiling flare.pqc
+compiling sentry.pqc
+compiling pyro.pqc
+compiling spy.pqc
+compiling demoman.pqc
+compiling scout.pqc
+compiling engineer.pqc
+compiling tsoldier.pqc
+compiling sniper.pqc
+compiling medic.pqc
+compiling tforthlp.pqc
+compiling ctf.pqc
+compiling coop.pqc
+compiling actions.pqc
+compiling missiles.pqc
+compiling mturret.pqc
+compiling camera.pqc
+in function Cam (line 552),
+camera.pqc:626: warning F307: type mismatch: void(entity _p_1912) camera_die to void() newmis.th_die
+defs.pqc:449:    const void(entity _p_1912) camera_die is defined here
+compiling prematch.pqc
+compiling xavior.pqc
+compiling tesla.pqc
+compiling telepad.pqc
+compiling security.pqc
+compiling fieldgen.pqc
+compiling acguns.pqc
+compiling aagun.pqc
+compiling light.pqc
+compiling helo.pqc
+compiling submarine.pqc
+compiling control.pqc
+compiling etf.pqc
+compiling rankings.pqc
+compiling tinker.pqc
+compiling mega_coop/needler.qc
+compiling mega_coop/mtf_coop.qc
+compiling mega_coop/mtf_coop_score.qc
+compiling mega_coop/ogre.qc
+compiling mega_coop/demon.qc
+compiling mega_coop/shambler.qc
+compiling mega_coop/knight.qc
+in function monster_knight1 (line 401),
+mega_coop/knight.qc:411: warning F307: type mismatch: void(entity attacker, float damage) knight_pain to void() self.th_pain
+mega_coop/mega_nehahra/neh_defsfuncs.qc:1752:    const void(entity attacker, float damage) knight_pain is defined here
+compiling mega_coop/soldier.qc
+compiling mega_coop/wizard.qc
+compiling mega_coop/dog.qc
+compiling mega_coop/zombie.qc
+compiling mega_coop/boss.qc
+compiling mega_coop/tarbaby.qc
+compiling mega_coop/hknight.qc
+compiling mega_coop/fish.qc
+compiling mega_coop/shalrath.qc
+compiling mega_coop/enforcer.qc
+compiling mega_coop/oldone.qc
+compiling mega_coop/misc/thunder.qc
+compiling mega_coop/misc/mood.qc
+compiling mega_coop/misc/cyberdemon.qc
+compiling mega_coop/boss_killable.qc
+compiling mega_coop/mega_travail/travail_defs_funcs.qc
+compiling mega_coop/mega_travail/azothfight.qc
+compiling mega_coop/mega_travail/azoth.qc
+compiling mega_coop/mega_travail/axegrunt.qc
+compiling mega_coop/mega_travail/ubs.qc
+compiling mega_coop/mega_travail/spider.qc
+compiling mega_coop/mega_travail/jugg.qc
+compiling mega_coop/mega_travail/ne_triggers.qc
+compiling mega_coop/mega_hip/hipsubs.qc
+compiling mega_coop/mega_hip/hip_brk.qc
+compiling mega_coop/mega_hip/hiptrain.qc
+compiling mega_coop/mega_hip/hip_expl.qc
+compiling mega_coop/mega_hip/hipcount.qc
+compiling mega_coop/mega_hip/hipitems.qc
+compiling mega_coop/mega_hip/hiprubbl.qc
+compiling mega_coop/mega_hip/hip_push.qc
+compiling mega_coop/mega_hip/hip_part.qc
+compiling mega_coop/mega_hip/hipspawn.qc
+compiling mega_coop/mega_hip/hiparma.qc
+compiling mega_coop/mega_hip/hipspike.qc
+compiling mega_coop/mega_hip/hiprot.qc
+compiling mega_coop/mega_hip/hipscrge.qc
+compiling mega_coop/mega_hip/hipholes.qc
+compiling mega_coop/mega_hip/hipclock.qc
+compiling mega_coop/mega_hip/hiptrig.qc
+compiling mega_coop/mega_hip/newhip.hipmisc.qc
+compiling mega_coop/mega_hip/hipdecoy.qc
+compiling mega_coop/mega_rogue/new_ai.qc
+compiling mega_coop/mega_rogue/invis_sw.qc
+compiling mega_coop/mega_rogue/newitems.qc
+compiling mega_coop/mega_rogue/newplats.qc
+compiling mega_coop/mega_rogue/newmisc.qc
+compiling mega_coop/mega_rogue/elevatr.qc
+compiling mega_coop/mega_rogue/pendulum.qc
+compiling mega_coop/mega_rogue/lightnin.qc
+compiling mega_coop/mega_rogue/wrath.qc
+compiling mega_coop/mega_rogue/shield.qc
+compiling mega_coop/mega_rogue/MTF_ROGUE_FUNC.qc
+compiling mega_coop/mega_rogue/lava_wpn.qc
+compiling mega_coop/mega_rogue/mult_wpn.qc
+compiling mega_coop/mega_rogue/dragon.qc
+compiling mega_coop/mega_rogue/s_wrath.qc
+compiling mega_coop/mega_rogue/random.qc
+compiling mega_coop/mega_rogue/earthq.qc
+compiling mega_coop/mega_rogue/lavaman.qc
+compiling mega_coop/mega_rogue/sphere.qc
+compiling mega_coop/mega_rogue/buzzsaw.qc
+compiling mega_coop/mega_rogue/morph.qc
+compiling mega_coop/mega_rogue/ending.qc
+compiling mega_coop/mega_rogue/mummy.qc
+compiling mega_coop/mega_rogue/timemach.qc
+compiling mega_coop/mega_nehahra/neh_hknight.qc
+compiling mega_coop/mega_nehahra/ai2.qc
+compiling mega_coop/mega_nehahra/ai4.qc
+compiling mega_coop/mega_nehahra/archg.qc
+compiling mega_coop/mega_nehahra/baron.qc
+compiling mega_coop/mega_nehahra/custit.qc
+compiling mega_coop/mega_nehahra/cutscene.qc
+compiling mega_coop/mega_nehahra/dodge.qc
+compiling mega_coop/mega_nehahra/effects.qc
+compiling mega_coop/mega_nehahra/enf2.qc
+compiling mega_coop/mega_nehahra/enf3.qc
+compiling mega_coop/mega_nehahra/explode.qc
+compiling mega_coop/mega_nehahra/gaunt.qc
+compiling mega_coop/mega_nehahra/horse.qc
+compiling mega_coop/mega_nehahra/hunter.qc
+compiling mega_coop/mega_nehahra/jagger.qc
+compiling mega_coop/mega_nehahra/library.qc
+compiling mega_coop/mega_nehahra/max.qc
+compiling mega_coop/mega_nehahra/m_weps.qc
+compiling mega_coop/mega_nehahra/nehah.qc
+compiling mega_coop/mega_nehahra/push.qc
+compiling mega_coop/mega_nehahra/qguy.qc
+compiling mega_coop/mega_nehahra/retreat.qc
+compiling mega_coop/mega_nehahra/story.qc
+compiling mega_coop/mega_nehahra/soldier.qc
+compiling mega_coop/mega_nehahra/thrown.qc
+compiling mega_coop/mega_nehahra/vigil.qc
+compiling mega_coop/mega_nehahra/vomitus.qc
+compiling mega_coop/mega_nehahra/wall.qc
+compiling mega_coop/mega_nehahra/watmos.qc
+compiling mega_coop/mega_nehahra/weldburn.qc
+compiling mega_coop/mega_nehahra/wraith.qc
+compiling mega_coop/mega_nehahra/finale.qc
+compiling mega_coop/mega_wolf3d/w3d_misc.qc
+compiling mega_coop/mega_doom/doom_misc.qc
+compiling mega_coop/mega_doom/dsold.qc
+compiling mega_coop/mega_doom/imp.qc
+compiling mega_coop/mega_doom/dsarg.qc
+compiling mega_coop/mega_doom/pinky.qc
+compiling mega_coop/mega_doom/caco.qc
+compiling mega_coop/mega_doom/baron.qc
+compiling mega_coop/mega_doom/lostsoul.qc
+compiling mega_coop/mega_doom/cyberdemon.qc
+compiling mega_coop/mega_doom/spdemon.qc
+compiling mega_coop/mega_doom/hwguy.qc
+compiling mega_coop/mega_doom/mancubus.qc
+compiling mega_coop/mega_doom/arachno.qc
+compiling mega_coop/mega_doom/revenant.qc
+compiling mega_coop/mega_hexen2/hexen2_defs.qc
+compiling mega_coop/mega_hexen2/hexen2_save.qc
+compiling mega_coop/mega_malice/malice_include.qc
+compiling mega_coop/quake2.qc
+compiling mega_coop/misc/rubicon2.qc
+compiling mega_coop/mtf_coop_lms.qc
+compiling mega_coop/mtf_coop_srv.qc
+compiling mega_coop/coop_monsters.qc
+compiling rpg.pqc
+compiling fireworks.qc
+compiling spectator.pqc
+Recognised progs as QuakeWorld
+0 shared locals, 6545 private, 6545 total
+FTE's QCLib will be required
+at global scope,
+additional.pqc:19677: warning F210: Sound "misc/drip/drip_1.wav" was used but not directly precached
+additional.pqc:24215: warning F210: Sound "001.wav" was used but not directly precached
+additional.pqc:24218: warning F210: Sound "071.wav" was used but not directly precached
+additional.pqc:24221: warning F210: Sound "015.wav" was used but not directly precached
+additional.pqc:24224: warning F210: Sound "002.wav" was used but not directly precached
+additional.pqc:24227: warning F210: Sound "017.wav" was used but not directly precached
+additional.pqc:24230: warning F210: Sound "112.wav" was used but not directly precached
+additional.pqc:24233: warning F210: Sound "096.wav" was used but not directly precached
+additional.pqc:24236: warning F210: Sound "102.wav" was used but not directly precached
+additional.pqc:24239: warning F210: Sound "065.wav" was used but not directly precached
+additional.pqc:24242: warning F210: Sound "054.wav" was used but not directly precached
+additional.pqc:24245: warning F210: Sound "040.wav" was used but not directly precached
+additional.pqc:24312: warning F210: Sound "vomitus/v_sight1.wav" was used but not directly precached
+menu.pqc:1094: warning F210: Sound "speech/yell/coverme.wav" was used but not directly precached
+mega_coop/mega_hip/HIPMTF.qc:51: warning F210: Sound "hipweap/laserric.wav" was used but not directly precached
+mega_coop/mega_hip/HIPMTF.qc:72: warning F210: Sound "hipweap/laserg.wav" was used but not directly precached
+mega_coop/mega_hip/HIPMTF.qc:321: warning F210: Sound "hipweap/mjolslap.wav" was used but not directly precached
+mega_coop/mega_hip/HIPMTF.qc:380: warning F210: Sound "hipweap/mjoltink.wav" was used but not directly precached
+mega_coop/mega_hip/HIPMTF.qc:465: warning F210: Sound "hipweap/proxwarn.wav" was used but not directly precached
+mega_coop/mega_hip/HIPMTF.qc:479: warning F210: Sound "hipweap/proxbomb.wav" was used but not directly precached
+client.pqc:3630: warning F210: Sound "misc/godlike.wav" was used but not directly precached
+client.pqc:3636: warning F210: Sound "misc/holyshit.wav" was used but not directly precached
+player.pqc:1084: warning F210: Sound "player/gib2.wav.wav" was used but not directly precached
+triggers.pqc:506: warning F210: Sound "weapons/bounce2.wav" was used but not directly precached
+fight.pqc:128: warning F210: Sound "cook/dpong.wav" was used but not directly precached
+fight.pqc:134: warning F210: Sound "cook/ping1.wav" was used but not directly precached
+fight.pqc:140: warning F210: Sound "cook/ping2.wav" was used but not directly precached
+fight.pqc:144: warning F210: Sound "cook/pong1.wav" was used but not directly precached
+missiles.pqc:383: warning F210: Sound "weapons/arrowhit.wav" was used but not directly precached
+security.pqc:196: warning F210: Sound "weapons/camera_beep.wav" was used but not directly precached
+fieldgen.pqc:129: warning F210: Sound "misc/notfound.wav" was used but not directly precached
+fieldgen.pqc:230: warning F210: Sound "misc/spkbite.wav" was used but not directly precached
+fieldgen.pqc:320: warning F210: Sound "misc/spkbite2.wav" was used but not directly precached
+acguns.pqc:134: warning F210: Sound "helo/acannon.wav" was used but not directly precached
+acguns.pqc:293: warning F210: Sound "helo/rocklnch.wav" was used but not directly precached
+aagun.pqc:55: warning F210: Sound "weapons/ballista.wav" was used but not directly precached
+aagun.pqc:67: warning F210: Sound "weapons/ballwind.wav" was used but not directly precached
+helo.pqc:1209: warning F210: Sound "weapons/stinger.wav" was used but not directly precached
+helo.pqc:1279: warning F210: Sound "weapons/beedeep.wav" was used but not directly precached
+mega_coop/mega_travail/ubs.qc:433: warning F210: Sound "ubs/wattack.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:31: warning F210: Sound "misc/foot1.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:34: warning F210: Sound "misc/foot2.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:37: warning F210: Sound "misc/foot3.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:40: warning F210: Sound "misc/foot4.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:43: warning F210: Sound "misc/foot5.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:46: warning F210: Sound "misc/foot6.wav" was used but not directly precached
+mega_coop/mega_hip/hipdecoy.qc:48: warning F210: Sound "misc/foot7.wav" was used but not directly precached
+mega_coop/mega_rogue/mult_wpn.qc:334: warning F210: Sound "plasma/explode.wav" was used but not directly precached
+mega_coop/mega_rogue/mult_wpn.qc:373: warning F210: Sound "plasma/flight.wav" was used but not directly precached
+mega_coop/mega_rogue/mult_wpn.qc:399: warning F210: Sound "plasma/fire.wav" was used but not directly precached
+mega_coop/mega_nehahra/enf2.qc:295: warning F210: Sound "weapons/shotdud.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:203: warning F210: Sound "jagger/bidle2.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:395: warning F210: Sound "jagger/bidle.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:679: warning F210: Sound "jagger/ddeath.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:767: warning F210: Sound "jagger/bjump.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:845: warning F210: Sound "jagger/bjump2.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:947: warning F210: Sound "jagger/dpain1.wav" was used but not directly precached
+mega_coop/mega_nehahra/jagger.qc:950: warning F210: Sound "player/razh20.wav" was used but not directly precached
+mega_coop/mega_nehahra/max.qc:1709: warning F210: Sound "weapons/sprocket.wav" was used but not directly precached
+mega_coop/mega_nehahra/m_weps.qc:278: warning F210: Sound "weapons/thump.wav" was used but not directly precached
+mega_coop/mega_nehahra/m_weps.qc:355: warning F210: Sound "weapons/shotgn3.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:534: warning F210: Sound "machine/m1_st.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:538: warning F210: Sound "machine/m2_st.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:542: warning F210: Sound "machine/m3_st.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:556: warning F210: Sound "machine/m1_xx.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:560: warning F210: Sound "machine/m2_xx.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:564: warning F210: Sound "machine/m3_xx.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:589: warning F210: Sound "machine/m1_go.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:593: warning F210: Sound "machine/m2_go.wav" was used but not directly precached
+mega_coop/mega_nehahra/wall.qc:597: warning F210: Sound "machine/m3_go.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:103: warning F210: Sound "024.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:106: warning F210: Sound "022.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:108: warning F210: Sound "049.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:163: warning F210: Sound "lsfx/036.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:169: warning F210: Sound "lsfx/037.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:175: warning F210: Sound "lsfx/045.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:180: warning F210: Sound "lsfx/035.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:189: warning F210: Sound "lsfx/044.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:247: warning F210: Sound "lsfx/031.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:316: warning F210: Sound "034.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:534: warning F210: Sound "007.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:597: warning F210: Sound "010.wav" was used but not directly precached
+mega_coop/mega_wolf3d/w3d_misc.qc:651: warning F210: Sound "lsfx/006.wav" was used but not directly precached
+mega_coop/mega_doom/cyberdemon.qc:62: warning F210: Sound "doom_cdemon/idle.wav" was used but not directly precached
+mega_coop/mega_doom/cyberdemon.qc:163: warning F210: Sound "doom_cdemon/claw.wav" was used but not directly precached
+mega_coop/mega_malice/malice_reliants.qc:106: warning F210: Sound "weapons/plasma.wav" was used but not directly precached
+mega_coop/mega_malice/malice_smoke.qc:207: warning F210: Sound "misc/hiss.wav" was used but not directly precached
+mega_coop/mega_malice/malice_utils.qc:40: warning F210: Sound "utils/pickup.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot_ai.qc:650: warning F210: Sound "vasquez/sight1.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot.qc:59: warning F210: Sound "weapons/punish4.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot.qc:346: warning F210: Sound "vasquez/pain1.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot.qc:350: warning F210: Sound "vasqeuz/pain2.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot.qc:376: warning F210: Sound "vasquez/death1.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot.qc:382: warning F210: Sound "vasquez/death2.wav" was used but not directly precached
+mega_coop/mega_malice/monster_cbot.qc:386: warning F210: Sound "vasquez/death3.wav" was used but not directly precached
+mega_coop/mega_malice/monster_banshee.qc:880: warning F210: Sound "banshee/repel.wav" was used but not directly precached
+mega_coop/mega_malice/monster_tank.qc:158: warning F210: Sound "weapons/hellfire.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:92: warning F210: Sound "soldier2/solatck2.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:113: warning F210: Sound "soldier2/solatck1.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:129: warning F210: Sound "soldier2/solatck3.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:138: warning F210: Sound "infidle.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:245: warning F210: Sound "infsearch.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:279: warning F210: Sound "infsight.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:417: warning F210: Sound "infpain.wav" was used but not directly precached
+mega_coop/mega_quake2\infantry.qc:479: warning F210: Sound "infdie.wav" was used but not directly precached
+mega_coop/mega_quake2\berserk.qc:67: warning F210: Sound "berserk/beridle1.wav" was used but not directly precached
+mega_coop/mega_quake2\berserk.qc:127: warning F210: Sound "berserk/attack.wav" was used but not directly precached
+mega_coop/mega_quake2\berserk.qc:243: warning F210: Sound "berserk/berpain2.wav" was used but not directly precached
+mega_coop/mega_quake2\berserk.qc:305: warning F210: Sound "berserk/berdeth2.wav" was used but not directly precached
+mega_coop/mega_quake2\bigtank.qc:40: warning F210: Sound "bigtank/tnkidle1.wav" was used but not directly precached
+mega_coop/mega_quake2\bigtank.qc:73: warning F210: Sound "bigtank/step.wav" was used but not directly precached
+mega_coop/mega_quake2\bigtank.qc:460: warning F210: Sound "bigtank/thud.wav" was used but not directly precached
+mega_coop/mega_quake2\bigtank.qc:479: warning F210: Sound "bigtank/pain.wav" was used but not directly precached
+mega_coop/mega_quake2\bigtank.qc:492: warning F210: Sound "bigtank/tnkpain2.wav" was used but not directly precached
+mega_coop/mega_quake2\bigtank.qc:682: warning F210: Sound "bigtank/death.wav" was used but not directly precached
+323304 strofs (of 2097152)
+185496 numstatements (of 1048576)
+ 10541 numfunctions (of 32768)
+ 24017 numglobaldefs (of 131072)
+   851 numfielddefs (805 unique) (of 8192)
+ 26979 numpr_globals (of 131072)
+   394 nummodels
+   973 numsounds
+Writing qwprogs.dat
+2493814 TOTAL SIZE
+Compile finished: qwprogs.dat (fte format)
+Writing qwprogs.lno for debugging
+973 unique precache_sounds
+394 unique precache_models
+105 unique precache_files
+Compile Complete
+
+optres_shortenifnots 675
+optres_overlaptemps 89012
+optres_noduplicatestrings 217989
+optres_constantarithmatic 365
+optres_assignments 2478
+optres_unreferenced 14437
+numtemps 16
+Done. 122 warnings

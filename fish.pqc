@@ -352,7 +352,7 @@ void() f_pain9 = [65, f_run1]
 {
 	ai_pain(6);
 };
-void(entity attacker, float damage) fish_pain = 
+void() fish_pain = 
 {
 	f_pain1();
 };
