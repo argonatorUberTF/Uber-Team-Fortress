@@ -169,7 +169,7 @@ void() cyber_missile23 =[ $shoot1,     cyber_run1 ]
 {
 ai_face();
 };
-void(entity attacker, float damage) cyber_pain =
+void() cyber_pain =
 {
 	if (self.pain_finished > time)
 		return;
