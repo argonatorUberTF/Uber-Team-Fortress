@@ -196,7 +196,7 @@ void () spdemon_pain3 = [ 40, spdemon_run1 ]
 {
 	spdemon_check_frame();
 };
-void (entity attacker, float damage) spdemon_pain =
+void () spdemon_pain =
 {
 	if ((self.pain_finished > time))
 	{

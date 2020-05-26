@@ -135,7 +135,7 @@ void () caco_run =
 	}
 	caco_run1 ();
 };
-void (entity attacker, float damage) caco_pain =
+void () caco_pain =
 {
 	if ((self.pain_finished > time))
 	{

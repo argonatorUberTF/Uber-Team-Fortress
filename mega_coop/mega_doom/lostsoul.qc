@@ -164,7 +164,7 @@ void () lsoul_run =
 {
 	lsoul_run1 ();
 };
-void (entity attacker, float damage) lsoul_pain =
+void () lsoul_pain =
 {
 	if ((self.pain_finished > time))
 	{

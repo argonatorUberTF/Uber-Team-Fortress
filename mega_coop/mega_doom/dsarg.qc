@@ -160,7 +160,7 @@ void () sargeant_pain2 = [ 48, sargeant_run1 ]
 {
 	sargeant_check_frame();
 };
-void (entity attacker, float damage) sargeant_pain =
+void () sargeant_pain =
 {
 	if ((self.pain_finished > time))
 	{

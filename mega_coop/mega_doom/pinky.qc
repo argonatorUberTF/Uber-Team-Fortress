@@ -181,7 +181,7 @@ void () pinky_pain4 = [ 56, pinky_run1 ]
 {
 	pinky_check_frame();
 };
-void (entity attacker, float damage) pinky_pain =
+void () pinky_pain =
 {
 	if ((self.pain_finished > time))
 	{

@@ -258,7 +258,7 @@ void () dbaron_run =
 	sound (self, CHAN_VOICE, "doom_knight/site.wav", TRUE, ATTN_IDLE);
 	dbaron_run1 ();
 };
-void (entity attacker, float damage) dbaron_pain =
+void () dbaron_pain =
 {
 	local float r;
 	r = random ();
