@@ -598,7 +598,7 @@ void () Show_Uptime =
 {
 	local float t;
 	local string s;
-	sprint(self, 2, "Serer Uptime /n"); // Server Uptime:
+	sprint(self, 2, "Server Uptime /n"); // Server Uptime:
 	sprint(self, 2, " days: ");		//Days:
 	t = f_uptime_d (server_time);
 	s = ftos (t);
