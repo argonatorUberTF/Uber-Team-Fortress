@@ -728,10 +728,10 @@ void () nehahra_carnify_head =
 	head.think = nehahra_frame;
 	head.nextthink = (time + 0.5);
 };
-void (entity attacker, float damage) bod_neh_pain =
+void () bod_neh_pain =
 {
-	self.objekt.enemy = attacker;
-	T_Damage (self.objekt, attacker, self, 1);
+//	self.objekt.enemy = attacker;
+//	T_Damage (self.objekt, attacker, self, 1);
 };
 void () nehahra_frame =
 {

@@ -70,7 +70,7 @@ void () library_pain =
 		self.solid = SOLID_SLIDEBOX;
 	}
 	library_2archg ();
-	self.th_pain (world, 0);
+	self.th_pain ();
 	return;
 };
 void () library_2mad =

@@ -355,13 +355,13 @@ void () baron_jumpup =
 	self.walkframe = (self.walkframe + 1);
 	ai_face ();
 };
-void (entity attacker, float damage) baron_pain =
+void () baron_pain =
 {
 	if ((self.pain_finished > time))
 	{
 		return;
 	}
-	if (((random () * SVC_INTERMISSION) > damage))
+	if (((random () * SVC_INTERMISSION) > 100))
 	{
 		return;
 	}

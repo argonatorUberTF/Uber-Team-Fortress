@@ -339,7 +339,7 @@ void () mark3_paina5 = [ 60, mark3_paina6 ]
 {};
 void () mark3_paina6 = [ 61, mark3_run1 ]
 {};
-void (entity attacker, float damage) mark3_pain =
+void () mark3_pain =
 {
 	local float r;
 	r = random ();

@@ -933,7 +933,7 @@ void () jagger_JumpTouch =
 	self.think = jagger_run8;
 	self.nextthink = time;
 };
-void (entity attacker, float damage) jagger_pain =
+void () jagger_pain =
 {
 	if ((self.touch == jagger_JumpTouch))
 	{

@@ -652,7 +652,7 @@ void () army_painc12 = [ 71, army_painc13 ]
 };
 void () army_painc13 = [ 72, army_run1 ]
 {};
-void (entity attacker, float damage) army_pain =
+void () army_pain =
 {
 	local float r;
 	if ((self.pain_finished > time))
@@ -919,7 +919,7 @@ void () army_2normal =
 void () army_ouch =
 {
 	army_2normal ();
-	army_pain (self, 0);
+	army_pain ();			// Removed extra parameters not needed -arg
 };
 void () army_crun =
 {
