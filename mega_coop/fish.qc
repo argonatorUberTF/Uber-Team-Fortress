@@ -232,7 +232,7 @@ void() f_pain8  =[      $pain8, f_pain9 ]
 {ai_pain(6);};
 void() f_pain9  =[      $pain9, f_run1 ]
 {ai_pain(6);};
-void(entity attacker, float damage)	fish_pain =
+void()	fish_pain =
 {
 	f_pain1 ();
 };

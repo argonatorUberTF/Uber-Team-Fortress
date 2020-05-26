@@ -270,7 +270,7 @@ void () knight_painb10 = [ 40, knight_painb11 ]
 };
 void () knight_painb11 = [ 41, knight_run1 ]
 {};
-void (entity attacker, float damage) knight_pain =
+void () knight_pain =
 {
 	local float r;
 	if ((self.pain_finished > time))
@@ -437,4 +437,4 @@ void () monster_knight =
 	COOP_SetLives ();
 	monster_knight1 ();
 };
-//END
+//END 

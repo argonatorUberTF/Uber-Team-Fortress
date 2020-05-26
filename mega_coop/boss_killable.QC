@@ -360,29 +360,15 @@ void() killable_boss_awake =
 #endif
 	killable_boss_rise1 ();
 };
-void(entity attacker, float damage)     killable_boss_pain =
+void() killable_boss_pain =
 {
 	local float     r;
 	if (self.pain_finished > time)
 		return;
 	r = random();
-	if ((r < 0.15)&&(attacker.classname !="monster_killable_boss"))
-	{
-		sound (self, CHAN_VOICE, "boss1/death.wav", 1, ATTN_NORM);
-		self.pain_finished = time + 5;
-		ThrowGib ("progs/gib1.mdl", -180);
-		ThrowGib ("progs/gib2.mdl", -180);
-		ThrowGib ("progs/gib3.mdl", -180);
-		killable_boss_flinch1 ();
-		self.enemy = attacker;
-	}
-	else
-	{
-		self.enemy = attacker;  //Pissed off at who Hurt him
 		if (self.enemy.classname == "monster_killable_boss") //Don't get mad at self
 			KillableBossFindTarget();  //Leave nothing within radius alive!
 		if (self.enemy == world) killable_boss_missile1();
-	}
 };
 void() head_gib =
 {

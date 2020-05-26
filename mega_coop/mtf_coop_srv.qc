@@ -101,7 +101,7 @@ void () ai_director_think =
 {
 	local float next_t;
 	next_t = random() * (self.owner.waitmax - self.owner.waitmin);
-	if (!self.owner.spawnflags & #SF_AID_TRIGGEREND)
+	if (!(self.owner.spawnflags & #SF_AID_TRIGGEREND))
 	{
 		if ( (time - self.health)  >= self.owner.pausetime )
 		{
@@ -167,12 +167,12 @@ void () trigger_aidirector =
 		self.waitmax = self.waitmin + 2;
 	if (!self.pausetime)
 		self.pausetime = 45;
-	if (!self.spawnflags & #SF_AID_TRIGGERONLY)
+	if (!(self.spawnflags & #SF_AID_TRIGGERONLY))
 			InitTrigger();
 	survival_mode = SURVIVAL_NATIVE;
 	localcmd("localinfo srv_ips \"\"\n");
 	self.use = aid_activate;
-	if (!self.spawnflags & #SF_AID_TRIGGERONLY)
+	if (!(self.spawnflags & #SF_AID_TRIGGERONLY))
 		self.touch = aid_touch;
 	if (!self.distance)
 		self.distance = 800;

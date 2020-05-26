@@ -436,13 +436,9 @@ void () wiz_die =
 	}
 	wiz_death1 ();
 };
-void (entity attacker, float damage) Wiz_Pain =
+void () Wiz_Pain =
 {
 	sound (self, CHAN_VOICE, "wizard/wpain.wav", true, ATTN_NORM);
-	if (((random () * 70) > damage))
-	{
-		return;
-	}
 	wiz_pain1 ();
 };
 void () Wiz_Missile =

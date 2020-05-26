@@ -334,7 +334,7 @@ void () enf_paind18 = [ 100, enf_paind19 ]
 {};
 void () enf_paind19 = [ 101, enf_run1 ]
 {};
-void (entity attacker, float damage) enf_pain =
+void () enf_pain =
 {
 	local float r;
 	r = random ();

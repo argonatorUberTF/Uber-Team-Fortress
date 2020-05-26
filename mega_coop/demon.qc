@@ -283,7 +283,7 @@ void()	demon1_fire14	=[	$attacka14,		demon1_fire15	]
 {ai_charge(16);};
 void()	demon1_fire15	=[	$attacka15,		demon1_run1		]
 {ai_charge(16);};
-void (entity attacker, float damage) demon1_pain =
+void () demon1_pain =
 {
 	if ((self.touch == Demon_JumpTouch))
 	{
@@ -295,10 +295,6 @@ void (entity attacker, float damage) demon1_pain =
 	}
 	self.pain_finished = (time + true);
 	sound (self, CHAN_VOICE, "demon/dpain1.wav", true, ATTN_NORM);
-	if (((random () * 200) > damage))
-	{
-		return;
-	}
 	demon1_pain1 ();
 };
 void () demon1_die1 = [ 45, demon1_die2 ]

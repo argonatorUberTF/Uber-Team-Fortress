@@ -1393,7 +1393,7 @@ void ( float mtype, float wepno ) Monsterweapon_setmodel =
 };
 void (float mclass) Monsterclass_add =
 {
-	if (!mclass_available & mclass)
+	if (!(mclass_available & mclass))
 		mclass_available = mclass_available + mclass;
 };
 void ( entity t_plyr, float mtype) Monsterteam_setmodel =

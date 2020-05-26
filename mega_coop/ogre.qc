@@ -517,7 +517,7 @@ void () ogre_paine14 = [ 110, ogre_paine15 ]
 {};
 void () ogre_paine15 = [ 111, ogre_run1 ]
 {};
-void (entity attacker, float damage) ogre_pain =
+void () ogre_pain =
 {
 	local float r;
 	if ((self.pain_finished > time))

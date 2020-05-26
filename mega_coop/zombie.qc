@@ -815,22 +815,12 @@ void () zombie_die =
 	ThrowGib ("progs/gib2.mdl", self.health);
 	ThrowGib ("progs/gib3.mdl", self.health);
 };
-void (entity attacker, float take) zombie_pain =
+void () zombie_pain =
 {
 	local float r;
 	self.health = 60;
-	if ((take < MOVETYPE_FLYMISSILE))
-	{
-		return;
-	}
 	if ((self.inpain == FL_SWIM))
 	{
-		return;
-	}
-	if ((take >= 25))
-	{
-		self.inpain = FL_SWIM;
-		zombie_paine1 ();
 		return;
 	}
 	if (self.inpain)

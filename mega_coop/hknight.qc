@@ -747,7 +747,7 @@ void () hk_idle_sound =
 		sound (self, CHAN_VOICE, "hknight/idle.wav", true, ATTN_NORM);
 	}
 };
-void (entity attacker, float damage) hknight_pain =
+void () hknight_pain =
 {
 	if ((self.pain_finished > time))
 	{

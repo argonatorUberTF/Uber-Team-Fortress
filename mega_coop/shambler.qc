@@ -614,14 +614,10 @@ void () sham_pain5 = [ 81, sham_pain6 ]
 {};
 void () sham_pain6 = [ 82, sham_run1 ]
 {};
-void (entity attacker, float damage) sham_pain =
+void () sham_pain =
 {
 	sound (self, CHAN_VOICE, "shambler/shurt2.wav", true, ATTN_NORM);
 	if ((self.health <= false))
-	{
-		return;
-	}
-	if (((random () * 400) > damage))
 	{
 		return;
 	}
