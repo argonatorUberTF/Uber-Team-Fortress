@@ -324,7 +324,7 @@ void () axe_runatkd6 = [ 142, axe_run1 ]
 {
 	ai_charge_side ();
 };
-void (entity attacker, float damage) axe_atk =
+void () axe_atk =
 {
 	local float r;
 	if ((self.pain_finished > time))
@@ -377,7 +377,7 @@ void () axe_pain5 = [ 33, axe_pain6 ]
 {};
 void () axe_pain6 = [ 34, axe_run1 ]
 {};
-void (entity attacker, float damage) axe_pain =
+void () axe_pain =
 {
 	if ((self.pain_finished > time))
 	{

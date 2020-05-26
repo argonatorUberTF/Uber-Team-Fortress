@@ -2531,7 +2531,7 @@ void () Toss_Flap =
 	new.frame = FALSE;
 	new.flags = FALSE;
 };
-void (entity attacker, float damage) ubs_Pain =
+void () ubs_Pain =
 {
 	if ((self.health <= 500))
 	{
@@ -2549,10 +2549,6 @@ void (entity attacker, float damage) ubs_Pain =
 	}
 	self.pain_finished = (time + FL_SWIM);
 	sound (self, FL_SWIM, "ubs/wpain.wav", TRUE, FALSE);
-	if (((random () * 70) > damage))
-	{
-		return;
-	}
 	if ((self.health <= 500))
 	{
 		ubs_painc1 ();

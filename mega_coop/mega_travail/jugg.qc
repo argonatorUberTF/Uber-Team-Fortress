@@ -27,7 +27,7 @@ void () juggernaut_pain6 = [ 95, juggernaut_run1 ]
 {
 	ai_painforward (TRUE);
 };
-void (entity attacker, float take) juggernaut_pain =
+void () juggernaut_pain =
 {
 	local float r;
 	r = random ();
@@ -56,10 +56,6 @@ void (entity attacker, float take) juggernaut_pain =
 	if ((random () < 0.2))
 	{
 		sound (self, MOVETYPE_STEP, "monsters/juggers/jbent.wav", TRUE, TRUE);
-	}
-	if ((take < ((self.health + take) * 0.2)))
-	{
-		return;
 	}
 	self.pain_finished = (time + MOVETYPE_WALK);
 	juggernaut_pain1 ();
