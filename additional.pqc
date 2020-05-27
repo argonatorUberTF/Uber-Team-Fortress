@@ -4259,7 +4259,7 @@ void(entity Viewer, float pc, float rpc, float xavior_Var) TeamFortress_PrintCla
 	}
 	else
 	{
-		sprint(Viewer, 2, "\n");
+		sprint(Viewer, 2, " \n");
 	}
 };
 void(entity Goal) UpdateAbbreviations = 
@@ -9031,7 +9031,7 @@ void(float Suicided) TeamFortress_SetupRespawn =
 	}
 	else
 	{
-		restime = 0;
+		restime = respawn_delay_time + 1;
 	}
 	if (Suicided)
 	{

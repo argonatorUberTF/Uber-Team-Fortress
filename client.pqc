@@ -1174,10 +1174,6 @@ void() respawn =
 	{
 		CopyToBodyQue(self);
 		setspawnparms(self);
-		self.pk_turretammo = 6;
-		self.pk_beartrapammo = 12;
-		self.pk_gravitywellammo = 2;
-		self.pk_canpabammo = 2;
 		PutClientInServer();
 	}
 	else
@@ -2060,69 +2056,68 @@ void () PlayerDeathThink =
 	local float foundme;
 	if (survival_mode)
 	{
-			if (self.monster_type != 0)
+		if (self.monster_type != 0)
+		{
+			if ((self.respawn_time <= time))
 			{
-				if ((self.respawn_time <= time))
-				{
-					self.button0 = 0.000000;
-					self.button1 = 0.000000;
-					self.button2 = 0.000000;
-					respawn ();
-				}
+				self.button0 = 0.000000;
+				self.button1 = 0.000000;
+				self.button2 = 0.000000;
+//				bprint(2,"PlayerDeathThink: respawning in survival mode.\n");
+				respawn ();
 			}
-			if (self.button0)
+		}
+		if (self.button0)
+		{
+			if (self.atomic_intensity < time)
 			{
-				if (self.atomic_intensity < time)
+				self.atomic_intensity = time + 0.5;
+				te = find(world, classname, "resdummy");
+				while (te)
 				{
-					self.atomic_intensity = time + 0.5;
-			
-					te = find(world, classname, "resdummy");
-					while (te)
+					if (te.owner == self)
 					{
-						if (te.owner == self)
+						WriteByte(4, 23);
+						WriteByte(4, 11);
+						WriteCoord(4, te.origin_x);
+						WriteCoord(4, te.origin_y);
+						WriteCoord(4, te.origin_z);
+						if ((self.last_saveme_sound < time))
 						{
-							WriteByte(4, 23);
-							WriteByte(4, 11);
-							WriteCoord(4, te.origin_x);
-							WriteCoord(4, te.origin_y);
-							WriteCoord(4, te.origin_z);
-							if ((self.last_saveme_sound < time))
-							{
-								sound (te, TF_FLARE_OFF, "speech/saveme1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-								self.last_saveme_sound = (time + 4);
-							}
-							foundme = TRUE;
+							sound (te, TF_FLARE_OFF, "speech/saveme1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+							self.last_saveme_sound = (time + 4);
 						}
-						te = find(te, classname, "resdummy");
+						foundme = TRUE;
 					}
-
-					if (!foundme && (self.view_ofs != '0 0 -8') )
-					{
-						bprint(2,"PlayerDeathThink: PDUMMY Not Found - Take a screenshot of your console and send it to DEV\n");
-						self.ammo_cells = 666;				// so we spawn at the beginning
-						MTF_Resurrect_Player ( self );
-					}
-					else
-					if (!foundme)
-					{
-						if (self.velocity_x < 1 && self.velocity_x > -1 &&
-						self.velocity_y < 1 && self.velocity_y > -1 &&
-						self.velocity_z < 1 && self.velocity_z > -1)
-						{
+				te = find(te, classname, "resdummy");
+				}
+			if (!foundme && (self.view_ofs != '0 0 -8') )
+			{
+//				bprint(2,"PlayerDeathThink: PDUMMY Not Found - Take a screenshot of your console and send it to DEV\n");
+				self.ammo_cells = 666;				// so we spawn at the beginning
+				MTF_Resurrect_Player ( self );
+			}
+			else
+			if (!foundme)
+			{
+				if (self.velocity_x < 1 && self.velocity_x > -1 && self.velocity_y < 1 && self.velocity_y > -1 && self.velocity_z < 1 && self.velocity_z > -1)
+				{
 							bprint(2,"Somebody is impatient.. You can beg for the answer...\n");
 							Survival_MakeDummy( 0 );
 							self.ammo_cells = 666;				// so we spawn at the beginning
 //							MTF_Resurrect_Player ( self );
 // make em wait for a res cube or cmd beg for it. -arg 
-						}
-					}
-					else
-					{
-						sprint( self, 2, "Call a player to resurrect you using \"saveme\". DO NOT RECONNECT!\n" );
-					return;
-					}
-					}
+				}
+			}
+			else
+			{
+				sprint( self, 2, "Call a player to resurrect you using \"saveme\". DO NOT RECONNECT!\n" );
+				return;
+			}
+		}
 	}
+	}
+		// This is for logic outside of survival_mode -arg
 	if ((self.flags & 512.000000))
 	{
 		_l_5972 = vlen (self.velocity);
@@ -2140,10 +2135,12 @@ void () PlayerDeathThink =
 	{
 		if (((self.button2 || self.button1) || self.button0))
 		{
+//			bprint(2,"PlayerDeathThink: returning on deadflag = 2.\n");
 			return;
 		}
 		self.deadflag = 3.000000;
 		self.tfstate = (self.tfstate - (self.tfstate & 8192.000000));
+//		bprint(2,"PlayerDeathThink: returning on deadflag = 3.\n");
 		return;
 	}
 	if (((!self.button2 && !self.button1) && !self.button0))
@@ -2155,21 +2152,21 @@ void () PlayerDeathThink =
 				self.button0 = 0.000000;
 				self.button1 = 0.000000;
 				self.button2 = 0.000000;
+//				bprint(2,"PlayerDeathThink: respawning on tfstate & 8192 .\n");
 				respawn ();
 			}
 		}
 		return;
 	}
-	}
 	else
 	{
-	
 		self.tfstate = (self.tfstate | 8192.000000);
 		if ((self.respawn_time <= time))
 		{
 			self.button0 = 0.000000;
 			self.button1 = 0.000000;
 			self.button2 = 0.000000;
+//			bprint(2,"PlayerDeathThink: respawning on tfstate | 8192 .\n");
 			respawn ();
 		}
 		return;

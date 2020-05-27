@@ -953,7 +953,7 @@ void() PlayerDead =
 	else
 	{
 		self.think = PlayerDead;
-		self.nextthink = time + .4;
+		self.nextthink = time + 4;
 	}
 };
 vector(float dm) VelocityForDamage = 
