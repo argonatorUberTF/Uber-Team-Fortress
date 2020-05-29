@@ -2051,6 +2051,7 @@ void () pdummy_spawn_think =
 #endif
 void () PlayerDeathThink =
 {
+//	self.respawn_time = respawn_delay_time + time;
 	local float _l_5972;
 	local entity te;
 	local float foundme;

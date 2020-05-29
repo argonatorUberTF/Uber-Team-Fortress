@@ -9764,8 +9764,8 @@ if ((((damage < 60) & ((attacker.classname == "player") & (targ.classname == "pl
 	}
 	return;
 	}
-if (attacker.classname == "player" && (targ.classname == "player" || targ.classname == "building_sentrygun"))
-{
+	if (attacker.classname == "player" && (targ.classname == "player" || targ.classname == "building_sentrygun"))
+	{
 	if (targ.team_no < #BOT_TEAM && targ.team_no > TF_FLARE_LIT && targ.team_no == attacker.team_no && targ != attacker)
 	{
 		if (teamplay & 16)
@@ -9792,8 +9792,8 @@ if (attacker.classname == "player" && (targ.classname == "player" || targ.classn
 		targ.armorvalue = TF_FLARE_LIT;
 	}
 #ifdef mtf_coop_bloodmod
-			if (targ.is_monster == 1)
-				bloodyme(targ, damage);
+	if (targ.is_monster == 1)
+		bloodyme(targ, damage);
 #endif
 	if (targ.health <= 0)
 	{
