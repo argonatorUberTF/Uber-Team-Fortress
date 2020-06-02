@@ -23,6 +23,10 @@ Uber Team Fortress. A four player teams, capture the flag, coop against monsters
  Beartraps, gravity well, can of pork n beans, auto sentry guns added.
  Original credit for Painkeep from Team Evolve. Also available for Quake 3.
 
+Supported on Windows, Linux, and Mac iOS clients.  If your machine can run Quakeworld, Fuhquake, EZQuake, Fortress One,
+FTE Quake Client, or Dark Places. You can connect to an Uber TF server and download the upgraded client files.
+ 
+However, it is much faster to get the client files as one .zip file from here.
 
 # GOAL
  Make it tougher to last to capture the flag with faster action, heinous
@@ -94,11 +98,12 @@ Auto sentry guns are waterproof and cannot be toastered.
 The following monsters were removed  to free up precache for sounds and models:
 Ogre cook, Vermis(lame), eel, and gremlin which didn't work.
 
-The minipet is superflous since you can cmd summon and the code needs work. Removed.
+The minipet is superflous since you can "cmd summon" and the code needs work. Removed.
 			
 # BUGS:
-The obituary messages need an overhaul and sometimes cause the server to spew word salad.
-The problem starts when a large amount of frags against monsters beyond 16-24 and causes a message flood.
+If the map is designed properly with a lower amount of spawns, the limit of 512 entities should not be broken.
+However, it is not a fatal error, you can restart a map or the server to try again.
+A fix is in progress to address this and the limit on the number of sound effects precached.
 
 New bugs can be submitted to Github for tracking and resolution be unbiased.
 Volunteer devs of code/fixes/features gladly accepted.
@@ -106,8 +111,6 @@ Volunteer devs of code/fixes/features gladly accepted.
 # TODO:
 Clean up source code for easy compiliation in fteccgui and 64bit versions. - 99% -arg
 Down to 4 warnings on ftegccui compiler in Windows. It's the grappling hook, and it works. 
-
-Submit said source to github for Open Source under GNU/GPL. - here now -arg
 
 Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 If possible upgrade the lightning gun to the painkeep chain lightning gun.
@@ -121,14 +124,10 @@ Adjust starting armor and speeds to rebalance things.
 All players start with at least 3 of each type of the two kinds of grenades. So drops require two type 2 work from the spawn on any map regardless for faster combat action. Besides some maps didn't have grenade ammo or some of the backpacks did not give grenades.
 This makes it possible to plant a prox mine from the start as soldier for example.
 
-Possibly put in an anti-bunny hopping system to remove the game glitch of angled bouncing.
-It was never intended in the design and unbalances gameplay. A cheese.
-It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing a scout.
 The bear traps, spikes, caltrops, and auto sentry guns should slow down combat movement speed as it halts bunny hoppers.
-(Possibly add this as an anti-cheat system)
 
 Add another weapon to the Pyro for even more destructive backup. multi pyro rockets?
-Allow the lightning gun to be toggled with the single barrel shotgun.
+Allow the lightning gun to be toggled with the single barrel shotgun even though there is no shotgun ammo handy.
 
 Add Ratbert's nuke grenades to drop4 for demoman or pyro. ? Perhaps.
 Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players are affected more
