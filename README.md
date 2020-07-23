@@ -182,7 +182,7 @@ Another new combat rule. Doing a "cmd beg" in non-survival mode punishes you for
 
 In survival mode you are not punished for the use of "cmd beg". If there are multiple human teams involved, that is for the admin or mod to police abuse. It can be set to punish if you were in combat and teleporting to home for no good reason.
 
-##Releases:
+# Releases:
 
 https://github.com/argonatorUberTF/Uber-Team-Fortress/releases
 
