@@ -692,7 +692,7 @@ void ( entity t_rune ) Coop_SetRune =
 	if (r_type == 5)
 	{
 		t_rune.weapon = 670 + #RUNE_AMMO;
-		t_rune.frame = 4;
+		t_rune.frame = 1;
 		t_rune.effects = t_rune.effects & EF_RED;
 	}
 	else
@@ -722,12 +722,13 @@ void ( entity t_rune ) Coop_SetRune =
 		t_rune.frame = 3;
 		t_rune.effects = EF_BLUE;
 	}
-	else
-	{
-		bprint( 2, "Coop_SetRune: No rune type: " );
-		bprint( 2, ftos( r_type ) );
-		bprint( 2, "\n" );
-	}
+// why flood the server text with a non result message? -arg
+//	else
+//	{
+//		bprint( 2, "Coop_SetRune: No rune type: " );
+//		bprint( 2, ftos( r_type ) );
+//		bprint( 2, "\n" );
+//	}
 };
 void () Coop_ThrowRune =
 {
@@ -918,7 +919,8 @@ if (random() < exp_probability)
 			newmis.noise = "items/r_item2.wav";
 			newmis.healamount = 100;
 			newmis.healtype = 2;
-//FIXME: Actually make this model touch work when palyers pick it up.
+//FIXME: Actually make this model touch work when players pick it up. The above megahealth.
+//Fixed in additional.pqc at MonsterItemTouch -arg
 		}
 		else	{
 			newmis.weapon = 6;
