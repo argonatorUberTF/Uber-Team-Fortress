@@ -3892,6 +3892,7 @@ void() TeamFortress_ChangeClass =
 	local float oldgrentype2;
 	local float oldhealth, oldarmor, oldcells, oldrockets, oldshells, oldnails;
 	local vector oldpos;
+	local float oldinvincible_finished;
 	local entity merchanty;
 	if (self.#lms_lives < 0)
 	{
@@ -3969,6 +3970,7 @@ void() TeamFortress_ChangeClass =
 				{
 					sprint(self,2, "Merchant: There ya go, buddy! This is the way!\n");
 					oldpos = self.origin;
+					oldinvincible_finished = self.invincible_finished;
 					oldhealth = self.health;
 					oldarmor = self.armorvalue;
 					oldshells = self.ammo_shells;
@@ -3983,6 +3985,7 @@ void() TeamFortress_ChangeClass =
 					oldgrentype2 = self.no_grenades_2;
 					self.immune_to_check = time + 10;
 					PutClientInServer();
+					self.invincible_finished = oldinvincible_finished;
 					self.health = oldhealth;
 					self.armorvalue = oldarmor;
 					self.origin = oldpos;
@@ -21460,11 +21463,6 @@ void () MTF_Coop_SummonMinion =
 };
 float(float num_args, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) ClientCommand =
 {
-	if ((self.cooldown > time))
-	{
-		sprint (self, 2.000000, "You must wait 4 seconds before using this function again.\n");
-		return 1;
-	}
 #ifdef NEW_CLASS1
 	if (!strcasecmp("newclass",arg1))
 	{
@@ -22562,7 +22560,7 @@ void (float can_be_dead) MonsterItemTouch =
 		}
 		if (self.speed_time > 0)
 		{
-			sprint(other, 2, "You got SPEED armor.\n");
+			sprint(other, 2, "You got cracked out SPEED armor.\n");
 			stuffcmd(other, "cl_forwardspeed 999\n");
 			if (other.speed_time > time)
 				other.speed_time = other.speed_time + self.speed_time;
@@ -22608,10 +22606,10 @@ void (float can_be_dead) MonsterItemTouch =
 		{
 			if (!(other.tfstate & 16))
 			{
-				if (other.health >= 250)
-				{
-					return;
-				}
+//				if (other.health >= 250)  //why limit this? most players need the boost up past 250 -arg
+//				{
+//					return;
+//				}
 				if (!T_Heal(other, self.healamount, TF_FLARE_OFF))
 				{
 					return;
@@ -24309,7 +24307,7 @@ void() SightSound =
 									{
 										if (self.classname == "monster_vomit")
 										{
-											sound(self, 2, "vomitus/v_sight1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+											sound(self, 2, "blob/sight1.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 										}
 										else
 										{
