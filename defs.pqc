@@ -1416,5 +1416,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v5.29.20 United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v9.13.20 United\n");
 //END
