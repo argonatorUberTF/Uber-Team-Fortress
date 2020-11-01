@@ -185,8 +185,9 @@ In survival mode you are not punished for the use of "cmd beg". If there are mul
 # Releases:
 
 https://github.com/argonatorUberTF/Uber-Team-Fortress/releases
+Server and Client packs.
 
-Donations glady accepted by bitcoin to address: 3J2nKrotxfP7mqQgTBotn4rgAvRqVhD1hh
+FTE Version with source that fixes weird glitches in mvdsv .28bxe is here. The server can be ran on FTE32 or FTE64 server from https://fte.triptohell.info/ .
 
 email: forgetitanyway@gmail.com
 
