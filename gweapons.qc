@@ -6,6 +6,8 @@ void () ZG_ammobox_regen;
 float(entity tester_e) IsBuilding =
 {
 	if (
+		tester_e.classname == "turret" ||
+		tester_e.classname == "turret_base" ||
 		tester_e.classname == "building_sentrygun" ||
 		tester_e.classname == "building_sentrygun_base" ||
 		tester_e.classname == "building_tesla" ||
@@ -75,6 +77,10 @@ float (entity tester_e, entity test) zg_invalidtarget =
 {
 	if (test.classname == "detpack")
 		return FALSE;
+	if (test.classname == "turret")
+		return FALSE;
+	if (test.classname == "turret_base")
+		return FALSE;	
 	if (test.classname == "merchant")
 		return TRUE;
 	if (test.classname == "timer")
@@ -163,7 +169,7 @@ void () zg_think =
 
 	zg_movetowards (pickuper, pickupee, trace_endpos);
 
-	self.nextthink = time + 0.05;
+	self.nextthink = time + 0.01;
 };
 void (entity pickuper, float toss) zg_drop =
 {

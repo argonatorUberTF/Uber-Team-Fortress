@@ -2,6 +2,7 @@
 //
 // Mega Team Fortress, Coop vs monsters, added 4 player deathmatch, with or without bots, battle royale mode. 12-2019
 // Author: Avirox (a.k.a. XavioR) up to 1-2015 with many others.
+// Special thanks to Ratbert fo rguidance and some source from previous mods.
 // Original MegaTeam Fortress Programmers: Ambush, Plexi, mod3m, Plasticity 1997
 // Additional addons by Ratbert, Argonator, Agent, Pablo, Cloud, Doc 2010-2019, Often, Aberrant.
 // Credits also to Hipnotic, Mega Team Fortress PTY LTD, Gold, Sh1thead. 
@@ -13,8 +14,6 @@
 //
 // Original credit for Painkeep from Team Evolve. (also available for Quake 3). It's public domain now. 2015
 // cmd changeteam blue, red, green, and yellow always enabled. You can fight alongside the monsters or summon more.
-// precache models and sounds missing fixed.  it's amazing this thing even works as it was.
-// Still gets unto warnings on the console when there are more precached than it's limit on some maps but still a minimum has been increased.
 // Removed sounds for taunts, yells.
 // Added two whole pounds of semicolons at the end of functions to not spazz out modern compilers. -arg
 // It worked ok in 2008-2015 for that old compiler, but not by today's standards.
@@ -59,15 +58,11 @@
 //	Clean up source code for easy compiliation in fteccgui and possibly 64bit versions.
 // 	- Down to 4 warnings on ftegccui compiler in Windows.
 //  Obtain source of mvdsv that will compile with newer versions with same xav tweaks.
-//	Make the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
+//	Made the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
 //	Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 //	If possible upgrade the lightning gun to the painkeep chain lightning gun.
-//  Not tested on FTE or Prozac server yet.
-//	Upgrade medic nail gun to lava nails ala rogue. - Set to 2.5 damage per nail now -arg
+//	Upgraded medic nail gun to lava nails ala rogue. - Set to 2.5 damage per nail now -arg
 //	Adjust starting armor and speeds to rebalance things.
-//	Put in an anti-bunny hopping system to remove the game glitch of angled bouncing.
-//	It is nowhere fair when a hwguy can move as fast as a scout or a soldier passing a scout.
-//	(Possibly add this as an anti-cheat system)
 //	Add another weapon to the Pyro for even destructive backup. multi pyro rockets?
 //  partial - sped up flame rockets and flamethrower. -arg 3/2020
 //	Add Ratbert's nuke grenades to drop4 for demoman or pyro.  ?
@@ -133,10 +128,6 @@
 #define LOAD_THINKWALK					1
 #define LOAD_THINKSTAND					2
 #define	CheckScoreCVAR
-//if (cvar("monster_noscoreboard") == 1)
-//{
-//return;
-//}
 #define LAZY_WAY			// client number hax
 #ifdef COOP_HAX
 #define HL_MAP		cvar("sv_map_halflife") == 1
@@ -149,8 +140,6 @@
 #define TELEPORTER_WAIT		2  //How long to wait after teleport (whole number)
 #define SCREWUP_ONE     1
 #define SCREWUP_TWO     2
-//#define FALSE 0 
-//#define TRUE  1
 #define FL_ONGROUND	    512 // standing on something
 #define SOLID_BBOX	    2
 #define CUSTOM_BUILDING 4
@@ -1251,6 +1240,7 @@ entity(entity scanner, float scanrange, float enemies, float friends) T_RadiusSc
 entity (float gno) Findgoal;
 void () monster_spawner_spawn; //fix for 2fortfood_coop.bsp -arg
 void () BTF_Precache;
+void () W_FireRocket;
 void () missing_precaches;  //put sounds and models missing here to load first absolutely -arg
 //						FLOAT FUNCTIONS and voids
 void () MTF_RemoveMonster;  //This was called in middle of mtf_coop.qc But should be defined first for summon_think to
@@ -1327,7 +1317,6 @@ float(float v) anglemod; // from fight.pqc
 float() GetGrenadePossibility;
 float() W_BestWeapon;
 float(float orighp) MTF_Monster_Health2;
-float(entity ent) InSolid;	// XavioR: moved to mtf_coop.qc
 float()	DogCheckAttack;
 float(string id_flame) RemoveFlameFromQueue;
 float() DemonCheckAttack;
@@ -2840,7 +2829,7 @@ void() TeamFortress_CheckTeamCheats =
 #ifndef mtf_coop_halloween
 				TeamFortress_SetSkin(self);
 //				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
-				sprint(self, 2, "You have been warned for changing your skin. Use CMD CUSTOMSKIN instead.\n");
+//				sprint(self, 2, "You have been warned for changing your skin. Use CMD CUSTOMSKIN instead.\n");
 				return;
 #endif
 			}
@@ -18946,6 +18935,7 @@ float() Sentry_Fire =
 		{
 			newmis = spawn();
 			newmis.owner = self;
+			newmis.team_no = self.team_no;		// Make sure the flames don't torch your own team members -arg
 			newmis.real_owner = self;
 			newmis.movetype = 9;
 			makevectors(self.angles);
@@ -19001,6 +18991,7 @@ float() Sentry_Fire =
 			sound (self, CHAN_WEAPON, "shalrath/attack2.wav", true, ATTN_NORM);
 			newmis = spawn ();
 			newmis.owner = self;
+			newmis.team_no = self.team_no;
 			newmis.real_owner = self;
 			newmis.solid = SOLID_BBOX;
 			newmis.movetype = MOVETYPE_FLYMISSILE;
@@ -19024,6 +19015,8 @@ float() Sentry_Fire =
 			sound (self, 1.000000, "weapons/rocklr1a.wav", 1.000000, 1.000000);
 			newmis = spawn ();
 			newmis.owner = self;
+			newmis.classname = "sentry_rockets";
+			newmis.team_no = self.team_no;
 			newmis.movetype = 9.000000;
 			newmis.solid = 2.000000;
 			newmis.velocity = (normalize (dir) * 800.000000);
@@ -22773,7 +22766,11 @@ void (float can_be_dead) MonsterItemTouch =
 		other.mtf_items |= #MTFITEM_LIGHTGUN;
 	}
 	else
-	if (self.weapon == 20)
+	if (self.weapon == 20 && survival_mode == 0)
+	{
+		bprint(2, "There's no point in using a ressurection cube when not in survival mode. Try CMD BEG instead to get unstuck.\n");
+	}
+	if (self.weapon == 20 && (survival_mode > 0))	//Added AND survival mode. There's no reason to use a cube in non survival mode. -arg
 	{		// resurrection cube
 		bprint(2, other.netname);
 		bprint(2, " has used the resurrection cube for their team! Players on that team can now resurrect or reconnect.\n");
@@ -23220,7 +23217,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	sprint(self, 2, "Killing Pete the undead head...searching...\n");
 	local entity head;
 	head = findradius (self.origin, 120);
-	if ((head.classname != "player") || (head.classname != "merchant" ))
+	if ((head.classname != "player") || (head.classname != "merchant" ) && (head.classname != "world" ) )
 	{
 		dremove(head);
 		sprint(self, 2, "poof!..done.\n");
@@ -24101,7 +24098,7 @@ void() item_megahealth_rot =
 void() walkmonster_start_go = 
 {
 	self.origin_z = self.origin_z + TF_FLARE_OFF;
-	droptofloor();
+	//droptofloor(); I think this is causing the monsters to drop through floor and continue once walking. -arg
 	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
 	{
 		dprint("walkmonster in wall at: ");
@@ -24462,51 +24459,6 @@ void () respawn_monster =
 		Killed (self, world);
 	}
 };
-void () playerfob_think =
-{
-	local float fls;
-	local vector endp;
-	if (self.owner.playerclass == 8 && self.owner.is_undercover)
-	{
-	self.frame = self.owner.undercover_team - 1; //the selected color undercover -arg
-	self.nextthink = time + .1;
-	}
-	else
-	{
-	self.frame = self.owner.team_no - 1;
-	}
-	if (self.owner.owner != self.real_owner)  //from summon_think for goalie. -arg
-	{
-		self.owner.owner = self.real_owner;
-	}
-	fls = self.owner.maxs_z * 1;
-	endp = self.owner.origin;
-	endp_z += fls;
-//move with player. -arg
-	if (self.origin != self.playerfob_target.origin || self.angles != self.owner.angles)
-	{
-		setorigin (self, (self.playerfob_target.origin));
-	}
-	if (self.angles != self.owner.angles) //follow in 3D space like the beartrap :} -arg
-	{
-			self.angles = self.owner.angles;
-	}
-		self.orig_origin = endp;
-	if (self.owner.is_feigning || self.owner.is_fob_disabled)
-	{
-	setorigin (self, (endp + ' 900 900 950'));
-	self.nextthink = time + 1;
-	return;
-	}
-	if (self.owner.invisible_finished > time)
-	{
-		setorigin(self, (endp + ' 900 900 950'));
-		self.nextthink = time + 1;
-		return;
-	}
-	setorigin(self, endp);
-	self.nextthink = time + .1;
-};
 void () attachplayerfob =
 {
 local entity playerfob;
@@ -24528,6 +24480,66 @@ local entity playerfob;
 	setmodel (playerfob, "progs/newdot.spr");
 	playerfob.frame = self.team_no - 1; //color fob dot same as player's team color. except green team is a purple dot. go figure. maybe a new sprite someday. -arg
 //end playerfob added -arg
+};
+void () playerfob_think =
+{
+    local float fls;
+    local vector endp;
+    if (self.owner.is_undercover)
+    {
+    self.frame = self.owner.undercover_team - 1; //the selected color undercover -arg
+    self.nextthink = time + .1;
+    }
+else
+    {
+    if (self.owner.team_no == 1)
+        {
+            self.frame = 0;
+        }
+        if (self.owner.team_no == 2)
+        {
+            self.frame = 1;
+        }
+        if (self.owner.team_no == 3)
+        {
+            self.frame = 2;
+        }
+        if (self.owner.team_no == 4)
+        {
+            self.frame = 3;
+        }
+    }
+    if (self.owner.owner != self.real_owner)  //from summon_think for goalie. -arg
+    {
+        self.owner.owner = self.real_owner;
+    }
+    fls = self.owner.maxs_z - 57;
+    endp = self.owner.origin;
+    endp_z += fls;
+//move with player. -arg
+    if (self.origin != self.playerfob_target.origin || self.angles != self.owner.angles)
+    {
+        setorigin (self, (self.playerfob_target.origin));
+    }
+    if (self.angles != self.owner.angles) //follow in 3D space like the beartrap :} -arg
+    {
+            self.angles = self.owner.angles;
+    }
+        self.orig_origin = endp;
+    if (self.owner.is_feigning || self.owner.is_fob_disabled)
+    {
+    setorigin (self, (endp + ' 900 900 950'));
+    self.nextthink = time + 1;
+    return;
+    }
+    if (self.owner.invisible_finished > time)
+    {
+        setorigin(self, (endp + ' 900 900 950'));
+        self.nextthink = time + 1;
+        return;
+    }
+    setorigin(self, endp);
+    self.nextthink = time + .01;
 };
 void () removeplayerfob =
 {
@@ -24554,5 +24566,35 @@ void() NailGrenadeTouch =
 	{
 		self.avelocity = '0 0 0';
 	}
+};
+void () W_FireRocket =
+{
+	self.ammo_rockets = (self.ammo_rockets - 1);
+	self.currentammo = (self.ammo_rockets);
+	sound (self, 1, "weapons/sgun1.wav", 1, 1);
+	KickPlayer (-2.000000, self);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.team_no = self.team_no;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	makevectors (self.v_angle);
+	newmis.velocity = v_forward;
+	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.touch = T_MissileTouch;
+	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
+	if (self.mtf_items & #BOUNCY_ROCKETS)
+	newmis.attack_finished = 5;
+	newmis.nextthink = (time + 5);
+	newmis.think = SUB_Remove;
+	newmis.weapon = 6;
+#ifdef mtf_coop_tgiving
+	setmodel (newmis, "progs/duck1.mdl");
+#else
+	setmodel (newmis, "progs/missile.mdl");
+#endif
+	setsize (newmis, '0 0 0', '0 0 0');
+	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
 //END

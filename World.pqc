@@ -375,7 +375,8 @@ void () worldspawn =
 		if (lms_entity == world)
 			survival_mode = 2;
 	if (infokey(world,"survivalnext") == "1")
-		if (lms_entity == world){
+		if (lms_entity == world)
+		{
 			survival_mode = 2;
 			localcmd("localinfo survivalnext \"\"\n");
 		}

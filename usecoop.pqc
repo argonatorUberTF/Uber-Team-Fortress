@@ -8,4 +8,5 @@
 //#define mtf_coop_halloween2		// make sure server has progs/pkin.mdl
 #define mtf_coop_bonus
 #endif
+//#define NEW_CLASS1		// enables new class: Spec Op
 //END

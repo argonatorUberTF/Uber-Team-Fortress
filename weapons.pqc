@@ -2785,36 +2785,6 @@ void () MakeHolo =
 		sprint (self, 2, "Holographic replica active!\n");
 	}
 };
-void () W_FireRocket =
-{
-	self.ammo_rockets = (self.ammo_rockets - 1);
-	self.currentammo = (self.ammo_rockets);
-	sound (self, 1, "weapons/sgun1.wav", 1, 1);
-	KickPlayer (-2.000000, self);
-	newmis = spawn ();
-	newmis.owner = self;
-	newmis.team_no = self.team_no;
-	newmis.movetype = 9;
-	newmis.solid = 2;
-	makevectors (self.v_angle);
-	newmis.velocity = v_forward;
-	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
-	newmis.angles = vectoangles (newmis.velocity);
-	newmis.touch = T_MissileTouch;
-	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-	if (self.mtf_items & #BOUNCY_ROCKETS)
-	newmis.attack_finished = 5;
-	newmis.nextthink = (time + 5);
-	newmis.think = SUB_Remove;
-	newmis.weapon = 6;
-#ifdef mtf_coop_tgiving
-	setmodel (newmis, "progs/duck1.mdl");
-#else
-	setmodel (newmis, "progs/missile.mdl");
-#endif
-	setsize (newmis, '0 0 0', '0 0 0');
-	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
-};
 void () BalloonMIRVtouch =
 {
 	if ((pointcontents (self.origin) == -6.000000))
@@ -3998,7 +3968,7 @@ void () W_PrintWeaponMessage =
 	{
 		if ((self.current_weapon == 1))
 		{
-			sprint (self, 1, "Grappling hook selected.\n");
+			sprint (self, 1, "Grappling hook/harpoon selected.\n");
 		}
 		else
 		{
@@ -6496,6 +6466,7 @@ void () PullCord =
 	self.chute_active = 1;
 	sound (self, 2, "utils/pullcord.wav", 1, 1);
 	newmis = spawn ();
+	newmis.classname = "chute"; 	//Added chute to classname for teleporters bring through.
 	newmis.movetype = 0.000000;
 	newmis.owner = self;
 	newmis.solid = 0.000000;
@@ -6545,6 +6516,7 @@ void () TeamFortress_Discard =
 		return;
 	}
 	newmis = spawn ();
+	newmis.classname = "discard_ammo";
 	if ((self.playerclass == 1.000000))
 	{
 		newmis.ammo_rockets = self.ammo_rockets;
@@ -7366,6 +7338,22 @@ void () DroneJet =
 	if ((self.playerclass > 10))
 	{
 		self.think = DroneFall;
+	}
+//Added search and fire on bosses with drone. An oversight fixed 10/2020. -arg
+		te = find (world, classname, "monster_boss");
+	while (te)
+	{
+		if (((te.team_no != TF_FLARE_LIT) && (te.team_no != self.team_no)))
+		{
+			if (te.health)
+			{
+				if (visible (te))
+				{
+					DroneLaunchLaser (self.origin, ((te.origin + '0 0 24') - self.origin));
+				}
+			}
+		}
+		te = find (te, classname, "monster_boss");
 	}
 };
 vector (vector ang) SUB_NormalizeAngles =

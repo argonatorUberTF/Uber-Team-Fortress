@@ -99,12 +99,12 @@ void		end_sys_globals;		// flag for structure dumping
 .float		effects;
 .vector		mins, maxs;		// bounding box extents reletive to origin
 .vector		size;			// maxs - mins
-.void()		touch;
-.void()		use;
-.void()		think;
-.void()		blocked;		// for doors or plats, called when can't push other
-.float		nextthink;
-.entity		groundentity;
+.void()	touch;
+.void()	use;
+.void() think;
+.void()	blocked;		// for doors or plats, called when can't push other
+.float nextthink;
+.entity 	groundentity;
 // stats
 .float		health;
 .float		frags;
@@ -952,7 +952,7 @@ float () Hipnotic_SaveModels2;
 //#define NO_POWERSTEALER
 #define	MONSTER_SPEED_MULT	2	// when monster has MITEM_SPEED, multiply walk/run speed by this
 #define MONSTER_TRANQUILIZED	32768
-.void()	th_fireball;	// stolen from prz-coop
+.void() th_fireball;	// stolen from prz-coop
 #define AS_FIREBALL			9
 // Gizmo
 void (entity pickuper, float toss) zg_togglepickup;
@@ -1416,5 +1416,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v9.13.20 United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v10.31.20 United\n");
 //END

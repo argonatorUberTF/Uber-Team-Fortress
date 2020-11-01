@@ -1,0 +1,27 @@
+Achievement Completionist. Comeplete all maps in episodes 1-4 of Original Quake.
+
+#CAPTURE_BASKET of monster loot increases the Loot Bagger Achievement.
+ACHIEVEMENT_MRGRINCH Geting more monster loot drop items.
+ACHIEVEMENT_HEAVYMETAL For killing Juggernauts.
+ACHIEVEMENT_SHAMBLER For killing Shamblers.
+ACHIEVEMENT_BLADERUNNER for killing monsters with the knive or weapon 1.
+ACHIEVEMENT_ATOMICPUNK  For kills with detpack as demoman or engineer drone explosions.
+ACHIEVEMENT_BAT For killing with the Scout bat. "Boink!"
+ACHIEVEMENT_RECORD SETTER For being the new top fragger on a map.
+Achievement Speed Runner for Congratulations! New best time record set for you.
+"Assault Junkie" - Kills with Big ass cannon as hwguy
+"Flawless Junkie" - Incremented a level for every time you complete a map flawlessly. Nobody dies from monster attacks. 
+ACHIEVEMENT_HEADSHOT  Given after a certain number of headshots as sniper. "boom headshot"
+"Mr. Medkit" For healing a certain number of players as medic.
+"Mr. Fixit" For repairing your stuff and others as Engineer.
+"Helping Hand" For ressurecting a certain number of fallen soldiers in survival mode.
+"Last Man Standing" For completing a Last Man Standing mission map/run.
+"Combo Meal" For killing multiple targets with one strike.
+"Santa's Little Helper" - For killing shamblers with Christmas mode on.
+"Court Bard" For juggling monsters into the air, then killing them.
+"Master of Quake" For reaching experience level 20.
+"Gamblin' Man" For winning over 1000 gambling with the merchant.
+"Treasure Hunter (wolf3d)"  -For getting the artifact in Wolfenstein 3D maps.
+"Speed Runner" - Fastest completion time.
+Record Setter"  Largest frag FER record. For killing the most players/monsters within a second or strike.
+

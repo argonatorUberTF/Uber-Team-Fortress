@@ -262,7 +262,7 @@ float() FindTarget =
 		if (self.#is_minion == 1)
 		{
 			guns = world;
-			guns = findradius(self.origin, 850);
+			guns = findradius(self.origin, 1500);
 			while (guns)
 			{
 				if (guns.monster_string == "on" && guns.#is_minion != #TRUE)
@@ -730,6 +730,7 @@ void() UpdateCharmerGoal =
 	{
 		targ = self.trigger_field;
 		setorigin(targ,self.charmer.origin + (d*300));
+// is this where the monsters drop ? -arg
 	}
 };
 void() HuntCharmer =

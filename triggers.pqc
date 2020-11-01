@@ -375,10 +375,6 @@ void(vector org) spawn_tfog =
 };
 void() tdeath_touch = 
 {
-	if (other == self.owner)
-	{
-		return;
-	}
 	if (other.classname == "player")
 	{
 		if (other.invincible_finished > time)
@@ -391,10 +387,10 @@ void() tdeath_touch =
 			return;
 		}
 	}
-	if (other.health)
-	{
-		T_Damage(other, self, self, 5000);
-	}
+//	if (other.health)
+//	{
+//		T_Damage(other, self, self, 5000);
+//	}
 };
 void(vector org, entity death_owner) spawn_tdeath = 
 {
@@ -417,7 +413,6 @@ void() teleport_touch =
 	local entity t;
 	local entity te;
 	local vector org;
-	
 #ifdef HALFLIFE
 	if (!HL_MAP)
 #endif
@@ -428,13 +423,68 @@ void() teleport_touch =
 			return;
 		}
 	}
-	if (self.spawnflags & TF_FLARE_OFF)
+//from painkeep 666 qw source -arg
+	if ((other.classname != "missile") && (other.classname != "grenade") &&
+			(other.classname != "player") && (other.classname != "spike") &&
+			(other.classname != "gib") &&
+			(other.classname != "item_artifact_super_damage") &&
+			(other.classname != "item_artifact_envirosuit") &&
+			(other.classname != "item_artifact_invulnerability") &&
+			(other.classname != "item_artifact_invisibility") &&
+			(other.classname != "weapon_supershotgun") &&
+			(other.classname != "weapon_grenadelauncher") &&
+			(other.classname != "weapon_supernailgun") &&
+			(other.classname != "weapon_nailgun") &&
+			(other.classname != "weapon_lightning") &&
+			(other.classname != "weapon_rocketlauncher") &&
+			(other.classname != "item_armor1") &&
+			(other.classname != "item_armor2") &&
+			(other.classname != "item_armorInv") &&
+			(other.classname != "weapon_airfist") &&
+			(other.classname != "weapon_grapgun") &&
+			(other.classname != "weapon_chainlg") &&
+			(other.classname != "item_painkeep_gwell") &&
+			(other.classname != "item_painkeep_turret") &&
+			(other.classname != "item_painkeep_can") &&
+			(other.classname != "item_painkeep_beartrap") &&
+			(other.classname != "item_painkeep_expshells") &&
+			(other.classname != "") &&
+			(other.classname != "gravity") &&
+			(other.classname != "beartrap") &&
+			(other.classname != "turret") && (other.classname != "turret_base") &&
+			(other.classname != "spectator") &&					
+			(other.classname != "building_teleporter")	&&		//allow engineer stuff and see what happens. -arg
+			(other.classname != "building_dispenser") &&		// The engineer drone is called "bot" and is allowed below. -arg
+			(other.classname != "building_tesla") &&
+			(other.classname != "flare") &&			// allow sniper flare through -arg
+			(other.classname != "airmirv") &&
+			(other.classname != "bot") &&			//Sure, let the bots chase you. Or any ent that has that classname like engineer drones. -arg
+			(other.classname != "minion") &&		//Sure let minions through.
+			(other.classname != "building_sentrygun_base") &&
+			(other.classname != "needler") &&		//allow needler fire through
+			(other.classname != "detpack") &&
+			(other.classname != "building_sentrygun") &&
+			(other.classname != "building_fieldgen") &&
+			(other.classname != "monster") &&		//oh yes, the monsters will chase you. -arg
+			(other.classname != "fire") &&			//allow flamer fire through teleporter -arg
+			(other.classname != "pipebomb") &&		//allow pipe bombs through. -arg
+			(other.classname != "trip_bomb") &&		//allow laser trip bombs. Not sure if it works though -arg
+			(other.classname != "timer") &&			//allow timer for grenade launcher grens through, lavaball
+			(other.classname != "spike") &&			//allow tranq darts through -arg
+			(other.classname != "chute") &&			//Allow parachuting through teleporter, take it for a ride.
+			(other.classname != "discard_ammo") &&	//Allow discarded ammo through teleporters. -arg
+			(other.classname != "drone_laser") &&	//Allow drones through teleporter.
+			(other.classname != "ammobox") &&		//Allow ammo boxes flung around by explosions or grav well through teleporter. More mayhem! -arg
+			(other.classname != "drop4") &&			//Allow the thrown medpack by medic through for assistance. -arg
+			(other.classname != "sentry_nail") &&	//Allow sentry gun nails through teleporter which should be chasing a target -arg
+			(other.classname != "player_prop") &&	//Allow the camera through.
+			(other.classname != "sentry_rockets") &&//Allow sentry gun rockets through teleporter to chase off enemies escaping. lol -arg
+			(other.classname != "backpack")			//Allow backpacks through. You might need ammo on the other side where there isn't any/slim pickings. -arg
+			)
 	{
-		if (other.classname != "player")
-		{
-			return;
-		}
+		return;
 	}
+
 	if (!Activated(self, other))
 	{
 		if (self.else_goal != TF_FLARE_LIT)
@@ -447,10 +497,10 @@ void() teleport_touch =
 		}
 		return;
 	}
-	if (other.health <= TF_FLARE_LIT || other.solid != 3)
-	{
-		return;
-	}
+//	if (other.health <= TF_FLARE_LIT || other.solid != 3)	//sure, let dead things and non-solids to go through. see what happens -arg
+//	{
+//		return;
+//	}
 #ifdef HALFLIFE
 	if (self.spawnflags & 2)		// No players
 		if (other.classname == "player")
@@ -466,7 +516,6 @@ void() teleport_touch =
 	{
 			return;
 	}
-		
 	if (self.classname == "monster_nihilanth")
 		return;
 #endif
@@ -484,7 +533,7 @@ void() teleport_touch =
 	if (!(other.health))
 	{
 		other.origin = t.origin;
-		other.velocity = v_forward * other.velocity_x + v_forward * other.velocity_y;
+		other.velocity = v_forward * other.velocity_x + v_forward * other.velocity_y; 
 		return;
 	}
 #ifdef HALFLIFE
@@ -492,7 +541,30 @@ void() teleport_touch =
 		setorigin (other, t.origin + '0 0 15');
 	else
 #endif
+		if (other.classname == "building_tesla") // Add a bit of a push to carried objects by grav gun and things that go through teleporter with player(could be rockets?) -arg
+	{
+		other.velocity = v_forward * 600; 
+		setorigin (other, t.origin + '64 0 15');  //forward 64 and up 15 so as to not merge with player carrying it with grav gun.
+	}
+	if (other.classname == "building_sentrygun")
+	{
+		other.velocity = v_forward * 600;
+		setorigin (other, t.origin + '64 0 15');
+	}
+	if (other.classname == "building_dispenser")
+	{
+		other.velocity = v_forward * 600;
+		setorigin (other, t.origin + '64 0 15');
+	}
+	if (other.classname == "turret")
+	{
+			other.velocity = v_forward * 600;
+			setorigin (other, t.origin + '64 0 15');
+	}
+	else
+	{
 	setorigin(other, t.origin);
+	}
 	if (other.is_monster == 1)
 	{
 		other.npc_originalloc = t.origin;
