@@ -807,7 +807,7 @@ void () army_die =
 {
 	if (self.health > 0)
 {
-		bprint(2,"WTF army tried to die but still has health.?! Tell Xav.\n");
+//		bprint(2,"WTF army tried to die but still has health.?! Tell the dev.\n");
 		return;
 	}
 	if ((self.flags & FL_ONGROUND))
