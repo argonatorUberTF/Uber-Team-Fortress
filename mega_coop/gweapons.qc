@@ -1,6 +1,5 @@
 void (entity pickuper, float toss) zg_drop;
 float (entity pickupee) zg_getpickupdist;
-float (entity ent) InSolid;	// XavioR: moved to mtf_coop.qc
 #ifdef GW_ALLOW_PICKUP_ITEM
 void(entity pickupee) ZG_FireItem;
 float (entity test) ZG_ItemType;

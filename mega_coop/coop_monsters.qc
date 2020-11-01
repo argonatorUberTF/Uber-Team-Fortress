@@ -134,8 +134,8 @@ void() monster_spawner_spawn =
 	e.#npc_useTargetsOnRespawn = #TRUE;	// make sure we always fire our targets
 	e.lives = 0;
 	e.endtime = self.endtime;
-//	if ( self.team_no )
-//		e.team_no = self.team_no; // what ? -arg
+	if ( self.team_no )
+		e.team_no = self.team_no; // what ? -arg
 	// check for randomizing the spawn position
 	if ( self.spawnflags & 1 || self.spawnflags & 2 || InSolid( e ) )
 	{

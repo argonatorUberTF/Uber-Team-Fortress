@@ -733,6 +733,7 @@ void ( entity t_rune ) Coop_SetRune =
 void () Coop_ThrowRune =
 {
 	newmis = spawn ();
+	newmis.classname = "rune"; //give it a classname so we can detect it at teleporters to prevent crashes when one bounces through.
 	newmis.origin = (self.origin - '0 0 24');
 	newmis.velocity_z = 3000;
 	newmis.velocity_x = (-100 + (random () * 2000));
@@ -946,7 +947,7 @@ if (random() < exp_probability)
 	}	
 	if (spawn_cube)
 	{
-		bprint(2, "A RESURRECTION CUBE has been dropped‚\n");
+		bprint(2, "A RESURRECTION CUBE has been dropped‚ go grab it!\n");
 		setmodel(newmis, "progs/v_spike.mdl");
 		newmis.weapon = 20;
 		newmis.effects = #EF_GREEN;
