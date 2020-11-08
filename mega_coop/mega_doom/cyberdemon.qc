@@ -59,7 +59,7 @@ void () cdemon_walk1 = [ 0, cdemon_walk2 ]
 cdemon_check_frame();
 	if ((random () < 0.4))
 	{
-		sound (self, CHAN_VOICE, "doom_cdemon/idle.wav", TRUE, ATTN_IDLE);
+		//sound (self, CHAN_VOICE, "doom_cdemon/idle.wav", TRUE, ATTN_IDLE);
 	}
 	ai_walk (5 + TRUE); 
 };
@@ -160,7 +160,7 @@ void () cdemon_Slash =
 		return;
 	}
 	delta = (self.enemy.origin - self.origin);
-	sound (self, CHAN_WEAPON, "doom_cdemon/claw.wav", TRUE, ATTN_STATIC);
+//	sound (self, CHAN_WEAPON, "doom_cdemon/claw.wav", TRUE, ATTN_STATIC);
 	Idmg = 60 + ((random () * MOVETYPE_BOUNCE) + MOVETYPE_FLY + 10);
 	T_Damage (self.enemy, self, self, Idmg);
 	self.attack_finished = (time + 0.3);
