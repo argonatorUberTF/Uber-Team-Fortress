@@ -1461,7 +1461,7 @@ void() effect_strobe =
 	self.movetype = 6;
 	self.solid = 2;
 	setsize(self, '-2 -2 -2', '4 4 4');
-	setmodel(self, "progs/newdot.spr");
+	setmodel(self, "progs/thedot.spr");
 	self.frame = 0;
 	self.effects = TF_FLARE_LIT;
 	self.nextthink = time + 2;
@@ -1475,7 +1475,7 @@ void() make_flashes1 =
 };
 void() make_flashes = 
 {
-	setmodel(self, "progs/newdot.spr");
+	setmodel(self, "progs/thedot.spr");
 	self.frame = 0;
 	self.effects = TF_FLARE_LIT;
 	self.nextthink = time + 0.9;
@@ -1483,7 +1483,7 @@ void() make_flashes =
 };
 void() make_flashes2 = 
 {
-	setmodel(self, "progs/newdot.spr");
+	setmodel(self, "progs/thedot.spr");
 	self.frame = 2;
 	self.effects = 8;
 	self.nextthink = time + 0.1;

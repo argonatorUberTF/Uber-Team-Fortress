@@ -15,22 +15,20 @@ compiling combat.pqc
 compiling items.pqc
 compiling gravity.qc
 compiling weapons.pqc
-in function Build_Chain (line 7894),
-weapons.pqc:7895: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
+weapons.pqc:8528: warning: file contains null bytes 224649/224650
+in function Build_Chain (line 7886),
+weapons.pqc:7887: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
 weapons.pqc:42:    const entity(float head) MakeLink is defined here
-weapons.pqc:7900: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
+weapons.pqc:7892: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
 weapons.pqc:42:    const entity(float head) MakeLink is defined here
-weapons.pqc:7901: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
+weapons.pqc:7893: warning Q105: too few parameters on call to MakeLink, head will be UNDEFINED
 weapons.pqc:42:    const entity(float head) MakeLink is defined here
 compiling mega_coop/mega_hip/HIPMTF.qc
 compiling world.pqc
 compiling status.pqc
 compiling client.pqc
-in function fertimer (line 5082),
-client.pqc:5088: warning F307: type mismatch: void(entity te) ferdisplay to void() newmis.think
-additional.pqc:1476:    const void(entity te) ferdisplay is defined here
-in function teamchangetimer (line 5127),
-client.pqc:5133: warning F307: type mismatch: void(entity targ) teamchange to void() newmis.think
+in function teamchangetimer (line 5122),
+client.pqc:5128: warning F307: type mismatch: void(entity targ) teamchange to void() newmis.think
 defs.pqc:650:    const void(entity targ) teamchange is defined here
 compiling player.pqc
 compiling doors.pqc
@@ -83,9 +81,6 @@ compiling mega_coop/ogre.qc
 compiling mega_coop/demon.qc
 compiling mega_coop/shambler.qc
 compiling mega_coop/knight.qc
-in function monster_knight1 (line 401),
-mega_coop/knight.qc:411: warning F307: type mismatch: void(entity attacker, float damage) knight_pain to void() self.th_pain
-mega_coop/mega_nehahra/neh_defsfuncs.qc:1752:    const void(entity attacker, float damage) knight_pain is defined here
 compiling mega_coop/soldier.qc
 compiling mega_coop/wizard.qc
 compiling mega_coop/dog.qc
@@ -212,22 +207,21 @@ compiling rpg.pqc
 compiling fireworks.qc
 compiling spectator.pqc
 Recognised progs as QuakeWorld
-0 shared locals, 6545 private, 6545 total
+0 shared locals, 6543 private, 6543 total
 FTE's QCLib will be required
 at global scope,
-additional.pqc:19677: warning F210: Sound "misc/drip/drip_1.wav" was used but not directly precached
-additional.pqc:24215: warning F210: Sound "001.wav" was used but not directly precached
-additional.pqc:24218: warning F210: Sound "071.wav" was used but not directly precached
-additional.pqc:24221: warning F210: Sound "015.wav" was used but not directly precached
-additional.pqc:24224: warning F210: Sound "002.wav" was used but not directly precached
-additional.pqc:24227: warning F210: Sound "017.wav" was used but not directly precached
-additional.pqc:24230: warning F210: Sound "112.wav" was used but not directly precached
-additional.pqc:24233: warning F210: Sound "096.wav" was used but not directly precached
-additional.pqc:24236: warning F210: Sound "102.wav" was used but not directly precached
-additional.pqc:24239: warning F210: Sound "065.wav" was used but not directly precached
-additional.pqc:24242: warning F210: Sound "054.wav" was used but not directly precached
-additional.pqc:24245: warning F210: Sound "040.wav" was used but not directly precached
-additional.pqc:24312: warning F210: Sound "vomitus/v_sight1.wav" was used but not directly precached
+additional.pqc:19673: warning F210: Sound "misc/drip/drip_1.wav" was used but not directly precached
+additional.pqc:24228: warning F210: Sound "001.wav" was used but not directly precached
+additional.pqc:24231: warning F210: Sound "071.wav" was used but not directly precached
+additional.pqc:24234: warning F210: Sound "015.wav" was used but not directly precached
+additional.pqc:24237: warning F210: Sound "002.wav" was used but not directly precached
+additional.pqc:24240: warning F210: Sound "017.wav" was used but not directly precached
+additional.pqc:24243: warning F210: Sound "112.wav" was used but not directly precached
+additional.pqc:24246: warning F210: Sound "096.wav" was used but not directly precached
+additional.pqc:24249: warning F210: Sound "102.wav" was used but not directly precached
+additional.pqc:24252: warning F210: Sound "065.wav" was used but not directly precached
+additional.pqc:24255: warning F210: Sound "054.wav" was used but not directly precached
+additional.pqc:24258: warning F210: Sound "040.wav" was used but not directly precached
 menu.pqc:1094: warning F210: Sound "speech/yell/coverme.wav" was used but not directly precached
 mega_coop/mega_hip/HIPMTF.qc:51: warning F210: Sound "hipweap/laserric.wav" was used but not directly precached
 mega_coop/mega_hip/HIPMTF.qc:72: warning F210: Sound "hipweap/laserg.wav" was used but not directly precached
@@ -235,10 +229,12 @@ mega_coop/mega_hip/HIPMTF.qc:321: warning F210: Sound "hipweap/mjolslap.wav" was
 mega_coop/mega_hip/HIPMTF.qc:380: warning F210: Sound "hipweap/mjoltink.wav" was used but not directly precached
 mega_coop/mega_hip/HIPMTF.qc:465: warning F210: Sound "hipweap/proxwarn.wav" was used but not directly precached
 mega_coop/mega_hip/HIPMTF.qc:479: warning F210: Sound "hipweap/proxbomb.wav" was used but not directly precached
-client.pqc:3630: warning F210: Sound "misc/godlike.wav" was used but not directly precached
-client.pqc:3636: warning F210: Sound "misc/holyshit.wav" was used but not directly precached
+client.pqc:3619: warning F210: Sound "misc/rampage.wav" was used but not directly precached
+client.pqc:3625: warning F210: Sound "misc/godlike.wav" was used but not directly precached
+client.pqc:3631: warning F210: Sound "misc/holyshit.wav" was used but not directly precached
+client.pqc:3691: warning F210: Sound "misc/juggled2.wav" was used but not directly precached
 player.pqc:1084: warning F210: Sound "player/gib2.wav.wav" was used but not directly precached
-triggers.pqc:506: warning F210: Sound "weapons/bounce2.wav" was used but not directly precached
+triggers.pqc:578: warning F210: Sound "weapons/bounce2.wav" was used but not directly precached
 fight.pqc:128: warning F210: Sound "cook/dpong.wav" was used but not directly precached
 fight.pqc:134: warning F210: Sound "cook/ping1.wav" was used but not directly precached
 fight.pqc:140: warning F210: Sound "cook/ping2.wav" was used but not directly precached
@@ -254,7 +250,6 @@ aagun.pqc:55: warning F210: Sound "weapons/ballista.wav" was used but not direct
 aagun.pqc:67: warning F210: Sound "weapons/ballwind.wav" was used but not directly precached
 helo.pqc:1209: warning F210: Sound "weapons/stinger.wav" was used but not directly precached
 helo.pqc:1279: warning F210: Sound "weapons/beedeep.wav" was used but not directly precached
-mega_coop/mega_travail/ubs.qc:433: warning F210: Sound "ubs/wattack.wav" was used but not directly precached
 mega_coop/mega_hip/hipdecoy.qc:31: warning F210: Sound "misc/foot1.wav" was used but not directly precached
 mega_coop/mega_hip/hipdecoy.qc:34: warning F210: Sound "misc/foot2.wav" was used but not directly precached
 mega_coop/mega_hip/hipdecoy.qc:37: warning F210: Sound "misc/foot3.wav" was used but not directly precached
@@ -330,16 +325,16 @@ mega_coop/mega_quake2\bigtank.qc:460: warning F210: Sound "bigtank/thud.wav" was
 mega_coop/mega_quake2\bigtank.qc:479: warning F210: Sound "bigtank/pain.wav" was used but not directly precached
 mega_coop/mega_quake2\bigtank.qc:492: warning F210: Sound "bigtank/tnkpain2.wav" was used but not directly precached
 mega_coop/mega_quake2\bigtank.qc:682: warning F210: Sound "bigtank/death.wav" was used but not directly precached
-323304 strofs (of 2097152)
-185496 numstatements (of 1048576)
+323688 strofs (of 2097152)
+185815 numstatements (of 1048576)
  10541 numfunctions (of 32768)
- 24017 numglobaldefs (of 131072)
+ 24028 numglobaldefs (of 131072)
    851 numfielddefs (805 unique) (of 8192)
- 26979 numpr_globals (of 131072)
+ 26992 numpr_globals (of 131072)
    394 nummodels
    973 numsounds
 Writing qwprogs.dat
-2493814 TOTAL SIZE
+2496890 TOTAL SIZE
 Compile finished: qwprogs.dat (fte format)
 Writing qwprogs.lno for debugging
 973 unique precache_sounds
@@ -348,10 +343,10 @@ Writing qwprogs.lno for debugging
 Compile Complete
 
 optres_shortenifnots 675
-optres_overlaptemps 89012
-optres_noduplicatestrings 217989
-optres_constantarithmatic 365
-optres_assignments 2478
+optres_overlaptemps 89311
+optres_noduplicatestrings 218095
+optres_constantarithmatic 364
+optres_assignments 2480
 optres_unreferenced 14437
 numtemps 16
-Done. 122 warnings
+Done. 121 warnings

@@ -292,6 +292,7 @@ float (entity test) ZG_ItemType =
 	if (test.model == "maps/b_shell1.bsp" || test.model == "maps/b_shell0.bsp"
 		|| test.model == "maps/b_nail1.bsp" || test.model == "maps/b_nail0.bsp"
 		|| test.model == "maps/b_rock1.bsp" || test.model == "maps/b_rock0.bsp"
+//Add other object types in future mods here -arg.
 #ifdef mtf_coop_halloween
 		|| test.model == "progs/pumpkin.mdl"
 #endif
@@ -300,7 +301,6 @@ float (entity test) ZG_ItemType =
 	if (test.model == "maps/b_bh25.bsp" || test.model == #MODEL_HEALTH_TEN
 		|| test.model == #MODEL_HEALTH_HUNDRED)
 		return 2;
-
 	return 0;
 };
 void(entity pickupee) ZG_FireItem = 
@@ -310,6 +310,7 @@ void(entity pickupee) ZG_FireItem =
 	sound(self, TF_FLARE_OFF, "weapons/launch.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 	newmis = spawn();
 	newmis.owner = self;
+	newmis.team_no = self.team_no;  // Give this missile a team_no for later sorting of whose team it is on just in case -arg
 	newmis.movetype = 10;
 	newmis.solid = 2;
 	newmis.classname = "pipebomb";

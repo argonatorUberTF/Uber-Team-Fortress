@@ -155,7 +155,7 @@ mega_coop/mega_rogue/sphere.qc
 mega_coop/mega_rogue/buzzsaw.qc
 //mega_coop/mega_rogue/dmatch.qc  // file was not there when inherited from agent. -arg
 mega_coop/mega_rogue/morph.qc
-mega_coop/mega_rogue/ending.qc
+//mega_coop/mega_rogue/ending.qc Not compiled until code is added/fixed ending.qc -arg 11/2020
 mega_coop/mega_rogue/mummy.qc
 mega_coop/mega_rogue/timemach.qc
 //mega_coop/mega_rogue/runes.qc // old rune code -unused -arg
@@ -223,11 +223,11 @@ mega_coop/mega_nehahra/finale.qc
 
 // Wolf3D (shareware)
 mega_coop/mega_wolf3d/w3d_misc.qc
-//mega_coop/mega_wolf3d/dog.qc  // was disabled/removed to free up precache for pk mods. -arg
-//mega_coop/mega_wolf3d/w3d_ss.qc
-//mega_coop/mega_wolf3d/w3d_guard.qc
-//mega_coop/mega_wolf3d/vict_bj.qc
-//mega_coop/mega_wolf3d/w3d_boss.qc
+mega_coop/mega_wolf3d/dog.qc  // was disabled/removed to free up precache for pk mods. -arg
+mega_coop/mega_wolf3d/w3d_ss.qc // Added back in 11/2020 -arg
+mega_coop/mega_wolf3d/w3d_guard.qc
+mega_coop/mega_wolf3d/vict_bj.qc
+mega_coop/mega_wolf3d/w3d_boss.qc
 
 // Doom 1 & 2
 mega_coop/mega_doom/doom_misc.qc

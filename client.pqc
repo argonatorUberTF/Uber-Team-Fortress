@@ -193,7 +193,7 @@ void() DecodeLevelParms =
 			else
 			{
 				number_of_teams = 4;  //I think this is right, regardless of whatever map -arg
-//however the map has to have a teamspawn for teams 1-4 at least 2 teams.
+//however the map has to have a teamspawn for teams 1-4 at least 2 teams. Mappers, fix your maps fools. -arg
 			}
 #ifndef mtf_coop
 			cvar_set("sv_aim", "1");
@@ -643,7 +643,7 @@ void() DecodeLevelParms =
 	newmis.enemy = self;
 	newmis.think = FixSoundCrap;
 };
-float /*WARNING: could not determine return type*/ (entity _p_5763) IsLegalClient =
+float (entity _p_5763) IsLegalClient =
 {
 	local string _l_5764;
 	local string _l_5765;
@@ -1002,7 +1002,7 @@ void () relandmark_touch =
 #endif
 void() changelevel_use =
 {
-	if (num_players > 1 && can_exit == #FALSE)
+	if (num_players > 0 && can_exit == #FALSE)
 	{
 		if (votestarted == #VOTE_EXIT)
 			return;
@@ -1228,7 +1228,7 @@ void() ClientKill =
 	if (self.hook_out)
 	{
 		sprint(self, 2, "You must retract hook first!\n");
-		return;
+		Service_Grapple();
 	}
 	self.suicide_time = time + 25 + random() * 5;
 	bprint(TF_FLARE_OFF, self.netname);
@@ -1291,6 +1291,8 @@ void(entity e) ValidateUser =
 {};
 void() PutClientInServer = 
 {
+	can_exit = #TRUE;  //Now unlock the exit so the players can lock it if they want. Prevents annoying message to unlock by voteexit by default -arg
+	//If multiple players join it gets unlocked by default. However if you want to pre-empt exiting, then cmd lockexit fools! -arg
 	if (self.fob == 0)  //only attach one fob to player, it stays or hides until you disconnect with removeplayerfob() -arg
 	{
 	attachplayerfob();
@@ -1301,7 +1303,7 @@ void() PutClientInServer =
 	self.pk_gravitywellammo = 4;
 	self.pk_canpabammo = 2;
 	self.vote_wait = time; // This allows new connected users to start a vote after 1 second from joining. -arg
-	CenterPrint (self, "Life is pain. Fight till you die.");
+	//CenterPrint (self, "Life is pain. Fight till you die.");
 	local float tc;
 	local string st;
 	local float iszoom;
@@ -1350,10 +1352,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	self.fire_held_down = 0;
 	stuffcmd(self, "play misc/null.wav\n");
 	DecodeLevelParms();
-#ifndef mtf_coop
-	stuffcmd (self, "alias voteyes impulse 245\n");  //removed auto aim/speed det stuff to impulse 240 -arg
-	stuffcmd (self, "cl_sidespeed 500\ncl_backspeed 500\ncl_forwardspeed 500\n");
-#endif
 	self.client = "unknown";
 	st = infokey (self, "*client");
 	if ((st == "mqwcl 0.96"))
@@ -2881,7 +2879,7 @@ void () hat_checkowner =
 	self.nextthink = time + .5;
 };
 #endif
-void() xpackEnding;
+//void() xpackEnding;
 void() PlayerPostThink = 
 {
 	setup_strcat ();
@@ -2912,7 +2910,7 @@ void() PlayerPostThink =
 	}
 //	if (cutscene_running)
 //	{
-//		xpackEnding(); //what is this and the code is missing. -arg
+//		xpackEnding(); //what is this and the code is missing. -arg  11/2 still doesn't work.
 //	}
 	if (self.being_juggled > 0)
 	{
@@ -3514,6 +3512,7 @@ void() ClientDisconnect =
 		}
 		te = find(te, classname, "turret");
 	}
+	te = find(world, classname, "turret_base"); //remove auto sentry turret base for disconnected player -arg
 	while (te)
 	{
 		if (te.owner == self)
@@ -3619,7 +3618,7 @@ void(entity targ, entity attacker) ClientObituary =
 			{
 				bprint (1, attacker.netname);
 				bprint (1.000000, " is on a rampage!\n");
-//				sound (world, 4.000000, "misc/rampage.wav", 1.000000, 0.000000); //removed until more sound precache available, next version of mvdsv -arg
+				sound (world, 4.000000, "misc/rampage.wav", 1.000000, 0.000000); //removed until more sound precache available, next version of mvdsv -arg
 			}
 			if (attacker.killstack == 12)
 			{
@@ -3691,7 +3690,7 @@ void(entity targ, entity attacker) ClientObituary =
 		bprint(2," got JUGGLED by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
-//		sound (world, 4, "misc/juggled2.wav", 1, 0);	//removed until more sound precache available, next version of mvdsv -arg
+		sound (world, 4, "misc/juggled2.wav", 1, 0);	//removed until more sound precache available, next version of mvdsv -arg
 	}
 	if (targ.being_juggled > 1 && targ.is_monster == 1 && attacker.classname == "player" && targ != attacker)
 	{
@@ -3699,7 +3698,7 @@ void(entity targ, entity attacker) ClientObituary =
 		bprint(2," got  ’««Ã≈ƒ by ");
 		bprint(2,attacker.netname);
 		bprint(2,"\n");
-//		sound (world, 4, "misc/juggled2.wav", 1, 0);  //removed until more sound precache available, next version of mvdsv -arg
+		sound (world, 4, "misc/juggled2.wav", 1, 0);  //removed until more sound precache available, next version of mvdsv -arg
 		targ.being_juggled = 0;
 		Achievements_Change( attacker, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_JUGGLER, 1 );
 	}
@@ -4667,7 +4666,7 @@ local entity te;
 				}
 	if (attacker.real_owner.coop_exp != -1 && attacker.real_owner.classname == "player" && targ.is_monster == 1)
 	{
-		//attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 5;
+		attacker.real_owner.coop_exp = attacker.real_owner.coop_exp + 5;
 		MTF_Coop_AddExperience ( attacker.real_owner, targ, FALSE );
 		MTF_Coop_PreWriteExperience( attacker.real_owner, attacker.real_owner.connect_name, attacker.real_owner.coop_exp );
 	}

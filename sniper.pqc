@@ -64,7 +64,7 @@ void(vector org) AirStrike_Target =
 	newmis.team_no = self.owner.team_no;
 	newmis.owner = self.owner;
 	setsize(newmis, '0 0 0', '0 0 1');
-	setmodel(newmis, "progs/newdot.spr");
+	setmodel(newmis, "progs/thedot.spr");
 	newmis.frame = self.team_no -1;	//Set airstrike spot to the color of the team that called it. -arg
 	newmis.effects = 8;
 	setorigin(newmis, org + '0 0 5');
@@ -185,7 +185,7 @@ void () SniperSight_Create =
 	}
 	if ((self.option4 != 1.000000))
 	{
-		setmodel(sight, "progs/newdot.spr");
+		setmodel(sight, "progs/thedot.spr");
 		sight.frame = self.team_no - 1;
 	}
 	sight.classname = "timer";

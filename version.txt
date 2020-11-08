@@ -1,4 +1,4 @@
-Build 10/31/2020
+Build 11/08/2020
 See readme.md
 Check for updates at:
 https://github.com/argonatorUberTF/Uber-Team-Fortress

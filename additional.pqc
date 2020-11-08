@@ -626,7 +626,7 @@ entity horn_charmer;			// horn of conjuring hipnotic hipitems.qc -arg
 //.float display_msg_next;			// the next time the "you must be scout..." message can appear. unused var -arg
 //.float is_mini; //For removed mini sentry guns and bot version -arg It was junk and didn't target monsters right.
 //.float shieldOn;
-//.float() customizeentityforclient; 	//unused from wolf3d addon not included to reduce precache size. -arg
+.float() customizeentityforclient; 	//unused from wolf3d addon not included to reduce precache size. -arg
 //.float mlah;							//from quoth monsfade.qc. unused -arg
 //.float statevis;					// from polyp.qc, unused -arg
 //.float polyp_speed;				// from polyp.qc, unused -arg
@@ -993,13 +993,14 @@ float FLASH_ON;						//thunder.qc
 float COUNT_ON;						//thunder.qc
 float COUNT_THUNDER;				//thunder.qc
 float OFFSET_RAND;					//thunder.qc
-float actorStage;					//Rogue ending.qc
-float STAGE_START = 0;				//Rogue ending.qc
-float STAGE_TO_POINT1 = 1;			//Rogue ending.qc
-float STAGE_AT_POINT1 = 2;			//Rogue ending.qc
-float STAGE_TO_POINT2 = 3;			//Rogue ending.qc
-float STAGE_AT_POINT2 = 4;			//Rogue ending.qc
-float STAGE_FIRING	= 5;			//Rogue ending.qc
+entity theMachine;					//used for timemachine code. -arg
+//float actorStage;					//Rogue ending.qc Not compiled until code is added/fixed -arg 11/2020
+//float STAGE_START = 0;				//Rogue ending.qc Not compiled until code is added/fixed ending.qc -arg 11/2020
+//float STAGE_TO_POINT1 = 1;			//Rogue ending.qc Not compiled until code is added/fixed -arg 11/2020
+//float STAGE_AT_POINT1 = 2;			//Rogue ending.qc Not compiled until code is added/fixed -arg 11/2020
+//float STAGE_TO_POINT2 = 3;			//Rogue ending.qc Not compiled until code is added/fixed -arg 11/2020
+//float STAGE_AT_POINT2 = 4;			//Rogue ending.qc Not compiled until code is added/fixed ending.qc -arg 11/2020
+//float STAGE_FIRING	= 5;			//Rogue ending.qc Not compiled until code is added/fixed ending.qc -arg 11/2020
 float MUMMY_STRONG = 4;				//Rogue mummy.qc
 float earthquake_active;			//MTF ROGUE
 float earthquake_intensity;			//MTF ROGUE
@@ -2842,7 +2843,7 @@ void() TeamFortress_CheckTeamCheats =
 		if (st != infokey(self, "team"))
 		{
 			SetTeamName(self);
-			sprint(self, 2, "You have been warned for changing your team. Use [cmd changeteam (color)] instead in console.\n");
+//			sprint(self, 2, "You have been warned for changing your team. Use [cmd changeteam (color)] instead in console.\n");  //No longer applicable, however this stills comes up if you connect in survival with no team number selected. -arg
 			return;
 		}
 };
@@ -10473,43 +10474,42 @@ void() changelevel_touch =
 		return;
 	HalfLife_SetupLandmark();
 #endif
-	if (num_players > 1 && can_exit == #FALSE)
+	if (other.classname != "player")	//This is supposed to prevent rockets, ammo, and monsters from triggering the exit. -arg 
 	{
-		if (votestarted == #VOTE_EXIT)
-			return;
-		if (total_monsters > killed_monsters)
+		return;
+	}
+	if (can_exit == #FALSE)  // Changed since a single player can now lock the exit with cmd lockexit to prevent premature exit on survival maps or regular ones. -arg
+	{	// This fixes the problem of a player getting thrown through exit while playing solo, or a monster doing the exit. -arg
+		// The other problem is that grenades or rockets from player 1 only can trigger the exit. So by default it is locked at the beginning of the map.
+		// If players do cmd voteexit from the start it is totally unlocked.
+		bprint(2,"The exit is locked, or was locked with [cmd lockexit]. If you need to activate the exit, then do [cmd voteexit] first.\n");
+		self = other;
+		return;
+	}
+	if (can_exit == #FALSE && num_players >= 2)
+	{
+		Vote_StartVote( #VOTE_EXIT, "", world );
+	}
+	if (num_players >= 2 || can_exit == #TRUE)	//If not locked or more than 1 player, then exit. -arg
+	{
+		if (cvar("samelevel") == 2 || (cvar("samelevel") == 3 && mapname != "start"))
 		{
-			if (votestarted > 0)
-				return;
-			else
-			{
-				self = other;
-				Vote_StartVote( #VOTE_EXIT, "", world );
-				return;
-			}
+		return;
 		}
+		bprint(2, other.netname);
+		bprint(2, " has exited the level.\n");
+		MTF_DoEndBonus ( other );
+		nextmap = self.map;
+		SUB_UseTargets();
+		if (self.spawnflags & TF_FLARE_OFF && deathmatch == 0)
+		{
+			GotoNextMap();
+			return;
+		}
+		self.touch = SUB_Null;
+		self.think = execute_changelevel;
+		self.nextthink = time + 0.1;
 	}
-	if (other.classname != "player")
-	{
-		return;
-	}
-	if (cvar("samelevel") == 2 || (cvar("samelevel") == 3 && mapname != "start"))
-	{
-		return;
-	}
-	bprint(2, other.netname);
-	bprint(2, " has exited the level.\n");
-	MTF_DoEndBonus ( other );
-	nextmap = self.map;
-	SUB_UseTargets();
-	if (self.spawnflags & TF_FLARE_OFF && deathmatch == 0)
-	{
-		GotoNextMap();
-		return;
-	}
-	self.touch = SUB_Null;
-	self.think = execute_changelevel;
-	self.nextthink = time + 0.1;
 };
 void () summon_respawn_think =
 {
@@ -21413,7 +21413,7 @@ void ( entity to_summon ) BeginSummon =
 //TODO: reset team number as the user changes teams for frag count and targeting.
 //Currently the summoned won't target you even if you change to red team. :}
 	goalie.touch = Coop_MinionMonsterTouch;
-	setmodel (goalie, "progs/newdot.spr");
+	setmodel (goalie, "progs/thedot.spr");
 	goalie.frame = self.team_no - 1;  
 	sprint( self, 2, "You are attempting to summon a minion...\n" );
 	self.#allow_next_summon_time = (time + 5) - self.minion_attr; // was 18 but we need armies of summons to fight within multi-team mode. -arg
@@ -21747,22 +21747,22 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 		if (teamct == 1)
 		{
 			self.ischangingteams = 1;
-			sprint (self, 2.000000, "After you die you will spawn on the Blue team.\n");
+			sprint (self, 2.000000, "After you die you will spawn on the Blue team 1.\n");
 		}
 		if (teamct == 2)
 		{
 			self.ischangingteams = 2;
-			sprint (self, 2.000000, "After you die you will spawn on the Red team.\n");
+			sprint (self, 2.000000, "After you die you will spawn on the Red team 2.\n");
 		}
 		if (teamct == 3)
 		{
 			self.ischangingteams = 3;
-			sprint (self, 2.000000, "After you die you will spawn on the Yellow team.\n");
+			sprint (self, 2.000000, "After you die you will spawn on the Yellow team 3.\n");
 		}
 		if (teamct == 4)
 		{
 			self.ischangingteams = 4;
-			sprint (self, 2.000000, "After you die you will spawn on the Green team.\n");
+			sprint (self, 2.000000, "After you die you will spawn on the Green team 4.\n");
 		}
 	return 1;
 	}
@@ -21880,7 +21880,6 @@ float ( float slot_no ) Inventory_UseItem =
 	}
 	else
 		t_item.touch = PreMonsterItemTouch;
-	
 	return #TRUE;
 };
 float ( string nname, float inv_slot, float return_type ) Inventory_GetItem =
@@ -22553,7 +22552,7 @@ void (float can_be_dead) MonsterItemTouch =
 		}
 		if (self.speed_time > 0)
 		{
-			sprint(other, 2, "You got cracked out SPEED armor.\n");
+			sprint(other, 2, "You got cracked out SPEED armor.\n");		//super fast -arg
 			stuffcmd(other, "cl_forwardspeed 999\n");
 			if (other.speed_time > time)
 				other.speed_time = other.speed_time + self.speed_time;
@@ -22768,7 +22767,22 @@ void (float can_be_dead) MonsterItemTouch =
 	else
 	if (self.weapon == 20 && survival_mode == 0)
 	{
-		bprint(2, "There's no point in using a ressurection cube when not in survival mode. Try CMD BEG instead to get unstuck.\n");
+		bprint(2, "There's no point in using a ressurection cube when not in survival mode. Try CMD BEG instead to get unstuck.\n");  //Add a drop of the unused cube so you or others can pick it back up. -arg
+//Since the item was used from cmd inv, use the same routine to drop it back down and let them pick it back up. -arg
+		newmis = spawn ();
+		newmis.origin = (self.origin - '0 0 24');
+		newmis.velocity_z = 300;
+		newmis.flags = 256;
+		newmis.solid = 1;
+		newmis.movetype = 6;
+		setsize (newmis, '-16 -16 0', '16 16 56');
+		setmodel(newmis, "progs/v_spike.mdl");
+		newmis.weapon = 20;
+		newmis.effects = #EF_GREEN;
+		newmis.noise = "items/protect.wav";
+		newmis.nextthink = time + 30;
+		newmis.think = SUB_Remove;
+		newmis.touch = PreMonsterItemTouch;
 	}
 	if (self.weapon == 20 && (survival_mode > 0))	//Added AND survival mode. There's no reason to use a cube in non survival mode. -arg
 	{		// resurrection cube
@@ -22927,6 +22941,16 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		return 1;
 	}
 #endif
+	if (s1 == "lockexit")
+	{
+		can_exit = #FALSE;  //used in changelevel_touch() to sense is it ok to start vote for exit level. The problem is with solo players, a monster or accidental touch of exit will automatically happen since there is only 1 vote to exit. -arg
+//Now, if you lock this exit, you have to do a cmd voteexit to really exit. -arg
+		bprint (1.000000, "Player ");
+		bprint (1.000000, self.netname);
+		bprint (1.000000, " has locked the exit of the map. Use [cmd voteexit] to unlock when you are ready to exit.");
+		return 1;
+	}
+	else
 	if (s1 == "newtaunts")
 	{
 		self.current_menu = 40;
@@ -22990,6 +23014,9 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "Impulse 189 - You eat a can of Pork and beans for a health boost. Farts damage enemies.\n");
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
 			sprint (self, 2.000000, "impulse  68 - Throws a beartrap.\n");
+			sprint (self, 2.000000, "impulse 61/60 - Toggles sniper laser dot off/on.\n");
+			sprint (self, 2.000000, "nextlvl     - Tells you how much experience it takes to reach the next level.\n");
+			sprint (self, 2.000000, "reset       - Resets your attribute points allocated for re-allocation by spending.\n");
 			sprint( self, 2, "Press 8 in game for more menus, or use [cmd extrahelp] .\n");
 			return 1;
 		}
@@ -23011,7 +23038,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "sayattrib - prints your current attributes to everyone.\n");
 			sprint( self, 2, "attrib - lists your currently available & spent attribute points.\n");
 			sprint( self, 2, "spend - used to spend free attrib points (see above cmd).\n");
-			sprint( self, 2, "reset - resets all your attributes and sets them free (lvl 5 or less).\n");
+			sprint( self, 2, "reset - resets all your attributes and sets them free.\n");
 		}
 		else
 		if (s2 == "ach" || s2 == "achievements")
@@ -23058,8 +23085,9 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		{
 			sprint( self, 2, "-- Vote CMDs --\n");
 			sprint( self, 2, "votemap <mapname> - Votes to switch to another map immediately.\n");
+			sprint( self, 2, "votelock - Locks the exit until all players agree to exit the map to prevent accidental exiting.\n");
 			sprint( self, 2, "voteexit - Votes to enable the map exit without map completion.\n");
-			sprint( self, 2, "voteuse - Uses the entity immediately in front of the vote starter.\n");
+			sprint( self, 2, "voteuse  - Uses the entity immediately in front of the vote starter.\n");
 			sprint( self, 2, "votenext - Vote for the next map to be played after someone exits.\n");
 			sprint( self, 2, "votemode - Change game mode to Survival for the next played map.\n");
 			sprint( self, 2, "votekick <userid> - Kick a user in the game based on userid (cmd pm).\n");
@@ -23073,7 +23101,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint( self, 2, "Certain skills are acquired when you have ");
 			sprint( self, 2, ftos(#MAX_SPEND));
 			sprint( self, 2, " points on any single attribute.\n");
-			sprint( self, 2, "aura - req. 7 Health: Heals all nearby players and gives you a bonus. All of medic class players can do this.\n");
+			sprint( self, 2, "aura - req. 7 Health: Heals all nearby players and gives you a bonus. All of medic class players can do this as a skill.\n");
 			sprint( self, 2, "call - req. 7 Minion: Teleports your furthest minion to a local point.\n");
 			sprint( self, 2, "7 Quick Shot: Lightning Gun replaces the single barrel shotgun.\n");
 			sprint( self, 2, "7 Ammo: Engineer can build 2 sentry devices at a time.\n");
@@ -23214,12 +23242,12 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	else
 	if (s1 == "killpete")
 	{
-	sprint(self, 2, "Killing Pete the undead head...searching...\n");
+	sprint(self, 2, "Killing Pete the undead monster/head...searching...\n");
 	local entity head;
 	head = findradius (self.origin, 120);
 	if ((head.classname != "player") || (head.classname != "merchant" ) && (head.classname != "world" ) )
 	{
-		dremove(head);
+		dremove(head); // would 
 		sprint(self, 2, "poof!..done.\n");
 	}
 	}
@@ -23291,8 +23319,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, ftos(self.invisible_finished-time));
 		sprint(self, 2, " seconds.\n");
 	}
-#ifdef mega_hats
 	else
+#ifdef hats
 	if (s1 == "hatsoff")
 	{
 		setmodel(self.hat, string_null);
@@ -23306,8 +23334,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self,2, "Hat display enabled.\n		Use CMD hatsoff to disable hat display.\n");
 		return 1;
 	}
-#endif
 	else
+#endif
 	if (s1 == "sendpacket")
 	{
 //		QC_SendPacket(s2, "fewwww \n\n\n asf\n");  // disabled until there are more servers- arg
@@ -23488,12 +23516,12 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	else
 	if (s1 == "dfob")
 	{
-	self.is_fob_disabled = 1;		//Tthis sets the colored playerfob like the spy feign for those who find it annoying. -arg
+	self.is_fob_disabled = 1;		//This sets the colored playerfob like the spy feign for those who find it annoying. -arg
 	}
 	else
 	if (s1 == "efob")
 	{
-	self.is_fob_disabled = 0 ;		//Tthis sets the colored playerfob like the spy feign for those who find it annoying. -arg
+	self.is_fob_disabled = 0 ;		//This sets the colored playerfob like the spy feign for those who find it annoying. -arg
 	}
 	else
 	if (s1 == "summon")
@@ -23551,7 +23579,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	else
 	if (s1 == "beg")
 	{
-	if ((self.deadflag) && survival_mode)
+	if ((self.deadflag) && survival_mode) //For survival mode and dead in a ditch, under slime, not disintegrating, or out of map area, can't be reached by other players -arg
 	{
 		sprint(self, 2, self.netname);
 		sprint(self, 2, " begs for forgiveness from dropping connection, and is resurrected.\n");
@@ -23559,7 +23587,8 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		MTF_Resurrect_Player (self);
 		return 1;
 	}
-	if (!(self.deadflag) && survival_mode)
+	if (!(self.deadflag) && survival_mode)	//For survival modem and not dead, just move them back to start, for example to get around a shut door at the middle and you need to go back to start. -arg
+	//Or you left your engineer builds at spawn start, and need them, and you can't get ammo where you are shut behind a one way door/tunnel/wind tunnel. -arg
 	{
 		sprint(self, 2, self.netname);
 		sprint(self, 2, " asked to be moved to the start of the map in survival mode. Done.\n");
@@ -23570,7 +23599,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	}
 	else
 	{
-	sprint(self, 2, self.netname);
+	sprint(self, 2, self.netname);	//Not in survival mode and being a jerk. -arg
 	sprint(self, 2, " was alive. The server killed him and respawned him for being a wuss begging to leave combat. -6 points. Only use this in survival mode.\n");
 	self.real_frags = self.real_frags - (TF_FLARE_OFF *5 ); // The player should just kill instead. I had to code this in to deal with users using cmd beg in non survival and not dead states. So be it. -arg
 	ClientKill();
@@ -24477,18 +24506,23 @@ local entity playerfob;
 	playerfob.origin = self.origin + '0 0 75'; //put fob above the player.
 	playerfob.touch = SUB_Null; // it does nothing, if touched.
 	self.playerfob_target = self; // for following with beartrap logic code.
-	setmodel (playerfob, "progs/newdot.spr");
+	setmodel (playerfob, "progs/thedot.spr");
 	playerfob.frame = self.team_no - 1; //color fob dot same as player's team color. except green team is a purple dot. go figure. maybe a new sprite someday. -arg
+	//Updated 11/2/2020 the new model thedot.spr replaces the old newdot.spr from mega coop/classic from xavior. -arg
 //end playerfob added -arg
 };
 void () playerfob_think =
 {
     local float fls;
     local vector endp;
+	if (self.team_no == 0)
+	{
+		return;
+	}
     if (self.owner.is_undercover)
     {
     self.frame = self.owner.undercover_team - 1; //the selected color undercover -arg
-    self.nextthink = time + .1;
+    self.nextthink = time + .01;
     }
 else
     {
@@ -24597,4 +24631,4 @@ void () W_FireRocket =
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
-//END
+//END

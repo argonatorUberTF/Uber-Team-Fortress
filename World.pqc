@@ -305,8 +305,8 @@ void () worldspawn =
 	precache_model ("progs/proxgren.mdl");
 	precache_model ("progs/v_asscan.mdl");
 	precache_model ("progs/v_mac10.mdl");
-	precache_model ("progs/newdot.spr");
-//	precache_model ("progs/dot3.spr");	// also used for airstrike. newdot.spr instead.
+	precache_model ("progs/thedot.spr");
+//	precache_model ("progs/dot3.spr");	// also used for airstrike. thedot.spr instead.
 	precache_model ("progs/rope.mdl");
 	precache_model ("progs/dispencr.mdl");
 	if (mapname == "r2m6")

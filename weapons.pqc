@@ -164,6 +164,7 @@ void() W_Precache =
 #ifdef BATTLE_ROYALE
 	precache_model2("progs/s_light.spr");
 #endif
+	precache_sound2 ("bigbomo/wokup.wav");
 	precache_sound2 ("speech/needlite.wav");
 	precache_sound("effects/bodyhit1.wav");
 	precache_sound("effects/bodyhit2.wav");
@@ -3865,19 +3866,19 @@ void() W_Attack =
 																		}
 																		else
 																		{
-																			if ((self.current_weapon == 524288.000000))
+																			if ((self.current_weapon == 524288.000000))  //if railgun selected (weapon 2) -arg
 																			{
-																				if (self.mtf_items & #MTFITEM_RAILGUN)
+																				if (self.mtf_items & #MTFITEM_RAILGUN)  // If you bought the upgrade, fire the uber railgun slug. -arg
 																				{
 																					self.option6 = 1;
 																					sound (self, 1, "weapons/railgun.wav", 1, 1);
 																					player_shot1 ();
 																					W_FireLaser (175);
-																					Attack_Finished (2.7);
+																					Attack_Finished (1.7); // speed it up just a bit from 2.5 -arg
 																				}
 																				else
 																				{
-																				if ((self.option6 != 1))
+																				if ((self.option6 != 1)) //else, fire the regular lasers.
 																				{
 																					if ((CheckForReload () == 1.000000))
 																					{
@@ -3885,19 +3886,19 @@ void() W_Attack =
 																					}
 																					sound (self, 1, "enforcer/enfire.wav", 1, 1);
 																					player_shot1 ();
-																					W_FireLaser (0);
+																					W_FireLaser (65);
 																					self.reload_rail_gun = (self.reload_rail_gun + 1);
 																					Attack_Finished (0.4);
 																				}
-																				else
+																			else  //Fire the slug -arg
 																				{
 																					sound (self, TF_FLARE_OFF, "weapons/railgun.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 																					player_shot1 ();
-																					W_FireLaser (65/*self.heat*/);
+																					W_FireLaser (65);
 																					Attack_Finished (1.5);
 																				}
 																			}
-																			}
+																		}
 																			else
 																			{
 																				if (self.current_weapon == #WEAP_ZEROGRAVITY)
@@ -4321,7 +4322,11 @@ if ((it & 32.000000))
 									else
 									{
 										local string srailcheck;
-										srailcheck = infokey (world, "superrail");
+//										srailcheck = infokey (world, "superrail");  // Allow super railgun and that allows check for Uber Rail gun. -arg
+										if (self.mtf_items & #MTFITEM_RAILGUN)  //If you activate the uber railgun upgrade from inv this flag goes on, and you have to turn on srailcheck -arg
+										{
+											srailcheck = "1"; // You have to have this on and then uber rail gun works along side rail gun and laser gun. -arg
+										}
 										if ((srailcheck == "1") && self.weaponmodel != "progs/v_span.mdl" && self.weaponmodel != "progs/v_shot2.mdl")
 										{
 

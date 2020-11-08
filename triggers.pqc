@@ -138,7 +138,7 @@ void() trigger_multiple =
 	{
 		if (self.spawnflags & TF_FLARE_OFF)
 		{
-			objerror("health and notouch don't make sense\n");
+			objerror("health and notouch don't make sense.\n");
 		}
 		self.max_health = self.health;
 		self.th_die = multi_killed;
@@ -439,6 +439,14 @@ void() teleport_touch =
 			(other.classname != "weapon_rocketlauncher") &&
 			(other.classname != "item_armor1") &&
 			(other.classname != "item_armor2") &&
+			(other.classname != "item_rockets") &&			//Allow rocket ammo to go through -arg
+			(other.classname != "item_health") &&
+			(other.classname != "item_shells") &&
+			(other.classname != "item_spikes") &&
+			(other.classname != "item_cells") &&
+			(other.classname != "item_artifact_super_damage") &&
+			(other.classname != "item_artifact_invisibility") &&
+			(other.classname != "item_artifact_invulnerability") &&
 			(other.classname != "item_armorInv") &&
 			(other.classname != "weapon_airfist") &&
 			(other.classname != "weapon_grapgun") &&

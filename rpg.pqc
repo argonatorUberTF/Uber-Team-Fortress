@@ -541,7 +541,7 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 	else
 	if (vote_type == #VOTE_KICK)
 	{
-		if (num_players < 4)
+		if (num_players < 3)	//There can be an idiot on the server with ony 3 players. changed from 4 to 3 -arg.
 		{
 			sprint(self,2,"Not enough players to call a kick vote.\n");
 			return;
@@ -702,7 +702,7 @@ void () Vote_CheckWin =
 		if (votestarted == #VOTE_EXIT)
 		{
 			can_exit = #TRUE;
-			bprint(2, "Players can now exit the map!\n");
+			bprint(2, "The exit is unlocked. Players can now exit the map!\n");
 		}
 		else
 if (votestarted == #VOTE_USE)
@@ -1089,7 +1089,7 @@ float (entity the_player, float amount, string give_what) Extra_Stuff =
 		the_player.maxstrafespeed = amount;
 		return 1;
 	}
-	if (give_what == "weapon")
+	if (give_what == "weapon")			//TODO: Add the uber railgun to this list, also the NEWCLASS weapons. -arg 11/2020
 	{
 		if (amount == 1)
 		{

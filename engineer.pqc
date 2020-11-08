@@ -200,7 +200,7 @@ void (float chargeDmg) W_FireLaser =
 	local vector org;
 	if ((self.option6 != 0))
 	{
-		if (infokey (world, "superrail") == "1")
+		if (infokey (world, "superrail") == "1" || (self.mtf_items & #MTFITEM_RAILGUN))  // The OR part is if the #18 Uber rail gun upgrade is activated. -arg
 		{
 			self.ammo_nails = (self.ammo_nails - 5);
 			self.currentammo = (self.ammo_nails);
@@ -210,12 +210,13 @@ void (float chargeDmg) W_FireLaser =
 			vec = aim (self, 10000);
 			vec = normalize (vec);
 			newmis = spawn ();
+			newmis.team_no = self.team_no; //Assign the beam/slug a team number. -arg
 			newmis.owner = self;
 			newmis.enemy = self;
 			newmis.movetype = 9;
 			newmis.solid = TF_FLARE_OFF;
 			newmis.heat = chargeDmg;
-setmodel(newmis, "progs/beam.mdl");
+			setmodel(newmis, "progs/beam.mdl");
 			setsize (newmis, '0 0 0', '0 0 0');
 			setorigin (newmis, (org + '0 0 16'));
 			newmis.velocity = (vec * 2000);
@@ -254,6 +255,7 @@ setmodel(newmis, "progs/beam.mdl");
 		vec = aim(self, 10000);
 		vec = normalize(vec);
 		newmis = spawn();
+		newmis.team_no = self.team_no;		//Assign a team number to the laser bolt. -arg
 		newmis.owner = self;
 		newmis.enemy = self;
 		newmis.team_no = self.team_no;
@@ -348,6 +350,7 @@ void(float objtobuild) TeamFortress_Build =
 		tmp2 = '16 16 24';
 		newmis.mdl = "progs/dispencr.mdl";
 		newmis.netname = "dispenser";
+		newmis.team_no = self.team_no;	//For tracking whose team number is it on. -arg
 		btime = time + 2;
 	}
 	else
@@ -372,6 +375,7 @@ void(float objtobuild) TeamFortress_Build =
 			tmp2 = '16 16 48';
 			newmis.mdl = "progs/turrbase.mdl";
 			newmis.netname = "sentrygun";
+			newmis.team_no = self.team_no;	//For tracking whose team number is it on. -arg
 			btime = time + 5;
 		}
 		if ((objtobuild == 3))
@@ -393,6 +397,7 @@ void(float objtobuild) TeamFortress_Build =
 			tmp2 = '16 16 48';	// BTF ver
 			newmis.mdl = "progs/newtesla.mdl";
 			newmis.netname = "tesla";
+			newmis.team_no = self.team_no;	//For tracking whose team number is it on. -arg			
 			btime = (time + 7);
 		}
 	if (objtobuild == 4)
@@ -418,6 +423,7 @@ void(float objtobuild) TeamFortress_Build =
 		tmp2 = '16 16 4';
 		newmis.mdl = "progs/telepad.mdl";
 		newmis.netname = "teleporter";
+		newmis.team_no = self.team_no;	//For tracking whose team number is it on. -arg		
 		btime = time + 3;
 		if (self.has_teleporter == 1)
 		{
@@ -474,6 +480,7 @@ void(float objtobuild) TeamFortress_Build =
 		tmp2 = '16 16 64';
 		newmis.mdl = "progs/fieldgen.mdl";
 		newmis.netname = "field generator";
+		newmis.team_no = self.team_no;	//For tracking whose team number is it on. -arg
 		btime = (time + 8);
 	}
 	if (CheckArea(newmis, self) == TF_FLARE_LIT)
@@ -541,6 +548,7 @@ void(float objtobuild) TeamFortress_Build =
 	setmodel(newmis, newmis.mdl);
 	setsize(newmis, tmp1, tmp2);
 	setorigin(newmis, newmis.origin);
+	newmis.team_no = self.team_no;	//For tracking whose team number is it on. -arg
 	newmis.flags = newmis.flags - (newmis.flags & 512);
 };
 void(entity bld) CheckBelowBuilding = 
@@ -591,7 +599,7 @@ void() DispenserThink =
 	{
 		self.armorvalue = 500;
 	}
-	self.nextthink = time + 10;
+	self.nextthink = time + 5;  //Was 10. Hurry the heck up, we need to feed the masses or blow up monsters. -arg
 };
 void() TeamFortress_FinishedBuilding = 
 {
@@ -688,7 +696,7 @@ void() TeamFortress_FinishedBuilding =
 			newmis.velocity = '0 0 -8';
 			newmis.flags = newmis.flags - (newmis.flags & 512);
 			oldself.flags = oldself.flags - (oldself.flags & 512);
-			newmis.team_no = self.team_no;
+			newmis.team_no = self.team_no; //Wow, xav did this right for once, I didn't have to code it here! -arg
 			newmis.think = lvl1_sentry_stand;
 			newmis.nextthink = time + 0.5;
 			newmis.yaw_speed = 10;
@@ -721,7 +729,7 @@ void() TeamFortress_FinishedBuilding =
 				self.has_tesla = TF_FLARE_OFF;
 				sprint (self, 2, "You finish building the tesla coil.\n");
 				teamsprint (self.team_no, self, self.netname);
-				teamsprint (self.team_no, self, " has built a tesla.\n");
+				teamsprint (self.team_no, self, " has built a Tesla Coil.\n");
 				sound (oldself, 3, "weapons/guerilla_set.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 				oldself.classname = "building_tesla";
 				oldself.netname = "tesla";
@@ -736,7 +744,7 @@ void() TeamFortress_FinishedBuilding =
 				oldself.velocity = '0 0 -8';
 				oldself.avelocity = '0 0 0';
 				oldself.flags = (oldself.flags - (oldself.flags & 512));
-				oldself.team_no = self.team_no;
+				oldself.team_no = self.team_no;  //See? He did it here, but not for other spawned things... -arg
 				oldself.think = Tesla_Idle;
 				oldself.nextthink = (time + 2);
 				oldself.touch = Tesla_Touch;
@@ -823,7 +831,7 @@ void() TeamFortress_FinishedBuilding =
 		oldself.nextthink = (time + 7);
 		oldself.th_die = FieldGen_Die;
 		oldself.mdl = "progs/fieldgen.mdl";
-		oldself.team_no = self.team_no;
+		oldself.team_no = self.team_no; //Good, keep track of it -arg
 		oldself.real_owner = self;
 		oldself.colormap = self.colormap;
 		oldself.takedamage = 2;

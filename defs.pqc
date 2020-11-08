@@ -1054,7 +1054,7 @@ void () Coop_ThrowRune;
 #define rune_finished			a_c
 // Newer votemap code
 entity vote_starter;
-float can_exit;
+float can_exit;			// Used to toggled when players can exit the map or not. See cmd lockexit. -arg
 string votestring;
 void (float vote_type, string vote_string, entity vote_target) Vote_StartVote;
 #define VOTE_MAP	4
@@ -1416,5 +1416,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v10.31.20 United\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v11.08.2020\n");
 //END
