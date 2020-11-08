@@ -8,7 +8,7 @@ void() ai_sprite_orient =
 		best_client_dist = 9999;
 		clienta = find(world, classname, "player");
 		while (clienta)
-{
+		{
 			if (coop_visible(self, clienta))
 				break;
 			if (vlen (self.origin - clienta.origin) < best_client_dist)
@@ -82,7 +82,7 @@ void(vector dir) FireMonsterBullets =
 				damg = rint(random()*64);
 			}
 			else
-if (endist < 4)
+			if (endist < 4)
 			{
 				damg = rint(random()*32);
 			}
@@ -102,7 +102,7 @@ void(string muzspr, float muztime, float mzlfrm) ai_monster_fire =
 	if (self.classname == "monster_ss")
 		sound (self, CHAN_WEAPON, "024.wav", 1, ATTN_NORM);	
 	else
-if (self.classname == "monster_boss")
+	if (self.classname == "monster_boss")
 		sound (self, CHAN_WEAPON, "022.wav", 1, ATTN_NORM);	
 	else
 		sound (self, CHAN_WEAPON, "049.wav", 1, ATTN_NORM);	
