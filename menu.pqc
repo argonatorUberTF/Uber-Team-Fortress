@@ -369,11 +369,11 @@ void () Menu_Team =
 	{
 		if (MONSTER_TEAM_ENABLED)
 		{
-			CenterPrint4 (self, "\n\n“.. Survivors (Blue)    \n”.. Monsters (Red)      \n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player resurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him up before it's too late.\n");
+			CenterPrint4 (self, "\n\n“.. Survivors (Blue)1   \n”.. Monsters (Red) 2     \n .. Yellow Team 3\n ..Green Team 4\n How to play:\n\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player resurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him up before it's too late.\n");
 		}
 		else
 		{
-			CenterPrint4 (self, "\n\n\" Welcome to Survival Mode \n\n“Select team [1 to 4]. Survivors     \n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player resurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him/her up before it's too late.\n");
+			CenterPrint4 (self, "\n\n\" Welcome to Survival Mode \n\n“Select team [1 to 4].\n\n Survivors Blue team 1\n\n Red Monsters team 2\n\n Yellow team 3\n\n Green Team 4\n\n\nHow to play:\nIn survival mode, all players have one\nlife and must survive based on mutual\nteamwork and player resurrection.\n When a player is killed he must use the\n \"saveme\" command to get others to help\n him/her up before it's too late.\n");
 		return;
 		}
 	}
