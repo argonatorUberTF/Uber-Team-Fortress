@@ -347,7 +347,7 @@ void () cbt_pain =
 	}
 	else
 	{
-		sound (self, CHAN_VOICE, "vasqeuz/pain2.wav", WEAPON_SHOTGUN, ATTN_NORM);
+		sound (self, CHAN_VOICE, "vasquez/pain2.wav", WEAPON_SHOTGUN, ATTN_NORM);  //Fixed typo on file path -arg
 	}
 	self.pain_finished = (time + WEAPON_SHOTGUN);
 	cbt_pain1 ();
