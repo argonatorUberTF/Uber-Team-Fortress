@@ -437,4 +437,4 @@ void () monster_knight =
 	COOP_SetLives ();
 	monster_knight1 ();
 };
-//END 
+//END

@@ -432,11 +432,11 @@ float ( entity t_plyr, float item_no, float item_cost ) Inventory_AddItem =
 void () Merchant_SayWares =
 {
 	if ( self.#merchant_type == 1 )
-		bprint(2, "Quakeguy Merchant is somewhere in the map!\n" );
+		bprint(2, "Quakeguy Merchant is somewhere in the map! He has hookers-n-blackjack!\n" );
 	if ( self.#merchant_type == 2 )
-		bprint(2, "Weapons Merchant is lookin' to sell some good stuff!\n" );
+		bprint(2, "The Quakeguy Merchant speaks: Stay a while and lischen!\n" );
 	if ( self.#merchant_type == 3 )
-		bprint(2, "Shambler Merchant's got some cool stuff for sale!\n" );
+		bprint(2, "Shambler Merchant's got some cool stuff for sale! Heads on a pike for free!\n" );
 	
 	self.nextthink = time + 100 * rint(random() * 5);
 };
@@ -456,6 +456,7 @@ void () Merchant_Touch =
 	lookdir = vectoangles(other.origin - self.origin);		// face the buyer
 	lookdir_x = (self.v_angle_x) * -0.533;
 	self.angles = lookdir;
+	bprint(2, "Merchant: Good? Bad? I'm the one with the guns!\n");
 	if (!other.current_menu)
 		other.current_menu = 43;
 };

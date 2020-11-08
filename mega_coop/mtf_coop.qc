@@ -152,7 +152,7 @@ void () MTF_Setup_Monster =
 		newmis.movetype = 9;
 		newmis.solid = 0/*SOLID_NOT*/;
 		newmis.effects = EF_BLUE;
-		setmodel(newmis, "progs/newdot.spr");
+		setmodel(newmis, "progs/thedot.spr");
 		newmis.frame = 0;
 		setsize(newmis, '0 0 0', '0 0 0');
 		setorigin(newmis, endp);
@@ -379,6 +379,7 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				timer.health = 10;
 			}
 		}
+		
 		if (atckr.monster_items & #MITEM_POWERSTEALER)
 		{
 			if (targ.rune_time > time)
@@ -388,6 +389,7 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				sprint(targ, 2, "Your RUNE time was stolen by a поверстеалер monster.\n");
 				if (atckr.health > 0)
 					atckr.health = atckr.health + 200;
+				sound(targ, 1, "bigbomo/wokup.wav", 1, 1);	 //Added a warning sound. -arg
 			}
 			else
 			if (targ.invisible_finished > time)
@@ -400,6 +402,7 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 					atckr.monster_items = atckr.monster_items | MITEM_INVISIBLE;
 					atckr.old_model = atckr.model;
 					setmodel(atckr, "progs/eyes.mdl");
+					sound(targ, 1, "bigbomo/wokup.wav", 1, 1);	 //Added a warning sound. -arg
 				}
 			}			
 			else
@@ -412,6 +415,7 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				{
 					atckr.monster_items = atckr.monster_items | MITEM_QUAD;
 					atckr.effects = atckr.effects | EF_BLUE;
+					sound(targ, 1, "bigbomo/wokup.wav", 1, 1);	 //Added a warning sound. -arg
 				}
 			}
 			else
@@ -424,7 +428,9 @@ float (entity atckr, entity inflictor, entity targ, float origdmg) MTF_Monster_D
 				if (targ.invincible_finished >= (time+3))
 				{
 					targ.invincible_finished = time + 3;
-					sprint(targ, 2, "Your PENT time was stolen by a поверстеалер monster - you have 3 seconds left!\n");
+					sprint(targ, 2, "Your PENT time was stolen by a поверстеалер monster - you have 3 seconds left!\n"); 
+					sound(targ, 2, "bigbomo/wokup.wav", 1, 1);	 //Added a warning sound. -arg
+					stuffcmd(targ, "play bigbomo/wokup.wav\n");	
 				}
 				else
 					{

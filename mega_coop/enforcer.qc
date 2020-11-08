@@ -477,7 +477,7 @@ void () Enforcer_SniperSight_Create =
 	sight.owner = self;
 	sight.movetype = 8.000000;
 	sight.solid = 0.000000;
-	setmodel (sight, "progs/newdot.spr");
+	setmodel (sight, "progs/thedot.spr");
 	sight.frame = 1;
 	sight.classname = "timer";
 	setorigin (sight, self.origin);
