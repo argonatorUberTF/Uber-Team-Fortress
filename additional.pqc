@@ -23085,7 +23085,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		{
 			sprint( self, 2, "-- Vote CMDs --\n");
 			sprint( self, 2, "votemap <mapname> - Votes to switch to another map immediately.\n");
-			sprint( self, 2, "votelock - Locks the exit until all players agree to exit the map to prevent accidental exiting.\n");
+			sprint( self, 2, "lockexit - Locks the exit until all players agree to exit the map to prevent accidental exiting.\n");
 			sprint( self, 2, "voteexit - Votes to enable the map exit without map completion.\n");
 			sprint( self, 2, "voteuse  - Uses the entity immediately in front of the vote starter.\n");
 			sprint( self, 2, "votenext - Vote for the next map to be played after someone exits.\n");
