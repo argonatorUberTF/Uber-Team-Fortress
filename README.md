@@ -230,3 +230,7 @@ email: forgetitanyway@gmail.com
 Discord: argonator#1511
 
 Coders see addtional.pqc for notes and references.
+Two new model filess included:
+thedot.spr  The colored player fob to identify which team is for a possibly customskinned player
+toaster.mdl A real toaster similar to After Dark for a homage.
+
