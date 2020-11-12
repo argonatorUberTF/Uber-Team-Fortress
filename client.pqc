@@ -1291,11 +1291,12 @@ void(entity e) ValidateUser =
 {};
 void() PutClientInServer = 
 {
-	can_exit = #TRUE;  //Now unlock the exit so the players can lock it if they want. Prevents annoying message to unlock by voteexit by default -arg
+	can_exit = #TRUE;  //Unlock the exit. -arg
 	//If multiple players join it gets unlocked by default. However if you want to pre-empt exiting, then cmd lockexit fools! -arg
 	if (self.fob == 0)  //only attach one fob to player, it stays or hides until you disconnect with removeplayerfob() -arg
 	{
 	attachplayerfob();
+	self.is_fob_disabled = 0 ;
 	self.fob = 1;
 	}
 	self.pk_turretammo = 6;  //set painkeep weapon ammo amounts. -arg

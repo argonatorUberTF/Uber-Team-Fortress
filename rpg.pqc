@@ -879,6 +879,7 @@ void(string put) votemap_start =
 			localcmd ("map ");
 			localcmd (put);
 			localcmd ("\n");
+			can_exit = #TRUE;  //Now unlock the exit so the players can lock it if they want. Prevents annoying message to unlock by voteexit by default -arg
 			newmis = spawn();
 			newmis.classname = "timer";
 			newmis.nextthink = time + 2;

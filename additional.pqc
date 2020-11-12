@@ -1742,7 +1742,6 @@ void() spike_touch;
 void(entity Goal, entity Player, entity Item) DisplayItemStatus;
 void(entity Item, entity AP, float method3) tfgoalitem_RemoveFromPlayer;
 void() TeamFortress_MOTD;
-void(float tno) TeamFortress_TeamSetColor;
 void() beartrap_dropBearTrap;
 void() beartrapTouch;
 void() beartrapFollow;
@@ -16975,6 +16974,8 @@ void () summon_think =
 	fls = self.owner.maxs_z * 1;
 	endp = self.owner.origin;
 	endp_z += fls;
+	//set minion's color fob to the same at the player's. -arg
+	self.frame = self.owner.team_no - 1;
 	if (self.owner == world || self.owner.is_monster != 1)
 	{
 		dremove(self);
@@ -23516,11 +23517,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	else
 	if (s1 == "dfob")
 	{
+	sprint ( self, 2, "Player color fob marker for your team disabled.\n" );
 	self.is_fob_disabled = 1;		//This sets the colored playerfob like the spy feign for those who find it annoying. -arg
 	}
 	else
 	if (s1 == "efob")
 	{
+	sprint ( self, 2, "Player color fob marker for your team enabled.\n" );
 	self.is_fob_disabled = 0 ;		//This sets the colored playerfob like the spy feign for those who find it annoying. -arg
 	}
 	else
@@ -24515,39 +24518,20 @@ void () playerfob_think =
 {
     local float fls;
     local vector endp;
-	if (self.team_no == 0)
-	{
-		return;
-	}
     if (self.owner.is_undercover)
     {
     self.frame = self.owner.undercover_team - 1; //the selected color undercover -arg
     self.nextthink = time + .01;
     }
-else
+	else
     {
-    if (self.owner.team_no == 1)
-        {
-            self.frame = 0;
-        }
-        if (self.owner.team_no == 2)
-        {
-            self.frame = 1;
-        }
-        if (self.owner.team_no == 3)
-        {
-            self.frame = 2;
-        }
-        if (self.owner.team_no == 4)
-        {
-            self.frame = 3;
-        }
+	self.frame = self.owner.team_no -1;
     }
     if (self.owner.owner != self.real_owner)  //from summon_think for goalie. -arg
     {
         self.owner.owner = self.real_owner;
     }
-    fls = self.owner.maxs_z - 57;
+    fls = self.owner.maxs_z * 1;
     endp = self.owner.origin;
     endp_z += fls;
 //move with player. -arg
