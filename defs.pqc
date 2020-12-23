@@ -427,7 +427,7 @@ string(string s1, string s2, ...) frik_strcat = #115;
 float(string s) checkextension = #99;
 void () setup_strcat;
 var void(entity e, string s2) clientcommand = __NULL__;
-float(string s) tokenize = #58; // #441 for FTE
+float(string s) tokenize = #84; // #441 for FTE
 string(float n) argv = #86;// #442 for FTE
 float() argc = #85;
 //fer stuff!
