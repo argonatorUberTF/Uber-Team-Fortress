@@ -456,7 +456,7 @@ void () Merchant_Touch =
 	lookdir = vectoangles(other.origin - self.origin);		// face the buyer
 	lookdir_x = (self.v_angle_x) * -0.533;
 	self.angles = lookdir;
-	bprint(2, "Merchant: Good? Bad? I'm the one with the guns!\n");
+//	bprint(2, "Merchant: Good? Bad? I'm the one with the guns!\n");
 	if (!other.current_menu)
 		other.current_menu = 43;
 };
@@ -632,4 +632,4 @@ void () Merchant_GenerateEntity =
 	dremove(self);
 	Inventory_SetupMerchant();
 };
-//END
+//END 
