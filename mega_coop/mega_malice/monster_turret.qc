@@ -84,5 +84,5 @@ void () monster_turret_malice =
 	self.health = 50;
 	dealwithskill ();
 	self.th_die = dead_tur;
-	droptofloor ();
+	droptofloor (0,0);
 };//END

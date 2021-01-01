@@ -184,7 +184,7 @@ void () extinguisher_touch =
 		self.co2_flag = (time + 0.3);
 		sound (self, CHAN_AUTO, "utils/putout.wav", WEAPON_SHOTGUN, ATTN_NORM);
 	}
-	droptofloor ();
+	droptofloor (0,0);
 };
 void () fire_extinguisher =
 {

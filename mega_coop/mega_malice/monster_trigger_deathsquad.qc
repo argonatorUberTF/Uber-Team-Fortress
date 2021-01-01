@@ -142,7 +142,7 @@ void () the_plant =
 	setsize (self, '-5 -5 -24', '5 5 25');
 	self.origin_z = (self.origin_z + SPAWNFLAG_LASER);
 	oldz = self.origin_z;
-	droptofloor ();
+	droptofloor (0,0);
 	if (((oldz - self.origin_z) > 250))
 	{
 		dprint ("item fell out of level at ");

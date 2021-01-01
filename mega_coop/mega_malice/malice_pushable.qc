@@ -15,7 +15,7 @@ void () crate_push =
 	}
 	if ((other.classname == "player"))
 	{
-		droptofloor ();
+		droptofloor (0,0);
 		makevectors (other.v_angle);
 		t__x = (self.origin_x + (v_forward_x * TE_TELEPORT));
 		t__y = (self.origin_y + (v_forward_y * TE_TELEPORT));
@@ -111,7 +111,7 @@ void () thing_barrel =
 	self.takedamage = DAMAGE_YES;
 	self.origin_z = (self.origin_z + SPAWNFLAG_LASER);
 	oldz = self.origin_z;
-	droptofloor ();
+	droptofloor (0,0);
 	if (((oldz - self.origin_z) > 250))
 	{
 		dprint ("item fell out of level at ");
@@ -133,7 +133,7 @@ void () thing_barrel2 =
 	self.takedamage = DAMAGE_YES;
 	self.origin_z = (self.origin_z + SPAWNFLAG_LASER);
 	oldz = self.origin_z;
-	droptofloor ();
+	droptofloor (0,0);
 	if (((oldz - self.origin_z) > 250))
 	{
 		dprint ("item fell out of level at ");

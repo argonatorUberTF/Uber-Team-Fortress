@@ -983,7 +983,7 @@ void () thing_body =
 		precache_model ("progs/swat.mdl");
 		setmodel (self, "progs/swat.mdl");
 		setsize (self, VEC_HULL_MIN, '16 16 40');
-		droptofloor ();
+		droptofloor (0,0);
 		self.think = SUB_Null;
 		n = random ();
 		if ((n < 0.2))

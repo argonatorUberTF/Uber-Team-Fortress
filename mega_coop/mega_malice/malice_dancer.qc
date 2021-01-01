@@ -144,7 +144,7 @@ void () dancer =
 	}
 	self.th_die = become_merc;
 	setsize (self, VEC_HULL2_MIN, '32 32 40');
-	droptofloor ();
+	droptofloor (0,0);
 	f_dancer1 ();
 };
 //END
