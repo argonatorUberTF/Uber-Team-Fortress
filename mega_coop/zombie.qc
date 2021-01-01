@@ -748,7 +748,7 @@ void () zombie_paine12 = [ 173, zombie_paine13 ]
 {
 			if (head.classname == "player" || head.is_monster == 1)
 			{
-				droptofloor ();
+				droptofloor (0,0);
 				self.solid = SOLID_NOT;
 			}
 			head = head.chain;

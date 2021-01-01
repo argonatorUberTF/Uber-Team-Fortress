@@ -1,4 +1,5 @@
 #define nofixcount
+//We are always in mtf_coop mode on uber -arg
 #ifndef mtf_coop
 #pragma DONT_COMPILE_THIS_FILE
 #else

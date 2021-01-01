@@ -1,3 +1,5 @@
+//Basically all the time uber is in nehara mode as all their code is added. So this file might as well be scrapped.
+//Keep for comparison uses but it's basically not compiled -arg
 #ifndef mtf_coop_nehahra
 void () army_fire;
 void () army_stand1 = [ 0, army_stand2 ]
