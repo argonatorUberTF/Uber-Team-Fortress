@@ -233,7 +233,7 @@ void (entity pickuper, float toss) zg_drop =
 		self = pickupee;
 		self.velocity = '0 0 0';
 		pickuper.owner = pickupee;
-		droptofloor ();
+		droptofloor (0,0);
 		self = oldself;
 	}
 	pickuper.owner = pickuper._oldowner;

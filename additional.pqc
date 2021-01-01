@@ -791,9 +791,10 @@ string nextmap;
 #ifdef mtf_coop_packet
 string (string packet_cmd) Packet_Slashpass; // not used really since the funcs are disabled -arg
 string() votesneededtostring; // for rpg.pqc
-#ifndef mtf_coop
-string team_menu_string /* = "" */;
-#endif
+// We are always in mtf_coop mode defined on uber -arg
+//#ifndef mtf_coop
+//string team_menu_string /* = "" */;
+//#endif
 //
 //VECTORS
 .vector aether;					// Nehara
@@ -967,10 +968,10 @@ float PK_CANPABAMMO_MAX = 4;
 float PK_BEARTRAPAMMO_MAX = 12;
 float EF_RED    = 128; //effects
 //
-#ifndef mtf_coop
-float FlagTag;	// mega2k feature (used in map Insanity.bsp)
-float coop = 1;
-#endif
+//#ifndef mtf_coop
+//float FlagTag;	// mega2k feature (used in map Insanity.bsp)
+//float coop = 1;
+//#endif
 //float SECRET_NO_SHOOT = 8.00000;	//unused
 //						END FLOAT CONSTANTS
 //
@@ -2820,12 +2821,13 @@ void() TeamFortress_CheckTeamCheats =
 				sk = csk;
 			if (st != sk)
 			{
-#ifdef botprogs
-				if (!self.ishuman)
-				{
-					return;
-				}
-#endif
+// We are always in mtf_coop mode defined on uber -arg
+//#ifdef botprogs
+//				if (!self.ishuman)
+//				{
+//					return;
+//				}
+//#endif
 #ifndef mtf_coop_halloween
 				TeamFortress_SetSkin(self);
 //				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
@@ -4225,9 +4227,10 @@ void() execute_changelevel =
 	{
 		if (other.stats_on)
 		{
-#ifndef mtf_coop
-			stuffcmd (other, "set stats_execed -1; exec progs/stats.cfg\n");
-#endif
+// We are always in mtf_coop mode defined on uber -arg
+//#ifndef mtf_coop
+//			stuffcmd (other, "set stats_execed -1; exec progs/stats.cfg\n");
+//#endif
 		}
 		other.takedamage = 0;
 		other.solid = 0;
@@ -17146,7 +17149,7 @@ float ( entity t_plyr, float attrib_type ) Coop_HasMasterSkill =
 };
 void () Masters_MinionSpawnThink =
 {
-	droptofloor ();
+	droptofloor (0, 0);
 	if (self.owner == world || self.owner.health < 1)
 	{
 		dremove(self);
@@ -24101,9 +24104,10 @@ void() walkmonster_start =
 	{
 		self.takedamage = 2;
 	}
-#ifndef mtf_coop
-	total_monsters = total_monsters + TF_FLARE_OFF;
-#endif
+// We are always in mtf_coop mode
+//#ifndef mtf_coop
+//	total_monsters = total_monsters + TF_FLARE_OFF;
+//#endif
 	set_monster_health();
 };
 void() item_megahealth_rot = 
@@ -24130,7 +24134,8 @@ void() item_megahealth_rot =
 void() walkmonster_start_go = 
 {
 	self.origin_z = self.origin_z + TF_FLARE_OFF;
-	//droptofloor(); I think this is causing the monsters to drop through floor and continue once walking. -arg
+	droptofloor(0, 0);
+// I think this is causing the monsters to drop through floor and continue once walking. -arg
 	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
 	{
 		dprint("walkmonster in wall at: ");
@@ -24615,4 +24620,4 @@ void () W_FireRocket =
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
-//END
+//END 

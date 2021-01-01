@@ -309,7 +309,7 @@ float (float yaw, float dist) walkmove = #32;
 //float (float yaw, float dist) droptofloor = #34; 
 //Are you sure you want to drop monster summons to the floor without parameters? -arg
 // This might be the cause of the reg monsters falling through map, they are not z high enough to match the solid floor.
-float () droptofloor = #34; //xav set this at first.
+float (float yaw, float dist) droptofloor = #34; //xav set this at first.
 // <---
 void (float style, string value) lightstyle = #35; 
 float (float v) rint = #36; 
@@ -434,9 +434,10 @@ float() argc = #85;
 .float num_kills;
 .float fertracker;
 .float hookpoints;
-#ifndef mtf_coop
-.float off_hook;
-#endif
+// We are always in mtf_coop mode defined on uber -arg
+//#ifndef mtf_coop
+//.float off_hook;
+//#endif
 // Rampage stuff!
 .float killstack;
 float spycam;
@@ -654,12 +655,13 @@ void (entity targ) teamchange;
 // monster(s) function is disabled. Can be tweaked via "localinfo pmonsters". 0 for no monsters (default),
 // 1 for 1-player only vs monster(s), and 2 for monsters staying no matter how many players.
 float prematchmonsters;
-#ifndef mtf_coop
-float monsterlevel;
-float monsterrecharge;
-void () respawn_shambler;
-void () monster_shambler_respawn;
-#endif
+//We are always in mtf_coop mode on uber -arg
+//#ifndef mtf_coop
+//float monsterlevel;
+//float monsterrecharge;
+//void () respawn_shambler;
+//void () monster_shambler_respawn;
+//#endif
 // Damage-O-meter - only supported by Prozac and FTE
 float canusenew;
 .float inflicted;
@@ -725,9 +727,10 @@ float votetimeleft;
 //mini turret
 .float has_mini;
 .float is_active_mini;
-#ifndef mtf_coop
-.float is_mini;
-#endif
+//We are always in mtf_coop mode on uber -arg
+//#ifndef mtf_coop
+//.float is_mini;
+//#endif
 //Field Generator from DeadLode mod (I'm tired of trying to decipher PZCTF's hieroglyphics)
 .float has_fieldgen;
 .entity gen_north;
@@ -1367,7 +1370,6 @@ void (entity to_bloody, float damage) bloodyme;
 #endif
 .entity reload_ent;
 .void() reload_finished_func;
-#ifndef mtf_coop
 #define PL_FEM   // for female gender model and deathmessages in client.pqc -arg
 #ifdef PL_FEM
 #define FEMALE_MODEL_BLUE			"progs/pf_blue.mdl"
@@ -1379,7 +1381,6 @@ void (entity whom) SetPlayerModelindex;
 .float gender;
 #define	GENDER_MALE				0
 #define GENDER_FEMALE			1
-#endif
 #endif
 //This switch allows comms to the hub and other MegaTF COOP servers. Since UberTF is
 //not participating with this, it's turned off. I also just put a return only to calls
@@ -1409,12 +1410,13 @@ void (string msg) Packet_SendGlobalMessage
 #define BONUS_PROPERTY_ONE			
 #define PROPERTY_
 #endif
-#ifndef mtf_coop
-#define BATTLE_ROYALE			1
-#endif
+//We are always in mtf_coop mode on uber -arg
+//#ifndef mtf_coop
+//#define BATTLE_ROYALE			1
+//#endif
 #ifdef BATTLE_ROYALE
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v12.10.2020\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v1.1.2021\n");
 //END

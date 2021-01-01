@@ -195,9 +195,10 @@ void() DecodeLevelParms =
 				number_of_teams = 4;  //I think this is right, regardless of whatever map -arg
 //however the map has to have a teamspawn for teams 1-4 at least 2 teams. Mappers, fix your maps fools. -arg
 			}
-#ifndef mtf_coop
-			cvar_set("sv_aim", "1");
-#endif
+// We are always in mtf_coop mode defined on uber -arg
+//#ifndef mtf_coop
+//			cvar_set("sv_aim", "1");
+//#endif
 			team1lives = -1;
 			team2lives = -1;
 			team3lives = -1;
@@ -1293,7 +1294,7 @@ void() PutClientInServer =
 {
 	can_exit = #TRUE;  //Unlock the exit. -arg
 	//If multiple players join it gets unlocked by default. However if you want to pre-empt exiting, then cmd lockexit fools! -arg
-	if (self.fob == 0)  //only attach one fob to player, it stays or hides until you disconnect with removeplayerfob() -arg
+	if (self.fob == 0)  //only attach one fob to player if they have a team number, it stays or hides until you disconnect with removeplayerfob() -arg
 	{
 	attachplayerfob();
 	self.is_fob_disabled = 0 ;
@@ -1928,19 +1929,20 @@ void() NextLevel =
 };
 void() CheckRules = 
 {
-#ifndef mtf_coop
-	if (timelimit && time >= timelimit)
-	{
-		NextLevel();
-	}
-	else
-	{
-		if (fraglimit && self.frags >= fraglimit)
-		{
-			NextLevel();
-		}
-	}
-#endif
+// We are always in mtf_coop mode defined on uber -arg
+//#ifndef mtf_coop
+//	if (timelimit && time >= timelimit)
+//	{
+//		NextLevel();
+//	}
+//	else
+//	{
+//		if (fraglimit && self.frags >= fraglimit)
+//		{
+//			NextLevel();
+//		}
+//	}
+//#endif
 };
 void () pdummy_wait_on_reconnect =
 {
@@ -3543,10 +3545,10 @@ void() ClientDisconnect =
 void() Grapple_Track;
 void() Reset_My_Grapple;
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience;
-#ifdef PL_FEM
-#include "fem_obits.qc"
-void FemaleClientObituary(entity targ, entity attacker );
-#endif
+//#ifdef PL_FEM
+//#include "fem_obits.qc"
+//void FemaleClientObituary(entity targ, entity attacker );
+//#endif
 void(entity targ, entity attacker) ClientObituary = 
 {
 	local float rnum;
@@ -3703,13 +3705,14 @@ void(entity targ, entity attacker) ClientObituary =
 		targ.being_juggled = 0;
 		Achievements_Change( attacker, world, ACHIEVEMENTS_ADD, ACHIEVEMENT_JUGGLER, 1 );
 	}
-#ifdef PL_FEM
-	if (targ.gender == GENDER_FEMALE)
-	{
-		FemaleClientObituary( targ, attacker );
-		return;
-	}
-#endif
+//fem_obits.qc needs to be gone through like the original obits to fix a compiler if/else tangle. -arg
+//#ifdef PL_FEM
+//	if (targ.gender == GENDER_FEMALE)
+//	{
+//		FemaleClientObituary( targ, attacker );
+//		return;
+//	}
+//#endif
 	rnum = random();
 	if (targ.classname == "player" || targ.is_monster == 1)
 	{
@@ -5202,4 +5205,4 @@ void () FixSoundCrap =
 	stuffcmd (playername, "_snd_mixahead .1\n");
 	dremove (self);
 };
-//End
+//End 

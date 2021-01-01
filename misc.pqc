@@ -234,7 +234,7 @@ void() misc_explobox =
 	self.takedamage = 2;
 	self.origin_z = self.origin_z + 2;
 	oldz = self.origin_z;
-	droptofloor();
+	droptofloor(0,0);
 	if (oldz - self.origin_z > 250)
 	{
 		dprint("item fell out of level at ");
@@ -262,7 +262,7 @@ void() misc_explobox2 =
 	self.takedamage = 2;
 	self.origin_z = self.origin_z + 2;
 	oldz = self.origin_z;
-	droptofloor();
+	droptofloor(0,0);
 	if (oldz - self.origin_z > 250)
 	{
 		dprint("item fell out of level at ");
@@ -1662,7 +1662,7 @@ void() skeet_shooter =
 	self.solid = TF_FLARE_LIT;
 	setsize(self, '0 0 0', '0 0 0');
 	self.origin_z = self.origin_z + 2;
-	droptofloor();
+	droptofloor(0,0);
 };
 void() skeet_sound = 
 {
@@ -1750,7 +1750,7 @@ void () effect_duckpond =
 	self.noise = "effects/duck1.wav";
 	self.think = Random_Play;
 	self.oldorigin = self.origin;
-	droptofloor ();
+	droptofloor (0,0);
 };
 void () duck_scare =
 {

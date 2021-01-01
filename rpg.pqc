@@ -1018,7 +1018,8 @@ void() RemoveVote2 =
 	return;
 	dremove (self);
 };
-#include "vmap_menus.qc"
+//Never saw it used or called. 1950 less lines of stuff. -arg
+//#include "vmap_menus.qc"
 float(string mapstr) validatemap =
 {
 	mapstr = strcat("maps/",mapstr);
