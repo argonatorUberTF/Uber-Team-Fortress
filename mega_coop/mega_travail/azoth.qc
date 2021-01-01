@@ -1887,7 +1887,7 @@ void () SpawnStairWaypoint =
 	setsize (waypoint, '-16 -16 -32', VEC_HULL_MAX);
 	oself = self;
 	self = waypoint;
-	droptofloor ();
+	droptofloor (0,0);
 	self = oself;
 	waypoint.touch = trigger_stairpoint;
 	waypoint.nextthink = (time + 0.1);
@@ -2100,7 +2100,7 @@ void () azoth_die =
 	setorigin (dummy, (waypoint.origin + '0 0 128'));
 	oself = self;
 	self = dummy;
-	droptofloor ();
+	droptofloor (0,0);
 	self = oself;
 };
 void () azoth_die_special =
