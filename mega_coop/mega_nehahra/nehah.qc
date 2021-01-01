@@ -94,7 +94,7 @@ void () monster_nehahra =
 	self.th_die = nehahra_die;
 	self.origin_z = (self.origin_z + 1);
 	self.button1 = 90;
-	droptofloor ();
+	droptofloor (0,0);
 	if (!walkmove (0, 0))
 	{
 		dprint ("nehahra stuck in wall at: ");

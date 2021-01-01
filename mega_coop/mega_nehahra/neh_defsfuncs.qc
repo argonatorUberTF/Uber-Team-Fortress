@@ -3615,7 +3615,7 @@ void () misc_barrel =
 	self.touch = player_push2;
 	self.origin_z = (self.origin_z + FL_SWIM);
 	oldz = self.origin_z;
-	droptofloor ();
+	droptofloor (0,0);
 	if (((oldz - self.origin_z) > 250))
 	{
 		dprint ("item fell out of level at ");
@@ -3730,7 +3730,7 @@ void () misc_car =
 	setsize (self, '-29 -66 -15', '31 67 41');
 	self.origin_z = (self.origin_z + FL_SWIM);
 	oldz = self.origin_z;
-	droptofloor ();
+	droptofloor (0,0);
 	if (((oldz - self.origin_z) > 250))
 	{
 		dprint ("misc_car fell out of level at ");
@@ -3756,7 +3756,7 @@ void () misc_vend =
 	self.takedamage = DAMAGE_AIM;
 	self.origin_z = (self.origin_z + FL_SWIM);
 	oldz = self.origin_z;
-	droptofloor ();
+	droptofloor (0,0);
 	if (((oldz - self.origin_z) > 250))
 	{
 		dprint ("vending machine fell out of level at ");

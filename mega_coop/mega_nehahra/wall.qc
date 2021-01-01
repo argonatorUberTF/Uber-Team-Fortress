@@ -429,7 +429,7 @@ void () exploding_wall =
 			te.solid = SOLID_BBOX;
 			setsize (te, VEC_HULL_MIN, '16 16 40');
 			self = te;
-			droptofloor();
+			droptofloor(0,0);
 			self.think = doom_barrel_think;
 			self.takedamage = 1;
 			self.health = oself.health;
