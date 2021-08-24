@@ -322,16 +322,6 @@ void(vector p) killable_boss_missile =
 	if (self.enemy.health <= 0)
 		KillableBossFindTarget ();   //Look Around!
 };
-#ifdef mtf_coop_halflife
-void () killable_boss_use = 
-{
-	if (useType > 0)
-{
-		return;
-	}
-	boss_death1();
-};
-#endif
 void() killable_boss_awake =
 {
 	self.solid = SOLID_SLIDEBOX;
@@ -350,14 +340,6 @@ void() killable_boss_awake =
 	WriteCoord (MSG_BROADCAST, self.origin_y);
 	WriteCoord (MSG_BROADCAST, self.origin_z);
 	self.yaw_speed = 20;
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-{
-		self.use = killable_boss_use;
-		self.takedamage = FALSE;
-		self.health = 99999999;
-	}
-#endif
 	killable_boss_rise1 ();
 };
 void() killable_boss_pain =
