@@ -1130,57 +1130,6 @@ float (entity the_player, float amount, string give_what) Extra_Stuff =
 	}
 	return 0;
 };
-#ifdef botprogs
-#define BOTLIST_NORM			0
-#define BOTLIST_TEAMCLASS		1
-#define BOTLIST_FULLDEBUG		2
-void(float btype) bot_list =
-{
-	local entity entar;
-	local string str;
-	entar = find(world, classname, "player");
-	while(entar)
-	{
-		if (entar.ishuman == 0 || entar.ishuman == 2)
-		{
-			str = ftos(entar.fUserID);
-			sprint (self, 2, str);
-			sprint (self, 2, "     ");
-			sprint (self, 2, entar.netname);
-			if (btype == #BOTLIST_TEAMCLASS)
-			{
-				sprint (self, 2, " ‘Â·Ì∫ ");
-				sprint (self, 2, GetTeamName(entar.team_no));
-				sprint (self, 2, " √Ï·ÛÛ∫ ");
-				sprint (self, 2, TeamFortress_GetClassName(entar.playerclass));
-			}
-			if (btype == #BOTLIST_FULLDEBUG)
-			{
-
-			}
-			sprint (self, 2, "\n");
-		}
-		entar = find(entar, classname, "player");
-	}
-};
-void (float clientno) bot_kick =
-{
-	local entity bot;
-	bot = find (world, classname, "player");
-	while (bot)
-	{
-		if (((bot.fUserID == clientno) && !bot.ishuman))
-		{
-			bot.fUserID = CONTENT_EMPTY;
-			botDisconnect (bot);
-			return;
-		}
-		bot = find (bot, classname, "player");
-	}
-	sprint(self,2, "Invalid bot. Bots in server:\n");
-	bot_list(#BOTLIST_NORM);
-};
-#endif
 float (string votemap_name) Check_For_Bmodel =
 {
 	if (votemap_name == "rfort" || votemap_name == "bfort" || votemap_name == "control2" || // 2fort5p|| 2fort5p || colony1 i think?

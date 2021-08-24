@@ -485,15 +485,6 @@ void(float objtobuild) TeamFortress_Build =
 	}
 	if (CheckArea(newmis, self) == TF_FLARE_LIT)
 	{
-#ifdef mtf_coop_halflife
-		if (self.classname != "player")
-		{
-			bprint(2,"COULDNT SPAWN A SENTRYGUN\n");
-			dremove(self);
-			dremove(newmis);
-			return;
-		}
-#endif
 		sprint(self, 2, "There is not enough room to build here.\n");
 		dremove(newmis);
 		return;

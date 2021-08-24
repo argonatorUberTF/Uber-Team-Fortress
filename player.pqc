@@ -41,17 +41,6 @@ void() player_touch =
 			}
 		}
 	}
-#ifdef botprogs
-	if (self.ishuman != 1)
-	{
-	local vector source;
-	makevectors (self.v_angle);
-	source = (self.origin + '0 0 16');
-	traceline (source, (source + (v_forward * 64)), 0, self);
-	if ( trace_fraction != 1 )
-		self.velocity = ( -1 * ( v_right * 64 ) ) * 4;
-	}
-#endif
 };
 void () player_stand1 = [ 17, player_stand1 ]
 {

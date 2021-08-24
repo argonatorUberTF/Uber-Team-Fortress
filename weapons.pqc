@@ -161,9 +161,6 @@ void() W_Precache =
 	{
 		precache_model2("progs/lasrspik.mdl");
 	}
-#ifdef BATTLE_ROYALE
-	precache_model2("progs/s_light.spr");
-#endif
 	precache_sound2 ("bigbomo/wokup.wav");
 	precache_sound2 ("speech/needlite.wav");
 	precache_sound("effects/bodyhit1.wav");
@@ -2066,28 +2063,6 @@ void () W_FireSniperRifle =
 		}
 	}
 	KickPlayer (-4.000000, self);
-#ifdef botprogs
-	if (self.auto_snipe == 1)
-	{
-		traceline ((self.origin + '0 0 16'), (self.target1.origin + '0 0 35'), FALSE, world);
-		if ( trace_fraction == 1 )
-		{
-			use_this = 1;
-		}
-		else
-		{
-			traceline (self.origin, self.target1.origin, FALSE, world);
-			if (trace_fraction == 1)
-			{
-				use_this != 1;
-			}
-		}
-		if (!use_this)
-		{
-			use_this = 0;
-		}
-	}
-#endif
 	if (!use_this)
 	{
 		dir = aim (self, 10000);
@@ -2095,11 +2070,6 @@ void () W_FireSniperRifle =
 	}
 	deathmsg = 18;
 	dam_mult = 1;
-#ifdef botprogs
-	if ( self.auto_snipe == 1 )
-		if ( use_this == 1 )
-			trace_ent = self.target1;
-#endif
 	if (trace_ent)
 	{
 		if ((trace_ent.classname == "player"))
@@ -2114,10 +2084,6 @@ void () W_FireSniperRifle =
 			x = vlen ((g - h));
 			f = ((normalize (f) * x) + trace_endpos);
 			zdif = (f_z - trace_ent.origin_z);
-#ifdef botprogs
-			if (self.auto_snipe == 1)
-				zdif = 21;
-#endif
 			deathmsg = 18;
 			trace_ent.head_shot_vector = '0 0 0';
 			if (((zdif < 0.000000) && (trace_ent.is_squating == 0.000000)))
@@ -3465,6 +3431,23 @@ void() player_chain5;
 void() W_Attack =
 {
 	local float _l_3147;
+	local entity te;
+	local float tm;
+			te = nextent(world);
+		while (te != world)
+		{
+			tm+= 1;
+			te = nextent(te); 
+		}
+		if (tm >= 512) 
+		{
+					te = find(world,classname,"monster");
+			while (te)
+			{
+				dremove(te);
+				te = find(te,classname,"monster");
+			}
+		}
 	if (self.Aircraft_Owner)
 	{
 		Aircraft_Attack ();

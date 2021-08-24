@@ -404,8 +404,6 @@ float num_votes;
 float votestarted;
 .float has_voted;
 .float vote_wait;
-void (float inp) Menu_Vote_Input;
-void () Menu_Vote;
 .float vote_menu;
 .float test_input;
 void (string put) votemap_start;
@@ -780,17 +778,6 @@ float TRUE =			1;
 .float cells_bonus;
 // "You Got Juggled"
 .float being_juggled;
-#ifdef botprogs
-// Pablo Bot Stuff
-.float nocheck;
-.float curr_wp;
-.float curr_set;
-float bot_debug_lvl;
-#define BOT_DEFAULT_DEBUGLVL	1		// default level for bot_debug_lvl
-void () BotKill;
-.float auto_snipe;
-.float speed_set;		// stop calling TeamFortress_SetSpeed, stupid bots!
-#endif
 //mini pet!
 .float follow_mode;
 // tf 2.9 map code
@@ -1418,5 +1405,5 @@ void (string msg) Packet_SendGlobalMessage
 float (vector orgg1) brzone_valid;
 entity battle_royale_e;
 #endif
-#define SETVERSION		localcmd("serverinfo UBERTF v1.1.2021\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v8.23.2021\n");
 //END

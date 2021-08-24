@@ -62,21 +62,8 @@ void() multi_use =
 void() multi_touch = 
 {
 	local entity te;
-#ifdef HALFLIFE
-	if (!self.spawnflags & 4)
-		if (other.classname != "player")
-			return;
-	if (#HL_MAP)
-		if (self.spawnflags & 4)		// Pushables only (c1a0e)
-			if (other.classname != "pushwall")
-				return;
-
-	if (has_master(self) == #TRUE)
-		return;
-#else
 	if (other.classname != "player")
 		return;
-#endif
 	if (!Activated(self, other))
 	{
 		if (self.else_goal != TF_FLARE_LIT)
@@ -155,10 +142,6 @@ void() trigger_multiple =
 	}
 	if (self.cnt == 0)
 	self.cnt = -1;
-#ifdef HALFLIFE
-		if (#HL_MAP)
-			self.touch = multi_touch;		// no SPAWNFLAG_NOTOUCH for half-life multi triggers
-#endif
 };
 void() trigger_once = 
 {
@@ -216,22 +199,7 @@ void() trigger_relay =
 		dremove(self);
 		return;
 	}
-#ifdef HALFLIFE
-	self.use = trigger_relay_use;
-	if (self.killtarget == "xentalkmm")
-	{	// lol dont ask
-		self.killtarget = "blah";
-		dremove(self);
-		return;
-	}
-	if (#HL_MAP)
-	{
-		self.think = trigger_relay_checktargs;
-		self.nextthink = time + 2;
-	}
-#else
 	self.use = SUB_UseTargets;
-#endif
 };
 void() trigger_secret = 
 {
@@ -509,24 +477,6 @@ void() teleport_touch =
 //	{
 //		return;
 //	}
-#ifdef HALFLIFE
-	if (self.spawnflags & 2)		// No players
-		if (other.classname == "player")
-			return;
-	if (#HL_MAP)
-		if (self.spawnflags & 1)		// Allow monsters
-			{}
-		else
-			if (other.classname != "player")
-				return;
-
-	if (has_master(self))
-	{
-			return;
-	}
-	if (self.classname == "monster_nihilanth")
-		return;
-#endif
 	SUB_UseTargets();
 	spawn_tfog(other.origin);
 	t = find(world, targetname, self.target);
@@ -544,11 +494,6 @@ void() teleport_touch =
 		other.velocity = v_forward * other.velocity_x + v_forward * other.velocity_y; 
 		return;
 	}
-#ifdef HALFLIFE
-	if (#HL_MAP)
-		setorigin (other, t.origin + '0 0 15');
-	else
-#endif
 		if (other.classname == "building_tesla") // Add a bit of a push to carried objects by grav gun and things that go through teleporter with player(could be rockets?) -arg
 	{
 		other.velocity = v_forward * 600; 
@@ -914,14 +859,6 @@ void () trigger_push_mtf_use =
 		self.touch = SUB_Null;
 	dremove(self);
 };
-#ifdef HALFLIFE
-void () func_ladder;
-void () trigger_push_use =
-{
-	self.touch = trigger_push_touch;
-	self.use = SUB_Null;
-};
-#endif
 void() trigger_push = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)

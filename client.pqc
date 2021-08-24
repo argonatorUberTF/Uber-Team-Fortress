@@ -738,19 +738,6 @@ float (entity _p_5763) IsLegalClient =
 	}
 	return (0.000000);
 };
-#ifdef HALFLIFE
-void (string str_a, string str_b) changelevel2 =
-{
-	if (landmarked)
-	{
-		changelevel_save(str_a, str_b);	// save the map (FTE only)
-		intermission_running = 0;
-		landmarked = 0;
-	}
-	else
-		changelevel(str_a);//changelevel2(str_a, str_b);		// save the level damnit! >:0
-};
-#endif
 void() TF_MovePlayer = 
 {
 	local entity place;
@@ -978,29 +965,6 @@ void() IntermissionThink =
 };
 void (entity plyr, string nname, float exp) MTF_Coop_PreWriteExperience;
 void () MTF_Coop_UpdateMapRanks;
-#ifdef HALFLIFE
-void () relandmark_touch =
-{
-	local entity targ, oself;
-	if (!landmarked)
-	{
-		oself = self;
-		targ = find( world, targetname, infokey (world, "landmark") );
-		if (targ)
-{
-			self = targ;
-			info_landmark();
-			self = oself;
-			self.touch = changelevel_touch;
-		}
-		else
-		{
-			bprint(2,"WE BE SCREWED.\n");
-			self.touch = changelevel_touch;
-		}
-	}
-};
-#endif
 void() changelevel_use =
 {
 	if (num_players > 0 && can_exit == #FALSE)
@@ -1048,23 +1012,6 @@ void() changelevel_use =
 	self.think = execute_changelevel;
 	self.nextthink = time + 0.1;
 };
-#ifdef SVEN_COOP
-void () trigger_changelevel_parse;
-void () trigger_changelevel_activate =
-{
-	self.touch = changelevel_touch;
-	self.use = changelevel_use;
-	self.solid = SOLID_TRIGGER;
-};
-void () exit_skins =
-{
-	if (self.frame == 0)
-		self.frame = 1;
-	else
-		self.frame = 0;
-	self.nextthink = time + 1;
-};
-#endif
 void() trigger_changelevel = 
 {
 	if (CheckExistence() == 0)
@@ -1105,70 +1052,6 @@ void() trigger_changelevel =
 	if ( self.targetname )
 		self.use = changelevel_use;
 };
-#ifdef SVEN_COOP
-void () trigger_changelevel_parse =
-{
-	local string nmt;
-	nmt = cvar_string( "nomaptrans" );
-	if ( nmt != "" )
-	{
-		if ( self.map == nmt )
-		{
-			self.touch = SUB_Null;
-			self.use = SUB_Null;
-			self.solid = SOLID_BBOX;
-			self.renderamt = 0;
-			HalfLife_DoRender();
-			return;
-		}
-	}
-	if ( cvar_string( "nextmap" ) != "" )
-	{
-		if (!self.map)
-	{
-			self.use = self.use = changelevel_use;//trigger_changelevel_activate;
-			self.map = cvar_string( "nextmap" );
-			return;
-		}
-		newmis = spawn();
-		setmodel( newmis, "progs/hlexit.spr" );
-		newmis.solid = SOLID_TRIGGER;
-		newmis.movetype = MOVETYPE_NONE;
-		setsize(newmis, VEC_HULL_MIN, '16 16 40');
-		setorigin( newmis, ((self.mins+self.maxs)*.5) );
-		newmis.frame = 0;
-		newmis.think = exit_skins;
-		newmis.nextthink = time + 1;
-		self.map = cvar_string( "nextmap" );
-		trigger_changelevel_activate();
-		return;
-	}
-	else
-	{
-		if (!self.map)
-			objerror ("changelevel trigger doesn't have map.");
-		if ( self.targetname )
-			self.use = changelevel_use;
-	}
-	if (self.landmark)
-	{
-		if (self.targetname == "changetoc1a1e")
-		{
-			dremove(self);
-			return;
-		}
-		if (hlt_think(self) == #TRUE)
-	{
-			dremove(self);
-			return;
-		}
-	}
-	if (!(self.spawnflags & 2))	// spawnflags 2 is use-only (which means we look for a trigger_transition generally..)
-	self.touch = changelevel_touch;
-	if ( self.targetname )
-		self.use = changelevel_use;
-};
-#endif
 void() respawn = 
 {
 	if (coop)
@@ -1323,9 +1206,6 @@ void() PutClientInServer =
 	self.max_health = floor( self.max_health * MTF_Coop_AttribGain(self, #ATTRIB_HEALTH) );
 	self.flags = 8;
 self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
-#ifdef HALFLIFE
-	self.oldgravity = 1;
-#endif
 	self.air_finished = time + 12;
 	self.dmg = 2;
 	self.super_damage_finished = 0;
@@ -1523,7 +1403,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		{
 			if ((te.real_owner == self))
 			{
-				TF_T_Damage (te, world, world, 500, 0, 0);
+				dremove(te); // just remove the trip bomb instead of detonating to prevent spawn self fragging -agent -arg
 			}
 			te = find (te, classname, "trip_bomb");
 		}
@@ -1547,7 +1427,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		{
 			if (te.real_owner == self)
 			{
-				TF_T_Damage(te, world, world, 500, 0, 0);
+				dremove(te); // just remove the dispenser instead of detonating to prevent spawn self fragging -agent -arg
 			}
 			te = find(te, classname, "building_dispenser");
 		}
@@ -1556,7 +1436,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		{
 			if (te.real_owner == self)
 			{
-				TF_T_Damage(te, world, world, 500, 0, 0);
+				dremove(te); // just remove the dispenser instead of detonating to prevent spawn self fragging -agent -arg
 			}
 			te = find(te, classname, "building_sentrygun");
 		}
@@ -1565,7 +1445,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		{
 			if ((te.real_owner == self))
 			{
-				TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+				dremove(te); // just remove the dispenser instead of detonating to prevent spawn self fragging -agent -arg
 			}
 			te = find (te, classname, "building_tesla");
 		}
@@ -1574,7 +1454,7 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		{
 			if ((te.real_owner == self))
 			{
-				TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+				dremove(te); // just remove the dispenser instead of detonating to prevent spawn self fragging -agent -arg
 			}
 			te = find (te, classname, "building_fieldgen");
 		}
@@ -1592,15 +1472,12 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 		{
 			if ((te.real_owner == self))
 			{
-				TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+				dremove(te); // just remove the dispenser instead of detonating to prevent spawn self fragging -agent -arg
 			}
 			te = find (te, classname, "building_teleporter");
 		}
 	}
 	self.tools = (self.tools - (self.tools & 32));	// Remove submarine
-#ifdef botprogs
-	self.curr_wp = 0;
-#endif
 	TeamFortress_PrintClassName (self, self.playerclass, (self.tfstate & 8.000000), 0);
 	TeamFortress_SetEquipment ();
 	TeamFortress_SetHealth ();
@@ -1619,11 +1496,6 @@ self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	self.deadflag = 0.000000;
 	self.pausetime = 0.000000;
 	spot = SelectSpawnPoint ();
-#ifdef SVEN_COOP
-	if (#HL_MAP)
-		if (spot == world)	// hack :(
-			spot = SelectSpawnPoint ();
-#endif
 	if ((self.playerclass != 0.000000))
 	{
 		spawn_tdeath (spot.origin, self);
@@ -1795,20 +1667,6 @@ void() testplayerstart =
 };
 void() info_player_deathmatch = 
 {
-#ifdef SVEN_COOP
-	if (#HL_MAP)
-	{
-		if (self.spawnflags & 2)
-		{	// start disabled
-			self.has_tesla = 1;
-			self.classname = "info_poop";
-		}
-		else
-			self.classname = "info_player_coop";
-		self.use = info_player_deathmatch_use;
-	}
-	else
-#endif
 	dremove(self);
 	if (CheckExistence() == 0)
 	{
@@ -1929,20 +1787,6 @@ void() NextLevel =
 };
 void() CheckRules = 
 {
-// We are always in mtf_coop mode defined on uber -arg
-//#ifndef mtf_coop
-//	if (timelimit && time >= timelimit)
-//	{
-//		NextLevel();
-//	}
-//	else
-//	{
-//		if (fraglimit && self.frags >= fraglimit)
-//		{
-//			NextLevel();
-//		}
-//	}
-//#endif
 };
 void () pdummy_wait_on_reconnect =
 {
@@ -2209,18 +2053,6 @@ void () PlayerJump =
 	{
 		return;
 	}
-#ifdef HALFLIFE
-	local float lad;
-	if (self.laddertime > time && self.ladderjump < time)
-	{
-		if (!(self.flags & FL_ONGROUND)) self.flags = self.flags + FL_ONGROUND;
-		self.ladderjump = time+0.4;
-		self.velocity_z = 0;
-		makevectors(self.angles);
-		self.velocity = self.velocity + (v_forward*100);
-		lad = 80;
-	}
-#endif
 	if ((self.waterlevel >= 2.000000))
 	{
 		if ((self.watertype == -3.000000))
@@ -2455,12 +2287,6 @@ void() CheckWaterJump =
 void () PlayerPreThink =
 {
 	local vector src;
-#ifdef botprogs
-	if (BotPreFrame ())
-	{
-		return;
-	}
-#endif
 	if (self.autoid)
 	{
 		makevectors (self.v_angle);
@@ -2895,12 +2721,6 @@ void() PlayerPostThink =
 			if (self.vw_index != 9 && self.vw_index != 11 && self.vw_index != 12 && self.vw_index != 13 && self.vw_index != 16 && self.vw_index != 19)	// bat & chainsaw
 				self.vw_index = 31;
 	}
-#ifdef botprogs
-	if (BotPostFrame ())		// Pablo Bot
-	{
-		return;
-	}
-#endif
 	if (self.view_ofs == '0 0 0')
 	{
 		return;
@@ -3068,35 +2888,7 @@ void() PlayerPostThink =
 };
 void() ClientConnect = 
 {
-//This is the switch for midair mode -arg
-#ifdef midair_switch
-	localcmd("sv_progsname qwprogs\n");
-	localcmd("timelimit 25\n");
-	localcmd("fraglimit 20\n");
-#endif
-#ifdef botprogs
-	ClientInRankings ();
-#else
 	ClientInRankings2 ();
-#endif
-#ifdef HALFLIFE
-	local entity relandmark, oself;
-	if (#HL_MAP)
-	{
-		oself = self;
-		relandmark = find(world,classname,"trigger_changelevel");
-		while (relandmark)
-		{
-			if (relandmark.touch == relandmark_touch)
-			{
-				self = relandmark;
-				self.touch();
-				self = oself;
-			}
-			relandmark = find(relandmark,classname,"trigger_changelevel");
-		}
-	}
-#endif
 	local entity te;
 	te = find ( world, classname, "monster_score" );
 	if (te.netname == "Monsters")
@@ -3294,19 +3086,9 @@ void() ClientConnect =
 		GotoNextMap();
 	}
 };
-#ifdef botprogs
-void (entity whee) RegeneratePlayerList;
-#endif
 void() ClientDisconnect = 
 {
-#ifdef botprogs
-	if (self.ishuman)
-	{
-		clientSetFree (self.fClientNo);
-	}
-#else
 	clientSetFree2 (self.fClientNo);
-#endif
 	Survival_MakeDummy( 1 );
 	num_players = num_players - 1;
 	if ((self.has_voted == 1))
@@ -3389,7 +3171,7 @@ void() ClientDisconnect =
 	{
 		if ((te.real_owner == self))
 		{
-			TF_T_Damage (te, world, world, 500, 0, 0);
+			dremove (te);
 		}
 		te = find (te, classname, "trip_bomb");
 	}
@@ -3398,7 +3180,7 @@ void() ClientDisconnect =
 	{
 		if (te.real_owner == self)
 		{
-			TF_T_Damage(te, world, world, 500, 0, 0);
+			dremove (te);
 		}
 		te = find(te, classname, "building_dispenser");
 	}
@@ -3407,7 +3189,7 @@ void() ClientDisconnect =
 	{
 		if (te.real_owner == self)
 		{
-			TF_T_Damage(te, world, world, 500, 0, 0);
+			dremove (te);
 		}
 		te = find(te, classname, "building_sentrygun");
 	}
@@ -3416,7 +3198,7 @@ void() ClientDisconnect =
 	{
 		if ((te.real_owner == self))
 		{
-			TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+			dremove (te);
 		}
 		te = find (te, classname, "building_tesla");
 	}
@@ -3425,7 +3207,7 @@ void() ClientDisconnect =
 	{
 		if ((te.real_owner == self))
 		{
-			TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+			dremove (te);
 		}
 		te = find (te, classname, "building_camera");
 	}
@@ -3443,7 +3225,7 @@ void() ClientDisconnect =
 	{
 		if ((te.real_owner == self))
 		{
-			TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+			dremove (te);
 		}
 		te = find (te, classname, "building_fieldgen");
 	}
@@ -5205,4 +4987,4 @@ void () FixSoundCrap =
 	stuffcmd (playername, "_snd_mixahead .1\n");
 	dremove (self);
 };
-//End 
+//End

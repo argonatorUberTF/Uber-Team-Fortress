@@ -836,11 +836,7 @@ vector gate    = '2600 -2600 250';	//azothfight.qc
 vector (float dm) VelocityForDamage;
 vector GUN_FLAGROOM    = '325 -3280 -428'; //from frik2.qc -arg
 //FLOAT CONSTANTS
-#ifdef botprogs
-// nothing! :D
-#else
 float TF_FLARE_OFF    = 1;
-#endif
 float	MASK_ENGINE		= 1;	//this is special. Any entities known by the engine but not the csqc will be added.
 //you can add any other masks below, remember, use bits. from csqc.defs -arg
 float	MASK_NORMAL		= 2;
@@ -975,10 +971,6 @@ float EF_RED    = 128; //effects
 //float SECRET_NO_SHOOT = 8.00000;	//unused
 //						END FLOAT CONSTANTS
 //
-#ifdef botprogs
-.float revert_wp_time;
-float MAX_WAYPOINT_TIME;
-#endif
 //
 //FLOATS REGULAR
 //float runespawn;	// have we spawned runes?	//runes.qc old ? unused? -arg
@@ -2081,13 +2073,6 @@ void() func_wall_use =
 			
 		return;
 	}
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-	{
-		self.frame = 1;
-		return;
-	}
-#endif
 	self.frame = TF_FLARE_OFF - self.frame;
 };
 void(float psize, entity p) KickPlayer = 
@@ -2703,10 +2688,6 @@ void() TeamFortress_CheckTeamCheats =
 	{
 		return;
 	}
-#ifdef botprogs
-	if (self.ishuman == 0 || self.ishuman == 2)
-		return;
-#endif
 	if (self.team_no > 0 && teamplay > 0)
 	{
 		st = infokey(self, "bottomcolor");
@@ -2822,12 +2803,6 @@ void() TeamFortress_CheckTeamCheats =
 			if (st != sk)
 			{
 // We are always in mtf_coop mode defined on uber -arg
-//#ifdef botprogs
-//				if (!self.ishuman)
-//				{
-//					return;
-//				}
-//#endif
 #ifndef mtf_coop_halloween
 				TeamFortress_SetSkin(self);
 //				bprint2(TF_FLARE_OFF, self.netname, " has been warned for changing skin.\n");
@@ -3893,27 +3868,6 @@ void() TeamFortress_ChangeClass =
 	if (survival_mode)
 		if (self.team_no == 0)		// survival mode hack allows players to join any team :\
 			return;
-#ifdef BATTLE_ROYALE
-	if (battle_royale_e != world)
-	{
-		spot = SelectSpawnPoint ();
-		if (spot == world)
-		{
-			sprint( self, 2, "No more valid spawn points. Please wait for the Battle Royale match to finish.\n");
-			self.playerclass = 0;
-			self.tfstate = self.tfstate - (self.tfstate & 8);
-			self.movetype = 8;
-			self.solid = 0;
-			self.model = "";
-			self.mdl = "";
-			self.velocity = '0 0 0';
-			self.avelocity = '0 0 0';
-			self.enemy = world;
-			self.lives = -1;
-			return;
-		}
-	}
-#endif
 	if (self.monster_type > 0)
 	{}
 	else
@@ -4195,12 +4149,6 @@ void() TeamFortress_ChangeClass =
 	TeamFortress_SetSpeed(self);
 	TeamFortress_SetSkin(self);
 	stuffcmd (self, "cl_sidespeed 500\ncl_backspeed 500\ncl_forwardspeed 500\n");
-#ifdef botprogs
-	if (!self.ishuman)
-	{
-		Waypoint_Find_Nearest();
-	}
-#endif
 };
 void() execute_changelevel = 
 {
@@ -4515,24 +4463,6 @@ entity() FindIntermission =
 		}
 		return spot;
 	}
-#ifdef HALFLIFE
-	spot = find (world, classname, "info_player_coop");
-	if (spot)
-	{       // pick a random one
-		cyc = random() * 4;
-		while (cyc > 1)
-		{
-			spot = find (spot, classname, "info_player_coop");
-			if (!spot)
-				spot = find (spot, classname, "info_player_coop");
-			cyc = cyc - 1;
-		}
-		return spot;
-	}
-	spot = find (world, classname, "info_player_start");
-	if (spot)
-		return spot;
-#endif
 	objerror("FindIntermission: no spot");
 	return self;	// dirty fix to get rid of compiler bitching
 };
@@ -4830,10 +4760,6 @@ entity() SelectSpawnPoint =
 	}
 	else
 	{
-#ifdef BATTLE_ROYALE		
-		if (battle_royale_e == world)
-		{
-#endif
 		if (deathmatch)
 		{
 			spot = find(lastspawn, classname, "info_player_deathmatch");
@@ -4867,24 +4793,12 @@ entity() SelectSpawnPoint =
 				}
 			}
 		}
-#ifdef BATTLE_ROYALE
-		}
-		else
-		{
-			return world;
-		}
-#endif
 	}
 	if (serverflags)
 	{
 		spot = find(world, classname, "info_player_start2");
 		if (spot)
 		{
-#ifdef BATTLE_ROYALE
-			if (brzone_valid(spot.origin) == 0)	{	
-				return world;
-			}
-#endif
 			return spot;
 		}
 	}
@@ -4893,97 +4807,8 @@ entity() SelectSpawnPoint =
 	{
 		error("PutClientInServer: no info_player_start on level\n");
 	}
-#ifdef BATTLE_ROYALE		
-	if (battle_royale_e != world)
-{
-		return world;
-	}
-#endif
 	return spot;
 };
-#ifdef HALFLIFE
-float (entity tcl) hlt_think =
-{
-	local string lmstats;
-	local vector lmsv, neworg;
-	local entity ips, nips;
-	if ( landmarked )
-		return ( #FALSE );
-	lmstats = infokey (world, "landmark");
-	lmstats = strzone(lmstats);
-	if (!lmstats)
-		return #FALSE;
-	if (tcl.landmark == lmstats)
-	{
-		ips = find(world, classname, "info_player_start");
-		while (ips != world)
-		{
-			dremove(ips);
-			ips = find(ips, classname, "info_player_start");
-		}
-		lmsv = (tcl.absmax+tcl.absmin)*.5;
-		nips = spawn();
-		nips.classname = "info_player_start";
-		setorigin(nips,lmsv /*+ '0 0 15'*/);
-		if (lmstats == "lm_c1a3_da" && mapname == "c1a3a")
-			setorigin(nips, '831.4 -1050.8 -100.0');
-		else
-		if (mapname == "c1a3b" && lmstats == "lm_c1a3_ab")
-			setorigin(nips, '170.7 -888.9 680.2');
-		else
-		if (mapname == "c1a3c" && lmstats == "lm_c1a3_bc")
-			neworg = '-932.1 -1555.3 180.1';
-		else
-		if (mapname == "c1a4b" && lmstats == "c1a4k_to_c1a4b")
-			neworg = '-647.4 -3534.6 -960.4';
-		else
-		if (mapname == "c1a4i" && lmstats == "c1a4btoi1")
-			neworg = '-152.1 -1060.9 -945.0';
-		else
-		if (mapname == "c1a4b" && lmstats == "c1a4btoi5")
-			neworg = '-536.4 -583.9 -1346.7';
-		else
-		if (mapname == "c1a4f" && lmstats == "c1a4btoc")
-			neworg = '-966.8 -165.3 1096.8';
-		else
-		if (mapname == "c1a1b" && lmstats == "c1a1b")
-			neworg = '-322.3 -153.1 -145.6';
-		else
-		if (mapname == "c1a3" && lmstats == "lm_c1a3_0d")
-			neworg = '76.5 1527.5  43.4';
-		else
-		if (mapname == "c1a4b" && lmstats == "c1a4btoc")
-			neworg = '-1109.5 -1159.1 -1138.0';
-		else
-		if (mapname == "c1a4b" && lmstats == "c1a4btoi3")
-			neworg = '-1109.1 -1103.0 -1149.9';
-		else
-		if (mapname == "c1a4b" && lmstats == "c1a4atod")
-			neworg = '-2433.6 -1433.2 -1159.9';
-		else
-		if (mapname == "c1a4d" && lmstats == "c1a4atod")
-			neworg = '2610.1 1502.1 361.5';
-		else
-		if (mapname == "c1a4d" && lmstats == "c1a4dtoe")
-			neworg = '1640.7 716.6 268.0';
-		else
-		if (mapname == "c1a4i" && lmstats == "c1a4btoi3")
-			neworg = '-1132.8 -1144.5 -1152.6';
-		else
-		if (mapname == "c1a3" && lmstats == "c1a2_to_c1a3")
-			neworg = '71.3 1511.1 39.5';
-		else
-		if (mapname == "c2a2h" && lmstats == "c2a2gc2a2h")
-			neworg = '65.4 -406.9 -713.0';
-		if (neworg != '0 0 0')
-			setorigin(nips, neworg);
-		strunzone(lmstats);
-		dremove(nips);//temp
-		return #FALSE;
-	}
-	return #FALSE;
-};
-#endif
 entity(entity start_point) FindNextIntermission = 
 {
 	local entity spot;
@@ -5237,13 +5062,6 @@ bprint(2, "\n");
 		}
 	}
 	ClientObituary (self, _p_1250);
-#ifdef botprogs
-	if (!self.ishuman)
-	{
-		self.curr_set = 0;
-		self.revert_wp_time = time + MAX_WAYPOINT_TIME;
-	}
-#endif
 	self.takedamage = 0.000000;
 	self.touch = SUB_Null;
 	monster_death_use ();
@@ -5798,23 +5616,10 @@ void() BecomeExplosion =
 };
 void(entity p) TeamFortress_SetSpeed = 
 {
-#ifdef botprogs
-	if ( self.ishuman == 2 ) // is a bot..
-		if ( self.speed_set == 1 )
-			return;
-#endif
-#ifdef mtf_coop_halflife
-	if (p.classname != "player")
-		return;
-#endif
 	local string sp;
 	local float tf;
 	local entity te;
 	stuffcmd(p, "cl_movespeedkey 1\n");
-#ifdef botprogs
-	if ( self.ishuman == 2 ) // is a bot..
-		self.speed_set = 1;
-#endif
 	if (p.playerclass == 1)
 	{
 		p.maxspeed = 400;
@@ -6015,41 +5820,12 @@ void() monster_death_use =
 			{
 			self.flags = self.flags - 2;
 			}
-#ifdef HALFLIFE
-	if (!#HL_MAP)
-	{
-			if (!(self.target))
-			{
-				return;
-			}
-		activator = self.enemy;
-		SUB_UseTargets();
-	}
-	else
-	{
-	if (!self.target && !self.TriggerTarget)
-		return;
-	if (self.target)
-	{
-		activator = self.enemy;
-		SUB_UseTargets ();
-	}
-	if (self.TriggerTarget)
-		if (self.TriggerTarget != self.target)
-		{
-			self.target = self.TriggerTarget;
-			activator = self.enemy;
-			SUB_UseTargets ();
-		}
-	}
-#else
 		if (!(self.target))
 		{
 			return;
 		}
 		activator = self.enemy;
 		SUB_UseTargets();
-#endif
 };
 float(entity targ, entity inflictor) CanDamage = 
 {
@@ -9013,9 +8789,6 @@ void(float Suicided) TeamFortress_SetupRespawn =
 {
 	local float restime;
 	local string db;
-#ifdef BATTLE_ROYALE
-	local entity spot;
-#endif	
 	if (self.respawn_time > time)
 	{
 		return;
@@ -9040,28 +8813,6 @@ void(float Suicided) TeamFortress_SetupRespawn =
 	{
 		self.lives = self.lives - 1;
 	}
-#ifdef BATTLE_ROYALE
-	if (battle_royale_e != world)
-	{
-		spot = SelectSpawnPoint ();
-		if (spot == world)
-	{
-			sprint( self, 2, "No more valid spawn points. Please wait for the Battle Royale match to finish.\n");
-			self.playerclass = 0;
-			self.tfstate = self.tfstate - (self.tfstate & 8);
-			self.movetype = 8;
-			self.solid = 0;
-			self.model = "";
-			self.mdl = "";
-			self.velocity = '0 0 0';
-			self.avelocity = '0 0 0';
-			self.enemy = world;
-			self.lives = -1;
-			setmodel(self, "");
-			return;
-		}
-	}
-#endif	
 	if (self.#lms_lives == -1)
 	{
 			sprint(self, 2, "NO lives left, returning to Observer mode.\n");
@@ -10471,11 +10222,6 @@ void() changelevel_touch =
 {
 	if (Coop_SpecialEnd(mapname) > 0)
 		other = checkclient();
-#ifdef HALFLIFE
-	if (self.spawnflags & 2)		// no touch exit
-		return;
-	HalfLife_SetupLandmark();
-#endif
 	if (other.classname != "player")	//This is supposed to prevent rockets, ammo, and monsters from triggering the exit. -arg 
 	{
 		return;
@@ -10548,10 +10294,6 @@ entity(float team_num) FindTeamSpawnPoint =
 	local entity at_spot;
 	local float spot_found;
 	local float attempts;
-#ifdef BATTLE_ROYALE
-	if (battle_royale_e != world)
-		return FindTeamSpawnPoint_BR (team_num);
-#endif	
 	if (team_num == TF_FLARE_OFF)
 	{
 		spot = lastspawn_team1;
@@ -23286,7 +23028,13 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, ".\n");
 		if (tm >= 512) 
 		{
-		sprint(self, 2, "Entities are over 512, bad karma, things will go wrong.");
+		sprint(self, 2, "Entities are over 512, bad karma, things will go wrong. Fixing.");
+					te = find(world,classname,"monster");
+			while (te)
+			{
+				dremove(te);
+				te = find(te,classname,"monster");
+			}
 		}
 	}
 	else
@@ -23795,32 +23543,6 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		bprint(2, " are CLASS ILLEGAL.\n");
 	}
 #endif
-#ifdef BATTLE_ROYALE
-	else
-	if
-	(s1 == "bro")
-	{
-		sprint(self, 2, vtos(self.origin) );
-		sprint(self, 2, "\n");
-		if (battle_royale_e == world)
-		{
-			battle_royale_e = spawn ();
-			battle_royale_e.solid = 1;
-			battle_royale_e.movetype = 9;
-			battle_royale_e.origin = '113 -90 -116';
-			setsize (battle_royale_e, '0 0 0', '0 0 0');
-			setmodel (battle_royale_e, "progs/flare.spr");
-			battle_royale_e.think = br_subthink;
-			battle_royale_e.nextthink = time + 1;
-			sprint(self, 2, "Battle Royale NOW ACTIVE!.\n");
-		}
-		else
-		{
-			sprint(self, 2, "Battle Royale Entity Already Spawned!.\n");
-		}
-		return 1;
-	}
-#endif
 	else
 	if (s1 == "voteyes")
 	{
@@ -23869,132 +23591,6 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			bprint(2, ".\n");
 		}
 	}
-#ifdef botprogs
-	else
-	if (s1 == "teammate")
-	{
-		if ( (stof(s2) > 0) && (stof(s2) < 5) )
-		{
-			if ( (stof(s3) > 0) && (stof(s3) < 10) )
-			{
-				botConnect2( stof(s2), stof(s3), self );
-				sprint(self, 2, "Bot TeamMate Spawned!\n");
-				return 1;
-			}
-			else
-			{
-				sprint(self, 2, "Invalid Class. Usage: CMD teammate TEAM CLASS .\n");
-				return 1;
-			}
-		}
-		else
-		{
-			sprint(self, 2, "Invalid Team. Usage: CMD teammate TEAM CLASS .\n");
-			return 1;
-		}
-	}
-	else
-	if (s1 == "buddymenu")
-	{
-		if ( (self.playerclass > 0) && (self.team_no > 0) )
-		{
-			self.current_menu = 203;
-		}
-	}
-	else
-	if (s1 == "botskill")
-	{
-		if ( (stof(s2) > 0) )
-		{
-			g_bskill = stof(s2);
-		}
-	}
-	else
-	if (s1 == "botlist")
-	{
-		sprint(self,2, "Bots in server:\n");
-		if ( (stof(s2) > 0) )
-		{
-			bot_list( stof(s2) );
-		}
-		else
-			bot_list(#BOTLIST_NORM);
-	}
-	else
-	if (s1 == "kickbot")
-	{
-		if ( (stof(s2) > 0) )
-		{
-			bot_kick( stof(s2) );
-		}
-		else
-		{
-			sprint(self,2, "Invalid bot. Bots in server:\n");
-			bot_list(#BOTLIST_NORM);
-		}
-	}
-	else
-	if (s1 == "botprint")
-	{
-		if ( (stof(s2) > 0) )
-		{
-			bot_debug_lvl = stof(s2);
-		}
-		else
-		{
-			sprint(self,2, "Invalid botprint. Please choose between 1 and 3.\n");
-		}
-	}
-	else
-	if (s1 == "grab_bot_info")
-	{
-	local vector source;
-	local vector org;
-	local vector def;
-	makevectors (self.v_angle);
-	source = (self.origin + '0 0 16');
-	traceline (source, (source + (v_forward * 64)), 0.000000, self);
-	if ((trace_fraction == 1))
-	{
-		return;
-	}
-	bprint(2, "max_revert_time: ");
-	bprint(2, ftos(trace_ent.revert_wp_time));
-	bprint(2, "  set: ");
-	bprint(2, ftos(trace_ent.curr_set));
-	bprint(2, "  currwp: ");
-	bprint(2, ftos(trace_ent.curr_wp));
-	bprint(2, ".\n");
-	}
-	else
-	if (s1 == "t_trace")
-	{
-		local entity ttrace, ent;
-		ent = find(world, classname, "ttrace");
-		if (ent != world)
-		{
-			dremove( ent );
-		}
-		ttrace = spawn();
-		ttrace.classname = "ttrace";
-		setorigin (ttrace, ((self.origin + (v_forward * 8)) + '0 0 16'));
-		ttrace.solid = 2;
-		setmodel (ttrace, "progs/player.mdl");
-		ttrace.movetype = 0;
-	}
-	else
-	if (s1 == "t_results")
-	{
-		local entity entt;
-		entt = find(world, classname, "ttrace");
-		if (entt != world)
-		{
-			traceline (self.origin, ent.origin, 1, self);
-			bprint(2, ftos(trace_fraction));
-			bprint(2, ".\n");
-		}
-	}
-#endif
 	else
 	if (s1 == "sayl")
 	{
@@ -24395,10 +23991,6 @@ void() SightSound =
 			}
 		}
 	}
-#ifdef HALFLIFE
-	if (self.classname == "monster_barney")
-		sound(self, 2, "ogre/ogwake.wav", TF_FLARE_OFF, TF_FLARE_OFF);
-#endif
 };
 void() HuntTarget = 
 {
@@ -24620,4 +24212,4 @@ void () W_FireRocket =
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
-//END 
+//END

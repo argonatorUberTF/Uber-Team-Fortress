@@ -389,12 +389,6 @@ void() door_touch =
 		else
 		return;
 	}
-	
-#ifdef HALFLIFE
-	if (#HL_MAP)
-	{}
-	else
-#endif
 	if ((self.items & other.items) != self.items)
 	{
 		if (self.owner.items == 131072)
@@ -460,9 +454,6 @@ void() door_touch =
 			bprint (PRINT_MEDIUM, " door\n");
 		}
 	}
-#ifdef HALFLIFE
-	if (!#HL_MAP)
-#endif
 	other.items = other.items - self.items;
 	other.tf_items = other.tf_items | self.items;
 	if (DoorShouldOpen())

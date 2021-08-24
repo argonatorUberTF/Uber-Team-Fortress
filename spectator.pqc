@@ -3,9 +3,6 @@ void () SpectatorImpulseCommand;
 void () SpectatorThink;
 void () SpectatorConnect =
 {
-#ifdef botprogs
-	ClientFixRankings();
-#endif
 	local entity te;
 	te = find ( world, classname, "monster_score" );
 	if (te.netname == "Monsters")

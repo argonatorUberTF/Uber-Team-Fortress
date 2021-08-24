@@ -305,7 +305,7 @@ void () Player_Menu =
 																			if (self.current_menu == 23)
 																			{
 																				self.vote_menu = self.test_input;
-																				Menu_Vote();
+																				//Menu_Vote();
 																			}
 																			else
 																			{
@@ -714,32 +714,6 @@ void(float inp) Menu_DoBindings_Input =
 };
 void(float inp) Menu_Input = 
 {
-#ifdef botprogs
-	if ((self.current_menu == 200.000000))
-	{
-		Menu_Bot_Input (inp);
-	}
-	else
-	{
-	if ((self.current_menu == 201.000000))
-	{
-		Menu_Bot_Team_Input (inp);
-	}
-	else
-	{
-	if ((self.current_menu == 202.000000))
-	{
-		Menu_Bot_Class_Input (inp);
-	}
-	else
-	{
-	if ( self.current_menu == 203 )
-	{
-		Menu_Bot_Buddy_Input (inp);
-	}
-	else
-	{
-#endif
 	if (self.current_menu == 2)
 	{
 		Menu_Team_Input(inp);
@@ -888,7 +862,7 @@ void(float inp) Menu_Input =
 														{
 															if (self.current_menu == 23)
 															{
-																Menu_Vote_Input(inp);
+																Menu_Taunt_Input(inp);
 															}
 														}
 													}
@@ -906,9 +880,6 @@ void(float inp) Menu_Input =
 	} } } } }
 	}
 	}
-#ifdef botprogs
-	} } } } // pablo bot
-#endif
 	}	// res
 	}	// merchant
 	}	// blackjack
@@ -3391,242 +3362,6 @@ void(float inp) Menu_NewTaunts_Input =
 	ResetMenu();
 	self.impulse = TF_FLARE_LIT;
 };
-#ifdef botprogs
-float fSayHealth;
-void () Menu_Bot =
-{
-	if (fResupplyBetweenKills)
-	{
-		if (fSayHealth)
-		{
-			CenterPrint (self, "=== Bot Menu ===\n\nì.. Add a Bot                 \nî.. Kick a Bot                \nï.. No resupplying            \nñ.. Don't Report Health       \nó.. Nothing                   \n\nBy P·‚ÏOéTËEéGÚÂ·T");
-		}
-		else
-		{
-			CenterPrint (self, "=== Bot Menu ===\n\nì.. Add a Bot                 \nî.. Kick a Bot                \nï.. No resupplying            \nñ.. Report Health             \nó.. Nothing                   \n\nBy P·‚ÏOéTËEéGÚÂ·T");
-		}
-	}
-	else
-	{
-		if (fSayHealth)
-		{
-			CenterPrint (self, "=== Bot Menu ===\n\nì.. Add a Bot                 \nî.. Kick a Bot                \nï.. Resupply between kills    \nñ.. Don't Report Health       \nó.. Nothing                   \n\nBy P·‚ÏOéTËEéGÚÂ·T");
-		}
-		else
-		{
-			CenterPrint (self, "=== Bot Menu ===\n\nì.. Add a Bot                 \nî.. Kick a Bot                \nï.. Resupply between kills    \nñ.. Report Health             \nó.. Nothing                   \n\nBy P·‚ÏOéTËEéGÚÂ·T");
-		}
-	}
-};
-void (float _p_1323) Menu_Bot_Input =
-{
-	local entity _l_1324;
-	if ((_p_1323 == 1.000000))
-	{
-		CenterPrint (self, "\n");
-		self.current_menu = 201.000000;
-		self.menu_displaytime = 25.000000;
-		self.menu_count = 25.000000;
-		self.impulse = 0.000000;
-	}
-	else
-	{
-		if ((_p_1323 == 2.000000))
-		{
-			CenterPrint (self, "\n");
-			self.impulse = 0.000000;
-			self.current_menu = 0.000000;
-			_l_1324 = find (world, classname, "player");
-			while (_l_1324)
-			{
-				if (!_l_1324.ishuman)
-				{
-					botDisconnect (_l_1324);
-					return;
-				}
-				_l_1324 = find (_l_1324, classname, "player");
-			}
-			CenterPrint (self, "No bots to kick.\n");
-		}
-		else
-		{
-			if ((_p_1323 == 3.000000))
-			{
-				CenterPrint (self, "\n");
-				self.impulse = 0.000000;
-				self.current_menu = 0.000000;
-			}
-			else
-			{
-				if ((_p_1323 == 4.000000))
-				{
-					CenterPrint (self, "\n");
-					if (fSayHealth == 0)
-						fSayHealth = 1;
-					else
-						fSayHealth = 0;
-					self.impulse = 0.000000;
-					self.current_menu = 0.000000;
-				}
-				else
-				{
-					if ((_p_1323 == 5.000000))
-					{
-						CenterPrint (self, "\n");
-						self.impulse = 0.000000;
-						self.current_menu = 0.000000;
-					}
-				}
-			}
-		}
-	}
-};
-void () Menu_Bot_Team =
-{
-	if (number_of_teams < 3)
-		CenterPrint (self, "=== Choose his team ===\n\nì.. Blue\nî.. Red \n\n");
-	else
-if (number_of_teams == 3)
-		CenterPrint (self, "=== Choose his team ===\n\nì.. Blue  \nî.. Red   \nï.. Yellow\n\n");
-	else
-if (number_of_teams == 4)
-		CenterPrint (self, "=== Choose his team ===\n\nì.. Blue  \nî.. Red   \nï.. Yellow\nñ.. Green \n\n");
-	else 
-		CenterPrint (self, "=== Choose his team ===\n\nì.. Blue\nî.. Red \n\n");
-};
-void (float _p_1327) Menu_Bot_Team_Input =
-{
-	if (number_of_teams < 3)
-	{
-	if (((_p_1327 < 1.000000) || (_p_1327 > 2.000000)))
-	{
-		return;
-	}
-	}
-	else
-	if (number_of_teams == 3)
-		if (((_p_1327 < 1.000000) || (_p_1327 > 3.000000)))
-		{
-			return;
-		}
-	else
-	if(number_of_teams == 4)
-		if (((_p_1327 < 1.000000) || (_p_1327 > 4.000000)))
-		{
-			return;
-		}
-	CenterPrint (self, "\n");
-	if ( TeamFortress_TeamIsCivilian(_p_1327) )
-	{
-		botConnect (_p_1327, 10);
-		self.current_menu = 0;
-	}
-	else
-	{
-		self.current_menu = 202;
-		self.obs_time = _p_1327;
-	}
-	self.impulse = 0.000000;
-};
-void () Menu_Bot_Class =
-{
-	CenterPrint (self, "=== Choose his class ===\n\nì.. Scout   \nî.. Sniper  \nï.. Soldier \nñ.. Demoman \nó.. Medic   \nò.. Hvwep   \nô.. Pyro    \nö.. Spy     \nõ.. Engineer\n");
-};
-void (float _p_1330) Menu_Bot_Class_Input =
-{
-	if (((_p_1330 < 1.000000) || (_p_1330 > 9.000000)))
-	{
-		return;
-	}
-	self.impulse = 0.000000;
-	self.current_menu = 0.000000;
-	CenterPrint (self, "\n");
-	botConnect (self.obs_time, _p_1330);
-};
-void () Menu_Bot_Buddy =
-{
-	CenterPrint(self, "Buddy Bot Action Menu\n\n1. Stay where you are\n2. Follow me\n3. Jump dumbass!\n4. Suicide\n5. Follow Waypoints: Off\n6. Set waypoint 1 here\n 7. Set waypoint 2 here\n8. Go where my crosshair is pointing\n9. Nothing\n");
-};
-void (float inp) Menu_Bot_Buddy_Input =
-{
-	if ( (inp < 1) || (inp > 9) )
-	{
-		return;
-	}
-	if ( (inp >= 1) && (inp < 9) )
-	{
-		local entity b_bot;
-		local vector org, src;
-		b_bot = find (world, classname, "player");
-		while (b_bot != world)
-		{
-			if ( b_bot.bot_owner == self )
-			{
-				if (inp == 1)
-				{
-					bprint(2,"stay.\n");
-					b_bot.follow_type = #FOLLOW_STOP;
-				}
-				else
-	if(inp == 2)
-				{
-					bprint(2,"follow me\n");
-					b_bot.follow_type = #FOLLOW_OWNER;
-				}
-				else
-	if(inp == 3)
-				{
-					b_bot.do_action = #ACTION_JUMP;
-				}
-				else
-	if(inp == 4)
-				{
-					b_bot.do_action = #ACTION_SUICIDE;
-				}
-				else
-	if(inp == 5)
-				{
-					b_bot.follow_type = #FOLLOW_WAYPOINTS;
-					b_bot.follow_wp = 1;
-					bprint(2, "GO WAYPOINTS GO!\n");
-				}
-				else
-	if(inp == 6)
-				{
-					b_bot.buddy_wp_one = self.origin;
-				}
-				else
-	if(inp == 7)
-				{
-					b_bot.buddy_wp_two = self.origin;
-				}
-				else
-	if(inp == 8 )
-				{
-					
-	makevectors (self.v_angle);
-	src = self.origin + (v_forward * 10);
-	src_z = self.absmin_z + (self.size_z * 0.7);
-	traceline (src, (src + (v_forward * 4096)), 0, self);
-	org = trace_endpos - (v_forward * 4);
-					b_bot.stop_wp = org;
-					b_bot.follow_type = #FOLLOW_THEN_STOP;
-				}
-				self.impulse = 0.000000;
-				self.current_menu = 0.000000;
-				CenterPrint (self, "\n");
-			}
-			b_bot = find (b_bot, classname, "player");
-		}
-	}
-	else
-	{
-		self.impulse = 0.000000;
-		self.current_menu = 0.000000;
-		CenterPrint (self, "\n");
-	}
-};
-#endif
 void () MTF_Resurrect_Player_Find;
 void () Menu_Res =
 {

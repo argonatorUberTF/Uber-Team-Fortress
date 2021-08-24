@@ -81,16 +81,6 @@ void() plat_center_touch =
 	{
 		return;
 	}
-#ifdef botprogs
-	if (other.ishuman == 2 || other.ishuman == 0)		// avirox'd!
-	{
-		if (self.enemy.state != 1 && other.cooldown < time && other.groundentity.classname != "plat")
-		{
-			other.cooldown = time + .3;
-			other.curr_wp = other.curr_wp - 1;
-		}
-	}
-#endif
 	if (!Activated(self, other))
 	{
 		if (self.else_goal != 0)
@@ -357,11 +347,6 @@ void() train_wait =
 	}
 	else
 	{
-#ifdef HALFLIFE
-		if (#HL_MAP)
-			train_next();
-		else
-#endif
 		self.nextthink = self.ltime + 0.1;
 	}
 	self.think = train_next;

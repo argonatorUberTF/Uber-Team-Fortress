@@ -497,9 +497,6 @@ void() func_illusionary =
 	self.movetype = TF_FLARE_LIT;
 	self.solid = TF_FLARE_LIT;
 	setmodel(self, self.model);
-#ifdef HALFLIFE
-	HalfLife_DoRender();
-#endif
 	makestatic(self);
 };
 void() func_episodegate = 

@@ -254,11 +254,6 @@ float() FindTarget =
 	else
 	{
 		the_client = checkclient();
-#ifdef HALFLIFE
-		if (#HL_MAP)
-			if (self.spawnflags & 16)		// notarget flag for HL monsters
-				the_client = world;
-#endif
 		if (self.#is_minion == 1)
 		{
 			guns = world;
@@ -761,19 +756,6 @@ void() StopHuntingCharmer =
 void(float dist) ai_run = 
 {
 	local float sp_mult;
-#ifdef HALFLIFE
-	if (self.enemy.classname == "script_corner")
-	{
-		self.angles = vectoangles(self.enemy.origin - self.origin);
-		self.angles_x = 0;
-		if (walkmove (self.angles_y + (random()*17), dist) == #FALSE)
-		{
-			if (FindTarget ())
-				self.enemy = world;
-		}
-		return;
-	}
-#endif
 	sp_mult = cvar ("monster_speed");
 	if (self.monster_items & MITEM_SPEED)
 		dist *= #MONSTER_SPEED_MULT;

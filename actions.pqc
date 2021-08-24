@@ -146,10 +146,6 @@ void () CheckIdlers =
 	loopent = find (world, classname, "player");
 	while (loopent)
 	{
-#ifdef BATTLE_ROYALE
-		if (battle_royale_e != world)
-			loopent.join_time = time;
-#endif
 		if (loopent.has_disconnected == 0 && loopent.join_time < (time - 180) && loopent.playerclass < 1 && loopent.#lms_lives != -1 && loopent.lives != -1 && lms_entity != world)
 		{		
 			KickIdler(loopent);
