@@ -306,9 +306,9 @@ void () traceoff = #30;
 void (entity e) eprint = #31; 
 float (float yaw, float dist) walkmove = #32; 
 // ---> pablo. this is wierd. :/
-//float (float yaw, float dist) droptofloor = #34; 
+//float (float dist) droptofloor = #34; 
 //Are you sure you want to drop monster summons to the floor without parameters? -arg
-// This might be the cause of the reg monsters falling through map, they are not z high enough to match the solid floor.
+//sometimes this is called with one parameter or two. Not sure why.  anyone? -arg
 float (float yaw, float dist) droptofloor = #34; //xav set this at first.
 // <---
 void (float style, string value) lightstyle = #35; 
@@ -1242,7 +1242,7 @@ float (string mpn) GetW3DMapBit;
 #define	ACHIEVEMENT_COMPLETIONIST		12					// completes 100 levels with every monster killed
 #define	ACHIEVEMENT_FLAWLESS			15					// completes 100 flawless runs
 #define ACHIEVEMENT_ATOMICPUNK			18					// killed 500 enemies with detpack
-#define ACHIEVEMENT_KILLINGMACHINE		21					// just a tally of the palyer's total kills
+#define ACHIEVEMENT_KILLINGMACHINE		21					// just a tally of the player's total kills
 #define ACHIEVEMENT_HEADSHOT			24					// Headshots.. nuff sed :p
 #define ACHIEVEMENT_BAT					27					// Boink! Kills w/ bat
 #define ACHIEVEMENT_HEAL				30					// Heals with Medikit
@@ -1401,9 +1401,9 @@ void (string msg) Packet_SendGlobalMessage
 //#ifndef mtf_coop
 //#define BATTLE_ROYALE			1
 //#endif
-#ifdef BATTLE_ROYALE
-float (vector orgg1) brzone_valid;
-entity battle_royale_e;
-#endif
-#define SETVERSION		localcmd("serverinfo UBERTF v8.23.2021\n");
+//#ifdef BATTLE_ROYALE
+//float (vector orgg1) brzone_valid;
+//entity battle_royale_e;
+//#endif
+#define SETVERSION		localcmd("serverinfo UBERTF v9.25.2021\n");
 //END

@@ -4973,10 +4973,18 @@ if (self.impulse == 9)
 			else
 			{
 				if (self.coop_exp >= Coop_ExpReq(80))
+//This is where you add weapons to items allowed per player when impulse 9 for special weapons is selected based on your player level -arg
+//This is where new weapons could be added to the player loop of selectable ones. -arg
 					self.mtf_items |= MTFITEM_NEEDLER;
+		
 				if (Coop_HasMasterSkill( self, #ATTRIB_QUICKSHOT ))
 					self.mtf_items |= MTFITEM_LIGHTGUN;
-				sprint(self,2, "Special Weapons Enabled.\n");
+//				if (self.coop_exp >= Coop_ExpReq(80))
+//				{
+//					if (self.playerclass == 3)  //This add the railgun to the soldier class as a test for over level 80. -arg
+//					self.mtf_items |= MTFITEM_RAILGUN;  //rats, didnr work 9/25/21 -arg
+//				}
+				sprint(self,2, "Special Weapons Enabled. More coming soon.\n");
 			}
 	}
 	if (self.Aircraft_Owner)
@@ -5571,6 +5579,7 @@ if (self.impulse == 9)
 				if ((self.impulse == 60))
 				{
 					TeamFortress_Spotlight();
+					sprint (self, 2.000000, "Spot light On. Toggle to turn off.\n");
 					self.impulse = 0.000000;
 				}
 				else
@@ -7393,7 +7402,7 @@ void () ProxiDie =
 	self.takedamage = TF_FLARE_LIT;
 	deathmsg = 45;
 	T_RadiusDamage (self, self.owner, 350, world);
-	sprint (self.owner, 2, "Your Proxi Mine is gone...\n");
+	sprint (self.owner, 2, "Your Proximity Mine is gone...\n");
 	dremove (self);
 };
 void () FoundBastard =
@@ -8447,7 +8456,7 @@ void() copb_eatCan =
 	other = self;
 	T_Heal (self, 150, 1); 
 	self.copb_timeout = time + 30;
-	self.search_time = time + (random() * 1);
+	self.search_time = time + (random() * 5);
 	copb_checkFart();
 };
 void (entity inflictor, entity attacker, float damage, entity ignore, float radius) T_BeanDamage =

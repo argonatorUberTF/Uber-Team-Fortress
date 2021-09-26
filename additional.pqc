@@ -1237,6 +1237,7 @@ void () BTF_Precache;
 void () W_FireRocket;
 void () missing_precaches;  //put sounds and models missing here to load first absolutely -arg
 //						FLOAT FUNCTIONS and voids
+void () EntityCount;
 void () MTF_RemoveMonster;  //This was called in middle of mtf_coop.qc But should be defined first for summon_think to
 // prevent crashes -arg
 void( float howmany ) MTF_Coop_ViewTopRanks;
@@ -1749,7 +1750,6 @@ void() turret_deathAnimBase;
 void(vector org, vector vec) turret_launchNail;
 void() turret_nailTouch;
 void() turret_checkIfCanBeSolid;
-void(string gibname, float dm) turret_throwGib;
 void() turret_gibTouch;
 void() TeamFortress_Inventory;
 void() TeamFortress_ShowTF;
@@ -6897,10 +6897,10 @@ if (allow_bat == 1)
 };
 void() TeamFortress_Spotlight = 
 {
-	if (self.playerclass != 2)
-	{
-		return;
-	}
+//	if (self.playerclass != 2)  // Let everyone see with the spot light.. -arg
+//	{
+//		return;
+//	}
 	if (self.option2 == 0)
 	{
 		self.option2 = 1;
@@ -15866,7 +15866,7 @@ void (string nname, float exp) MTF_Coop_RanksExperience =
 	}
 	if (trank == world)
 	{
-		bprint(2, "MTF_Coop_RanksExperience: trank not found for netname ");
+		bprint(2, "MTF_Coop_RanksExperience: Cannot update experience for a disconnected player.\n");
 		bprint(2, nname);
 		bprint(2, "\n");
 		return;
@@ -19256,17 +19256,16 @@ void(string gibname, float dm) ThrowGib =
 	setmodel(newmis, gibname);
 	setsize(newmis, '0 0 0', '0 0 0');
 	newmis.velocity = VelocityForDamage(dm);
-	newmis.movetype = 10;
-	newmis.solid = 2;
+	newmis.movetype = MOVETYPE_BOUNCE;
+	newmis.solid = SOLID_NOT;
 	newmis.avelocity_x = random() * 600;
 	newmis.avelocity_y = random() * 600;
 	newmis.avelocity_z = random() * 600;
 	newmis.think = SUB_Remove;
-	newmis.touch = SUB_Remove;
 	newmis.ltime = time;
-	newmis.nextthink = time + 3;
-	newmis.frame = TF_FLARE_LIT;
-	newmis.flags = TF_FLARE_LIT;
+	newmis.nextthink = (time + (random() * 5));
+	newmis.frame = 0;
+	newmis.flags = 0;
 };
 void (float damage,vector dir) TraceAttack =
 {
@@ -22763,6 +22762,9 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "impulse 61/60 - Toggles sniper laser dot off/on.\n");
 			sprint (self, 2.000000, "nextlvl     - Tells you how much experience it takes to reach the next level.\n");
 			sprint (self, 2.000000, "reset       - Resets your attribute points allocated for re-allocation by spending.\n");
+			sprint (self, 2.000000, "lockexit    - Locks the exit portal or trigger. If you need to activate the exit, then do [cmd voteexit] first.\n");
+			sprint (self, 2,000000, "votexit     - Unlocks the exit portal or trigger so players can exit the map. Useful when playing single player even.\n");
+			sprint (self, 2,000000, "quotes      - Displays random movie quotes for fun.\n");
 			sprint( self, 2, "Press 8 in game for more menus, or use [cmd extrahelp] .\n");
 			return 1;
 		}
@@ -22821,7 +22823,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			sprint (self, 2.000000, "impulse  67 - Throws a gravity well bomb.\n");
 			sprint (self, 2.000000, "impulse  68 - Throws a beartrap.\n");
 			sprint (self, 2.000000, "tm - Reports total monsters in map.\n");
-			sprint (self, 2.000000, "telem - Teleports to monsters in game. Not players.\n");
+			sprint (self, 2.000000, "telem - Teleports to monsters in game. Not players. If there are 10% or more monsters leftm 50 EXP will be subtracted per teleport.\n");
 			sprint (self, 2.000000, "ttime - Tells you how much time till the next monster spawn.\n");
 			sprint (self, 2.000000, "ts - Total map secrets found so far.\n");
 			sprint (self, 2.000000, "nextlvl - How much experience points it takes for the next level gained.\n");
@@ -23036,6 +23038,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 				te = find(te,classname,"monster");
 			}
 		}
+		EntityCount; // call this and see what the xavior count is? -arg
 	}
 	else
 	if (s1 == "pentleft")
@@ -23043,6 +23046,14 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, "Invincibility time left: ");
 		sprint(self, 2, ftos(self.invincible_finished-time));
 		sprint(self, 2, " seconds.\n");
+	}	
+	else
+		if (s1 == "quotes") // Starts random movie quotes in 40 second intervals. Also can be done by setting infokey(world,"moviequotes") in the server.cfg file.
+	{
+		newmis = spawn();
+		newmis.classname = "timer";
+		newmis.nextthink = time + 40;
+		newmis.think = display_quote;
 	}	
 	else
 	if (s1 == "ringleft" || s1 == "invisleft" )
@@ -23178,12 +23189,16 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	else
 	if (s1 == "telem")
 	{
+//Search for a live monster in the world. -arg
 	te = find(world, monster_string, "on");
 	while (te)
 	{
 		if (te.health > 0)
 		{
 			self.origin = te.origin;
+//TODO:perhaps move the player neat the monster and that way you are not stuck inside them? But not teleport into a wall or below the floor..			
+//If monster count is less than 10% planned to spawn don't punish the players with -50 exp.
+//calc punishemnt or not:
 			return 1;
 		}
 		te = find(te, monster_string, "on");
@@ -23700,10 +23715,6 @@ void() walkmonster_start =
 	{
 		self.takedamage = 2;
 	}
-// We are always in mtf_coop mode
-//#ifndef mtf_coop
-//	total_monsters = total_monsters + TF_FLARE_OFF;
-//#endif
 	set_monster_health();
 };
 void() item_megahealth_rot = 
@@ -23731,7 +23742,6 @@ void() walkmonster_start_go =
 {
 	self.origin_z = self.origin_z + TF_FLARE_OFF;
 	droptofloor(0, 0);
-// I think this is causing the monsters to drop through floor and continue once walking. -arg
 	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
 	{
 		dprint("walkmonster in wall at: ");

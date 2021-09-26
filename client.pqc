@@ -1175,7 +1175,7 @@ void(entity e) ValidateUser =
 {};
 void() PutClientInServer = 
 {
-	can_exit = #TRUE;  //Unlock the exit. -arg
+	can_exit = #TRUE;  //Unlock the exit. -arg  This unlocks the exit when players respawn or new players join.. hmmm 9/2021
 	//If multiple players join it gets unlocked by default. However if you want to pre-empt exiting, then cmd lockexit fools! -arg
 	if (self.fob == 0)  //only attach one fob to player if they have a team number, it stays or hides until you disconnect with removeplayerfob() -arg
 	{
@@ -1205,7 +1205,7 @@ void() PutClientInServer =
 	self.FlashTime = 0;
 	self.max_health = floor( self.max_health * MTF_Coop_AttribGain(self, #ATTRIB_HEALTH) );
 	self.flags = 8;
-self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
+	self.flags = self.flags - (self.flags & #FL_FINDABLE_NONSOLID);
 	self.air_finished = time + 12;
 	self.dmg = 2;
 	self.super_damage_finished = 0;
