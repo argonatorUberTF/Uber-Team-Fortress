@@ -1,6 +1,3 @@
-#ifdef BATTLE_ROYALE
-void () br_subthink;
-#endif
 void () RemoveVote;
 void () MapNotFound;
 void () RemoveVote2;
@@ -24,25 +21,6 @@ void SV_ParseClientCommand (string st) =
 	g = argv(3);
 	i = argv(4);
 	j = argv(5);
-#ifndef FTE_ONLY
-	if (clientcommand)
-{}			// warning killa
-	c = strzone(c);
-	d = strzone(d);
-	f = strzone(f);
-	g = strzone(g);
-	i = strzone(i);
-	j = strzone(j);
-	if (c == "say")
-		Packet_SendSAY();
-	ClientCommand( args, c, d, f, g, i, j, "" );
-	strunzone(c);
-	strunzone(d);
-	strunzone(f);
-	strunzone(g);
-	strunzone(i);
-	strunzone(j);
-#else
 	if (c == "stuff")
 	{
 		rconpw = infokey (world, "rcon_password");
@@ -82,38 +60,6 @@ void SV_ParseClientCommand (string st) =
 					gotthrough = 1;
 					local float argu4;
 					argu4 = stof(g);
-					if (g == "team_red")
-					{
-						te.suicideoverride = time + 1;
-						te.ischangingteams = 2;
-						stuffcmd (te, "kill");
-						stuffcmd (te, "\n");
-						return;
-					}
-					if (g == "team_blue")
-					{
-						te.suicideoverride = time + 1;
-						te.ischangingteams = 1;
-						stuffcmd (te, "kill");
-						stuffcmd (te, "\n");
-						return;
-					}
-					if (g == "team_green")
-					{
-						te.suicideoverride = time + 1;
-						te.ischangingteams = 4;
-						stuffcmd (te, "kill");
-						stuffcmd (te, "\n");
-						return;
-					}
-					if (g == "team_yellow")
-					{
-						te.suicideoverride = time + 1;
-						te.ischangingteams = 3;
-						stuffcmd (te, "kill");
-						stuffcmd (te, "\n");
-						return;
-					}
 					if (i == "gravity")
 					{
 						te.gravity = argu4;
@@ -287,42 +233,6 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 		else
-		if (d == "!map")
-		{
-			if (f)
-			{
-				local float handle;
-				local string map_name;
-				map_name = f;
-				if (Check_For_Bmodel(map_name) == 1)
-					return;
-				handle = search_begin(strcat("maps/", map_name, ".bsp"), false, true);
-				if (handle>=0)
-				{
-					clientcommand(self, st);
-					votemap_start (f);
-					search_end(handle);
-					return;
-				}
-				else
-				{
-					clientcommand(self, st);
-					sprint (self, 2, "Couldn't find (pcc-called) ", map_name, "\n");
-					return;
-				}
-			map_name = "dm9";
-			handle = search_begin(strcat("maps/", map_name, ".bsp"), false, true);
-			if (handle>=0)
-			{
-				search_end(handle);
-			}
-			else
-			bprint("done\n");
-		}
-		clientcommand(self, st);
-		sprint (self, 2, "Please use !map mapname .\n");
-		return;
-		}
 		clientcommand(self, st);
 	}
 	else
@@ -332,7 +242,6 @@ void SV_ParseClientCommand (string st) =
 		else
 			clientcommand(self, st);
 	}
-#endif
 };
 void() voteyes = 
 {
@@ -347,13 +256,14 @@ void() voteyes =
 	{
 		sprint (self, 2, "There is no vote started. To start a vote, use the mega menu or type votemenu.\n");
 		if (infokey(world, "fteserver") == "1")
-{
-		sprint (self, 2, "On this server you can also call for a map by saying !map mapname .\n"); }
+		{
+			sprint (self, 2, "On this server you can also call for a map by saying !map mapname .\n");
+		}
 		if (infokey(world, "prozacserver") == "1")
-{
+		{
 		sprint (self, 2, "On this server you can also call for a map by using CMD votemap mapname in the console.\n"); }
 		return;
-	}
+		}
 	if ((self.has_voted == 1))
 	{
 		sprint (self, 2, "You've already voted!\n");
@@ -1177,228 +1087,5 @@ void (entity plyr) Badpacket_attribute_over_limit =
 void (string msg) Packet_SendGlobalMessage =
 {
 return; // to stop sending packets -arg
-};
-void () Packet_SendSAY =
-{
-	local string send_to, sendername, send_what;
-	local float i;
-	send_to = infokey (world, "packet_master");
-	if (send_to == "")
-		return;
-	if (argv(1) == string_null)
-	{
-		// No message?
-		return;
-	}
-	send_to = strzone(send_to);
-	sendername = infokey (world, "hostname");	
-	if (sendername == string_null)
-	{
-		sendername = "Unknown Server";
-	}
-	sendername = strzone(sendername);
-	send_what = frik_strcat(sendername, Packet_Slashpass("broadcast_msg"));
-	if (self.connect_name == string_null)
-		send_what = frik_strcat(send_what, self.netname, ":");
-	else
-		send_what = frik_strcat(send_what, self.connect_name, ":");
-	
-	i=1;
-	while (i<30)
-	{
-		if (argv(i) == string_null)
-			break;
-		else 
-			send_what = frik_strcat(send_what, " ", argv(i));
-		i++;
-	}
-	send_what = frik_strcat(send_what, " \\n");
-	send_what = strzone(send_what);
-	QC_SendPacket(send_to, send_what);
-	//bprint(2,send_what);
-	strunzone(send_to);
-	strunzone(sendername);
-	strunzone(send_what);
-};
-void (string sender) Master_UpdateConnections =
-{
-	local float i, found_me;
-	i=0;
-	while (i<STORED_ADDRESSES)
-	{
-		if (ips[i] == string_null)
-			break;
-		else
-		if (ips[i] == sender)
-		{
-			found_me = 1;
-			break;
-		}
-		i++;
-	}
-	if (!found_me)
-	{
-		i=0;
-		while (i<STORED_ADDRESSES)
-		{
-			if (ips[i] == string_null)
-			{
-				ips[i] = sender;
-				ips[i] = strzone(ips[i]);
-				bprint(2,ips[i]);
-				bprint(2," added to the IP roster\n");
-				break;
-			}
-			i++;
-		}
-	}
-};
-float(string sender, string contents) SV_ParseConnectionlessPacket = 
-{
-	contents = strzone(contents);
-	sender = strzone(sender);
-	local string sentname;
-	local float namepos;
-	local float allow_old_pw;			// allow older server to be linked for chat and other non-exp things
-	local float args, i;
-	local entity oself;
-	local float cont_size;
-	local string newcontents;
-	local string send_what;
-	local string packet_pw;
-	packet_pw = infokey (world, "packet_password");
-	cont_size = strlen(contents);
-	namepos = strstr(contents, "\\");
-	namepos = namepos - 1;
-	sentname = substring(contents, 0, namepos);
-	sentname = strzone(sentname);
-	namepos = namepos + 3;
-	cont_size = cont_size - (namepos);
-	newcontents = substring(contents, namepos, cont_size);
-	newcontents = strzone(newcontents);
-	args = tokenize(newcontents);
-	oself=self;
-	packet_pw = infokey (world, "packet_password");
-	if ( !(argv(1) == "getexp" || argv(1) == "reconcileexp" || argv(1) == "setexp") && packet_pw == argv(0) )
-		allow_old_pw = 1;
-	if (argv(0) != packet_pw && allow_old_pw != 1)
-	{
-#ifdef allow_debug_spam		
-		bprint(2,"Bad password from ");
-		bprint(2, sender);
-		bprint(2, "\n");
-#endif
-	}
-	else
-	{
-		Master_UpdateConnections(sender);
-		if (sentname == string_null || sentname == "")
-			bprint(2,"NULL SENTNAME - THERE IS ALWAYS SUPPOSED TO BE A SENTNAME!!!!\n");
-	if (argv(1) == "broadcast_msg")
-	{				// Server => Hub: Send this message out to all connected servers
-		send_what = frik_strcat(sentname, Packet_Slashpass("display_msg"));
-		i=1;
-		while (i < 30)
-		{
-				if (argv(i) == string_null || argv(i) == "\\n")
-					break;
-				else
-					send_what = frik_strcat(send_what, " ", argv(i));
-				i++;
-			}
-			send_what = frik_strcat(send_what, "\n");
-			send_what = strzone(send_what);
-			i=0;
-			while (i<STORED_ADDRESSES)
-			{
-				//bprint(2,ips[i]);
-				//bprint(2," is ips\n");
-				if (ips[i] == string_null)
-					break;
-				else
-				if (ips[i] == sender)
-				{}
-				else
-					QC_SendPacket(ips[i], send_what);
-				i++;
-			}
-			strunzone(send_what);
-		}
-		else
-		if (argv(1) == "broadcast_globalmsg")
-		{			// Server => Hub: Send this message out to all connected servers
-			send_what = frik_strcat(sentname, Packet_Slashpass("display_globalmsg"));
-			i=1;
-			while (i < 30)
-			{
-				if (argv(i) == string_null || argv(i) == "\\n")
-					break;
-				else
-					send_what = frik_strcat(send_what, " ", argv(i));
-				i++;
-			}
-			send_what = frik_strcat(send_what, "\n");
-			send_what = strzone(send_what);
-			i=0;
-			while (i<STORED_ADDRESSES)
-			{
-				//bprint(2,ips[i]);
-				//bprint(2," is ips\n");
-				if (ips[i] == string_null)
-					break;
-				else
-				if (ips[i] == sender)
-				{}
-				else
-					QC_SendPacket(ips[i], send_what);
-				i++;
-			}
-			strunzone(send_what);
-		}
-		else
-if (argv(1) == "display_msg")
-		{				// Hub => Server: Display this CHAT message to all clients
-			//send_what = frik_strcat(sentname, " - ");
-			i=3;
-			while (i < 30)
-			{
-				if (argv(i) == string_null)
-					break;
-				else
-					send_what = frik_strcat(send_what, argv(i), " ");
-				i++;
-			}
-			send_what = strzone(send_what);
-			bprint(2,sentname);
-			bprint(2, ":\n");
-			bprint(PRINT_CHAT,send_what);
-			bprint(PRINT_CHAT,"\n");
-			strunzone(send_what);
-		}
-		else
-		if (argv(1) == "display_globalmsg")
-		{				// Hub => Server: Display ANY message to all clients
-			i=3;
-			while (i < 30)
-			{
-				if (argv(i) == string_null)
-					break;
-				else
-					send_what = frik_strcat(send_what, argv(i), " ");
-				i++;
-			}
-			send_what = strzone(send_what);
-			bprint(2,sentname);
-			bprint(2, ":\n");
-			bprint(2,send_what);
-			bprint(2,"\n");
-			strunzone(send_what);
-		}		
-	}
-	strunzone (sentname);
-	strunzone (newcontents);
-	strunzone (contents);
-	strunzone (sender);
-	return FALSE;
 };
 //END

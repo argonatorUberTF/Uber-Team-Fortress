@@ -129,10 +129,7 @@
 #define LOAD_THINKSTAND					2
 #define	CheckScoreCVAR
 #define LAZY_WAY			// client number hax
-#ifdef COOP_HAX
-#define HL_MAP		cvar("sv_map_halflife") == 1
-#else
-#define HL_MAP		cvar("halflifebsp") == 1
+//#define HL_MAP		cvar("halflifebsp") == 1  //Defines map as a half life map. A switch, no longer used. -arg
 #define next_push_time lefty
 #define FIRST_AWD_LINE		7
 #define true 1
@@ -208,19 +205,7 @@
 #define EF_DIMLIGHT=8;
 //
 //					ENGINE HOOKS not defined in defs.pqc .
-float (float n) sin = #60;  //For Marioworld map physics -arg -agent
-float (float n) cos = #61;	//For Marioworld map physics -arg -agent
-void (...) AdvanceFrame = #63;  //from aagun.pqc
-float(string st1, string st2) strcasecmp = #87;
-float(string filename, float mode) fopen = #110;
-void(float handle) fclose = #111;
-string(float handle) fgets = #112;
-void(float handle, string s) fputs = #113;
-float (string s) strlen = #114;
-string(string s, float start, float length) substring = #116;
-string(string s) strzone = #118;
-void(string s) strunzone = #119;
-float () strcount = #138;
+
 //
 //
 //							ENTITIES
@@ -690,16 +675,6 @@ entity horn_charmer;			// horn of conjuring hipnotic hipitems.qc -arg
 .float FlashTime;
 void () FlashTimer;
 #endif
-// crouch
-#ifdef COOP_HAX
-.float rs_s_h;
-#define uncrouch_time	rs_s_h
-#else
-//.float crouchflags; 				//used in half-life, unused -arg
-#define CROUCH_OFF			0
-#define CROUCH_ON			1
-#define CROUCH_TRYSTAND		2
-#endif
 .string item;						//quake2.qc
 .string client;
 .string clientv;
@@ -788,14 +763,8 @@ string weld_fire_sound_1;				// Nehara
 string weld_fire_sound_2;				// Nehara
 string weld_explode_sound;				// Nehara
 string nextmap;
-#ifdef mtf_coop_packet
-string (string packet_cmd) Packet_Slashpass; // not used really since the funcs are disabled -arg
+//string (string packet_cmd) Packet_Slashpass; // not used really since the funcs are disabled -arg
 string() votesneededtostring; // for rpg.pqc
-// We are always in mtf_coop mode defined on uber -arg
-//#ifndef mtf_coop
-//string team_menu_string /* = "" */;
-//#endif
-//
 //VECTORS
 .vector aether;					// Nehara
 .vector xtrace;					// Nehara
@@ -1348,8 +1317,6 @@ float (string nname) MTF_Coop_GetExperience;
 void(entity plyr, entity targ, float override_amount) MTF_Coop_AddExperience;
 void(float clientno, float clientfrags) svcUpdateFrags;
 void(entity mnst) Monster_Stats_Send_Full;
-string(string blah) strzone;
-void(string blah) strunzone;
 string substr(string str, float start, float len);
 float Coop_ExpForNextLevel (float exp);
 void() Multi_Finish;
@@ -2863,21 +2830,6 @@ void(float tno, float scoretoadd) TeamFortress_TeamIncreaseScore =
 			e = find(e, classname, "player");
 		}
 	}
-#ifdef BATTLE_ROYALE
-	else
-	if (battle_royale_e != world)
-	{
-		e = find(world, classname, "player");
-		while (e)
-		{
-			if (e.team_no == tno)
-			{
-				e.frags = TeamFortress_TeamGetScore(tno);
-			}
-			e = find(e, classname, "player");
-		}
-	}
-#endif
 };
 float(float tno) TeamFortress_TeamGetScore = 
 {
@@ -15553,80 +15505,7 @@ float (entity plyr, float type_a) Coop_GetAttributeTotal =
 		r_total = plyr.proj_attr;
 	return (r_total);
 };
-void (entity to_update) Packet_SendEXP =
-{
-	local string send_to, send_what;
-	send_to = infokey (world, "packet_master");
-	if (send_to == "")
-		return;
-	if (to_update.coop_exp < 0)
-	{
-		return;
-	}
-	if (to_update.connect_name == "" || to_update.connect_name == string_null)
-	{
-		bprint(2,"Packet_SendEXP: Tried to tell the hub that player ");
-		bprint(2, to_update.connect_name);
-		bprint(2, " BAD CONNECT NAME TELL DEV\n");
-		return;
-	}
-	send_to = strzone(send_to);
-	send_what = frik_strcat(to_update.connect_name, Packet_Slashpass("setexp"), ftos(to_update.coop_exp));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.attribute_points));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.health_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.armor_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.damage_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.ammo_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.misc_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.crit_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.reload_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.minion_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.quickshot_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.clipex_attr));
-	send_what = frik_strcat(send_what, " ", ftos(to_update.proj_attr));
-	send_what = frik_strcat(send_what, " \\n");
-	QC_SendPacket(send_to, send_what);
-	strunzone(send_to);
-};
-void () Packet_Auth_Think =
-{
-	local string send_to, send_what;
-	send_to = infokey (world, "packet_master");
-	if (send_to == "")
-	{
-		bprint(2,"\"packet_master\" not set in localinfo - set this to the master server IP\n");
-		dremove(self);
-		return;
-	}
-	if (self.owner == world || self.owner.has_disconnected == 1 || self.owner.classname == "observer" 
-	|| self.owner.netname == string_null || self.owner.connect_name == string_null)
-	{
-		dremove(self);
-		return;
-	}
-	if (self.#awaiting_packet == TRUE)
-	{
-		if (self.#packet_tries == 3)
-		{
-			bprint(2,"No response from hub server for player ");
-			bprint(2, self.owner.connect_name);
-			bprint(2, " - server may be down\n");
-			self.#awaiting_packet = #FALSE;
-		}
-		else
-		{
-			send_what = frik_strcat(self.owner.connect_name, Packet_Slashpass("getexp"));
-			send_what = strzone(send_what);
-			QC_SendPacket(send_to, send_what);
-			strunzone(send_what);
-			self.#packet_tries++;
-		}
-	}
-	else
-	{
-	}
-	self.nextthink = time + 3;
-};
+
 float (string nname) MTF_Coop_GetExperience =
 {
 	nname = strzone(nname);	// er.. might be a good idea to move this AFTER "if ( nname ==..."
@@ -18591,9 +18470,6 @@ void() Sentry_Pain =
 };
 void() Sentry_Die = 
 {
-#ifdef mtf_coop_halflife
-	if (self.real_owner.classname != "monster_sentry")
-#endif
 	sprint(self.real_owner, 2, "Your sentry gun was destroyed.\n");
 	self.real_owner.has_sentry = 0;
 	ThrowGib("progs/tgib1.mdl", -70);
@@ -18790,9 +18666,6 @@ float() Sentry_Fire =
 	{
 		if ((self.ammo_shells == 20.000000))
 		{
-#ifdef mtf_coop_halflife
-			if (self.real_owner.classname != "monster_sentry")
-#endif
 			sprint (self.real_owner, 2.000000, "Sentry Gun is low on shells.\n");
 		}
 	}
@@ -23038,7 +22911,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 				te = find(te,classname,"monster");
 			}
 		}
-		EntityCount; // call this and see what the xavior count is? -arg
+		EntityCount(); // call this and see what the xavior count is? -arg
 	}
 	else
 	if (s1 == "pentleft")
@@ -23119,49 +22992,6 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 	{
 		FindEntsWithClassname ( s2 );
 	}
-#ifdef mtf_coop_halflife
-	else
-	if (s1 == "crouch")
-	{
-		stuffcmd(self, "say hl_crouch1_on\n");
-		self.mtf_items |= MTFITEM_CROUCH;
-		self.rs_s_h = time + 1;
-	}
-	else
-	if (s1 == "mesize")
-	{
-		bprint(2,vtos(self.size));
-		bprint(2," it size\n");
-	}
-	else
-	if (s1 == "wtf")
-	{
-		bprint(2,cvar_string("nextmap"));
-		bprint(2," ISSITn\n");
-	}
-	else
-	if (s1 == "usetargs")
-	{
-	bprint(2,"NEWWWWWEEEHH\n");
-		newmis = spawn();
-		newmis.target = s2;
-		newmis.target = strzone(newmis.target);
-		newmis.think = Delayed_Use;
-		newmis.nextthink = time + 1;
-	}
-	else
-	if (s1 == "tinf")
-	{
-		if (!s2)
-			return 1;
-		te = find(world, classname, s2);
-		while (te)
-		{
-			eprint(te);
-			te = find(te, classname, s2);
-		}
-	}
-#endif
 	else
 	if (s1 == "uncrouch")
 	{
@@ -23174,12 +23004,6 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		self.origin_y = stof(s3);
 		self.origin_z = stof(s4);
 	}
-#ifdef mtf_coop_halflife
-	else
-	if (s1 == "maketele")
-	{
-	}
-#endif
 	else
 	if (s1 == "meh")
 	{
@@ -24222,4 +24046,21 @@ void () W_FireRocket =
 	setsize (newmis, '0 0 0', '0 0 0');
 	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
+void () EntityCount =
+{
+	local float counter;
+	local entity current;
+	local string output;
+	counter = 0;
+	current = world;
+	current = nextent(current);
+	while (current != world)
+	{
+		counter = counter + 1;
+		current = nextent(current);
+	}
+	output = ftos(counter);
+	dprint ("\nTotal entities currently by Xavior: ");
+	dprint (output);
+}; 
 //END

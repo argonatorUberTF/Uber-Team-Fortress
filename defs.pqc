@@ -250,9 +250,7 @@ void (entity e, string m) setmodel = #3;
 void (entity e, vector min, vector max) setsize = #4; 
 void () break = #6; 
 float () random = #7; 
-#ifndef botprogs
 void (entity e, float chan, string samp, float vol, float atten) sound = #8;
-#endif
 vector (vector v) normalize = #9; 
 void (string e) error = #10; 
 void (string e) objerror = #11; 
@@ -265,13 +263,11 @@ entity () checkclient = #17;
 entity (entity start, .string fld, string match) find = #18; 
 string (string s) precache_sound = #19; 
 string (string s) precache_model = #20; 
-#ifndef botprogs
 void (entity client, string s) stuffcmd = #21; 
-#endif
 entity (vector org, float rad) findradius = #22; 
 // pablo.
 // --->
-#ifndef botprogs
+
 void(...) bprint				= #23;
 void(...) sprint 				= #24;
 void(...) bprint2				= #23;
@@ -287,16 +283,6 @@ void(...) sprint6 				= #24;
 void(...) bprint7				= #23;
 void(...) sprint7 				= #24;
 void(...) bprint8				= #23;
-#else
-void(...) bprint				= #23;
-void(...) bprint2				= #23;
-void(...) bprint3				= #23;
-void(...) bprint4				= #23;
-void(...) bprint5				= #23;
-void(...) bprint6				= #23;
-void(...) bprint7				= #23;
-void(...) bprint8				= #23;
-#endif
 void (string s) dprint = #25; 
 string (float f) ftos = #26; 
 string (vector v) vtos = #27; 
@@ -318,16 +304,13 @@ float (float v) ceil = #38;
 float (entity e) checkbottom = #40; 
 float (vector v) pointcontents = #41; 
 float (float f) fabs = #43; 
-#ifndef botprogs
 vector (entity e, float speed) aim = #44; 
-#endif
 float (string s) cvar = #45; 
 void (string s) localcmd = #46; 
 entity (entity e) nextent = #47; 
 void (vector o, vector d, float color, float count) particle = #48; 
 void () ChangeYaw = #49; 
 vector (vector v) vectoangles = #51; 
-#ifndef botprogs
 void (float to, float f) WriteByte = #52; 
 void (float to, float f) WriteChar = #53; 
 void (float to, float f) WriteShort = #54; 
@@ -336,27 +319,19 @@ void (float to, float f) WriteCoord = #56;
 void (float to, float f) WriteAngle = #57; 
 void (float to, string s) WriteString = #58; 
 void (float to, entity s) WriteEntity = #59; 
-#endif
 void (float step) movetogoal = #67; 
 string (string s) precache_file = #68; 
 void (entity e) makestatic = #69; 
 void (string s) changelevel = #70; 
 void (string var, string val) cvar_set = #72; 
-// pablo. simple.
-#ifndef botprogs
 void (entity pl,string s1, ...) centerprint = #73;
-#endif
 void (vector pos, string samp, float vol, float atten) ambientsound = #74; 
 string (string s) precache_model2 = #75; 
 string (string s) precache_sound2 = #76; 
 string (string s) precache_file2 = #77; 
-#ifndef botprogs
 void (entity e) setspawnparms = #78; 
-#endif
 void(entity killer, entity killee) logfrag = #79; 
-#ifndef botprogs
 string(entity e, string key) infokey = #80; 
-#endif
 float(string s) stof = #81; 
 void (vector pos, float to) multicast = #82;
 float quadscore;
@@ -885,7 +860,20 @@ string(float f) read = #133;
 string (...) write = #134;
 float(string s) tq_stof = #135;
 float(string fname) checkfilename = #136;
-float(string fname) checkmodelprecache = #137; 
+float(string fname) checkmodelprecache = #137;
+float (float n) sin = #60;  //For Marioworld map physics -arg -agent
+float (float n) cos = #61;	//For Marioworld map physics -arg -agent
+void (...) AdvanceFrame = #63;  //from aagun.pqc
+float(string st1, string st2) strcasecmp = #87;
+float(string filename, float mode) fopen = #110;
+void(float handle) fclose = #111;
+string(float handle) fgets = #112;
+void(float handle, string s) fputs = #113;
+float (string s) strlen = #114;
+string(string s, float start, float length) substring = #116;
+string(string s) strzone = #118;
+void(string s) strunzone = #119;
+float () strcount = #138; 
 #endif
 // Exp Sys vars/properties
 #define ATTRIB_HEALTH	1
@@ -1095,7 +1083,6 @@ void () MTF_Coop_ResetItems;
 #define MTFITEM_MONSTER_DEMON			256
 #define MTFITEM_DIVIDE_EXP				512
 #define MTFITEM_NEEDLER					1024
-// VWEPS require MVDSV/XE, and I dunno if they work with bots (#ifndef botprogs me!!)
 #define VWEPS
 // vweps for coop.. but why not enable for united in the future too? -arg
 float(string model) precache_vwep_model = #532;
@@ -1199,9 +1186,6 @@ float modelindex_hover;
 // Half-Life 1 support is seedy and incomplete. A lot of monsters are replaced, and a lot of entities are as well.
 //Some maps work fine, others need quite some work. Most are somewhere in between.
 // Currently works best on FTE (detects proper hull sizes, can parse multi_manager, and ROTATING BRUSH MODELS)
-#ifdef mtf_coop_halflife
-#define HALFLIFE
-#endif
 #define npc_useTargetsOnRespawn		StatusBarSize		// if true then monster should call SUB_UseTargets() again when he dies after respawning
 #define DEFAULT_SPAWNER_TARGETNAME	"monster_spawner"
 #define SPAWN_USETARGETSONRESPAWN		4				// if present, monsters that respawn will re-fire their triggers upon death
@@ -1292,8 +1276,8 @@ void () ShalHome;
 void () ShalMissileTouch;
 // Wolf 3D Stuff
 #ifndef mtf_coop_halflife
-//void() monster_wolf_dog;  //removed to reduce precache of sounds/models -arg
-//void() monster_wolfboss;
+void() monster_wolf_dog;  //removed to reduce precache of sounds/models -arg
+void() monster_wolfboss;
 void() func_wolfdoor;
 void() wolfdoor_trigger_touch;
 #endif
@@ -1372,9 +1356,9 @@ void (entity whom) SetPlayerModelindex;
 //This switch allows comms to the hub and other MegaTF COOP servers. Since UberTF is
 //not participating with this, it's turned off. I also just put a return only to calls
 //Those functions in case it's called later.
-#define mtf_coop_packet
-void () Packet_SendSAY;
-void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
+//#define mtf_coop_packet
+//void () Packet_SendSAY;
+//void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
 #ifdef mtf_coop_packet
 #define awaiting_packet			health
 #define packet_tries			weapon
@@ -1398,12 +1382,5 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 //We are always in mtf_coop mode on uber -arg
-//#ifndef mtf_coop
-//#define BATTLE_ROYALE			1
-//#endif
-//#ifdef BATTLE_ROYALE
-//float (vector orgg1) brzone_valid;
-//entity battle_royale_e;
-//#endif
 #define SETVERSION		localcmd("serverinfo UBERTF v9.25.2021\n");
 //END

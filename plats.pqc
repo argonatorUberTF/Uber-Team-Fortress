@@ -276,16 +276,6 @@ void() train_use =
 	{
 		return;
 	}
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-	{
-		if (self.target == "waterpath2" || self.targetname == "water_door_move3")
-		{
-			self.solid = 1;
-		}
-	}
-	self.has_tesla = 0;
-#endif
 	train_next();
 };
 void() train_moving_use =
@@ -308,20 +298,6 @@ void() train_wait =
 		sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM); //play stopping sound
 		return;
 	}
-#ifdef mtf_coop_halflife
-	if (self.has_tesla == 1)
-	{
-		self.use = train_use;
-		self.think = func_train_find;
-		self.has_tesla = 0;
-		return;
-	}
-	if (self.message)
-	{
-		Delayed_Timer( self.message, 0 );
-		self.message = "";
-	}
-#endif
 	local string oldtarg;
 	if (self.real_owner.pathtarget)
 	{
@@ -362,14 +338,6 @@ void() train_next =
 	self.target = targ.target;
 	if (!(self.target))
 	{
-#ifdef mtf_coop_halflife
-		if (#HL_MAP)
-		{
-			if (targ == world  || !targ.classname || !targ.targetname)
-				return;
-		}
-		else
-#endif
 		return;		// this may break hl support.. dunno lol (quake 2 thing)
 	}
 	if (targ.wait)
@@ -382,33 +350,6 @@ void() train_next =
 	}
 	self.sounds = 4;
 		sound(self, 2, self.noise1, 1, 1);
-#ifdef mtf_coop_halflife
-	if (self.mtf_items > 0)
-	{
-			self.speed = self.mtf_items;
-		self.mtf_items = 0;
-	}
-	if (#HL_MAP)
-{//self.globalname)
-		if (targ.speed > 0)			// change our speed to match the path_corner's
-			self.mtf_items = targ.speed;
-		if (targ.spawnflags & 1)
-		{
-			self.has_tesla = 1;		// wait till triggered again
-		}
-		if (targ.message)
-			self.message = targ.message;
-
-		if (targ.spawnflags & 2)
-		{	// teleport there auto
-			setorigin(self, targ.origin - ((self.mins+self.maxs)*.5));
-			SUB_CalcMove(targ.origin - ((self.mins+self.maxs)*.5), 9999, train_wait);
-		}
-		else
-			SUB_CalcMove(targ.origin - ((self.mins+self.maxs)*.5), self.speed, train_wait);
-	}
-	else
-#endif
 	// quake 2 stuff
 	if (targ.spawnflags & 1)
 	{
@@ -428,16 +369,6 @@ void() func_train_find =
 	local entity targ;
 	targ = find(world, targetname, self.target);
 	self.target = targ.target;
-#ifdef mtf_coop_halflife
-	if (targ.speed > 0)
-		self.speed = targ.speed;
-	if (#HL_MAP)
-	{ //self.globalname)
-//{   why was this extra { here ? -arg
-		setorigin(self, targ.origin - ((self.mins + self.maxs)*.5));
-	}
-	else
-#endif
 	setorigin(self, targ.origin - self.mins);
 	if (!(self.targetname))
 	{
@@ -464,13 +395,6 @@ void() func_train =
 	}
 	if (!(self.target))
 	{
-#ifdef mtf_coop_halflife
-		if (self.targetname == "c1a3_pole01")
-		{
-			dremove(self);
-			return;
-		}
-#endif
 		objerror("func_train without a target");
 	}
 	if (!(self.dmg))
@@ -517,52 +441,8 @@ void() func_train =
 	setmodel(self, self.model);
 	setsize(self, self.mins, self.maxs);
 	setorigin(self, self.origin);
-#ifdef mtf_coop_halflife
-	if (mapname == "c1a1b" || mapname == "c1a1c")
-{
-		if (self.globalname == "c1a1b_zombie_vent1")
-			dremove(self);
-	}
-	else
-	if (mapname == "c1a1c")
-	{
-		self.globalname = "downward_vent";
-	}
-	else
-	if (mapname == "c1a2c")
-		if (self.target == "freezer_train_2")
-			self.globalname = "halflife_thing";
-	
-	if (#HL_MAP)
-	{
-		if (self.spawnflags & 8)
-		{	// swimmy!
-			self.spawnflags = 8;
-			self.solid = 1;
-			setorigin (self, self.origin);
-			self.touch = liquid_touch; // better swim function is required lol
-		}
-		else
-			self.spawnflags = 0;		// halflife trains only have "8" for spawn flags afaik
-	}
-	if (#HL_MAP)
-	{
-		if (self.target == "waterpath2" || self.targetname == "water_door_move3")
-		{
-			self.solid = 0;
-			setorigin(self, self.origin - '0 0 1000');
-		}
-	}
-	HalfLife_DoRender();
-#endif
-	
 	self.nextthink = self.ltime + 0.1;
 	self.think = func_train_find;
-#ifdef SVEN_COOP
-	if (#HL_MAP)
-		if (self.target && !self.targetname)
-			self.use();
-#endif
 };
 void() light_move = 
 {

@@ -35,22 +35,10 @@ void() button_fire =
 	}
 	sound(self, 2, self.noise, TF_FLARE_OFF, TF_FLARE_OFF);
 	self.state = 2;
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-		if (self.spawnflags & 1)
-		{
-			SUB_CalcMove(self.origin, self.speed, button_wait);
-			return;
-		}
-#endif
 	SUB_CalcMove(self.pos2, self.speed, button_wait);
 };
 void() button_use = 
 {
-#ifdef mtf_coop_halflife
-	if (has_master(self))
-		return;
-#endif
 	self.enemy = activator;
 	button_fire();
 };
@@ -65,10 +53,6 @@ void() button_touch =
 	{
 		return;
 	}
-#ifdef mtf_coop_halflife
-	if (has_master(self))
-		return;
-#endif
 	if (!Activated(self, other))
 	{
 		if (self.else_goal != TF_FLARE_LIT)
@@ -86,13 +70,6 @@ void() button_touch =
 };
 void() button_killed = 
 {
-#ifdef mtf_coop_halflife
-	if (has_master(self))
-	{
-		self.health = 1;
-		return;
-	}
-#endif
 	if (self.goal_activation & 8)
 	{
 		return;
@@ -134,10 +111,6 @@ void (entity t_owner) SpawnMovewith =
 	newtent.think = movewith_firstthink;
 	newtent.nextthink = time + 0.1;
 };
-#ifdef mtf_coop_halflife
-void() multi_use;
-void() trigger_multiple;
-#endif
 void() func_button = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -201,62 +174,6 @@ void() func_button =
 	self.state = TF_FLARE_OFF;
 	self.pos1 = self.origin;
 	self.pos2 = self.pos1 + self.movedir * (fabs(self.movedir * self.size) - self.lip);
-#ifdef mtf_coop_halflife
-	if (mapname == "c1a1c")
-	{
-		if (self.model == "*113")
-			self.target = "changetoc1a2";
-	}
-	else
-	if (mapname == "c1a3d")
-	{
-		if (self.target == "c1a3_liftdoor01")
-		{
-			newmis = spawn();
-			newmis.classname = "trigger_once";
-			newmis.wait = -1;
-			newmis.delay = 3;
-			newmis.targetname = "c1a3_liftdoor01";
-			newmis.target = "c1a3_lift01";
-			newmis.use = multi_use;
-			return;
-		}
-	}
-	else
-	if (mapname == "c1a3a")
-	{
-		if (self.target == "c1a3_liftdoor03")
-		{
-			newmis = spawn();
-			newmis.classname = "trigger_once";
-			newmis.wait = -1;
-			newmis.delay = 3;
-			newmis.targetname = "c1a3_liftdoor03";
-			newmis.target = "c1a3_lift02";
-			newmis.use = multi_use;
-			return;
-		}
-	}
-	else
-	if (mapname == "c2a1a")
-	{
-		if (self.target == "p_mm2")
-		{
-			self.max_health = 1;
-			self.th_die = button_killed;
-			self.takedamage = 1;
-		}
-	}
-	self.hl_use = button_use;
-#ifdef COOP_HAX
-	if (self.hl_use)
-	{
-		Create_Useme( self, ((self.absmin+self.absmax)*.5) );
-	}
-#endif
-	
-	HalfLife_DoRender();
-#endif
 	if (self.spawnflags & 32)
 	{
 		button_fire();

@@ -134,9 +134,6 @@ void() TeamFortress_MOTD =
 		TeamFortress_Alias("last_weapon", 70, TF_FLARE_LIT);
 		stuffcmd(self, "bind 9 \"impulse 9\"\n");
 		stuffcmd(self, "bind 0 \"impulse 10\"\n");
-#ifdef mtf_coop_halflife
-	stuffcmd (self, "alias +crouch \"cmd crouch\"\nalias -crouch \"cmd uncrouch\"\n");
-#endif
 	}
 };
 void() TeamFortress_HelpMap = 

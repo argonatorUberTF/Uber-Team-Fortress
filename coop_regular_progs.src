@@ -5,7 +5,7 @@ defs.pqc	//Main definitions for all modes and specific engine hooks, don't edit 
 mega_coop/mega_hip/hipdefs.qc		// Quake MP1 support
 mega_coop/mega_rogue/mtf_rogue.qc	// Quake MP2 support
 additional.pqc // vars for coopmtf and painkeep addons. Some modules can be commented out and still have vars declared for smaller compilation -arg.
-mega_coop/mega_halflife/hl_defs.qc	////Only loaded and compiled if the #define in defs.pqc is turned on. Beware though it is a large partially complete addon -arg
+//mega_coop/mega_halflife/hl_defs.qc	////Only loaded and compiled if the #define in defs.pqc is turned on. Beware though it is a large partially complete addon -arg
 ss_csqc.qc							//functions to animated reload bar. The rest of file read/write specific to mvdsv tweaks was merged into additional.pqc -arg
 mega_coop/uberhard.qc		//functions to uberhard mode at compilation. turned on/off in usecoop.pqc -arg
 mega_coop/mega_nehahra/neh_defsfuncs.qc  //nehara monsters

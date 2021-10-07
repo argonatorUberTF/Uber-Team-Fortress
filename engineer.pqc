@@ -652,9 +652,6 @@ void() TeamFortress_FinishedBuilding =
 		if (oldself.weapon == 2)
 		{
 			self.has_sentry = TF_FLARE_OFF;
-#ifdef mtf_coop_halflife
-			if (self.classname != "monster_sentry")
-#endif
 			sprint(self, 2, "You finish building the sentry gun.\n");
 			teamsprint(self.team_no, self, self.netname);
 			teamsprint(self.team_no, self, " has built a Sentry Gun.\n");
@@ -705,12 +702,6 @@ void() TeamFortress_FinishedBuilding =
 			newmis.ammo_shells = 25;
 			newmis.maxammo_shells = 100;
 			newmis.maxammo_rockets = 20;
-#ifdef mtf_coop_halflife
-			if (self.classname == "monster_sentry")
-			{
-				self.building = newmis;
-			}
-#endif
 			newmis.netname = "sentry";
 		}
 		else

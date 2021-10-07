@@ -220,23 +220,6 @@ void() display_quote =
 	quotetimer ();
 	dremove (self);
 };
-void () EntityCount =
-{
-	local float counter;
-	local entity current;
-	local string output;
-	counter = 0;
-	current = world;
-	current = nextent(current);
-	while (current != world)
-	{
-		counter = counter + 1;
-		current = nextent(current);
-	}
-	output = ftos(counter);
-	dprint ("\nTotal entities currently: ");
-	dprint (output);
-}; 
 void (entity e, float flt) Rank_FragIncrease;
 void() tester =
 {

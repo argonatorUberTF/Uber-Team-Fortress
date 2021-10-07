@@ -984,10 +984,8 @@ void() changelevel_use =
 		}
 	}
 	other = activator; 
-#ifndef COOP_HAX
 	if (other.classname != "player")
 		return;
-#endif
 	if (cvar("samelevel") == 2 || (cvar("samelevel") == 3 && mapname != "start"))
 	{
 		T_Damage (other, self, self, 50000);
@@ -1023,9 +1021,6 @@ void() trigger_changelevel =
 		self.map = "r2m2";
 	if (!(self.map))
 	{
-#ifdef SVEN_COOP
-		if (!#HL_MAP)			// we store next map in the cvar string "nextmap"
-#endif
 		objerror("changelevel trigger doesn't have map");
 	}
 	if (self.map == "hip1m4")
@@ -1035,19 +1030,6 @@ void() trigger_changelevel =
 	if (mapname == "qte2m4")
 		self.map = "qtstart";
 	InitTrigger();
-#ifdef SVEN_COOP
-	if (#HL_MAP)
-	{
-		precache_model ( "progs/hlexit.spr" );
-		self.think = trigger_changelevel_parse;
-#ifdef COOP_HAX
-		self.nextthink = time + 4;
-#else
-		self.nextthink = time + .1;
-#endif
-		return;
-	}
-#endif
 	self.touch = changelevel_touch;
 	if ( self.targetname )
 		self.use = changelevel_use;
@@ -1629,10 +1611,6 @@ void() info_player_start =
 		precache_mr ();
 		spawn_mister ();
 	}
-#ifdef SVEN_COOP
-	if (#HL_MAP)
-		self.classname = "info_intermission";
-#endif
 };
 void() info_player_start2 = 
 {
@@ -1893,7 +1871,6 @@ void () pdummy_spawn_think =
 	self = oself;
 	dremove(self);
 };
-#endif
 void () PlayerDeathThink =
 {
 //	self.respawn_time = respawn_delay_time + time;

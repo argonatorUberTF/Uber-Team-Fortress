@@ -52,10 +52,6 @@ void() multi_killed =
 };
 void() multi_use = 
 {
-#ifdef mtf_coop_halflife
-	if (has_master(self) == #TRUE)
-		return;
-#endif
 	self.enemy = activator;
 	multi_trigger();
 };
@@ -151,47 +147,8 @@ void() trigger_once =
 		return;
 	}
 	self.wait = -1;
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-		if (self.target == "init_rocket_fire")
-		{
-			self.master = "testfire_ms";
-			self.master = strzone(self.master);
-		}
-#endif
 	trigger_multiple();
 };
-#ifdef mtf_coop_halflife
-void () trigger_relay_checktargs =
-{
-	local entity targ;
-	targ = find(world, target, self.targetname);
-	
-	if (targ == world)
-	{
-		targ = find(world, TriggerTarget, self.targetname);
-		if (targ != world)
-		{
-			if (targ.classname == "env_global")
-			{
-				hldprint(2,"No setting of globals!\n");
-			}
-			hldprint(2, "set proper trigger target!\n");
-			targ.target = targ.TriggerTarget;
-			return;
-		}
-		hldprint(2,"trigger_relay: not targeted by anything\n");
-	}
-	else
-	{
-		hldprint(2, "Am targeted!\n");
-	}
-};
-void () trigger_relay_use =
-{
-	SUB_UseTargets();
-};
-#endif
 void() trigger_relay = 
 {
 	if (CheckExistence() == TF_FLARE_LIT)
@@ -381,9 +338,6 @@ void() teleport_touch =
 	local entity t;
 	local entity te;
 	local vector org;
-#ifdef HALFLIFE
-	if (!HL_MAP)
-#endif
 	if (self.targetname)
 	{
 		if (self.nextthink < time)
@@ -704,49 +658,11 @@ void() hurt_touch =
 		}
 		self.solid = TF_FLARE_LIT;
 		deathmsg = 36;
-#ifdef mtf_coop_halflife
-		if (#HL_MAP)
-		{
-			if (self.spawnflags & 8)
-			{
-				if (other.classname == "player")
-				{
-					// dont hurt clients
-					self.think = hurt_on;
-					self.nextthink = time + 1;
-					return;
-				}
-			}
-		}
-		if (self.dmg < 0)	// yes, trigger_hurts can heal in half-life O.o
-		{
-			other.health += -self.dmg;
-			if (other.health > other.max_health)
-				other.health = other.max_health;
-		}
-		else
-#endif
 		TF_T_Damage(other, self, self, self.dmg, TF_FLARE_OFF, TF_FLARE_LIT);
 		self.think = hurt_on;
 		self.nextthink = time + TF_FLARE_OFF;
 	}
 };
-#ifdef mtf_coop_halflife
-void() trigger_hurt_use = 
-{
-	if (self.touch == hurt_touch)
-	{
-		self.touch = SUB_Null;
-	}
-	else
-	{
-		self.touch = hurt_touch;
-	}
-		
-	if (self.spawnflags & 1)
-		self.use = SUB_Null;
-};
-#endif
 void () hurt_use =
 {
 	if (self.solid == SOLID_NOT)
@@ -769,21 +685,6 @@ void() trigger_hurt =
 	{
 		self.dmg = 5;
 	}
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-	{
-		self.use = trigger_hurt_use;
-		if (self.spawnflags & 2)
-			self.touch = SUB_Null;
-		if (mapname == "c1a3")
-			dremove(self);	// doesnt really work right in quakeworld
-		if (substr(mapname, 0, 4) == "c2a2" || mapname == "c2a3")
-		{
-			if (self.dmg == 10 || self.dmg == 20 || self.dmg == 5 || self.dmg == 150)
-				self.touch = SUB_Null;
-		}
-	}
-#endif
 	else
 	{
 		if (self.spawnflags & 1)
@@ -825,13 +726,6 @@ void() trigger_push_touch =
 	{
 		if (other.health > TF_FLARE_LIT && !(self.armorclass))
 		{
-#ifdef mtf_coop_halflife
-			if (#HL_MAP)
-			{	// halflife's trigger_push handles these things differently.. more subtle
-				other.velocity = other.velocity + (self.speed*.01 * self.movedir);
-			}
-			else
-#endif
 			other.velocity = self.speed * self.movedir * 10;
 			if (other.classname == "player")
 			{
@@ -873,33 +767,11 @@ void() trigger_push =
 	{
 		self.speed = 1000;
 	}
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-	{
-		if (self.spawnflags & 2)
-		{
-			self.use = trigger_push_use;
-			self.touch = SUB_Null;
-		}
-	}
-	else
-	{
-#endif
 	if (self.spawnflags & 2)
 	{
 		self.touch = SUB_Null;
 	}
 	self.use = trigger_push_mtf_use;
-#ifdef mtf_coop_halflife
-	}
-	if (mapname == "c1a1b")
-		if (self.targetname == "water_door_current")
-		{
-			self.targetname = "blahhh";
-			self.use = SUB_Null;
-			return;
-		}
-#endif
 };
 void () trigger_jumper_touch =
 {

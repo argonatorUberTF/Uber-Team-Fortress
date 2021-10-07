@@ -633,15 +633,6 @@ void() monster_turret =
 		monster_turret_malice ();
 		return;
 	}
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-		if (!self.team_no)
-		{
-				self.classname = "monster_miniturret";
-				self.team_no = 2;
-				self.origin_z -= 30;
-		}
-#endif
 	precache_model("progs/turret.mdl");
 	precache_model("progs/h_turret.mdl");
 	precache_model("progs/dedturet.mdl");
@@ -686,12 +677,6 @@ void() monster_turret =
 		self.rotate_type = TF_FLARE_LIT;
 	}
 	self.currentammo = TF_FLARE_OFF;
-#ifdef mtf_coop_halflife
-	if (self.classname == "monster_miniturret")
-	{
-		self.netname = "monster_miniturret";
-	}
-#endif
 	self.classname = "bot";
 	if (self.spawnflags & 2)
 	{

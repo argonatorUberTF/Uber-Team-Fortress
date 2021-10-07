@@ -482,9 +482,6 @@ void() func_wall =
 		}
 		return;
 	}
-#ifdef mtf_coop_halflife
-	HalfLife_DoRender();
-#endif
 };
 void() func_illusionary = 
 {
