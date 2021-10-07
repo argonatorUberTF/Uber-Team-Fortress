@@ -12,7 +12,6 @@ void WriteVector (float msg, vector org) =
 	WriteCoord (msg, org_y);
 	WriteCoord (msg, org_z);
 };
-#ifndef mtf_coop_halflife
 void () hl_rotating =
 {
 	local float mvspd, realmvspd;
@@ -78,7 +77,6 @@ void () func_rotating =
 	}
 	self.use = func_rotating_use;
 };
-#endif
 void () target_laser_think =
 {
 	local entity 	ignore;
@@ -186,14 +184,10 @@ void () target_laser =
 	self.think = target_laser_start;
 	self.nextthink = time + 1;
 };
-#ifdef mtf_coop_halflife
-void() func_door_rotating_q2 =
-#else
 float DOOR_REVERSE		= 2;
 float DOOR_X_AXIS		= 64;
 float DOOR_Y_AXIS		= 128;
 void() func_door_rotating =
-#endif
 {
 	local vector blah;
 	if ( (CheckExistence () == 0.000) )
@@ -369,7 +363,6 @@ void () func_timer =
 			func_timer_preuse ();
 	}
 };
-#ifndef mtf_coop_halflife
 void () ladder_touch_old =
 {
 	local vector pvec;
@@ -388,7 +381,6 @@ void() func_ladder =
 	InitTrigger();
 	self.touch = ladder_touch_old;
 };
-#endif
 void () target_explosion_explode =
 {
 	local float		save;

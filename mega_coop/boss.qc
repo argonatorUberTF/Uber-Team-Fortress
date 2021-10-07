@@ -345,13 +345,6 @@ void () monster_boss =
 		monster_killable_boss();
 		return;
 	}
-#ifndef mtf_coop_halflife
-#endif
-	if (deathmatch)
-	{
-		remove (self);
-		return;
-	}
 	precache_model ("progs/boss.mdl");
 	precache_model ("progs/lavaball.mdl");
 	precache_sound ("weapons/rocket1i.wav");

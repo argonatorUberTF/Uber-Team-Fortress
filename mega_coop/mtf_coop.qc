@@ -199,12 +199,10 @@ void () MTF_Setup_Monster =
 		newmis.armorvalue = 1;
 		newmis.nextthink = time + .1;		
 	}	
-#ifndef mtf_coop_halflife
 	if (cvar("sv_map_halflife") == 1 || #DOOM_MAP)
 	{
 		self.effects = 0; // makes wolf3d sprites have boxes on ezquake
 	}
-#endif
 };
 float (float orighp) MTF_Monster_Health =
 {
@@ -1070,17 +1068,6 @@ void () COOP_SetLives =
 	{
 		self.lives = 999;
 		self.#npc_spawndelay = 45;
-	}
-#endif
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-	{
-		self.lives = 1;
-		if (random() > .6)
-		{
-			self.lives = 2;
-			self.#npc_spawndelay = 2;
-		}
 	}
 #endif
 	self.lives = self.lives - 1;

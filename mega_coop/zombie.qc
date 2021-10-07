@@ -927,10 +927,6 @@ void () monster_zombie =
 	self.#npc_spawndelay = 30;
 	self.#npc_spawnfunc = monster_zombie1;
 	COOP_SetLives ();
-#ifdef mtf_coop_halflife
-	if (#HL_MAP)
-		self.origin_z += 30;
-#endif
 	monster_zombie1 ();
 };
 //END

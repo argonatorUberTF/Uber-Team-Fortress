@@ -385,12 +385,6 @@ void ( entity monster, entity mkiller ) MTF_Monster_DropInventory =
 	t_item.think = Inventory_ClingToMonster;
 	t_item.nextthink = time + .2;
 	t_item.owner.effects = EF_RED;
-#ifndef mtf_coop_halflife
-	if (cvar("sv_map_halflife") == 1 || #DOOM_MAP)
-{
-		t_item.owner.effects = 0;
-	}
-#endif
 };
 float ( entity t_plyr, float item_no, float item_cost ) Inventory_AddItem =
 {

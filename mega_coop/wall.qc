@@ -692,7 +692,6 @@ void () wait_to_die =
 	self.think = wait_to_die;
 	self.nextthink = (time + 0.1);
 };
-#ifndef mtf_coop_halflife
 void () player_push2 =
 {
 	if ((other.classname != "player"))
@@ -705,7 +704,6 @@ void () player_push2 =
 		self.velocity_y = (other.velocity_y + (400 * random ()));
 	}
 };
-#endif
 void () squish_touch =
 {
 	local vector spot;
