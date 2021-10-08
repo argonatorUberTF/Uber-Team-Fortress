@@ -255,10 +255,6 @@ void() voteyes =
 	if (votestarted == 0)
 	{
 		sprint (self, 2, "There is no vote started. To start a vote, use the mega menu or type votemenu.\n");
-		if (infokey(world, "fteserver") == "1")
-		{
-			sprint (self, 2, "On this server you can also call for a map by saying !map mapname .\n");
-		}
 		if (infokey(world, "prozacserver") == "1")
 		{
 		sprint (self, 2, "On this server you can also call for a map by using CMD votemap mapname in the console.\n"); }

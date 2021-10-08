@@ -12174,14 +12174,7 @@ void() item_tfgoal =
 };
 void(entity AD) ParseTFDetect = 
 {
-// not sure to remove this stub of code or not -arg
-#ifndef mtf_coop
-	if (AD.team_broadcast != string_null)
-	{
-		team_menu_string = AD.team_broadcast;
-	}
-	localcmd(AD.message);
-#endif
+
 	#SETVERSION
 	team1lives = AD.ammo_shells;
 	team2lives = AD.ammo_nails;
@@ -12232,15 +12225,6 @@ void(entity AD) ParseTFDetect =
 	illegalclasses2 = AD.maxammo_nails;
 	illegalclasses3 = AD.maxammo_rockets;
 	illegalclasses4 = AD.maxammo_cells;
-	if (mapname == "1on1r")
-	{
-		illegalclasses1 = 419;
-		illegalclasses2 = 419;
-	}
-	if (mapname == "2FORT5")
-	{
-		localcmd("sv_gravity 800\n");
-	}
 	civilianteams = TF_FLARE_LIT;
 	if (illegalclasses1 == -1)
 	{
