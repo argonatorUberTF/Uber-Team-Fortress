@@ -293,7 +293,6 @@ entity(vector fmins, vector fmaxs) spawn_field =
 	local entity trigger;
 	local vector t1;
 	local vector t2;
-#ifndef mtf_coop_halflife
 	if (cvar("sv_map_halflife") == 1)
 	{
 		trigger = spawn();
@@ -311,7 +310,6 @@ entity(vector fmins, vector fmaxs) spawn_field =
 			setsize (trigger, fmins - '60 60 0', fmaxs + '60 60 0');
 		return (trigger);
 	}
-#endif
 	trigger = spawn();
 	trigger.movetype = TF_FLARE_LIT;
 	trigger.solid = TF_FLARE_OFF;
@@ -458,13 +456,11 @@ void() LinkDoors =
 };
 void() func_door = 
 {
-#ifndef mtf_coop_halflife
 	if (cvar("sv_map_halflife") == 1)
 	{
 		func_wolfdoor ();
 		return;
 	}
-#endif
 	if (CheckExistence() == TF_FLARE_LIT)
 	{
 		dremove(self);

@@ -933,10 +933,6 @@ float PK_CANPABAMMO_MAX = 4;
 float PK_BEARTRAPAMMO_MAX = 12;
 float EF_RED    = 128; //effects
 //
-//#ifndef mtf_coop
-//float FlagTag;	// mega2k feature (used in map Insanity.bsp)
-//float coop = 1;
-//#endif
 //float SECRET_NO_SHOOT = 8.00000;	//unused
 //						END FLOAT CONSTANTS
 //

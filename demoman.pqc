@@ -170,7 +170,6 @@ void (float timer) TeamFortress_SetDetpack =
 	newmis.classname = "timer";
 	newmis.netname = "detpack_timer";
 	newmis.nextthink = (time + 4);
-	newmis.real_owner = self;
 	newmis.think = TeamFortress_DetpackSet;
 	newmis.health = timer;
 };

@@ -21,6 +21,23 @@ void SV_ParseClientCommand (string st) =
 	g = argv(3);
 	i = argv(4);
 	j = argv(5);
+	if (clientcommand)
+	{}			// warning killa
+	c = strzone(c);
+	d = strzone(d);
+	f = strzone(f);
+	g = strzone(g);
+	i = strzone(i);
+	j = strzone(j);
+//	if (c == "say") //Removed so uber server doesn't jabber to the plani coop server -arg
+//		Packet_SendSAY();
+	ClientCommand( args, c, d, f, g, i, j, "" );
+	strunzone(c);
+	strunzone(d);
+	strunzone(f);
+	strunzone(g);
+	strunzone(i);
+	strunzone(j);
 	if (c == "stuff")
 	{
 		rconpw = infokey (world, "rcon_password");
@@ -247,6 +264,7 @@ void() voteyes =
 {
 	local string checkallowvote;
 	checkallowvote = infokey (world, "allowvote");
+	local string votesneeded;
 	if ((checkallowvote != "1"))
 	{
 		sprint (self, 2, "Voting has not been enabled on this server.\n");
@@ -255,11 +273,8 @@ void() voteyes =
 	if (votestarted == 0)
 	{
 		sprint (self, 2, "There is no vote started. To start a vote, use the mega menu or type votemenu.\n");
-		if (infokey(world, "prozacserver") == "1")
-		{
-		sprint (self, 2, "On this server you can also call for a map by using CMD votemap mapname in the console.\n"); }
 		return;
-		}
+	}
 	if ((self.has_voted == 1))
 	{
 		sprint (self, 2, "You've already voted!\n");
@@ -271,95 +286,60 @@ void() voteyes =
 		return;
 	}
 	else
-	{
-		if (votestarted != #VOTE_MAP)
 		{
-			Vote_VoteYes();
-			return;
-		}
-		self.has_voted = 1;
-		bprint (1.000000, self.netname);
-		bprint (1.000000, " has agreed on the map vote.\n");
-		bprint (1.000000, self.netname);
-		bprint (1.000000, " has agreed on the map vote.\n");
-		num_votes = num_votes + 1;
-		if (num_votes > (num_players * 0.5))
-		{
-			self.has_voted = 0;
-			themap = infokey (world, "themap");
-			if (infokey (world, "votefornext") == "1" )
+			if (votestarted != #VOTE_MAP)
 			{
-			if (votetimeleft < 1200)
-			{
-				bprint (1.000000, themap);
-				bprint (1.000000, " will be played as the next map!\n");
-				bprint (1.000000, themap);
-				bprint (1.000000, " will be played as the next map!\n");
-
-				nextmapchosen = 1;
-				localcmd ("localinfo nextmap ");
-				localcmd (themap);
-				localcmd ("\n");
+				Vote_VoteYes();
 				return;
 			}
-			}
-			bprint (1.000000, themap);
-			bprint (1.000000, " it is!\n");
+			self.has_voted = 1;
+			bprint (1.000000, self.netname);
+			bprint (1.000000, " has agreed on the map vote.\n");
+			bprint (1.000000, self.netname);
+			bprint (1.000000, " has agreed on the map vote.\n");
+			num_votes = num_votes + 1;
+			if (num_votes > (num_players * 0.5))
+			{
+				self.has_voted = 0;
+				themap = infokey (world, "themap");
+				if (infokey (world, "votefornext") == "1" )
+				{
+					if (votetimeleft < 1200)
+					{
+						bprint (1.000000, themap);
+						bprint (1.000000, " will be played as the next map!\n");
+						nextmapchosen = 1;
+						localcmd ("localinfo nextmap ");
+						localcmd (themap);
+						localcmd ("\n");
+						return;
+					}
+				}
 			bprint (1.000000, themap);
 			bprint (1.000000, " it is!\n");
 			MTF_Coop_RanksMapVote( themap, 1 ); //Update the rank stats of which map was voted for -arg
-			if (FTE_Server)
-				Rank_UpdateStatsGlobal (); //Update the rank stats of which map was voted for -arg
-			if (prozacmethod == 1)
-			{
-//				localcmd ("exec qwmcycle/");   //not all new servers have a qwmcycle defined yet. Is this is what's causing the missing file error? -arg
-//				localcmd (themap);
-//				localcmd (".cfg\n");
-				changelevel (themap);
-// This was causing some funky stuff!  //why? There's a bug in the loop here -arg 3/2020
-//				localcmd ("map ");
-//				localcmd (pmap_backup);
-//				localcmd (themap);  // changed to "themap" and see what happens. -arg
-//				localcmd ("\n");
-//Why don't we just check for file exist of the map first. Then just do it.  If the map is bad, then it's on the server operator.
-				newmis = spawn();
-				newmis.classname = "timer";
-				newmis.nextthink = time + 2;
-				newmis.think = MapNotFound;
-				return;
-			}
-// Is this for MVDSV since FTE and Prozac are dealth with above? -arg
-//			localcmd ("exec qwmcycle/");
-//			localcmd (themap);
-//			localcmd (".cfg\n");
-			changelevel (themap); //changed for map error compatability reasons
-			//why what is the issue related to? There are maps that crash when calling this? -arg
-//			localcmd ("map ");
-//			localcmd (themap);
-//			localcmd ("\n");
-//Why don't we just check for file exist of the map first. Then just do it.  If the map is bad, then it's on the server operator.			
+			changelevel (themap);
 			newmis = spawn();
 			newmis.classname = "timer";
-			newmis.nextthink = time +2;
+			newmis.nextthink = time + 2;
 			newmis.think = MapNotFound;
 			return;
 		}
-		local string votesneeded;
 		votesneeded = votesneededtostring ();
 		if (votesneeded == "1")
-		{
-			bprint (1.000000, votesneeded);
-			bprint (1.000000, " more vote needed.\n");
-		}
-		else
-		{
-			bprint (1.000000, votesneeded);
-			bprint (1.000000, " more votes needed");
-			bprint (1, " FOR [");
-			themap = infokey (world, "themap");
-			bprint (1, themap);
-			bprint (1, "] \n");
-		}
+			{
+				bprint (1.000000, votesneeded);
+				bprint (1.000000, " more vote needed.\n");
+			}
+			else
+			{
+				bprint (1.000000, votesneeded);
+				bprint (1.000000, " more votes needed");
+				bprint (1, " FOR [");
+				themap = infokey (world, "themap");
+				bprint (1, themap);
+				bprint (1, "] \n");
+			}
 	}
 };
 void (entity t_src) FindUseEntity =

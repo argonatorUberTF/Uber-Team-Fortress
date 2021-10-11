@@ -1382,5 +1382,5 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 //We are always in mtf_coop mode on uber -arg
-#define SETVERSION		localcmd("serverinfo UBERTF v10.7.2021\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v10.11.2021\n");
 //END
