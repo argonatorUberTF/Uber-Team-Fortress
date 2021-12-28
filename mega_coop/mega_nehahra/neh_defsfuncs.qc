@@ -297,9 +297,7 @@ void () button_use;
 void () button_touch;
 void () button_killed;
 void () func_button;
-#ifndef HALFLIFE
 float (entity Top, entity bottom) IsOnTopOf;
-#endif
 void () DecodeLevelParms;
 entity () FindIntermission;
 void () GotoNextMap;
@@ -3146,7 +3144,6 @@ void (float shotcount, vector dir, vector spread) FireBullets;
 void () W_FireShotgun;
 void () W_FireSuperShotgun;
 void () T_MissileTouch;
-void () W_FireRocket;
 void () W_FireLightning;
 void () GrenadeExplode;
 void () GrenadeTouch;
