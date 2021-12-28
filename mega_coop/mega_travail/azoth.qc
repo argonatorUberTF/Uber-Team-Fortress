@@ -2419,9 +2419,9 @@ void () monster_azoth =
 	if (mapname == "aopend")
 		self.lives = 0;
 };
-void (entity sky) spawn_blacksky =
+void (entity sky27) spawn_blacksky =
 {
-	setmodel (sky, sky.model);
+	setmodel (sky27, sky27.model);
 };
 void () nightfall3;
 void () nightfall2 = [ 0, nightfall3 ]
