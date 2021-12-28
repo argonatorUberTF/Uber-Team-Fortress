@@ -1,3 +1,13 @@
+void () Packet_SendSAY;
+void() pm_list;
+void (entity plyr) Badpacket_attribute_over_limit;
+float(string s1, string s2, string s3, string s4, string s5) ExtendedCMDs;
+void () Vote_CheckWin;
+void (entity t_src) FindUseEntity;
+void() voteyes;
+void SV_ParseClientCommand (string st);
+void (float vote_type, string vote_string, entity vote_target) Vote_StartVote;
+void (string put) votemap_start;
 void () RemoveVote;
 void () MapNotFound;
 void () RemoveVote2;
@@ -6,6 +16,10 @@ float(string mapstr) validatemap;
 float (entity the_player, float amount, string give_what) Extra_Stuff;		// More Stuff Command goodness!
 float (string s1, string s2, string s3, string s4, string s5, string s6) More_Commands;
 float (string votemap_name) Check_For_Bmodel;		// so players cant vote on bmodels
+void () Packet_SendSAY =
+{
+return;
+};
 void SV_ParseClientCommand (string st) =
 {
 	local float args;
@@ -21,16 +35,17 @@ void SV_ParseClientCommand (string st) =
 	g = argv(3);
 	i = argv(4);
 	j = argv(5);
+#ifndef FTE_ONLY
 	if (clientcommand)
-	{}			// warning killa
+	{}
 	c = strzone(c);
 	d = strzone(d);
 	f = strzone(f);
 	g = strzone(g);
 	i = strzone(i);
 	j = strzone(j);
-//	if (c == "say") //Removed so uber server doesn't jabber to the plani coop server -arg
-//		Packet_SendSAY();
+	if (c == "say") //Removed so uber server doesn't jabber to the plain coop server -arg
+		Packet_SendSAY();
 	ClientCommand( args, c, d, f, g, i, j, "" );
 	strunzone(c);
 	strunzone(d);
@@ -38,6 +53,7 @@ void SV_ParseClientCommand (string st) =
 	strunzone(g);
 	strunzone(i);
 	strunzone(j);
+#else
 	if (c == "stuff")
 	{
 		rconpw = infokey (world, "rcon_password");
@@ -120,67 +136,6 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 	}
-	if (c == "changeteam")
-	{
-		local float teamct;
-		local float teamp;
-		if (self.ischangingteams > 0)
-		{
-			sprint (self, 2.000000, "You can only use this command once per life.\n");
-			return;
-		}
-		if (!d)
-		{
-			sprint (self, 2.000000, "Please use [CMD changeteam Blue/Red/Green/Yellow] in the console.\n");
-			return;
-		}
-		if (d == "blue")
-		{
-			teamct	= 1;
-			teamp = teamcount1;
-		}
-		if (d == "red")
-		{
-			teamct	= 2;
-			teamp = teamcount2;
-		}
-		if (d == "yellow")
-		{
-			teamct	= 3;
-			teamp = teamcount3;
-		}
-		if (d == "green")
-		{
-			teamct	= 4;
-			teamp = teamcount4;
-		}
-		if (self.team_no == teamct)
-		{
-			sprint (self, 2.000000, "You can't switch to the team you're already on or you chose an invalid team!\n");
-			return;
-		}
-		if (teamct == 1)
-		{
-			self.ischangingteams = 1;
-			sprint (self, 2.000000, "After you die you will spawn on the Blue team.\n");
-		}
-		if (teamct == 2)
-		{
-			self.ischangingteams = 2;
-			sprint (self, 2.000000, "After you die you will spawn on the Red team.\n");
-		}
-		if (teamct == 3)
-		{
-			self.ischangingteams = 3;
-			sprint (self, 2.000000, "After you die you will spawn on the Yellow team.\n");
-		}
-		if (teamct == 4)
-		{
-			self.ischangingteams = 4;
-			sprint (self, 2.000000, "After you die you will spawn on the Green team.\n");
-		}
-		return;
-	}
 	if (c == "pm")
 		{
 			if (!d)
@@ -227,21 +182,6 @@ void SV_ParseClientCommand (string st) =
 		}
 		return;
 	}
-	if (c == "color")
-	{
-		sprint (self, 2, "color.\n");
-		return;
-	}
-	if (c == "team")
-	{
-		sprint (self, 2, "team.\n");
-		return;
-	}
-	if (c == "skin")
-	{
-		sprint (self, 2, "skin.\n");
-		return;
-	}
 	if (c == "say")
 	{
 		if (d == "!voteyes")
@@ -250,15 +190,18 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 		else
-		clientcommand(self, st);
+//		ClientCommand( args, c, d, f, g, i, j, "" );
+		clientcommand(self, st); 	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
 	}
 	else
 	{
 		if (More_Commands(c, d, f, g, i, j) == 1)
 			return;
 		else
-			clientcommand(self, st);
+		clientcommand(self, st);		
+//		ClientCommand( args, c, d, f, g, i, j, "" );	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
 	}
+#endif
 };
 void() voteyes = 
 {
@@ -369,7 +312,7 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		return;
 	if (vote_type == #VOTE_MAP)
 	{
-		votemap_start( vote_string );
+		votemap_start(vote_string);
 		return;
 	}
 	if ((self.vote_wait < 1))
@@ -603,6 +546,7 @@ if (votestarted == #VOTE_USE)
 				bprint(2, "The entity/door/switch that ");
 				bprint(2, vote_starter.netname);
 				bprint(2, " is in front of will now be triggered.\n");
+				self.vote_wait = 9;
 			}
 		}
 		else
@@ -1064,4 +1008,12 @@ void (string msg) Packet_SendGlobalMessage =
 {
 return; // to stop sending packets -arg
 };
+void () Packet_Auth_Think =
+{
+return; // do nothing, no sending of packets anymore, left original calling there in code as a marker. -arg 12/25/2021
+}
+void (entity to_update) Packet_SendEXP =
+{
+return; // dead stump of sending xp to hub server that times out anyway -arg
+}
 //END

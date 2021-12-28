@@ -1,3 +1,4 @@
+void () W_FireRocket;
 void (vector a, vector b) SpawnMeatSpray;
 void(entity targ, entity inflictor, entity attacker, float damage, float T_flags, float T_AttackType) TF_T_Damage;
 float crandom();
@@ -5074,6 +5075,7 @@ if (self.impulse == 9)
 		bprint2 (1.000000, self.netname, " tried to cheat.\n");
 		sprint (self, 2.000000, "You have been kicked for attempting to cheat. Don't do it.\n");
 		stuffcmd (self, "disconnect\n");
+		stuffcmd (self, "wait;wait;wait;wait;wait\n");
 		stuffcmd (self, "quit\n");
 	}
 	if (spycam)
@@ -8518,4 +8520,51 @@ void() copb_checkFart =
 			}
 	}	
 };
+void () W_FireRocket =
+{
+	self.ammo_rockets = (self.ammo_rockets - 1);
+	self.currentammo = (self.ammo_rockets);
+	sound (self, 1, "weapons/sgun1.wav", 1, 1);
+	KickPlayer (-2.000000, self);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.team_no = self.team_no;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	makevectors (self.v_angle);
+	newmis.velocity = v_forward;
+	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.touch = T_MissileTouch;
+	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
+	if (self.mtf_items & #BOUNCY_ROCKETS)
+	newmis.attack_finished = 5;
+	newmis.nextthink = (time + 5);
+	newmis.think = SUB_Remove;
+	newmis.weapon = 6;
+#ifdef mtf_coop_tgiving
+	setmodel (newmis, "progs/duck1.mdl");
+#else
+	setmodel (newmis, "progs/missile.mdl");
+#endif
+	setsize (newmis, '0 0 0', '0 0 0');
+	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
+};
+void () EntityCount =
+{
+	local float counter;
+	local entity current;
+	local string output;
+	counter = 0;
+	current = world;
+	current = nextent(current);
+	while (current != world)
+	{
+		counter = counter + 1;
+		current = nextent(current);
+	}
+	output = ftos(counter);
+	dprint ("\nTotal entities currently by Xavior: ");
+	dprint (output);
+}; 
 //END

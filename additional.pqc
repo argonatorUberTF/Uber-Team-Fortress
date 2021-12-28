@@ -1199,7 +1199,7 @@ entity(entity scanner, float scanrange, float enemies, float friends) T_RadiusSc
 entity (float gno) Findgoal;
 void () monster_spawner_spawn; //fix for 2fortfood_coop.bsp -arg
 void () BTF_Precache;
-void () W_FireRocket;
+//void () W_FireRocket;
 void () missing_precaches;  //put sounds and models missing here to load first absolutely -arg
 //						FLOAT FUNCTIONS and voids
 void () EntityCount;
@@ -5567,7 +5567,7 @@ void(entity p) TeamFortress_SetSpeed =
 	local string sp;
 	local float tf;
 	local entity te;
-	stuffcmd(p, "cl_movespeedkey 1\n");
+//	stuffcmd(p, "cl_movespeedkey 1\n");  //what is this for? -arg
 	if (p.playerclass == 1)
 	{
 		p.maxspeed = 400;
@@ -19116,7 +19116,7 @@ void(string gibname, float dm) ThrowGib =
 	newmis.avelocity_z = random() * 600;
 	newmis.think = SUB_Remove;
 	newmis.ltime = time;
-	newmis.nextthink = (time + (random() * 5));
+	newmis.nextthink = (time + 3);
 	newmis.frame = 0;
 	newmis.flags = 0;
 };
@@ -20049,7 +20049,7 @@ void (string gibname, float dm) beartrap_throwGib =
 	new.avelocity_z = random() * 600;
 	new.think = SUB_Remove;
 	new.ltime = time;
-	new.nextthink = time + 3 + random() * 3;
+	new.nextthink = time + 3;
 	new.frame = 0;
 	new.flags = 0;
 	new.classname = "beartrap_gib";
@@ -21125,14 +21125,14 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 	}
 	if (!strcasecmp("votemap",arg1))
 	{
-		if (!strcasecmp("hippos",arg2))
-		{
-			if (num_players < 2)
-			{
-				sprint(self, 2, "More players are required to initiate this vote.\n");
-				return 1;
-			}
-		}
+//		if (!strcasecmp("hippos",arg2))
+//		{
+//			if (num_players < 2)
+//			{
+//				sprint(self, 2, "More players are required to initiate this vote.\n");
+//				return 1;
+//			}
+//		}
 		local string thisiscnn;
 		thisiscnn = arg2;
 		if ((self.vote_wait > time))
@@ -23996,51 +23996,5 @@ void() NailGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
-void () W_FireRocket =
-{
-	self.ammo_rockets = (self.ammo_rockets - 1);
-	self.currentammo = (self.ammo_rockets);
-	sound (self, 1, "weapons/sgun1.wav", 1, 1);
-	KickPlayer (-2.000000, self);
-	newmis = spawn ();
-	newmis.owner = self;
-	newmis.team_no = self.team_no;
-	newmis.movetype = 9;
-	newmis.solid = 2;
-	makevectors (self.v_angle);
-	newmis.velocity = v_forward;
-	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
-	newmis.angles = vectoangles (newmis.velocity);
-	newmis.touch = T_MissileTouch;
-	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
-	if (self.mtf_items & #BOUNCY_ROCKETS)
-	newmis.attack_finished = 5;
-	newmis.nextthink = (time + 5);
-	newmis.think = SUB_Remove;
-	newmis.weapon = 6;
-#ifdef mtf_coop_tgiving
-	setmodel (newmis, "progs/duck1.mdl");
-#else
-	setmodel (newmis, "progs/missile.mdl");
-#endif
-	setsize (newmis, '0 0 0', '0 0 0');
-	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
-};
-void () EntityCount =
-{
-	local float counter;
-	local entity current;
-	local string output;
-	counter = 0;
-	current = world;
-	current = nextent(current);
-	while (current != world)
-	{
-		counter = counter + 1;
-		current = nextent(current);
-	}
-	output = ftos(counter);
-	dprint ("\nTotal entities currently by Xavior: ");
-	dprint (output);
-}; 
+
 //END

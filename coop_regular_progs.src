@@ -1,5 +1,4 @@
 qwprogs.dat
-
 usecoop.pqc	//Compiler switches used for compilation of regular, halloween, christmas modes. -arg
 defs.pqc	//Main definitions for all modes and specific engine hooks, don't edit it. -arg
 mega_coop/mega_hip/hipdefs.qc		// Quake MP1 support
@@ -93,6 +92,9 @@ mega_coop/misc/mood.qc
 mega_coop/misc/cyberdemon.qc		// map: slidefox_coop
 mega_coop/boss_killable.qc	// Killable chthon a'la bbelief etc
 
+// Decemberween stuff
+mega_coop/mega_xmas/elf.qc
+mega_coop/mega_xmas/santa.qc
 // TRAVAIL: New quake sp ep
 mega_coop/mega_travail/travail_defs_funcs.qc
 mega_coop/mega_travail/azothfight.qc
@@ -249,9 +251,6 @@ mega_coop/mega_doom/revenant.qc
 mega_coop/mega_hexen2/hexen2_defs.qc
 mega_coop/mega_hexen2/hexen2_save.qc
 
-// Decemberween stuff
-//mega_coop/mega_xmas/elf.qc
-//mega_coop/mega_xmas/santa.qc
 
 mega_coop/mega_malice/malice_include.qc
 

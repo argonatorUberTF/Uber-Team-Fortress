@@ -1243,12 +1243,12 @@ void() PutClientInServer =
 	if ((st != ""))
 	{
 // There shouldn't be no auto aiming at all ffs -arg
-//		st = infokey (self, "*ver");
-//		if ((st == "2.40-0858"))
-//		{
-//			stuffcmd (self, "aa_enabled");
-//			stuffcmd (self, "\n");
-//		}
+		st = infokey (self, "*ver");
+		if ((st == "2.40-0858"))
+		{
+			stuffcmd (self, "aa_enabled");
+			stuffcmd (self, "\n");
+		}
 	}
 	st = infokey (self, "*z_ver");
 	if ((st != ""))
