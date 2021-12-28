@@ -1,8 +1,8 @@
 #define nofixcount
 //We are always in mtf_coop mode on uber -arg
-#ifndef mtf_coop
-#pragma DONT_COMPILE_THIS_FILE
-#else
+//#ifndef mtf_coop
+//#pragma DONT_COMPILE_THIS_FILE
+//#else
 //============================================================================
 float	spawner_noTriggerId;		// next id of a spawner without a targetname, so we can tell them apart
 void() monster_spawner_spawn =
@@ -356,11 +356,11 @@ void() monster_spawner =
 	}
 	else
 		self.ammo_detpack = 2;				// doesn't have to be unique if a targetname was specified
-#ifndef nofixcount
+//#ifndef nofixcount
 	// only increase monster count if we're not on a team or we're not on team one
-	if ( !self.team_no || !Teammate( self.team_no, 1 ) )
-		total_monsters = total_monsters + self.lives;
-#endif
+//	if ( !self.team_no || !Teammate( self.team_no, 1 ) )
+//		total_monsters = total_monsters + self.lives;
+//#endif
 	// first precache sounds and models
 	temp = spawn();
 	// preserve total_monsters
@@ -507,10 +507,10 @@ void() monster_spawner =
 				monster_spawner_spawn();
 		}
 	}
-#ifndef nofixcount
+//#ifndef nofixcount
 	// reset total_monsters
-	total_monsters = ftmp;
-#endif
+//	total_monsters = ftmp;
+//#endif
 };
 void() monsterteam_touch =
 {
@@ -636,5 +636,4 @@ void() trigger_monsterteam =
 		self.touch = monsterteam_touch;
 	self.use = monsterteam_use;
 };
-#endif
 //END
