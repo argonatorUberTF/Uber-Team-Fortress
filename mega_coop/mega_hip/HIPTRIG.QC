@@ -128,13 +128,6 @@ void() trigger_gravity_touch =
 		other.gravity = 1.0;
 	else
 		other.gravity = self.gravity;
-#ifdef HALFLIFE	
-	if (#HL_MAP)
-	{
-		other.gravity = self.gravity * .65;	// adjust it slightly, since half-life players can jump farther generally	
-		other.oldgravity = other.gravity;
-	}
-#endif
 };
 void() trigger_setgravity =
 {
