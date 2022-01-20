@@ -43,9 +43,6 @@ precache models and sounds missing fixed.
 It still gets into warnings on the console when there are more precached than it's limit on some maps
 but still a minimum has been increased.
 
-Removed sounds for taunts, yells. In order to add weapons and sound effects.
-There is a limit of 256 on MVDSV and 2048 on the FTE server version.
-
 Added two whole pounds of semicolons at the end of functions to not spazz out modern compilers. -arg
 It worked ok in 2008-2015 for that old compiler, but not by today's standards.
 
@@ -86,7 +83,7 @@ health attribute.
  
 # 10-31-2020 - Added support for teleporters to transport just about anything through or fired missiles/lasers.
 
-Shotgun fire and harpoon does not travel through teleporters.
+Shotgun fire and harpoon does not travel through teleporters.  Neither does the lightning gun.
 
 The Engineer gravity gun will all you to pickup beartraps, auto sentry guns, and Engineer built items and place them into the transporter to areas that need them.
 
@@ -130,7 +127,6 @@ The minipet is superflous since you can "cmd summon" and the code needs work. Re
 If the map is designed properly with a lower amount of spawns, the limit of 512 entities should not be broken.
 However, it is not a fatal error, you can restart a map or the server to try again.
 A fix is in progress to address this and the limit on the number of sound effects precached.
-# 9-2020 Fixed with FTE Server version for 32 or 64 bit. See releases.
 The mega health box dropped by monster adds 100 health regardless of your health amount. It also cures infections. Previously it wouldn't help until you were below 250 health.
 
 New bugs can be submitted to Github for tracking and resolution be unbiased.
@@ -139,12 +135,9 @@ Special thanks to Agent for fixing the player fob and FuhQuake support.
 
 # TODO:
 Clean up source code for easy compiliation in fteccgui and 64bit versions. - 99.9% -arg
-Down to 4 warnings on ftegccui compiler in Windows. It's the grappling hook, and it works. It's also a harpoon weapon just like PainKeep.
 
 Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 If possible upgrade the lightning gun to the painkeep chain lightning gun.
-
-Upgraded medic nail gun to nails with more damage, similar to the lava nails, but not quad damage. - done -arg.
 
 Adjust starting armor and speeds to rebalance things.
 
@@ -176,7 +169,7 @@ All classes get bonus health, armor, ammo, reload time, summoning etc from the
 attribute system based on experience points gained from frags and captures.
 At level 80 you get the Xav Needler gun.  Use impulse 9 to toggle between shotguns and needler/electric gun.
 
-The lightning gun weapon comes up by selecting 2 and having the ammo masters skill.
+The lightning gun weapon comes up by selecting 2 and having the ammo masters skill at attribute 7 or higher.
 
 Fastest completion time for flawless ending saved per map.
 
@@ -215,15 +208,13 @@ If you suicide after fighting, you will be punished 5 additional frags for denyi
 Another new combat rule. Doing a "cmd beg" in non-survival mode punishes you for teleporting for no purpose to the start spawn to prevent spamming of ammo and once again denying the opponent their prey.
 
 If you take battle damage and suicide, you will be punished for a total of six points for avoiding a fight. If you are at full health you only take 1 point subtraction.
-
+Moral is, fight till you die, you might get a frag in 
 In survival mode you are not punished for the use of "cmd beg". If there are multiple human teams involved, that is for the admin or mod to police abuse. It can be set to punish if you were in combat and teleporting to home for no good reason.
 
 # Releases:
 
 https://github.com/argonatorUberTF/Uber-Team-Fortress/releases
 Server and Client packs.
-
-FTE Version with source that fixes weird glitches in mvdsv .28bxe is here. The server can be ran on FTE32 or FTE64 server from https://fte.triptohell.info/ .
 
 email: forgetitanyway@gmail.com
 
@@ -234,3 +225,4 @@ Two new model filess included:
 thedot.spr  The colored player fob to identify which team is for a possibly customskinned player
 toaster.mdl A real toaster similar to After Dark for a homage.
 
+Added compiled sound, model, and map packs as separate updates from 2020-2021 for new maps.
