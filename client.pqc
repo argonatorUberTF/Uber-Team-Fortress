@@ -1086,11 +1086,11 @@ void() ClientKill =
 	{
 		return;
 	}
-	if (self.tfstate & 16)
-	{
-		sprint(self, 2, "You wish life was that easy!\n");
-		return;
-	}
+//	if (self.tfstate & 16)			//Even when you are sick, you should be able to suicide out. -arg 1/2022
+//	{
+//		sprint(self, 2, "You wish life was that easy!\n");
+//		return;
+//	}
 	if (self.hook_out)
 	{
 		sprint(self, 2, "You must retract hook first!\n");
@@ -3092,11 +3092,9 @@ void() ClientDisconnect =
 		teamcount4 = teamcount4 - 1;
 	}
 	local entity te;
-//#ifdef newsounds2
-//	if (random() > 0.5)
-//		sound(self, 4, "misc/eject.wav", TF_FLARE_OFF, 0);
-//	else
-//#endif
+	if (random() > 0.5)
+		sound(self, 4, "misc/eject.wav", TF_FLARE_OFF, 0);
+	else
 	sound(self, 4, "misc/eject.wav", TF_FLARE_OFF, 0);
 	self.has_disconnected = TF_FLARE_OFF;
 	self.health = 0;
@@ -3193,7 +3191,8 @@ void() ClientDisconnect =
 	{
 		if ((te.real_owner == self))
 		{
-			TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+	//		TF_T_Damage (te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
+			dremove(te);
 		}
 		te = find (te, classname, "building_teleporter");
 	}

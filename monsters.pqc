@@ -15,7 +15,9 @@ void() flymonster_start_go =
 	{
 		dprint("flymonster in wall at: ");
 		dprint(vtos(self.origin));
-		dprint("\n");
+		dprint(" removing.\n");
+		Killed(head, self);  // just remove it. -arg
+		return;
 	}
 	if (self.target)
 	{

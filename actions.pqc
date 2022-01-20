@@ -14,6 +14,7 @@ void (vector direction,float damage) BigAssBullet =
 	if (trace_ent.takedamage)
 	{
 		org = (trace_endpos - (v_forward * 4));
+		org = (trace_endpos - (v_forward * 4));
 		SpawnBlood (org, 9);
 	}
 	else
@@ -136,8 +137,8 @@ void () Det_Sent =
 };
 void (entity pent) KickIdler =
 {
-	sprint (pent, 2, "You have been kicked for idling for more than 3 minutes without joining a team/class.\n");
-	stuffcmd(pent, "disconnect\n");
+	sprint (pent, 2, "You have been put on observer for idling for more than 3 minutes without joining a team/class.\n");
+	stuffcmd(pent, "observe\n");
 };
 void () CheckIdlers =
 {

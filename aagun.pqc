@@ -148,7 +148,7 @@ void () item_rlgun =
 	self.solid = 2;
 	setmodel (self, "progs/minit.mdl");
 	setsize (self, '-16.000000 -16.000000 -20.000000', '16.000000 16.000000 16.000000');
-	droptofloor (/*0, 0*/);
+	droptofloor (0);
 	self.oldorigin = self.angles;
 	self.th_weapon = FireBalBolt;
 	self.proj_ofs = '0.000000 0.000000 10.000000';
@@ -162,7 +162,7 @@ void () item_aagun =
 	self.solid = 2;
 	setmodel (self, "progs/minit.mdl");
 	setsize (self, '-16.000000 -16.000000 -20.000000', '16.000000 16.000000 16.000000');
-	droptofloor (/*0, 0*/);
+	droptofloor (0);
 	self.oldorigin = self.angles;
 	self.th_weapon = FireBalBolt;
 	self.proj_ofs = '0.000000 0.000000 10.000000';

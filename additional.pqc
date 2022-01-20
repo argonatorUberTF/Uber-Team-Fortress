@@ -2,7 +2,7 @@
 //
 // Mega Team Fortress, Coop vs monsters, added 4 player deathmatch, with or without bots, battle royale mode. 12-2019
 // Author: Avirox (a.k.a. XavioR) up to 1-2015 with many others.
-// Special thanks to Ratbert fo rguidance and some source from previous mods.
+// Special thanks to Ratbert for guidance and some source from previous mods.
 // Original MegaTeam Fortress Programmers: Ambush, Plexi, mod3m, Plasticity 1997
 // Additional addons by Ratbert, Argonator, Agent, Pablo, Cloud, Doc 2010-2019, Often, Aberrant.
 // Credits also to Hipnotic, Mega Team Fortress PTY LTD, Gold, Sh1thead. 
@@ -14,7 +14,6 @@
 //
 // Original credit for Painkeep from Team Evolve. (also available for Quake 3). It's public domain now. 2015
 // cmd changeteam blue, red, green, and yellow always enabled. You can fight alongside the monsters or summon more.
-// Removed sounds for taunts, yells.
 // Added two whole pounds of semicolons at the end of functions to not spazz out modern compilers. -arg
 // It worked ok in 2008-2015 for that old compiler, but not by today's standards.
 //
@@ -55,8 +54,9 @@
 //			Volunteer devs of code/fixes/features gladly accepted.
 //
 //								TODO:
+//  Recompile mods done to server code in C++ for .28BXE to MVDSV .34 which allows more fixes and features. - long term -arg
 //	Clean up source code for easy compiliation in fteccgui and possibly 64bit versions.
-// 	- Down to 4 warnings on ftegccui compiler in Windows.
+// 	- Down to 13 warnings on ftegccui compiler in Windows.
 //  Obtain source of mvdsv that will compile with newer versions with same xav tweaks.
 //	Made the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
 //	Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
@@ -68,9 +68,9 @@
 //	Add Ratbert's nuke grenades to drop4 for demoman or pyro.  ?
 //	Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players are affected more
 //	by plasma or fire damage than blast/nail damage.
-//	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
+//	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit. Adjust monster spawn times if the limit is close.
 //	Then again, the map makers should be aware of this and not use so many spawns.
-//	Finish HALF-LIFE support. (A long march if asked for)
+//	Finish HALF-LIFE support. (A long march if asked for) - shelved for now 12-21 -arg
 //	Add the Air fist weapon ala pain keep. 
 //
 //					Changes to existing classes:
@@ -119,6 +119,7 @@
 // Generally in this order:
 // #defines, .floats, .entities, vectors, static floats , floats, float functions, and then void().
 // Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, etc.
+# SRV_DEBUG									//Turns on debug cleanup for pdummy_think.
 #define mtf_coop_hipnotic
 #define MENU_ENGINEER_FIX_TELEPORTER	33 // in customTF this value is different.
 #define LIGHTNING_ADD	7		//from player.pqc
@@ -129,7 +130,7 @@
 #define LOAD_THINKSTAND					2
 #define	CheckScoreCVAR
 #define LAZY_WAY			// client number hax
-//#define HL_MAP		cvar("halflifebsp") == 1  //Defines map as a half life map. A switch, no longer used. -arg
+//#define HL_MAP		cvar("halflifebsp") == 1  //Defines map as a half life map. A switch, no longer used. -arg 12/21
 #define next_push_time lefty
 #define FIRST_AWD_LINE		7
 #define true 1
@@ -1131,7 +1132,7 @@ float intermission_exittime;
 float modelindex_eyes, modelindex_player, modelindex_null;
 float modelindex_plyr;				//BTF thing
 float modelindex_aircraft; 			//BTF thing
-float TurretNailSpeed = 1550;  // efc - PK Turret aiming. Was 450, but we are dealing with bots and cracked out monsters -arg
+float TurretNailSpeed = 1550;  // efc - PK Turret aiming. Was 450, but we are dealing with cracked out monsters -arg
 float intermission_running;						// PAINKEEP
 float intermission_exittime;					// PAINKEEP
 float turret_clearGround (entity head);			// PAINKEEP
@@ -1191,7 +1192,7 @@ void () removeplayerfob;
 void () playerfob_think;
 void () attachplayerfob; //The colored dot fob thing that tracks players even though their skin or colors are changed.
 void () Merchant_SayWares;
-void () Merchant_GenerateEntity ;
+void () Merchant_GenerateEntity;
 void () respawn;  //client.pqc but can be addressed here now. -arg
 entity() SelectSpawnPoint;
 entity() FindIntermission;
@@ -1211,7 +1212,7 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank;
 void () MTF_Resurrect_Player_Find;
 void () Vote_CheckWin;
 void () summon_think;
-void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..
+void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..which is bound to the whole inner workings -arg
 //It is impossible almost to remove LMS code from the main loop. -arg
 void(entity Item) mtf_tfgoalitem_drop;
 void () tfgoalitem_remove;
@@ -1424,7 +1425,7 @@ void() ferdisplay;
 void(entity ritem, entity act) Respawn_Item;
 void()ammo_touch;
 void()SUB_regen;
-void(float old, float new) Deathmatch_Weapon;
+//void(float old, float new) Deathmatch_Weapon; // Dead, do nothing function. 1-22 arg
 void(entity pl, float typ) PrintGrenadeType;
 void()PlaceItem;
 void()W_WeaponFrame;
@@ -1867,45 +1868,41 @@ void() DeathSound =
 		sound(self, 2, "player/h2odeath.wav", 1, TF_FLARE_LIT);
 		return;
 	}
-//	rs = rint(random() * 6 + 1);
-//	if (rs == 1)
-//	{
+	rs = rint(random() * 6 + 1);
+	if (rs == 1)
+	{
 		self.noise = "player/death1.wav";
-//	}
-//	if (rs == 2)
-//	{
-//		self.noise = "player/death2.wav";
-//	}
-//	if (rs == 3)
-//	{
-//		self.noise = "player/death3.wav";
-//	}
-//	if (rs == 4)
-//	{
-//		self.noise = "player/death4.wav";
-//	}
-//	if (rs == 5)
-//	{
-//		self.noise = "player/mdeath5.wav";
-//	}
-//	if ((rs == 6))
-//	{
-//#ifdef newsounds2
-//		if (random() > .6)
-//			self.noise = "player/mdeath7.wav";
-//		else
-//#endif
-//		self.noise = "player/mdeath4.wav";
-//	}
-//	if (rs == 7)				// STRONGBAD DEATH
-//	{
-//#ifdef newsounds2
-//		if (random() > .6)
-//			self.noise = "player/mdeath7.wav";
-//		else
-//#endif
-//		self.noise = "player/mdeath6.wav";
-//	}
+	}
+	if (rs == 2)
+	{
+		self.noise = "player/death2.wav";
+	}
+	if (rs == 3)
+	{
+		self.noise = "player/death3.wav";
+	}
+	if (rs == 4)
+	{
+		self.noise = "player/death4.wav";
+	}
+	if (rs == 5)
+	{
+		self.noise = "player/mdeath5.wav";
+	}
+	if ((rs == 6))
+	{
+		if (random() > .6)
+			self.noise = "player/mdeath7.wav";
+		else
+		self.noise = "player/mdeath4.wav";
+	}
+	if (rs == 7)				// STRONGBAD DEATH
+	{
+		if (random() > .6)
+			self.noise = "player/mdeath7.wav";
+		else
+		self.noise = "player/mdeath6.wav";
+	}
 	sound(self, 2, self.noise, 1, 1);
 	return;
 };
@@ -7613,12 +7610,12 @@ void () TeamFortress_PrimeGrenade =
 				}
 				self.StatusRefreshTime = (time + 0.100000);
 			}
-			else
-			{
-				sound (self, 1.000000, "player/pain2.wav", 1.000000, 1.000000);
-				sprint (self, 2.000000, "Your arthritic priming hand is taking a break.\n");
-				return;
-			}
+//			else
+//			{
+//				sound (self, 1.000000, "player/pain2.wav", 1.000000, 1.000000);
+//				sprint (self, 2.000000, "Your arthritic priming hand is taking a break.\n");
+//				return;
+//			}
 		}
 		else
 		{
@@ -7706,12 +7703,12 @@ void () TeamFortress_PrimeGrenade =
 				self.active_grenades_2 = (self.active_grenades_2 + 1.000000);
 				self.StatusRefreshTime = (time + 0.100000);
 			}
-			else
-			{
-				sound (self, 1.000000, "player/pain2.wav", 1.000000, 1.000000);
-				sprint (self, 2.000000, "Your arthritic priming hand is taking a break.\n");
-				return;
-			}
+//			else
+//			{
+//				sound (self, 1.000000, "player/pain2.wav", 1.000000, 1.000000);
+//				sprint (self, 2.000000, "Your arthritic priming hand is taking a break.\n");
+//				return;
+//			}
 		}
 		else
 		{
@@ -16750,7 +16747,7 @@ float ( entity t_plyr, float attrib_type ) Coop_HasMasterSkill =
 };
 void () Masters_MinionSpawnThink =
 {
-	droptofloor (0, 0);
+	droptofloor (0);
 	if (self.owner == world || self.owner.health < 1)
 	{
 		dremove(self);
@@ -17480,7 +17477,7 @@ void() weapon_touch =
 	other.weapons_carried = other.weapons_carried | new;
 	stemp = self;
 	self = other;
-	Deathmatch_Weapon(old, new);
+//	Deathmatch_Weapon(old, new); // Dead, do nothing function. 1-22 arg
 	W_SetCurrentAmmo();
 	self = stemp;
 	if (leave)
@@ -17884,8 +17881,8 @@ float() GetGrenadePossibility =
 	}
 	return TF_FLARE_LIT;
 };
-void(float old, float new) Deathmatch_Weapon = 
-{};
+//void(float old, float new) Deathmatch_Weapon = // Dead, do nothing function. 1-22 arg
+//{};
 void(entity ritem, entity act) Respawn_Item = 
 {
 	local entity oldself;
@@ -19109,6 +19106,7 @@ void(string gibname, float dm) ThrowGib =
 	setmodel(newmis, gibname);
 	setsize(newmis, '0 0 0', '0 0 0');
 	newmis.velocity = VelocityForDamage(dm);
+	newmis.classname = "gib";  // give it a classname to sweep and delete on cmd tent over entity fix. -arg 1/2022
 	newmis.movetype = MOVETYPE_BOUNCE;
 	newmis.solid = SOLID_NOT;
 	newmis.avelocity_x = random() * 600;
@@ -20005,14 +20003,14 @@ void (entity plyr, float addfrags) Rank_FragIncrease =
 void () missing_precaches =
 {
 	precache_model ("progs/medexp.spr");
-	precache_sound2 ("items/inv1.wav");
-	precache_sound2 ("items/inv2.wav");
-	precache_sound2("wall/push.wav");
-	precache_model2("progs/ammobox2.mdl");
-	precache_sound2 ("items/inv3.wav");
-	precache_model2("progs/proxbomb.mdl");
-	precache_model2("progs/s_splava.spr");
-	precache_sound2 ("items/protect.wav");
+//	precache_sound2 ("items/inv1.wav");
+//	precache_sound2 ("items/inv2.wav");
+//	precache_sound2("wall/push.wav");
+//	precache_model2("progs/ammobox2.mdl");
+//	precache_sound2 ("items/inv3.wav");
+//	precache_model2("progs/proxbomb.mdl");
+//	precache_model2("progs/s_splava.spr");
+//	precache_sound2 ("items/protect.wav");
 	
 };
 void() beartrapDie =
@@ -20052,7 +20050,7 @@ void (string gibname, float dm) beartrap_throwGib =
 	new.nextthink = time + 3;
 	new.frame = 0;
 	new.flags = 0;
-	new.classname = "beartrap_gib";
+	new.classname = "gib";  //name it gib so it can be swept up and cleaned off with over entity fix with cmd tent -arg 1/2022
 	new.team_no = other.team_no; // Just to be anal, it's their beartrap now.
 	new.owner = other.owner; 
 	new.think = SUB_Remove;
@@ -20174,16 +20172,16 @@ void() BTF_Precache =
 		precache_sound ("helo/acpain3.wav");
 		precache_sound ("helo/voice1.wav");
 		precache_sound ("helo/voice2.wav");
-		precache_sound ("helo/voice3.wav");
-		precache_sound ("helo/voice4.wav");
-		precache_sound ("helo/fuellow.wav");
+//		precache_sound ("helo/voice3.wav");
+//		precache_sound ("helo/voice4.wav");
+//		precache_sound ("helo/fuellow.wav");
 		precache_sound ("helo/eject2.wav");
-		precache_sound ("engines/chopper.wav");
+//		precache_sound ("engines/chopper.wav");
 		precache_sound ("weapons/ffar2.wav");
-		precache_sound2 ("weapons/gat2.wav");
-		precache_sound2 ("weapons/bombdrop.wav");
+//		precache_sound2 ("weapons/gat2.wav");
+//		precache_sound2 ("weapons/bombdrop.wav");
 		precache_sound ("misc/metal2.wav");
-		precache_model("progs/cockpit.mdl");
+//		precache_model("progs/cockpit.mdl");
 		precache_model("progs/ffar.mdl");
 		precache_model2 ("progs/acgib1.mdl");  // These were already being precached with model2 in weapons.pqc -arg
 		precache_model2 ("progs/acgib2.mdl");
@@ -20198,13 +20196,13 @@ void() BTF_Precache =
 		precache_model2 ("progs/torpedo.mdl");
 		precache_model2 ("progs/subpit.mdl");
 		precache_model2 ("progs/sight.mdl");
-		precache_sound ("sub/throttle.wav");
-		precache_sound ("sub/ping.wav");
-		precache_sound ("damage/subpain.wav");
+//		precache_sound ("sub/throttle.wav");
+//		precache_sound ("sub/ping.wav");
+//		precache_sound ("damage/subpain.wav");
 		precache_sound ("utils/hoveron.wav");
-		precache_sound ("weapons/torpedo.wav");
-		precache_sound ("sub/locked.wav");
-		precache_sound ("sub/lockon.wav");
+//		precache_sound ("weapons/torpedo.wav");
+//		precache_sound ("sub/locked.wav");
+//		precache_sound ("sub/lockon.wav");
 		BTF_Cached = 1;
 	}
 };
@@ -22883,15 +22881,28 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		sprint(self, 2, ".\n");
 		if (tm >= 512) 
 		{
-		sprint(self, 2, "Entities are over 512, bad karma, things will go wrong. Fixing.");
-					te = find(world,classname,"monster");
-			while (te)
+			sprint(self, 2, "Entities are over 512, bad karma, things will go wrong. Fixing.");
+			te = nextent(world);
+			while (te != world)
 			{
-				dremove(te);
-				te = find(te,classname,"monster");
+				if (te.classname == "backpack"; // is pack, rune, gib, remove it -arg
+					{
+					dremove(te);
+					sprint(self, 2, "BACKPACK REMOVED.\n");
+					}
+				if (te.classname == "rune"; // is pack, rune, gib, 
+					{
+						dremove(te);
+						sprint(self, 2, "rune REMOVED.\n");
+					}
+				if (te.classname == "gib"; // is pack, rune, gib, 
+					{
+						dremove(te);				
+						sprint(self, 2, "gibs.\n");
+					}
+				te = nextent(te); 
 			}
 		}
-		EntityCount(); // call this and see what the xavior count is? -arg
 	}
 	else
 	if (s1 == "pentleft")
@@ -23545,12 +23556,14 @@ void() item_megahealth_rot =
 void() walkmonster_start_go = 
 {
 	self.origin_z = self.origin_z + TF_FLARE_OFF;
-	droptofloor(0, 0);
+	droptofloor(0);
 	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
 	{
 		dprint("walkmonster in wall at: ");
 		dprint(vtos(self.origin));
-		dprint("\n");
+		dprint(" removing.\n");
+		Killed(head, self);  // Just kill off monsters spawning in walls and the player can't shoot them anyway unless cmd telem allowed. -arg
+		return;	
 	}
 	self.takedamage = 2;
 	self.ideal_yaw = self.angles * '0 1 0';

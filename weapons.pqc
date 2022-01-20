@@ -273,21 +273,21 @@ void() W_Precache =
 	if (infokey (world, "btf_stuff") == "1" || infokey (world, "btf_stuff") == "on")
 	{
 		precache_model("progs/bullet.mdl");
-		precache_sound ("helo/achit.wav");
-		precache_sound ("helo/acpain1.wav");
-		precache_sound ("helo/acpain2.wav");
-		precache_sound ("helo/acpain3.wav");
-		precache_sound ("helo/voice1.wav");
-		precache_sound ("helo/voice2.wav");
-		precache_sound ("helo/voice3.wav");
-		precache_sound ("helo/voice4.wav");
-		precache_sound ("helo/fuellow.wav");
-		precache_sound ("helo/eject2.wav");
-		precache_sound ("engines/chopper.wav");
-		precache_sound ("weapons/ffar2.wav");
-		precache_sound2 ("weapons/gat2.wav");
-		precache_sound2 ("weapons/bombdrop.wav");
-		precache_sound ("misc/metal2.wav");
+//		precache_sound ("helo/achit.wav");
+//		precache_sound ("helo/acpain1.wav");
+//		precache_sound ("helo/acpain2.wav");
+//		precache_sound ("helo/acpain3.wav");
+//		precache_sound ("helo/voice1.wav");
+//		precache_sound ("helo/voice2.wav");
+//		precache_sound ("helo/voice3.wav");
+//		precache_sound ("helo/voice4.wav");
+//		precache_sound ("helo/fuellow.wav");
+//		precache_sound ("helo/eject2.wav");
+//		precache_sound ("engines/chopper.wav");
+//		precache_sound ("weapons/ffar2.wav");
+//		precache_sound2 ("weapons/gat2.wav");
+//		precache_sound2 ("weapons/bombdrop.wav");
+//		precache_sound ("misc/metal2.wav");
 		precache_model("progs/cockpit.mdl");
 		precache_model("progs/ffar.mdl");
 		precache_model2 ("progs/acgib1.mdl");
@@ -303,15 +303,15 @@ void() W_Precache =
 		precache_model2 ("progs/torpedo.mdl");
 		precache_model2 ("progs/subpit.mdl");
 		precache_model2 ("progs/sight.mdl");
-		precache_sound ("sub/throttle.wav");
-		precache_sound ("sub/ping.wav");
-		precache_sound ("damage/subpain.wav");
-		precache_sound ("utils/hoveron.wav");
-		precache_sound ("weapons/torpedo.wav");
-		precache_sound ("sub/locked.wav");
-		precache_sound ("sub/lockon.wav");
+//		precache_sound ("sub/throttle.wav");
+//		precache_sound ("sub/ping.wav");
+//		precache_sound ("damage/subpain.wav");
+//		precache_sound ("utils/hoveron.wav");
+//		precache_sound ("weapons/torpedo.wav");
+//		precache_sound ("sub/locked.wav");
+//		precache_sound ("sub/lockon.wav");
 	}
-//	precache_sound ("player/mdeath6.wav");
+	precache_sound ("player/mdeath6.wav");
 	precache_model ("progs/h_demon.mdl");
 	precache_sound ("demon/ddeath.wav");
 	precache_sound ("demon/dhit2.wav");
@@ -325,7 +325,7 @@ void() W_Precache =
 	precache_sound ("weapons/tlaser.wav");
 	precache_sound ("weapons/tarbeep.wav");
 	precache_model ("progs/v_bat.mdl");		// bat weapon ala qfusion mod
-//	precache_sound ("player/mdeath7.wav");
+	precache_sound ("player/mdeath7.wav");
 	precache_sound2  ("sets/set2_4.wav");
 	precache_sound ("weapons/asscan4.wav");
 	precache_sound ("items/protect3.wav");
@@ -7879,13 +7879,12 @@ void () Update_Chain =
 };
 void () Build_Chain =
 {
-	self.goalentity = MakeLink ();
+	self.goalentity = MakeLink (0);
 	self.goalentity.think = Update_Chain;
 	self.goalentity.nextthink = (time + 0.1);
 	self.goalentity.owner = self.owner;
-	
-	self.goalentity.goalentity = MakeLink ();
-	self.goalentity.goalentity.goalentity = MakeLink ();
+	self.goalentity.goalentity = MakeLink (0);
+	self.goalentity.goalentity.goalentity = MakeLink (0);
 };
 float () Check_Overhead =
 {

@@ -1001,7 +1001,8 @@ void(float inp) Menu_Taunt_Input =
 				{
 					stuffcmd(self, "bhole\n");
 						bprint (1, self.netname);
-							bprint (1.000000, " would you like to see my bung hole? ehehehehheh!\n");
+						bprint (1.000000, " would you like to see my bung hole? ehehehehhh!\n");
+						sound(self, 2, "speech/getwhiff.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 				}
 				else
 				{
@@ -1009,6 +1010,7 @@ void(float inp) Menu_Taunt_Input =
 					{
 							bprint (1, self.netname);
 							bprint (1.000000, " yells call 911!\n");
+							sound(self, 2, "speech/call911.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 					}
 					else
 					{
@@ -1016,6 +1018,7 @@ void(float inp) Menu_Taunt_Input =
 						{
 							bprint (1, self.netname);
 							bprint (1.000000, " kick'em in the nads Beavis!\n");
+							sound(self, 2, "speech/kicknads.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 						}
 						else
 						{
@@ -1023,6 +1026,7 @@ void(float inp) Menu_Taunt_Input =
 							{
 							bprint (1, self.netname);
 							bprint (1.000000, " yells I do the ass kicking around here!\n");
+							sound(self, 2, "speech/idoasskk.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 							}
 							else
 							{
@@ -1031,8 +1035,9 @@ void(float inp) Menu_Taunt_Input =
 #ifdef mtf_coop_birthday
 									sound(self, TF_FLARE_OFF, "taunts/makeitso.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 #else
-							bprint (1, self.netname);
-							bprint (1.000000, " you are one pathetic Luuuuzer!\n");
+									sound(self, 2, "speech/pathetic.wav", 1, 1);
+									bprint (1, self.netname);
+									bprint (1.000000, " you are one pathetic Luuuuzer!\n");
 #endif
 								}
 								else
@@ -1070,6 +1075,7 @@ void(float inp) Menu_Yell_Input =
 	{
 		if (inp == 2)
 		{
+		sound(self, TF_FLARE_OFF, "speech/yell/overhere.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 		bprint (1, self.netname);
 		bprint (1.000000, " yells over here!!\n");
 		}
@@ -1077,50 +1083,57 @@ void(float inp) Menu_Yell_Input =
 		{
 			if (inp == 3)
 			{
-						bprint (1, self.netname);
-		bprint (1.000000, " yells this is the way!!\n");
+				bprint (1, self.netname);
+				sound(self, TF_FLARE_OFF, "speech/yell/thisway.wav", TF_FLARE_OFF, TF_FLARE_OFF);
+				bprint (1.000000, " yells this is the way!!\n");
 			}
 			else
 			{
 				if (inp == 4)
 				{
-							bprint (1, self.netname);
-		bprint (1.000000, " yells follow me!\n");
+					bprint (1, self.netname);
+					bprint (1.000000, " yells follow me!\n");
+					sound(self, TF_FLARE_OFF, "speech/yell/followme.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 				}
 				else
 				{
 					if (inp == 5)
 					{
-							bprint (1, self.netname);
-		bprint (1.000000, " incoming fire!\n");
+						bprint (1, self.netname);
+						bprint (1.000000, " incoming fire!\n");
+						sound(self, TF_FLARE_OFF, "speech/yell/incomng.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 					}
 					else
 					{
 						if (inp == 6)
 						{
-								bprint (1, self.netname);
-		bprint (1.000000, " yells holdup!!\n");
+							bprint (1, self.netname);
+							bprint (1.000000, " yells holdup!!\n");
+							sound(self, TF_FLARE_OFF, "speech/yell/holdup.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 						}
 						else
 						{
 							if (inp == 7)
 							{
-									bprint (1, self.netname);
-		bprint (1.000000, " yells GO GO GO!\n");
+								bprint (1, self.netname);
+								bprint (1.000000, " yells GO GO GO!\n");
+								sound(self, TF_FLARE_OFF, "speech/yell/gogogo.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 							}
 							else
 							{
 								if (inp == 8)
 								{
-											bprint (1, self.netname);
-		bprint (1.000000, " yells LOOKOUT!\n");
+									bprint (1, self.netname);
+									bprint (1.000000, " yells LOOKOUT!\n");
+									sound(self, TF_FLARE_OFF, "speech/yell/lookout.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 								}
 								else
 								{
 									if (inp == 9)
 									{
-												bprint (1, self.netname);
-		bprint (1.000000, " yells FIRE IN THE HOLE!\n");
+										bprint (1, self.netname);
+										bprint (1.000000, " yells FIRE IN THE HOLE!\n");
+										sound(self, TF_FLARE_OFF, "speech/yell/firehole.wav", TF_FLARE_OFF, TF_FLARE_OFF);
 									}
 									else
 									{

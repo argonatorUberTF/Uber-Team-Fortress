@@ -10,6 +10,11 @@ void () SpectatorConnect =
 	local string st;
 	local string st2;
 	self.playerclass = PC_UNDEFINED;
+	//It's probably a good idea to remove pk toys from being deployed while in observer. -arg 1/2022
+	//will test and decide to do this as a fixme: -arg
+	self.pk_turretammo = 0;
+	self.pk_beartrapammo = 0;
+	self.pk_gravitywellammo = 0;
 	self.classname = "observer";
 	self.flags = 8;
 	st2 = infokey (world, "apw");

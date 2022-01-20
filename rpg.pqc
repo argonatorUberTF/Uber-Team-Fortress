@@ -190,16 +190,16 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 		else
-//		ClientCommand( args, c, d, f, g, i, j, "" );
-		clientcommand(self, st); 	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
+		ClientCommand( args, c, d, f, g, i, j, "" );
+//		clientcommand(self, st); 	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
 	}
 	else
 	{
 		if (More_Commands(c, d, f, g, i, j) == 1)
 			return;
 		else
-		clientcommand(self, st);		
-//		ClientCommand( args, c, d, f, g, i, j, "" );	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
+//		clientcommand(self, st);		
+		ClientCommand( args, c, d, f, g, i, j, "" );	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
 	}
 #endif
 };
@@ -249,7 +249,7 @@ void() voteyes =
 				{
 					if (votetimeleft < 1200)
 					{
-						bprint (1.000000, themap);
+						bprint (1, themap);
 						bprint (1.000000, " will be played as the next map!\n");
 						nextmapchosen = 1;
 						localcmd ("localinfo nextmap ");
@@ -258,7 +258,7 @@ void() voteyes =
 						return;
 					}
 				}
-			bprint (1.000000, themap);
+			bprint (1, themap);
 			bprint (1.000000, " it is!\n");
 			MTF_Coop_RanksMapVote( themap, 1 ); //Update the rank stats of which map was voted for -arg
 			changelevel (themap);
@@ -1008,12 +1008,4 @@ void (string msg) Packet_SendGlobalMessage =
 {
 return; // to stop sending packets -arg
 };
-void () Packet_Auth_Think =
-{
-return; // do nothing, no sending of packets anymore, left original calling there in code as a marker. -arg 12/25/2021
-}
-void (entity to_update) Packet_SendEXP =
-{
-return; // dead stump of sending xp to hub server that times out anyway -arg
-}
 //END

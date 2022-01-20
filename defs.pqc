@@ -8,6 +8,7 @@
 */
 
 //
+//
 // system globals
 //
 entity		self;
@@ -292,10 +293,10 @@ void () traceoff = #30;
 void (entity e) eprint = #31; 
 float (float yaw, float dist) walkmove = #32; 
 // ---> pablo. this is wierd. :/
-//float (float dist) droptofloor = #34; 
+float (float dist) droptofloor = #34; 
 //Are you sure you want to drop monster summons to the floor without parameters? -arg
 //sometimes this is called with one parameter or two. Not sure why.  anyone? -arg
-float (float yaw, float dist) droptofloor = #34; //xav set this at first.
+//float (float yaw, float dist) droptofloor = #34; //xav set this at first.
 // <---
 void (float style, string value) lightstyle = #35; 
 float (float v) rint = #36; 
@@ -400,6 +401,7 @@ string(string s1, string s2, ...) frik_strcat = #115;
 float(string s) checkextension = #99;
 void () setup_strcat;
 var void(entity e, string s2) clientcommand = __NULL__;
+//void(entity e, string s2) clientcommand = __NULL__;
 float(string s) tokenize = #84; // #441 for FTE
 string(float n) argv = #86;// #442 for FTE
 float() argc = #85;
@@ -1356,20 +1358,18 @@ void (entity whom) SetPlayerModelindex;
 //This switch allows comms to the hub and other MegaTF COOP servers. Since UberTF is
 //not participating with this, it's turned off. I also just put a return only to calls
 //Those functions in case it's called later.
-//#define mtf_coop_packet
-//void () Packet_SendSAY;
-//void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
+#define mtf_coop_packet
+void () Packet_SendSAY;
+void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
 #ifdef mtf_coop_packet
 #define awaiting_packet			health
 #define packet_tries			weapon
-//.entity packet_ent;
+.entity packet_ent;
 #define STORED_ADDRESSES			10
 string ips[STORED_ADDRESSES];
-//void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
-//float (string s1, string s2, float startpos) strstrofs = #221;
+void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
+float (string s1, string s2, float startpos) strstrofs = #221;
 float (string s1, string s2) strstr = #221;
-//string(string s, float start, float length) substring = #116;
-void (entity to_update) Packet_SendEXP;
 void (string msg) Packet_SendGlobalMessage
 #endif
 #ifdef mtf_items_worn
@@ -1382,5 +1382,5 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 //We are always in mtf_coop mode on uber -arg
-#define SETVERSION		localcmd("serverinfo UBERTF v10.11.2021\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v12.28.2021\n");
 //END
