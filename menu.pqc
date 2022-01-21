@@ -1936,10 +1936,11 @@ if (self.has_teleporter == 2)
 				if (te.real_owner == self)
 				{
 					local float damg;
-					damg = te.ammo_cells * 0.25;
-					damg = damg + te.ammo_nails * 0.1;
-					damg = damg + te.ammo_shells * 0.2;
+					damg = te.ammo_cells * 0.3;
+					damg = damg + te.ammo_nails * 0.3;
+					damg = damg + te.ammo_shells * 0.4;
 					damg = damg + te.ammo_rockets * 1.75;
+					damg = damg + self.armorvalue * 0.2; //Added shrapnel damage -agent -arg
 					damg = damg * 4;
 					deathmsg = 201;
 					T_RadiusDamage(te, te.real_owner, damg, world);

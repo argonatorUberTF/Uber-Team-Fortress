@@ -87,10 +87,10 @@ void () DropFlag =
 void () Det_Disp =
 {
 	local entity te;
-	if (self.playerclass != 9)
-	{
-	return;
-	}
+//	if (self.playerclass != 9)
+//	{
+//	return;
+//	}
 	if (self.has_dispenser)
 	{
 		te = find(world, classname, "building_dispenser");
@@ -99,7 +99,8 @@ void () Det_Disp =
 			if (te.real_owner == self)
 			{
 				deathmsg = 201;
-				T_RadiusDamage(te, te.real_owner, 140, world);
+				T_RadiusDamage(te, te.real_owner, 340, world);  // Bigger boom  There's rockets flying outward... -arg
+				TF_T_Damage(te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
 				TF_T_Damage(te, world, world, 500, TF_FLARE_LIT, TF_FLARE_LIT);
 				sprint(self, 2, "Your dispenser was detonated.\n");
 			}

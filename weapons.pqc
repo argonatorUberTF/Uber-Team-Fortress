@@ -5717,7 +5717,7 @@ if (self.impulse == 9)
 	{
 		DropGoalItems();
 	}
-	if(self.impulse == 188)
+	if(self.impulse == 188 && self.playerclass == 9)
 	{
 		Det_Disp();
 	}

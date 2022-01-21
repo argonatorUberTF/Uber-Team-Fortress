@@ -119,7 +119,7 @@
 // Generally in this order:
 // #defines, .floats, .entities, vectors, static floats , floats, float functions, and then void().
 // Commented where applicable in which mod genre. Nehara, rogue, painkeep, lms, etc.
-# SRV_DEBUG									//Turns on debug cleanup for pdummy_think.
+//# SRV_DEBUG									//Turns on debug cleanup for pdummy_think.
 #define mtf_coop_hipnotic
 #define MENU_ENGINEER_FIX_TELEPORTER	33 // in customTF this value is different.
 #define LIGHTNING_ADD	7		//from player.pqc
@@ -1680,9 +1680,9 @@ void(entity te) dremove =
 {
 	if (te == world)
 	{
-		dprint("***BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG***\n");
-		dprint("WORLD has nearly been removed. Don't worry\n");
-		dprint("***BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG***\n");
+//		dprint("***BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG***\n");
+//		dprint("WORLD has nearly been removed. Don't worry\n");
+//		dprint("***BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG***\n");
 		return;
 	}
 	if (te.is_removed == 1)
@@ -1854,7 +1854,7 @@ void(float num_bubbles) DeathBubbles =
 };
 void() DeathSound = 
 {
-//	local float rs;
+	local float rs;
 	if (self.waterlevel == 3)
 	{
 		if (self.is_feigning)
@@ -16747,7 +16747,7 @@ float ( entity t_plyr, float attrib_type ) Coop_HasMasterSkill =
 };
 void () Masters_MinionSpawnThink =
 {
-	droptofloor (0);
+	droptofloor ();
 	if (self.owner == world || self.owner.health < 1)
 	{
 		dremove(self);
@@ -20006,10 +20006,10 @@ void () missing_precaches =
 //	precache_sound2 ("items/inv1.wav");
 //	precache_sound2 ("items/inv2.wav");
 //	precache_sound2("wall/push.wav");
-//	precache_model2("progs/ammobox2.mdl");
+	precache_model2("progs/ammobox2.mdl");
 //	precache_sound2 ("items/inv3.wav");
-//	precache_model2("progs/proxbomb.mdl");
-//	precache_model2("progs/s_splava.spr");
+	precache_model2("progs/proxbomb.mdl");
+	precache_model2("progs/s_splava.spr");
 //	precache_sound2 ("items/protect.wav");
 	
 };
@@ -22885,20 +22885,20 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			te = nextent(world);
 			while (te != world)
 			{
-				if (te.classname == "backpack"; // is pack, rune, gib, remove it -arg
+				if (te.classname == "backpack") // is pack, rune, gib, remove it -arg
 					{
 					dremove(te);
 					sprint(self, 2, "BACKPACK REMOVED.\n");
 					}
-				if (te.classname == "rune"; // is pack, rune, gib, 
+				if (te.classname == "rune") // is pack, rune, gib, 
 					{
 						dremove(te);
 						sprint(self, 2, "rune REMOVED.\n");
 					}
-				if (te.classname == "gib"; // is pack, rune, gib, 
+				if (te.classname == "gib") // is pack, rune, gib, 
 					{
 						dremove(te);				
-						sprint(self, 2, "gibs.\n");
+						sprint(self, 2, "gibs removed.\n");
 					}
 				te = nextent(te); 
 			}
@@ -23556,13 +23556,13 @@ void() item_megahealth_rot =
 void() walkmonster_start_go = 
 {
 	self.origin_z = self.origin_z + TF_FLARE_OFF;
-	droptofloor(0);
+	droptofloor();
 	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
 	{
 		dprint("walkmonster in wall at: ");
 		dprint(vtos(self.origin));
 		dprint(" removing.\n");
-		Killed(head, self);  // Just kill off monsters spawning in walls and the player can't shoot them anyway unless cmd telem allowed. -arg
+		Killed(self,self);  // Just kill off monsters spawning in walls and the player can't shoot them anyway unless cmd telem allowed. -arg
 		return;	
 	}
 	self.takedamage = 2;
@@ -24010,4 +24010,4 @@ void() NailGrenadeTouch =
 	}
 };
 
-//END
+//END 

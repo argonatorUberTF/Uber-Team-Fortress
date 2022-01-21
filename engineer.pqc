@@ -616,6 +616,7 @@ void() TeamFortress_FinishedBuilding =
 		teamsprint(self.team_no, self, " has built a Dispenser.\n");
 		self.ammo_cells = self.ammo_cells - 100;
 		oldself.classname = "building_dispenser";
+		oldself.team_no = self.owner.team_no; // put it on your team -arg
 		oldself.netname = "dispenser";
 		oldself.blocked = T_Dispenser;
 		oldself.touch = T_Dispenser;
@@ -833,6 +834,10 @@ void() TeamFortress_FinishedBuilding =
 void() T_Dispenser = 
 {
 	local entity dist_checker;
+	if (self.team_no != self.owner.team_no)   //If someone from another team touches your dispenser. The thieves will get blown up. -arg
+	{
+		Det_Disp();
+	}
 	if (other.classname != "player")
 	{
 		return;
@@ -1147,4 +1152,4 @@ void () Sentry_MuzzleFlash =
 {
 	self.effects = (self.effects | 8.000000);
 };
-//END
+//END 

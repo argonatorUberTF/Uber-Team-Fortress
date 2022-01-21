@@ -505,7 +505,7 @@ void () misc_fireworks =
 		remove (self);
 		return;
 	}
-	droptofloor (0);
+	droptofloor ();
 	if ((random () < 0.5))
 	{
 		SpawnFireworks ();

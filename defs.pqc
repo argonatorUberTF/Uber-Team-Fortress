@@ -293,7 +293,7 @@ void () traceoff = #30;
 void (entity e) eprint = #31; 
 float (float yaw, float dist) walkmove = #32; 
 // ---> pablo. this is wierd. :/
-float (float dist) droptofloor = #34; 
+float () droptofloor = #34; // does not have a value to be fed to it. -arg
 //Are you sure you want to drop monster summons to the floor without parameters? -arg
 //sometimes this is called with one parameter or two. Not sure why.  anyone? -arg
 //float (float yaw, float dist) droptofloor = #34; //xav set this at first.
@@ -1364,10 +1364,10 @@ void(string dest, string content) QC_SendPacket = #242; // probably should remov
 #ifdef mtf_coop_packet
 #define awaiting_packet			health
 #define packet_tries			weapon
-.entity packet_ent;
+//.entity packet_ent;
 #define STORED_ADDRESSES			10
-string ips[STORED_ADDRESSES];
-void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
+//string ips[STORED_ADDRESSES];
+//void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
 float (string s1, string s2, float startpos) strstrofs = #221;
 float (string s1, string s2) strstr = #221;
 void (string msg) Packet_SendGlobalMessage
@@ -1382,5 +1382,5 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 //We are always in mtf_coop mode on uber -arg
-#define SETVERSION		localcmd("serverinfo UBERTF v12.28.2021\n");
-//END
+#define SETVERSION		localcmd("serverinfo UBERTF v1.20.2022\n");
+//END 
