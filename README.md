@@ -81,7 +81,7 @@ Regular deathmatch is possible by just loading a map without monsters. Pick oppo
 The medic class cam heal with masters skill "cmd aura" when spawned. Regardless of masters level of the
 health attribute.							
  
-# 10-31-2020 - Added support for teleporters to transport just about anything through or fired missiles/lasers.
+# 10-31-2020 - Added support for teleporters to transport just about anything through or fired missiles.
 
 Shotgun fire and harpoon does not travel through teleporters.  Neither does the lightning gun.
 
@@ -156,7 +156,10 @@ Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players 
 by plasma or fire damage than blast/nail damage.
 
 Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
+Auto map cleanup of bodyqueue and gibs and debris in the works, reduced the entity count.
 Then again, the map makers should be aware of this and not use so many spawns.
+Some maps can have 600-700 entities and depending on the triggers/design it can go into the whack zone of >512 type of server defects.
+Bad karma, things do not necessarily work right, .01% chance of crashing the server and it restarts.
 
 Finish HALF-LIFE map support. ?
 
@@ -219,6 +222,11 @@ Server and Client packs.
 email: forgetitanyway@gmail.com
 
 Discord: argonator#1511
+Discord server for Ubert, Mega Team Fortress Classics, One on One, COOP vs monster at:
+ https://discord.gg/nTvC4PrPYR
+UBERTF server at: gamehost2.tastyspleen.net:27506  Hosted by k3vin and generous donations from tastyspleen admins.
+Mega Team Fortress Classics at: gamehost2.tastyspleen.net:27502
+Mega TF COOP vs Monsters and Survival/Last Man Standing modes: gamehost2.tastyspleen.net:27500
 
 Coders see addtional.pqc for notes and references.
 Two new model filess included:
@@ -226,3 +234,5 @@ thedot.spr  The colored player fob to identify which team is for a possibly cust
 toaster.mdl A real toaster similar to After Dark for a homage.
 
 Added compiled sound, model, and map packs as separate updates from 2020-2021 for new maps.
+
+
