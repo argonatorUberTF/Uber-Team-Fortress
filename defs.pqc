@@ -293,7 +293,7 @@ void () traceoff = #30;
 void (entity e) eprint = #31; 
 float (float yaw, float dist) walkmove = #32; 
 // ---> pablo. this is wierd. :/
-float () droptofloor = #34; // does not have a value to be fed to it. -arg
+float () droptofloor = #34; 
 //Are you sure you want to drop monster summons to the floor without parameters? -arg
 //sometimes this is called with one parameter or two. Not sure why.  anyone? -arg
 //float (float yaw, float dist) droptofloor = #34; //xav set this at first.
@@ -335,6 +335,7 @@ void(entity killer, entity killee) logfrag = #79;
 string(entity e, string key) infokey = #80; 
 float(string s) stof = #81; 
 void (vector pos, float to) multicast = #82;
+//void (float fdatesec, float fdatemin, float fdatehour, float fdateday, float fdatemonth, float fdateyear, string sdatestring) timeofday = #231;
 float quadscore;
 float sr_gren1;
 float sr_gren2;
@@ -1364,12 +1365,13 @@ void(string dest, string content) QC_SendPacket = #242; // probably should remov
 #ifdef mtf_coop_packet
 #define awaiting_packet			health
 #define packet_tries			weapon
-//.entity packet_ent;
+//.entity packet_ent;	//not use for multiple servers, the hub -arg
 #define STORED_ADDRESSES			10
-//string ips[STORED_ADDRESSES];
-//void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
+//string ips[STORED_ADDRESSES];  // not used for multiple servers , the hub -arg
+void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
 float (string s1, string s2, float startpos) strstrofs = #221;
 float (string s1, string s2) strstr = #221;
+void (entity to_update) Packet_SendEXP;
 void (string msg) Packet_SendGlobalMessage
 #endif
 #ifdef mtf_items_worn
@@ -1382,5 +1384,5 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 //We are always in mtf_coop mode on uber -arg
-#define SETVERSION		localcmd("serverinfo UBERTF v1.20.2022\n");
-//END 
+#define SETVERSION		localcmd("serverinfo UBERTF v5.15.2022\n");
+//END
