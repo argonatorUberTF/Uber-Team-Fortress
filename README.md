@@ -102,7 +102,7 @@ Maps deisgned with ammo packs, painkeep items or weapons will transport through 
 
 # Quirks:
 Summoned monsters might only target the RED team if monster maps are selected.
-
+Added a white flying toaster model for the toaster in honor of the After Dark screensaver. :}
 Beartraps stick where you place them and cannot be shot off you once clamped.
 They will eventually die, but if you stand still you don't take damage.
 
@@ -126,8 +126,7 @@ The minipet is superflous since you can "cmd summon" and the code needs work. Re
 # BUGS:
 If the map is designed properly with a lower amount of spawns, the limit of 512 entities should not be broken.
 However, it is not a fatal error, you can restart a map or the server to try again.
-A fix is in progress to address this and the limit on the number of sound effects precached.
-The mega health box dropped by monster adds 100 health regardless of your health amount. It also cures infections. Previously it wouldn't help until you were below 250 health.
+The mega health box dropped by monster now adds 100 health regardless of your health amount. It also cures infections. Previously it wouldn't help until you were below 250 health.
 
 New bugs can be submitted to Github for tracking and resolution be unbiased.
 Volunteer devs of code/fixes/features gladly accepted.
