@@ -774,7 +774,7 @@ void () enf3_sightsound =
 		rsnd = rint ((random () * MOVETYPE_WALK));
 		if ((rsnd == 1))
 		{
-			//sound (self, CHAN_VOICE, "enf3/hey.wav", 1, ATTN_NORM);
+			sound (self, CHAN_VOICE, "enf3/hey.wav", 1, ATTN_NORM);
 		}
 		else
 		{

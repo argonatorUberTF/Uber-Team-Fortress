@@ -429,7 +429,7 @@ void () exploding_wall =
 			te.solid = SOLID_BBOX;
 			setsize (te, VEC_HULL_MIN, '16 16 40');
 			self = te;
-			droptofloor(0,0);
+			droptofloor();
 			self.think = doom_barrel_think;
 			self.takedamage = 1;
 			self.health = oself.health;
@@ -693,7 +693,6 @@ void () wait_to_die =
 	self.think = wait_to_die;
 	self.nextthink = (time + 0.1);
 };
-#ifndef mtf_coop_halflife
 void () player_push2 =
 {
 	if ((other.classname != "player"))
@@ -706,7 +705,6 @@ void () player_push2 =
 		self.velocity_y = (other.velocity_y + (400 * random ()));
 	}
 };
-#endif
 void () squish_touch =
 {
 	local vector spot;
@@ -758,4 +756,4 @@ void () breakable_brush =
 {
 	func_explodable();
 };
-//END
+//END 
