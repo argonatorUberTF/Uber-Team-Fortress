@@ -8,7 +8,6 @@
 */
 
 //
-//
 // system globals
 //
 entity		self;
@@ -293,10 +292,10 @@ void () traceoff = #30;
 void (entity e) eprint = #31; 
 float (float yaw, float dist) walkmove = #32; 
 // ---> pablo. this is wierd. :/
-float () droptofloor = #34; 
+//float (float dist) droptofloor = #34; 
 //Are you sure you want to drop monster summons to the floor without parameters? -arg
 //sometimes this is called with one parameter or two. Not sure why.  anyone? -arg
-//float (float yaw, float dist) droptofloor = #34; //xav set this at first.
+float () droptofloor = #34; //xav set this at first.
 // <---
 void (float style, string value) lightstyle = #35; 
 float (float v) rint = #36; 
@@ -335,7 +334,6 @@ void(entity killer, entity killee) logfrag = #79;
 string(entity e, string key) infokey = #80; 
 float(string s) stof = #81; 
 void (vector pos, float to) multicast = #82;
-//void (float fdatesec, float fdatemin, float fdatehour, float fdateday, float fdatemonth, float fdateyear, string sdatestring) timeofday = #231;
 float quadscore;
 float sr_gren1;
 float sr_gren2;
@@ -385,7 +383,7 @@ float votestarted;
 .float test_input;
 void (string put) votemap_start;
 void () voteyes;
-string themap;
+.string themap;
 .float startedvote;
 // Parems for prozac servers ONLY
 float(string st) validatefile = #91;
@@ -401,8 +399,7 @@ string(string s1, string s2, ...) mvdsv_strcat = #89;
 string(string s1, string s2, ...) frik_strcat = #115;
 float(string s) checkextension = #99;
 void () setup_strcat;
-var void(entity e, string s2) clientcommand = __NULL__;
-//void(entity e, string s2) clientcommand = __NULL__;
+//var void(entity e, string s2) clientcommand = __NULL__;
 float(string s) tokenize = #84; // #441 for FTE
 string(float n) argv = #86;// #442 for FTE
 float() argc = #85;
@@ -1361,17 +1358,17 @@ void (entity whom) SetPlayerModelindex;
 //Those functions in case it's called later.
 #define mtf_coop_packet
 void () Packet_SendSAY;
-void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
+//void(string dest, string content) QC_SendPacket = #242; // probably should remove this as it's not used -arg
 #ifdef mtf_coop_packet
 #define awaiting_packet			health
 #define packet_tries			weapon
-//.entity packet_ent;	//not use for multiple servers, the hub -arg
+//.entity packet_ent;				//Not used in send packets to central hub server anymore -arg 1/2022
 #define STORED_ADDRESSES			10
-//string ips[STORED_ADDRESSES];  // not used for multiple servers , the hub -arg
-void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
+//string ips[STORED_ADDRESSES];  //Not used in packet send to master hub -arg 1/2022
+//void () Packet_Auth_Think; //turned off, no point jabbering to a hub that doesn't exist. -arg
 float (string s1, string s2, float startpos) strstrofs = #221;
 float (string s1, string s2) strstr = #221;
-void (entity to_update) Packet_SendEXP;
+//void (entity to_update) Packet_SendEXP;
 void (string msg) Packet_SendGlobalMessage
 #endif
 #ifdef mtf_items_worn
@@ -1384,5 +1381,5 @@ void (string msg) Packet_SendGlobalMessage
 #define PROPERTY_
 #endif
 //We are always in mtf_coop mode on uber -arg
-#define SETVERSION		localcmd("serverinfo UBERTF v5.15.2022\n");
+#define SETVERSION		localcmd("serverinfo UBERTF v3.31.2024\n");
 //END

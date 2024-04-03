@@ -1,6 +1,4 @@
 void () W_FireRocket;
-void () Prox;
-void () ProxiDie;
 void (vector a, vector b) SpawnMeatSpray;
 void(entity targ, entity inflictor, entity attacker, float damage, float T_flags, float T_AttackType) TF_T_Damage;
 float crandom();
@@ -41,6 +39,7 @@ void () Det_Disp;
 void () Det_Sent;
 void () TeamFortress_Timeleft;
 void () Prox_Disarm;
+void () ProxiDie;
 entity (float head) MakeLink;
 void() TeamFortress_AmmoboxTouch;
 void () TeamFortress_Spotlight;
@@ -3433,6 +3432,23 @@ void() player_chain5;
 void() W_Attack =
 {
 	local float _l_3147;
+	local entity te;
+	local float tm;
+			te = nextent(world);
+		while (te != world)
+		{
+			tm+= 1;
+			te = nextent(te); 
+		}
+		if (tm >= 512) 
+		{
+					te = find(world,classname,"monster");
+			while (te)
+			{
+				dremove(te);
+				te = find(te,classname,"monster");
+			}
+		}
 	if (self.Aircraft_Owner)
 	{
 		Aircraft_Attack ();
@@ -3573,10 +3589,10 @@ void() W_Attack =
 					}
 					else
 					{
-//					if ((CheckForReload () == 1.000000))  // I think this is what is causing the elec gun not selected since the reg shotgun(128) is out of ammo. -arg
-//					{
-					//	return;
-//					}
+					if ((CheckForReload () == 1.000000))  // I think this is what is causing the elec gun not selected since the reg shotgun(128) is out of ammo. -arg
+					{
+						return;
+					}
 					player_shot1 ();
 					W_FireShotgun ();
 					self.reload_shotgun = (self.reload_shotgun + 1.000000);
@@ -3716,10 +3732,10 @@ void() W_Attack =
 															self.impulse = 0.000000;
 															return;
 														}
-//														if ((self.ammo_cells < 4.000000))
-//														{
-//															sprint (self, 1.000000, "Insufficient cells to power up the Assault Cannon.\n");
-//														}
+														if ((self.ammo_cells < 4.000000))
+														{
+															sprint (self, 1.000000, "Insufficient cells to power up the Assault Cannon.\n");
+														}
 														else
 														{
 															self.ammo_cells = (self.ammo_cells - 4.000000);
@@ -4060,15 +4076,11 @@ void () W_ChangeWeapon =
 			if (fl & (32 | 64 | 128 | 256 | 32768 | 262144) && self.ammo_shells < 1)
 			{
 				am = 1;
-				W_FireLightning();
 			}
 			else
 			{
 			if (fl & (32 ) && self.ammo_shells < 1/*snip_ammo*/) 
-			{
 				am = 1;
-				W_FireLightning();
-			}
 			else
 			{
 			if (fl & (512 | 1024 | 524288) && self.ammo_nails < 1) 
@@ -4242,7 +4254,6 @@ if ((it & 32.000000))
 						if ((self.ammo_shells < 1.000000))
 						{
 							am = 1.000000;
-							W_FireLightning();
 						}
 						else
 						{
@@ -4257,7 +4268,6 @@ if ((it & 32.000000))
 							if ((self.ammo_shells < 1.000000))
 							{
 								am = 1.000000;
-								W_FireLightning();
 							}
 							else
 							{
@@ -4275,7 +4285,6 @@ if ((it & 32.000000))
 								if ((self.ammo_shells < 1.000000))
 								{
 									am = 1.000000;
-									W_FireLightning();
 								}
 								else
 								{
@@ -4345,7 +4354,6 @@ if ((it & 32.000000))
 							if ((self.ammo_shells < 1.000000))
 							{
 								am = 1.000000;
-								W_FireLightning();
 							}
 							else
 							{
@@ -4824,7 +4832,6 @@ void () CycleWeaponCommand =
 																	if ((self.ammo_cells < 1))
 																	{
 																		am = 1;
-																		W_FireLightning();
 																	}
 																}
 																else
@@ -4967,10 +4974,18 @@ if (self.impulse == 9)
 			else
 			{
 				if (self.coop_exp >= Coop_ExpReq(80))
+//This is where you add weapons to items allowed per player when impulse 9 for special weapons is selected based on your player level -arg
+//This is where new weapons could be added to the player loop of selectable ones. -arg
 					self.mtf_items |= MTFITEM_NEEDLER;
+		
 				if (Coop_HasMasterSkill( self, #ATTRIB_QUICKSHOT ))
 					self.mtf_items |= MTFITEM_LIGHTGUN;
-				sprint(self,2, "Special Weapons Enabled.\n");
+//				if (self.coop_exp >= Coop_ExpReq(80))
+//				{
+//					if (self.playerclass == 3)  //This add the railgun to the soldier class as a test for over level 80. -arg
+//					self.mtf_items |= MTFITEM_RAILGUN;  //rats, didnr work 9/25/21 -arg
+//				}
+				sprint(self,2, "Special Weapons Enabled. More coming soon.\n");
 			}
 	}
 	if (self.Aircraft_Owner)
@@ -5060,6 +5075,7 @@ if (self.impulse == 9)
 		bprint2 (1.000000, self.netname, " tried to cheat.\n");
 		sprint (self, 2.000000, "You have been kicked for attempting to cheat. Don't do it.\n");
 		stuffcmd (self, "disconnect\n");
+		stuffcmd (self, "wait;wait;wait;wait;wait\n");
 		stuffcmd (self, "quit\n");
 	}
 	if (spycam)
@@ -5161,7 +5177,7 @@ if (self.impulse == 9)
 													{
 														self.last_saveme_sound = (time + 5.000000);
 														muzzleflash ();
-														//sound (self, 0.000000, "speech/threat.wav", 0.700000, 0.000000);
+														sound (self, 0.000000, "speech/threat.wav", 0.700000, 0.000000);
 														bprint (1, self.netname);
 														bprint (1.000000, " says 'Are you threatening me?!'\n");
 														self.impulse = 0.000000;
@@ -5399,7 +5415,7 @@ if (self.impulse == 9)
 																									
 																									self.last_saveme_sound = (time + 5.000000);
 																									muzzleflash ();
-																									//sound (self, 1.000000, "speech/pantsdwn.wav", 1.000000, 1.000000);
+																									sound (self, 1.000000, "speech/pantsdwn.wav", 1.000000, 1.000000);
 																									bprint (1.000000, "Come out with your pants down!\n");
 																									sprint (self, 1.000000, "Uber Team Fortress ",version_finder,"\n");
 																									self.impulse = 0.000000;
@@ -5565,6 +5581,7 @@ if (self.impulse == 9)
 				if ((self.impulse == 60))
 				{
 					TeamFortress_Spotlight();
+					sprint (self, 2.000000, "Spot light On. Toggle to turn off.\n");
 					self.impulse = 0.000000;
 				}
 				else
@@ -5700,7 +5717,7 @@ if (self.impulse == 9)
 	{
 		DropGoalItems();
 	}
-	if(self.impulse == 188)
+	if(self.impulse == 188 && self.playerclass == 9)
 	{
 		Det_Disp();
 	}
@@ -7380,6 +7397,16 @@ void () Prox_Disarm =
 	}
 	return;
 };
+void () ProxiDie =
+{
+	self.effects = 4;
+	make_explosion ();
+	self.takedamage = TF_FLARE_LIT;
+	deathmsg = 45;
+	T_RadiusDamage (self, self.owner, 350, world);
+	sprint (self.owner, 2, "Your Proximity Mine is gone...\n");
+	dremove (self);
+};
 void () FoundBastard =
 {
 	local float _l_11382;
@@ -7491,8 +7518,8 @@ void () ProxAttach =
 };
 void () OneProx =
 {
-	sprint (self, 2.000000, "1 proximity grenade at a time!\n");
-	if ((self.weaponmodel == "progs/proxgren.mdl"))
+		sprint (self, 2.000000, "1 proximity grenade at a time!\n");
+		if ((self.weaponmodel == "progs/proxgren.mdl"))
 		{
 			self.current_weapon = W_BestWeapon ();
 			self.weaponmodel = "progs/v_rock2.mdl";
@@ -8431,7 +8458,7 @@ void() copb_eatCan =
 	other = self;
 	T_Heal (self, 150, 1); 
 	self.copb_timeout = time + 30;
-	self.search_time = time + (random() * 1);
+	self.search_time = time + (random() * 5);
 	copb_checkFart();
 };
 void (entity inflictor, entity attacker, float damage, entity ignore, float radius) T_BeanDamage =
@@ -8493,14 +8520,51 @@ void() copb_checkFart =
 			}
 	}	
 };
-void () ProxiDie =
+void () W_FireRocket =
 {
-	self.effects = 4;
-	make_explosion ();
-	self.takedamage = TF_FLARE_LIT;
-	deathmsg = 45;
-	T_RadiusDamage (self, self.owner, 350, world);
-	sprint (self.owner, 2, "Your Proxi Mine is gone...\n");
-	dremove (self);
+	self.ammo_rockets = (self.ammo_rockets - 1);
+	self.currentammo = (self.ammo_rockets);
+	sound (self, 1, "weapons/sgun1.wav", 1, 1);
+	KickPlayer (-2.000000, self);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.team_no = self.team_no;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	makevectors (self.v_angle);
+	newmis.velocity = v_forward;
+	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.touch = T_MissileTouch;
+	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
+	if (self.mtf_items & #BOUNCY_ROCKETS)
+	newmis.attack_finished = 5;
+	newmis.nextthink = (time + 5);
+	newmis.think = SUB_Remove;
+	newmis.weapon = 6;
+#ifdef mtf_coop_tgiving
+	setmodel (newmis, "progs/duck1.mdl");
+#else
+	setmodel (newmis, "progs/missile.mdl");
+#endif
+	setsize (newmis, '0 0 0', '0 0 0');
+	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
 };
-//END 
+void () EntityCount =
+{
+	local float counter;
+	local entity current;
+	local string output;
+	counter = 0;
+	current = world;
+	current = nextent(current);
+	while (current != world)
+	{
+		counter = counter + 1;
+		current = nextent(current);
+	}
+	output = ftos(counter);
+	dprint ("\nTotal entities currently by Xavior: ");
+	dprint (output);
+}; 
+//END

@@ -1157,14 +1157,15 @@ void(entity e) ValidateUser =
 {};
 void() PutClientInServer = 
 {
-	can_exit = #TRUE;  //Unlock the exit. -arg  This unlocks the exit when players respawn or new players join.. hmmm 9/2021
+	// can_exit = #TRUE;  //Unlock the exit. -arg  This unlocks the exit when players respawn or new players join.. hmmm 9/2021
 	//If multiple players join it gets unlocked by default. However if you want to pre-empt exiting, then cmd lockexit fools! -arg
-	if (self.fob == 0)  //only attach one fob to player if they have a team number, it stays or hides until you disconnect with removeplayerfob() -arg
-	{
-	attachplayerfob();
-	self.is_fob_disabled = 0 ;
-	self.fob = 1;
-	}
+	Prox();		// Make sure your prox mine is dead and switch reset. -arg
+//	if (self.fob == 0)  //only attach one fob to player if they have a team number, it stays or hides until you disconnect with removeplayerfob() -arg
+//	{
+		//attachplayerfob(); // turn off the fob when you first join. -arg
+		//self.is_fob_disabled = 0 ;
+		//self.fob = 0;
+//	}
 	self.pk_turretammo = 6;  //set painkeep weapon ammo amounts. -arg
 	self.pk_beartrapammo = 12;
 	self.pk_gravitywellammo = 4;
@@ -1599,7 +1600,6 @@ void() PutClientInServer =
 		sound (self, 2.000000, "player/malive5.wav", 1.000000, 1.000000);
 	}
 	self.killstack = 0;
-//	self.tf_state == self.`tfstate - (self.tfstate & 16)  // Added mod by Agent for keeping flames and velocity from happening on respawn. -arg -argent 4/29/2022
 };
 void() info_player_start = 
 {
@@ -1832,7 +1832,6 @@ void () pdummy_spawn_think =
 	sprint( self.owner, 2, "Call a Player to resurrect you using \"saveme\". DO NOT RECONNECT!\n" );
 	pdummy.team_no = self.team_no;  //Assign a team number to the dead survivor player just in case.
 //That way only team members of the same team can only ressurrect you, not just any player. -arg
-
 	pdummy.enemy = self.owner;
 	pdummy.owner = self.owner;		// used for saveme
 	setsize(pdummy, pdummy.owner.mins, pdummy.owner.maxs);
@@ -3436,6 +3435,7 @@ void(entity targ, entity attacker) ClientObituary =
 			MTF_Coop_AddExperience ( attacker.owner, targ, FALSE );
 			MTF_Coop_PreWriteExperience( attacker.owner, attacker.owner.connect_name, attacker.owner.coop_exp );
 			sprint(attacker.owner, 2, "One of your minions has decomposed.\n");
+			// self.#minions = self.#minions -1; //remove the minion from your total so you can spawn more --arg
 		}
 		else
 			return;
@@ -4965,4 +4965,4 @@ void () FixSoundCrap =
 	stuffcmd (playername, "_snd_mixahead .1\n");
 	dremove (self);
 };
-//End 
+//End

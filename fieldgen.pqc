@@ -1,6 +1,6 @@
 //Not in compilation yet.
 //needs precaches for models and sound. -arg
-
+// agent got it working pull his code and mods in -arg 3/31/2024
 void () FieldGen_Think;
 void () FieldGen_Die;
 void () ForceField_Think;

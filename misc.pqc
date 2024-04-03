@@ -1809,4 +1809,4 @@ void () duck_fly =
 		self.th_pain = duck_scare;
 	}
 };
-//END
+//END 

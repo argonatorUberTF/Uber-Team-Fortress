@@ -2,7 +2,7 @@
 //
 // Mega Team Fortress, Coop vs monsters, added 4 player deathmatch, with or without bots, battle royale mode. 12-2019
 // Author: Avirox (a.k.a. XavioR) up to 1-2015 with many others.
-// Special thanks to Ratbert for guidance and some source from previous mods.
+// Special thanks to Ratbert fo rguidance and some source from previous mods.
 // Original MegaTeam Fortress Programmers: Ambush, Plexi, mod3m, Plasticity 1997
 // Additional addons by Ratbert, Argonator, Agent, Pablo, Cloud, Doc 2010-2019, Often, Aberrant.
 // Credits also to Hipnotic, Mega Team Fortress PTY LTD, Gold, Sh1thead. 
@@ -14,7 +14,6 @@
 //
 // Original credit for Painkeep from Team Evolve. (also available for Quake 3). It's public domain now. 2015
 // cmd changeteam blue, red, green, and yellow always enabled. You can fight alongside the monsters or summon more.
-// Removed sounds for taunts, yells.
 // Added two whole pounds of semicolons at the end of functions to not spazz out modern compilers. -arg
 // It worked ok in 2008-2015 for that old compiler, but not by today's standards.
 //
@@ -25,7 +24,7 @@
 // Fixed the attribute saving feature for each player name logged on.
 // It's important to remember your Quake name with special characters.
 //
-// "cmd telem" has been modified for survival mode to enabled.
+// "cmd telem" has been modified for survival mode to enabled. Also spawns above the monsters, not inside them.
 // In survival mode, if you get disconnected or dropped, you can "cmd beg" to be let back in because,
 // sometimes other players can't find or see your corpse. Or your player died and fell into an unobtainable area.
 // Even if you use the resurrection cube, sometimes the player would spawn and just die again. :{
@@ -55,10 +54,8 @@
 //			Volunteer devs of code/fixes/features gladly accepted.
 //
 //								TODO:
-//  Recompile mods done to server code in C++ for .28BXE to MVDSV .34 which allows more fixes and features. - long term -arg
-//	Clean up source code for easy compiliation in fteccgui and possibly 64bit versions.
-// 	- Down to 13 warnings on ftegccui compiler in Windows.
-//  Obtain source of mvdsv that will compile with newer versions with same xav tweaks.
+//  Obtain source of mvdsv that will compile with newer versions with same xav tweaks.  Damn near impossible due to shared variable names that operate differently or mods to stack directly.
+//  The mvdsv for coop was not upkept by the author's second keeper and he doesn't want to fix it either.  Sorry no bsp2 support for large maps.
 //	Made the auto sentry guns and beartraps do Quad damage when that player is buffed with quad. -auto sentry done -arg
 //	Add Painkeep explosive shotgun ammo when you pick up a pack from monsters. A few shells with rekt most monsters in a few shots.
 //	If possible upgrade the lightning gun to the painkeep chain lightning gun.
@@ -69,9 +66,9 @@
 //	Add Ratbert's nuke grenades to drop4 for demoman or pyro.  ?
 //	Add Prozac/Ratbert's mini sentry guns of differing types. Some monsters/players are affected more
 //	by plasma or fire damage than blast/nail damage.
-//	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit. Adjust monster spawn times if the limit is close.
+//	Tame down the survival mode with less extra monster spawns to stay under the 512 entities limit.
 //	Then again, the map makers should be aware of this and not use so many spawns.
-//	Finish HALF-LIFE support. (A long march if asked for) - shelved for now 12-21 -arg
+//	Finish HALF-LIFE support. (A long march if asked for)
 //	Add the Air fist weapon ala pain keep. 
 //
 //					Changes to existing classes:
@@ -108,9 +105,9 @@
 //
 //						CODING TIPS
 // Don't leave blank lines, or use /* /* comments, adds to code size by 12%, slows things down a lot.
-// For the love of god, use // for comments instead. Sparingly.
+// For the love of god, use // for comments instead. Sparingly. If you mod it, add a comment and a tag username.
 // Production/release code should only have the minimum comments to speed up the code.
-// This particular build only runs in window with MSDSV .28BXE build.
+// This particular build only runs in window with MSDSV .28BXE build.  aka mvdsv71.exe for windows.
 // XAV did some tweaks to that build used here.
 // Don't change defs.pqc or run the risk of the dreaded, "You must have progs.dat installed" server error/crash messages.
 // Add additional variables HERE, additional code or #includes here. Not in defs.pqc.  
@@ -130,7 +127,7 @@
 #define LOAD_THINKSTAND					2
 #define	CheckScoreCVAR
 #define LAZY_WAY			// client number hax
-//#define HL_MAP		cvar("halflifebsp") == 1  //Defines map as a half life map. A switch, no longer used. -arg 12/21
+//#define HL_MAP		cvar("halflifebsp") == 1  //Defines map as a half life map. A switch, no longer used. -arg
 #define next_push_time lefty
 #define FIRST_AWD_LINE		7
 #define true 1
@@ -206,14 +203,6 @@
 #define EF_DIMLIGHT=8;
 //
 //					ENGINE HOOKS not defined in defs.pqc .
-//date and time strings for use within quake C here -arg 5/22 disabled for now
-//float datesec;
-//float datemin;
-//float datehour;
-//float dateday;
-//float datemonth;
-//float dateyear;
-//string datestring;
 
 //
 //
@@ -775,7 +764,6 @@ string nextmap;
 //string (string packet_cmd) Packet_Slashpass; // not used really since the funcs are disabled -arg
 string() votesneededtostring; // for rpg.pqc
 //VECTORS
-.vector whereholo;					//Added to make walking hologram holodude. -agent -arg 5/2022
 .vector aether;					// Nehara
 .vector xtrace;					// Nehara
 .vector xgoal;					// Nehara
@@ -819,7 +807,6 @@ float TF_FLARE_OFF    = 1;
 float	MASK_ENGINE		= 1;	//this is special. Any entities known by the engine but not the csqc will be added.
 //you can add any other masks below, remember, use bits. from csqc.defs -arg
 float	MASK_NORMAL		= 2;
-float pickone;						//Added to make walking hologram holodude. -agent -arg 5/2022 weapons.pqc
 float ITEM_RUNE1 = 1;				// Rune of Earth Magic:  Resistance		//runes.qc
 float ITEM_RUNE2 = 2;				// Rune of Black Magic:  Strength		//runes.qc
 float ITEM_RUNE3 = 4;				// Rune of Hell Magic:  Haste			//runes.qc
@@ -1142,7 +1129,7 @@ float intermission_exittime;
 float modelindex_eyes, modelindex_player, modelindex_null;
 float modelindex_plyr;				//BTF thing
 float modelindex_aircraft; 			//BTF thing
-float TurretNailSpeed = 1550;  // efc - PK Turret aiming. Was 450, but we are dealing with cracked out monsters -arg
+float TurretNailSpeed = 1550;  // efc - PK Turret aiming. Was 450, but we are dealing with bots and cracked out monsters -arg
 float intermission_running;						// PAINKEEP
 float intermission_exittime;					// PAINKEEP
 float turret_clearGround (entity head);			// PAINKEEP
@@ -1202,7 +1189,7 @@ void () removeplayerfob;
 void () playerfob_think;
 void () attachplayerfob; //The colored dot fob thing that tracks players even though their skin or colors are changed.
 void () Merchant_SayWares;
-void () Merchant_GenerateEntity;
+void () Merchant_GenerateEntity ;
 void () respawn;  //client.pqc but can be addressed here now. -arg
 entity() SelectSpawnPoint;
 entity() FindIntermission;
@@ -1222,11 +1209,12 @@ void (float rank_pos, string nname, float exp) MTF_Coop_WriteNewRank;
 void () MTF_Resurrect_Player_Find;
 void () Vote_CheckWin;
 void () summon_think;
-void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..which is bound to the whole inner workings -arg
+void ( entity newmon, string newmon_cln ) SetSpawnFunc;		// FIXME: This is assuming that we're compiling with LMS mode..
 //It is impossible almost to remove LMS code from the main loop. -arg
 void(entity Item) mtf_tfgoalitem_drop;
 void () tfgoalitem_remove;
 void () tfgoalitem_dropthink;
+void () Prox;
 void() HuntTarget;
 void() ai_run_melee;
 void() ai_run_missile;
@@ -1326,6 +1314,7 @@ void(float clientno, float clientfrags) svcUpdateFrags;
 void(entity mnst) Monster_Stats_Send_Full;
 string substr(string str, float start, float len);
 float Coop_ExpForNextLevel (float exp);
+void() W_FireRocket;
 void() Multi_Finish;
 void() ApplyMultiDamage;
 void(entity Goal,entity AP) DoGoalWork;
@@ -1435,7 +1424,7 @@ void() ferdisplay;
 void(entity ritem, entity act) Respawn_Item;
 void()ammo_touch;
 void()SUB_regen;
-//void(float old, float new) Deathmatch_Weapon; // Dead, do nothing function. 1-22 arg
+void(float old, float new) Deathmatch_Weapon;
 void(entity pl, float typ) PrintGrenadeType;
 void()PlaceItem;
 void()W_WeaponFrame;
@@ -1864,7 +1853,7 @@ void(float num_bubbles) DeathBubbles =
 };
 void() DeathSound = 
 {
-//	local float rs;
+	local float rs;
 	if (self.waterlevel == 3)
 	{
 		if (self.is_feigning)
@@ -1878,45 +1867,45 @@ void() DeathSound =
 		sound(self, 2, "player/h2odeath.wav", 1, TF_FLARE_LIT);
 		return;
 	}
-//	rs = rint(random() * 6 + 1);
-//	if (rs == 1)
-//	{
+	rs = rint(random() * 6 + 1);
+	if (rs == 1)
+	{
 		self.noise = "player/death1.wav";
-//	}
-//	if (rs == 2)
-//	{
-//		self.noise = "player/death2.wav";
-//	}
-//	if (rs == 3)
-//	{
-//		self.noise = "player/death3.wav";
-//	}
-//	if (rs == 4)
-//	{
-//		self.noise = "player/death4.wav";
-//	}
-//	if (rs == 5)
-//	{
-//		self.noise = "player/mdeath5.wav";
-//	}
-//	if ((rs == 6))
-//	{
-//#ifdef newsounds2
-//		if (random() > .6)
-//			self.noise = "player/mdeath7.wav";
-//		else
-//#endif
-//		self.noise = "player/mdeath4.wav";
-//	}
-//	if (rs == 7)				// STRONGBAD DEATH
-//	{
-//#ifdef newsounds2
-//		if (random() > .6)
-//			self.noise = "player/mdeath7.wav";
-//		else
-//#endif
-//		self.noise = "player/mdeath6.wav";
-//	}
+	}
+	if (rs == 2)
+	{
+		self.noise = "player/death2.wav";
+	}
+	if (rs == 3)
+	{
+		self.noise = "player/death3.wav";
+	}
+	if (rs == 4)
+	{
+		self.noise = "player/death4.wav";
+	}
+	if (rs == 5)
+	{
+		self.noise = "player/mdeath5.wav";
+	}
+	if ((rs == 6))
+	{
+#ifdef newsounds2
+		if (random() > .6)
+			self.noise = "player/mdeath7.wav";
+		else
+#endif
+		self.noise = "player/mdeath4.wav";
+	}
+	if (rs == 7)				// STRONGBAD DEATH
+	{
+#ifdef newsounds2
+		if (random() > .6)
+			self.noise = "player/mdeath7.wav";
+		else
+#endif
+		self.noise = "player/mdeath6.wav";
+	}
 	sound(self, 2, self.noise, 1, 1);
 	return;
 };
@@ -3874,7 +3863,7 @@ void() TeamFortress_ChangeClass =
 				{
 					sprint(self,2, "Merchant: There ya go, buddy! This is the way!\n");
 					oldpos = self.origin;
-					oldinvincible_finished = self.invincible_finished;  //keep this just to reset grenades and change class without losing pent -arg 4/2022
+					oldinvincible_finished = self.invincible_finished;
 					oldhealth = self.health;
 					oldarmor = self.armorvalue;
 					oldshells = self.ammo_shells;
@@ -4103,9 +4092,6 @@ void() TeamFortress_ChangeClass =
 		spot = find(spot, classname, "player");
 	}
 	TeamFortress_PrintClassName(self, self.playerclass, self.tfstate & 8, 0);
-	self.invincible_finished = oldinvincible_finished;
-	self.health = oldhealth;
-	self.armorvalue = oldarmor;
 	TeamFortress_SetEquipment();
 	TeamFortress_SetHealth();
 	TeamFortress_SetSpeed(self);
@@ -17494,7 +17480,7 @@ void() weapon_touch =
 	other.weapons_carried = other.weapons_carried | new;
 	stemp = self;
 	self = other;
-//	Deathmatch_Weapon(old, new); // Dead, do nothing function. 1-22 arg
+	Deathmatch_Weapon(old, new);
 	W_SetCurrentAmmo();
 	self = stemp;
 	if (leave)
@@ -17898,8 +17884,8 @@ float() GetGrenadePossibility =
 	}
 	return TF_FLARE_LIT;
 };
-//void(float old, float new) Deathmatch_Weapon = // Dead, do nothing function. 1-22 arg
-//{};
+void(float old, float new) Deathmatch_Weapon = 
+{};
 void(entity ritem, entity act) Respawn_Item = 
 {
 	local entity oldself;
@@ -21061,6 +21047,8 @@ void () MTF_Coop_SummonMinion =
 		}
 		te = te.chain;
 	}
+	if (tgood.classname == "monster_cyberdemon")
+		return;
 	if (tgood)
 		BeginSummon ( tgood );
 	else
@@ -21164,9 +21152,9 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 			sprint (self, 2.000000, "You must first join the game to vote.\n");
 			return 1;
 		}
-		if (arg2)
-		{
-		}
+//		if (arg2)
+//		{
+//		}
 		if (Check_For_Bmodel(arg2) == 1)
 			return 1;
 		if (validatemap(arg2))
@@ -21187,6 +21175,7 @@ float(float num_args, string arg1, string arg2, string arg3, string arg4, string
 			return 1;
 		}
 	}
+	else
 	if (infokey(world, "allowstuff") == "1")
 	{
 		if (!strcasecmp("stuff",arg1))
@@ -22890,21 +22879,65 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		while (te != world)
 		{
 			tm+= 1;
-			te = nextent(te); 
+			te = nextent(te);
 		}
 		sprint(self, 2, "Total entity count: ");
 		sprint(self, 2, ftos(tm));
 		sprint(self, 2, ".\n");
 		if (tm >= 512) 
-		{
-			sprint(self, 2, "Entities are over 512, bad karma, things will go wrong./n");
-		}
+			{
+				sprint(self, 2, "Entities are over 512, bad karma, things will go wrong. Fixing.");
+				// try removing some needles
+				//removing needles floating forever
+				te = find (world, classname, "needles");
+				while (te)
+				{
+					if ((te.owner == self))
+					{
+						dremove(te);
+					}
+				te = find (te, classname, "needles");
+				}
+			}
+//remove grenades whereever they are in the map.
+		te = find (world, classname, "grenade");
+		while (te)
+			{
+				if ((te.owner == self))
+					{
+						dremove(te);
+					}
+				te = find (te, classname, "grenade");
+			}
+//remove grenades whereever they are in the map.
+		te = find (world, classname, "minion");
+		while (te)
+			{
+				if ((te.owner == self))
+					{
+						self.owner.flags = self.flags | FL_MONSTER;
+						self.owner.deathtype = "monster_respawn";
+						self.owner.health = -60;
+						Killed (self.owner, world);
+//TODO put in a function to kill the head too. no pete monsters? -arg
+						self.enemy = self.owner;
+						self.think = MTF_RemoveMonster;
+						self.nextthink = time + 5;
+						te = find (te, classname, "minion");
+					}
+			}
 	}
 	else
 	if (s1 == "pentleft")
 	{
 		sprint(self, 2, "Invincibility time left: ");
 		sprint(self, 2, ftos(self.invincible_finished-time));
+		sprint(self, 2, " seconds. ");
+		sprint(self, 2, "Ring invisibility time left: ");
+		sprint(self, 2, ftos(self.invisible_finished-time));
+		sprint(self, 2, " seconds.\n");
+		sprint(self, 2, "Quad time left: ");
+		sprint(self, 2, ftos(self.super_damage_finished-time));
 		sprint(self, 2, " seconds.\n");
 	}	
 	else
@@ -23011,8 +23044,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 			self.coop_exp = self.coop_exp - 50;
 			if (self.coop_exp <0)
 			self.coop_exp = 0;			
-//TODO:perhaps move the player neat the monster and that way you are not stuck inside them? But not teleport into a wall or below the floor..			
-//If monster count is less than 10% planned to spawn maybe punish the players with -50 exp.
+//If monster count is less than 10% planned to spawn don't punish the players with -50 exp.
 //calc punishemnt or not:
 			return 1;
 		}
@@ -23171,7 +23203,7 @@ float (string s1, string s2, string s3, string s4, string s5, string s6) More_Co
 		MTF_Resurrect_Player (self);
 		return 1;
 	}
-	if (!(self.deadflag) && survival_mode)	//For survival modem and not dead, just move them back to start, for example to get around a shut door at the middle and you need to go back to start. -arg
+	if (!(self.deadflag) && survival_mode)	//For survival mode, and not dead, just move them back to start, for example to get around a shut door at the middle and you need to go back to start. -arg
 	//Or you left your engineer builds at spawn start, and need them, and you can't get ammo where you are shut behind a one way door/tunnel/wind tunnel. -arg
 	{
 		sprint(self, 2, self.netname);
@@ -23558,13 +23590,12 @@ void() walkmonster_start_go =
 	self.origin_z = self.origin_z + TF_FLARE_OFF;
 	droptofloor();
 	if (!walkmove(TF_FLARE_LIT, TF_FLARE_LIT))
-	{
-		dprint("walkmonster in wall died at: ");  //Added died -arg 5/2022
-		dprint(vtos(self.origin));
-		dprint("\n");
-		dremove(self);  // Just kill off monsters spawning in walls and the player can't shoot them anyway unless cmd telem allowed. -arg
+		{
+		//	dprint("walkmonster in wall at: ");
+		//	dprint(vtos(self.origin));
+		//	dprint("\n");
 		return;
-	}
+		}
 	self.takedamage = 2;
 	self.ideal_yaw = self.angles * '0 1 0';
 	if (!(self.yaw_speed))
@@ -23902,7 +23933,7 @@ void () respawn_monster =
 	{
 		bprint(2,"DEV: Do not try to summmon that type of monster.\n");
 		dremove(self);
-		return; //not sure to return or let it crash. defined InSolid as a fix here? -arg 
+		return; //sure to return not let it crash. defined InSolid as a fix here? -arg try uncommenting
 	}
 	self.think1 ();
 	self.lives = savedlives;
@@ -24009,5 +24040,52 @@ void() NailGrenadeTouch =
 		self.avelocity = '0 0 0';
 	}
 };
+void () W_FireRocket =
+{
+	self.ammo_rockets = (self.ammo_rockets - 1);
+	self.currentammo = (self.ammo_rockets);
+	sound (self, 1, "weapons/sgun1.wav", 1, 1);
+	KickPlayer (-2.000000, self);
+	newmis = spawn ();
+	newmis.owner = self;
+	newmis.team_no = self.team_no;
+	newmis.movetype = 9;
+	newmis.solid = 2;
+	makevectors (self.v_angle);
+	newmis.velocity = v_forward;
+	newmis.velocity = (newmis.velocity * 1350);			// pablo. rocket speed. mtf 1350. reg 900.
+	newmis.angles = vectoangles (newmis.velocity);
+	newmis.touch = T_MissileTouch;
+	newmis.velocity = newmis.velocity + (newmis.velocity * MTF_Coop_AttribGain(self, #ATTRIB_PROJECTILE));
+	if (self.mtf_items & #BOUNCY_ROCKETS)
+	newmis.attack_finished = 5;
+	newmis.nextthink = (time + 5);
+	newmis.think = SUB_Remove;
+	newmis.weapon = 6;
+#ifdef mtf_coop_tgiving
+	setmodel (newmis, "progs/duck1.mdl");
+#else
+	setmodel (newmis, "progs/missile.mdl");
+#endif
+	setsize (newmis, '0 0 0', '0 0 0');
+	setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));  //setorigin (newmis, ((self.origin + (v_forward * 8)) + '0 0 16'));
+};
+void () EntityCount =
+{
+	local float counter;
+	local entity current;
+	local string output;
+	counter = 0;
+	current = world;
+	current = nextent(current);
+	while (current != world)
+	{
+		counter = counter + 1;
+		current = nextent(current);
+	}
+	output = ftos(counter);
+	dprint ("\nTotal entities currently by Xavior: ");
+	dprint (output);
+};
 
-//END
+//END

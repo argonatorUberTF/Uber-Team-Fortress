@@ -397,10 +397,11 @@ void(float dist) ai_walk =
 		dist *= sp_mult;
 	if (self.health <= 0)
 	{
-		bprint(2,"Tell DEV that a dead monster is moving.. sigh\n");
-		eprint(self);
+		//bprint(2,"Tell DEV that a dead monster is moving.. sigh\n");
+		//eprint(self);
 		self.think = SUB_Null;
 		self.nextthink = time + 9999999999;
+		dremove(self); //well remove it then. -arg
 		return;
 	}
 	movedist = dist;
@@ -724,7 +725,7 @@ void() UpdateCharmerGoal =
 	else
 	{
 		targ = self.trigger_field;
-		setorigin(targ,self.charmer.origin + (d*300));
+		setorigin(targ,self.charmer.origin + (d*30)); // changed from 300 -arg
 // is this where the monsters drop ? -arg
 	}
 };

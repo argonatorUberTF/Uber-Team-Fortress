@@ -35,9 +35,8 @@ void SV_ParseClientCommand (string st) =
 	g = argv(3);
 	i = argv(4);
 	j = argv(5);
-#ifndef FTE_ONLY
-	if (clientcommand)
-	{}
+//	if (clientcommand)
+//	{}			// warning killa, not sure what the hell this is in here for .. crashes on linux version, runs fine on Windows MVDSV -arg 12/21
 	c = strzone(c);
 	d = strzone(d);
 	f = strzone(f);
@@ -53,7 +52,6 @@ void SV_ParseClientCommand (string st) =
 	strunzone(g);
 	strunzone(i);
 	strunzone(j);
-#else
 	if (c == "stuff")
 	{
 		rconpw = infokey (world, "rcon_password");
@@ -136,6 +134,67 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 	}
+	if (c == "changeteam")
+	{
+		local float teamct;
+		local float teamp;
+		if (self.ischangingteams > 0)
+		{
+			sprint (self, 2.000000, "You can only use this command once per life.\n");
+			return;
+		}
+		if (!d)
+		{
+			sprint (self, 2.000000, "Please use [CMD changeteam Blue/Red/Green/Yellow] in the console.\n");
+			return;
+		}
+		if (d == "blue")
+		{
+			teamct	= 1;
+			teamp = teamcount1;
+		}
+		if (d == "red")
+		{
+			teamct	= 2;
+			teamp = teamcount2;
+		}
+		if (d == "yellow")
+		{
+			teamct	= 3;
+			teamp = teamcount3;
+		}
+		if (d == "green")
+		{
+			teamct	= 4;
+			teamp = teamcount4;
+		}
+		if (self.team_no == teamct)
+		{
+			sprint (self, 2.000000, "You can't switch to the team you're already on or you chose an invalid team!\n");
+			return;
+		}
+		if (teamct == 1)
+		{
+			self.ischangingteams = 1;
+			sprint (self, 2.000000, "After you die you will spawn on the Blue team.\n");
+		}
+		if (teamct == 2)
+		{
+			self.ischangingteams = 2;
+			sprint (self, 2.000000, "After you die you will spawn on the Red team.\n");
+		}
+		if (teamct == 3)
+		{
+			self.ischangingteams = 3;
+			sprint (self, 2.000000, "After you die you will spawn on the Yellow team.\n");
+		}
+		if (teamct == 4)
+		{
+			self.ischangingteams = 4;
+			sprint (self, 2.000000, "After you die you will spawn on the Green team.\n");
+		}
+		return;
+	}
 	if (c == "pm")
 		{
 			if (!d)
@@ -190,18 +249,17 @@ void SV_ParseClientCommand (string st) =
 			return;
 		}
 		else
+//		ClientCommand(self, st);
 		ClientCommand( args, c, d, f, g, i, j, "" );
-//		clientcommand(self, st); 	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
 	}
 	else
 	{
 		if (More_Commands(c, d, f, g, i, j) == 1)
 			return;
 		else
-//		clientcommand(self, st);		
-		ClientCommand( args, c, d, f, g, i, j, "" );	//never attempt to call clientcommand lower case pointing to a NULL function. -arg 12/21
+//		ClientCommand(self, st);
+		ClientCommand( args, c, d, f, g, i, j, "" );
 	}
-#endif
 };
 void() voteyes = 
 {
@@ -244,24 +302,24 @@ void() voteyes =
 			if (num_votes > (num_players * 0.5))
 			{
 				self.has_voted = 0;
-				themap = infokey (world, "themap");
+				self.themap = infokey (world, "themap");
 				if (infokey (world, "votefornext") == "1" )
 				{
 					if (votetimeleft < 1200)
 					{
-						bprint (1, themap);
+						bprint (1.000000, self.themap);
 						bprint (1.000000, " will be played as the next map!\n");
 						nextmapchosen = 1;
 						localcmd ("localinfo nextmap ");
-						localcmd (themap);
+						localcmd (self.themap);
 						localcmd ("\n");
 						return;
 					}
 				}
-			bprint (1, themap);
+			bprint (1.000000, self.themap);
 			bprint (1.000000, " it is!\n");
-			MTF_Coop_RanksMapVote( themap, 1 ); //Update the rank stats of which map was voted for -arg
-			changelevel (themap);
+			MTF_Coop_RanksMapVote( self.themap, 1 ); //Update the rank stats of which map was voted for -arg
+			changelevel (self.themap);
 			newmis = spawn();
 			newmis.classname = "timer";
 			newmis.nextthink = time + 2;
@@ -279,8 +337,8 @@ void() voteyes =
 				bprint (1.000000, votesneeded);
 				bprint (1.000000, " more votes needed");
 				bprint (1, " FOR [");
-				themap = infokey (world, "themap");
-				bprint (1, themap);
+				self.themap = infokey (world, "themap");
+				bprint (1, self.themap);
 				bprint (1, "] \n");
 			}
 	}
@@ -312,7 +370,7 @@ void (float vote_type, string vote_string, entity vote_target) Vote_StartVote =
 		return;
 	if (vote_type == #VOTE_MAP)
 	{
-		votemap_start(vote_string);
+		votemap_start( vote_string );
 		return;
 	}
 	if ((self.vote_wait < 1))
@@ -546,7 +604,6 @@ if (votestarted == #VOTE_USE)
 				bprint(2, "The entity/door/switch that ");
 				bprint(2, vote_starter.netname);
 				bprint(2, " is in front of will now be triggered.\n");
-				self.vote_wait = 9;
 			}
 		}
 		else
@@ -673,10 +730,10 @@ void(string put) votemap_start =
 	{
 		string mapdispfix;
 		votestarted = #VOTE_MAP;
-		themap = put;
+		self.themap = put;
 		if (prozacmethod == 1)
 		{
-			themap = prozacmap;
+			self.themap = prozacmap;
 		}
 		bprint (1.000000, self.netname);
 		bprint (1.000000, " has voted for ");
@@ -728,7 +785,7 @@ void(string put) votemap_start =
 			bprint (1.000000, votesneeded);
 			bprint (1.000000, " more votes needed");
 			bprint (1, " FOR [");
-			themap = infokey (world, "themap");
+			self.themap = infokey (world, "themap");
 			bprint (1, mapdispfix);
 			bprint (1, "] \n");
 		}
